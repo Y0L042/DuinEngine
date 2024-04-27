@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "Duin/Application.h"
+#include "Duin/Log.h"
 
 // ----- Entry Point -----
 #include "Duin/EntryPoint.h"

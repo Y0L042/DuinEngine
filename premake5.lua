@@ -26,7 +26,7 @@ project "Duin"
 
 	includedirs
 	{
-		-- "%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include"
 	}
 
 	filter "system:windows"
@@ -78,7 +78,7 @@ project "Sandbox"
 
 	includedirs
 	{
-		-- "%{prj.name}/vendor/spdlog/include",
+		"Duin/vendor/spdlog/include",
 		"Duin/src"
 	}
 
