@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "raylib-cpp.hpp"
 
 namespace Duin
 {

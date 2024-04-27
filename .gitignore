@@ -1,4 +1,8 @@
 # Directories
+.usr
 .vs/
 bin/
 bin-int/
+
+# Files
+*.user

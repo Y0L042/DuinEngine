@@ -21,12 +21,25 @@ project "Duin"
 	files 
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.cpp",
 	}
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/raylib5/include",
+		"%{prj.name}/vendor/raylibCPP/include",
+		"%{prj.name}/vendor/spdlog/include",
+	}
+
+	libdirs
+	{
+		"%{prj.name}/vendor/raylib5/lib",
+	}
+
+	links
+	{
+		"raylib"
 	}
 
 	filter "system:windows"
@@ -73,13 +86,21 @@ project "Sandbox"
 	files 
 	{
 		"ExampleProjects/%{prj.name}/src/**.h",
-		"ExampleProjects/%{prj.name}/src/**.cpp"
+		"ExampleProjects/%{prj.name}/src/**.hpp",
+		"ExampleProjects/%{prj.name}/src/**.cpp",
 	}
 
 	includedirs
 	{
+		"Duin/vendor/raylib5/include",
+		"Duin/vendor/raylibCPP/include",
 		"Duin/vendor/spdlog/include",
-		"Duin/src"
+		"Duin/src",
+	}
+
+	libdirs
+	{
+		"Duin/vendor/raylib5/lib",
 	}
 
 	filter "system:windows"
@@ -89,12 +110,13 @@ project "Sandbox"
 
 	defines
 	{
-		"DN_PLATFORM_WINDOWS"
+		"DN_PLATFORM_WINDOWS",
 	}
 
 	links
 	{
-		"Duin"
+		"Duin",
+		"raylib",
 	}
 
 	filter "configurations:Debug"
