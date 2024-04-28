@@ -1,3 +1,5 @@
+#include "dnpch.h"
+
 #include "Log.h"
 
 namespace Duin

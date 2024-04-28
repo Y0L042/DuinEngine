@@ -1,7 +1,8 @@
 #pragma once
+#include "dnpch.h"
 
 #include "Core.h"
-#include "raylib-cpp.hpp"
+#include "SDL.h"
 
 namespace Duin
 {

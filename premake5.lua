@@ -18,6 +18,9 @@ project "Duin"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "dnpch.h"
+	pchsource "Duin/src/dnpch.cpp"
+
 	files 
 	{
 		"%{prj.name}/src/**.h",
@@ -27,19 +30,21 @@ project "Duin"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/raylib5/include",
-		"%{prj.name}/vendor/raylibCPP/include",
+		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/sdl2/include",
+
 	}
 
 	libdirs
 	{
-		"%{prj.name}/vendor/raylib5/lib",
+		"%{prj.name}/vendor/sdl2/lib/x64",
 	}
 
 	links
 	{
-		"raylib"
+		"SDL2",
+		"SDL2main", -- Add more SDL2 libraries as needed
 	}
 
 	filter "system:windows"
@@ -50,7 +55,8 @@ project "Duin"
 	defines
 	{
 		"DN_PLATFORM_WINDOWS",
-		"DN_BUILD_DLL"
+		"DN_BUILD_DLL",
+		"SDL_MAIN_HANDLED",
 	}
 
 	postbuildcommands
@@ -92,15 +98,15 @@ project "Sandbox"
 
 	includedirs
 	{
-		"Duin/vendor/raylib5/include",
-		"Duin/vendor/raylibCPP/include",
+		"%{prj.name}/src",
 		"Duin/vendor/spdlog/include",
+		"Duin/vendor/sdl2/include",
 		"Duin/src",
 	}
 
 	libdirs
 	{
-		"Duin/vendor/raylib5/lib",
+		"Duin/vendor/sdl2/lib/x64",
 	}
 
 	filter "system:windows"
@@ -116,7 +122,8 @@ project "Sandbox"
 	links
 	{
 		"Duin",
-		"raylib",
+		"SDL2",
+		"SDL2main", -- Add more SDL2 libraries as needed
 	}
 
 	filter "configurations:Debug"

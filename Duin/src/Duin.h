@@ -2,7 +2,7 @@
 
 // For use by Duin applications only!
 
-#include <iostream>
+#include "dnpch.h"
 
 #include "Duin/Application.h"
 #include "Duin/Log.h"
