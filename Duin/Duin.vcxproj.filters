@@ -19,6 +19,9 @@
     <ClInclude Include="src\Duin\Log.h">
       <Filter>Duin</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Window.h">
+      <Filter>Duin</Filter>
+    </ClInclude>
     <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +29,9 @@
       <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Log.cpp">
+      <Filter>Duin</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Window.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />

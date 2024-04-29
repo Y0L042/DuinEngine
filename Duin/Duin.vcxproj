@@ -160,16 +160,16 @@
     <ClInclude Include="src\Duin\Core.h" />
     <ClInclude Include="src\Duin\EntryPoint.h" />
     <ClInclude Include="src\Duin\Log.h" />
-    <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\Duin\Window.h" />
+    <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Application.cpp" />
     <ClCompile Include="src\Duin\Log.cpp" />
+    <ClCompile Include="src\Duin\Window.cpp" />
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Duin\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
