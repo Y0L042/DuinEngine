@@ -23,6 +23,7 @@
       <Filter>Duin</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="src\Duin\ObjectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Application.cpp">
@@ -35,5 +36,6 @@
       <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
+    <ClCompile Include="src\Duin\ObjectManager.cpp" />
   </ItemGroup>
 </Project>

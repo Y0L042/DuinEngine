@@ -37,12 +37,16 @@ namespace Duin
         uint32_t rDelta = 0;
         uint32_t pDelta = 0;
 
+        EngineReady();
+        Ready();
+
         //While application is running
         while (!quit)
         {
             //Handle events on queue
             while (SDL_PollEvent(&e) != 0)
             {
+                EngineHandleEvents(e);
                 HandleEvents(e);
 
                 //User requests quit
@@ -60,9 +64,23 @@ namespace Duin
             if (executeRenderFrame) { renderTimeCount = currentTicks; }
             if (executePhysicsFrame) { physicsTimeCount = currentTicks; }
 
-            if (rDelta >= RENDER_TIME) { Process(rDelta); }
-            if (pDelta >= PHYSICS_TIME) { PhysicsProcess(pDelta); }
-            if (rDelta >= RENDER_TIME) { Render(); }
+            if (rDelta >= RENDER_TIME) 
+            { 
+                EngineProcess(rDelta);
+                Process(rDelta); 
+            }
+
+            if (pDelta >= PHYSICS_TIME) 
+            { 
+                EnginePhysicsProcess(pDelta);
+                PhysicsProcess(pDelta); 
+            }
+
+            if (rDelta >= RENDER_TIME) 
+            { 
+                EngineDraw();
+                Draw(); 
+            }
 
             //Update the surface
 
@@ -72,7 +90,15 @@ namespace Duin
         win->Close();
     }
 
+    void Application::EngineReady()
+    {
+    }
+
     void Application::Ready()
+    {
+    }
+
+    void Application::EngineHandleEvents(SDL_Event& e)
     {
     }
 
@@ -80,7 +106,15 @@ namespace Duin
     {
     }
 
+    void Application::EngineProcess(double rDelta)
+    {
+    }
+
     void Application::Process(double rDelta)
+    {
+    }
+
+    void Application::EnginePhysicsProcess(double pDelta)
     {
     }
 
@@ -88,9 +122,13 @@ namespace Duin
     {
     }
 
-    void Application::Render()
+    void Application::EngineDraw()
     {
         win->Render();
+    }
+
+    void Application::Draw()
+    {
     }
 
 }
