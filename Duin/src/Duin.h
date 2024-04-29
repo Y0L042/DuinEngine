@@ -10,3 +10,12 @@
 // ----- Entry Point -----
 #include "Duin/EntryPoint.h"
 // ----- Entry Point -----
+
+#include "Duin/Events/Event.h"
+#include "Duin/Events/InputEvent.h"
+
+#include "Duin/Window.h"
+#include "Duin/Graphics/Texture.h"
+#include "Duin/Graphics/TextureLoader.h"
+
+#include "Duin/ObjectManager.h"

@@ -3,37 +3,41 @@
 
 #include "Core.h"
 #include "Log.h"
+#include "Graphics/TextureLoader.h"
 
 #include <SDL.h>
 #include <SDL_video.h>
 
-
-class Window
+namespace Duin
 {
-public:
-	Window(int screenWidth, int screenHeight);
-	Window();
-	~Window();
-
-	SDL_Window* GetWindow() { return gWindow; }
-	SDL_Surface* GetScreenSurface() { return gScreenSurface; }
-
-	void SetScreenSize(int screenWidth, int screenHeight)
+	class Window
 	{
-		SCREEN_WIDTH = screenWidth;
-		SCREEN_HEIGHT = screenHeight;
-	}
+	public:
+		Window(int screenWidth, int screenHeight);
+		Window();
+		~Window();
 
-	bool Init();
-	bool LoadMedia();
-	void Render();
-	void Close();
+		SDL_Window* GetWindow() { return gWindow; }
+		SDL_Surface* GetScreenSurface() { return gScreenSurface; }
+		SDL_Renderer* GetRenderer() { return gRenderer; }
+
+		void SetScreenSize(int screenWidth, int screenHeight)
+		{
+			SCREEN_WIDTH = screenWidth;
+			SCREEN_HEIGHT = screenHeight;
+		}
+
+		bool Init();
+		void Render();
+		void Close();
 
 
-private:
-	SDL_Window* gWindow = NULL;
-	SDL_Surface* gScreenSurface = NULL;
-	int SCREEN_WIDTH = 800;
-	int SCREEN_HEIGHT = 400;
+	private:
+		SDL_Window* gWindow = NULL;
+		SDL_Surface* gScreenSurface = NULL;
+		SDL_Renderer* gRenderer = NULL;
+		int SCREEN_WIDTH = 800;
+		int SCREEN_HEIGHT = 400;
 
-};
+	};
+}

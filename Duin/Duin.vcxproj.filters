@@ -24,6 +24,10 @@
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\Duin\ObjectManager.h" />
+    <ClInclude Include="src\Duin\Events\Event.h" />
+    <ClInclude Include="src\Duin\Events\InputEvent.h" />
+    <ClInclude Include="src\Duin\Graphics\Texture.h" />
+    <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Application.cpp">
@@ -37,5 +41,9 @@
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
     <ClCompile Include="src\Duin\ObjectManager.cpp" />
+    <ClCompile Include="src\Duin\Events\Event.cpp" />
+    <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
+    <ClCompile Include="src\Duin\Graphics\Texture.cpp" />
+    <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
   </ItemGroup>
 </Project>
