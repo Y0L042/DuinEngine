@@ -43,6 +43,8 @@ namespace Duin
             //Handle events on queue
             while (SDL_PollEvent(&e) != 0)
             {
+                HandleEvents(e);
+
                 //User requests quit
                 if (e.type == SDL_QUIT)
                 {
@@ -58,7 +60,6 @@ namespace Duin
             if (executeRenderFrame) { renderTimeCount = currentTicks; }
             if (executePhysicsFrame) { physicsTimeCount = currentTicks; }
 
-            if (pDelta >= RENDER_TIME) { HandleEvents(); }
             if (rDelta >= RENDER_TIME) { Process(rDelta); }
             if (pDelta >= PHYSICS_TIME) { PhysicsProcess(pDelta); }
             if (rDelta >= RENDER_TIME) { Render(); }
@@ -75,7 +76,7 @@ namespace Duin
     {
     }
 
-    void Application::HandleEvents()
+    void Application::HandleEvents(SDL_Event& e)
     {
     }
 

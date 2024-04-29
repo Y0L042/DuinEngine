@@ -21,7 +21,7 @@ namespace Duin
 		void Run();
 
 		void Ready();
-		void HandleEvents();
+		void HandleEvents(SDL_Event& e);
 		void Process(double rDelta);
 		void PhysicsProcess(double pDelta);
 		void Render();
