@@ -2,7 +2,7 @@
                     
 #include "dnpch.h"
 
-#include "Duin/Core.h"
+#include "Duin/Core/Core.h"
 #include <SDL.h>
 
 namespace Duin

@@ -1,8 +1,8 @@
 #pragma once
 #include "dnpch.h"
 
-#include "Core.h"
-#include "Window.h"
+#include "Duin/Core/Core.h"
+#include "Duin/Window.h"
 
 namespace Duin
 {

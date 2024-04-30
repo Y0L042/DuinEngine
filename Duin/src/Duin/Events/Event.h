@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Duin/Core.h" 
+#include "Duin/Core/Core.h" 
 
 namespace Duin
 {

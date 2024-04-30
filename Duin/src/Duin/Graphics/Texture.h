@@ -1,8 +1,8 @@
 #pragma once
 #include "dnpch.h"
 
-#include "Duin/Core.h"
-#include "Duin/Log.h"
+#include "Duin/Core/Core.h"
+#include "Duin/Core/Debug/Log.h"
 #include <SDL.h>
 #include "TextureLoader.h"
 

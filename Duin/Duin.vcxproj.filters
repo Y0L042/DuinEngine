@@ -4,46 +4,78 @@
     <Filter Include="Duin">
       <UniqueIdentifier>{F558847C-E18F-850D-8A7C-6B107692010F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Duin\Core">
+      <UniqueIdentifier>{6D5EF473-D9C8-A8EA-2207-5A908EB0863F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Core\Debug">
+      <UniqueIdentifier>{A3C678B6-0F52-E67A-1863-696F846D427B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Events">
+      <UniqueIdentifier>{39BFA747-A574-203D-2E69-1A149A1D1741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Graphics">
+      <UniqueIdentifier>{D504F86B-41C5-73A2-0A00-BD1F767FB87E}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
     <ClInclude Include="src\Duin\Application.h">
       <Filter>Duin</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Core.h">
-      <Filter>Duin</Filter>
+    <ClInclude Include="src\Duin\Core\Core.h">
+      <Filter>Duin\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Debug\Log.h">
+      <Filter>Duin\Core\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\EntryPoint.h">
       <Filter>Duin</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Log.h">
+    <ClInclude Include="src\Duin\Events\Event.h">
+      <Filter>Duin\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Events\InputEvent.h">
+      <Filter>Duin\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Graphics\Texture.h">
+      <Filter>Duin\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Graphics\TextureLoader.h">
+      <Filter>Duin\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\ObjectManager.h">
       <Filter>Duin</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Window.h">
       <Filter>Duin</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\Duin\ObjectManager.h" />
-    <ClInclude Include="src\Duin\Events\Event.h" />
-    <ClInclude Include="src\Duin\Events\InputEvent.h" />
-    <ClInclude Include="src\Duin\Graphics\Texture.h" />
-    <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Application.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Log.cpp">
+    <ClCompile Include="src\Duin\Core\Debug\Log.cpp">
+      <Filter>Duin\Core\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Events\Event.cpp">
+      <Filter>Duin\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Events\InputEvent.cpp">
+      <Filter>Duin\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Graphics\Texture.cpp">
+      <Filter>Duin\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp">
+      <Filter>Duin\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\ObjectManager.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Window.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
-    <ClCompile Include="src\Duin\ObjectManager.cpp" />
-    <ClCompile Include="src\Duin\Events\Event.cpp" />
-    <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
-    <ClCompile Include="src\Duin\Graphics\Texture.cpp" />
-    <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
   </ItemGroup>
 </Project>

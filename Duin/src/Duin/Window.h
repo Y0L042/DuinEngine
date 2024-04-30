@@ -1,9 +1,9 @@
 #pragma once
 #include "dnpch.h"
 
-#include "Core.h"
-#include "Log.h"
-#include "Graphics/TextureLoader.h"
+#include "Duin/Core/Core.h"
+#include "Duin/Core/Debug/Log.h"
+#include "Duin/Graphics/TextureLoader.h"
 
 #include <SDL.h>
 #include <SDL_video.h>
