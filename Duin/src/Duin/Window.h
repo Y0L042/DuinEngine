@@ -28,8 +28,12 @@ namespace Duin
 		}
 
 		bool Init();
-		void Render();
+		Window& Render();
 		void Close();
+
+		Window& ClearRenderer();
+		Window& UpdateRenderer();
+		Window& FillWindow(int r, int g, int b);
 
 
 	private:

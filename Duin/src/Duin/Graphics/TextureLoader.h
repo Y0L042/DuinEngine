@@ -18,8 +18,12 @@ namespace Duin
 
         static TextureLoader& SetRenderer(SDL_Renderer* renderer);
         static SDL_Renderer* GetRenderer() { return GetInstance().gRenderer; }
+
+        static TextureLoader& SetWindow(SDL_Window* window);
+        static SDL_Window* GetWindow() { return GetInstance().gWindow; }
         
     private:
-        SDL_Renderer* gRenderer = NULL;
+        SDL_Renderer* gRenderer = nullptr;
+        SDL_Window* gWindow = nullptr;
     };
 }

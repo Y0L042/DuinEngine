@@ -12,26 +12,19 @@ namespace Duin
 	class DUIN_API Texture
 	{
 	public:
-		Texture(std::string texturePath);
+		Texture(std::string& texturePath);
+		Texture(const char* texturePath);
 		Texture();
 		~Texture();
 
 		Texture& LoadTexture(const char* texturePath);
 		Texture& LoadTexture(std::string& texturePath);
 
+		Texture& Draw(float posX, float posY, float width, float height);
+
 		void ClearTexture();
 
 	private:
-		// Define the smart pointer with a custom deleter directly inside the class
-		std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture;
-
-		// Static method to serve as a deleter
-		static void DestroyTexture(SDL_Texture* texture) 
-		{
-			if (texture) 
-			{
-				SDL_DestroyTexture(texture);
-			}
-		}
+		SDL_Texture* texture = nullptr;
 	};
 } 

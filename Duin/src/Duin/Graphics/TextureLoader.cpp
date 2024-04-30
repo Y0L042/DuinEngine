@@ -10,4 +10,11 @@ namespace Duin
 		instance.gRenderer = renderer;
 		return instance;
 	}
+
+	TextureLoader& TextureLoader::SetWindow(SDL_Window* window)
+	{
+		TextureLoader& instance = GetInstance();
+		instance.gWindow = window;
+		return instance;
+	}
 }

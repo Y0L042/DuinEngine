@@ -20,12 +20,15 @@ Duin::Application* Duin::CreateApplication()
 
 
 
+Duin::Texture texture1;
+Duin::Texture texture2;
+
+int x = 0;
 
 void Sandbox::Ready()
 {
-	Duin::Texture texture;
-	std::string("Textures/duin.bmp");
-	texture.LoadTexture();
+	texture1.LoadTexture("Textures/duin.bmp");
+	texture2.LoadTexture("Textures/duin.bmp");
 }
 
 void Sandbox::HandleEvents(SDL_Event& e)
@@ -40,8 +43,11 @@ void Sandbox::Process(double rDelta)
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
+	x++;
 }
 
 void Sandbox::Draw()
 {
+	texture1.Draw(0, 0, 250, 250);
+	texture2.Draw(x, 350, 200, 200);
 }

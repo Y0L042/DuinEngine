@@ -30,10 +30,13 @@ namespace Duin
 
         uint32_t renderTimeCount = SDL_GetTicks();
         uint32_t physicsTimeCount = SDL_GetTicks();
+        uint32_t previousTimeCount = SDL_GetTicks();
+        uint32_t lagTimeCount = 0;
 
         const uint32_t RENDER_TIME = (uint32_t)(1000 / TARGET_RENDER_FRAMERATE);
         const uint32_t PHYSICS_TIME = (uint32_t)(1000 / TARGET_PHYSICS_FRAMERATE);
 
+        uint32_t nDelta = 0;
         uint32_t rDelta = 0;
         uint32_t pDelta = 0;
 
@@ -57,17 +60,20 @@ namespace Duin
             }
 
             uint32_t currentTicks = SDL_GetTicks();
+            nDelta = currentTicks - previousTimeCount;
             rDelta = currentTicks - renderTimeCount;
             pDelta = currentTicks - physicsTimeCount;
+            previousTimeCount = currentTicks;
+            lagTimeCount += nDelta;
             bool executeRenderFrame = rDelta >= RENDER_TIME;
             bool executePhysicsFrame = pDelta >= PHYSICS_TIME;
             if (executeRenderFrame) { renderTimeCount = currentTicks; }
             if (executePhysicsFrame) { physicsTimeCount = currentTicks; }
 
-            if (rDelta >= RENDER_TIME) 
-            { 
+            if (rDelta >= RENDER_TIME)
+            {
                 EngineProcess(rDelta);
-                Process(rDelta); 
+                Process(rDelta);
             }
 
             if (pDelta >= PHYSICS_TIME) 
@@ -76,18 +82,27 @@ namespace Duin
                 PhysicsProcess(pDelta); 
             }
 
+            //// Perhaps a better physics loop, but have to adjust pDelta first
+            //while (lagTimeCount >= PHYSICS_TIME)
+            //{
+            //    EnginePhysicsProcess(pDelta);
+            //    PhysicsProcess(pDelta);
+            //    lagTimeCount -= PHYSICS_TIME;
+            //}
+
             if (rDelta >= RENDER_TIME) 
             { 
-                EngineDraw();
+                win->ClearRenderer();
+                win->FillWindow(25, 25, 25);
                 Draw(); 
+                EngineDraw();
+                win->Render();
             }
-
-            //Update the surface
-
         }
 
         //Free resources and close SDL
         win->Close();
+        SDL_Quit();
     }
 
     void Application::EngineReady()
@@ -124,7 +139,6 @@ namespace Duin
 
     void Application::EngineDraw()
     {
-        win->Render();
     }
 
     void Application::Draw()
