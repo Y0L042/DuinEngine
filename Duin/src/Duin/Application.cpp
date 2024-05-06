@@ -18,25 +18,19 @@ namespace Duin
         int screenWidth = 800;
         int screenHeight = 450;
 
-        raylib::Window window(screenWidth, screenHeight, "raylib-cpp - basic window");
-        //raylib::Texture logo("raylib_logo.png");
+        win = std::make_unique<Window>(screenWidth, screenHeight);
 
         SetTargetFPS(60);
 
-        while (!window.ShouldClose())
+        while (!win->ShouldClose())
         {
-            BeginDrawing();
+            win->UpdateWindow();
 
-            window.ClearBackground(RAYWHITE);
+            win->ClearWindow(255, 255, 255);
 
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
-            // Object methods.
-            //logo.Draw(
-            //    screenWidth / 2 - logo.GetWidth() / 2,
-            //    screenHeight / 2 - logo.GetHeight() / 2);
 
-            EndDrawing();
+            win->Close();
         }
 
         // UnloadTexture() and CloseWindow() are called automatically.

@@ -7,6 +7,7 @@ namespace Duin
 	Window::Window(int screenWidth, int screenHeight)
 		: SCREEN_WIDTH(screenWidth), SCREEN_HEIGHT(screenHeight)
 	{
+		window = std::make_unique<raylib::Window>(screenWidth, screenHeight, "");
 	}
 
 	Window::Window()
@@ -27,23 +28,31 @@ namespace Duin
 
 	Window& Window::Render()
 	{
-		UpdateRenderer();
+		UpdateWindow();
 		return *this;
 	}
 
 	void Window::Close()
 	{
+		EndDrawing();
 	}
-	Window& Window::ClearRenderer()
+
+	Window& Window::ClearWindow(int r, int g, int b)
 	{
+		ClearBackground(raylib::Color(r, g, b));
 		return *this;
 	}
-	Window& Window::UpdateRenderer()
+	Window& Window::UpdateWindow()
 	{
+		BeginDrawing();
 		return *this;
 	}
 	Window& Window::FillWindow(int r, int g, int b)
 	{
 		return *this;
+	}
+	bool Window::ShouldClose()
+	{
+		return window->ShouldClose();
 	}
 }

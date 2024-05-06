@@ -26,14 +26,16 @@ namespace Duin
 		Window& Render();
 		void Close();
 
-		Window& ClearRenderer();
-		Window& UpdateRenderer();
+		Window& ClearWindow(int r, int g, int b);
+		Window& UpdateWindow();
 		Window& FillWindow(int r, int g, int b);
+		bool ShouldClose();
 
 
 	private:
 		int SCREEN_WIDTH = 800;
 		int SCREEN_HEIGHT = 400;
+		std::unique_ptr<raylib::Window> window;
 
 	};
 }
