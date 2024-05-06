@@ -49,6 +49,9 @@
     <ClInclude Include="src\Duin\Window.h">
       <Filter>Duin</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\raylib_windows_compat.h">
+      <Filter>Duin</Filter>
+    </ClInclude>
     <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,7 @@ project "Duin"
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/raylib5/include",
+		"%{prj.name}/vendor/raylib-cpp/include",
 	}
 
 	libdirs
@@ -42,7 +43,7 @@ project "Duin"
 
 	links
 	{
-
+		"raylib",
 	}
 
 	filter "system:windows"
@@ -98,6 +99,7 @@ project "Sandbox"
 		"%{prj.name}/src",
 		"Duin/vendor/spdlog/include",
 		"Duin/vendor/raylib5/include",
+		"Duin/vendor/raylib-cpp/include",
 		"Duin/src",
 	}
 
@@ -119,6 +121,7 @@ project "Sandbox"
 	links
 	{
 		"Duin",
+		"raylib",
 	}
 
 	filter "configurations:Debug"
