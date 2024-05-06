@@ -32,19 +32,17 @@ project "Duin"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/vendor/sdl2/include",
-
+		"%{prj.name}/vendor/raylib5/include",
 	}
 
 	libdirs
 	{
-		"%{prj.name}/vendor/sdl2/lib/x64",
+		"%{prj.name}/vendor/raylib5/lib",
 	}
 
 	links
 	{
-		"SDL2",
-		"SDL2main", -- Add more SDL2 libraries as needed
+
 	}
 
 	filter "system:windows"
@@ -56,7 +54,6 @@ project "Duin"
 	{
 		"DN_PLATFORM_WINDOWS",
 		"DN_BUILD_DLL",
-		"SDL_MAIN_HANDLED",
 	}
 
 	postbuildcommands
@@ -100,13 +97,13 @@ project "Sandbox"
 	{
 		"%{prj.name}/src",
 		"Duin/vendor/spdlog/include",
-		"Duin/vendor/sdl2/include",
+		"Duin/vendor/raylib5/include",
 		"Duin/src",
 	}
 
 	libdirs
 	{
-		"Duin/vendor/sdl2/lib/x64",
+		"Duin/vendor/raylib5/lib",
 	}
 
 	filter "system:windows"
@@ -122,8 +119,6 @@ project "Sandbox"
 	links
 	{
 		"Duin",
-		"SDL2",
-		"SDL2main", -- Add more SDL2 libraries as needed
 	}
 
 	filter "configurations:Debug"

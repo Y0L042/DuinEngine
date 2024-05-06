@@ -5,9 +5,6 @@
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Graphics/TextureLoader.h"
 
-#include <SDL.h>
-#include <SDL_video.h>
-
 namespace Duin
 {
 	class Window
@@ -17,9 +14,7 @@ namespace Duin
 		Window();
 		~Window();
 
-		SDL_Window* GetWindow() { return gWindow; }
-		SDL_Surface* GetScreenSurface() { return gScreenSurface; }
-		SDL_Renderer* GetRenderer() { return gRenderer; }
+
 
 		void SetScreenSize(int screenWidth, int screenHeight)
 		{
@@ -37,9 +32,6 @@ namespace Duin
 
 
 	private:
-		SDL_Window* gWindow = NULL;
-		SDL_Surface* gScreenSurface = NULL;
-		SDL_Renderer* gRenderer = NULL;
 		int SCREEN_WIDTH = 800;
 		int SCREEN_HEIGHT = 400;
 

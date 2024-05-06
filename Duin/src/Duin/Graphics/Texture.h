@@ -3,7 +3,6 @@
 
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Debug/Log.h"
-#include <SDL.h>
 #include "TextureLoader.h"
 
 
@@ -25,6 +24,5 @@ namespace Duin
 		void ClearTexture();
 
 	private:
-		SDL_Texture* texture = nullptr;
 	};
 } 

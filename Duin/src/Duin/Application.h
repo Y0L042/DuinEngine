@@ -22,8 +22,8 @@ namespace Duin
 
 		void EngineReady();
 		virtual void Ready();
-		void EngineHandleEvents(SDL_Event& e);
-		virtual void HandleEvents(SDL_Event& e);
+		void EngineHandleEvents();
+		virtual void HandleEvents();
 		void EngineProcess(double rDelta);
 		virtual void Process(double rDelta);
 		void EnginePhysicsProcess(double pDelta);
