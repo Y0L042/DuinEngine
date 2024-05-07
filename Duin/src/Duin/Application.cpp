@@ -15,94 +15,26 @@ namespace Duin
 
     void Application::Run()
     {
-        win = std::make_unique<Window>(1280, 720);
-        //Start up SDL and create window
-        if (!win->Init())
+        int screenWidth = 800;
+        int screenHeight = 450;
+
+        win = std::make_unique<Window>(screenWidth, screenHeight);
+
+        SetTargetFPS(60);
+
+        while (!win->ShouldClose())
         {
-            DN_CORE_FATAL("Failed to initialize!\n");
+            win->UpdateWindow();
+
+            win->ClearWindow(255, 255, 255);
+
+
+
+            win->Close();
         }
 
-        //Main loop flag
-        bool quit = false;
-
-        //Event handler
-        SDL_Event e;
-
-        uint32_t renderTimeCount = SDL_GetTicks();
-        uint32_t physicsTimeCount = SDL_GetTicks();
-        uint32_t previousTimeCount = SDL_GetTicks();
-        uint32_t lagTimeCount = 0;
-
-        const uint32_t RENDER_TIME = (uint32_t)(1000 / TARGET_RENDER_FRAMERATE);
-        const uint32_t PHYSICS_TIME = (uint32_t)(1000 / TARGET_PHYSICS_FRAMERATE);
-
-        uint32_t nDelta = 0;
-        uint32_t rDelta = 0;
-        uint32_t pDelta = 0;
-
-        EngineReady();
-        Ready();
-
-        //While application is running
-        while (!quit)
-        {
-            //Handle events on queue
-            while (SDL_PollEvent(&e) != 0)
-            {
-                EngineHandleEvents(e);
-                HandleEvents(e);
-
-                //User requests quit
-                if (e.type == SDL_QUIT)
-                {
-                    quit = true;
-                }
-            }
-
-            uint32_t currentTicks = SDL_GetTicks();
-            nDelta = currentTicks - previousTimeCount;
-            rDelta = currentTicks - renderTimeCount;
-            pDelta = currentTicks - physicsTimeCount;
-            previousTimeCount = currentTicks;
-            lagTimeCount += nDelta;
-            bool executeRenderFrame = rDelta >= RENDER_TIME;
-            bool executePhysicsFrame = pDelta >= PHYSICS_TIME;
-            if (executeRenderFrame) { renderTimeCount = currentTicks; }
-            if (executePhysicsFrame) { physicsTimeCount = currentTicks; }
-
-            if (rDelta >= RENDER_TIME)
-            {
-                EngineProcess(rDelta);
-                Process(rDelta);
-            }
-
-            if (pDelta >= PHYSICS_TIME) 
-            { 
-                EnginePhysicsProcess(pDelta);
-                PhysicsProcess(pDelta); 
-            }
-
-            //// Perhaps a better physics loop, but have to adjust pDelta first
-            //while (lagTimeCount >= PHYSICS_TIME)
-            //{
-            //    EnginePhysicsProcess(pDelta);
-            //    PhysicsProcess(pDelta);
-            //    lagTimeCount -= PHYSICS_TIME;
-            //}
-
-            if (rDelta >= RENDER_TIME) 
-            { 
-                win->ClearRenderer();
-                win->FillWindow(25, 25, 25);
-                Draw(); 
-                EngineDraw();
-                win->Render();
-            }
-        }
-
-        //Free resources and close SDL
-        win->Close();
-        SDL_Quit();
+        // UnloadTexture() and CloseWindow() are called automatically.
+    
     }
 
     void Application::EngineReady()
@@ -113,11 +45,11 @@ namespace Duin
     {
     }
 
-    void Application::EngineHandleEvents(SDL_Event& e)
+    void Application::EngineHandleEvents()
     {
     }
 
-    void Application::HandleEvents(SDL_Event& e)
+    void Application::HandleEvents()
     {
     }
 

@@ -1,8 +1,11 @@
 #pragma once
 #include "dnpch.h"
 
+#include "Duin/raylib_windows_compat.h"
 #include "Duin/Core/Core.h"
 #include "Duin/Window.h"
+
+#include <raylib-cpp.hpp>
 
 namespace Duin
 {
@@ -22,8 +25,8 @@ namespace Duin
 
 		void EngineReady();
 		virtual void Ready();
-		void EngineHandleEvents(SDL_Event& e);
-		virtual void HandleEvents(SDL_Event& e);
+		void EngineHandleEvents();
+		virtual void HandleEvents();
 		void EngineProcess(double rDelta);
 		virtual void Process(double rDelta);
 		void EnginePhysicsProcess(double pDelta);

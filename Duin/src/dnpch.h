@@ -16,6 +16,4 @@
 #include <sstream>
 #include <string>
 
-#ifdef DN_PLATFORM_WINDOWS
-	#include <Windows.h>
-#endif
+#include "Duin/raylib_windows_compat.h"
