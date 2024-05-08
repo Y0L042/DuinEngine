@@ -29,6 +29,7 @@ namespace Duin
 
             win->ClearWindow(255, 255, 255);
 
+            ImGui::ShowDemoWindow();
 
 
             win->Close();

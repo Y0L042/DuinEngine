@@ -5,8 +5,8 @@
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Graphics/TextureLoader.h"
 
-#include <imgui.h>
-#include <rlImGui.h>
+#include "imgui.h"
+#include "rlImGui.h"
 
 namespace Duin
 {

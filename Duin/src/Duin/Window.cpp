@@ -56,5 +56,6 @@ namespace Duin
 	bool Window::ShouldClose()
 	{
 		return window->ShouldClose();
+		//return false;
 	}
 }
