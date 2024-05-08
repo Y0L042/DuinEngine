@@ -21,6 +21,7 @@ namespace Duin
         win = std::make_unique<Window>(screenWidth, screenHeight);
 
         SetTargetFPS(60);
+        rlImGuiSetup(true);
 
         while (!win->ShouldClose())
         {
@@ -32,9 +33,8 @@ namespace Duin
 
             win->Close();
         }
-
+        rlImGuiShutdown();
         // UnloadTexture() and CloseWindow() are called automatically.
-    
     }
 
     void Application::EngineReady()

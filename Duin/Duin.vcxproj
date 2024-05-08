@@ -79,8 +79,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -103,8 +103,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -131,8 +131,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -168,6 +168,45 @@
     <ClInclude Include="src\Duin\Window.h" />
     <ClInclude Include="src\Duin\raylib_windows_compat.h" />
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_allegro5.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_android.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx10.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx11.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_glut.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_metal.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl2.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_osx.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_sdl3.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_sdlrenderer3.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_vulkan.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_wgpu.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="vendor\imgui\examples\example_allegro5\imconfig_allegro5.h" />
+    <ClInclude Include="vendor\imgui\examples\libs\emscripten\emscripten_mainloop_stub.h" />
+    <ClInclude Include="vendor\imgui\examples\libs\glfw\include\GLFW\glfw3.h" />
+    <ClInclude Include="vendor\imgui\examples\libs\glfw\include\GLFW\glfw3native.h" />
+    <ClInclude Include="vendor\imgui\examples\libs\usynergy\uSynergy.h" />
+    <ClInclude Include="vendor\imgui\extras\FA6FreeSolidFontData.h" />
+    <ClInclude Include="vendor\imgui\extras\IconsFontAwesome6.h" />
+    <ClInclude Include="vendor\imgui\imconfig.h" />
+    <ClInclude Include="vendor\imgui\imgui.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_raylib.h" />
+    <ClInclude Include="vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="vendor\imgui\imstb_rectpack.h" />
+    <ClInclude Include="vendor\imgui\imstb_textedit.h" />
+    <ClInclude Include="vendor\imgui\imstb_truetype.h" />
+    <ClInclude Include="vendor\imgui\misc\cpp\imgui_stdlib.h" />
+    <ClInclude Include="vendor\imgui\misc\freetype\imgui_freetype.h" />
+    <ClInclude Include="vendor\imgui\misc\single_file\imgui_single_file.h" />
+    <ClInclude Include="vendor\imgui\rlImGui.h" />
+    <ClInclude Include="vendor\imgui\rlImGuiColors.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Application.cpp" />
@@ -181,6 +220,90 @@
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_allegro5.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_android.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx10.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx12.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx9.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_glut.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_sdl3.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_sdlrenderer3.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_wgpu.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="vendor\imgui\examples\example_allegro5\main.cpp" />
+    <ClCompile Include="vendor\imgui\examples\example_android_opengl3\main.cpp">
+      <ObjectFileName>$(IntDir)\main1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_glfw_opengl2\main.cpp">
+      <ObjectFileName>$(IntDir)\main2.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_glfw_opengl3\main.cpp">
+      <ObjectFileName>$(IntDir)\main3.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_glfw_vulkan\main.cpp">
+      <ObjectFileName>$(IntDir)\main4.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_glfw_wgpu\main.cpp">
+      <ObjectFileName>$(IntDir)\main5.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_glut_opengl2\main.cpp">
+      <ObjectFileName>$(IntDir)\main6.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_null\main.cpp">
+      <ObjectFileName>$(IntDir)\main7.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_sdl2_directx11\main.cpp">
+      <ObjectFileName>$(IntDir)\main8.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_sdl2_opengl2\main.cpp">
+      <ObjectFileName>$(IntDir)\main9.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_sdl2_opengl3\main.cpp">
+      <ObjectFileName>$(IntDir)\main10.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_sdl2_sdlrenderer2\main.cpp">
+      <ObjectFileName>$(IntDir)\main11.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_sdl2_vulkan\main.cpp">
+      <ObjectFileName>$(IntDir)\main12.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_sdl3_opengl3\main.cpp">
+      <ObjectFileName>$(IntDir)\main13.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_sdl3_sdlrenderer3\main.cpp">
+      <ObjectFileName>$(IntDir)\main14.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_win32_directx10\main.cpp">
+      <ObjectFileName>$(IntDir)\main15.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_win32_directx11\main.cpp">
+      <ObjectFileName>$(IntDir)\main16.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_win32_directx12\main.cpp">
+      <ObjectFileName>$(IntDir)\main17.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_win32_directx9\main.cpp">
+      <ObjectFileName>$(IntDir)\main18.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\examples\example_win32_opengl3\main.cpp">
+      <ObjectFileName>$(IntDir)\main19.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="vendor\imgui\misc\cpp\imgui_stdlib.cpp" />
+    <ClCompile Include="vendor\imgui\misc\fonts\binary_to_compressed_c.cpp" />
+    <ClCompile Include="vendor\imgui\misc\freetype\imgui_freetype.cpp" />
+    <ClCompile Include="vendor\imgui\rlImGui.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

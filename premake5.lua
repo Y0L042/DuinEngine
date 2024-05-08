@@ -1,5 +1,6 @@
 workspace "Duin"
 	architecture "x64"
+	startproject "Sandbox"	
 
 	configurations
 	{
@@ -8,7 +9,14 @@ workspace "Duin"
 		"Dist"
 	}
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+    -- Include directories relative to the root folder (solution directory)
+    IncludeDir = {}
+    IncludeDir["spdlog"] = "Duin/vendor/spdlog/include"
+    IncludeDir["raylib"] = "Duin/vendor/raylib5/include"
+    IncludeDir["raylib_cpp"] = "Duin/vendor/raylib-cpp/include"
+	IncludeDir["imgui"] = "Duin/vendor/imgui"
 
 project "Duin"
 	location "Duin"
@@ -26,24 +34,29 @@ project "Duin"
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.hpp",
 		"%{prj.name}/src/**.cpp",
+
+		"%{prj.name}/vendor/imgui/**.h",
+		"%{prj.name}/vendor/imgui/**.hpp",
+		"%{prj.name}/vendor/imgui/**.cpp",
+
 	}
 
 	includedirs
 	{
-		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/vendor/raylib5/include",
-		"%{prj.name}/vendor/raylib-cpp/include",
+        "%{prj.name}/src",
+        "%{IncludeDir.spdlog}",
+        "%{IncludeDir.raylib}",
+        "%{IncludeDir.raylib_cpp}",
+        "%{IncludeDir.imgui}"
 	}
 
 	libdirs
 	{
-		"%{prj.name}/vendor/raylib5/lib",
-	}
+		"%{prj.name}/vendor/raylib5/lib",	}
 
 	links
 	{
-		"raylib",
+		"raylib", 
 	}
 
 	filter "system:windows"
@@ -55,6 +68,7 @@ project "Duin"
 	{
 		"DN_PLATFORM_WINDOWS",
 		"DN_BUILD_DLL",
+		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
 	}
 
 	postbuildcommands
@@ -96,17 +110,17 @@ project "Sandbox"
 
 	includedirs
 	{
-		"%{prj.name}/src",
-		"Duin/vendor/spdlog/include",
-		"Duin/vendor/raylib5/include",
-		"Duin/vendor/raylib-cpp/include",
-		"Duin/src",
+        "Duin/src",
+        "%{IncludeDir.spdlog}",
+        "%{IncludeDir.raylib}",
+        "%{IncludeDir.raylib_cpp}",
+        "%{IncludeDir.imgui}",
 	}
 
-	libdirs
-	{
-		"Duin/vendor/raylib5/lib",
-	}
+	-- libdirs
+	-- {
+	-- 	"Duin/vendor/raylib5/lib",
+	-- }
 
 	filter "system:windows"
 		cppdialect "C++20"
@@ -121,7 +135,7 @@ project "Sandbox"
 	links
 	{
 		"Duin",
-		"raylib",
+		-- "raylib",
 	}
 
 	filter "configurations:Debug"

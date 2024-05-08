@@ -6,6 +6,8 @@
 #include "Duin/Window.h"
 
 #include <raylib-cpp.hpp>
+#include <imgui.h>
+#include <rlImGui.h>
 
 namespace Duin
 {

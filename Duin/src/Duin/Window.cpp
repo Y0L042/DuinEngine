@@ -34,6 +34,7 @@ namespace Duin
 
 	void Window::Close()
 	{
+		rlImGuiEnd();
 		EndDrawing();
 	}
 
@@ -45,6 +46,7 @@ namespace Duin
 	Window& Window::UpdateWindow()
 	{
 		BeginDrawing();
+		rlImGuiBegin();
 		return *this;
 	}
 	Window& Window::FillWindow(int r, int g, int b)
