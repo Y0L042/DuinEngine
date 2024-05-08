@@ -2,7 +2,7 @@
 #include "dnpch.h"
 
 #include "Duin/Core/Core.h"
-#include "Duin/Window.h"
+#include "Duin/AppWindow.h"
 
 //#include <raylib-cpp.hpp>
 //#include <imgui.h>
@@ -39,7 +39,7 @@ namespace Duin
 	private:
 		int TARGET_RENDER_FRAMERATE = 60;
 		int TARGET_PHYSICS_FRAMERATE = 60;
-		std::unique_ptr<Window> win;
+		std::unique_ptr<AppWindow> win;
 	};
 
 	Application* CreateApplication();

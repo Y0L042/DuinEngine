@@ -7,15 +7,16 @@
 
 #include "imgui.h"
 #include "rlImGui.h"
+#include "raylib-cpp.hpp"
 
 namespace Duin
 {
-	class Window
+	class AppWindow
 	{
 	public:
-		Window(int screenWidth, int screenHeight);
-		Window();
-		~Window();
+		AppWindow(int screenWidth, int screenHeight);
+		AppWindow();
+		~AppWindow();
 
 
 
@@ -26,12 +27,14 @@ namespace Duin
 		}
 
 		bool Init();
-		Window& Render();
+		AppWindow& Render();
 		void Close();
 
-		Window& ClearWindow(int r, int g, int b);
-		Window& UpdateWindow();
-		Window& FillWindow(int r, int g, int b);
+		AppWindow& ClearWindow(int r, int g, int b);
+		AppWindow& UpdateWindow();
+		AppWindow& FillWindow(int r, int g, int b);
+		AppWindow& SetTargetAppFPS(int fps);
+		AppWindow& Shutdown();
 		bool ShouldClose();
 
 

@@ -6,7 +6,7 @@
 
 // ---------- Root -----------
 #include "Duin/Application.h"
-#include "Duin/Window.h"
+#include "Duin/AppWindow.h"
 #include "Duin/ObjectManager.h"
 
 // ---------- Core -----------

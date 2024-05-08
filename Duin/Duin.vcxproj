@@ -165,7 +165,7 @@
     <ClInclude Include="src\Duin\Graphics\Texture.h" />
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
     <ClInclude Include="src\Duin\ObjectManager.h" />
-    <ClInclude Include="src\Duin\Window.h" />
+    <ClInclude Include="src\Duin\AppWindow.h" />
     <ClInclude Include="src\Duin\raylib_windows_compat.h" />
     <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
@@ -177,7 +177,7 @@
     <ClCompile Include="src\Duin\Graphics\Texture.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
     <ClCompile Include="src\Duin\ObjectManager.cpp" />
-    <ClCompile Include="src\Duin\Window.cpp" />
+    <ClCompile Include="src\Duin\AppWindow.cpp" />
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

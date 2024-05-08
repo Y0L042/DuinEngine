@@ -18,10 +18,10 @@ namespace Duin
         int screenWidth = 800;
         int screenHeight = 450;
 
-        win = std::make_unique<Window>(screenWidth, screenHeight);
+        win = std::make_unique<AppWindow>(screenWidth, screenHeight);
 
-        SetTargetFPS(60);
-        rlImGuiSetup(true);
+        win->SetTargetAppFPS(60);
+        
 
         while (!win->ShouldClose())
         {
@@ -29,12 +29,9 @@ namespace Duin
 
             win->ClearWindow(255, 255, 255);
 
-            ImGui::ShowDemoWindow();
-
-
             win->Close();
         }
-        rlImGuiShutdown();
+        win->Shutdown();
         // UnloadTexture() and CloseWindow() are called automatically.
     }
 
