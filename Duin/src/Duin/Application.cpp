@@ -19,18 +19,34 @@ namespace Duin
         int screenHeight = 450;
 
         win = std::make_unique<AppWindow>(screenWidth, screenHeight);
-
         win->SetTargetAppFPS(60);
         
+        EngineReady();
+        Ready();
 
         while (!win->ShouldClose())
         {
             win->UpdateWindow();
-
             win->ClearWindow(255, 255, 255);
+
+            EngineHandleEvents();
+            HandleEvents();
+
+            EngineProcess(win->GetFrametime());
+            Process(win->GetFrametime());
+
+            EnginePhysicsProcess(win->GetFrametime()); // TODO
+            PhysicsProcess(win->GetFrametime()); // TODO
+
+            EngineDraw();
+            Draw();
 
             win->Close();
         }
+
+        EngineExit();
+        Exit();
+
         win->Shutdown();
         // UnloadTexture() and CloseWindow() are called automatically.
     }
@@ -72,6 +88,14 @@ namespace Duin
     }
 
     void Application::Draw()
+    {
+    }
+
+    void Application::EngineExit()
+    {
+    }
+
+    void Application::Exit()
     {
     }
 

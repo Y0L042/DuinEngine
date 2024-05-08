@@ -72,4 +72,8 @@ namespace Duin
 		rlImGuiShutdown();
 		return *this;
 	}
+	double AppWindow::GetFrametime()
+	{
+		return GetFrameTime();
+	}
 }

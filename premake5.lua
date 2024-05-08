@@ -18,6 +18,7 @@ workspace "Duin"
     IncludeDir["raylib_cpp"] = "Duin/vendor/raylib-cpp/include"
 	IncludeDir["imgui"] = "Duin/vendor/imgui"
 	IncludeDir["rlgui"] = "Duin/vendor/rlgui"
+	IncludeDir["patches"] = "Duin/vendor/patches/include"
 
 project "Duin"
 	location "Duin"
@@ -40,6 +41,7 @@ project "Duin"
 	includedirs
 	{
         "%{prj.name}/src",
+		"%{IncludeDir.patches}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.raylib}",
         "%{IncludeDir.raylib_cpp}",
@@ -111,6 +113,7 @@ project "Sandbox"
 	includedirs
 	{
         "Duin/src",
+		"%{IncludeDir.patches}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.raylib}",
         "%{IncludeDir.raylib_cpp}",

@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -104,7 +104,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -132,7 +132,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
+    <ClInclude Include="src\Duin\AppWindow.h" />
     <ClInclude Include="src\Duin\Application.h" />
     <ClInclude Include="src\Duin\Core\Core.h" />
     <ClInclude Include="src\Duin\Core\Debug\Log.h" />
@@ -165,11 +166,14 @@
     <ClInclude Include="src\Duin\Graphics\Texture.h" />
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
     <ClInclude Include="src\Duin\ObjectManager.h" />
-    <ClInclude Include="src\Duin\AppWindow.h" />
-    <ClInclude Include="src\Duin\raylib_windows_compat.h" />
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="vendor\patches\include\RayGuiComponent.h" />
+    <ClInclude Include="vendor\patches\include\RaylibComponent.h" />
+    <ClInclude Include="vendor\patches\include\raylib_windows_compat.h" />
+    <ClInclude Include="vendor\patches\include\RLImGuiComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duin\AppWindow.cpp" />
     <ClCompile Include="src\Duin\Application.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
     <ClCompile Include="src\Duin\Events\Event.cpp" />
@@ -177,7 +181,6 @@
     <ClCompile Include="src\Duin\Graphics\Texture.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
     <ClCompile Include="src\Duin\ObjectManager.cpp" />
-    <ClCompile Include="src\Duin\AppWindow.cpp" />
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

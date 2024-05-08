@@ -16,4 +16,4 @@
 #include <sstream>
 #include <string>
 
-#include "Duin/raylib_windows_compat.h"
+#include <raylib_windows_compat.h>

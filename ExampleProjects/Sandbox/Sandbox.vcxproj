@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -97,7 +97,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -119,7 +119,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

@@ -4,10 +4,6 @@
 #include "Duin/Core/Core.h"
 #include "Duin/AppWindow.h"
 
-//#include <raylib-cpp.hpp>
-//#include <imgui.h>
-//#include <rlImGui.h>
-
 namespace Duin
 {
 	class DUIN_API Application
@@ -34,6 +30,8 @@ namespace Duin
 		virtual void PhysicsProcess(double pDelta);
 		void EngineDraw();
 		virtual void Draw();
+		void EngineExit();
+		virtual void Exit();
 
 
 	private:

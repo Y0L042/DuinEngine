@@ -19,6 +19,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
+    <ClInclude Include="src\Duin\AppWindow.h">
+      <Filter>Duin</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Application.h">
       <Filter>Duin</Filter>
     </ClInclude>
@@ -46,15 +49,15 @@
     <ClInclude Include="src\Duin\ObjectManager.h">
       <Filter>Duin</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Window.h">
-      <Filter>Duin</Filter>
-    </ClInclude>
     <ClInclude Include="src\Duin\raylib_windows_compat.h">
       <Filter>Duin</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duin\AppWindow.cpp">
+      <Filter>Duin</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duin\Application.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
@@ -74,9 +77,6 @@
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\ObjectManager.cpp">
-      <Filter>Duin</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Duin\Window.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />

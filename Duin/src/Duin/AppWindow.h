@@ -5,9 +5,7 @@
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Graphics/TextureLoader.h"
 
-#include "imgui.h"
-#include "rlImGui.h"
-#include "raylib-cpp.hpp"
+#include <RayGuiComponent.h>
 
 namespace Duin
 {
@@ -35,6 +33,7 @@ namespace Duin
 		AppWindow& FillWindow(int r, int g, int b);
 		AppWindow& SetTargetAppFPS(int fps);
 		AppWindow& Shutdown();
+		double GetFrametime();
 		bool ShouldClose();
 
 
