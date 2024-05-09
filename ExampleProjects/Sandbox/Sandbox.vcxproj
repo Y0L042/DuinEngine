@@ -137,12 +137,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SandboxGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Duin\Duin.vcxproj">
       <Project>{F558847C-E18F-850D-8A7C-6B107692010F}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,3 +2,7 @@
 
 #include "ObjectManager.h"
 
+namespace Duin
+{
+
+}

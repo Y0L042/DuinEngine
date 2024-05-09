@@ -19,10 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
-    <ClInclude Include="src\Duin\AppWindow.h">
+    <ClInclude Include="src\Duin\Core\AppWindow.h">
       <Filter>Duin</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Application.h">
+    <ClInclude Include="src\Duin\Core\Application.h">
       <Filter>Duin</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Core.h">
@@ -46,9 +46,6 @@
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\ObjectManager.h">
-      <Filter>Duin</Filter>
-    </ClInclude>
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="vendor\patches\include\RayGuiComponent.h" />
     <ClInclude Include="vendor\patches\include\RaylibComponent.h" />
@@ -66,10 +63,10 @@
     <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Duin\AppWindow.cpp">
+    <ClCompile Include="src\Duin\Core\AppWindow.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Application.cpp">
+    <ClCompile Include="src\Duin\Core\Application.cpp">
       <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp">
@@ -86,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp">
       <Filter>Duin\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Duin\ObjectManager.cpp">
-      <Filter>Duin</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
     <ClCompile Include="src\Duin\Object\Object.cpp" />

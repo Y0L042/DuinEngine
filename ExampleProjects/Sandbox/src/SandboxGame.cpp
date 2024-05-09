@@ -1,4 +1,13 @@
 #include <Duin.h>
+#include <Duin/EntryPoint.h>
+
+
+
+
+int x = 0;
+
+Duin::Texture texture1;
+Duin::Texture texture2;
 
 class Sandbox : public Duin::Application
 {
@@ -12,18 +21,9 @@ public:
 	void PhysicsProcess(double pDelta) override;
 	void Draw() override;
 };
-
-Duin::Application* Duin::CreateApplication()
-{
-	return new Sandbox();
-}
+Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
 
-
-Duin::Texture texture1;
-Duin::Texture texture2;
-
-int x = 0;
 
 void Sandbox::Ready()
 {

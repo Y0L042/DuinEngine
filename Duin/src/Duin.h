@@ -7,8 +7,8 @@
 // --------------------------------
 
 // ---------- Root -----------
-#include "Duin/Application.h"
-#include "Duin/AppWindow.h"
+#include "Duin/Core/Application.h"
+#include "Duin/Core/AppWindow.h"
 
 // ---------- Core -----------
 #include "Duin/Core/Debug/Log.h"
@@ -29,9 +29,3 @@
 #include "Duin/Object/Node/CanvasItem/Node2D/Node2D.h"
 #include "Duin/Object/Node/CanvasItem/Node2D/Sprite2D.h"
 #include "Duin/Object/Node/Node3D/Node3D.h"
-
-
-
-// ---------- Entry Point -----------
-#include "Duin/EntryPoint.h"
-// ---------- Entry Point -----------

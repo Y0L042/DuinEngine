@@ -156,8 +156,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
-    <ClInclude Include="src\Duin\AppWindow.h" />
-    <ClInclude Include="src\Duin\Application.h" />
+    <ClInclude Include="src\Duin\Core\AppWindow.h" />
+    <ClInclude Include="src\Duin\Core\Application.h" />
     <ClInclude Include="src\Duin\Core\Core.h" />
     <ClInclude Include="src\Duin\Core\Debug\Log.h" />
     <ClInclude Include="src\Duin\Core\UUID.h" />
@@ -167,7 +167,6 @@
     <ClInclude Include="src\Duin\Events\InputMap.h" />
     <ClInclude Include="src\Duin\Graphics\Texture.h" />
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
-    <ClInclude Include="src\Duin\ObjectManager.h" />
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\Duin\Object\Node\CanvasItem\CanvasItem.h" />
     <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.h" />
@@ -183,15 +182,14 @@
     <ClInclude Include="vendor\patches\include\RLImGuiComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Duin\AppWindow.cpp" />
-    <ClCompile Include="src\Duin\Application.cpp" />
+    <ClCompile Include="src\Duin\Core\AppWindow.cpp" />
+    <ClCompile Include="src\Duin\Core\Application.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
     <ClCompile Include="src\Duin\Core\UUID.cpp" />
     <ClCompile Include="src\Duin\Events\Event.cpp" />
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
     <ClCompile Include="src\Duin\Graphics\Texture.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
-    <ClCompile Include="src\Duin\ObjectManager.cpp" />
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

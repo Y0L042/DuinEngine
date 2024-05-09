@@ -2,7 +2,7 @@
 #include "dnpch.h"
 
 #include "Duin/Core/Core.h"
-#include "Duin/AppWindow.h"
+#include "Duin/Core/AppWindow.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Events/InputMap.h"
 
