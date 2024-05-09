@@ -3,6 +3,8 @@
 
 #include "Duin/Core/Core.h"
 #include "Duin/AppWindow.h"
+#include "Duin/Events/InputEvent.h"
+#include "Duin/Events/InputMap.h"
 
 namespace Duin
 {
@@ -22,8 +24,8 @@ namespace Duin
 
 		void EngineReady();
 		virtual void Ready();
-		void EngineHandleEvents();
-		virtual void HandleEvents();
+		void EngineHandleInputs(InputEvent e);
+		virtual void HandleInputs(InputEvent e);
 		void EngineProcess(double rDelta);
 		virtual void Process(double rDelta);
 		void EnginePhysicsProcess(double pDelta);

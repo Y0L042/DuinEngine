@@ -160,13 +160,23 @@
     <ClInclude Include="src\Duin\Application.h" />
     <ClInclude Include="src\Duin\Core\Core.h" />
     <ClInclude Include="src\Duin\Core\Debug\Log.h" />
+    <ClInclude Include="src\Duin\Core\UUID.h" />
     <ClInclude Include="src\Duin\EntryPoint.h" />
     <ClInclude Include="src\Duin\Events\Event.h" />
     <ClInclude Include="src\Duin\Events\InputEvent.h" />
+    <ClInclude Include="src\Duin\Events\InputMap.h" />
     <ClInclude Include="src\Duin\Graphics\Texture.h" />
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
     <ClInclude Include="src\Duin\ObjectManager.h" />
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="src\Duin\Object\Node\CanvasItem\CanvasItem.h" />
+    <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.h" />
+    <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.h" />
+    <ClInclude Include="src\Duin\Object\Node\Node.h" />
+    <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
+    <ClInclude Include="src\Duin\Object\Object.h" />
+    <ClInclude Include="src\Duin\Object\ObjectFactory.h" />
+    <ClInclude Include="src\Duin\Object\ObjectManager.h" />
     <ClInclude Include="vendor\patches\include\RayGuiComponent.h" />
     <ClInclude Include="vendor\patches\include\RaylibComponent.h" />
     <ClInclude Include="vendor\patches\include\raylib_windows_compat.h" />
@@ -176,6 +186,7 @@
     <ClCompile Include="src\Duin\AppWindow.cpp" />
     <ClCompile Include="src\Duin\Application.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
+    <ClCompile Include="src\Duin\Core\UUID.cpp" />
     <ClCompile Include="src\Duin\Events\Event.cpp" />
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
     <ClCompile Include="src\Duin\Graphics\Texture.cpp" />
@@ -184,6 +195,13 @@
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Duin\Object\Node\CanvasItem\CanvasItem.cpp" />
+    <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.cpp" />
+    <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.cpp" />
+    <ClCompile Include="src\Duin\Object\Node\Node.cpp" />
+    <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp" />
+    <ClCompile Include="src\Duin\Object\Object.cpp" />
+    <ClCompile Include="src\Duin\Object\ObjectManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

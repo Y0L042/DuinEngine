@@ -29,8 +29,8 @@ namespace Duin
             win->UpdateWindow();
             win->ClearWindow(255, 255, 255);
 
-            EngineHandleEvents();
-            HandleEvents();
+            //EngineHandleInputss(e);
+            //HandleInputs(e);
 
             EngineProcess(win->GetFrametime());
             Process(win->GetFrametime());
@@ -59,11 +59,11 @@ namespace Duin
     {
     }
 
-    void Application::EngineHandleEvents()
+    void Application::EngineHandleInputs(InputEvent e)
     {
     }
 
-    void Application::HandleEvents()
+    void Application::HandleInputs(InputEvent e)
     {
     }
 

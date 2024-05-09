@@ -9,7 +9,7 @@
 
 namespace Duin
 {
-	class AppWindow
+	class DUIN_API AppWindow
 	{
 	public:
 		AppWindow(int screenWidth, int screenHeight);
