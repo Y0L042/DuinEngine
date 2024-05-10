@@ -7,5 +7,6 @@ class Player : public Duin::Node2D
 public:
 
 private:
+	Duin::Sprite2D sprite{ "Textures/at_symbol.png" };
 
 };

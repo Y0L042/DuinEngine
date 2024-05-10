@@ -11,10 +11,9 @@ namespace Duin
 		Object();
 		~Object();
 
-		UUID& GetUUID() { return idComponent; }
+		const UUID& GetUUID() { return idComponent; }
 
 	private:
 		UUID idComponent;
-
 	};
 }

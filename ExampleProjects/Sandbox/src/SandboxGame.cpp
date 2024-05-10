@@ -6,8 +6,8 @@
 
 int x = 0;
 
-Duin::Texture texture1;
-Duin::Texture texture2;
+Duin::TextureRes texture1;
+Duin::TextureRes texture2;
 
 class Sandbox : public Duin::Application
 {
@@ -27,8 +27,8 @@ Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
 void Sandbox::Ready()
 {
-	texture1.LoadTexture("Textures/duin.bmp");
-	texture2.LoadTexture("Textures/duin.bmp");
+	texture1.LoadTexture("Textures/at_symbol.png");
+	texture1.SetTextureSize(100.0f, 100.0f);
 }
 
 void Sandbox::HandleInputs(Duin::InputEvent e)
@@ -48,6 +48,5 @@ void Sandbox::PhysicsProcess(double pDelta)
 
 void Sandbox::Draw()
 {
-	texture1.Draw(0, 0, 250, 250);
-	texture2.Draw(x, 350, 200, 200);
+	texture1.Draw(0, 0);
 }

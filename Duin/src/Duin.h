@@ -7,11 +7,12 @@
 // --------------------------------
 
 // ---------- Root -----------
-#include "Duin/Core/Application.h"
-#include "Duin/Core/AppWindow.h"
 
 // ---------- Core -----------
+#include "Duin/Core/Application.h"
+#include "Duin/Core/AppWindow.h"
 #include "Duin/Core/Debug/Log.h"
+#include "Duin/Core/Maths/DuinMaths.h"
 
 // ---------- Events -----------
 #include "Duin/Events/Event.h"
@@ -19,7 +20,7 @@
 #include "Duin/Events/InputMap.h"
 
 // ---------- Graphics -----------
-#include "Duin/Graphics/Texture.h"
+#include "Duin/Graphics/TextureRes.h"
 #include "Duin/Graphics/TextureLoader.h"
 
 // ---------- Objects -----------

@@ -40,7 +40,7 @@
     <ClInclude Include="src\Duin\Events\InputEvent.h">
       <Filter>Duin\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Graphics\Texture.h">
+    <ClInclude Include="src\Duin\Graphics\TextureRes.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h">
@@ -61,6 +61,7 @@
     <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.h" />
     <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.h" />
     <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
+    <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp">
@@ -78,7 +79,7 @@
     <ClCompile Include="src\Duin\Events\InputEvent.cpp">
       <Filter>Duin\Events</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Graphics\Texture.cpp">
+    <ClCompile Include="src\Duin\Graphics\TextureRes.cpp">
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp">
@@ -93,5 +94,6 @@
     <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.cpp" />
     <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp" />
+    <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />
   </ItemGroup>
 </Project>

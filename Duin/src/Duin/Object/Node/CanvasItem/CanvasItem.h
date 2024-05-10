@@ -8,6 +8,10 @@ namespace Duin
 	class DUIN_API CanvasItem : public Node
 	{
 	public:
+		CanvasItem();
+		~CanvasItem();
+
+		virtual void Draw();
 
 	private:
 

@@ -7,7 +7,7 @@ namespace Duin
 	AppWindow::AppWindow(int screenWidth, int screenHeight)
 		: SCREEN_WIDTH(screenWidth), SCREEN_HEIGHT(screenHeight)
 	{
-		window = std::make_unique<raylib::Window>(screenWidth, screenHeight, "");
+		window = std::make_shared<raylib::Window>(screenWidth, screenHeight, "");
 		rlImGuiSetup(true);
 	}
 

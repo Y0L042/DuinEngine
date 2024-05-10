@@ -4,5 +4,16 @@
 
 namespace Duin
 {
+    CanvasItem::CanvasItem()
+    {
+    }
 
+    CanvasItem::~CanvasItem()
+    {
+    }
+
+    void CanvasItem::Draw()
+    {
+
+    }
 }

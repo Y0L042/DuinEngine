@@ -4,5 +4,17 @@
 
 namespace Duin
 {
+	Node2D::Node2D()
+	{
+	}
 
+	Node2D::Node2D(raylib::Vector2 i_globalPosition2D)
+		: globalPosition2D(i_globalPosition2D)
+	{
+
+	}
+
+	Node2D::~Node2D()
+	{
+	}
 }

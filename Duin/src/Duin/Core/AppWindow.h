@@ -40,7 +40,7 @@ namespace Duin
 	private:
 		int SCREEN_WIDTH = 800;
 		int SCREEN_HEIGHT = 400;
-		std::unique_ptr<raylib::Window> window;
+		std::shared_ptr<raylib::Window> window;
 
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Duin/Core/Core.h"
+#include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Object/Node/CanvasItem/CanvasItem.h"
 
 namespace Duin
@@ -8,7 +9,13 @@ namespace Duin
 	class DUIN_API Node2D : public CanvasItem
 	{
 	public:
+		Node2D();
+		Node2D(raylib::Vector2 globalPosition2D);
+		~Node2D();
 		
+	protected:
+		raylib::Vector2 globalPosition2D{};
+
 	private:
 
 	};
