@@ -1,6 +1,8 @@
 #pragma once
+#include "dnpch.h"
 
 #include "Duin/Core/Core.h"
+#include "Duin/Core/UUID.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Object/Node/CanvasItem/CanvasItem.h"
 
@@ -12,7 +14,8 @@ namespace Duin
 		Node2D();
 		Node2D(raylib::Vector2 globalPosition2D);
 		~Node2D();
-		
+
+
 	protected:
 		raylib::Vector2 globalPosition2D{};
 

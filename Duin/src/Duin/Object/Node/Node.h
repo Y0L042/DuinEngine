@@ -13,10 +13,10 @@ namespace Duin
 		Node();
 		~Node();
 
-		virtual void Ready();
-		virtual void HandleInputs(InputEvent e);
-		virtual void Update(double rDelta);
-		virtual void PhysicsUpdate(double pDelta);
+		virtual void Ready() override;
+		virtual void HandleInput(InputEvent e) override;
+		virtual void Update(double rDelta) override;
+		virtual void PhysicsUpdate(double pDelta) override;
 
 	private:
 

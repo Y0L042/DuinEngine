@@ -5,6 +5,7 @@
 #include "Duin/Core/AppWindow.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Events/InputMap.h"
+#include "Duin/Object/ObjectManager.h"
 
 namespace Duin
 {
@@ -20,8 +21,19 @@ namespace Duin
 			TARGET_PHYSICS_FRAMERATE = framerate;
 		}
 
+		template<typename T, typename... Args>
+		std::shared_ptr<T> InstantiateChild(Args&&... args)
+		{
+			std::shared_ptr<T> objPtr = ObjectManager::GetRootNode().InstantiateChild(std::forward<Args>(args)...);
+			return objPtr;
+		}
+		void AddChild(std::shared_ptr<Object> child);
+		void RemoveChild(std::shared_ptr<Object> child);
+
 		void Run();
 
+		void EngineInitialize();
+		virtual void Initialize();
 		void EngineReady();
 		virtual void Ready();
 		void EngineHandleInputs(InputEvent e);
@@ -34,7 +46,6 @@ namespace Duin
 		virtual void Draw();
 		void EngineExit();
 		virtual void Exit();
-
 
 	private:
 		int TARGET_RENDER_FRAMERATE = 60;

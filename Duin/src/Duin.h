@@ -11,6 +11,7 @@
 // ---------- Core -----------
 #include "Duin/Core/Application.h"
 #include "Duin/Core/AppWindow.h"
+#include "Duin/Core/Signal.h"
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 
@@ -25,6 +26,7 @@
 
 // ---------- Objects -----------
 #include "Duin/Object/Object.h"
+#include "Duin/Object/ObjectManager.h"
 #include "Duin/Object/Node/Node.h"
 #include "Duin/Object/Node/CanvasItem/CanvasItem.h"
 #include "Duin/Object/Node/CanvasItem/Node2D/Node2D.h"

@@ -1,7 +1,7 @@
 #include <Duin.h>
 #include <Duin/EntryPoint.h>
 
-
+#include "Player.h"
 
 
 int x = 0;
@@ -9,12 +9,15 @@ int x = 0;
 Duin::TextureRes texture1;
 Duin::TextureRes texture2;
 
+std::shared_ptr<Player> player;
+
 class Sandbox : public Duin::Application
 {
 public:
 	Sandbox() {}
 	~Sandbox() {}
-
+	
+	void Initialize() override;
 	void Ready() override;
 	void HandleInputs(Duin::InputEvent e) override;
 	void Process(double rDelta) override;
@@ -24,6 +27,11 @@ public:
 Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
 
+
+void Sandbox::Initialize()
+{
+	player = InstantiateChild<Player>();
+}
 
 void Sandbox::Ready()
 {
@@ -48,5 +56,5 @@ void Sandbox::PhysicsProcess(double pDelta)
 
 void Sandbox::Draw()
 {
-	texture1.Draw(0, 0);
+	texture1.Draw(100, 100);
 }

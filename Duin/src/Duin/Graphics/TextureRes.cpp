@@ -33,7 +33,6 @@ namespace Duin
 	TextureRes& TextureRes::LoadTexture(const char* texturePath)
 	{
 		Texture texture = ::LoadTexture(texturePath); // supposed to call Raylib's LoadTexture()
-		// Assign the loaded texture to the shared_ptr with a custom deleter
 		texturePtr.reset(new Texture(texture), [](Texture* ptr) {
 			UnloadTexture(*ptr);  // Custom deleter that calls Raylib's UnloadTexture
 			delete ptr;           // Delete the pointer after unloading the texture

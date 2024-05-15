@@ -17,4 +17,5 @@ namespace Duin
 	Node2D::~Node2D()
 	{
 	}
+
 }

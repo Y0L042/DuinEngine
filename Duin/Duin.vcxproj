@@ -161,6 +161,7 @@
     <ClInclude Include="src\Duin\Core\Core.h" />
     <ClInclude Include="src\Duin\Core\Debug\Log.h" />
     <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h" />
+    <ClInclude Include="src\Duin\Core\Signal.h" />
     <ClInclude Include="src\Duin\Core\UUID.h" />
     <ClInclude Include="src\Duin\EntryPoint.h" />
     <ClInclude Include="src\Duin\Events\Event.h" />

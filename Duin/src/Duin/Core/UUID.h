@@ -17,6 +17,11 @@ namespace Duin
 		{
 			return this->mUUID == uuid.mUUID;
 		}
+		
+		bool operator<(const UUID& other) const {
+			return mUUID < other.mUUID;
+		}
+
 		operator uint64_t() const { return mUUID; }
 
 	private:

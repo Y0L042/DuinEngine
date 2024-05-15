@@ -3,6 +3,8 @@
 #include "Duin/Core/Core.h"
 #include "Duin/Object/Node/Node.h"
 
+#include <functional>
+
 namespace Duin
 {
 	class DUIN_API CanvasItem : public Node
@@ -11,7 +13,7 @@ namespace Duin
 		CanvasItem();
 		~CanvasItem();
 
-		virtual void Draw();
+		virtual void Draw() override;
 
 	private:
 

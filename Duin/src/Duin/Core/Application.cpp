@@ -1,6 +1,7 @@
 #include "dnpch.h"
 
 #include "Application.h"
+#include "Duin/Object/Node/CanvasItem/Node2D/Node2D.h"
 
 namespace Duin
 {
@@ -13,6 +14,16 @@ namespace Duin
     {
     }
 
+    void Application::AddChild(std::shared_ptr<Object> child)
+    {
+        ObjectManager::GetRootNode().AddChild(child);
+    }
+
+    void Application::RemoveChild(std::shared_ptr<Object> child)
+    {
+        ObjectManager::GetRootNode().RemoveChild(child);
+    }
+
     void Application::Run()
     {
         int screenWidth = 800;
@@ -21,6 +32,9 @@ namespace Duin
         win = std::make_unique<AppWindow>(screenWidth, screenHeight);
         win->SetTargetAppFPS(60);
         
+        EngineInitialize();
+        Initialize();
+
         EngineReady();
         Ready();
 
@@ -29,7 +43,9 @@ namespace Duin
             win->UpdateWindow();
             win->ClearWindow(255, 255, 255);
 
-            //EngineHandleInputss(e);
+            // TODO Generate event, then pass to handleinputs
+
+            //EngineHandleInputs(e);
             //HandleInputs(e);
 
             EngineProcess(win->GetFrametime());
@@ -51,16 +67,27 @@ namespace Duin
         // UnloadTexture() and CloseWindow() are called automatically.
     }
 
+    void Application::EngineInitialize()
+    {
+        ObjectManager::SetRootNode(std::make_shared<Node2D>()); // 2D for now
+    }
+
+    void Application::Initialize()
+    {
+    }
+
     void Application::EngineReady()
     {
     }
 
     void Application::Ready()
     {
+        ObjectManager::CallReady();
     }
 
     void Application::EngineHandleInputs(InputEvent e)
     {
+        ObjectManager::CallHandleInput(e);
     }
 
     void Application::HandleInputs(InputEvent e)
@@ -69,6 +96,7 @@ namespace Duin
 
     void Application::EngineProcess(double rDelta)
     {
+        ObjectManager::CallUpdate(rDelta);
     }
 
     void Application::Process(double rDelta)
@@ -77,6 +105,7 @@ namespace Duin
 
     void Application::EnginePhysicsProcess(double pDelta)
     {
+        ObjectManager::CallPhysicsUpdate(pDelta);
     }
 
     void Application::PhysicsProcess(double pDelta)
@@ -85,6 +114,7 @@ namespace Duin
 
     void Application::EngineDraw()
     {
+        ObjectManager::CallDraw();
     }
 
     void Application::Draw()

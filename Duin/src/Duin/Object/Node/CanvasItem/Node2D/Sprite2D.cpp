@@ -8,23 +8,18 @@ namespace Duin
     {
     }
 
-    Sprite2D::Sprite2D(const char* texturePath)
-        : texture(std::make_shared<TextureRes>(texturePath))
-    {
-    }
-
-    Sprite2D::Sprite2D(TextureRes* texturePtr)
-        : texture(std::shared_ptr<TextureRes>(texturePtr))
-    {
-    }
-
-    Sprite2D::Sprite2D(std::shared_ptr<TextureRes> texturePtr)
-        : texture(texturePtr)
+    Sprite2D::Sprite2D(const char* i_texturePath)
+        : texturePath(i_texturePath)
     {
     }
 
     Sprite2D::~Sprite2D()
     {
+    }
+
+    void Sprite2D::Ready()
+    {
+        texture = std::make_shared<TextureRes>(texturePath);
     }
 
     std::shared_ptr<TextureRes> Sprite2D::GetTexture()

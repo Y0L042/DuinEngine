@@ -62,6 +62,7 @@
     <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.h" />
     <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
     <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h" />
+    <ClInclude Include="src\Duin\Core\Signal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp">
