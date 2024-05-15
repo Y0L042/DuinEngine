@@ -31,7 +31,5 @@ namespace Duin
 	private:
 		std::shared_ptr<::Texture> texturePtr;
 		raylib::Vector2 textureSize;
-
-		void SetRLTextureSize(int width, int height);
 	};
 } 

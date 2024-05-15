@@ -15,7 +15,7 @@ namespace Duin
 	{
 	public:
 
-		static void SetRootNode(std::shared_ptr<Object> rootObj);
+		static void SetRootNode(std::shared_ptr<Object> root);
 
 		static void AddObject(std::shared_ptr<Object> obj);
 		static void RemoveObject(std::shared_ptr<Object> obj);
@@ -32,7 +32,9 @@ namespace Duin
 			return *instance;
 		}
 
-		static Object& GetRootNode();
+		static std::shared_ptr<Object> GetRootNode();
+		Object& GetRef();
+		
 
 	private:
 		Signal<> onReady;
@@ -41,7 +43,7 @@ namespace Duin
 		Signal<double> onPhysicsUpdate;
 		Signal<> onDraw;
 
-		std::shared_ptr<Object> rootObject;
+		std::shared_ptr<Object> rootNode;
 		std::vector<std::shared_ptr<Object>> objectCollection;
 
 		ObjectManager() = default;

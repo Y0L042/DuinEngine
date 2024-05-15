@@ -5,8 +5,12 @@
 class Player : public Duin::Node2D
 {
 public:
+	Player();
+	~Player();
+
+	void Initialize() override;
 
 private:
-	Duin::Sprite2D sprite;
+	std::shared_ptr<Duin::Sprite2D> sprite;
 
 };

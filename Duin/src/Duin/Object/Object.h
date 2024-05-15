@@ -27,17 +27,21 @@ namespace Duin
 		template<typename T, typename... Args>
 		std::shared_ptr<T> InstantiateChild(Args&&... args)
 		{
-			std::shared_ptr<T> objPtr = Instantiate<T>(std::forward<Args>(args)...);
-			AddChild(objPtr);
-			return objPtr;
+			static_assert(std::is_base_of<Object, T>::value, "T must be an Object derived class");
+			std::shared_ptr<T> objInstance = std::make_shared<T>(std::forward<Args>(args)...);
+			std::shared_ptr<Object> objPtr = std::static_pointer_cast<Object>(objInstance);
+			AddChild(objInstance);
+			objInstance->Initialize();
+
+			return objInstance;
 		}
 
 		template<typename T>
-		T& GetRef()
+		std::shared_ptr<T> GetPointer()
 		{
-			return *this;
+			static_assert(std::is_base_of<Object, T>::value, "T must be an Object derived class");
+			return std::dynamic_pointer_cast<T>(shared_from_this());
 		}
-
 		
 		void AddChild(std::shared_ptr<Object> child);
 		void RemoveChild(std::shared_ptr<Object> child);
@@ -74,9 +78,6 @@ namespace Duin
 			Signal<double>& i_onPhysicsUpdate,
 			Signal<>& i_onDraw
 		);
-
-		template <typename T>
-		std::shared_ptr<T> GetPointer() { return shared_from_this(); } 
 
 		virtual void Initialize();
 

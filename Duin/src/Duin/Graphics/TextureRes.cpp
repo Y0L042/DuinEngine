@@ -43,37 +43,52 @@ namespace Duin
 	TextureRes& TextureRes::SetTextureSize(float width, float height)
 	{
 		textureSize = raylib::Vector2(width, height);
-		SetRLTextureSize((int)width, (int)height);
+		std::cout << "Changing size: " << width << ", " << height << "\n";
 		return *this;
 	}
 
 	TextureRes& TextureRes::SetTextureSize(raylib::Vector2 size)
 	{
 		textureSize = size;
-		SetRLTextureSize((int)size.x, (int)size.y);
+		std::cout << "Changing size: " << size.x << ", " << size.y << "\n";
 		return *this;
 	}
 
 	TextureRes& TextureRes::Draw(float posX, float posY)
 	{
-		::DrawTexture(*(texturePtr), (int)posX, (int)posY, { 255, 255, 255, 255 });
+		if (!texturePtr) 
+		{ 
+			DN_CORE_WARN("TextureRes texture pointer not set!");
+			return *this;
+		}
+
+		Draw(raylib::Vector2{ posX, posY });
 		return *this;
 	}
 
 	TextureRes& TextureRes::Draw(raylib::Vector2 position)
 	{
-		::DrawTexture(*(texturePtr.get()), (int)position.x, (int)position.y, { 255, 255, 255, 255 });
+		if (!texturePtr)
+		{
+			DN_CORE_WARN("TextureRes texture pointer not set!");
+			return *this;
+		}
+
+		::DrawTexturePro
+		(
+			*(texturePtr),
+			{ 0, 0, (float)texturePtr->width, (float)texturePtr->height },
+			{ position.x, position.y, textureSize.x, textureSize.y },
+			{ 0, 0 },
+			0,
+			{ 255, 255, 255, 255 }
+		);
+		//std::cout << "Drawing texture with size: " << textureSize.x << ", " << textureSize.y << "\n";
 		return *this;
 	}
 
 	void TextureRes::ClearTexture()
 	{
-
-	}
-
-	void TextureRes::SetRLTextureSize(int width, int height)
-	{
-		texturePtr->width = width;
-		texturePtr->height = height;
+		texturePtr.reset();
 	}
 }

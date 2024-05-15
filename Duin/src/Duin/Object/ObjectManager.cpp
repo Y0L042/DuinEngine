@@ -8,8 +8,9 @@ namespace Duin
 	void ObjectManager::SetRootNode(std::shared_ptr<Object> rootObj)
 	{
 		auto& instance = GetInstance();
-		instance.rootObject = rootObj;
-		instance.rootObject->ConnectSignalsToCallbacks
+		instance.AddObject(rootObj);
+		instance.rootNode = rootObj;
+		instance.rootNode->ConnectSignalsToCallbacks
 		(
 			instance.onReady,
 			instance.onHandleInput,
@@ -70,9 +71,9 @@ namespace Duin
 		instance.onDraw.Emit();
 	}
 
-	Object& ObjectManager::GetRootNode()
+	std::shared_ptr<Object> ObjectManager::GetRootNode()
 	{
 		auto& instance = GetInstance();
-		return *instance.rootObject;
+		return instance.rootNode;
 	}
 }

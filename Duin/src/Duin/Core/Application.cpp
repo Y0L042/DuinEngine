@@ -14,16 +14,6 @@ namespace Duin
     {
     }
 
-    void Application::AddChild(std::shared_ptr<Object> child)
-    {
-        ObjectManager::GetRootNode().AddChild(child);
-    }
-
-    void Application::RemoveChild(std::shared_ptr<Object> child)
-    {
-        ObjectManager::GetRootNode().RemoveChild(child);
-    }
-
     void Application::Run()
     {
         int screenWidth = 800;
@@ -33,9 +23,9 @@ namespace Duin
         win->SetTargetAppFPS(60);
         
         EngineInitialize();
-        Initialize();
-
         EngineReady();
+        
+        Initialize();
         Ready();
 
         while (!win->ShouldClose())
@@ -69,7 +59,8 @@ namespace Duin
 
     void Application::EngineInitialize()
     {
-        ObjectManager::SetRootNode(std::make_shared<Node2D>()); // 2D for now
+        auto rootNode = std::make_shared<Node2D>(); // 2D for now
+        ObjectManager::SetRootNode(rootNode); 
     }
 
     void Application::Initialize()

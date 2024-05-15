@@ -21,15 +21,6 @@ namespace Duin
 			TARGET_PHYSICS_FRAMERATE = framerate;
 		}
 
-		template<typename T, typename... Args>
-		std::shared_ptr<T> InstantiateChild(Args&&... args)
-		{
-			std::shared_ptr<T> objPtr = ObjectManager::GetRootNode().InstantiateChild(std::forward<Args>(args)...);
-			return objPtr;
-		}
-		void AddChild(std::shared_ptr<Object> child);
-		void RemoveChild(std::shared_ptr<Object> child);
-
 		void Run();
 
 		void EngineInitialize();

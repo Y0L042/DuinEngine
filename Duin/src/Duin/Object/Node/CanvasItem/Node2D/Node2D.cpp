@@ -18,4 +18,14 @@ namespace Duin
 	{
 	}
 
+	raylib::Vector2 Node2D::GetGlobalPosition2D()
+	{
+		return globalPosition2D;
+	}
+
+	void Node2D::SetGlobalPosition2D(raylib::Vector2 pos)
+	{
+		globalPosition2D = pos;
+	}
+
 }

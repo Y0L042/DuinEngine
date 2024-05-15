@@ -15,6 +15,8 @@ namespace Duin
 		Node2D(raylib::Vector2 globalPosition2D);
 		~Node2D();
 
+		raylib::Vector2 GetGlobalPosition2D();
+		void SetGlobalPosition2D(raylib::Vector2 pos);
 
 	protected:
 		raylib::Vector2 globalPosition2D{};

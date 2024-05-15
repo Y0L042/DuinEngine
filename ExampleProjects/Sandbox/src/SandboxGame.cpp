@@ -9,6 +9,7 @@ int x = 0;
 Duin::TextureRes texture1;
 Duin::TextureRes texture2;
 
+std::shared_ptr<Duin::Object> root;
 std::shared_ptr<Player> player;
 
 class Sandbox : public Duin::Application
@@ -30,13 +31,13 @@ Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
 void Sandbox::Initialize()
 {
-	player = InstantiateChild<Player>();
+	root = Duin::ObjectManager::GetRootNode();
+	player = root->InstantiateChild<Player>();
 }
 
 void Sandbox::Ready()
 {
-	texture1.LoadTexture("Textures/at_symbol.png");
-	texture1.SetTextureSize(100.0f, 100.0f);
+
 }
 
 void Sandbox::HandleInputs(Duin::InputEvent e)
@@ -56,5 +57,5 @@ void Sandbox::PhysicsProcess(double pDelta)
 
 void Sandbox::Draw()
 {
-	texture1.Draw(100, 100);
+
 }

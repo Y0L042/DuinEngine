@@ -18,15 +18,17 @@ namespace Duin
 		~Sprite2D();
 
 		std::shared_ptr<TextureRes> GetTexture();
-		Sprite2D& SetTexture(char* texturePath);
-		Sprite2D& SetTexture(TextureRes* texturePtr);
-		Sprite2D& SetTexture(std::shared_ptr<TextureRes> texturePtr);
+		std::shared_ptr<Sprite2D> SetTexture(char* texturePath);
+		std::shared_ptr<Sprite2D> SetTexture(TextureRes* texturePtr);
+		std::shared_ptr<Sprite2D> SetTexture(std::shared_ptr<TextureRes> texturePtr);
 
-		void Ready() override;
+		std::shared_ptr<Sprite2D> SetTextureSize(float width, float height);
+		std::shared_ptr<Sprite2D> SetTextureSize(raylib::Vector2 size);
+
+		void Initialize() override;
 		void Draw() override;
 
 	private:
-		const char* texturePath;
 		std::shared_ptr<TextureRes> texture;
 		raylib::Vector2 textureScale;
 
