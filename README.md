@@ -6,4 +6,4 @@ I wanted an engine, without all the UI, tooling, and extra features that most en
 
 
 
-Thanks to @raysan5 and [Raylib](https://www.raylib.com/) for making C++ game development fun!
+A thanks to @raysan5 and [Raylib](https://www.raylib.com/) for making C++ game development fun!
