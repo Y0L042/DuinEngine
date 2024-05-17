@@ -19,7 +19,7 @@ namespace Duin
 		SetTextureSize(width, height);
 	}
 
-	TextureRes::TextureRes(const char* texturePath, raylib::Vector2 size)
+	TextureRes::TextureRes(const char* texturePath, Vector2 size)
 	{
 		LoadTexture(texturePath);
 		SetTextureSize(size);
@@ -42,15 +42,13 @@ namespace Duin
 
 	TextureRes& TextureRes::SetTextureSize(float width, float height)
 	{
-		textureSize = raylib::Vector2(width, height);
-		std::cout << "Changing size: " << width << ", " << height << "\n";
+		textureSize = Vector2(width, height);
 		return *this;
 	}
 
-	TextureRes& TextureRes::SetTextureSize(raylib::Vector2 size)
+	TextureRes& TextureRes::SetTextureSize(Vector2 size)
 	{
 		textureSize = size;
-		std::cout << "Changing size: " << size.x << ", " << size.y << "\n";
 		return *this;
 	}
 
@@ -62,11 +60,11 @@ namespace Duin
 			return *this;
 		}
 
-		Draw(raylib::Vector2{ posX, posY });
+		Draw(Vector2{ posX, posY });
 		return *this;
 	}
 
-	TextureRes& TextureRes::Draw(raylib::Vector2 position)
+	TextureRes& TextureRes::Draw(Vector2 position)
 	{
 		if (!texturePtr)
 		{

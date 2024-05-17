@@ -23,14 +23,12 @@ namespace Duin
 		std::shared_ptr<Sprite2D> SetTexture(std::shared_ptr<TextureRes> texturePtr);
 
 		std::shared_ptr<Sprite2D> SetTextureSize(float width, float height);
-		std::shared_ptr<Sprite2D> SetTextureSize(raylib::Vector2 size);
+		std::shared_ptr<Sprite2D> SetTextureSize(Vector2 size);
 
 		void Initialize() override;
 		void Draw() override;
 
 	private:
 		std::shared_ptr<TextureRes> texture;
-		raylib::Vector2 textureScale;
-
 	};
 }

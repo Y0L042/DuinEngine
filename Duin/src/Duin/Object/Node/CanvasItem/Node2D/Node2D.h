@@ -12,14 +12,26 @@ namespace Duin
 	{
 	public:
 		Node2D();
-		Node2D(raylib::Vector2 globalPosition2D);
+		Node2D(Vector2 localPos2D);
 		~Node2D();
 
-		raylib::Vector2 GetGlobalPosition2D();
-		void SetGlobalPosition2D(raylib::Vector2 pos);
+		Vector2 GetLocalPosition2D();
+		void SetLocalPosition2D(Vector2 pos);
+
+		Vector2 GetGlobalPosition2D();
+		void SetGlobalPosition2D(Vector2 pos);
+
+		Transform2D GetLocalTransform2D();
+		Transform2D GetGlobalTransform2D();
 
 	protected:
-		raylib::Vector2 globalPosition2D{};
+		Signal<Transform2D> onLocalTransformDirty;
+		bool localTransformDirty;
+
+		Transform2D localTransform2D;
+		Transform2D globalTransform2DCache;
+
+		void UpdateGlobalTransform2DCache();
 
 	private:
 

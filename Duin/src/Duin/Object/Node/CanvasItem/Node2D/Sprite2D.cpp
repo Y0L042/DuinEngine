@@ -45,7 +45,7 @@ namespace Duin
         return GetPointer<Sprite2D>();
     }
 
-    std::shared_ptr<Sprite2D> Duin::Sprite2D::SetTextureSize(raylib::Vector2 size)
+    std::shared_ptr<Sprite2D> Duin::Sprite2D::SetTextureSize(Vector2 size)
     {
         if (texture)
         {
@@ -56,14 +56,14 @@ namespace Duin
 
     std::shared_ptr<Sprite2D> Duin::Sprite2D::SetTextureSize(float width, float height)
     {
-        return SetTextureSize(raylib::Vector2{ width, height });
+        return SetTextureSize(Vector2{ width, height });
     }
 
     void Sprite2D::Draw()
     {
         if (texture)
         {
-            texture->Draw(globalPosition2D.x, globalPosition2D.y);
+            texture->Draw(localTransform2D.origin);
         }
     }
 }

@@ -63,6 +63,11 @@
     <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
     <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h" />
     <ClInclude Include="src\Duin\Core\Signal.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Vector2.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Mat3x3.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Mat2x2.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp">
