@@ -12,4 +12,8 @@ namespace Duin
 	Object::~Object()
 	{
 	}
+	bool Object::operator==(Object& other)
+	{
+		return this->GetUUID() == other.GetUUID();
+	}
 }

@@ -18,6 +18,8 @@ namespace Duin
 
 		UUID GetUUID() { return objectUUID; }
 
+		bool operator==(Object& other);
+
 	protected:
 		UUID objectUUID;
 

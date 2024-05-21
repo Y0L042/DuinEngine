@@ -40,11 +40,25 @@ namespace Duin
     {
         if (child)
         {
-            children.push_back(child);
-            std::shared_ptr<Node> selfPtr = ObjectManager::GetNodePtr(GetUUID());
-            child->SetParent(selfPtr);
-            child->RequestSignalConnections();
-            child->ProcessInitialize();
+            // Check if the child is already present by comparing UUIDs
+            auto it = std::find_if(
+                children.begin(), 
+                children.end(),
+                [&child](const std::shared_ptr<Node>& existingChild) 
+                {
+                    return existingChild->GetUUID() == child->GetUUID();
+                }
+            );
+
+            // Only add the child if it is not already a child
+            if (it == children.end())
+            {
+                children.push_back(child);
+                std::shared_ptr<Node> selfPtr = ObjectManager::GetNodePtr(GetUUID());
+                child->SetParent(selfPtr);
+                child->RequestSignalConnections();
+                child->ProcessInitialize();
+            }
         }
     }
 

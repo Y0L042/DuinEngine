@@ -33,7 +33,8 @@ namespace Duin
 
 
 // Define a specialization of std::hash for Duin::UUID
-namespace std {
+namespace std 
+{
 	template <>
 	struct hash<Duin::UUID>
 	{

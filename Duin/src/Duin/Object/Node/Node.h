@@ -14,7 +14,6 @@ namespace Duin
 		Node();
 		~Node();
 
-
 		template <typename T, typename... Args>
 		static std::shared_ptr<T> Instantiate(Args&&... args)
 		{
@@ -40,47 +39,18 @@ namespace Duin
 		std::shared_ptr<T> GetPointer()
 		{
 			static_assert(std::is_base_of<Node, T>::value, "T must be an Node derived class");
-			return std::dynamic_pointer_cast<T>();
+			std::shared_ptr<Node> selfSPtr = ObjectManager::GetNodePtr(GetUUID());
+			return std::dynamic_pointer_cast<T>(selfSPtr);
 		}
 
 		void AddChild(std::shared_ptr<Node> child);
 		void RemoveChild(std::shared_ptr<Node> child);
 
-		std::shared_ptr<Node> GetParent()
-		{
-			return parentPtr;
-		}
-
-		void SetParent(std::shared_ptr<Node> parent)
-		{
-			parentPtr = parent;
-		}
-
-		void ResetParent()
-		{
-			parentPtr.reset();
-		}
-
-
-		virtual std::map<std::string, SignalBase*>& GetSignalMenu();
-		void ConnectSignalsToCallbacks(
-			const std::map<std::string, SignalBase*>& signalMenu,
-			const std::map<std::string, std::any>& callbacks
-		);
-
-		void DisconnectSignalsFromCallbacks(
-			const std::map<std::string, SignalBase*>& signalMenu,
-			const std::vector<std::string>& signalNames
-		);
-
-		Signal<> onReady;
-		Signal<InputEvent> onHandleInput;
-		Signal<double> onUpdate;
-		Signal<double> onPhysicsUpdate;
-		Signal<> onDraw;
+		std::shared_ptr<Node> GetParent() { return parentPtr; }
+		void SetParent(std::shared_ptr<Node> parent) { parentPtr = parent; }
+		void ResetParent() { parentPtr.reset(); }
 
 		void ProcessInitialize();
-
 		void ProcessOnReady();
 		void ProcessOnHandleInput(InputEvent e);
 		void ProcessOnUpdate(double rDelta);
@@ -94,12 +64,36 @@ namespace Duin
 		virtual void PhysicsUpdate(double pDelta);
 		virtual void Draw();
 
-	protected:
-		std::vector<std::shared_ptr<Node>> children;
+
+
+		// ---- DEFUNCT ---- //
 		std::map<std::string, SignalBase*> signalMenu;
-		std::shared_ptr<Node> parentPtr;
+
+		Signal<> onReady;
+		Signal<InputEvent> onHandleInput;
+		Signal<double> onUpdate;
+		Signal<double> onPhysicsUpdate;
+		Signal<> onDraw;
+
+		virtual std::map<std::string, SignalBase*>& GetSignalMenu();
+		void ConnectSignalsToCallbacks(
+			const std::map<std::string, SignalBase*>& signalMenu,
+			const std::map<std::string, std::any>& callbacks
+		);
+
+		void DisconnectSignalsFromCallbacks(
+			const std::map<std::string, SignalBase*>& signalMenu,
+			const std::vector<std::string>& signalNames
+		);
 		virtual void SetSignalMenu();
 		virtual void RequestSignalConnections();
+		// ---- DEFUNCT ---- //
+
+
+
+	protected:
+		std::vector<std::shared_ptr<Node>> children;
+		std::shared_ptr<Node> parentPtr;
 
 	private:
 
