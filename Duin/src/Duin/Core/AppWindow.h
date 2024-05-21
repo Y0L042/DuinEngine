@@ -30,6 +30,7 @@ namespace Duin
 
 		AppWindow& ClearWindow(int r, int g, int b);
 		AppWindow& UpdateWindow();
+		AppWindow& EndUpdateWindow();
 		AppWindow& FillWindow(int r, int g, int b);
 		AppWindow& SetTargetAppFPS(int fps);
 		AppWindow& Shutdown();
@@ -40,7 +41,5 @@ namespace Duin
 	private:
 		int SCREEN_WIDTH = 800;
 		int SCREEN_HEIGHT = 400;
-		std::shared_ptr<raylib::Window> window;
-
 	};
 }

@@ -32,7 +32,7 @@ Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 void Sandbox::Initialize()
 {
 	root = Duin::ObjectManager::GetRootNode();
-	player = root->InstantiateChild<Player>();
+	//player = root->InstantiateChild<Player>();
 }
 
 void Sandbox::Ready()

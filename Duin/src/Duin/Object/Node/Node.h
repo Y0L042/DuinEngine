@@ -2,6 +2,7 @@
 
 #include "Duin/Core/Core.h"
 #include "Duin/Object/Object.h"
+#include "Duin/Object/ObjectManager.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Events/InputMap.h"
 
@@ -13,10 +14,96 @@ namespace Duin
 		Node();
 		~Node();
 
-		virtual void Ready() override;
-		virtual void HandleInput(InputEvent e) override;
-		virtual void Update(double rDelta) override;
-		virtual void PhysicsUpdate(double pDelta) override;
+
+		template <typename T, typename... Args>
+		static std::shared_ptr<T> Instantiate(Args&&... args)
+		{
+			static_assert(std::is_base_of<Node, T>::value, "T must be a Node derived class");
+			std::shared_ptr<T> objInstance = std::make_shared<T>(std::forward<Args>(args)...);
+			std::shared_ptr<Object> objPtr = std::static_pointer_cast<Node>(objInstance);
+			ObjectManager::AddNode(objPtr, objPtr->GetUUID());
+			objPtr->ProcessInitialize();
+
+			return objInstance;
+		}
+
+		template<typename T, typename... Args>
+		std::shared_ptr<T> InstantiateChild(Args&&... args)
+		{
+			static_assert(std::is_base_of<Node, T>::value, "T must be a Node derived class");
+			std::shared_ptr<T> objInstance = std::make_shared<T>(std::forward<Args>(args)...);
+			std::shared_ptr<Node> objPtr = std::static_pointer_cast<Node>(objInstance);
+			ObjectManager::AddNode(objPtr, objPtr->GetUUID());
+			AddChild(objInstance);
+			objInstance->ProcessInitialize();
+
+			return objInstance;
+		}
+
+		template<typename T>
+		std::shared_ptr<T> GetPointer()
+		{
+			static_assert(std::is_base_of<Node, T>::value, "T must be an Node derived class");
+			return std::dynamic_pointer_cast<T>();
+		}
+
+		void AddChild(std::shared_ptr<Node> child);
+		void RemoveChild(std::shared_ptr<Node> child);
+
+		std::shared_ptr<Node> GetParent()
+		{
+			return parentPtr;
+		}
+
+		void SetParent(std::shared_ptr<Node> parent)
+		{
+			parentPtr = parent;
+		}
+
+		void ResetParent()
+		{
+			parentPtr.reset();
+		}
+
+
+		virtual std::map<std::string, SignalBase*>& GetSignalMenu();
+		void ConnectSignalsToCallbacks(
+			const std::map<std::string, SignalBase*>& signalMenu,
+			const std::map<std::string, std::any>& callbacks
+		);
+		void DisconnectSignalsFromCallbacks(
+			const std::map<std::string, SignalBase*>& signalMenu,
+			const std::vector<std::string>& signalNames
+		);
+
+		Signal<> onReady;
+		Signal<InputEvent> onHandleInput;
+		Signal<double> onUpdate;
+		Signal<double> onPhysicsUpdate;
+		Signal<> onDraw;
+
+		void ProcessInitialize();
+
+		void ProcessOnReady();
+		void ProcessOnHandleInput(InputEvent e);
+		void ProcessOnUpdate(double rDelta);
+		void ProcessOnPhysicsUpdate(double pDelta);
+		void ProcessOnDraw();
+
+		virtual void Initialize();
+		virtual void Ready();
+		virtual void HandleInput(InputEvent e);
+		virtual void Update(double rDelta);
+		virtual void PhysicsUpdate(double pDelta);
+		virtual void Draw();
+
+	protected:
+		std::vector<std::shared_ptr<Node>> children;
+		std::map<std::string, SignalBase*> signalMenu;
+		std::shared_ptr<Node> parentPtr;
+		virtual void SetSignalMenu();
+		virtual void RequestSignalConnections();
+
 
 	private:
 

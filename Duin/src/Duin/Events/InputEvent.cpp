@@ -13,36 +13,36 @@ namespace Duin
 
 	bool InputEvent::IsKeyPressed(int key)
 	{
-		return raylib::Keyboard::IsKeyPressed(key);
+		return ::IsKeyPressed(key);
 	}
 
 	bool InputEvent::IsKeyPressedRepeat(int key)
 	{
-		return raylib::Keyboard::IsKeyPressedRepeat(key);
+		return ::IsKeyPressedRepeat(key);
 	}
 
 	bool InputEvent::IsKeyDown(int key)
 	{
-		return raylib::Keyboard::IsKeyDown(key);
+		return ::IsKeyDown(key);
 	}
 
 	bool InputEvent::IsKeyReleased(int key)
 	{
-		return raylib::Keyboard::IsKeyReleased(key);
+		return ::IsKeyReleased(key);
 	}
 
 	bool InputEvent::IsKeyUp(int key)
 	{
-		return raylib::Keyboard::IsKeyUp(key);
+		return ::IsKeyUp(key);
 	}
 
 	bool InputEvent::GetKeyPressed()
 	{
-		return raylib::Keyboard::GetKeyPressed();
+		return ::GetKeyPressed();
 	}
 
 	bool InputEvent::GetCharPressed()
 	{
-		return raylib::Keyboard::GetCharPressed();
+		return ::GetCharPressed();
 	}
 }

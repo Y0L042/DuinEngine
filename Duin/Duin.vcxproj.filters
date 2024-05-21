@@ -10,26 +10,71 @@
     <Filter Include="Duin\Core\Debug">
       <UniqueIdentifier>{A3C678B6-0F52-E67A-1863-696F846D427B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Duin\Core\Maths">
+      <UniqueIdentifier>{99BC19B7-0548-877B-0E59-0A707A63E37B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Core\Maths\src">
+      <UniqueIdentifier>{301F84F0-9C80-61FE-25EE-A7B0914E98BD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Duin\Events">
       <UniqueIdentifier>{39BFA747-A574-203D-2E69-1A149A1D1741}</UniqueIdentifier>
     </Filter>
     <Filter Include="Duin\Graphics">
       <UniqueIdentifier>{D504F86B-41C5-73A2-0A00-BD1F767FB87E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Duin\Object">
+      <UniqueIdentifier>{DB00945D-47B6-0C53-D0AA-062A3C5F0357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Object\Node">
+      <UniqueIdentifier>{70EC6CFC-5CE5-8B4E-8517-71D3716F6B5A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Object\Node\CanvasItem">
+      <UniqueIdentifier>{8A3D9B3D-F64A-C923-7F31-C50EEB3D95DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Object\Node\CanvasItem\Node2D">
+      <UniqueIdentifier>{F510666C-E14C-69D6-4A5F-81CD36BA11F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Duin\Object\Node\Node3D">
+      <UniqueIdentifier>{3C41ED37-A878-35CF-B182-99F21D395CC8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
     <ClInclude Include="src\Duin\Core\AppWindow.h">
-      <Filter>Duin</Filter>
+      <Filter>Duin\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Application.h">
-      <Filter>Duin</Filter>
+      <Filter>Duin\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Core.h">
       <Filter>Duin\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Debug\Log.h">
       <Filter>Duin\Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h">
+      <Filter>Duin\Core\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Mat2x2.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Mat3x3.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Vector2.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Signal.h">
+      <Filter>Duin\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\UUID.h">
+      <Filter>Duin\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\EntryPoint.h">
       <Filter>Duin</Filter>
@@ -40,44 +85,53 @@
     <ClInclude Include="src\Duin\Events\InputEvent.h">
       <Filter>Duin\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Graphics\TextureRes.h">
-      <Filter>Duin\Graphics</Filter>
+    <ClInclude Include="src\Duin\Events\InputMap.h">
+      <Filter>Duin\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Graphics\TextureRes.h">
+      <Filter>Duin\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h">
+      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\Node\Node2D\Sprite2D.h">
+      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\Node\Node.h">
+      <Filter>Duin\Object\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h">
+      <Filter>Duin\Object\Node\Node3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\Object.h">
+      <Filter>Duin\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\ObjectFactory.h">
+      <Filter>Duin\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\ObjectManager.h">
+      <Filter>Duin\Object</Filter>
+    </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="vendor\patches\include\RayGuiComponent.h" />
-    <ClInclude Include="vendor\patches\include\RaylibComponent.h" />
-    <ClInclude Include="vendor\patches\include\raylib_windows_compat.h" />
-    <ClInclude Include="vendor\patches\include\RLImGuiComponent.h" />
-    <ClInclude Include="src\Duin\Object\Object.h" />
-    <ClInclude Include="src\Duin\Object\ObjectFactory.h" />
-    <ClInclude Include="src\Duin\Object\ObjectManager.h" />
-    <ClInclude Include="src\Duin\Core\UUID.h" />
-    <ClInclude Include="src\Duin\Object\Node\Node.h" />
-    <ClInclude Include="src\Duin\Events\InputMap.h" />
-    <ClInclude Include="src\Duin\Object\Node\CanvasItem\CanvasItem.h" />
-    <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.h" />
-    <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.h" />
-    <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
-    <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h" />
-    <ClInclude Include="src\Duin\Core\Signal.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Vector2.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Mat3x3.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Mat2x2.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp">
-      <Filter>Duin</Filter>
+      <Filter>Duin\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Core\Application.cpp">
-      <Filter>Duin</Filter>
+      <Filter>Duin\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp">
       <Filter>Duin\Core\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp">
+      <Filter>Duin\Core\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Core\UUID.cpp">
+      <Filter>Duin\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Events\Event.cpp">
       <Filter>Duin\Events</Filter>
@@ -85,21 +139,30 @@
     <ClCompile Include="src\Duin\Events\InputEvent.cpp">
       <Filter>Duin\Events</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Graphics\TextureRes.cpp">
-      <Filter>Duin\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp">
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Duin\Graphics\TextureRes.cpp">
+      <Filter>Duin\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp">
+      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\Node\Node2D\Sprite2D.cpp">
+      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\Node\Node.cpp">
+      <Filter>Duin\Object\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp">
+      <Filter>Duin\Object\Node\Node3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\Object.cpp">
+      <Filter>Duin\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\ObjectManager.cpp">
+      <Filter>Duin\Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
-    <ClCompile Include="src\Duin\Object\Object.cpp" />
-    <ClCompile Include="src\Duin\Object\ObjectManager.cpp" />
-    <ClCompile Include="src\Duin\Core\UUID.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\Node.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\CanvasItem\CanvasItem.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp" />
-    <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />
   </ItemGroup>
 </Project>

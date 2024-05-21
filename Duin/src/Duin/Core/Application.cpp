@@ -1,7 +1,7 @@
 #include "dnpch.h"
 
 #include "Application.h"
-#include "Duin/Object/Node/CanvasItem/Node2D/Node2D.h"
+#include "Duin/Object/Node/Node2D/Node2D.h"
 
 namespace Duin
 {
@@ -47,8 +47,9 @@ namespace Duin
             EngineDraw();
             Draw();
 
-            win->Close();
+            win->EndUpdateWindow();
         }
+        win->Close();
 
         EngineExit();
         Exit();
@@ -59,8 +60,7 @@ namespace Duin
 
     void Application::EngineInitialize()
     {
-        auto rootNode = std::make_shared<Node2D>(); // 2D for now
-        ObjectManager::SetRootNode(rootNode); 
+        
     }
 
     void Application::Initialize()

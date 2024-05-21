@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <any>
 
 namespace Duin
 {
@@ -53,6 +54,12 @@ namespace Duin
                 callbacksVec.pop_back();
                 uuidToIndexMap.erase(it);
             }
+        }
+
+        void DisconnectAll()
+        {
+            callbacksVec.clear();
+            uuidToIndexMap.clear();
         }
 
         // Emit a signal to all connected callbacks
@@ -103,5 +110,46 @@ namespace Duin
 
             invalidCallbacks.clear();
         }
+    };
+
+
+    class SignalBase
+    {
+    public:
+        virtual ~SignalBase() = default;
+        virtual void DisconnectAll() = 0;
+        virtual void ConnectCallback(std::any callback) = 0;
+        virtual void EmitSignal(std::any args) = 0;
+    };
+
+    template <typename... Args>
+    class SignalWrapper : public SignalBase
+    {
+    public:
+        Signal<Args...>& signal;
+
+        SignalWrapper(Signal<Args...>& sig) : signal(sig) {}
+
+        void DisconnectAll() override
+        {
+            signal.DisconnectAll();
+        }
+
+        void ConnectCallback(std::any callback) override
+        {
+            signal.Connect(std::any_cast<std::function<void(Args...)>>(callback));
+        }
+
+        void EmitSignal(std::any args) override
+        {
+            try {
+                auto args_tuple = std::any_cast<std::tuple<Args...>>(args);
+                std::apply([this](Args... unpackedArgs) { signal.Emit(unpackedArgs...); }, args_tuple);
+            }
+            catch (const std::bad_any_cast& e) {
+                std::cerr << "Bad any cast: " << e.what() << std::endl;
+            }
+        }
+
     };
 }

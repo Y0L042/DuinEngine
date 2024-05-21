@@ -5,20 +5,26 @@
 #include "Duin/Core/Signal.h"
 #include "Duin/Events/InputEvent.h"
 
+#include <unordered_map>
 #include <vector>
 #include <cinttypes>
+#include <any>
 
 namespace Duin
 {
-	class Object; // Forward Declaration
+	class Node; // Forward Declaration
 	class DUIN_API ObjectManager
 	{
 	public:
 
-		static void SetRootNode(std::shared_ptr<Object> root);
+		static void SetRootNode(std::shared_ptr<Node> root);
 
-		static void AddObject(std::shared_ptr<Object> obj);
-		static void RemoveObject(std::shared_ptr<Object> obj);
+		static void AddObject(std::shared_ptr<Node> obj);
+		static void RemoveObject(std::shared_ptr<Node> obj);
+
+		static void AddNode(std::shared_ptr<Node> node, UUID uuid);
+		static void RemoveNode(UUID uuid);
+		static std::shared_ptr<Node> GetNodePtr(UUID uuid);
 
 		static void CallReady();
 		static void CallHandleInput(InputEvent e);
@@ -32,9 +38,12 @@ namespace Duin
 			return *instance;
 		}
 
-		static std::shared_ptr<Object> GetRootNode();
-		Object& GetRef();
+		static std::shared_ptr<Node> GetRootNode();
 		
+		void ConnectSignalsToCallbacks(
+			const std::map<std::string, SignalBase*>& signalMenu,
+			const std::map<std::string, std::any>& callbacks
+		);
 
 	private:
 		Signal<> onReady;
@@ -43,8 +52,13 @@ namespace Duin
 		Signal<double> onPhysicsUpdate;
 		Signal<> onDraw;
 
-		std::shared_ptr<Object> rootNode;
-		std::vector<std::shared_ptr<Object>> objectCollection;
+		std::map<std::string, SignalBase*> signalMenu;
+
+		std::shared_ptr<Node> rootNode;
+		std::vector<std::shared_ptr<Node>> objectCollection;
+		std::unordered_map<UUID, std::shared_ptr<Node>> nodeMap;
+
+		static void SetSignalMenu();
 
 		ObjectManager() = default;
 		~ObjectManager() = default;

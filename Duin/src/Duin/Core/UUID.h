@@ -3,6 +3,7 @@
 #include "Duin/Core/Core.h"
 
 #include <cinttypes>
+#include <functional>
 
 namespace Duin
 {
@@ -26,5 +27,19 @@ namespace Duin
 
 	private:
 		uint64_t mUUID;
+	};
+}
+
+
+
+// Define a specialization of std::hash for Duin::UUID
+namespace std {
+	template <>
+	struct hash<Duin::UUID>
+	{
+		std::size_t operator()(const Duin::UUID& uuid) const
+		{
+			return std::hash<uint64_t>()(static_cast<uint64_t>(uuid));
+		}
 	};
 }

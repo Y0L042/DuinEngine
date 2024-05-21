@@ -19,7 +19,6 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Duin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -80,7 +79,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -90,7 +89,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
@@ -104,7 +103,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -118,7 +117,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
@@ -132,7 +131,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -146,7 +145,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
@@ -172,21 +171,16 @@
     <ClInclude Include="src\Duin\Events\Event.h" />
     <ClInclude Include="src\Duin\Events\InputEvent.h" />
     <ClInclude Include="src\Duin\Events\InputMap.h" />
-    <ClInclude Include="src\Duin\Graphics\TextureRes.h" />
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
-    <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\Duin\Object\Node\CanvasItem\CanvasItem.h" />
-    <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.h" />
-    <ClInclude Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.h" />
+    <ClInclude Include="src\Duin\Graphics\TextureRes.h" />
+    <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h" />
+    <ClInclude Include="src\Duin\Object\Node\Node2D\Sprite2D.h" />
     <ClInclude Include="src\Duin\Object\Node\Node.h" />
     <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
     <ClInclude Include="src\Duin\Object\Object.h" />
     <ClInclude Include="src\Duin\Object\ObjectFactory.h" />
     <ClInclude Include="src\Duin\Object\ObjectManager.h" />
-    <ClInclude Include="vendor\patches\include\RayGuiComponent.h" />
-    <ClInclude Include="vendor\patches\include\RaylibComponent.h" />
-    <ClInclude Include="vendor\patches\include\raylib_windows_compat.h" />
-    <ClInclude Include="vendor\patches\include\RLImGuiComponent.h" />
+    <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp" />
@@ -196,18 +190,17 @@
     <ClCompile Include="src\Duin\Core\UUID.cpp" />
     <ClCompile Include="src\Duin\Events\Event.cpp" />
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
-    <ClCompile Include="src\Duin\Graphics\TextureRes.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
-    <ClCompile Include="src\dnpch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\Duin\Object\Node\CanvasItem\CanvasItem.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Node2D.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\CanvasItem\Node2D\Sprite2D.cpp" />
+    <ClCompile Include="src\Duin\Graphics\TextureRes.cpp" />
+    <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp" />
+    <ClCompile Include="src\Duin\Object\Node\Node2D\Sprite2D.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp" />
     <ClCompile Include="src\Duin\Object\Object.cpp" />
     <ClCompile Include="src\Duin\Object\ObjectManager.cpp" />
+    <ClCompile Include="src\dnpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

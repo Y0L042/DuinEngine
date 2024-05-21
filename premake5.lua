@@ -15,6 +15,7 @@ workspace "Duin"
     IncludeDir = {}
     IncludeDir["spdlog"] = "Duin/vendor/spdlog/include"
     IncludeDir["raylib"] = "Duin/vendor/raylib5/include"
+	IncludeDir["raylibsrc"] = "Duin/vendor/raylib5/src"
     IncludeDir["raylib_cpp"] = "Duin/vendor/raylib-cpp/include"
 	IncludeDir["imgui"] = "Duin/vendor/imgui"
 	IncludeDir["rlgui"] = "Duin/vendor/rlgui"
@@ -44,6 +45,7 @@ project "Duin"
 		"%{IncludeDir.patches}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.raylib}",
+        "%{IncludeDir.raylibsrc}",
         "%{IncludeDir.raylib_cpp}",
         "%{IncludeDir.imgui}",
 		"%{IncludeDir.rlgui}",
@@ -59,12 +61,13 @@ project "Duin"
 	{
 		"raylib.lib", 
 		"rlImGui.lib",
+		"winmm.lib",
 	}
 
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "Off"
-		systemversion "10.0"
+		-- systemversion "10.0"
 
 	defines
 	{
@@ -116,6 +119,7 @@ project "Sandbox"
 		"%{IncludeDir.patches}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.raylib}",
+		"%{IncludeDir.raylibsrc}",
         "%{IncludeDir.raylib_cpp}",
         "%{IncludeDir.imgui}",
 		"%{IncludeDir.rlgui}",
@@ -124,13 +128,13 @@ project "Sandbox"
 	libdirs
 	{
 		"Duin/vendor/raylib5/lib",
-		"Duin/ventor/rlimgui/lib",
+		"Duin/vendor/rlimgui/lib",
 	}
 
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "Off"
-		systemversion "10.0"
+		-- systemversion "10.0"
 
 	defines
 	{

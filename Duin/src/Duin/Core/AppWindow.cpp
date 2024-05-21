@@ -7,8 +7,8 @@ namespace Duin
 	AppWindow::AppWindow(int screenWidth, int screenHeight)
 		: SCREEN_WIDTH(screenWidth), SCREEN_HEIGHT(screenHeight)
 	{
-		window = std::make_shared<raylib::Window>(screenWidth, screenHeight, "");
-		rlImGuiSetup(true);
+		::InitWindow(screenWidth, screenHeight, "");
+		::rlImGuiSetup(true);
 	}
 
 	AppWindow::AppWindow()
@@ -17,7 +17,7 @@ namespace Duin
 
 	AppWindow::~AppWindow()
 	{
-
+		CloseWindow();
 	}
 
 	bool AppWindow::Init()
@@ -35,19 +35,24 @@ namespace Duin
 
 	void AppWindow::Close()
 	{
-		rlImGuiEnd();
-		EndDrawing();
+		::CloseWindow();
 	}
 
 	AppWindow& AppWindow::ClearWindow(int r, int g, int b)
 	{
-		ClearBackground(raylib::Color(r, g, b));
+		::ClearBackground(Color{ static_cast<unsigned char>(r), static_cast<unsigned char>(g), static_cast<unsigned char>(b), 255 });
 		return *this;
 	}
 	AppWindow& AppWindow::UpdateWindow()
 	{
-		BeginDrawing();
-		rlImGuiBegin();
+		::BeginDrawing();
+		::rlImGuiBegin();
+		return *this;
+	}
+	AppWindow& AppWindow::EndUpdateWindow()
+	{
+		::rlImGuiEnd();
+		::EndDrawing();
 		return *this;
 	}
 	AppWindow& AppWindow::FillWindow(int r, int g, int b)
@@ -57,23 +62,22 @@ namespace Duin
 
 	AppWindow& AppWindow::SetTargetAppFPS(int fps)
 	{
-		SetTargetFPS(fps);
+		::SetTargetFPS(fps);
 		return *this;
 	}
 
 	bool AppWindow::ShouldClose()
 	{
-		return window->ShouldClose();
-		//return false;
+		return ::WindowShouldClose();
 	}
 
 	AppWindow& AppWindow::Shutdown()
 	{
-		rlImGuiShutdown();
+		::rlImGuiShutdown();
 		return *this;
 	}
 	double AppWindow::GetFrametime()
 	{
-		return GetFrameTime();
+		return ::GetFrameTime();
 	}
 }
