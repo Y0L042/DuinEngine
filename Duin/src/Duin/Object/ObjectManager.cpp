@@ -5,6 +5,11 @@
 
 namespace Duin
 {
+	ObjectManager::ObjectManager()
+	{
+		Initialize();
+	}
+
 	void ObjectManager::SetRootNode(std::shared_ptr<Node> rootObj)
 	{
 		auto& instance = GetInstance();
@@ -12,6 +17,10 @@ namespace Duin
 		instance.AddObject(rootObj);
 		instance.rootNode = rootObj;
 		instance.rootNode->ProcessInitialize();
+	}
+
+	void ObjectManager::Initialize()
+	{
 	}
 
 	void ObjectManager::AddObject(std::shared_ptr<Node> obj)
@@ -51,30 +60,35 @@ namespace Duin
 	{
 		auto& instance = GetInstance();
 		instance.onReady.Emit();
+		instance.rootNode->ProcessOnReady();
 	}
 
 	void ObjectManager::CallHandleInput(InputEvent e)
 	{
 		auto& instance = GetInstance();
 		instance.onHandleInput.Emit(e);
+		instance.rootNode->ProcessOnHandleInput(e);
 	}
 
 	void ObjectManager::CallUpdate(double rDelta)
 	{
 		auto& instance = GetInstance();
 		instance.onUpdate.Emit(rDelta);
+		instance.rootNode->ProcessOnUpdate(rDelta);
 	}
 
 	void ObjectManager::CallPhysicsUpdate(double pDelta)
 	{
 		auto& instance = GetInstance();
 		instance.onPhysicsUpdate.Emit(pDelta);
+		instance.rootNode->ProcessOnPhysicsUpdate(pDelta);
 	}
 
 	void ObjectManager::CallDraw()
 	{
 		auto& instance = GetInstance();
 		instance.onDraw.Emit();
+		instance.rootNode->ProcessOnDraw();
 	}
 
 	std::shared_ptr<Node> ObjectManager::GetRootNode()
@@ -102,19 +116,24 @@ namespace Duin
 		}
 	}
 
-	std::shared_ptr<Node> ObjectManager::GetNodePtr(UUID uuid) // Add a way for Nodes to get pointers to themselves
+	std::shared_ptr<Node> ObjectManager::GetNodePtr(UUID uuid)
 	{
 		auto& instance = GetInstance();
-		return instance.nodeMap.at(uuid);
+		auto it = instance.nodeMap.find(uuid);
+		if (it != instance.nodeMap.end())
+		{
+			return it->second;
+		}
+		return nullptr; // Return nullptr if the node is not found
 	}
 
 	void ObjectManager::SetSignalMenu()
 	{
-		auto& instance = GetInstance();
-		instance.signalMenu["READY"] = new SignalWrapper<>(instance.onReady);
-		instance.signalMenu["HANDLEINPUT"] = new SignalWrapper<InputEvent>(instance.onHandleInput);
-		instance.signalMenu["UPDATE"] = new SignalWrapper<double>(instance.onUpdate);
-		instance.signalMenu["PHYSICSUPDATE"] = new SignalWrapper<double>(instance.onPhysicsUpdate);
-		instance.signalMenu["DRAW"] = new SignalWrapper<>(instance.onDraw);
+		//auto& instance = GetInstance();
+		//instance.signalMenu["READY"] = new SignalWrapper<>(instance.onReady);
+		//instance.signalMenu["HANDLEINPUT"] = new SignalWrapper<InputEvent>(instance.onHandleInput);
+		//instance.signalMenu["UPDATE"] = new SignalWrapper<double>(instance.onUpdate);
+		//instance.signalMenu["PHYSICSUPDATE"] = new SignalWrapper<double>(instance.onPhysicsUpdate);
+		//instance.signalMenu["DRAW"] = new SignalWrapper<>(instance.onDraw);
 	}
 }

@@ -20,10 +20,8 @@ namespace Duin
 		{
 			static_assert(std::is_base_of<Node, T>::value, "T must be a Node derived class");
 			std::shared_ptr<T> objInstance = std::make_shared<T>(std::forward<Args>(args)...);
-			std::shared_ptr<Object> objPtr = std::static_pointer_cast<Node>(objInstance);
+			std::shared_ptr<Node> objPtr = std::static_pointer_cast<Node>(objInstance);
 			ObjectManager::AddNode(objPtr, objPtr->GetUUID());
-			objPtr->ProcessInitialize();
-
 			return objInstance;
 		}
 
@@ -31,13 +29,11 @@ namespace Duin
 		std::shared_ptr<T> InstantiateChild(Args&&... args)
 		{
 			static_assert(std::is_base_of<Node, T>::value, "T must be a Node derived class");
-			std::shared_ptr<T> objInstance = std::make_shared<T>(std::forward<Args>(args)...);
-			std::shared_ptr<Node> objPtr = std::static_pointer_cast<Node>(objInstance);
-			ObjectManager::AddNode(objPtr, objPtr->GetUUID());
-			AddChild(objInstance);
-			objInstance->ProcessInitialize();
-
-			return objInstance;
+			std::shared_ptr<T> childSPtr = std::make_shared<T>(std::forward<Args>(args)...);
+			std::shared_ptr<Node> castSPtr = std::static_pointer_cast<Node>(childSPtr);
+			ObjectManager::AddNode(castSPtr, castSPtr->GetUUID());
+			AddChild(castSPtr);
+			return childSPtr;
 		}
 
 		template<typename T>
@@ -71,6 +67,7 @@ namespace Duin
 			const std::map<std::string, SignalBase*>& signalMenu,
 			const std::map<std::string, std::any>& callbacks
 		);
+
 		void DisconnectSignalsFromCallbacks(
 			const std::map<std::string, SignalBase*>& signalMenu,
 			const std::vector<std::string>& signalNames
@@ -103,7 +100,6 @@ namespace Duin
 		std::shared_ptr<Node> parentPtr;
 		virtual void SetSignalMenu();
 		virtual void RequestSignalConnections();
-
 
 	private:
 

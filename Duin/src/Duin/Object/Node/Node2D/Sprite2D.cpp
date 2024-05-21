@@ -58,7 +58,7 @@ namespace Duin
     {
         if (texture)
         {
-            texture->Draw(localTransform2D.origin);
+            texture->Draw({10, 10});
         }
     }
 }

@@ -9,7 +9,7 @@ int x = 0;
 Duin::TextureRes texture1;
 Duin::TextureRes texture2;
 
-std::shared_ptr<Duin::Object> root;
+std::shared_ptr<Duin::Node> root;
 std::shared_ptr<Player> player;
 
 class Sandbox : public Duin::Application
@@ -32,7 +32,7 @@ Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 void Sandbox::Initialize()
 {
 	root = Duin::ObjectManager::GetRootNode();
-	//player = root->InstantiateChild<Player>();
+	player = root->InstantiateChild<Player>();
 }
 
 void Sandbox::Ready()
@@ -52,7 +52,7 @@ void Sandbox::Process(double rDelta)
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
-	x++;
+
 }
 
 void Sandbox::Draw()

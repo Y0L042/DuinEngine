@@ -7,7 +7,8 @@ namespace Duin
 	AppWindow::AppWindow(int screenWidth, int screenHeight)
 		: SCREEN_WIDTH(screenWidth), SCREEN_HEIGHT(screenHeight)
 	{
-		::InitWindow(screenWidth, screenHeight, "");
+		::InitWindow(screenWidth, screenHeight, "Test");
+		::SetTargetFPS(60);
 		::rlImGuiSetup(true);
 	}
 
@@ -29,7 +30,7 @@ namespace Duin
 
 	AppWindow& AppWindow::Render()
 	{
-		UpdateWindow();
+		BeginUpdateWindow();
 		return *this;
 	}
 
@@ -43,7 +44,7 @@ namespace Duin
 		::ClearBackground(Color{ static_cast<unsigned char>(r), static_cast<unsigned char>(g), static_cast<unsigned char>(b), 255 });
 		return *this;
 	}
-	AppWindow& AppWindow::UpdateWindow()
+	AppWindow& AppWindow::BeginUpdateWindow()
 	{
 		::BeginDrawing();
 		::rlImGuiBegin();

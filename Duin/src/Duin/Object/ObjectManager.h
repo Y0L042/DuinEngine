@@ -18,7 +18,6 @@ namespace Duin
 	public:
 
 		static void SetRootNode(std::shared_ptr<Node> root);
-
 		static void AddObject(std::shared_ptr<Node> obj);
 		static void RemoveObject(std::shared_ptr<Node> obj);
 
@@ -60,7 +59,9 @@ namespace Duin
 
 		static void SetSignalMenu();
 
-		ObjectManager() = default;
+		ObjectManager();
 		~ObjectManager() = default;
+		
+		void Initialize();
 	};
 }

@@ -11,6 +11,8 @@ public:
 	void Initialize() override;
 	void PhysicsUpdate(double pDelta) override;
 
+	void Draw() override;
+
 private:
 	std::shared_ptr<Duin::Sprite2D> sprite;
 

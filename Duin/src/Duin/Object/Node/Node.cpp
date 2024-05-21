@@ -41,7 +41,10 @@ namespace Duin
         if (child)
         {
             children.push_back(child);
-            //child->SetParent();
+            std::shared_ptr<Node> selfPtr = ObjectManager::GetNodePtr(GetUUID());
+            child->SetParent(selfPtr);
+            child->RequestSignalConnections();
+            child->ProcessInitialize();
         }
     }
 
@@ -100,7 +103,7 @@ namespace Duin
             if (it != signalMenu.end())
             {
                 it->second->ConnectCallback(callbackPair.second);
-                std::cout << signalName << " has been connected." << "\n";
+                std::cout << signalName << " has been connected. " << GetUUID() << "\n";
             }
             else
             {
@@ -130,40 +133,57 @@ namespace Duin
 
     void Node::ProcessInitialize()
     {
-        //ObjectManager::AddObject();
         SetSignalMenu();
-        RequestSignalConnections();
         Initialize();
     }
 
     void Node::ProcessOnReady()
     {
         onReady.Emit();
+        for (auto& child : children)
+        {
+            child->ProcessOnReady();
+        }
         Ready();
     }
 
     void Node::ProcessOnHandleInput(InputEvent e)
     {
         onHandleInput.Emit(e);
+        for (auto& child : children)
+        {
+            child->ProcessOnHandleInput(e);
+        }
         HandleInput(e);
     }
 
     void Node::ProcessOnUpdate(double rDelta)
     {
         onUpdate.Emit(rDelta);
+        for (auto& child : children)
+        {
+            child->ProcessOnUpdate(rDelta);
+        }
         Update(rDelta);
     }
 
     void Node::ProcessOnPhysicsUpdate(double pDelta)
     {
-        DN_CORE_INFO("Emit & Process");
         onPhysicsUpdate.Emit(pDelta);
+        for (auto& child : children)
+        {
+            child->ProcessOnPhysicsUpdate(pDelta);
+        }
         PhysicsUpdate(pDelta);
     }
 
     void Node::ProcessOnDraw()
     {
         onDraw.Emit();
+        for (auto& child : children)
+        {
+            child->ProcessOnDraw();
+        }
         Draw();
     }
 }

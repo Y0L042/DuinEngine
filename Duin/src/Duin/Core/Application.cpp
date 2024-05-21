@@ -19,20 +19,18 @@ namespace Duin
         int screenWidth = 800;
         int screenHeight = 450;
 
-        win = std::make_unique<AppWindow>(screenWidth, screenHeight);
-        win->SetTargetAppFPS(60);
+        InitWindow(screenWidth, screenHeight, "Test");
+        SetTargetFPS(60);
+        rlImGuiSetup(true);
         
         EngineInitialize();
         EngineReady();
         
         Initialize();
         Ready();
-
-        while (!win->ShouldClose())
+   
+        while(!WindowShouldClose())
         {
-            win->UpdateWindow();
-            win->ClearWindow(255, 255, 255);
-
             // TODO Generate event, then pass to handleinputs
 
             //EngineHandleInputs(e);
@@ -44,23 +42,29 @@ namespace Duin
             EnginePhysicsProcess(win->GetFrametime()); // TODO
             PhysicsProcess(win->GetFrametime()); // TODO
 
+            BeginDrawing();
+            rlImGuiBegin();
+
+            ClearBackground(RAYWHITE);
+            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+
             EngineDraw();
             Draw();
 
-            win->EndUpdateWindow();
+            rlImGuiEnd();
+            EndDrawing();
         }
-        win->Close();
 
         EngineExit();
         Exit();
 
-        win->Shutdown();
-        // UnloadTexture() and CloseWindow() are called automatically.
+        rlImGuiShutdown();
+        CloseWindow();
     }
 
     void Application::EngineInitialize()
     {
-        
+        ObjectManager::SetRootNode(std::make_shared<Node2D>());
     }
 
     void Application::Initialize()
@@ -69,11 +73,11 @@ namespace Duin
 
     void Application::EngineReady()
     {
+        ObjectManager::CallReady();
     }
 
     void Application::Ready()
     {
-        ObjectManager::CallReady();
     }
 
     void Application::EngineHandleInputs(InputEvent e)

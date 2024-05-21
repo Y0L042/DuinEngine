@@ -29,7 +29,7 @@ namespace Duin
 		void Close();
 
 		AppWindow& ClearWindow(int r, int g, int b);
-		AppWindow& UpdateWindow();
+		AppWindow& BeginUpdateWindow();
 		AppWindow& EndUpdateWindow();
 		AppWindow& FillWindow(int r, int g, int b);
 		AppWindow& SetTargetAppFPS(int fps);

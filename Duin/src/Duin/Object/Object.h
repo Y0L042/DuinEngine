@@ -16,7 +16,7 @@ namespace Duin
 		Object();
 		~Object();
 
-		const UUID& GetUUID() { return objectUUID; }
+		UUID GetUUID() { return objectUUID; }
 
 	protected:
 		UUID objectUUID;

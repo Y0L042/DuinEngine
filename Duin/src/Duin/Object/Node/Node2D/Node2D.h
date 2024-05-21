@@ -24,7 +24,6 @@ namespace Duin
 		Transform2D GetLocalTransform2D();
 		Transform2D GetGlobalTransform2D();
 
-	protected:
 		Signal<Transform2D> onLocalTransformDirty;
 		bool localTransformDirty;
 
