@@ -58,7 +58,7 @@ namespace Duin
     {
         if (texture)
         {
-            texture->Draw({10, 10});
+            texture->Draw(GetGlobalPosition2D());
         }
     }
 }

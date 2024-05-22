@@ -60,5 +60,35 @@ namespace Duin
             result.origin = transform * other.origin + origin;
             return result;
         }
+
+        Transform2D operator+(const Transform2D& other) const
+        {
+            Transform2D result;
+            result.origin = origin + other.origin;
+            //result.transform = transform + other.transform; // Assuming Matrix2x2 has an operator+ defined
+            return result;
+        }
+
+        Transform2D operator-(const Transform2D& other) const
+        {
+            Transform2D result;
+            result.origin = origin - other.origin;
+            //result.transform = transform - other.transform; // Assuming Matrix2x2 has an operator+ defined
+            return result;
+        }
+
+        Transform2D& operator+=(const Transform2D& other)
+        {
+            origin += other.origin;
+            //transform += other.transform; // Assuming Matrix2x2 has an operator+= defined
+            return *this;
+        }
+
+        Transform2D& operator-=(const Transform2D& other)
+        {
+            origin -= other.origin;
+            //transform -= other.transform; // Assuming Matrix2x2 has an operator+= defined
+            return *this;
+        }
     };
 }

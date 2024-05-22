@@ -173,9 +173,9 @@
     <ClInclude Include="src\Duin\Events\InputMap.h" />
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
     <ClInclude Include="src\Duin\Graphics\TextureRes.h" />
+    <ClInclude Include="src\Duin\Object\Node\Node.h" />
     <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h" />
     <ClInclude Include="src\Duin\Object\Node\Node2D\Sprite2D.h" />
-    <ClInclude Include="src\Duin\Object\Node\Node.h" />
     <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
     <ClInclude Include="src\Duin\Object\Object.h" />
     <ClInclude Include="src\Duin\Object\ObjectFactory.h" />
@@ -192,9 +192,9 @@
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureRes.cpp" />
+    <ClCompile Include="src\Duin\Object\Node\Node.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node2D\Sprite2D.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\Node.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp" />
     <ClCompile Include="src\Duin\Object\Object.cpp" />
     <ClCompile Include="src\Duin\Object\ObjectManager.cpp" />

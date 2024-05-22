@@ -28,11 +28,8 @@
     <Filter Include="Duin\Object\Node">
       <UniqueIdentifier>{70EC6CFC-5CE5-8B4E-8517-71D3716F6B5A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\Object\Node\CanvasItem">
-      <UniqueIdentifier>{8A3D9B3D-F64A-C923-7F31-C50EEB3D95DA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Duin\Object\Node\CanvasItem\Node2D">
-      <UniqueIdentifier>{F510666C-E14C-69D6-4A5F-81CD36BA11F1}</UniqueIdentifier>
+    <Filter Include="Duin\Object\Node\Node2D">
+      <UniqueIdentifier>{1B41ED37-8778-35CF-9082-99F2FC385CC8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Duin\Object\Node\Node3D">
       <UniqueIdentifier>{3C41ED37-A878-35CF-B182-99F21D395CC8}</UniqueIdentifier>
@@ -94,14 +91,14 @@
     <ClInclude Include="src\Duin\Graphics\TextureRes.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h">
-      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Object\Node\Node2D\Sprite2D.h">
-      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
-    </ClInclude>
     <ClInclude Include="src\Duin\Object\Node\Node.h">
       <Filter>Duin\Object\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h">
+      <Filter>Duin\Object\Node\Node2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Object\Node\Node2D\Sprite2D.h">
+      <Filter>Duin\Object\Node\Node2D</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h">
       <Filter>Duin\Object\Node\Node3D</Filter>
@@ -145,14 +142,14 @@
     <ClCompile Include="src\Duin\Graphics\TextureRes.cpp">
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp">
-      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Duin\Object\Node\Node2D\Sprite2D.cpp">
-      <Filter>Duin\Object\Node\CanvasItem\Node2D</Filter>
-    </ClCompile>
     <ClCompile Include="src\Duin\Object\Node\Node.cpp">
       <Filter>Duin\Object\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp">
+      <Filter>Duin\Object\Node\Node2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Object\Node\Node2D\Sprite2D.cpp">
+      <Filter>Duin\Object\Node\Node2D</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp">
       <Filter>Duin\Object\Node\Node3D</Filter>

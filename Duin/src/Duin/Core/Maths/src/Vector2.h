@@ -35,6 +35,34 @@ namespace Duin
             return Vector2(x / scalar, y / scalar);
         }
 
+        Vector2 operator+=(const Vector2& other)
+        {
+            x += other.x;
+            y += other.y;
+            return Vector2(x, y);
+        }
+
+        Vector2 operator-=(const Vector2& other)
+        {
+            x -= other.x;
+            y -= other.y;
+            return Vector2(x, y);
+        }
+
+        Vector2 operator*=(float scalar)
+        {
+            x *= scalar;
+            y *= scalar;
+            return Vector2(x, y);
+        }
+
+        Vector2 operator/=(float scalar)
+        {
+            x /= scalar;
+            y /= scalar;
+            return Vector2(x, y);
+        }
+
         float Dot(const Vector2& other) const
         {
             return x * other.x + y * other.y;

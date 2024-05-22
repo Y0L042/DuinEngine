@@ -6,6 +6,7 @@ namespace Duin
 {
     Node::Node()
     {
+        nodeAlias = std::to_string(GetUUID());
     }
 
     Node::~Node()
@@ -34,6 +35,16 @@ namespace Duin
 
     void Node::Draw()
     {
+    }
+
+    void Node::SetNodeAlias(std::string alias)
+    {
+        nodeAlias = alias;
+    }
+
+    std::string Node::GetNodeAlias()
+    {
+        return nodeAlias;
     }
 
     void Node::AddChild(std::shared_ptr<Node> child)
@@ -148,6 +159,7 @@ namespace Duin
     void Node::ProcessInitialize()
     {
         SetSignalMenu();
+        InternalInitialize();
         Initialize();
     }
 
@@ -199,5 +211,9 @@ namespace Duin
             child->ProcessOnDraw();
         }
         Draw();
+    }
+
+    void Node::InternalInitialize()
+    {
     }
 }

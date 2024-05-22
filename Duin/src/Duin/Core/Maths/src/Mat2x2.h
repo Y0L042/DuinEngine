@@ -40,6 +40,54 @@ namespace Duin
             return Matrix2x2(sx, 0, 0, sy);
         }
 
+        Matrix2x2 operator+(const Matrix2x2& other) const
+        {
+            return Matrix2x2(
+                m[0][0] + other.m[0][0],
+                m[0][1] + other.m[0][1],
+                m[1][0] + other.m[1][0],
+                m[1][1] + other.m[1][1]
+            );
+        }
+
+        Matrix2x2 operator-(const Matrix2x2& other) const
+        {
+            return Matrix2x2(
+                m[0][0] - other.m[0][0],
+                m[0][1] - other.m[0][1],
+                m[1][0] - other.m[1][0],
+                m[1][1] - other.m[1][1]
+            );
+        }
+
+        Matrix2x2 operator+=(const Matrix2x2& other)
+        {
+            m[0][0] += other.m[0][0];
+            m[0][1] += other.m[0][1];
+            m[1][0] += other.m[1][0];
+            m[1][1] += other.m[1][1];
+            return Matrix2x2(
+                m[0][0],
+                m[0][1],
+                m[1][0],
+                m[1][1]
+            );
+        }
+
+        Matrix2x2 operator-=(const Matrix2x2& other)
+        {
+            m[0][0] -= other.m[0][0];
+            m[0][1] -= other.m[0][1];
+            m[1][0] -= other.m[1][0];
+            m[1][1] -= other.m[1][1];
+            return Matrix2x2(
+                m[0][0],
+                m[0][1],
+                m[1][0],
+                m[1][1]
+            );
+        }
+
         Matrix2x2 operator*(const Matrix2x2& other) const 
         {
             return Matrix2x2(

@@ -43,6 +43,9 @@ namespace Duin
 			return std::dynamic_pointer_cast<T>(selfSPtr);
 		}
 
+		void SetNodeAlias(std::string alias);
+		std::string GetNodeAlias();
+
 		void AddChild(std::shared_ptr<Node> child);
 		void RemoveChild(std::shared_ptr<Node> child);
 
@@ -56,6 +59,8 @@ namespace Duin
 		void ProcessOnUpdate(double rDelta);
 		void ProcessOnPhysicsUpdate(double pDelta);
 		void ProcessOnDraw();
+
+		virtual void InternalInitialize();
 
 		virtual void Initialize();
 		virtual void Ready();
@@ -96,6 +101,6 @@ namespace Duin
 		std::shared_ptr<Node> parentPtr;
 
 	private:
-
+		std::string nodeAlias = "DefaultNodeAlias";
 	};
 }
