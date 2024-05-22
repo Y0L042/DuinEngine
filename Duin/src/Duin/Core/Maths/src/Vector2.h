@@ -7,6 +7,8 @@
 namespace Duin
 {
     struct Vector2 {
+        #define ZERO Vector2(0, 0)
+
         float x, y;
 
         Vector2()
@@ -93,6 +95,10 @@ namespace Duin
         Vector2 Normalized() const
         {
             float mag = Magnitude();
+            if (Maths::AreSame(mag, 0))
+            {
+                return ZERO;
+            }
             return Vector2(x / mag, y / mag);
         }
     };

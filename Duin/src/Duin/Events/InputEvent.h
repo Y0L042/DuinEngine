@@ -21,6 +21,7 @@ namespace Duin
 		bool IsKeyUp(int key);
 		bool GetKeyPressed();
 		bool GetCharPressed();
+		Vector2 GetInputVector(int keyUp, int keyDown, int keyLeft, int keyRight);
 
 		Vector2 GetMousePosition();
 

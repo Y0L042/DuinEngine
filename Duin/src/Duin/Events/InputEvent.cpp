@@ -45,6 +45,13 @@ namespace Duin
 	{
 		return ::GetCharPressed();
 	}
+	Vector2 InputEvent::GetInputVector(int keyUp, int keyDown, int keyLeft, int keyRight)
+	{
+		Vector2 vec;
+		vec.x = IsKeyDown(keyLeft) * -1 + IsKeyDown(keyRight);
+		vec.y = IsKeyDown(keyUp) * -1 + IsKeyDown(keyDown);
+		return vec.Normalized();
+	}
 	Vector2 InputEvent::GetMousePosition()
 	{
 		return Vector2(::GetMouseX(), ::GetMouseY());
