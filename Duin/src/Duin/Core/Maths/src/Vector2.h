@@ -1,5 +1,7 @@
 #pragma once
 
+#include "./Maths.h"
+
 #include <cmath>
 
 namespace Duin
@@ -35,32 +37,47 @@ namespace Duin
             return Vector2(x / scalar, y / scalar);
         }
 
-        Vector2 operator+=(const Vector2& other)
+        Vector2& operator=(const Vector2& other)
+        {
+            if (this != &other)
+            {
+                x = other.x;
+                y = other.y;
+            }
+            return *this;
+        }
+
+        bool operator==(const Vector2& other)
+        {
+            return (Maths::AreSame(x, other.x) && Maths::AreSame(y, other.y));
+        }
+
+        Vector2& operator+=(const Vector2& other)
         {
             x += other.x;
             y += other.y;
-            return Vector2(x, y);
+            return *this;
         }
 
-        Vector2 operator-=(const Vector2& other)
+        Vector2& operator-=(const Vector2& other)
         {
             x -= other.x;
             y -= other.y;
-            return Vector2(x, y);
+            return *this;
         }
 
-        Vector2 operator*=(float scalar)
+        Vector2& operator*=(float scalar)
         {
             x *= scalar;
             y *= scalar;
-            return Vector2(x, y);
+            return *this;
         }
 
-        Vector2 operator/=(float scalar)
+        Vector2& operator/=(float scalar)
         {
             x /= scalar;
             y /= scalar;
-            return Vector2(x, y);
+            return *this;
         }
 
         float Dot(const Vector2& other) const

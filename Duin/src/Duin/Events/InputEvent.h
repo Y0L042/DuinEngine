@@ -2,6 +2,7 @@
 
 #include "Duin/Core/Core.h"
 #include "Duin/Events/InputMap.h"
+#include "Duin/Core/Maths/DuinMaths.h"
 
 #include <RaylibComponent.h>
 
@@ -20,6 +21,8 @@ namespace Duin
 		bool IsKeyUp(int key);
 		bool GetKeyPressed();
 		bool GetCharPressed();
+
+		Vector2 GetMousePosition();
 
 	private:
 	};

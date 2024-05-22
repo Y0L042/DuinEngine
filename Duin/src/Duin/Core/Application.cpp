@@ -31,10 +31,14 @@ namespace Duin
    
         while(!WindowShouldClose())
         {
+            BeginDrawing();
+            rlImGuiBegin();
+
             // TODO Generate event, then pass to handleinputs
 
-            //EngineHandleInputs(e);
-            //HandleInputs(e);
+            InputEvent e;
+            EngineHandleInputs(e);
+            HandleInputs(e);
 
             EngineProcess(win->GetFrametime());
             Process(win->GetFrametime());
@@ -42,10 +46,9 @@ namespace Duin
             EnginePhysicsProcess(win->GetFrametime()); // TODO
             PhysicsProcess(win->GetFrametime()); // TODO
 
-            BeginDrawing();
-            rlImGuiBegin();
-
             ClearBackground(RAYWHITE);
+            
+
             DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
             EngineDraw();

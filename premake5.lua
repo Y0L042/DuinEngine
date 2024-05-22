@@ -143,6 +143,9 @@ project "Sandbox"
 
 	links
 	{
+		"raylib.lib", 
+		"rlImGui.lib",
+		"winmm.lib",
 		"Duin",
 	}
 

@@ -9,13 +9,13 @@ void Player::Initialize()
 	sprite->SetTextureSize(50, 50);
 }
 
-float x = 0;
+Duin::Vector2 pos(10, 10);
 void Player::PhysicsUpdate(double pDelta)
 {
-	SetLocalPosition2D(x, 10);
-	x++;
-	DN_INFO("x: {}, y: {}", ::GetMouseX(), ::GetMouseY());
+	SetLocalPosition2D(pos);
 }
 
-
- 
+void Player::HandleInput(Duin::InputEvent e)
+{
+	pos = e.GetMousePosition();
+}

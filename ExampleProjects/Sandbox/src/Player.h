@@ -10,6 +10,7 @@ public:
 
 	void Initialize() override;
 	void PhysicsUpdate(double pDelta) override;
+	void HandleInput(Duin::InputEvent e) override;
 
 private:
 	std::shared_ptr<Duin::Sprite2D> sprite;

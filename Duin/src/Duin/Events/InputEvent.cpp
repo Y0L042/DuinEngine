@@ -45,4 +45,8 @@ namespace Duin
 	{
 		return ::GetCharPressed();
 	}
+	Vector2 InputEvent::GetMousePosition()
+	{
+		return Vector2(::GetMouseX(), ::GetMouseY());
+	}
 }
