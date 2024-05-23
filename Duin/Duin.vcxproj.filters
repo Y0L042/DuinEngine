@@ -114,6 +114,7 @@
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Maths.h" />
+    <ClInclude Include="src\Duin\Object\Blackboard.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp">
@@ -162,5 +163,6 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
+    <ClCompile Include="src\Duin\Object\Blackboard.cpp" />
   </ItemGroup>
 </Project>
