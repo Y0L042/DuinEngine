@@ -58,6 +58,9 @@
     <ClInclude Include="src\Duin\Core\Maths\src\Mat3x3.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Maths.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
@@ -91,6 +94,9 @@
     <ClInclude Include="src\Duin\Graphics\TextureRes.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Object\Blackboard.h">
+      <Filter>Duin\Object</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Object\Node\Node.h">
       <Filter>Duin\Object\Node</Filter>
     </ClInclude>
@@ -113,8 +119,6 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Maths.h" />
-    <ClInclude Include="src\Duin\Object\Blackboard.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp">
@@ -144,6 +148,9 @@
     <ClCompile Include="src\Duin\Graphics\TextureRes.cpp">
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Duin\Object\Blackboard.cpp">
+      <Filter>Duin\Object</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duin\Object\Node\Node.cpp">
       <Filter>Duin\Object\Node</Filter>
     </ClCompile>
@@ -163,6 +170,5 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
-    <ClCompile Include="src\Duin\Object\Blackboard.cpp" />
   </ItemGroup>
 </Project>

@@ -79,7 +79,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -103,7 +103,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -131,7 +131,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

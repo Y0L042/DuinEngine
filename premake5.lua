@@ -20,6 +20,7 @@ workspace "Duin"
 	IncludeDir["imgui"] = "Duin/vendor/imgui"
 	IncludeDir["rlgui"] = "Duin/vendor/rlgui"
 	IncludeDir["patches"] = "Duin/vendor/patches/include"
+	IncludeDir["entt"] = "Duin/vendor/entt/single_include"
 
 project "Duin"
 	location "Duin"
@@ -49,6 +50,7 @@ project "Duin"
         "%{IncludeDir.raylib_cpp}",
         "%{IncludeDir.imgui}",
 		"%{IncludeDir.rlgui}",
+		"%{IncludeDir.entt}",
 	}
 
 	libdirs
