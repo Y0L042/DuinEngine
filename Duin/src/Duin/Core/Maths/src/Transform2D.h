@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../MathsCore.h"
 #include "Vector2.h"
 #include "Mat2x2.h"
 
@@ -7,7 +8,7 @@
 
 namespace Duin 
 {
-    struct Transform2D 
+    struct DUIN_MATHS_API Transform2D
     {
         Vector2 origin;
         Matrix2x2 transform;

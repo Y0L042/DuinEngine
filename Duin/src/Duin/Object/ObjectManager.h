@@ -17,6 +17,12 @@ namespace Duin
 	{
 	public:
 
+		static ObjectManager& GetInstance()
+		{
+			static ObjectManager* instance = new ObjectManager();
+			return *instance;
+		}
+
 		static void SetRootNode(std::shared_ptr<Node> root);
 		static void AddObject(std::shared_ptr<Node> obj);
 		static void RemoveObject(std::shared_ptr<Node> obj);
@@ -30,12 +36,6 @@ namespace Duin
 		static void CallUpdate(double rDelta);
 		static void CallPhysicsUpdate(double pDelta);
 		static void CallDraw();
-
-		static ObjectManager& GetInstance()
-		{
-			static ObjectManager* instance = new ObjectManager();
-			return *instance;
-		}
 
 		static std::shared_ptr<Node> GetRootNode();
 		

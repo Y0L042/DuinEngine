@@ -16,6 +16,10 @@ namespace Duin
         SceneManager()
             : rootNode(Node2D::Instantiate<Node2D>()), registry(std::make_unique<entt::registry>()) {}
 
+        std::shared_ptr<Entity> CreateEntity();
+        
+        // Instantiate node / Handle that logic
+
     private:
         std::shared_ptr<Node2D> rootNode;
         std::unique_ptr<entt::registry> registry;

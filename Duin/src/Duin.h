@@ -14,6 +14,13 @@
 #include "Duin/Core/Signal.h"
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Core/Maths/DuinMaths.h"
+#include "Duin/Core/Structures/RenderStructs.h"
+#include "Duin/Core/Scene/SceneManager.h"
+
+// ---------- Entities -----------
+#include "Duin/Entity/Entity.h"
+#include "Duin/Entity/Registry.h"
+#include "Duin/Entity/Component/Component.h"
 
 // ---------- Events -----------
 #include "Duin/Events/Event.h"
@@ -34,4 +41,4 @@
 #include "Duin/Object/Node/Node3D/Node3D.h"
 
 // ---------- External Dependencies -----------
-#include <RLImGuiComponent.h>
+//#include <RLImGuiComponent.h>

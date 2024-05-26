@@ -1,10 +1,11 @@
 #pragma once
 
+#include "../MathsCore.h"
 #include <cmath>
 
 namespace Duin
 {
-	struct Vector3
+	struct DUIN_MATHS_API Vector3
 	{
         float x, y, z;
 

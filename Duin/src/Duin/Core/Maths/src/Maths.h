@@ -1,11 +1,13 @@
 #pragma once
+
+#include "../MathsCore.h"
 #include <corecrt_math.h>
 
 namespace Duin
 {
 	#define EPSILON 0.05
 
-	class Maths
+	class DUIN_MATHS_API Maths
 	{
 	public:
 		static bool AreSame(double a, double b)

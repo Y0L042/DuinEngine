@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../MathsCore.h"
 #include "Vector2.h"
 #include <cmath>
 
 namespace Duin
 {
-    struct Matrix3x3 
+    struct DUIN_MATHS_API Matrix3x3
     {
         float m[3][3];
 

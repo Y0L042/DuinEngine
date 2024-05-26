@@ -125,6 +125,7 @@ project "Sandbox"
         "%{IncludeDir.raylib_cpp}",
         "%{IncludeDir.imgui}",
 		"%{IncludeDir.rlgui}",
+		"%{IncludeDir.entt}",
 	}
 
 	libdirs

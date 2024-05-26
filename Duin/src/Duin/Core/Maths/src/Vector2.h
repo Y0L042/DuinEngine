@@ -1,12 +1,13 @@
 #pragma once
 
+#include "../MathsCore.h"
 #include "./Maths.h"
 
 #include <cmath>
 
 namespace Duin
 {
-    struct Vector2 {
+    struct DUIN_MATHS_API Vector2 {
         #define ZERO Vector2(0, 0)
 
         float x, y;
