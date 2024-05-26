@@ -175,6 +175,7 @@
     <ClInclude Include="src\Duin\Core\Structures\RenderStructs.h" />
     <ClInclude Include="src\Duin\Core\UUID.h" />
     <ClInclude Include="src\Duin\Entity\Component\Component.h" />
+    <ClInclude Include="src\Duin\Entity\Component\ComponentManager.h" />
     <ClInclude Include="src\Duin\Entity\Entity.h" />
     <ClInclude Include="src\Duin\Entity\Registry.h" />
     <ClInclude Include="src\Duin\EntryPoint.h" />

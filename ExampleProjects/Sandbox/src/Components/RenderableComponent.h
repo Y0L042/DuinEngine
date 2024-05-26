@@ -6,10 +6,12 @@
 
 struct RenderableCMP
 {
-    Duin::Color color;
-    float size;
-    std::vector<Duin::Vector2> vertices;
+    Duin::TextureRes* texture;
+    Duin::Vector2 size;
 
-    RenderableCMP(Duin::Color color, float size, std::vector<Duin::Vector2>& vertices)
-        : color(color), size(size), vertices(vertices) {}
+    RenderableCMP(Duin::TextureRes* texture, Duin::Vector2 size)
+        : texture(texture), size(size) 
+    {
+        texture->SetTextureSize(size);
+    }
 };

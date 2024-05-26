@@ -16,6 +16,11 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Components\TransformCMPManager.h" />
+    <ClInclude Include="src\Components\RenderableCMPManager.h" />
+    <ClInclude Include="src\Components\PlayerComponent.h" />
+    <ClInclude Include="src\Components\PlayerCMPManager.h" />
+    <ClInclude Include="src\Components\MovementCMPManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Player.cpp" />

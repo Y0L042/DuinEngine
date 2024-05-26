@@ -158,6 +158,7 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="src\Duin\Entity\Component\ComponentManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\AppWindow.cpp">

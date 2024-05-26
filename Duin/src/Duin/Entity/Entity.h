@@ -32,28 +32,29 @@ namespace Duin
 		template<typename Component, typename... Args>
 		void AddComponent(Args&&... args)
 		{
-			registry->AddComponent(*this, std::forward<Args>(args)...);
+			registry->AddComponent<Component>(this->entity, std::forward<Args>(args)...);
 		}
 
 		template<typename Component>
 		Component& GetComponent()
 		{
-			return registry->GetComponent(*this);
+			return registry->GetComponent<Component>(this->entity);
 		}
 
 		template<typename Component>
 		void RemoveComponent()
 		{
-			registry->RemoveComponent(*this);
+			registry->RemoveComponent<Component>(this->entity);
 		}
 
 		template<typename Component>
 		bool HasComponent()
 		{
-			return registry->HasComponent(*this);
+			return registry->HasComponent<Component>(this->entity);
 		}
 
 	private:
+		entt::entity entity;
 		Registry* registry;
 		UUID uuid;
 	};

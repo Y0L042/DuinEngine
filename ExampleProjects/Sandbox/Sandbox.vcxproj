@@ -139,8 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\MovementCMPManager.h" />
     <ClInclude Include="src\Components\MovementComponent.h" />
+    <ClInclude Include="src\Components\PlayerCMPManager.h" />
+    <ClInclude Include="src\Components\PlayerComponent.h" />
+    <ClInclude Include="src\Components\RenderableCMPManager.h" />
     <ClInclude Include="src\Components\RenderableComponent.h" />
+    <ClInclude Include="src\Components\TransformCMPManager.h" />
     <ClInclude Include="src\Components\TransformComponent.h" />
     <ClInclude Include="src\Player.h" />
   </ItemGroup>

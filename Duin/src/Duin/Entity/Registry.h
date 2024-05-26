@@ -21,41 +21,47 @@ namespace Duin
 			return &instance;
 		}
 
+		static entt::registry& GetRegistry()
+		{
+			auto& instance = GetInstance();
+			return instance.registry;
+		}
+
 		static entt::entity CreateEntity()
 		{
 			auto& instance = GetInstance();
 			return instance.registry.create();
 		}
 
-		void DestroyEntity(entt::entity& entity)
+		static void DestroyEntity(entt::entity& entity)
 		{
 			auto& instance = GetInstance();
 			instance.registry.destroy(entity);
 		}
 
 		template<typename Component, typename... Args>
-		void AddComponent(entt::entity& entity, Args&&... args)
+		static void AddComponent(entt::entity& entity, Args&&... args)
 		{
 			auto& instance = GetInstance();
 			instance.registry.emplace<Component>(entity, std::forward<Args>(args)...);
 		}
 
 		template<typename Component>
-		Component& GetComponent(entt::entity& entity)
+		static Component& GetComponent(entt::entity& entity)
 		{
 			auto& instance = GetInstance();
 			return instance.registry.get<Component>(entity);
 		}
 
 		template<typename Component>
-		void RemoveComponent(entt::entity& entity)
+		static void RemoveComponent(entt::entity& entity)
 		{
 			auto& instance = GetInstance();
 			instance.registry.remove<Component>(entity);
 		}
 
 		template<typename Component>
-		bool HasComponent(entt::entity& entity)
+		static bool HasComponent(entt::entity& entity)
 		{
 			auto& instance = GetInstance();
 			return instance.registry.any_of<Component>(entity);
