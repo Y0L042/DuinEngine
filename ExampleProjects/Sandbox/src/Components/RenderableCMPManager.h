@@ -5,9 +5,9 @@
 #include "./RenderableComponent.h"
 #include "./TransformComponent.h"
 
-struct RenderableCMPManager : entt::process<RenderableCMPManager, uint32_t>
+struct RenderableCMPManager
 {
-    static void update(uint32_t delta) 
+    static void Update() 
     {
         auto view = Duin::Registry::GetRegistry().view<TransformCMP, RenderableCMP>();
         for (auto [entity, transform, renderable] : view.each()) 

@@ -2,19 +2,21 @@
 
 #include <Duin.h>
 
+#include "./PlayerInputComponent.h"
 #include "./MovementComponent.h"
 
-struct MovementCMPManager : entt::process<MovementCMPManager, uint32_t>
+struct MovementCMPManager
 {
-    static void update(uint32_t delta) 
+
+    static void Update(double delta) 
     {
-        auto view = Duin::Registry::GetRegistry().view<MovementCMP>();
-        for (auto [enity, movement] : view.each())
+        float SPEED = 100.0f;
+        auto view = Duin::Registry::GetRegistry().view<PlayerInputCMP, MovementCMP>();
+        for (auto [enity, pinput, movement] : view.each())
         {
-            float SPEED = 100.0f;
             movement.prevVelocity = movement.velocity;
-            movement.velocity *= (SPEED * delta);
-            DN_INFO("MovementManager vel: {} , {}", movement.velocity.x, movement.velocity.y);
+            movement.velocity = pinput.inputVec * (SPEED * delta);
+            //DN_INFO("MovementManager vel: {} , {}", movement.velocity.x, movement.velocity.y);
         }
     }
 };

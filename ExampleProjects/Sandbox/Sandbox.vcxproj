@@ -143,6 +143,7 @@
     <ClInclude Include="src\Components\MovementComponent.h" />
     <ClInclude Include="src\Components\PlayerCMPManager.h" />
     <ClInclude Include="src\Components\PlayerComponent.h" />
+    <ClInclude Include="src\Components\PlayerInputComponent.h" />
     <ClInclude Include="src\Components\RenderableCMPManager.h" />
     <ClInclude Include="src\Components\RenderableComponent.h" />
     <ClInclude Include="src\Components\TransformCMPManager.h" />

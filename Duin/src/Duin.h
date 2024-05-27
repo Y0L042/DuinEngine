@@ -21,6 +21,7 @@
 #include "Duin/Entity/Entity.h"
 #include "Duin/Entity/Registry.h"
 #include "Duin/Entity/Component/Component.h"
+#include "Duin/Entity/Component/ComponentManager.h"
 
 // ---------- Events -----------
 #include "Duin/Events/Event.h"

@@ -5,9 +5,9 @@
 #include "./MovementComponent.h"
 #include "./TransformComponent.h"
 
-struct TransformCMPManager : entt::process<TransformCMPManager, uint32_t>
+struct TransformCMPManager
 {
-    static void update(uint32_t delta) {
+    static void Update(double delta) {
         auto view = Duin::Registry::GetRegistry().view<TransformCMP, MovementCMP>();
         for (auto [entity, transform, movement] : view.each()) 
         {

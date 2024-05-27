@@ -24,7 +24,10 @@ namespace Duin
 		}
 
 		Entity(Registry* i_registry)
-			: registry(i_registry) {}
+			: registry(i_registry) 
+		{
+			entity = registry->CreateEntity();
+		}
 		~Entity() = default;
 
 		UUID GetUUID() { return uuid; }

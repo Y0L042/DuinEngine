@@ -21,6 +21,7 @@
     <ClInclude Include="src\Components\PlayerComponent.h" />
     <ClInclude Include="src\Components\PlayerCMPManager.h" />
     <ClInclude Include="src\Components\MovementCMPManager.h" />
+    <ClInclude Include="src\Components\PlayerInputComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Player.cpp" />
