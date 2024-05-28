@@ -8,9 +8,9 @@
 
 struct PlayerCMPManager
 {
-    static void Update(Duin::InputEvent e)
+    static void Update(Duin::Registry* registry, Duin::InputEvent e)
     {
-		auto view = Duin::Registry::GetRegistry().view<PlayerCMP, PlayerInputCMP>();
+		auto view = registry->View<PlayerCMP, PlayerInputCMP>();
 		for (auto [entity, pinput] : view.each())
 		{
 			pinput.inputVec = e.GetInputVector(KEY_W, KEY_S, KEY_A, KEY_D);

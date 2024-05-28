@@ -7,8 +7,8 @@
 
 struct TransformCMPManager
 {
-    static void Update(double delta) {
-        auto view = Duin::Registry::GetRegistry().view<TransformCMP, MovementCMP>();
+    static void Update(Duin::Registry* registry, double delta) {
+        auto view = registry->View<TransformCMP, MovementCMP>();
         for (auto [entity, transform, movement] : view.each()) 
         {
             transform.position += movement.velocity;

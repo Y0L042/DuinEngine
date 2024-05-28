@@ -1,27 +1,35 @@
 #pragma once
 
 #include "Duin/Core/Core.h"
+
 #include "Duin/Entity/Entity.h"
-#include "Duin/Object/Object.h"
-#include "Duin/Object/Node/Node2D/Node2D.h"
+#include "Duin/Entity/Registry.h"
 
 #include <entt/entt.hpp>
 
 #include <memory>
+#include <vector>
+
 
 namespace Duin
 {
     class DUIN_API SceneManager {
     public:
         SceneManager()
-            : rootNode(Node2D::Instantiate<Node2D>()), registry(std::make_unique<entt::registry>()) {}
+            : registry(std::make_shared<Registry>()) 
+        {}
 
-        std::shared_ptr<Entity> CreateEntity();
+        ~SceneManager() = default; 
         
-        // Instantiate node / Handle that logic
+        void AddEntity(std::shared_ptr<Entity> entity);
+        void RemoveEntity(std::shared_ptr<Entity> entity);
+
+        std::vector<std::shared_ptr<Entity>> GetAllEntities();
+
+        void ViewEntitiesWithComponents();
 
     private:
-        std::shared_ptr<Node2D> rootNode;
-        std::unique_ptr<entt::registry> registry;
+        std::shared_ptr<Registry> registry;
+        std::vector<std::shared_ptr<Entity>> entityList;
     };
 }

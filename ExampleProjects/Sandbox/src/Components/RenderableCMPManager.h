@@ -7,9 +7,9 @@
 
 struct RenderableCMPManager
 {
-    static void Update() 
+    static void Update(Duin::Registry* registry) 
     {
-        auto view = Duin::Registry::GetRegistry().view<TransformCMP, RenderableCMP>();
+        auto view = registry->View<TransformCMP, RenderableCMP>();
         for (auto [entity, transform, renderable] : view.each()) 
         {
             renderable.texture->Draw(transform.position);

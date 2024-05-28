@@ -9,68 +9,55 @@ namespace Duin
 	class DUIN_API Registry
 	{
 	public:
-		static Registry& GetInstance()
+		Registry();
+		~Registry();
+
+		entt::registry& GetENTTRegistry()
 		{
-			static Registry* instance = new Registry();
-			return *instance;
+			return registry;
 		}
 
-		static Registry* GetInstancePointer()
+		entt::entity CreateEntity()
 		{
-			Registry& instance = GetInstance();
-			return &instance;
+			return registry.create();
 		}
 
-		static entt::registry& GetRegistry()
+		void DestroyEntity(entt::entity& entity)
 		{
-			auto& instance = GetInstance();
-			return instance.registry;
-		}
-
-		static entt::entity CreateEntity()
-		{
-			auto& instance = GetInstance();
-			return instance.registry.create();
-		}
-
-		static void DestroyEntity(entt::entity& entity)
-		{
-			auto& instance = GetInstance();
-			instance.registry.destroy(entity);
+			registry.destroy(entity);
 		}
 
 		template<typename Component, typename... Args>
-		static void AddComponent(entt::entity& entity, Args&&... args)
+		void AddComponent(entt::entity& entity, Args&&... args)
 		{
-			auto& instance = GetInstance();
-			instance.registry.emplace<Component>(entity, std::forward<Args>(args)...);
+			registry.emplace<Component>(entity, std::forward<Args>(args)...);
 		}
 
 		template<typename Component>
-		static Component& GetComponent(entt::entity& entity)
-		{
-			auto& instance = GetInstance();
-			return instance.registry.get<Component>(entity);
+		Component& GetComponent(entt::entity& entity)
+		{	
+			return registry.get<Component>(entity);
 		}
 
 		template<typename Component>
-		static void RemoveComponent(entt::entity& entity)
+		void RemoveComponent(entt::entity& entity)
 		{
-			auto& instance = GetInstance();
-			instance.registry.remove<Component>(entity);
+			registry.remove<Component>(entity);
 		}
 
 		template<typename Component>
-		static bool HasComponent(entt::entity& entity)
+		bool HasComponent(entt::entity& entity)
 		{
-			auto& instance = GetInstance();
-			return instance.registry.any_of<Component>(entity);
+			return registry.any_of<Component>(entity);
+		}
+
+		template<typename... Component>
+		auto View()
+		{
+			return registry.view<Component...>();
 		}
 
 	private:
 		entt::registry registry;
-
-		Registry();
-		~Registry();
 	};
 }

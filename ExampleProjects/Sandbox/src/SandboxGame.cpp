@@ -29,6 +29,8 @@ std::shared_ptr<Duin::Node> root;
 std::shared_ptr<Player> player;
 std::shared_ptr<Duin::TextureRes> texture;
 
+Duin::Registry registry;
+
 class Sandbox : public Duin::Application
 {
 public:
@@ -51,16 +53,15 @@ void Sandbox::Initialize()
 	root = Duin::ObjectManager::GetRootNode();
 	player = root->InstantiateChild<Player>();
 
-	std::shared_ptr<Duin::Entity> entity;
 	texture = std::make_shared<Duin::TextureRes>("Textures/at_symbol.png");
 	for (int i = 0; i < 10000; i++)
 	{
-		entity = Duin::Entity::CreatePointer();
-		entity->AddComponent<PlayerCMP>();
-		entity->AddComponent<PlayerInputCMP>();
-		entity->AddComponent<MovementCMP>();
-		entity->AddComponent<TransformCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) });
-		entity->AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{15, 15});
+		Duin::Entity entity = Duin::Entity::Create(&registry);
+		entity.AddComponent<PlayerCMP>();
+		entity.AddComponent<PlayerInputCMP>();
+		entity.AddComponent<MovementCMP>();
+		entity.AddComponent<TransformCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) });
+		entity.AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{15, 15});
 	}
 }
 
@@ -71,7 +72,7 @@ void Sandbox::Ready()
 
 void Sandbox::HandleInputs(Duin::InputEvent e)
 {
-	PlayerCMPManager::Update(e);
+	PlayerCMPManager::Update(&registry, e);
 }
 
 void Sandbox::Process(double rDelta)
@@ -80,11 +81,11 @@ void Sandbox::Process(double rDelta)
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
-	MovementCMPManager::Update(pDelta);
-	TransformCMPManager::Update(pDelta);
+	MovementCMPManager::Update(&registry, pDelta);
+	TransformCMPManager::Update(&registry, pDelta);
 }
 
 void Sandbox::Draw()
 {
-	RenderableCMPManager::Update();
+	RenderableCMPManager::Update(&registry);
 }

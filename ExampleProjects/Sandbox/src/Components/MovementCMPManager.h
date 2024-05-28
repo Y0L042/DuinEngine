@@ -8,10 +8,10 @@
 struct MovementCMPManager
 {
 
-    static void Update(double delta) 
+    static void Update(Duin::Registry* registry, double delta) 
     {
         float SPEED = 100.0f;
-        auto view = Duin::Registry::GetRegistry().view<PlayerInputCMP, MovementCMP>();
+        auto view = registry->View<PlayerInputCMP, MovementCMP>();
         for (auto [enity, pinput, movement] : view.each())
         {
             movement.prevVelocity = movement.velocity;

@@ -6,31 +6,44 @@
 
 #include <entt/entt.hpp>
 
+#include <memory>
+#include <unordered_map>
+
 namespace Duin
 {
 	class DUIN_API Entity
 	{
 	public:
-		static Entity& CreateInstance()
+		static Entity& Create(Registry* registry)
 		{
-			Entity entity(Registry::GetInstancePointer());
-			return entity;
-		}
-
-		static std::shared_ptr<Entity> CreatePointer()
-		{
-			std::shared_ptr<Entity> entitySPtr = std::make_shared<Entity>(Registry::GetInstancePointer());
-			return entitySPtr;
+			std::shared_ptr<Entity> entity = std::make_shared<Entity>(registry);
+			entityStorage[entity->GetUUID()] = entity;
+			return *entity;
 		}
 
 		Entity(Registry* i_registry)
-			: registry(i_registry) 
+			: registry(i_registry)
 		{
 			entity = registry->CreateEntity();
 		}
-		~Entity() = default;
+
+		~Entity()
+		{
+			entityStorage.erase(uuid);
+		};
 
 		UUID GetUUID() { return uuid; }
+
+		std::shared_ptr<Entity> GetSharedPointer()
+		{
+			auto it = entityStorage.find(uuid);
+			if (it != entityStorage.end())
+			{
+				return entityStorage.at(uuid);
+			}
+			
+			return nullptr;
+		}
 
 		template<typename Component, typename... Args>
 		void AddComponent(Args&&... args)
@@ -57,6 +70,8 @@ namespace Duin
 		}
 
 	private:
+		static std::unordered_map<uint64_t, std::shared_ptr<Entity>> entityStorage;
+
 		entt::entity entity;
 		Registry* registry;
 		UUID uuid;
