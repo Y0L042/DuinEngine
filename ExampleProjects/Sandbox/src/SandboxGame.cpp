@@ -12,6 +12,14 @@
 #include "Components/RenderableComponent.h"
 #include "Components/RenderableCMPManager.h"
 
+#include <random>
+
+int min = 20;
+int max = 700;
+std::random_device rd;  // Obtain a random number from hardware
+std::mt19937 gen(rd()); // Seed the generator
+std::uniform_int_distribution<> distr(min, max); // Define the range
+
 int x = 0;
 
 Duin::TextureRes texture1;
@@ -19,7 +27,7 @@ Duin::TextureRes texture2;
 
 std::shared_ptr<Duin::Node> root;
 std::shared_ptr<Player> player;
-std::shared_ptr<Duin::Entity> entity;
+std::shared_ptr<Duin::TextureRes> texture;
 
 class Sandbox : public Duin::Application
 {
@@ -43,12 +51,17 @@ void Sandbox::Initialize()
 	root = Duin::ObjectManager::GetRootNode();
 	player = root->InstantiateChild<Player>();
 
-	entity = Duin::Entity::CreatePointer();
-	entity->AddComponent<PlayerCMP>();
-	entity->AddComponent<PlayerInputCMP>();
-	entity->AddComponent<MovementCMP>();
-	entity->AddComponent<TransformCMP>();
-	entity->AddComponent<RenderableCMP>(new Duin::TextureRes("Textures/at_symbol.png"), Duin::Vector2{ 15, 15 });
+	std::shared_ptr<Duin::Entity> entity;
+	texture = std::make_shared<Duin::TextureRes>("Textures/at_symbol.png");
+	for (int i = 0; i < 10000; i++)
+	{
+		entity = Duin::Entity::CreatePointer();
+		entity->AddComponent<PlayerCMP>();
+		entity->AddComponent<PlayerInputCMP>();
+		entity->AddComponent<MovementCMP>();
+		entity->AddComponent<TransformCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) });
+		entity->AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{15, 15});
+	}
 }
 
 void Sandbox::Ready()

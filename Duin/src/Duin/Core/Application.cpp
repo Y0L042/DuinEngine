@@ -20,7 +20,7 @@ namespace Duin
         int screenHeight = 450;
 
         InitWindow(screenWidth, screenHeight, "Test");
-        SetTargetFPS(60);
+        SetTargetFPS(144);
         rlImGuiSetup(true);
         
         EngineInitialize();
@@ -113,6 +113,9 @@ namespace Duin
     void Application::EngineDraw()
     {
         ObjectManager::CallDraw();
+        int fps = ::GetFPS();
+        std::string fpsStr = std::to_string(fps);
+        ::DrawText(fpsStr.c_str(), 10, 10, 25, GREEN);
     }
 
     void Application::Draw()
