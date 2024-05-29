@@ -1,7 +1,6 @@
 #include <Duin.h>
 #include <Duin/EntryPoint.h>
 
-#include "Player.h"
 #include "Components/PlayerComponent.h"
 #include "Components/PlayerInputComponent.h"
 #include "Components/PlayerCMPManager.h"
@@ -20,13 +19,6 @@ std::random_device rd;  // Obtain a random number from hardware
 std::mt19937 gen(rd()); // Seed the generator
 std::uniform_int_distribution<> distr(min, max); // Define the range
 
-int x = 0;
-
-Duin::TextureResource texture1;
-Duin::TextureResource texture2;
-
-std::shared_ptr<Duin::Node> root;
-std::shared_ptr<Player> player;
 std::shared_ptr<Duin::TextureResource> texture;
 
 Duin::Registry registry;
@@ -50,9 +42,6 @@ Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
 void Sandbox::Initialize()
 {
-	root = Duin::ObjectManager::GetRootNode();
-	player = root->InstantiateChild<Player>();
-
 	texture = std::make_shared<Duin::TextureResource>("Textures/at_symbol.png");
 	for (int i = 0; i < 10000; i++)
 	{

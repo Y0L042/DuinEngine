@@ -43,7 +43,6 @@ namespace Duin
 	private:
 		int TARGET_RENDER_FRAMERATE = 60;
 		int TARGET_PHYSICS_FRAMERATE = 60;
-		std::unique_ptr<AppWindow> win;
 	};
 
 	Application* CreateApplication();

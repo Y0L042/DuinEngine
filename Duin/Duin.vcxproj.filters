@@ -49,9 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
-    <ClInclude Include="src\Duin\Core\AppWindow.h">
-      <Filter>Duin\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Duin\Core\Application.h">
       <Filter>Duin\Core</Filter>
     </ClInclude>
@@ -106,9 +103,6 @@
     <ClInclude Include="src\Duin\Core\UUID.h">
       <Filter>Duin\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Entity\Component\Component.h">
-      <Filter>Duin\Entity\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Duin\Entity\Entity.h">
       <Filter>Duin\Entity</Filter>
     </ClInclude>
@@ -118,17 +112,11 @@
     <ClInclude Include="src\Duin\EntryPoint.h">
       <Filter>Duin</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Events\Event.h">
-      <Filter>Duin\Events</Filter>
-    </ClInclude>
     <ClInclude Include="src\Duin\Events\InputEvent.h">
       <Filter>Duin\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Events\InputMap.h">
       <Filter>Duin\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Graphics\TextureLoader.h">
-      <Filter>Duin\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Graphics\TextureResource.h">
       <Filter>Duin\Graphics</Filter>
@@ -158,12 +146,8 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\Duin\Entity\Component\ComponentManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Duin\Core\AppWindow.cpp">
-      <Filter>Duin\Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Duin\Core\Application.cpp">
       <Filter>Duin\Core</Filter>
     </ClCompile>
@@ -179,23 +163,14 @@
     <ClCompile Include="src\Duin\Core\UUID.cpp">
       <Filter>Duin\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Entity\Component\Component.cpp">
-      <Filter>Duin\Entity\Component</Filter>
-    </ClCompile>
     <ClCompile Include="src\Duin\Entity\Entity.cpp">
       <Filter>Duin\Entity</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Entity\Registry.cpp">
       <Filter>Duin\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Events\Event.cpp">
-      <Filter>Duin\Events</Filter>
-    </ClCompile>
     <ClCompile Include="src\Duin\Events\InputEvent.cpp">
       <Filter>Duin\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp">
-      <Filter>Duin\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Graphics\TextureResource.cpp">
       <Filter>Duin\Graphics</Filter>

@@ -155,7 +155,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
-    <ClInclude Include="src\Duin\Core\AppWindow.h" />
     <ClInclude Include="src\Duin\Core\Application.h" />
     <ClInclude Include="src\Duin\Core\Core.h" />
     <ClInclude Include="src\Duin\Core\Debug\Log.h" />
@@ -174,15 +173,11 @@
     <ClInclude Include="src\Duin\Core\Signal.h" />
     <ClInclude Include="src\Duin\Core\Structures\RenderStructs.h" />
     <ClInclude Include="src\Duin\Core\UUID.h" />
-    <ClInclude Include="src\Duin\Entity\Component\Component.h" />
-    <ClInclude Include="src\Duin\Entity\Component\ComponentManager.h" />
     <ClInclude Include="src\Duin\Entity\Entity.h" />
     <ClInclude Include="src\Duin\Entity\Registry.h" />
     <ClInclude Include="src\Duin\EntryPoint.h" />
-    <ClInclude Include="src\Duin\Events\Event.h" />
     <ClInclude Include="src\Duin\Events\InputEvent.h" />
     <ClInclude Include="src\Duin\Events\InputMap.h" />
-    <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
     <ClInclude Include="src\Duin\Graphics\TextureResource.h" />
     <ClInclude Include="src\Duin\Object\Blackboard.h" />
     <ClInclude Include="src\Duin\Object\Node\Node.h" />
@@ -195,18 +190,14 @@
     <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Duin\Core\AppWindow.cpp" />
     <ClCompile Include="src\Duin\Core\Application.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
     <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />
     <ClCompile Include="src\Duin\Core\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Duin\Core\UUID.cpp" />
-    <ClCompile Include="src\Duin\Entity\Component\Component.cpp" />
     <ClCompile Include="src\Duin\Entity\Entity.cpp" />
     <ClCompile Include="src\Duin\Entity\Registry.cpp" />
-    <ClCompile Include="src\Duin\Events\Event.cpp" />
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
-    <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureResource.cpp" />
     <ClCompile Include="src\Duin\Object\Blackboard.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node.cpp" />

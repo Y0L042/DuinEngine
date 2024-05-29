@@ -148,10 +148,8 @@
     <ClInclude Include="src\Components\RenderableComponent.h" />
     <ClInclude Include="src\Components\TransformCMPManager.h" />
     <ClInclude Include="src\Components\TransformComponent.h" />
-    <ClInclude Include="src\Player.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SandboxGame.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,6 @@
     <ClInclude Include="src\Components\TransformComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Components\TransformCMPManager.h" />
     <ClInclude Include="src\Components\RenderableCMPManager.h" />
     <ClInclude Include="src\Components\PlayerComponent.h" />
@@ -24,7 +23,6 @@
     <ClInclude Include="src\Components\PlayerInputComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SandboxGame.cpp" />
   </ItemGroup>
 </Project>

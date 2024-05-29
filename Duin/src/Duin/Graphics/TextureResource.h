@@ -4,7 +4,6 @@
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Core/Maths/DuinMaths.h"
-#include "Duin/Graphics/TextureLoader.h"
 
 #include <RayGuiComponent.h>
 
