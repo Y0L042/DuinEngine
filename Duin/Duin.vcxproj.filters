@@ -25,9 +25,6 @@
     <Filter Include="Duin\Entity">
       <UniqueIdentifier>{A11F1F47-0DD5-973C-96C9-9113027E8E40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\Entity\Component">
-      <UniqueIdentifier>{43B51192-AF21-CD8C-7815-65EAE440EFF4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Duin\Events">
       <UniqueIdentifier>{39BFA747-A574-203D-2E69-1A149A1D1741}</UniqueIdentifier>
     </Filter>
@@ -103,6 +100,9 @@
     <ClInclude Include="src\Duin\Core\UUID.h">
       <Filter>Duin\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Entity\ComponentManager.h">
+      <Filter>Duin\Entity</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Entity\Entity.h">
       <Filter>Duin\Entity</Filter>
     </ClInclude>
@@ -146,7 +146,6 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\Duin\Entity\ComponentManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -163,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="src\Duin\Core\UUID.cpp">
       <Filter>Duin\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Entity\ComponentManager.cpp">
+      <Filter>Duin\Entity</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Entity\Entity.cpp">
       <Filter>Duin\Entity</Filter>
@@ -198,6 +200,5 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
-    <ClCompile Include="src\Duin\Entity\ComponentManager.cpp" />
   </ItemGroup>
 </Project>

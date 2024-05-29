@@ -56,7 +56,7 @@ project "Duin"
 	libdirs
 	{
 		"%{prj.name}/vendor/raylib5/lib",	
-		"%{prj.name}/vendor/rlimgui/lib",
+		"%{prj.name}/vendor/rlimgui//bin/Debug",
 	}
 
 	links
@@ -131,7 +131,7 @@ project "Sandbox"
 	libdirs
 	{
 		"Duin/vendor/raylib5/lib",
-		"Duin/vendor/rlimgui/lib",
+		"Duin/vendor/rlimgui//bin/Debug",
 	}
 
 	filter "system:windows"

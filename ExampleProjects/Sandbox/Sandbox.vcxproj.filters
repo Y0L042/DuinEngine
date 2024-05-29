@@ -6,21 +6,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\MovementCMPManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Components\MovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PlayerCMPManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PlayerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\PlayerInputComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\RenderableCMPManager.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\RenderableComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Components\TransformCMPManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Components\TransformComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\TransformCMPManager.h" />
-    <ClInclude Include="src\Components\RenderableCMPManager.h" />
-    <ClInclude Include="src\Components\PlayerComponent.h" />
-    <ClInclude Include="src\Components\PlayerCMPManager.h" />
-    <ClInclude Include="src\Components\MovementCMPManager.h" />
-    <ClInclude Include="src\Components\PlayerInputComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SandboxGame.cpp" />

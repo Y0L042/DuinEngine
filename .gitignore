@@ -2,7 +2,7 @@
 .usr
 .vs/
 bin/
-Duin/docs/*
+Duin/docs/DuinDocs/
 
 bin-int/
 !vendor/bin/*

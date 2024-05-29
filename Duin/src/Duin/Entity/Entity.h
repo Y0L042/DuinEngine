@@ -11,8 +11,6 @@
 
 namespace Duin
 {
-	using EntitySptr = std::shared_ptr<Duin::Entity>;
-
 	class DUIN_API Entity
 	{
 	public:
@@ -31,7 +29,7 @@ namespace Duin
 
 		~Entity()
 		{
-			entityStorage.erase(uuid);
+			//entityStorage.erase(uuid);
 		};
 
 		Entity(const Entity&) = delete;
