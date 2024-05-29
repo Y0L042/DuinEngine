@@ -32,10 +32,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Doxygen
-        uses: mattnotmitt/setup-doxygen@v1
-        with:
-          doxygen-version: 'latest'
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen
 
       - name: Generate Doxygen documentation
         run: doxygen Doxyfile
