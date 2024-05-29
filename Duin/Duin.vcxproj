@@ -183,7 +183,7 @@
     <ClInclude Include="src\Duin\Events\InputEvent.h" />
     <ClInclude Include="src\Duin\Events\InputMap.h" />
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h" />
-    <ClInclude Include="src\Duin\Graphics\TextureRes.h" />
+    <ClInclude Include="src\Duin\Graphics\TextureResource.h" />
     <ClInclude Include="src\Duin\Object\Blackboard.h" />
     <ClInclude Include="src\Duin\Object\Node\Node.h" />
     <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h" />
@@ -207,7 +207,7 @@
     <ClCompile Include="src\Duin\Events\Event.cpp" />
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp" />
-    <ClCompile Include="src\Duin\Graphics\TextureRes.cpp" />
+    <ClCompile Include="src\Duin\Graphics\TextureResource.cpp" />
     <ClCompile Include="src\Duin\Object\Blackboard.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node.cpp" />
     <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp" />

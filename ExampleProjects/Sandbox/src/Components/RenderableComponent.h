@@ -6,10 +6,10 @@
 
 struct RenderableCMP
 {
-    Duin::TextureRes* texture;
+    Duin::TextureResource* texture;
     Duin::Vector2 size;
 
-    RenderableCMP(Duin::TextureRes* texture, Duin::Vector2 size)
+    RenderableCMP(Duin::TextureResource* texture, Duin::Vector2 size)
         : texture(texture), size(size) 
     {
         texture->SetTextureSize(size);

@@ -2,10 +2,12 @@
 #include "dnpch.h"
 
 #include "Duin/Core/Core.h"
-#include "Duin/Core/AppWindow.h"
-#include "Duin/Events/InputEvent.h"
 #include "Duin/Events/InputMap.h"
-#include "Duin/Object/ObjectManager.h"
+#include "Duin/Events/InputEvent.h"
+#include "Duin/Core/Scene/SceneManager.h"
+
+#include <RayGuiComponent.h>
+
 
 namespace Duin
 {

@@ -22,12 +22,12 @@ std::uniform_int_distribution<> distr(min, max); // Define the range
 
 int x = 0;
 
-Duin::TextureRes texture1;
-Duin::TextureRes texture2;
+Duin::TextureResource texture1;
+Duin::TextureResource texture2;
 
 std::shared_ptr<Duin::Node> root;
 std::shared_ptr<Player> player;
-std::shared_ptr<Duin::TextureRes> texture;
+std::shared_ptr<Duin::TextureResource> texture;
 
 Duin::Registry registry;
 
@@ -53,7 +53,7 @@ void Sandbox::Initialize()
 	root = Duin::ObjectManager::GetRootNode();
 	player = root->InstantiateChild<Player>();
 
-	texture = std::make_shared<Duin::TextureRes>("Textures/at_symbol.png");
+	texture = std::make_shared<Duin::TextureResource>("Textures/at_symbol.png");
 	for (int i = 0; i < 10000; i++)
 	{
 		Duin::Entity entity = Duin::Entity::Create(&registry);

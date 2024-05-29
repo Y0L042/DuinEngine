@@ -1,7 +1,6 @@
 #include "dnpch.h"
 
 #include "Application.h"
-#include "Duin/Object/Node/Node2D/Node2D.h"
 
 namespace Duin
 {
@@ -19,9 +18,9 @@ namespace Duin
         int screenWidth = 800;
         int screenHeight = 450;
 
-        InitWindow(screenWidth, screenHeight, "Test");
-        SetTargetFPS(144);
-        rlImGuiSetup(true);
+        ::InitWindow(screenWidth, screenHeight, "Test");
+        ::SetTargetFPS(144);
+        ::rlImGuiSetup(true);
         
         EngineInitialize();
         EngineReady();
@@ -29,10 +28,10 @@ namespace Duin
         Initialize();
         Ready();
    
-        while(!WindowShouldClose())
+        while(!::WindowShouldClose())
         {
-            BeginDrawing();
-            rlImGuiBegin();
+            ::BeginDrawing();
+            ::rlImGuiBegin();
 
             // TODO Generate event, then pass to handleinputs
 
@@ -40,34 +39,33 @@ namespace Duin
             EngineHandleInputs(e);
             HandleInputs(e);
 
-            EngineProcess(win->GetFrametime());
-            Process(win->GetFrametime());
+            EngineProcess(::GetFrameTime());
+            Process(::GetFrameTime());
 
-            EnginePhysicsProcess(win->GetFrametime()); // TODO
-            PhysicsProcess(win->GetFrametime()); // TODO
+            EnginePhysicsProcess(::GetFrameTime()); // TODO
+            PhysicsProcess(::GetFrameTime()); // TODO
 
-            ClearBackground(RAYWHITE);
+            ::ClearBackground(RAYWHITE);
             
 
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+            ::DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
             EngineDraw();
             Draw();
 
-            rlImGuiEnd();
-            EndDrawing();
+            ::rlImGuiEnd();
+            ::EndDrawing();
         }
 
         EngineExit();
         Exit();
 
-        rlImGuiShutdown();
-        CloseWindow();
+        ::rlImGuiShutdown();
+        ::CloseWindow();
     }
 
     void Application::EngineInitialize()
     {
-        ObjectManager::SetRootNode(std::make_shared<Node2D>());
     }
 
     void Application::Initialize()
@@ -76,7 +74,6 @@ namespace Duin
 
     void Application::EngineReady()
     {
-        ObjectManager::CallReady();
     }
 
     void Application::Ready()
@@ -85,7 +82,6 @@ namespace Duin
 
     void Application::EngineHandleInputs(InputEvent e)
     {
-        ObjectManager::CallHandleInput(e);
     }
 
     void Application::HandleInputs(InputEvent e)
@@ -94,7 +90,6 @@ namespace Duin
 
     void Application::EngineProcess(double rDelta)
     {
-        ObjectManager::CallUpdate(rDelta);
     }
 
     void Application::Process(double rDelta)
@@ -103,7 +98,6 @@ namespace Duin
 
     void Application::EnginePhysicsProcess(double pDelta)
     {
-        ObjectManager::CallPhysicsUpdate(pDelta);
     }
 
     void Application::PhysicsProcess(double pDelta)
@@ -112,7 +106,6 @@ namespace Duin
 
     void Application::EngineDraw()
     {
-        ObjectManager::CallDraw();
         int fps = ::GetFPS();
         std::string fpsStr = std::to_string(fps);
         ::DrawText(fpsStr.c_str(), 10, 10, 25, GREEN);

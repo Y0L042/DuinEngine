@@ -4,17 +4,8 @@
 
 namespace Duin
 {
-	void SceneManager::AddEntity(std::shared_ptr<Entity> entity)
+	Entity& SceneManager::CreateEntity()
 	{
-	}
-	void SceneManager::RemoveEntity(std::shared_ptr<Entity> entity)
-	{
-	}
-	std::vector<std::shared_ptr<Entity>> SceneManager::GetAllEntities()
-	{
-		return std::vector<std::shared_ptr<Entity>>();
-	}
-	void SceneManager::ViewEntitiesWithComponents()
-	{
+		return Entity::Create(registry.get());
 	}
 }

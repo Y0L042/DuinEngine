@@ -1,9 +1,8 @@
 #pragma once
 #include "dnpch.h"
-// For use by Duin applications only!
 
 // --------------------------------
-// Client Application API Headers
+// Client API Headers
 // --------------------------------
 
 // ---------- Root -----------
@@ -17,20 +16,20 @@
 #include "Duin/Core/Structures/RenderStructs.h"
 #include "Duin/Core/Scene/SceneManager.h"
 
-// ---------- Entities -----------
-#include "Duin/Entity/Entity.h"
-#include "Duin/Entity/Registry.h"
-#include "Duin/Entity/Component/Component.h"
-#include "Duin/Entity/Component/ComponentManager.h"
-
 // ---------- Events -----------
 #include "Duin/Events/Event.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Events/InputMap.h"
 
 // ---------- Graphics -----------
-#include "Duin/Graphics/TextureRes.h"
+#include "Duin/Graphics/TextureResource.h"
 #include "Duin/Graphics/TextureLoader.h"
+
+// ---------- Entities -----------
+#include "Duin/Entity/Entity.h"
+#include "Duin/Entity/Registry.h"
+#include "Duin/Entity/Component/Component.h"
+#include "Duin/Entity/Component/ComponentManager.h"
 
 // ---------- Objects -----------
 #include "Duin/Object/Object.h"

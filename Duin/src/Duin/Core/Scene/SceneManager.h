@@ -20,16 +20,16 @@ namespace Duin
         {}
 
         ~SceneManager() = default; 
-        
-        void AddEntity(std::shared_ptr<Entity> entity);
-        void RemoveEntity(std::shared_ptr<Entity> entity);
 
-        std::vector<std::shared_ptr<Entity>> GetAllEntities();
+        Entity& CreateEntity();
 
-        void ViewEntitiesWithComponents();
+        template<typename... Component>
+        auto ViewEntitiesWith()
+        {
+            return registry->View<Component...>();
+        }
 
     private:
         std::shared_ptr<Registry> registry;
-        std::vector<std::shared_ptr<Entity>> entityList;
     };
 }

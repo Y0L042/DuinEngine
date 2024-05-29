@@ -130,7 +130,7 @@
     <ClInclude Include="src\Duin\Graphics\TextureLoader.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Graphics\TextureRes.h">
+    <ClInclude Include="src\Duin\Graphics\TextureResource.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Object\Blackboard.h">
@@ -197,7 +197,7 @@
     <ClCompile Include="src\Duin\Graphics\TextureLoader.cpp">
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Graphics\TextureRes.cpp">
+    <ClCompile Include="src\Duin\Graphics\TextureResource.cpp">
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Object\Blackboard.cpp">
