@@ -1,0 +1,43 @@
+\doxysection{Log.\+h}
+\hypertarget{_log_8h_source}{}\label{_log_8h_source}\index{Duin/src/Duin/Core/Debug/Log.h@{Duin/src/Duin/Core/Debug/Log.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}dnpch.h"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <spdlog/spdlog.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <spdlog/sinks/stdout\_color\_sinks.h>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_log}{Log}}}
+\DoxyCodeLine{00011\ \ \ \ \ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Init();}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\&\ GetCoreLogger()\ \{\ \textcolor{keywordflow}{return}\ s\_CoreLogger;\ \}}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\&\ GetClientLogger()\ \{\ \textcolor{keywordflow}{return}\ s\_ClientLogger;\ \}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\ s\_CoreLogger;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\ s\_ClientLogger;}
+\DoxyCodeLine{00021\ \ \ \ \ \};}
+\DoxyCodeLine{00022\ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ Core\ log\ macros}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ DN\_CORE\_FATAL(...)\ ::Duin::Log::GetCoreLogger()-\/>critical(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ DN\_CORE\_ERROR(...)\ ::Duin::Log::GetCoreLogger()-\/>error(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ DN\_CORE\_WARN(...)\ \ ::Duin::Log::GetCoreLogger()-\/>warn(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ DN\_CORE\_INFO(...)\ \ ::Duin::Log::GetCoreLogger()-\/>info(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ DN\_CORE\_TRACE(...)\ ::Duin::Log::GetCoreLogger()-\/>trace(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ Client\ log\ macros}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ DN\_FATAL(...)\ \ \ \ \ \ ::Duin::Log::GetClientLogger()-\/>critical(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ DN\_ERROR(...)\ \ \ \ \ \ ::Duin::Log::GetClientLogger()-\/>error(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ DN\_WARN(...)\ \ \ \ \ \ \ ::Duin::Log::GetClientLogger()-\/>warn(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ DN\_INFO(...)\ \ \ \ \ \ \ ::Duin::Log::GetClientLogger()-\/>info(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ DN\_TRACE(...)\ \ \ \ \ \ ::Duin::Log::GetClientLogger()-\/>trace(\_\_VA\_ARGS\_\_)}}
+
+\end{DoxyCode}

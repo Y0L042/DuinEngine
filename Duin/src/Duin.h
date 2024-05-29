@@ -25,6 +25,7 @@
 // ---------- Entities -----------
 #include "Duin/Entity/Entity.h"
 #include "Duin/Entity/Registry.h"
+#include "Duin/Entity/ComponentManager.h"
 
 // ---------- External Dependencies -----------
 

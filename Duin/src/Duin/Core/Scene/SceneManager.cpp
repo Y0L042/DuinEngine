@@ -4,7 +4,7 @@
 
 namespace Duin
 {
-	Entity& SceneManager::CreateEntity()
+	std::shared_ptr<Entity> SceneManager::CreateEntity()
 	{
 		return Entity::Create(registry.get());
 	}

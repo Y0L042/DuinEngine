@@ -4,6 +4,7 @@
 
 #include "Duin/Entity/Entity.h"
 #include "Duin/Entity/Registry.h"
+#include "Duin/Entity/ComponentManager.h"
 
 #include <entt/entt.hpp>
 
@@ -21,7 +22,19 @@ namespace Duin
 
         ~SceneManager() = default; 
 
-        Entity& CreateEntity();
+        std::shared_ptr<Entity> CreateEntity();
+
+        std::shared_ptr<Registry> GetRegistry()
+        {
+            return registry;
+        }
+        
+        template<typename CompMgr, typename... Args>
+        CompMgr& CreateComponentManager(Args&&... args)
+        {
+            CompMgr* compMgr = new CompMgr(std::forward<Args>(args)...);
+            return *compMgr;
+        }
 
         template<typename... Component>
         auto ViewEntitiesWith()

@@ -146,6 +146,7 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="src\Duin\Entity\ComponentManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -197,5 +198,6 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
+    <ClCompile Include="src\Duin\Entity\ComponentManager.cpp" />
   </ItemGroup>
 </Project>

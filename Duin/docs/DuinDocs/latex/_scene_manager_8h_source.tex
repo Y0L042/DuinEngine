@@ -1,0 +1,54 @@
+\doxysection{Scene\+Manager.\+h}
+\hypertarget{_scene_manager_8h_source}{}\label{_scene_manager_8h_source}\index{Duin/src/Duin/Core/Scene/SceneManager.h@{Duin/src/Duin/Core/Scene/SceneManager.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Duin/Entity/Entity.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Duin/Entity/Registry.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Duin/Entity/ComponentManager.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <entt/entt.hpp>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_scene_manager}{SceneManager}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_scene_manager}{SceneManager}}()}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ :\ registry(std::make\_shared<Registry>())\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \{\}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_scene_manager}{\string~SceneManager}}()\ =\ \textcolor{keywordflow}{default};\ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ std::shared\_ptr<Entity>\ CreateEntity();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ std::shared\_ptr<Registry>\ GetRegistry()}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ registry;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ CompMgr,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ CompMgr\&\ CreateComponentManager(Args\&\&...\ args)}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ CompMgr*\ compMgr\ =\ \textcolor{keyword}{new}\ CompMgr(std::forward<Args>(args)...);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *compMgr;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Component>}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ViewEntitiesWith()}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ registry-\/>View<Component...>();}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::shared\_ptr<Registry>\ registry;}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ \}}
+
+\end{DoxyCode}

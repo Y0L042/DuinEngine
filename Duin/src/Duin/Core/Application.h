@@ -40,9 +40,12 @@ namespace Duin
 		void EngineExit();
 		virtual void Exit();
 
+		SceneManager& GetSceneManager();
+
 	private:
 		int TARGET_RENDER_FRAMERATE = 60;
 		int TARGET_PHYSICS_FRAMERATE = 60;
+		SceneManager sceneManager;
 	};
 
 	Application* CreateApplication();

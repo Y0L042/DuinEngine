@@ -1,0 +1,29 @@
+\doxysection{Object\+Factory.\+h}
+\hypertarget{_object_factory_8h_source}{}\label{_object_factory_8h_source}\index{Duin/src/Duin/Object/ObjectFactory.h@{Duin/src/Duin/Object/ObjectFactory.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{class\ }Object;\ \textcolor{comment}{//\ Forward\ Declaration}}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_object_factory}{ObjectFactory}}}
+\DoxyCodeLine{00011\ \ \ \ \ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::weak\_ptr<T>\ Instantiate(Args\&\&...\ args)}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<Object,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ be\ an\ Object\ derived\ class"{}});}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<T>\ objInstance\ =\ std::make\_shared<T>(std::forward<Args>(args)...);}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<Object>\ objPtr\ =\ std::static\_pointer\_cast<Object>(objInstance);}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ objPtr-\/>Initialize();}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ objInstance;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00022\ \ \ \ \ \};}
+\DoxyCodeLine{00023\ \}}
+
+\end{DoxyCode}

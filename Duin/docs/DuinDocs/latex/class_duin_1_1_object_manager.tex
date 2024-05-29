@@ -1,0 +1,56 @@
+\doxysection{Duin\+::Object\+Manager Class Reference}
+\hypertarget{class_duin_1_1_object_manager}{}\label{class_duin_1_1_object_manager}\index{Duin::ObjectManager@{Duin::ObjectManager}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_duin_1_1_object_manager_a25ea34b663a02d00be91c20e519f063a}\label{class_duin_1_1_object_manager_a25ea34b663a02d00be91c20e519f063a} 
+void {\bfseries Connect\+Signals\+To\+Callbacks} (const std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ \&signal\+Menu, const std\+::map$<$ std\+::string, std\+::any $>$ \&callbacks)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_duin_1_1_object_manager_a68937d44fba18d66e3922f98a496dd8b}\label{class_duin_1_1_object_manager_a68937d44fba18d66e3922f98a496dd8b} 
+static \mbox{\hyperlink{class_duin_1_1_object_manager}{Object\+Manager}} \& {\bfseries Get\+Instance} ()
+\item 
+\Hypertarget{class_duin_1_1_object_manager_a60a61ed59de378d8e6f45b3ff5664dfc}\label{class_duin_1_1_object_manager_a60a61ed59de378d8e6f45b3ff5664dfc} 
+static void {\bfseries Set\+Root\+Node} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ root)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_abb9e70502c8dcbbc6ccc981bc68d6299}\label{class_duin_1_1_object_manager_abb9e70502c8dcbbc6ccc981bc68d6299} 
+static void {\bfseries Add\+Object} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ obj)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_adbd9b4adaf1e3de93ff28c9b0e836fb2}\label{class_duin_1_1_object_manager_adbd9b4adaf1e3de93ff28c9b0e836fb2} 
+static void {\bfseries Remove\+Object} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ obj)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_a372f31a02508c723147ae11f026601e2}\label{class_duin_1_1_object_manager_a372f31a02508c723147ae11f026601e2} 
+static void {\bfseries Add\+Node} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ node, \mbox{\hyperlink{class_duin_1_1_u_u_i_d}{UUID}} uuid)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_a475ad549e8c1e65461f96a6e8786630d}\label{class_duin_1_1_object_manager_a475ad549e8c1e65461f96a6e8786630d} 
+static void {\bfseries Remove\+Node} (\mbox{\hyperlink{class_duin_1_1_u_u_i_d}{UUID}} uuid)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_aebf1865d0c97af85f6ce853b6cd7c1c9}\label{class_duin_1_1_object_manager_aebf1865d0c97af85f6ce853b6cd7c1c9} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ {\bfseries Get\+Node\+Ptr} (\mbox{\hyperlink{class_duin_1_1_u_u_i_d}{UUID}} uuid)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_aa919f5c30ff2d5be1c902aaa738ed5e1}\label{class_duin_1_1_object_manager_aa919f5c30ff2d5be1c902aaa738ed5e1} 
+static void {\bfseries Call\+Ready} ()
+\item 
+\Hypertarget{class_duin_1_1_object_manager_a764ccf9dfc9f894e80af1dd1e753f7d5}\label{class_duin_1_1_object_manager_a764ccf9dfc9f894e80af1dd1e753f7d5} 
+static void {\bfseries Call\+Handle\+Input} (\mbox{\hyperlink{class_duin_1_1_input_event}{Input\+Event}} e)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_a03c69ba60451a497f74ed8b4b7eaaf11}\label{class_duin_1_1_object_manager_a03c69ba60451a497f74ed8b4b7eaaf11} 
+static void {\bfseries Call\+Update} (double r\+Delta)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_ad62e592862a228d8b611b68f0fc81117}\label{class_duin_1_1_object_manager_ad62e592862a228d8b611b68f0fc81117} 
+static void {\bfseries Call\+Physics\+Update} (double p\+Delta)
+\item 
+\Hypertarget{class_duin_1_1_object_manager_aa6f1aa40688600f89d40a321910cea10}\label{class_duin_1_1_object_manager_aa6f1aa40688600f89d40a321910cea10} 
+static void {\bfseries Call\+Draw} ()
+\item 
+\Hypertarget{class_duin_1_1_object_manager_ab4461fdec028745a3c45c743b4a1910a}\label{class_duin_1_1_object_manager_ab4461fdec028745a3c45c743b4a1910a} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ {\bfseries Get\+Root\+Node} ()
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Duin/src/\+Duin/\+Object/Object\+Manager.\+h\item 
+Duin/src/\+Duin/\+Object/Object\+Manager.\+cpp\end{DoxyCompactItemize}

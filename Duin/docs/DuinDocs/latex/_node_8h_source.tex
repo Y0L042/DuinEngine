@@ -1,0 +1,112 @@
+\doxysection{Node.\+h}
+\hypertarget{_node_8h_source}{}\label{_node_8h_source}\index{Duin/src/Duin/Object/Node/Node.h@{Duin/src/Duin/Object/Node/Node.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Duin/Object/Object.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Duin/Object/ObjectManager.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Duin/Events/InputEvent.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Duin/Events/InputMap.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_node}{Node}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_duin_1_1_object}{Object}}}
+\DoxyCodeLine{00012\ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_node}{Node}}();}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_node}{\string~Node}}();}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<T>\ Instantiate(Args\&\&...\ args)}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<Node,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ be\ a\ Node\ derived\ class"{}});}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<T>\ objInstance\ =\ std::make\_shared<T>(std::forward<Args>(args)...);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<Node>\ objPtr\ =\ std::static\_pointer\_cast<Node>(objInstance);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ ObjectManager::AddNode(objPtr,\ objPtr-\/>GetUUID());}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ objInstance;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ std::shared\_ptr<T>\ InstantiateChild(Args\&\&...\ args)}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<Node,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ be\ a\ Node\ derived\ class"{}});}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<T>\ childSPtr\ =\ std::make\_shared<T>(std::forward<Args>(args)...);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<Node>\ castSPtr\ =\ std::static\_pointer\_cast<Node>(childSPtr);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ ObjectManager::AddNode(castSPtr,\ castSPtr-\/>GetUUID());}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ AddChild(castSPtr);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ childSPtr;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ std::shared\_ptr<T>\ GetPointer()}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<Node,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ be\ an\ Node\ derived\ class"{}});}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<Node>\ selfSPtr\ =\ ObjectManager::GetNodePtr(GetUUID());}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::dynamic\_pointer\_cast<T>(selfSPtr);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetNodeAlias(std::string\ alias);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ std::string\ GetNodeAlias();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ AddChild(std::shared\_ptr<Node>\ child);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RemoveChild(std::shared\_ptr<Node>\ child);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ std::shared\_ptr<Node>\ GetParent()\ \{\ \textcolor{keywordflow}{return}\ parentPtr;\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetParent(std::shared\_ptr<Node>\ parent)\ \{\ parentPtr\ =\ parent;\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ResetParent()\ \{\ parentPtr.reset();\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessInitialize();}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessOnReady();}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessOnHandleInput(\mbox{\hyperlink{class_duin_1_1_input_event}{InputEvent}}\ e);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessOnUpdate(\textcolor{keywordtype}{double}\ rDelta);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessOnPhysicsUpdate(\textcolor{keywordtype}{double}\ pDelta);}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessOnDraw();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ InternalInitialize();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Initialize();}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Ready();}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleInput(\mbox{\hyperlink{class_duin_1_1_input_event}{InputEvent}}\ e);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Update(\textcolor{keywordtype}{double}\ rDelta);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ PhysicsUpdate(\textcolor{keywordtype}{double}\ pDelta);}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Draw();}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ DEFUNCT\ -\/-\/-\/-\/\ //}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ std::map<std::string,\ SignalBase*>\ signalMenu;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_signal}{Signal<>}}\ onReady;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_signal}{Signal<InputEvent>}}\ onHandleInput;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_signal}{Signal<double>}}\ onUpdate;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_signal}{Signal<double>}}\ onPhysicsUpdate;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_signal}{Signal<>}}\ onDraw;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ std::map<std::string,\ SignalBase*>\&\ GetSignalMenu();}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ConnectSignalsToCallbacks(}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::map<std::string,\ SignalBase*>\&\ signalMenu,}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::map<std::string,\ std::any>\&\ callbacks}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ DisconnectSignalsFromCallbacks(}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::map<std::string,\ SignalBase*>\&\ signalMenu,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\&\ signalNames}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetSignalMenu();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ RequestSignalConnections();}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ DEFUNCT\ -\/-\/-\/-\/\ //}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ std::vector<std::shared\_ptr<Node>>\ children;}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ std::shared\_ptr<Node>\ parentPtr;}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ std::string\ nodeAlias\ =\ \textcolor{stringliteral}{"{}DefaultNodeAlias"{}};}
+\DoxyCodeLine{00105\ \ \ \ \ \};}
+\DoxyCodeLine{00106\ \}}
+
+\end{DoxyCode}

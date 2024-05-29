@@ -1,0 +1,110 @@
+\doxysection{Duin\+::Node3D Class Reference}
+\hypertarget{class_duin_1_1_node3_d}{}\label{class_duin_1_1_node3_d}\index{Duin::Node3D@{Duin::Node3D}}
+Inheritance diagram for Duin\+::Node3D\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_duin_1_1_node3_d}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_duin_1_1_node}{Duin\+::\+Node}}}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries Instantiate\+Child} (Args \&\&... args)
+\item 
+{\footnotesize template$<$typename T $>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries Get\+Pointer} ()
+\item 
+void {\bfseries Set\+Node\+Alias} (std\+::string alias)
+\item 
+std\+::string {\bfseries Get\+Node\+Alias} ()
+\item 
+void {\bfseries Add\+Child} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ child)
+\item 
+void {\bfseries Remove\+Child} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ child)
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ {\bfseries Get\+Parent} ()
+\item 
+void {\bfseries Set\+Parent} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ parent)
+\item 
+void {\bfseries Reset\+Parent} ()
+\item 
+void {\bfseries Process\+Initialize} ()
+\item 
+void {\bfseries Process\+On\+Ready} ()
+\item 
+void {\bfseries Process\+On\+Handle\+Input} (\mbox{\hyperlink{class_duin_1_1_input_event}{Input\+Event}} e)
+\item 
+void {\bfseries Process\+On\+Update} (double r\+Delta)
+\item 
+void {\bfseries Process\+On\+Physics\+Update} (double p\+Delta)
+\item 
+void {\bfseries Process\+On\+Draw} ()
+\item 
+virtual void {\bfseries Internal\+Initialize} ()
+\item 
+virtual void {\bfseries Initialize} ()
+\item 
+virtual void {\bfseries Ready} ()
+\item 
+virtual void {\bfseries Handle\+Input} (\mbox{\hyperlink{class_duin_1_1_input_event}{Input\+Event}} e)
+\item 
+virtual void {\bfseries Update} (double r\+Delta)
+\item 
+virtual void {\bfseries Physics\+Update} (double p\+Delta)
+\item 
+virtual void {\bfseries Draw} ()
+\item 
+virtual std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ \& {\bfseries Get\+Signal\+Menu} ()
+\item 
+void {\bfseries Connect\+Signals\+To\+Callbacks} (const std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ \&signal\+Menu, const std\+::map$<$ std\+::string, std\+::any $>$ \&callbacks)
+\item 
+void {\bfseries Disconnect\+Signals\+From\+Callbacks} (const std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ \&signal\+Menu, const std\+::vector$<$ std\+::string $>$ \&signal\+Names)
+\item 
+virtual void {\bfseries Set\+Signal\+Menu} ()
+\item 
+virtual void {\bfseries Request\+Signal\+Connections} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_duin_1_1_object}{Duin\+::\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_duin_1_1_u_u_i_d}{UUID}} {\bfseries Get\+UUID} ()
+\item 
+bool {\bfseries operator==} (\mbox{\hyperlink{class_duin_1_1_object}{Object}} \&other)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_duin_1_1_node}{Duin\+::\+Node}}}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\static std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries Instantiate} (Args \&\&... args)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_duin_1_1_node}{Duin\+::\+Node}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries signal\+Menu}
+\item 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}} {\bfseries on\+Ready}
+\item 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}}$<$ \mbox{\hyperlink{class_duin_1_1_input_event}{Input\+Event}} $>$ {\bfseries on\+Handle\+Input}
+\item 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}}$<$ double $>$ {\bfseries on\+Update}
+\item 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}}$<$ double $>$ {\bfseries on\+Physics\+Update}
+\item 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}} {\bfseries on\+Draw}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_duin_1_1_node}{Duin\+::\+Node}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ $>$ {\bfseries children}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ {\bfseries parent\+Ptr}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_duin_1_1_object}{Duin\+::\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_duin_1_1_u_u_i_d}{UUID}} {\bfseries object\+UUID}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Duin/src/\+Duin/\+Object/\+Node/\+Node3\+D/Node3\+D.\+h\end{DoxyCompactItemize}

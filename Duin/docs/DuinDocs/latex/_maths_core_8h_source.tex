@@ -1,0 +1,17 @@
+\doxysection{Maths\+Core.\+h}
+\hypertarget{_maths_core_8h_source}{}\label{_maths_core_8h_source}\index{Duin/src/Duin/Core/Maths/MathsCore.h@{Duin/src/Duin/Core/Maths/MathsCore.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifdef\ DN\_PLATFORM\_WINDOWS}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ DN\_BUILD\_DLL}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ DUIN\_MATHS\_API\ \_\_declspec(dllexport)}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#define\ DUIN\_MATHS\_API\ \_\_declspec(dllimport)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ \ \ \#error\ Duin\ only\ supports\ Windows.}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

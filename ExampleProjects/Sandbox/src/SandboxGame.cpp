@@ -21,7 +21,7 @@ std::uniform_int_distribution<> distr(min, max); // Define the range
 
 std::shared_ptr<Duin::TextureResource> texture;
 
-Duin::Registry registry;
+std::shared_ptr<Duin::Registry> registry;
 
 class Sandbox : public Duin::Application
 {
@@ -42,15 +42,16 @@ Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
 void Sandbox::Initialize()
 {
+	registry = GetSceneManager().GetRegistry();
 	texture = std::make_shared<Duin::TextureResource>("Textures/at_symbol.png");
 	for (int i = 0; i < 10000; i++)
 	{
-		Duin::Entity entity = Duin::Entity::Create(&registry);
-		entity.AddComponent<PlayerCMP>();
-		entity.AddComponent<PlayerInputCMP>();
-		entity.AddComponent<MovementCMP>();
-		entity.AddComponent<TransformCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) });
-		entity.AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{15, 15});
+		std::shared_ptr<Duin::Entity> entity = GetSceneManager().CreateEntity();
+		entity->AddComponent<PlayerCMP>();
+		entity->AddComponent<PlayerInputCMP>();
+		entity->AddComponent<MovementCMP>();
+		entity->AddComponent<TransformCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) });
+		entity->AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{15, 15});
 	}
 }
 
@@ -61,7 +62,7 @@ void Sandbox::Ready()
 
 void Sandbox::HandleInputs(Duin::InputEvent e)
 {
-	PlayerCMPManager::Update(&registry, e);
+	PlayerCMPManager::Update(registry.get(), e);
 }
 
 void Sandbox::Process(double rDelta)
@@ -70,11 +71,11 @@ void Sandbox::Process(double rDelta)
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
-	MovementCMPManager::Update(&registry, pDelta);
-	TransformCMPManager::Update(&registry, pDelta);
+	MovementCMPManager::Update(registry.get(), pDelta);
+	TransformCMPManager::Update(registry.get(), pDelta);
 }
 
 void Sandbox::Draw()
 {
-	RenderableCMPManager::Update(&registry);
+	RenderableCMPManager::Update(registry.get());
 }

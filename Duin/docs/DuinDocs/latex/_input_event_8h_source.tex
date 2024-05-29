@@ -1,0 +1,36 @@
+\doxysection{Input\+Event.\+h}
+\hypertarget{_input_event_8h_source}{}\label{_input_event_8h_source}\index{Duin/src/Duin/Events/InputEvent.h@{Duin/src/Duin/Events/InputEvent.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Duin/Events/InputMap.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Maths/DuinMaths.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <RaylibComponent.h>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_input_event}{InputEvent}}}
+\DoxyCodeLine{00012\ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_input_event}{InputEvent}}();}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_input_event}{\string~InputEvent}}();}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsKeyPressed(\textcolor{keywordtype}{int}\ key);}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsKeyPressedRepeat(\textcolor{keywordtype}{int}\ key);}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsKeyDown(\textcolor{keywordtype}{int}\ key);}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsKeyReleased(\textcolor{keywordtype}{int}\ key);}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsKeyUp(\textcolor{keywordtype}{int}\ key);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ GetKeyPressed();}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ GetCharPressed();}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ GetInputVector(\textcolor{keywordtype}{int}\ keyUp,\ \textcolor{keywordtype}{int}\ keyDown,\ \textcolor{keywordtype}{int}\ keyLeft,\ \textcolor{keywordtype}{int}\ keyRight);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ GetMousePosition();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00029\ \ \ \ \ \};}
+\DoxyCodeLine{00030\ \}}
+
+\end{DoxyCode}

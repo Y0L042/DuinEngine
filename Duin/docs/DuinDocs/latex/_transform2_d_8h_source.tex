@@ -1,0 +1,101 @@
+\doxysection{Transform2\+D.\+h}
+\hypertarget{_transform2_d_8h_source}{}\label{_transform2_d_8h_source}\index{Duin/src/Duin/Core/Maths/src/Transform2D.h@{Duin/src/Duin/Core/Maths/src/Transform2D.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}../MathsCore.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Vector2.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Mat2x2.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }Duin\ }
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{struct\ }DUIN\_MATHS\_API\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}}
+\DoxyCodeLine{00012\ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ origin;}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_matrix2x2}{Matrix2x2}}\ transform;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}()\ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ :\ origin(0,\ 0),\ transform()}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \{\}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\&\ origin,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_matrix2x2}{Matrix2x2}}\&\ transform)}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ :\ origin(origin),\ transform(transform)\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \{\}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ Identity()\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}(\mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}(0,\ 0),\ \mbox{\hyperlink{struct_duin_1_1_matrix2x2}{Matrix2x2}}());}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ Translated(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\&\ offset)\textcolor{keyword}{\ const\ }}
+\DoxyCodeLine{00030\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ result.origin\ =\ result.origin\ +\ offset;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ Rotated(\textcolor{keywordtype}{float}\ angle)\textcolor{keyword}{\ const\ }}
+\DoxyCodeLine{00037\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_matrix2x2}{Matrix2x2}}\ rotation\ =\ Matrix2x2::Rotate(angle);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ result.transform\ =\ result.transform\ *\ rotation;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ Scaled(\textcolor{keywordtype}{float}\ sx,\ \textcolor{keywordtype}{float}\ sy)\textcolor{keyword}{\ const\ }}
+\DoxyCodeLine{00045\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_matrix2x2}{Matrix2x2}}\ scale\ =\ Matrix2x2::Scale(sx,\ sy);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ result.transform\ =\ result.transform\ *\ scale;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ Apply(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\&\ point)\textcolor{keyword}{\ const\ }}
+\DoxyCodeLine{00053\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ transform\ *\ point\ +\ origin;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\&\ other)\textcolor{keyword}{\ const\ }}
+\DoxyCodeLine{00058\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ result;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ result.transform\ =\ transform\ *\ other.transform;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ result.origin\ =\ transform\ *\ other.origin\ +\ origin;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\&\ other)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00066\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ result;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ result.origin\ =\ origin\ +\ other.origin;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//result.transform\ =\ transform\ +\ other.transform;\ //\ Assuming\ Matrix2x2\ has\ an\ operator+\ defined}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ operator-\/(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\&\ other)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00074\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ result;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ result.origin\ =\ origin\ -\/\ other.origin;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//result.transform\ =\ transform\ -\/\ other.transform;\ //\ Assuming\ Matrix2x2\ has\ an\ operator+\ defined}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\&\ operator+=(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\&\ other)}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ origin\ +=\ other.origin;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//transform\ +=\ other.transform;\ //\ Assuming\ Matrix2x2\ has\ an\ operator+=\ defined}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\&\ operator-\/=(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\&\ other)}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ origin\ -\/=\ other.origin;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//transform\ -\/=\ other.transform;\ //\ Assuming\ Matrix2x2\ has\ an\ operator+=\ defined}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \};}
+\DoxyCodeLine{00095\ \}}
+
+\end{DoxyCode}

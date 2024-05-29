@@ -1,0 +1,309 @@
+\doxysection{Render\+Structs.\+h}
+\hypertarget{_render_structs_8h_source}{}\label{_render_structs_8h_source}\index{Duin/src/Duin/Core/Structures/RenderStructs.h@{Duin/src/Duin/Core/Structures/RenderStructs.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Maths/DuinMaths.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ /**********************************************************************************************}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ *\ \ \ raylib\ v5.1-\/dev\ -\/\ A\ simple\ and\ easy-\/to-\/use\ library\ to\ enjoy\ videogames\ programming\ (www.raylib.com)}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ *\ \ \ FEATURES:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ NO\ external\ dependencies,\ all\ required\ libraries\ included\ with\ raylib}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Multiplatform:\ Windows,\ Linux,\ FreeBSD,\ OpenBSD,\ NetBSD,\ DragonFly,}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MacOS,\ Haiku,\ Android,\ Raspberry\ Pi,\ DRM\ native,\ HTML5.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Written\ in\ plain\ C\ code\ (C99)\ in\ PascalCase/camelCase\ notation}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Hardware\ accelerated\ with\ OpenGL\ (1.1,\ 2.1,\ 3.3,\ 4.3\ or\ ES2\ -\/\ choose\ at\ compile)}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Unique\ OpenGL\ abstraction\ layer\ (usable\ as\ standalone\ module):\ [rlgl]}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Multiple\ Fonts\ formats\ supported\ (TTF,\ XNA\ fonts,\ AngelCode\ fonts)}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Outstanding\ texture\ formats\ support,\ including\ compressed\ formats\ (DXT,\ ETC,\ ASTC)}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Full\ 3d\ support\ for\ 3d\ Shapes,\ Models,\ Billboards,\ Heightmaps\ and\ more!}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Flexible\ Materials\ system,\ supporting\ classic\ maps\ and\ PBR\ maps}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Animated\ 3D\ models\ supported\ (skeletal\ bones\ animation)\ (IQM)}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Shaders\ support,\ including\ Model\ shaders\ and\ Postprocessing\ shaders}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Powerful\ math\ module\ for\ Vector,\ Matrix\ and\ Quaternion\ operations:\ [raymath]}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Audio\ loading\ and\ playing\ with\ streaming\ support\ (WAV,\ OGG,\ MP3,\ FLAC,\ XM,\ MOD)}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ VR\ stereo\ rendering\ with\ configurable\ HMD\ device\ parameters}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ Bindings\ to\ multiple\ programming\ languages\ available!}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ *\ \ \ NOTES:}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ One\ default\ Font\ is\ loaded\ on\ InitWindow()-\/>LoadFontDefault()\ [core,\ text]}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ One\ default\ Texture2D\ is\ loaded\ on\ rlglInit(),\ 1x1\ white\ pixel\ R8G8B8A8\ [rlgl]\ (OpenGL\ 3.3\ or\ ES2)}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ One\ default\ Shader\ is\ loaded\ on\ rlglInit()-\/>rlLoadShaderDefault()\ [rlgl]\ (OpenGL\ 3.3\ or\ ES2)}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ -\/\ One\ default\ RenderBatch\ is\ loaded\ on\ rlglInit()-\/>rlLoadRenderBatch()\ [rlgl]\ (OpenGL\ 3.3\ or\ ES2)}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ *\ \ \ DEPENDENCIES\ (included):}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rcore]\ rglfw\ (Camilla\ Löwy -\/\ github.com/glfw/glfw)\ for\ window/context\ management\ and\ input\ (PLATFORM\_DESKTOP)}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rlgl]\ glad\ (David\ Herberth\ -\/\ github.com/Dav1dde/glad)\ for\ OpenGL\ 3.3\ extensions\ loading\ (PLATFORM\_DESKTOP)}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [raudio]\ miniaudio\ (David\ Reid\ -\/\ github.com/mackron/miniaudio)\ for\ audio\ device/context\ management}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ *\ \ \ OPTIONAL\ DEPENDENCIES\ (included):}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rcore]\ msf\_gif\ (Miles\ Fogle)\ for\ GIF\ recording}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rcore]\ sinfl\ (Micha\ Mettke)\ for\ DEFLATE\ decompression\ algorithm}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rcore]\ sdefl\ (Micha\ Mettke)\ for\ DEFLATE\ compression\ algorithm}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rtextures]\ stb\_image\ (Sean\ Barret)\ for\ images\ loading\ (BMP,\ TGA,\ PNG,\ JPEG,\ HDR...)}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rtextures]\ stb\_image\_write\ (Sean\ Barret)\ for\ image\ writing\ (BMP,\ TGA,\ PNG,\ JPG)}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rtextures]\ stb\_image\_resize\ (Sean\ Barret)\ for\ image\ resizing\ algorithms}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rtext]\ stb\_truetype\ (Sean\ Barret)\ for\ ttf\ fonts\ loading}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rtext]\ stb\_rect\_pack\ (Sean\ Barret)\ for\ rectangles\ packing}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rmodels]\ par\_shapes\ (Philip\ Rideout)\ for\ parametric\ 3d\ shapes\ generation}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rmodels]\ tinyobj\_loader\_c\ (Syoyo\ Fujita)\ for\ models\ loading\ (OBJ,\ MTL)}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rmodels]\ cgltf\ (Johannes\ Kuhlmann)\ for\ models\ loading\ (glTF)}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [rmodels]\ Model3D\ (bzt)\ for\ models\ loading\ (M3D,\ https://bztsrc.gitlab.io/model3d)}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [raudio]\ dr\_wav\ (David\ Reid)\ for\ WAV\ audio\ file\ loading}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [raudio]\ dr\_flac\ (David\ Reid)\ for\ FLAC\ audio\ file\ loading}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [raudio]\ dr\_mp3\ (David\ Reid)\ for\ MP3\ audio\ file\ loading}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [raudio]\ stb\_vorbis\ (Sean\ Barret)\ for\ OGG\ audio\ loading}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [raudio]\ jar\_xm\ (Joshua\ Reisenauer)\ for\ XM\ audio\ module\ loading}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ \ \ [raudio]\ jar\_mod\ (Joshua\ Reisenauer)\ for\ MOD\ audio\ module\ loading}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ \ \ \ *\ \ \ LICENSE:\ zlib/libpng}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ \ \ \ *\ \ \ raylib\ is\ licensed\ under\ an\ unmodified\ zlib/libpng\ license,\ which\ is\ an\ OSI-\/certified,}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ \ \ \ *\ \ \ BSD-\/like\ license\ that\ allows\ static\ linking\ with\ closed\ source\ software:}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ \ \ \ *\ \ \ Copyright\ (c)\ 2013-\/2024\ Ramon\ Santamaria\ (@raysan5)}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ \ \ \ *\ \ \ This\ software\ is\ provided\ "{}as-\/is"{},\ without\ any\ express\ or\ implied\ warranty.\ In\ no\ event}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ \ \ \ *\ \ \ will\ the\ authors\ be\ held\ liable\ for\ any\ damages\ arising\ from\ the\ use\ of\ this\ software.}}
+\DoxyCodeLine{00071\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00072\ \textcolor{comment}{\ \ \ \ *\ \ \ Permission\ is\ granted\ to\ anyone\ to\ use\ this\ software\ for\ any\ purpose,\ including\ commercial}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ \ \ \ *\ \ \ applications,\ and\ to\ alter\ it\ and\ redistribute\ it\ freely,\ subject\ to\ the\ following\ restrictions:}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ 1.\ The\ origin\ of\ this\ software\ must\ not\ be\ misrepresented;\ you\ must\ not\ claim\ that\ you}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ wrote\ the\ original\ software.\ If\ you\ use\ this\ software\ in\ a\ product,\ an\ acknowledgment}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ in\ the\ product\ documentation\ would\ be\ appreciated\ but\ is\ not\ required.}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ 2.\ Altered\ source\ versions\ must\ be\ plainly\ marked\ as\ such,\ and\ must\ not\ be\ misrepresented}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ as\ being\ the\ original\ software.}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ \ \ \ *\ \ \ \ \ 3.\ This\ notice\ may\ not\ be\ removed\ or\ altered\ from\ any\ source\ distribution.}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \ \ **********************************************************************************************/}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ NOTE:\ MSVC\ C++\ compiler\ does\ not\ support\ compound\ literals\ (C99\ feature)}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//\ Plain\ structures\ in\ C++\ (without\ constructors)\ can\ be\ initialized\ with\ \{\ \}}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ This\ is\ called\ aggregate\ initialization\ (C++11\ feature)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \ \ \#if\ defined(\_\_cplusplus)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ \ \ \#define\ CLITERAL(type)\ \ \ \ \ \ type}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\ \ \ \ \#define\ CLITERAL(type)\ \ \ \ \ \ (type)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Some\ compilers\ (mostly\ macos\ clang)\ default\ to\ C++98,}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ where\ aggregate\ initialization\ can't\ be\ used}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ So,\ give\ a\ more\ clear\ error\ stating\ how\ to\ fix\ this}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\ \ \ \ \#if\ !defined(\_MSC\_VER)\ \&\&\ (defined(\_\_cplusplus)\ \&\&\ \_\_cplusplus\ <\ 201103L)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\ \ \ \ \#error\ "{}C++11\ or\ later\ is\ required.\ Add\ -\/std=c++11"{}}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\ \ \ \ \#define\ LIGHTGRAY\ \ CLITERAL(Color)\{\ 200,\ 200,\ 200,\ 255\ \}\ \ \ }\textcolor{comment}{//\ Light\ Gray}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\ \ \ \ \#define\ GRAY\ \ \ \ \ \ \ CLITERAL(Color)\{\ 130,\ 130,\ 130,\ 255\ \}\ \ \ }\textcolor{comment}{//\ Gray}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\ \ \ \ \#define\ DARKGRAY\ \ \ CLITERAL(Color)\{\ 80,\ 80,\ 80,\ 255\ \}\ \ \ \ \ \ }\textcolor{comment}{//\ Dark\ Gray}}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\ \ \ \ \#define\ YELLOW\ \ \ \ \ CLITERAL(Color)\{\ 253,\ 249,\ 0,\ 255\ \}\ \ \ \ \ }\textcolor{comment}{//\ Yellow}}
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\ \ \ \ \#define\ GOLD\ \ \ \ \ \ \ CLITERAL(Color)\{\ 255,\ 203,\ 0,\ 255\ \}\ \ \ \ \ }\textcolor{comment}{//\ Gold}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\ \ \ \ \#define\ ORANGE\ \ \ \ \ CLITERAL(Color)\{\ 255,\ 161,\ 0,\ 255\ \}\ \ \ \ \ }\textcolor{comment}{//\ Orange}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\ \ \ \ \#define\ PINK\ \ \ \ \ \ \ CLITERAL(Color)\{\ 255,\ 109,\ 194,\ 255\ \}\ \ \ }\textcolor{comment}{//\ Pink}}
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\ \ \ \ \#define\ RED\ \ \ \ \ \ \ \ CLITERAL(Color)\{\ 230,\ 41,\ 55,\ 255\ \}\ \ \ \ \ }\textcolor{comment}{//\ Red}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\ \ \ \ \#define\ MAROON\ \ \ \ \ CLITERAL(Color)\{\ 190,\ 33,\ 55,\ 255\ \}\ \ \ \ \ }\textcolor{comment}{//\ Maroon}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\ \ \ \ \#define\ GREEN\ \ \ \ \ \ CLITERAL(Color)\{\ 0,\ 228,\ 48,\ 255\ \}\ \ \ \ \ \ }\textcolor{comment}{//\ Green}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\ \ \ \ \#define\ LIME\ \ \ \ \ \ \ CLITERAL(Color)\{\ 0,\ 158,\ 47,\ 255\ \}\ \ \ \ \ \ }\textcolor{comment}{//\ Lime}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\ \ \ \ \#define\ DARKGREEN\ \ CLITERAL(Color)\{\ 0,\ 117,\ 44,\ 255\ \}\ \ \ \ \ \ }\textcolor{comment}{//\ Dark\ Green}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\ \ \ \ \#define\ SKYBLUE\ \ \ \ CLITERAL(Color)\{\ 102,\ 191,\ 255,\ 255\ \}\ \ \ }\textcolor{comment}{//\ Sky\ Blue}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\ \ \ \ \#define\ BLUE\ \ \ \ \ \ \ CLITERAL(Color)\{\ 0,\ 121,\ 241,\ 255\ \}\ \ \ \ \ }\textcolor{comment}{//\ Blue}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\ \ \ \ \#define\ DARKBLUE\ \ \ CLITERAL(Color)\{\ 0,\ 82,\ 172,\ 255\ \}\ \ \ \ \ \ }\textcolor{comment}{//\ Dark\ Blue}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\ \ \ \ \#define\ PURPLE\ \ \ \ \ CLITERAL(Color)\{\ 200,\ 122,\ 255,\ 255\ \}\ \ \ }\textcolor{comment}{//\ Purple}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\ \ \ \ \#define\ VIOLET\ \ \ \ \ CLITERAL(Color)\{\ 135,\ 60,\ 190,\ 255\ \}\ \ \ \ }\textcolor{comment}{//\ Violet}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\ \ \ \ \#define\ DARKPURPLE\ CLITERAL(Color)\{\ 112,\ 31,\ 126,\ 255\ \}\ \ \ \ }\textcolor{comment}{//\ Dark\ Purple}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\ \ \ \ \#define\ BEIGE\ \ \ \ \ \ CLITERAL(Color)\{\ 211,\ 176,\ 131,\ 255\ \}\ \ \ }\textcolor{comment}{//\ Beige}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\ \ \ \ \#define\ BROWN\ \ \ \ \ \ CLITERAL(Color)\{\ 127,\ 106,\ 79,\ 255\ \}\ \ \ \ }\textcolor{comment}{//\ Brown}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\ \ \ \ \#define\ DARKBROWN\ \ CLITERAL(Color)\{\ 76,\ 63,\ 47,\ 255\ \}\ \ \ \ \ \ }\textcolor{comment}{//\ Dark\ Brown}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\ \ \ \ \#define\ WHITE\ \ \ \ \ \ CLITERAL(Color)\{\ 255,\ 255,\ 255,\ 255\ \}\ \ \ }\textcolor{comment}{//\ White}}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\ \ \ \ \#define\ BLACK\ \ \ \ \ \ CLITERAL(Color)\{\ 0,\ 0,\ 0,\ 255\ \}\ \ \ \ \ \ \ \ \ }\textcolor{comment}{//\ Black}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\ \ \ \ \#define\ BLANK\ \ \ \ \ \ CLITERAL(Color)\{\ 0,\ 0,\ 0,\ 0\ \}\ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//\ Blank\ (Transparent)}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\ \ \ \ \#define\ MAGENTA\ \ \ \ CLITERAL(Color)\{\ 255,\ 0,\ 255,\ 255\ \}\ \ \ \ \ }\textcolor{comment}{//\ Magenta}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Color,\ 4\ components,\ R8G8B8A8\ (32bit)}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_color}{Color}}\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ r;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ red\ value}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ g;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ green\ value}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ b;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ blue\ value}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ a;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ alpha\ value}}
+\DoxyCodeLine{00136\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_color}{Color}};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Image,\ pixel\ data\ stored\ in\ CPU\ memory\ (RAM)}}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_image}{Image}}\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Image\ raw\ data}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Image\ base\ width}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ height;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Image\ base\ height}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mipmaps;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mipmap\ levels,\ 1\ by\ default}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ format;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Data\ format\ (PixelFormat\ type)}}
+\DoxyCodeLine{00145\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_image}{Image}};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Texture,\ tex\ data\ stored\ in\ GPU\ memory\ (VRAM)}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture}}\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ id;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ OpenGL\ texture\ id}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Texture\ base\ width}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ height;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Texture\ base\ height}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mipmaps;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mipmap\ levels,\ 1\ by\ default}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ format;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Data\ format\ (PixelFormat\ type)}}
+\DoxyCodeLine{00154\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture}};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//\ Texture2D,\ same\ as\ Texture}}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture}}\ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture2D}};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{comment}{//\ TextureCubemap,\ same\ as\ Texture}}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture}}\ \mbox{\hyperlink{struct_duin_1_1_texture}{TextureCubemap}};}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ RenderTexture,\ fbo\ for\ texture\ rendering}}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_render_texture}{RenderTexture}}\ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ id;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ OpenGL\ framebuffer\ object\ id}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture}}\ texture;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ buffer\ attachment\ texture}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture}}\ depth;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Depth\ buffer\ attachment\ texture}}
+\DoxyCodeLine{00167\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_render_texture}{RenderTexture}};}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{comment}{//\ RenderTexture2D,\ same\ as\ RenderTexture}}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_duin_1_1_render_texture}{RenderTexture}}\ \mbox{\hyperlink{struct_duin_1_1_render_texture}{RenderTexture2D}};}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{comment}{//\ NPatchInfo,\ n-\/patch\ layout\ info}}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_n_patch_info}{NPatchInfo}}\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_rectangle}{Rectangle}}\ source;\ \ \ \ \ \ \ \textcolor{comment}{//\ Texture\ source\ rectangle}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ left;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Left\ border\ offset}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ top;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Top\ border\ offset}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ right;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Right\ border\ offset}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ bottom;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bottom\ border\ offset}}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ layout;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Layout\ of\ the\ n-\/patch:\ 3x3,\ 1x3\ or\ 3x1}}
+\DoxyCodeLine{00180\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_n_patch_info}{NPatchInfo}};}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ GlyphInfo,\ font\ characters\ glyphs\ info}}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_glyph_info}{GlyphInfo}}\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Character\ value\ (Unicode)}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ offsetX;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Character\ offset\ X\ when\ drawing}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ offsetY;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Character\ offset\ Y\ when\ drawing}}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ advanceX;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Character\ advance\ position\ X}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_image}{Image}}\ image;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Character\ image\ data}}
+\DoxyCodeLine{00189\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_glyph_info}{GlyphInfo}};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//\ Font,\ font\ texture\ and\ GlyphInfo\ array\ data}}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_font}{Font}}\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ baseSize;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Base\ size\ (default\ chars\ height)}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ glyphCount;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ glyph\ characters}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ glyphPadding;\ \ \ \ \ \ \ \textcolor{comment}{//\ Padding\ around\ the\ glyph\ characters}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture2D}}\ texture;\ \ \ \ \ \ \textcolor{comment}{//\ Texture\ atlas\ containing\ the\ glyphs}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_rectangle}{Rectangle}}*\ recs;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Rectangles\ in\ texture\ for\ the\ glyphs}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_glyph_info}{GlyphInfo}}*\ glyphs;\ \ \ \ \ \ \textcolor{comment}{//\ Glyphs\ info\ data}}
+\DoxyCodeLine{00199\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_font}{Font}};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ Camera,\ defines\ position/orientation\ in\ 3d\ space}}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_camera3_d}{Camera3D}}\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector3}{Vector3}}\ position;\ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ position}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector3}{Vector3}}\ target;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ target\ it\ looks-\/at}}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector3}{Vector3}}\ up;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ up\ vector\ (rotation\ over\ its\ axis)}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ fovy;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ field-\/of-\/view\ aperture\ in\ Y\ (degrees)\ in\ perspective,\ used\ as\ near\ plane\ width\ in\ orthographic}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ projection;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ projection:\ CAMERA\_PERSPECTIVE\ or\ CAMERA\_ORTHOGRAPHIC}}
+\DoxyCodeLine{00208\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_camera3_d}{Camera3D}};}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_duin_1_1_camera3_d}{Camera3D}}\ \mbox{\hyperlink{struct_duin_1_1_camera3_d}{Camera}};\ \ \ \ \textcolor{comment}{//\ Camera\ type\ fallback,\ defaults\ to\ Camera3D}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{comment}{//\ Camera2D,\ defines\ position/orientation\ in\ 2d\ space}}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_camera2_d}{Camera2D}}\ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ offset;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ offset\ (displacement\ from\ target)}}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ target;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ target\ (rotation\ and\ zoom\ origin)}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rotation;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ rotation\ in\ degrees}}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ zoom;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Camera\ zoom\ (scaling),\ should\ be\ 1.0f\ by\ default}}
+\DoxyCodeLine{00218\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_camera2_d}{Camera2D}};}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//\ Mesh,\ vertex\ data\ and\ vao/vbo}}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_mesh}{Mesh}}\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ vertexCount;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ vertices\ stored\ in\ arrays}}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ triangleCount;\ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ triangles\ stored\ (indexed\ or\ not)}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Vertex\ attributes\ data}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ vertices;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Vertex\ position\ (XYZ\ -\/\ 3\ components\ per\ vertex)\ (shader-\/location\ =\ 0)}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ texcoords;\ \ \ \ \ \ \ \textcolor{comment}{//\ Vertex\ texture\ coordinates\ (UV\ -\/\ 2\ components\ per\ vertex)\ (shader-\/location\ =\ 1)}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ texcoords2;\ \ \ \ \ \ \textcolor{comment}{//\ Vertex\ texture\ second\ coordinates\ (UV\ -\/\ 2\ components\ per\ vertex)\ (shader-\/location\ =\ 5)}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ normals;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Vertex\ normals\ (XYZ\ -\/\ 3\ components\ per\ vertex)\ (shader-\/location\ =\ 2)}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ tangents;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Vertex\ tangents\ (XYZW\ -\/\ 4\ components\ per\ vertex)\ (shader-\/location\ =\ 4)}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ colors;\ \ \ \ \ \ \textcolor{comment}{//\ Vertex\ colors\ (RGBA\ -\/\ 4\ components\ per\ vertex)\ (shader-\/location\ =\ 3)}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}*\ indices;\ \ \ \ \textcolor{comment}{//\ Vertex\ indices\ (in\ case\ vertex\ data\ comes\ indexed)}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Animation\ vertex\ data}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ animVertices;\ \ \ \ \textcolor{comment}{//\ Animated\ vertex\ positions\ (after\ bones\ transformations)}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ animNormals;\ \ \ \ \ \textcolor{comment}{//\ Animated\ normals\ (after\ bones\ transformations)}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ boneIds;\ \textcolor{comment}{//\ Vertex\ bone\ ids,\ max\ 255\ bone\ ids,\ up\ to\ 4\ bones\ influence\ by\ vertex\ (skinning)}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ boneWeights;\ \ \ \ \ \textcolor{comment}{//\ Vertex\ bone\ weight,\ up\ to\ 4\ bones\ influence\ by\ vertex\ (skinning)}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ OpenGL\ identifiers}}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vaoId;\ \ \ \ \ \textcolor{comment}{//\ OpenGL\ Vertex\ Array\ Object\ id}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}*\ vboId;\ \ \ \ \textcolor{comment}{//\ OpenGL\ Vertex\ Buffer\ Objects\ id\ (default\ vertex\ data)}}
+\DoxyCodeLine{00243\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_mesh}{Mesh}};}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{comment}{//\ Shader}}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_shader}{Shader}}\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ id;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Shader\ program\ id}}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ locs;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Shader\ locations\ array\ (RL\_MAX\_SHADER\_LOCATIONS)}}
+\DoxyCodeLine{00249\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_shader}{Shader}};}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{comment}{//\ MaterialMap}}
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_material_map}{MaterialMap}}\ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_texture}{Texture2D}}\ texture;\ \ \ \ \ \ \textcolor{comment}{//\ Material\ map\ texture}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_color}{Color}}\ color;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Material\ map\ color}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ value;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Material\ map\ value}}
+\DoxyCodeLine{00256\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_material_map}{MaterialMap}};}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{comment}{//\ Material,\ includes\ shader\ and\ maps}}
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_material}{Material}}\ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_shader}{Shader}}\ shader;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Material\ shader}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_material_map}{MaterialMap}}*\ maps;\ \ \ \ \ \ \textcolor{comment}{//\ Material\ maps\ array\ (MAX\_MATERIAL\_MAPS)}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ params[4];\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Material\ generic\ parameters\ (if\ required)}}
+\DoxyCodeLine{00263\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_material}{Material}};}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ Transform,\ vertex\ transformation\ data}}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_transform}{Transform}}\ \{}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector3}{Vector3}}\ translation;\ \ \ \ \textcolor{comment}{//\ Translation}}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_quaternion}{Quaternion}}\ rotation;\ \ \ \ \textcolor{comment}{//\ Rotation}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector3}{Vector3}}\ scale;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scale}}
+\DoxyCodeLine{00270\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_transform}{Transform}};}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ \textcolor{comment}{//\ Bone,\ skeletal\ animation\ bone}}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_bone_info}{BoneInfo}}\ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ name[32];\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bone\ name}}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ parent;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bone\ parent}}
+\DoxyCodeLine{00276\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_bone_info}{BoneInfo}};}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{comment}{//\ Model,\ meshes,\ materials\ and\ animation\ data}}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_model}{Model}}\ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_matrix}{Matrix}}\ transform;\ \ \ \ \ \ \ \textcolor{comment}{//\ Local\ transform\ matrix}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ meshCount;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ meshes}}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ materialCount;\ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ materials}}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_mesh}{Mesh}}*\ meshes;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Meshes\ array}}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_material}{Material}}*\ materials;\ \ \ \ \textcolor{comment}{//\ Materials\ array}}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ meshMaterial;\ \ \ \ \ \ \textcolor{comment}{//\ Mesh\ material\ number}}
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Animation\ data}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ boneCount;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ bones}}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_bone_info}{BoneInfo}}*\ bones;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bones\ information\ (skeleton)}}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform}{Transform}}*\ bindPose;\ \ \ \ \textcolor{comment}{//\ Bones\ base\ transformation\ (pose)}}
+\DoxyCodeLine{00292\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_model}{Model}};}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{comment}{//\ ModelAnimation}}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }DUIN\_API\ \mbox{\hyperlink{struct_duin_1_1_model_animation}{ModelAnimation}}\ \{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ boneCount;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ bones}}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ frameCount;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ animation\ frames}}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_bone_info}{BoneInfo}}*\ bones;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bones\ information\ (skeleton)}}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform}{Transform}}**\ framePoses;\ \textcolor{comment}{//\ Poses\ array\ by\ frame}}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ name[32];\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Animation\ name}}
+\DoxyCodeLine{00301\ \ \ \ \ \}\ \mbox{\hyperlink{struct_duin_1_1_model_animation}{ModelAnimation}};}
+\DoxyCodeLine{00302\ \textcolor{comment}{/*********************************************************************************************/}}
+\DoxyCodeLine{00303\ \}}
+
+\end{DoxyCode}

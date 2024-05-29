@@ -1,0 +1,39 @@
+\doxysection{Sprite2\+D.\+h}
+\hypertarget{_sprite2_d_8h_source}{}\label{_sprite2_d_8h_source}\index{Duin/src/Duin/Object/Node/Node2D/Sprite2D.h@{Duin/src/Duin/Object/Node/Node2D/Sprite2D.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Maths/DuinMaths.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Duin/Object/Node/Node2D/Node2D.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Duin/Graphics/TextureResource.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_sprite2_d}{Sprite2D}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_duin_1_1_node2_d}{Node2D}}}
+\DoxyCodeLine{00014\ \ \ \ \ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_sprite2_d}{Sprite2D}}();}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_sprite2_d}{Sprite2D}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ texturePath);}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_sprite2_d}{\string~Sprite2D}}();}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ std::shared\_ptr<TextureResource>\ GetTexture();}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ std::shared\_ptr<Sprite2D>\ SetTexture(\textcolor{keywordtype}{char}*\ texturePath);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ std::shared\_ptr<Sprite2D>\ SetTexture(\mbox{\hyperlink{class_duin_1_1_texture_resource}{TextureResource}}*\ texturePtr);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ std::shared\_ptr<Sprite2D>\ SetTexture(std::shared\_ptr<TextureResource>\ texturePtr);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ std::shared\_ptr<Sprite2D>\ SetTextureSize(\textcolor{keywordtype}{float}\ width,\ \textcolor{keywordtype}{float}\ height);}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ std::shared\_ptr<Sprite2D>\ SetTextureSize(\mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ size);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Draw()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::shared\_ptr<TextureResource>\ texture;}
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ \}}
+
+\end{DoxyCode}

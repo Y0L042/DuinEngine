@@ -1,0 +1,50 @@
+\doxysection{Node2\+D.\+h}
+\hypertarget{_node2_d_8h_source}{}\label{_node2_d_8h_source}\index{Duin/src/Duin/Object/Node/Node2D/Node2D.h@{Duin/src/Duin/Object/Node/Node2D/Node2D.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}dnpch.h"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/UUID.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Maths/DuinMaths.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Duin/Object/Node/Node.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_node2_d}{Node2D}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_duin_1_1_node}{Node}}}
+\DoxyCodeLine{00014\ \ \ \ \ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_node2_d}{Node2D}}();}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_node2_d}{Node2D}}(\mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ localPos2D);}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_node2_d}{\string~Node2D}}();}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ InternalInitialize()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ GetLocalPosition2D();}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetLocalPosition2D(\mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ pos);}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetLocalPosition2D(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ GetGlobalPosition2D();}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetGlobalPosition2D(\mbox{\hyperlink{struct_duin_1_1_vector2}{Vector2}}\ pos);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ GetLocalTransform2D();}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetLocalTransform2D(\mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ transform);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ GetGlobalTransform2D();}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ConnectToTransformUpdate(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}})>\ callback);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ GetParentGlobalTransform2D(\mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ parentTF\ );}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_signal}{Signal<Transform2D>}}\ onAnyTransformUpdate;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ localTransform2D;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_duin_1_1_transform2_d}{Transform2D}}\ globalTransform2DCache;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ globalTransformCacheDirty\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00043\ \ \ \ \ \};}
+\DoxyCodeLine{00044\ \}}
+
+\end{DoxyCode}

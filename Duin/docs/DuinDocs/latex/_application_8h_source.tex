@@ -1,0 +1,60 @@
+\doxysection{Application.\+h}
+\hypertarget{_application_8h_source}{}\label{_application_8h_source}\index{Duin/src/Duin/Core/Application.h@{Duin/src/Duin/Core/Application.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}dnpch.h"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Core.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Duin/Events/InputMap.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Duin/Events/InputEvent.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Scene/SceneManager.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <RayGuiComponent.h>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }Duin}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }DUIN\_API\ \mbox{\hyperlink{class_duin_1_1_application}{Application}}}
+\DoxyCodeLine{00015\ \ \ \ \ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_application}{Application}}();}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_duin_1_1_application}{\string~Application}}();}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetFramerate(\textcolor{keywordtype}{int}\ framerate)}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ TARGET\_RENDER\_FRAMERATE\ =\ framerate;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ TARGET\_PHYSICS\_FRAMERATE\ =\ framerate;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Run();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EngineInitialize();}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Initialize();}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EngineReady();}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Ready();}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EngineHandleInputs(\mbox{\hyperlink{class_duin_1_1_input_event}{InputEvent}}\ e);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleInputs(\mbox{\hyperlink{class_duin_1_1_input_event}{InputEvent}}\ e);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EngineProcess(\textcolor{keywordtype}{double}\ rDelta);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Process(\textcolor{keywordtype}{double}\ rDelta);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EnginePhysicsProcess(\textcolor{keywordtype}{double}\ pDelta);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ PhysicsProcess(\textcolor{keywordtype}{double}\ pDelta);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EngineDraw();}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Draw();}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EngineExit();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Exit();}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_scene_manager}{SceneManager}}\&\ GetSceneManager();}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ TARGET\_RENDER\_FRAMERATE\ =\ 60;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ TARGET\_PHYSICS\_FRAMERATE\ =\ 60;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_scene_manager}{SceneManager}}\ sceneManager;}
+\DoxyCodeLine{00049\ \ \ \ \ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_duin_1_1_application}{Application}}*\ CreateApplication();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \}}
+\DoxyCodeLine{00054\ }
+
+\end{DoxyCode}

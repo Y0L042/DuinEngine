@@ -11,14 +11,16 @@
 
 namespace Duin
 {
+	using EntitySptr = std::shared_ptr<Duin::Entity>;
+
 	class DUIN_API Entity
 	{
 	public:
-		static Entity& Create(Registry* registry)
+		static std::shared_ptr<Entity> Create(Registry* registry)
 		{
 			std::shared_ptr<Entity> entity = std::make_shared<Entity>(registry);
 			entityStorage[entity->GetUUID()] = entity;
-			return *entity;
+			return entity;
 		}
 
 		Entity(Registry* i_registry)
@@ -31,6 +33,9 @@ namespace Duin
 		{
 			entityStorage.erase(uuid);
 		};
+
+		Entity(const Entity&) = delete;
+		Entity& operator=(const Entity&) = delete;
 
 		UUID GetUUID() { return uuid; }
 

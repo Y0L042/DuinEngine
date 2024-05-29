@@ -123,4 +123,9 @@ namespace Duin
     {
     }
 
+    SceneManager& Application::GetSceneManager()
+    {
+        return sceneManager;
+    }
+
 }

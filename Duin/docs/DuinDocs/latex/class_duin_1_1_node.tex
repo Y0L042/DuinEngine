@@ -1,0 +1,146 @@
+\doxysection{Duin\+::Node Class Reference}
+\hypertarget{class_duin_1_1_node}{}\label{class_duin_1_1_node}\index{Duin::Node@{Duin::Node}}
+Inheritance diagram for Duin\+::Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_duin_1_1_node}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_duin_1_1_node_a686b1240cd60c07fc7163703d6e56bc2}\label{class_duin_1_1_node_a686b1240cd60c07fc7163703d6e56bc2} 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries Instantiate\+Child} (Args \&\&... args)
+\item 
+\Hypertarget{class_duin_1_1_node_a6258936a2b2c18ffe5c5165c3e0540fd}\label{class_duin_1_1_node_a6258936a2b2c18ffe5c5165c3e0540fd} 
+{\footnotesize template$<$typename T $>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries Get\+Pointer} ()
+\item 
+\Hypertarget{class_duin_1_1_node_aa6078841683894aacf26ca21ff072974}\label{class_duin_1_1_node_aa6078841683894aacf26ca21ff072974} 
+void {\bfseries Set\+Node\+Alias} (std\+::string alias)
+\item 
+\Hypertarget{class_duin_1_1_node_a468937062f5a984fa18378e6fa78e3d6}\label{class_duin_1_1_node_a468937062f5a984fa18378e6fa78e3d6} 
+std\+::string {\bfseries Get\+Node\+Alias} ()
+\item 
+\Hypertarget{class_duin_1_1_node_aef9c00f700bc729cd00f57e5a41a2e24}\label{class_duin_1_1_node_aef9c00f700bc729cd00f57e5a41a2e24} 
+void {\bfseries Add\+Child} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ child)
+\item 
+\Hypertarget{class_duin_1_1_node_abd64f96905ddbd531349e043ba923164}\label{class_duin_1_1_node_abd64f96905ddbd531349e043ba923164} 
+void {\bfseries Remove\+Child} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ child)
+\item 
+\Hypertarget{class_duin_1_1_node_aa73793f58a80f05a29c4cc37fb6fdbf0}\label{class_duin_1_1_node_aa73793f58a80f05a29c4cc37fb6fdbf0} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ {\bfseries Get\+Parent} ()
+\item 
+\Hypertarget{class_duin_1_1_node_ae1e4fd3675f1d9e4b3eb48f4469e9272}\label{class_duin_1_1_node_ae1e4fd3675f1d9e4b3eb48f4469e9272} 
+void {\bfseries Set\+Parent} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ parent)
+\item 
+\Hypertarget{class_duin_1_1_node_ac8cc68f337eb4df7a5234d4ec49cf171}\label{class_duin_1_1_node_ac8cc68f337eb4df7a5234d4ec49cf171} 
+void {\bfseries Reset\+Parent} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a2d5bbe2f4d37ec432aa4aaad9c4bf552}\label{class_duin_1_1_node_a2d5bbe2f4d37ec432aa4aaad9c4bf552} 
+void {\bfseries Process\+Initialize} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a77eb67bbd5ef50b79232c2a07dc4ed76}\label{class_duin_1_1_node_a77eb67bbd5ef50b79232c2a07dc4ed76} 
+void {\bfseries Process\+On\+Ready} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a82111bcf3355c2167f16a4d01818c522}\label{class_duin_1_1_node_a82111bcf3355c2167f16a4d01818c522} 
+void {\bfseries Process\+On\+Handle\+Input} (\mbox{\hyperlink{class_duin_1_1_input_event}{Input\+Event}} e)
+\item 
+\Hypertarget{class_duin_1_1_node_ae132eb8d9753b646df1e399aaa813271}\label{class_duin_1_1_node_ae132eb8d9753b646df1e399aaa813271} 
+void {\bfseries Process\+On\+Update} (double r\+Delta)
+\item 
+\Hypertarget{class_duin_1_1_node_ab3bcd9fa24860c036eacc8baa157532c}\label{class_duin_1_1_node_ab3bcd9fa24860c036eacc8baa157532c} 
+void {\bfseries Process\+On\+Physics\+Update} (double p\+Delta)
+\item 
+\Hypertarget{class_duin_1_1_node_a38024acb586f1884b30ed30504eda276}\label{class_duin_1_1_node_a38024acb586f1884b30ed30504eda276} 
+void {\bfseries Process\+On\+Draw} ()
+\item 
+\Hypertarget{class_duin_1_1_node_aa8b0946bc93e52931616b39ce2fbea87}\label{class_duin_1_1_node_aa8b0946bc93e52931616b39ce2fbea87} 
+virtual void {\bfseries Internal\+Initialize} ()
+\item 
+\Hypertarget{class_duin_1_1_node_abbd00ca4314f4d404758afd91c7ff0ce}\label{class_duin_1_1_node_abbd00ca4314f4d404758afd91c7ff0ce} 
+virtual void {\bfseries Initialize} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a26830d29a9049bf69a13e1745646cea0}\label{class_duin_1_1_node_a26830d29a9049bf69a13e1745646cea0} 
+virtual void {\bfseries Ready} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a9542064e1e2b0541d3693c853f688b4a}\label{class_duin_1_1_node_a9542064e1e2b0541d3693c853f688b4a} 
+virtual void {\bfseries Handle\+Input} (\mbox{\hyperlink{class_duin_1_1_input_event}{Input\+Event}} e)
+\item 
+\Hypertarget{class_duin_1_1_node_aef8cd8752d8d016be4654072bf14ca4c}\label{class_duin_1_1_node_aef8cd8752d8d016be4654072bf14ca4c} 
+virtual void {\bfseries Update} (double r\+Delta)
+\item 
+\Hypertarget{class_duin_1_1_node_afb60cbda70b4a1d06ac1a1e27eff6ed5}\label{class_duin_1_1_node_afb60cbda70b4a1d06ac1a1e27eff6ed5} 
+virtual void {\bfseries Physics\+Update} (double p\+Delta)
+\item 
+\Hypertarget{class_duin_1_1_node_a4ab78c5434f510079d94f930b441fa83}\label{class_duin_1_1_node_a4ab78c5434f510079d94f930b441fa83} 
+virtual void {\bfseries Draw} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a8918f5bb6daf206b097190644978ad70}\label{class_duin_1_1_node_a8918f5bb6daf206b097190644978ad70} 
+virtual std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ \& {\bfseries Get\+Signal\+Menu} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a537bb76903693eb513f35bec75bf31ce}\label{class_duin_1_1_node_a537bb76903693eb513f35bec75bf31ce} 
+void {\bfseries Connect\+Signals\+To\+Callbacks} (const std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ \&signal\+Menu, const std\+::map$<$ std\+::string, std\+::any $>$ \&callbacks)
+\item 
+\Hypertarget{class_duin_1_1_node_a362c3a2e03550226bf80609f505195d3}\label{class_duin_1_1_node_a362c3a2e03550226bf80609f505195d3} 
+void {\bfseries Disconnect\+Signals\+From\+Callbacks} (const std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ \&signal\+Menu, const std\+::vector$<$ std\+::string $>$ \&signal\+Names)
+\item 
+\Hypertarget{class_duin_1_1_node_ab62a6411d6f169d9e6dd5b4258b58764}\label{class_duin_1_1_node_ab62a6411d6f169d9e6dd5b4258b58764} 
+virtual void {\bfseries Set\+Signal\+Menu} ()
+\item 
+\Hypertarget{class_duin_1_1_node_a9fcff0551a2a910454332139ce39495b}\label{class_duin_1_1_node_a9fcff0551a2a910454332139ce39495b} 
+virtual void {\bfseries Request\+Signal\+Connections} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_duin_1_1_object}{Duin\+::\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_duin_1_1_u_u_i_d}{UUID}} {\bfseries Get\+UUID} ()
+\item 
+bool {\bfseries operator==} (\mbox{\hyperlink{class_duin_1_1_object}{Object}} \&other)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_duin_1_1_node_af83b962596658c6be8eced9540469c8b}\label{class_duin_1_1_node_af83b962596658c6be8eced9540469c8b} 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\static std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries Instantiate} (Args \&\&... args)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_duin_1_1_node_ac5c0d519fc4a503e2b01018477d1f165}\label{class_duin_1_1_node_ac5c0d519fc4a503e2b01018477d1f165} 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{class_duin_1_1_signal_base}{Signal\+Base}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries signal\+Menu}
+\item 
+\Hypertarget{class_duin_1_1_node_a632703c7e0c2729cf151baa38a817cf9}\label{class_duin_1_1_node_a632703c7e0c2729cf151baa38a817cf9} 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}} {\bfseries on\+Ready}
+\item 
+\Hypertarget{class_duin_1_1_node_a8a5886ca966fd366318f73f27d906ac3}\label{class_duin_1_1_node_a8a5886ca966fd366318f73f27d906ac3} 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}}$<$ \mbox{\hyperlink{class_duin_1_1_input_event}{Input\+Event}} $>$ {\bfseries on\+Handle\+Input}
+\item 
+\Hypertarget{class_duin_1_1_node_a7d48940a5cb1d20fbc07a72e44286ed2}\label{class_duin_1_1_node_a7d48940a5cb1d20fbc07a72e44286ed2} 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}}$<$ double $>$ {\bfseries on\+Update}
+\item 
+\Hypertarget{class_duin_1_1_node_abff1cf39be082a30f67eacbf09634bc3}\label{class_duin_1_1_node_abff1cf39be082a30f67eacbf09634bc3} 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}}$<$ double $>$ {\bfseries on\+Physics\+Update}
+\item 
+\Hypertarget{class_duin_1_1_node_aa6dbe76e0f51d8624d33c5132c999e58}\label{class_duin_1_1_node_aa6dbe76e0f51d8624d33c5132c999e58} 
+\mbox{\hyperlink{class_duin_1_1_signal}{Signal}} {\bfseries on\+Draw}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_duin_1_1_node_a0d88556728919aaabe170c716e3ed8a5}\label{class_duin_1_1_node_a0d88556728919aaabe170c716e3ed8a5} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ $>$ {\bfseries children}
+\item 
+\Hypertarget{class_duin_1_1_node_a3006c4fb2434df384739e53e268e08a7}\label{class_duin_1_1_node_a3006c4fb2434df384739e53e268e08a7} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_duin_1_1_node}{Node}} $>$ {\bfseries parent\+Ptr}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_duin_1_1_object}{Duin\+::\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_duin_1_1_u_u_i_d}{UUID}} {\bfseries object\+UUID}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Duin/src/\+Duin/\+Object/\+Node/Node.\+h\item 
+Duin/src/\+Duin/\+Object/\+Node/Node.\+cpp\end{DoxyCompactItemize}
