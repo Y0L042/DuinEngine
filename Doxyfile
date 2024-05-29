@@ -190,7 +190,7 @@ FULL_PATH_NAMES        = YES
 # will be relative from the directory where doxygen is started.
 # This tag requires that the tag FULL_PATH_NAMES is set to YES.
 
-STRIP_FROM_PATH        = "C:/Projects/CPP_Projects/Duin/"
+STRIP_FROM_PATH        = "C:/Projects/CPP_Projects/Duin/", "/home/runner/work/DuinEngine/"
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of the
 # path mentioned in the documentation of a class, which tells the reader which
@@ -1416,7 +1416,7 @@ HTML_EXTRA_STYLESHEET  = ./Duin/docs/doxygen-awesome-css/doxygen-awesome.css \
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       = ./Duin/docs/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js, ./Duin/docs/doxygen-awesome-css/doxygen-awesome-fragment-copy-button.js
+HTML_EXTRA_FILES       = ./Duin/docs/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js \ ./Duin/docs/doxygen-awesome-css/doxygen-awesome-fragment-copy-button.js
 
 # The HTML_COLORSTYLE tag can be used to specify if the generated HTML output
 # should be rendered with a dark or light theme.
