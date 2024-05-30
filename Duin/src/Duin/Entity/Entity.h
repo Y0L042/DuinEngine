@@ -35,6 +35,8 @@ namespace Duin
 		Entity(const Entity&) = delete;
 		Entity& operator=(const Entity&) = delete;
 
+		bool operator==(Entity& other);
+
 		UUID GetUUID() { return uuid; }
 
 		std::shared_ptr<Entity> GetSharedPointer()
@@ -49,9 +51,9 @@ namespace Duin
 		}
 
 		template<typename Component, typename... Args>
-		void AddComponent(Args&&... args)
+		auto AddComponent(Args&&... args)
 		{
-			registry->AddComponent<Component>(this->entity, std::forward<Args>(args)...);
+			return registry->AddComponent<Component>(this->entity, std::forward<Args>(args)...);
 		}
 
 		template<typename Component>

@@ -13,6 +13,7 @@
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Structures/RenderStructs.h"
+#include "Duin/Core/Structures/QuadTree.h"
 #include "Duin/Core/Scene/SceneManager.h"
 
 // ---------- Events -----------

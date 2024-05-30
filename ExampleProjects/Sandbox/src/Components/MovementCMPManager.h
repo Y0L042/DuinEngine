@@ -19,7 +19,7 @@ struct MovementCMPManager
             {
                 movement.velocity.x = abs(movement.velocity.x) * 1;
             }
-            if (transform.position.x > 800)
+            if (transform.position.x > 1280)
             {
                 movement.velocity.x = abs(movement.velocity.x) * -1;
             }
@@ -28,7 +28,7 @@ struct MovementCMPManager
             {
                 movement.velocity.y = abs(movement.velocity.y) * 1;
             }
-            if (transform.position.y > 600)
+            if (transform.position.y > 720)
 			{
                 movement.velocity.y = abs(movement.velocity.y) * -1;
 			}

@@ -171,6 +171,7 @@
     <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h" />
     <ClInclude Include="src\Duin\Core\Scene\SceneManager.h" />
     <ClInclude Include="src\Duin\Core\Signal.h" />
+    <ClInclude Include="src\Duin\Core\Structures\QuadTree.h" />
     <ClInclude Include="src\Duin\Core\Structures\RenderStructs.h" />
     <ClInclude Include="src\Duin\Core\UUID.h" />
     <ClInclude Include="src\Duin\Entity\ComponentManager.h" />

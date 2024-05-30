@@ -15,8 +15,8 @@ namespace Duin
 
     void Application::Run()
     {
-        int screenWidth = 800;
-        int screenHeight = 450;
+        int screenWidth = 1280;
+        int screenHeight = 720;
 
         ::InitWindow(screenWidth, screenHeight, "Test");
         ::SetTargetFPS(144);

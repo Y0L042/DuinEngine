@@ -28,9 +28,9 @@ namespace Duin
 		}
 
 		template<typename Component, typename... Args>
-		void AddComponent(entt::entity& entity, Args&&... args)
+		auto AddComponent(entt::entity& entity, Args&&... args)
 		{
-			registry.emplace<Component>(entity, std::forward<Args>(args)...);
+			return registry.emplace<Component>(entity, std::forward<Args>(args)...);
 		}
 
 		template<typename Component>
