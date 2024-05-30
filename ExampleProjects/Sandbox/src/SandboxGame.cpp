@@ -49,12 +49,13 @@ void Sandbox::Initialize()
 	newTFCMPManager = &GetSceneManager().CreateComponentManager<NewTransformCMPManager>();
 
 	texture = std::make_shared<Duin::TextureResource>("Textures/at_symbol.png");
-	for (int i = 0; i < 10000; i++)
+	int numEntities = 10000;
+	for (int i = 0; i < numEntities; i++)
 	{
 		std::shared_ptr<Duin::Entity> entity = GetSceneManager().CreateEntity();
 		entity->AddComponent<PlayerCMP>();
 		entity->AddComponent<PlayerInputCMP>();
-		entity->AddComponent<MovementCMP>();
+		entity->AddComponent<MovementCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) }.Normalized());
 		entity->AddComponent<TransformCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) });
 		entity->AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{15, 15});
 	}
@@ -77,8 +78,8 @@ void Sandbox::Process(double rDelta)
 void Sandbox::PhysicsProcess(double pDelta)
 {
 	MovementCMPManager::Update(registry.get(), pDelta);
-	//TransformCMPManager::Update(registry.get(), pDelta);
-	newTFCMPManager->Update(pDelta);
+	TransformCMPManager::Update(registry.get(), pDelta);
+	//newTFCMPManager->Update(pDelta);
 	
 }
 

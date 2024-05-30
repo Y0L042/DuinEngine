@@ -42,13 +42,18 @@ namespace Duin
             EngineProcess(::GetFrameTime());
             Process(::GetFrameTime());
 
-            EnginePhysicsProcess(::GetFrameTime()); // TODO
-            PhysicsProcess(::GetFrameTime()); // TODO
+            if (::GetFrameTime() > 0.0f)
+            {
+                EnginePhysicsProcess(::GetFrameTime()); // TODO
+                PhysicsProcess(::GetFrameTime()); // TODO
+            }
 
             ::ClearBackground(RAYWHITE);
             
 
-            ::DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+            int fps = ::GetFPS();
+            std::string fpsStr = std::to_string(fps);
+            ::DrawText(fpsStr.c_str(), 10, 10, 25, GREEN);
 
             EngineDraw();
             Draw();
@@ -106,9 +111,6 @@ namespace Duin
 
     void Application::EngineDraw()
     {
-        int fps = ::GetFPS();
-        std::string fpsStr = std::to_string(fps);
-        ::DrawText(fpsStr.c_str(), 10, 10, 25, GREEN);
     }
 
     void Application::Draw()
