@@ -105,9 +105,7 @@ void Sandbox::SpawnEntityBatches()
 			entity->AddComponent<MovementCMP>(Duin::Vector2{ (float)distr(gen), (float)distr(gen) }.Normalized());
 			entity->AddComponent<TransformCMP>(position);
 			entity->AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{ 15, 15 });
-			auto qtComp = entity->AddComponent<Duin::QuadTreeComponent>(entity->GetUUID(), position);
-
-			qTree.Insert(qtComp);
+			entity->AddComponent<Duin::QuadTreeComponent>(&qTree, entity->GetUUID(), position);
 
 			entityCount++;
 		}

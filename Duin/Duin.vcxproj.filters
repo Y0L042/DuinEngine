@@ -201,5 +201,6 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
+    <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp" />
   </ItemGroup>
 </Project>

@@ -196,6 +196,7 @@
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
     <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />
     <ClCompile Include="src\Duin\Core\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp" />
     <ClCompile Include="src\Duin\Core\UUID.cpp" />
     <ClCompile Include="src\Duin\Entity\ComponentManager.cpp" />
     <ClCompile Include="src\Duin\Entity\Entity.cpp" />
