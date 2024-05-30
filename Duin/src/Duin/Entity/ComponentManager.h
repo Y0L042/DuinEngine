@@ -10,9 +10,11 @@ namespace Duin
 	public:
 		Registry* registry = nullptr;
 
+		ComponentManager() = default;
 		ComponentManager(Registry* registry);
 
 		Registry* GetRegistry();
+		void SetRegistry(Registry* registry);
 
 	protected:
 	private:

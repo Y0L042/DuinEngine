@@ -32,7 +32,9 @@ namespace Duin
         template<typename CompMgr, typename... Args>
         CompMgr& CreateComponentManager(Args&&... args)
         {
+            static_assert(std::is_base_of<ComponentManager, CompMgr>::value, "CpmpMgr must be a ComponentManager derived struct!");
             CompMgr* compMgr = new CompMgr(std::forward<Args>(args)...);
+            compMgr->SetRegistry(registry.get());
             return *compMgr;
         }
 

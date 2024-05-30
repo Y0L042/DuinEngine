@@ -7,7 +7,6 @@
 
 struct MovementCMPManager
 {
-
     static void Update(Duin::Registry* registry, double delta) 
     {
         float SPEED = 100.0f;

@@ -11,6 +11,8 @@
 #include "Components/RenderableComponent.h"
 #include "Components/RenderableCMPManager.h"
 
+#include "Components/NewTransfromCMPManager.h"
+
 #include <random>
 
 int min = 20;
@@ -22,6 +24,7 @@ std::uniform_int_distribution<> distr(min, max); // Define the range
 std::shared_ptr<Duin::TextureResource> texture;
 
 std::shared_ptr<Duin::Registry> registry;
+NewTransformCMPManager* newTFCMPManager;
 
 class Sandbox : public Duin::Application
 {
@@ -43,6 +46,8 @@ Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 void Sandbox::Initialize()
 {
 	registry = GetSceneManager().GetRegistry();
+	newTFCMPManager = &GetSceneManager().CreateComponentManager<NewTransformCMPManager>();
+
 	texture = std::make_shared<Duin::TextureResource>("Textures/at_symbol.png");
 	for (int i = 0; i < 10000; i++)
 	{
@@ -72,7 +77,9 @@ void Sandbox::Process(double rDelta)
 void Sandbox::PhysicsProcess(double pDelta)
 {
 	MovementCMPManager::Update(registry.get(), pDelta);
-	TransformCMPManager::Update(registry.get(), pDelta);
+	//TransformCMPManager::Update(registry.get(), pDelta);
+	newTFCMPManager->Update(pDelta);
+	
 }
 
 void Sandbox::Draw()

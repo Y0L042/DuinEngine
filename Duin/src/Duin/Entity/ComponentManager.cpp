@@ -13,4 +13,8 @@ namespace Duin
 	{
 		return registry;
 	}
+	void ComponentManager::SetRegistry(Registry* registry)
+	{
+		this->registry = registry;
+	}
 }
