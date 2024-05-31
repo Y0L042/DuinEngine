@@ -55,6 +55,11 @@ namespace Duin
             return (Maths::AreSame(x, other.x) && Maths::AreSame(y, other.y));
         }
 
+        bool operator!=(const Vector2& other)
+        {
+            return !(Maths::AreSame(x, other.x) && Maths::AreSame(y, other.y));
+        }
+
         Vector2& operator+=(const Vector2& other)
         {
             x += other.x;

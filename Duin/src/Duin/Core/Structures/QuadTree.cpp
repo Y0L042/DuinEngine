@@ -2,6 +2,9 @@
 
 #include "QuadTree.h"
 
+//For Draw()
+#include "RLImGuiComponent.h"
+
 namespace Duin
 {
     QuadTreeComponent::QuadTreeComponent(UUID uuid, Vector2 position)
@@ -14,12 +17,30 @@ namespace Duin
     {
         if (tree)
         {
+            this->tree = tree;
             tree->Insert(*this);
         }
     }
 
     QuadTreeComponent::~QuadTreeComponent()
     {
+    }
+
+    void QuadTreeComponent::UpdatePosition(Vector2 newPosition)
+    {
+        Vector2 oldPos = position;
+        position = newPosition;
+        if (oldPos != position)
+        {
+            if (tree)
+            {
+                tree->Remove(*this);
+            }
+            if (tree)
+            {
+                tree->Insert(*this);
+            }
+        }
     }
 
     QuadTree::QuadTree(Rectangle bounds, int maxNodes, int maxLevels, int currentLevel)
@@ -31,31 +52,42 @@ namespace Duin
     {
     }
 
+    UUID QuadTree::GetUUID() const
+    {
+        return uuid;
+    }
+
     void QuadTree::Insert(QuadTreeComponent node)
     {
-        if (!bounds.Contains(node.position))
+        if (!bounds.Contains(node.GetPosition()))
         {
+            DN_CORE_INFO("Bounds of {0} does not contain node {1} pos!", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
             return;
         }
+        DN_CORE_INFO("Bounds of {0} does contains node {1} pos.", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
 
-        if (nodes.size() < maxNodes || currentLevel >= maxLevels)
+        // TODO Make it clearer when tree is empty/when children are empty/does not exist/when children are full...
+        // If there is space
+        if (nodes.size() < maxNodes && !children[0])// || currentLevel >= maxLevels)
         {
+            DN_CORE_INFO("Tree {0} inserts node {1}.", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
             nodes.push_back(node);
             return;
         }
+        // Else
+        DN_CORE_INFO("Tree {0} full, passing node {1} on...", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
 
+        // (Create children if no children
         if (!children[0])
         {
+            DN_CORE_INFO("Tree {0} splitting!", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
             Split();
+            PassOnNodes();
         }
-
-        int index = GetQuadIndex(node.position);
-        if (index != -1) {
+        // Insert nodes into children
+        int index = GetQuadIndex(node.GetPosition());
+        if (index != -1 && children[index]) {
             children[index]->Insert(node);
-        }
-        else
-        {
-            nodes.push_back(node);
         }
     }
 
@@ -68,7 +100,7 @@ namespace Duin
 
         for (const auto& node : nodes)
         {
-            if (area.Contains(node.position))
+            if (area.Contains(node.GetPosition()))
             {
                 resultVec.push_back(node.uuid);
             }
@@ -85,7 +117,7 @@ namespace Duin
 
     bool QuadTree::Remove(QuadTreeComponent node)
     {
-        if (!bounds.Contains(node.position))
+        if (!bounds.Contains(node.GetPosition()))
         {
             return false;
         }
@@ -106,18 +138,52 @@ namespace Duin
 
         if (children[0])
         {
-            int index = GetQuadIndex(node.position);
-            if (index != -1 && children[index]->Remove(node))
+            int index = GetQuadIndex(node.GetPosition());
+            if (index != -1 && children[index])
             {
-                if (children[index]->nodes.size() == 0)
+                if (children[index]->Remove(node))
                 {
-                    children[index].reset();
+                    bool allChildrenEmpty = true;
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        if (children[i] && children[i]->nodes.size() != 0)
+                        {
+                            allChildrenEmpty = false;
+                            break;
+                        }
+                    }
+                    if (allChildrenEmpty)
+                    {
+                        for (int i = 0; i < 4; ++i)
+                        {
+                            children[i].reset();
+                        }
+                    }
+                    return true;
                 }
-                return true;
             }
         }
 
         return false;
+    }
+
+    void QuadTree::Draw()
+    {
+        if (!this) { return; }
+        ::DrawRectangleLines(bounds.origin.x, bounds.origin.y, bounds.width/2, bounds.height/2, LIGHTGRAY); //NW
+        ::DrawRectangleLines(bounds.origin.x + bounds.width / 2, bounds.origin.y, bounds.width / 2, bounds.height / 2, LIGHTGRAY); //NE
+        ::DrawRectangleLines(bounds.origin.x, bounds.origin.y + bounds.height / 2, bounds.width / 2, bounds.height / 2, LIGHTGRAY); //SW
+        ::DrawRectangleLines(bounds.origin.x+bounds.width/2, bounds.origin.y+bounds.height/2, bounds.width / 2, bounds.height / 2, LIGHTGRAY); //SE
+
+        ::DrawRectangleLines(bounds.origin.x, bounds.origin.y, bounds.width, bounds.height, BLUE);
+        
+        for (auto& child : children)
+        {
+            if (child)
+            {
+                child->Draw();
+            }
+        }
     }
 
     void QuadTree::Split()
@@ -127,10 +193,28 @@ namespace Duin
         float x = bounds.origin.x;
         float y = bounds.origin.y;
 
-        children[0] = std::make_unique<QuadTree>(Rectangle{ x + subWidth, y, subWidth, subHeight }, maxNodes, maxLevels, currentLevel + 1);
-        children[1] = std::make_unique<QuadTree>(Rectangle{ x, y, subWidth, subHeight }, maxNodes, maxLevels, currentLevel + 1);
-        children[2] = std::make_unique<QuadTree>(Rectangle{ x, y + subHeight, subWidth, subHeight }, maxNodes, maxLevels, currentLevel + 1);
-        children[3] = std::make_unique<QuadTree>(Rectangle{ x + subWidth, y + subHeight, subWidth, subHeight }, maxNodes, maxLevels, currentLevel + 1);
+        children[0] = std::make_unique<QuadTree>(Duin::Rectangle( x + subWidth, y, subWidth, subHeight ), maxNodes, maxLevels, currentLevel + 1);
+        children[1] = std::make_unique<QuadTree>(Duin::Rectangle( x, y, subWidth, subHeight ), maxNodes, maxLevels, currentLevel + 1);
+        children[2] = std::make_unique<QuadTree>(Duin::Rectangle( x, y + subHeight, subWidth, subHeight ), maxNodes, maxLevels, currentLevel + 1);
+        children[3] = std::make_unique<QuadTree>(Duin::Rectangle( x + subWidth, y + subHeight, subWidth, subHeight ), maxNodes, maxLevels, currentLevel + 1);
+    }
+
+    void QuadTree::PassOnNodes()
+    {
+        if (!children[0])
+        {
+            return;
+        }
+
+        for (auto& node : nodes)
+        {
+            children[0]->Insert(node);
+            children[1]->Insert(node);
+            children[2]->Insert(node);
+            children[3]->Insert(node);
+        }
+
+        nodes.clear();
     }
 
     int QuadTree::GetQuadIndex(Vector2 pos)
