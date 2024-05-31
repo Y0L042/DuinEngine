@@ -61,26 +61,26 @@ namespace Duin
     {
         if (!bounds.Contains(node.GetPosition()))
         {
-            DN_CORE_INFO("Bounds of {0} does not contain node {1} pos!", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
+            //DN_CORE_INFO("Bounds of {0} does not contain node {1} pos!", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
             return;
         }
-        DN_CORE_INFO("Bounds of {0} does contains node {1} pos.", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
+        //DN_CORE_INFO("Bounds of {0} does contains node {1} pos.", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
 
         // TODO Make it clearer when tree is empty/when children are empty/does not exist/when children are full...
         // If there is space
         if (nodes.size() < maxNodes && !children[0])// || currentLevel >= maxLevels)
         {
-            DN_CORE_INFO("Tree {0} inserts node {1}.", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
+            //DN_CORE_INFO("Tree {0} inserts node {1}.", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
             nodes.push_back(node);
             return;
         }
         // Else
-        DN_CORE_INFO("Tree {0} full, passing node {1} on...", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
+        //DN_CORE_INFO("Tree {0} full, passing node {1} on...", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
 
         // (Create children if no children
         if (!children[0])
         {
-            DN_CORE_INFO("Tree {0} splitting!", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
+            //DN_CORE_INFO("Tree {0} splitting!", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
             Split();
             PassOnNodes();
         }

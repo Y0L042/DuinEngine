@@ -27,7 +27,7 @@ std::shared_ptr<Duin::Registry> registry;
 NewTransformCMPManager* newTFCMPManager;
 int entityCount = 0;
 
-Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 3, 1000, 0);
+Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 10, 1000, 0);
 
 class Sandbox : public Duin::Application
 {
@@ -43,7 +43,7 @@ public:
 	void Draw() override;
 
 	void SpawnEntityBatches();
-	void SpawnEntity(Duin::Vector2 position);
+	void SpawnEntity(Duin::Vector2 position, Duin::Vector2 velocity);
 };
 Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
@@ -66,7 +66,7 @@ void Sandbox::HandleInputs(Duin::InputEvent e)
 {
 	if (e.IsMouseButtonPressed(Duin::MOUSE_BUTTON_LEFT))
 	{
-		SpawnEntity(e.GetMousePosition());
+		//SpawnEntity(e.GetMousePosition(), Duin::Vector2::ZERO);
 		DN_INFO("Mouse clicked");
 	}
 	PlayerCMPManager::Update(registry.get(), e);
@@ -76,14 +76,14 @@ void Sandbox::Process(double rDelta)
 {
 }
 
-int numEntities = 10;
+int numEntities = 2500;
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
-	//if (numEntities > entityCount)
-	//{
-	//	SpawnEntityBatches();
-	//}
+	if (numEntities > entityCount)
+	{
+		SpawnEntityBatches();
+	}
 
 	MovementCMPManager::Update(registry.get(), pDelta);
 	TransformCMPManager::Update(registry.get(), pDelta);
@@ -99,24 +99,25 @@ void Sandbox::Draw()
 
 void Sandbox::SpawnEntityBatches()
 {
-	int entityBatch = 1;
+	int entityBatch = 100;
 	if (entityCount < numEntities)
 	{
 		for (int i = 0; i < (entityBatch < numEntities - entityCount ? entityBatch : numEntities - entityCount); i++)
 		{
 			Duin::Vector2 position{ (float)distr(gen), (float)distr(gen) };
-			SpawnEntity(position);
+			Duin::Vector2 velocity{ (float)distr(gen), (float)distr(gen) };
+			SpawnEntity(position, velocity);
 		}
 	}
 }
 
-void Sandbox::SpawnEntity(Duin::Vector2 position)
+void Sandbox::SpawnEntity(Duin::Vector2 position, Duin::Vector2 velocity)
 {
 	std::shared_ptr<Duin::Entity> entity = GetSceneManager().CreateEntity();
 	
 	entity->AddComponent<PlayerCMP>();
 	entity->AddComponent<PlayerInputCMP>();
-	entity->AddComponent<MovementCMP>(Duin::Vector2::ZERO);//{ (float)distr(gen), (float)distr(gen) }.Normalized());
+	entity->AddComponent<MovementCMP>(velocity);//{ (float)distr(gen), (float)distr(gen) }.Normalized());
 	entity->AddComponent<TransformCMP>(position);
 	entity->AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{ 15, 15 });
 	entity->AddComponent<Duin::QuadTreeComponent>(&qTree, entity->GetUUID(), position);
