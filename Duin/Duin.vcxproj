@@ -158,6 +158,7 @@
     <ClInclude Include="src\Duin\Core\Application.h" />
     <ClInclude Include="src\Duin\Core\Core.h" />
     <ClInclude Include="src\Duin\Core\Debug\Log.h" />
+    <ClInclude Include="src\Duin\Core\Debug\Profiler.h" />
     <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h" />
     <ClInclude Include="src\Duin\Core\Maths\MathsCore.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Mat2x2.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="src\Duin\Core\Signal.h" />
     <ClInclude Include="src\Duin\Core\Structures\QuadTree.h" />
     <ClInclude Include="src\Duin\Core\Structures\RenderStructs.h" />
+    <ClInclude Include="src\Duin\Core\Debug\Timer.h" />
     <ClInclude Include="src\Duin\Core\UUID.h" />
     <ClInclude Include="src\Duin\Entity\ComponentManager.h" />
     <ClInclude Include="src\Duin\Entity\Entity.h" />
@@ -194,6 +196,7 @@
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
+    <ClCompile Include="src\Duin\Core\Debug\Profiler.cpp" />
     <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />
     <ClCompile Include="src\Duin\Core\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp" />

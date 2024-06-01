@@ -147,6 +147,8 @@
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\Duin\Core\Structures\QuadTree.h" />
+    <ClInclude Include="src\Duin\Core\Debug\Profiler.h" />
+    <ClInclude Include="src\Duin\Core\Debug\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -202,5 +204,6 @@
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
     <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp" />
+    <ClCompile Include="src\Duin\Core\Debug\Profiler.cpp" />
   </ItemGroup>
 </Project>

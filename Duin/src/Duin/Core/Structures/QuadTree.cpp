@@ -86,7 +86,8 @@ namespace Duin
         }
         // Insert nodes into children
         int index = GetQuadIndex(node.GetPosition());
-        if (index != -1 && children[index]) {
+        if (index != -1 && children[index]) 
+        {
             children[index]->Insert(node);
         }
     }
@@ -177,12 +178,12 @@ namespace Duin
 
         ::DrawRectangleLines(bounds.origin.x, bounds.origin.y, bounds.width, bounds.height, BLUE);
         
-        for (auto& child : children)
+        if (children[0])
         {
-            if (child)
-            {
-                child->Draw();
-            }
+            children[0]->Draw();
+            children[1]->Draw();
+            children[2]->Draw();
+            children[3]->Draw();
         }
     }
 

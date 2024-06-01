@@ -11,6 +11,8 @@
 #include "Duin/Core/Application.h"
 #include "Duin/Core/Signal.h"
 #include "Duin/Core/Debug/Log.h"
+#include "Duin/Core/Debug/Profiler.h"
+#include "Duin/Core/Debug/Timer.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Structures/RenderStructs.h"
 #include "Duin/Core/Structures/QuadTree.h"

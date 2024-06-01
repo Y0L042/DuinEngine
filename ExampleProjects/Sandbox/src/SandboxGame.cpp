@@ -29,6 +29,8 @@ int entityCount = 0;
 
 Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 10, 1000, 0);
 
+Duin::Profiler profiler;
+
 class Sandbox : public Duin::Application
 {
 public:
@@ -76,7 +78,7 @@ void Sandbox::Process(double rDelta)
 {
 }
 
-int numEntities = 2500;
+int numEntities = 250;
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
@@ -95,6 +97,7 @@ void Sandbox::Draw()
 {
 	RenderableCMPManager::Update(registry.get());
 	qTree.Draw();
+	profiler.Draw();
 }
 
 void Sandbox::SpawnEntityBatches()
@@ -117,7 +120,7 @@ void Sandbox::SpawnEntity(Duin::Vector2 position, Duin::Vector2 velocity)
 	
 	entity->AddComponent<PlayerCMP>();
 	entity->AddComponent<PlayerInputCMP>();
-	entity->AddComponent<MovementCMP>(velocity);//{ (float)distr(gen), (float)distr(gen) }.Normalized());
+	entity->AddComponent<MovementCMP>(velocity);
 	entity->AddComponent<TransformCMP>(position);
 	entity->AddComponent<RenderableCMP>(texture.get(), Duin::Vector2{ 15, 15 });
 	entity->AddComponent<Duin::QuadTreeComponent>(&qTree, entity->GetUUID(), position);
