@@ -4,6 +4,8 @@
 
 #include <RLImGuiComponent.h>
 
+#include <vector>
+
 namespace Duin
 {
 	class DUIN_API Profiler
@@ -12,9 +14,19 @@ namespace Duin
 		Profiler();
 		~Profiler();
 
+		float GetFramerate();
+		float GetFrametime();
+
+		void ShowFPS();
+
 		void Draw();
 
 	private:
 		bool enabled = true;
+		std::vector<float> fpsBuffer;
+		std::vector<float> frametimeBuffer;
+
+		void UpdateFPSBuffer(float fps);
+		void UpdateFrametimeBuffer(float frametime);
 	};
 }

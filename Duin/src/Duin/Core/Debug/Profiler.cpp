@@ -6,41 +6,59 @@ namespace Duin
 {
     Profiler::Profiler()
     {
+        fpsBuffer = std::vector<float>(600, 0.0f);
+        frametimeBuffer = std::vector<float>(600, 0.0f);
     }
+
     Profiler::~Profiler()
     {
     }
-    void Profiler::Draw()
-    {
-        // Create a window called "My First Tool", with a menu bar.
-        ImGui::Begin("My First Tool", &enabled, ImGuiWindowFlags_MenuBar);
-        if (ImGui::BeginMenuBar())
-        {
-            if (ImGui::BeginMenu("File"))
-            {
-                if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
-                if (ImGui::MenuItem("Save", "Ctrl+S")) { /* Do stuff */ }
-                if (ImGui::MenuItem("Close", "Ctrl+W")) { enabled = false; }
-                ImGui::EndMenu();
-            }
-            ImGui::EndMenuBar();
-        }
 
-        // Edit a color stored as 4 floats
-        //ImGui::ColorEdit4("Color", my_color);
+    float Profiler::GetFramerate()
+    {
+        return (float)(::GetFPS());
+    }
+
+    float Profiler::GetFrametime()
+    {
+        return ::GetFrameTime();
+    }
+
+    void Profiler::ShowFPS()
+    {
+        float framerate = GetFramerate();
+        float frametime = GetFrametime() * 1000.0f;
+        UpdateFrametimeBuffer(frametime);
+
+        ImGui::Begin("FPS", &enabled, ImGuiWindowFlags_MenuBar);
+
+        ImGui::TextColored(ImVec4(1, 1, 0, 1), "Framerate: %.0f fps", framerate);
+        ImGui::TextColored(ImVec4(1, 1, 0, 1), "Frametime: %.1f ms", frametime);
+
+        // Set the graph size and scale
+        ImVec2 graphSize(350, 125); // Width and height of the graph
+        float minScale = 0.0f; // Minimum value of the scale
+        float maxScale = 100.0f; // Maximum value of the scale
 
         // Generate samples and plot them
-        float samples[100];
-        for (int n = 0; n < 100; n++)
-            samples[n] = sinf(n * 0.2f + ImGui::GetTime() * 1.5f);
-        ImGui::PlotLines("Samples", samples, 100);
-
-        // Display contents in a scrolling region
-        ImGui::TextColored(ImVec4(1, 1, 0, 1), "Important Stuff");
-        ImGui::BeginChild("Scrolling");
-        for (int n = 0; n < 50; n++)
-            ImGui::Text("%04d: Some text", n);
-        ImGui::EndChild();
+        ImGui::PlotLines("Frametime", frametimeBuffer.data(), frametimeBuffer.size(), 0, nullptr, minScale, maxScale, graphSize);
+    
         ImGui::End();
+    }
+
+    void Profiler::Draw()
+    {
+        ShowFPS();
+    }
+
+    void Profiler::UpdateFPSBuffer(float fps)
+    {
+        std::rotate(fpsBuffer.begin(), fpsBuffer.begin() + 1, fpsBuffer.end());
+        fpsBuffer.back() = fps;
+    }
+    void Profiler::UpdateFrametimeBuffer(float frametime)
+    {
+        std::rotate(frametimeBuffer.begin(), frametimeBuffer.begin() + 1, frametimeBuffer.end());
+        frametimeBuffer.back() = frametime;
     }
 }

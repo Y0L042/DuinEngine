@@ -27,7 +27,7 @@ std::shared_ptr<Duin::Registry> registry;
 NewTransformCMPManager* newTFCMPManager;
 int entityCount = 0;
 
-Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 10, 1000, 0);
+Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 2, 1000, 0);
 
 Duin::Profiler profiler;
 
@@ -78,7 +78,7 @@ void Sandbox::Process(double rDelta)
 {
 }
 
-int numEntities = 250;
+int numEntities = 10000;
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
@@ -102,7 +102,7 @@ void Sandbox::Draw()
 
 void Sandbox::SpawnEntityBatches()
 {
-	int entityBatch = 100;
+	int entityBatch = 1;
 	if (entityCount < numEntities)
 	{
 		for (int i = 0; i < (entityBatch < numEntities - entityCount ? entityBatch : numEntities - entityCount); i++)
