@@ -49,6 +49,19 @@ namespace Duin
     void Profiler::Draw()
     {
         ShowFPS();
+
+        ImGui::Begin("User Output", &enabled, ImGuiWindowFlags_MenuBar);
+        for (auto text : usertextBuffer)
+        {
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), text);
+        }
+        usertextBuffer.clear();
+        ImGui::End();
+    }
+
+    void Profiler::DrawText(const char* text)
+    {
+        usertextBuffer.push_back(text);
     }
 
     void Profiler::UpdateFPSBuffer(float fps)

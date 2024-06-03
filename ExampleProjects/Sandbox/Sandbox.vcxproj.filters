@@ -12,6 +12,9 @@
     <ClInclude Include="src\Components\MovementComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Components\NewTransfromCMPManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Components\PlayerCMPManager.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -33,7 +36,6 @@
     <ClInclude Include="src\Components\TransformComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\NewTransfromCMPManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SandboxGame.cpp" />

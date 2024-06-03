@@ -14,6 +14,7 @@
 #include "Components/NewTransfromCMPManager.h"
 
 #include <random>
+#include <fmt/core.h>
 
 int min = 20;
 int max = 700;
@@ -78,7 +79,7 @@ void Sandbox::Process(double rDelta)
 {
 }
 
-int numEntities = 10000;
+int numEntities = 100;
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
@@ -90,6 +91,9 @@ void Sandbox::PhysicsProcess(double pDelta)
 	MovementCMPManager::Update(registry.get(), pDelta);
 	TransformCMPManager::Update(registry.get(), pDelta);
 	//newTFCMPManager->Update(pDelta);
+
+	std::string formattedString = fmt::format("Entity Count: {}", numEntities);
+	profiler.DrawText(formattedString.c_str());
 	
 }
 

@@ -55,6 +55,12 @@
     <ClInclude Include="src\Duin\Core\Debug\Log.h">
       <Filter>Duin\Core\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Core\Debug\Profiler.h">
+      <Filter>Duin\Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Debug\Timer.h">
+      <Filter>Duin\Core\Debug</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h">
       <Filter>Duin\Core\Maths</Filter>
     </ClInclude>
@@ -93,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Signal.h">
       <Filter>Duin\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Structures\QuadTree.h">
+      <Filter>Duin\Core\Structures</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Structures\RenderStructs.h">
       <Filter>Duin\Core\Structures</Filter>
@@ -146,9 +155,6 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\Duin\Core\Structures\QuadTree.h" />
-    <ClInclude Include="src\Duin\Core\Debug\Profiler.h" />
-    <ClInclude Include="src\Duin\Core\Debug\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -157,11 +163,17 @@
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp">
       <Filter>Duin\Core\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\Duin\Core\Debug\Profiler.cpp">
+      <Filter>Duin\Core\Debug</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp">
       <Filter>Duin\Core\Maths</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Core\Scene\SceneManager.cpp">
       <Filter>Duin\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp">
+      <Filter>Duin\Core\Structures</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Core\UUID.cpp">
       <Filter>Duin\Core</Filter>
@@ -203,7 +215,5 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
-    <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp" />
-    <ClCompile Include="src\Duin\Core\Debug\Profiler.cpp" />
   </ItemGroup>
 </Project>

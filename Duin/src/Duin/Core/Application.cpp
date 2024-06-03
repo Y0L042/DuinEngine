@@ -51,10 +51,6 @@ namespace Duin
             ::ClearBackground(RAYWHITE);
             
 
-            int fps = ::GetFPS();
-            std::string fpsStr = std::to_string(fps);
-            ::DrawText(fpsStr.c_str(), 10, 10, 25, GREEN);
-
             EngineDraw();
             Draw();
 
