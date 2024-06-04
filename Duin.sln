@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "ExampleProjects\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Duin", "Duin\Duin.vcxproj", "{F558847C-E18F-850D-8A7C-6B107692010F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuinEditor", "DuinEditor\DuinEditor.vcxproj", "{7C922328-684A-6575-D151-3ED1BD280066}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -24,6 +26,12 @@ Global
 		{F558847C-E18F-850D-8A7C-6B107692010F}.Dist|x64.Build.0 = Dist|x64
 		{F558847C-E18F-850D-8A7C-6B107692010F}.Release|x64.ActiveCfg = Release|x64
 		{F558847C-E18F-850D-8A7C-6B107692010F}.Release|x64.Build.0 = Release|x64
+		{7C922328-684A-6575-D151-3ED1BD280066}.Debug|x64.ActiveCfg = Debug|x64
+		{7C922328-684A-6575-D151-3ED1BD280066}.Debug|x64.Build.0 = Debug|x64
+		{7C922328-684A-6575-D151-3ED1BD280066}.Dist|x64.ActiveCfg = Dist|x64
+		{7C922328-684A-6575-D151-3ED1BD280066}.Dist|x64.Build.0 = Dist|x64
+		{7C922328-684A-6575-D151-3ED1BD280066}.Release|x64.ActiveCfg = Release|x64
+		{7C922328-684A-6575-D151-3ED1BD280066}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

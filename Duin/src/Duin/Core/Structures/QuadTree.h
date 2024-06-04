@@ -47,10 +47,14 @@ namespace Duin
         void Query(Rectangle area, std::vector<UUID>& resultVec);
         bool Remove(QuadTreeComponent node);
 
+        void AddNodeToRebuildQueue(QuadTreeComponent node);
+        void RebuildTree();
+
         void Draw();
     protected:
         UUID uuid;
     private:
+        std::vector<QuadTreeComponent> nodesQueuedForRebuild;
         std::vector<QuadTreeComponent> nodes;
         std::unique_ptr<QuadTree> children[4];
 

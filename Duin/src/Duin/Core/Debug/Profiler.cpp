@@ -30,13 +30,13 @@ namespace Duin
         float frametime = GetFrametime() * 1000.0f;
         UpdateFrametimeBuffer(frametime);
 
-        ImGui::Begin("FPS", &enabled, ImGuiWindowFlags_MenuBar);
+        ImGui::Begin("FPS", &fpsDisplayEnabled, ImGuiWindowFlags_MenuBar);
 
         ImGui::TextColored(ImVec4(1, 1, 0, 1), "Framerate: %.0f fps", framerate);
         ImGui::TextColored(ImVec4(1, 1, 0, 1), "Frametime: %.1f ms", frametime);
 
         // Set the graph size and scale
-        ImVec2 graphSize(350, 125); // Width and height of the graph
+        ImVec2 graphSize(250, 100); // Width and height of the graph
         float minScale = 0.0f; // Minimum value of the scale
         float maxScale = 100.0f; // Maximum value of the scale
 
@@ -46,20 +46,38 @@ namespace Duin
         ImGui::End();
     }
 
-    void Profiler::Draw()
+    void Profiler::ShowUserDebug()
     {
-        ShowFPS();
-
-        ImGui::Begin("User Output", &enabled, ImGuiWindowFlags_MenuBar);
-        for (auto text : usertextBuffer)
+        ImGui::Begin("User Output", &userDebugEnabled, ImGuiWindowFlags_MenuBar);
+        for (auto& text : usertextBuffer)
         {
-            ImGui::TextColored(ImVec4(1, 1, 0, 1), text);
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), text.c_str());
         }
         usertextBuffer.clear();
         ImGui::End();
     }
 
-    void Profiler::DrawText(const char* text)
+    void Profiler::Draw()
+    {
+        ImGui::Begin("Menu", &profilerEnabled, ImGuiWindowFlags_MenuBar);
+
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("Options"))
+            {
+                if (ImGui::Checkbox("FPS Menu", &fpsDisplayEnabled)) {}
+                if (ImGui::Checkbox("User Debug", &userDebugEnabled)) {}
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
+        ImGui::End();
+
+        if (fpsDisplayEnabled) { ShowFPS(); }
+        if (userDebugEnabled) { ShowUserDebug(); }
+    }
+
+    void Profiler::DrawText(std::string text)
     {
         usertextBuffer.push_back(text);
     }

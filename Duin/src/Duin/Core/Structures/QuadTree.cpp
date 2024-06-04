@@ -30,15 +30,20 @@ namespace Duin
     {
         Vector2 oldPos = position;
         position = newPosition;
-        if (oldPos != position)
+        if (oldPos != position) // TODO Terribly inefficient. Would it not be better to simply clear and rebuild the whole tree?
         {
+            //if (tree)
+            //{
+            //    tree->Remove(*this);
+            //}
+            //if (tree)
+            //{
+            //    tree->Insert(*this);
+            //}
+
             if (tree)
             {
-                tree->Remove(*this);
-            }
-            if (tree)
-            {
-                tree->Insert(*this);
+                tree->AddNodeToRebuildQueue(*this);
             }
         }
     }
@@ -166,6 +171,24 @@ namespace Duin
         }
 
         return false;
+    }
+
+    void QuadTree::AddNodeToRebuildQueue(QuadTreeComponent node)
+    {
+        nodesQueuedForRebuild.push_back(node);
+    }
+
+    void QuadTree::RebuildTree()
+    {
+        nodes.clear();
+        children->reset();
+
+        for (auto& node : nodesQueuedForRebuild)
+        {
+            Insert(node);
+        }
+
+        nodesQueuedForRebuild.clear();
     }
 
     void QuadTree::Draw()

@@ -3,8 +3,10 @@
 #include "Duin/Core/Core.h"
 
 #include <RLImGuiComponent.h>
+#include <fmt/core.h>
 
 #include <vector>
+#include <string>
 
 namespace Duin
 {
@@ -18,16 +20,19 @@ namespace Duin
 		float GetFrametime();
 
 		void ShowFPS();
+		void ShowUserDebug();
 
 		void Draw();
 
-		void DrawText(const char* text);
+		void DrawText(std::string text);
 
 	private:
-		bool enabled = true;
+		bool profilerEnabled = true;
+		bool fpsDisplayEnabled = true;
+		bool userDebugEnabled = true;
 		std::vector<float> fpsBuffer;
 		std::vector<float> frametimeBuffer;
-		std::vector<const char*> usertextBuffer;
+		std::vector<std::string> usertextBuffer;
 
 		void UpdateFPSBuffer(float fps);
 		void UpdateFrametimeBuffer(float frametime);

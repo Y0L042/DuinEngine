@@ -14,7 +14,6 @@
 #include "Components/NewTransfromCMPManager.h"
 
 #include <random>
-#include <fmt/core.h>
 
 int min = 20;
 int max = 700;
@@ -79,22 +78,45 @@ void Sandbox::Process(double rDelta)
 {
 }
 
-int numEntities = 100;
+int numEntities = 2500;
 
 void Sandbox::PhysicsProcess(double pDelta)
 {
+	Duin::Timer timer;
 	if (numEntities > entityCount)
 	{
 		SpawnEntityBatches();
 	}
 
+	double spawnTime = timer.Lap();
 	MovementCMPManager::Update(registry.get(), pDelta);
+	double movTime = timer.Lap();
 	TransformCMPManager::Update(registry.get(), pDelta);
-	//newTFCMPManager->Update(pDelta);
 
-	std::string formattedString = fmt::format("Entity Count: {}", numEntities);
-	profiler.DrawText(formattedString.c_str());
-	
+	double tfTime = timer.Lap();
+
+	qTree.RebuildTree();
+
+	double rebuildTreeTime = timer.Lap();
+
+
+	std::string spawnProc = fmt::format("Spawn: {} ms", spawnTime / 1000.0f);
+	profiler.DrawText(spawnProc);
+
+	std::string mvProc = fmt::format("Mov: {} ms", movTime / 1000.0f);
+	profiler.DrawText(mvProc);
+
+	std::string tfProc = fmt::format("TF: {} ms", tfTime / 1000.0f);
+	profiler.DrawText(tfProc);
+
+	std::string strrebuildTreeTime = fmt::format("RebQT: {} ms", rebuildTreeTime / 1000.0f);
+	profiler.DrawText(strrebuildTreeTime);
+
+	std::string physProc = fmt::format("PhysicsProcess: {} ms", timer.Stop() / 1000.0f);
+	profiler.DrawText(physProc);
+
+	std::string formattedString = fmt::format("Entity Count: {}", entityCount);
+	profiler.DrawText(formattedString);
 }
 
 void Sandbox::Draw()
