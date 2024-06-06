@@ -22,6 +22,7 @@ workspace "Duin"
 	IncludeDir["patches"] = "Duin/vendor/patches/include"
 	IncludeDir["entt"] = "Duin/vendor/entt/single_include"
 	IncludeDir["fmt"] = "Duin/vendor/fmt/include"
+	IncludeDir["cdt"] = "Duin/vendor/cdt/CDT/include"
 
 
 
@@ -57,6 +58,7 @@ project "Duin"
 		"%{IncludeDir.rlgui}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.fmt}",
+		"%{IncludeDir.cdt}",
 	}
 
 	libdirs
@@ -133,6 +135,7 @@ project "DuinEditor"
 		"%{IncludeDir.rlgui}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.fmt}",
+		"%{IncludeDir.cdt}",
 	}
 
 	libdirs
@@ -202,6 +205,7 @@ project "Sandbox"
 		"%{IncludeDir.rlgui}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.fmt}",
+		"%{IncludeDir.cdt}",
 	}
 
 	libdirs

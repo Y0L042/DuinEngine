@@ -78,7 +78,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -97,7 +97,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -120,7 +120,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -149,8 +149,12 @@
     <ClInclude Include="src\Components\RenderableComponent.h" />
     <ClInclude Include="src\Components\TransformCMPManager.h" />
     <ClInclude Include="src\Components\TransformComponent.h" />
+    <ClInclude Include="src\DelaunayTest.h" />
+    <ClInclude Include="src\SandboxGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DelaunayTest.cpp" />
+    <ClCompile Include="src\Sandbox.cpp" />
     <ClCompile Include="src\SandboxGame.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -79,7 +79,7 @@
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -104,7 +104,7 @@ IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\De
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -133,7 +133,7 @@ IF EXIST ..\bin\Release-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -160,6 +160,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\Duin.h" />
     <ClInclude Include="src\Duin\Core\Application.h" />
     <ClInclude Include="src\Duin\Core\Core.h" />
+    <ClInclude Include="src\Duin\Core\Debug\DebugDraw.h" />
     <ClInclude Include="src\Duin\Core\Debug\Log.h" />
     <ClInclude Include="src\Duin\Core\Debug\Profiler.h" />
     <ClInclude Include="src\Duin\Core\Debug\Timer.h" />
@@ -176,6 +177,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h" />
     <ClInclude Include="src\Duin\Core\Scene\SceneManager.h" />
     <ClInclude Include="src\Duin\Core\Signal.h" />
+    <ClInclude Include="src\Duin\Core\Structures\Delaunay.h" />
     <ClInclude Include="src\Duin\Core\Structures\QuadTree.h" />
     <ClInclude Include="src\Duin\Core\Structures\RenderStructs.h" />
     <ClInclude Include="src\Duin\Core\UUID.h" />
@@ -198,6 +200,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp" />
+    <ClCompile Include="src\Duin\Core\Debug\DebugDraw.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Profiler.cpp" />
     <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />

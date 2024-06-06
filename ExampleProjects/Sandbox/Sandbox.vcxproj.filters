@@ -36,8 +36,12 @@
     <ClInclude Include="src\Components\TransformComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\DelaunayTest.h" />
+    <ClInclude Include="src\SandboxGame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SandboxGame.cpp" />
+    <ClCompile Include="src\Sandbox.cpp" />
+    <ClCompile Include="src\DelaunayTest.cpp" />
   </ItemGroup>
 </Project>

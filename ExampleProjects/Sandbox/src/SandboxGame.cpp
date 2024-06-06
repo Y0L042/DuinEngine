@@ -1,5 +1,4 @@
-#include <Duin.h>
-#include <Duin/EntryPoint.h>
+#include "SandboxGame.h"
 
 #include "Components/PlayerComponent.h"
 #include "Components/PlayerInputComponent.h"
@@ -10,10 +9,12 @@
 #include "Components/TransformCMPManager.h"
 #include "Components/RenderableComponent.h"
 #include "Components/RenderableCMPManager.h"
-
 #include "Components/NewTransfromCMPManager.h"
 
 #include <random>
+
+#include <CDT.h>
+
 
 int min = 20;
 int max = 700;
@@ -21,33 +22,13 @@ std::random_device rd;  // Obtain a random number from hardware
 std::mt19937 gen(rd()); // Seed the generator
 std::uniform_int_distribution<> distr(min, max); // Define the range
 
-std::shared_ptr<Duin::TextureResource> texture;
 
 std::shared_ptr<Duin::Registry> registry;
 NewTransformCMPManager* newTFCMPManager;
 int entityCount = 0;
-
+std::shared_ptr<Duin::TextureResource> texture;
 Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 2, 1000, 0);
-
 Duin::Profiler profiler;
-
-class Sandbox : public Duin::Application
-{
-public:
-	Sandbox() {}
-	~Sandbox() {}
-	
-	void Initialize() override;
-	void Ready() override;
-	void HandleInputs(Duin::InputEvent e) override;
-	void Process(double rDelta) override;
-	void PhysicsProcess(double pDelta) override;
-	void Draw() override;
-
-	void SpawnEntityBatches();
-	void SpawnEntity(Duin::Vector2 position, Duin::Vector2 velocity);
-};
-Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
 
 
@@ -61,7 +42,6 @@ void Sandbox::Initialize()
 
 void Sandbox::Ready()
 {
-
 }
 
 void Sandbox::HandleInputs(Duin::InputEvent e)
@@ -83,6 +63,7 @@ int numEntities = 2500;
 void Sandbox::PhysicsProcess(double pDelta)
 {
 	Duin::Timer timer;
+
 	if (numEntities > entityCount)
 	{
 		SpawnEntityBatches();
@@ -153,3 +134,4 @@ void Sandbox::SpawnEntity(Duin::Vector2 position, Duin::Vector2 velocity)
 
 	entityCount++;
 }
+

@@ -100,6 +100,9 @@
     <ClInclude Include="src\Duin\Core\Signal.h">
       <Filter>Duin\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Core\Structures\Delaunay.h">
+      <Filter>Duin\Core\Structures</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Core\Structures\QuadTree.h">
       <Filter>Duin\Core\Structures</Filter>
     </ClInclude>
@@ -155,6 +158,7 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="src\Duin\Core\Debug\DebugDraw.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -215,5 +219,6 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
+    <ClCompile Include="src\Duin\Core\Debug\DebugDraw.cpp" />
   </ItemGroup>
 </Project>
