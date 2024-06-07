@@ -159,6 +159,7 @@
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\Duin\Core\Debug\DebugDraw.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Shapes2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -220,5 +221,6 @@
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\DebugDraw.cpp" />
+    <ClCompile Include="src\Duin\Core\Structures\Delaunay.cpp" />
   </ItemGroup>
 </Project>

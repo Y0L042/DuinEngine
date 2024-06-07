@@ -172,6 +172,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\Duin\Core\Maths\src\Matrix.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Quaternion.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Rectangle.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Shapes2D.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Vector2.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h" />
@@ -205,6 +206,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClCompile Include="src\Duin\Core\Debug\Profiler.cpp" />
     <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />
     <ClCompile Include="src\Duin\Core\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Duin\Core\Structures\Delaunay.cpp" />
     <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp" />
     <ClCompile Include="src\Duin\Core\UUID.cpp" />
     <ClCompile Include="src\Duin\Entity\ComponentManager.cpp" />

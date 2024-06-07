@@ -17,8 +17,6 @@ public:
 	void PhysicsProcess(double pDelta) override;
 	void Draw() override;
 
-	CDT::Triangulation<double> cdt;
-	CDT::TriangleVec triangles;
-	std::vector<CDT::V2d<double>> points;
+	Duin::Delaunay delaunayGraph;
 
 };

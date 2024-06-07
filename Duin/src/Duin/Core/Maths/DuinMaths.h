@@ -11,6 +11,7 @@
 #include "./src/Rectangle.h"
 #include "./src/Quaternion.h"
 #include "./src/Matrix.h"
+#include "./src/Shapes2D.h"
 #include "./src/Maths.h"
 // ----- Duin Maths Lib -----
 
