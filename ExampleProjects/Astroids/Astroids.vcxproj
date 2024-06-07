@@ -139,6 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Component_AstroidInput.h" />
+    <ClInclude Include="src\Components\Component_Movement.h" />
+    <ClInclude Include="src\Components\Component_PlayerInput.h" />
+    <ClInclude Include="src\Components\Component_Renderable.h" />
+    <ClInclude Include="src\Components\Component_Transform.h" />
+    <ClInclude Include="src\Components\Handler_PlayerInput.h" />
+    <ClInclude Include="src\Components\Handler_PlayerMovement.h" />
+    <ClInclude Include="src\Components\Handler_Renderable.h" />
+    <ClInclude Include="src\Components\Handler_UpdateTransform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Astroids.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Duin\Duin.vcxproj">
       <Project>{F558847C-E18F-850D-8A7C-6B107692010F}</Project>
     </ProjectReference>

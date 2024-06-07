@@ -107,5 +107,19 @@ namespace Duin
             }
             return Vector2(x / mag, y / mag);
         }
+
+        Vector2 LimitLength(float minLength, float maxLength) const
+        {
+            float mag = Magnitude();
+            if (mag < minLength)
+            {
+                return Normalized() * minLength;
+            }
+            else if (mag > maxLength)
+            {
+                return Normalized() * maxLength;
+            }
+            return *this;
+        }
     };
 }

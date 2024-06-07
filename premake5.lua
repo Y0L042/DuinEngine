@@ -86,6 +86,13 @@ project "Duin"
 		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
 	}
 	
+	postbuildcommands
+	{
+		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
+		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/DuinEditor"),
+		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Astroids"),
+	}
+	
 	filter "configurations:Debug"
 	defines "DN_DEBUG"
 	symbols "On"
@@ -100,11 +107,6 @@ project "Duin"
 
 
 -- MODIFY THESE WHEN ADDING LIBS AND NEW PROJECTS
-	postbuildcommands
-	{
-		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
-		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/DuinEditor"),
-	}
 
 
 global_includedirs = 
