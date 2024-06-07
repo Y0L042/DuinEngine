@@ -1,39 +1,12 @@
 #include "SandboxGame.h"
 
-#include "Components/PlayerComponent.h"
-#include "Components/PlayerInputComponent.h"
-#include "Components/PlayerCMPManager.h"
-#include "Components/MovementComponent.h"
-#include "Components/MovementCMPManager.h"
-#include "Components/TransformComponent.h"
-#include "Components/TransformCMPManager.h"
-#include "Components/RenderableComponent.h"
-#include "Components/RenderableCMPManager.h"
-#include "Components/NewTransfromCMPManager.h"
-
-#include <random>
-
-#include <CDT.h>
-
-
-int min = 20;
-int max = 700;
-std::random_device rd;  // Obtain a random number from hardware
-std::mt19937 gen(rd()); // Seed the generator
-std::uniform_int_distribution<> distr(min, max); // Define the range
-
-
-std::shared_ptr<Duin::Registry> registry;
-NewTransformCMPManager* newTFCMPManager;
-int entityCount = 0;
-std::shared_ptr<Duin::TextureResource> texture;
-Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 2, 1000, 0);
-Duin::Profiler profiler;
-
-
-
 void Sandbox::Initialize()
 {
+	std::mt19937 gen(rd()); // Seed the generator
+	std::uniform_int_distribution<> distr(min, max); // Define the range
+	Duin::QuadTree qTree(Duin::Rectangle(0.0f, 0.0f, 1280.0f, 720.0f), 2, 1000, 0);
+
+
 	registry = GetSceneManager().GetRegistry();
 	newTFCMPManager = &GetSceneManager().CreateComponentManager<NewTransformCMPManager>();
 
@@ -58,7 +31,6 @@ void Sandbox::Process(double rDelta)
 {
 }
 
-int numEntities = 2500;
 
 void Sandbox::PhysicsProcess(double pDelta)
 {

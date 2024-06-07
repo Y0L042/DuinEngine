@@ -38,6 +38,7 @@ namespace Duin
         int maxLevels;
         int currentLevel;
 
+        QuadTree() = default;
         QuadTree(Rectangle bounds, int maxNodes, int maxLevels, int currentLevel);
         ~QuadTree();
 
