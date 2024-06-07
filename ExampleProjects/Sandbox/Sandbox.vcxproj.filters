@@ -40,8 +40,8 @@
     <ClInclude Include="src\SandboxGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\SandboxGame.cpp" />
-    <ClCompile Include="src\Sandbox.cpp" />
     <ClCompile Include="src\DelaunayTest.cpp" />
+    <ClCompile Include="src\Sandbox.cpp" />
+    <ClCompile Include="src\SandboxGame.cpp" />
   </ItemGroup>
 </Project>

@@ -85,26 +85,63 @@ project "Duin"
 		"DN_BUILD_DLL",
 		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
 	}
+	
+	filter "configurations:Debug"
+	defines "DN_DEBUG"
+	symbols "On"
+	
+	filter "configurations:Release"
+	defines "DN_RELEASE"
+	optimize "On"
+	
+	filter "configurations:Dist"
+	defines "DN_DIST"
+	optimize "On"
 
+
+-- MODIFY THESE WHEN ADDING LIBS AND NEW PROJECTS
 	postbuildcommands
 	{
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/DuinEditor"),
 	}
 
-	filter "configurations:Debug"
-		defines "DN_DEBUG"
-		symbols "On"
 
-	filter "configurations:Release"
-		defines "DN_RELEASE"
-		optimize "On"
+global_includedirs = 
+{
+	"Duin/src",
+	"%{IncludeDir.patches}",
+	"%{IncludeDir.spdlog}",
+	"%{IncludeDir.raylib}",
+	"%{IncludeDir.raylibsrc}",
+	"%{IncludeDir.raylib_cpp}",
+	"%{IncludeDir.imgui}",
+	"%{IncludeDir.rlgui}",
+	"%{IncludeDir.entt}",
+	"%{IncludeDir.fmt}",
+	"%{IncludeDir.cdt}"
+}
 
-	filter "configurations:Dist"
-		defines "DN_DIST"
-		optimize "On"
+global_libdirs =
+{
+	"Duin/vendor/raylib5/lib",
+	"Duin/vendor/rlimgui//bin/Debug",
+}
 
+global_defines =
+{
+	"DN_PLATFORM_WINDOWS",
+}
 
+global_links =
+{
+	"raylib.lib", 
+	"rlImGui.lib",
+	"winmm.lib",
+	"Duin",
+}
+
+-- 
 
 
 
@@ -123,44 +160,30 @@ project "DuinEditor"
 		"%{prj.name}/src/**.cpp",
 	}
 
+	includedirs(global_includedirs)
 	includedirs
 	{
-		"Duin/src",
-		"%{IncludeDir.patches}",
-		"%{IncludeDir.spdlog}",
-		"%{IncludeDir.raylib}",
-		"%{IncludeDir.raylibsrc}",
-		"%{IncludeDir.raylib_cpp}",
-		"%{IncludeDir.imgui}",
-		"%{IncludeDir.rlgui}",
-		"%{IncludeDir.entt}",
-		"%{IncludeDir.fmt}",
-		"%{IncludeDir.cdt}",
 	}
 
+	libdirs(global_libdirs)
 	libdirs
 	{
-		"Duin/vendor/raylib5/lib",
-		"Duin/vendor/rlimgui//bin/Debug",
 	}
 
+	defines(global_defines)
+	defines
+	{
+	}
+	
+	links(global_links)
+	links
+	{
+	}
+	
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "Off"
 		-- systemversion "10.0"
-
-	defines
-	{
-		"DN_PLATFORM_WINDOWS",
-	}
-
-	links
-	{
-		"raylib.lib", 
-		"rlImGui.lib",
-		"winmm.lib",
-		"Duin",
-	}
 
 	filter "configurations:Debug"
 		defines "DN_DEBUG"
@@ -193,44 +216,86 @@ project "Sandbox"
 		"ExampleProjects/%{prj.name}/src/**.cpp",
 	}
 
+	includedirs(global_includedirs)
 	includedirs
 	{
-		"Duin/src",
-		"%{IncludeDir.patches}",
-		"%{IncludeDir.spdlog}",
-		"%{IncludeDir.raylib}",
-		"%{IncludeDir.raylibsrc}",
-		"%{IncludeDir.raylib_cpp}",
-		"%{IncludeDir.imgui}",
-		"%{IncludeDir.rlgui}",
-		"%{IncludeDir.entt}",
-		"%{IncludeDir.fmt}",
-		"%{IncludeDir.cdt}",
 	}
 
+	libdirs(global_libdirs)
 	libdirs
 	{
-		"Duin/vendor/raylib5/lib",
-		"Duin/vendor/rlimgui//bin/Debug",
 	}
 
+	defines(global_defines)
+	defines
+	{
+	}
+	
+	links(global_links)
+	links
+	{
+	}
+	
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "Off"
 		-- systemversion "10.0"
 
-	defines
+	filter "configurations:Debug"
+		defines "DN_DEBUG"
+		symbols "On"
+
+	filter "configurations:Release"
+		defines "DN_RELEASE"
+		optimize "On"
+
+	filter "configurations:Dist"
+		defines "DN_DIST"
+		optimize "On"
+
+
+
+
+
+project "Astroids"
+	location "ExampleProjects/Astroids"
+	kind "ConsoleApp"
+	language "C++"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files 
 	{
-		"DN_PLATFORM_WINDOWS",
+		"ExampleProjects/%{prj.name}/src/**.h",
+		"ExampleProjects/%{prj.name}/src/**.hpp",
+		"ExampleProjects/%{prj.name}/src/**.cpp",
 	}
 
+	includedirs(global_includedirs)
+	includedirs
+	{
+	}
+
+	libdirs(global_libdirs)
+	libdirs
+	{
+	}
+
+	defines(global_defines)
+	defines
+	{
+	}
+	
+	links(global_links)
 	links
 	{
-		"raylib.lib", 
-		"rlImGui.lib",
-		"winmm.lib",
-		"Duin",
 	}
+	
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "Off"
+		-- systemversion "10.0"
 
 	filter "configurations:Debug"
 		defines "DN_DEBUG"

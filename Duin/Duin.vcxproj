@@ -93,10 +93,6 @@
       <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\DuinEditor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\DuinEditor &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -122,10 +118,6 @@ IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\De
       <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\bin\Release-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\DuinEditor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\DuinEditor &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
