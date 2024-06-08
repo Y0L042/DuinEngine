@@ -33,8 +33,12 @@
     <ClInclude Include="src\Components\Handler_UpdateTransform.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Components\AllComponents.h" />
+    <ClInclude Include="src\Components\Handler_RenderableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Astroids.cpp" />
+    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
 </Project>

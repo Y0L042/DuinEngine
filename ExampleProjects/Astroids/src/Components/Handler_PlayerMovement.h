@@ -22,6 +22,10 @@ struct Handler_PlayerMovement
 			c_movement.prevVelocity = c_movement.currVelocity;
 			c_movement.currVelocity += c_movement.inputDir * c_movement.acceleration;
 			c_movement.currVelocity.LimitLength(0.0f, c_movement.maxSpeed);
+			if (c_movement.inputDir.Magnitude() > 0)
+			{
+				c_movement.currRotation = Duin::Maths::RadiansToDegrees(c_movement.inputDir.ToAngle()) + 90.0f;
+			}
 		}
 	}
 };

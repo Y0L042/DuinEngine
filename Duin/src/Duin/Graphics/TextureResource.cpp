@@ -10,7 +10,9 @@ namespace Duin
 
 	TextureResource::TextureResource(const char* texturePath)
 	{
+	
 		LoadTexture(texturePath);
+		SetTextureSize(texturePtr->width, texturePtr->height);
 	}
 
 	TextureResource::TextureResource(const char* texturePath, float width, float height)
@@ -52,7 +54,7 @@ namespace Duin
 		return *this;
 	}
 
-	TextureResource& TextureResource::Draw(float posX, float posY)
+	TextureResource& TextureResource::Draw(float posX, float posY, float rotation_deg)
 	{
 		if (!texturePtr) 
 		{ 
@@ -60,16 +62,23 @@ namespace Duin
 			return *this;
 		}
 
-		Draw(Vector2{ posX, posY });
+		Draw(Vector2{ posX, posY }, rotation_deg);
 		return *this;
 	}
 
-	TextureResource& TextureResource::Draw(Vector2 position)
+	TextureResource& TextureResource::Draw(Vector2 position, float rotation_deg)
 	{
 		if (!texturePtr)
 		{
 			DN_CORE_WARN("TextureRes texture pointer not set!");
 			return *this;
+		}
+		
+		Vector2 origin = Vector2::ZERO;
+		if (isCentered)
+		{
+			position -= textureSize / 2;
+			origin += textureSize / 2;
 		}
 
 		::DrawTexturePro
@@ -77,11 +86,17 @@ namespace Duin
 			*(texturePtr),
 			{ 0, 0, (float)texturePtr->width, (float)texturePtr->height },
 			{ position.x, position.y, textureSize.x, textureSize.y },
-			{ 0, 0 },
-			0,
+			{ origin.x, origin.y },
+			rotation_deg,
 			{ 255, 255, 255, 255 }
 		);
 		//std::cout << "Drawing texture with size: " << textureSize.x << ", " << textureSize.y << "\n";
+		return *this;
+	}
+
+	TextureResource& TextureResource::SetCentered(bool centered)
+	{
+		isCentered = centered;
 		return *this;
 	}
 

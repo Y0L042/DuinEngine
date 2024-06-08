@@ -2,6 +2,7 @@
 
 #include "../MathsCore.h"
 #include <corecrt_math.h>
+#include <cmath>
 
 namespace Duin
 {
@@ -18,6 +19,14 @@ namespace Duin
 		static bool AreSame(float a, float b)
 		{
 			return fabs(a - b) < EPSILON;
+		}
+
+		static double RadiansToDegrees(double radians) {
+			return radians * (180.0 / 3.14159265358979323846f);
+		}
+
+		static double DegreesToRadians(double degrees) {
+			return degrees * (3.14159265358979323846f / 180.0);
 		}
 	};
 }

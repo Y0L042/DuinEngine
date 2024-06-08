@@ -23,13 +23,16 @@ namespace Duin
 		TextureResource& SetTextureSize(float width, float height);
 		TextureResource& SetTextureSize(Vector2 size);
 
-		TextureResource& Draw(float posX, float posY);
-		TextureResource& Draw(Vector2 position);
+		TextureResource& Draw(float posX, float posY, float rotation_deg);
+		TextureResource& Draw(Vector2 position, float rotation_deg);
+
+		TextureResource& SetCentered(bool centered);
 
 		void ClearTexture();
 
 	private:
 		std::shared_ptr<::Texture> texturePtr;
 		Vector2 textureSize;
+		bool isCentered = false;
 	};
 } 

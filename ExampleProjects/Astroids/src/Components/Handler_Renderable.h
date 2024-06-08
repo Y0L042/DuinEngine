@@ -19,7 +19,7 @@ struct Handler_Renderable
 		auto view = registry->View<Component_Renderable, Component_Transform>();
 		for (auto [entity, c_renderable, c_transform] : view.each())
 		{
-			c_renderable.texture->Draw(c_transform.position);
+			c_renderable.texture->Draw(c_transform.position, 0);
 		}
 	}
 };

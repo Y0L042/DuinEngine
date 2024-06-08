@@ -121,5 +121,10 @@ namespace Duin
             }
             return *this;
         }
+
+        float ToAngle() const
+        {
+            return std::atan2f(y, x);
+        }
     };
 }
