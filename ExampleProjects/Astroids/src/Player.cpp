@@ -14,3 +14,7 @@ Player::Player(Duin::Registry* registry)
 Player::~Player()
 {
 }
+
+void Player::PhysicsUpdate(double pDelta)
+{
+}

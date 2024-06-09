@@ -18,10 +18,28 @@ struct Handler_PlayerInput
 		auto view = registry->View<Component_PlayerInput, Component_Movement>();
 		for (auto [entity, c_pinput, c_movement] : view.each())
 		{
-			float speed = (c_movement.maxSpeed * e.IsKeyDown(Duin::KEY_W)) - (c_movement.braking * e.IsKeyDown(Duin::KEY_S));
-			c_movement.currRotation += c_movement.maxRotationSpeed * (e.IsKeyDown(Duin::KEY_A) * -1) * e.IsKeyDown(Duin::KEY_D);
-			c_movement.inputDir = Duin::Vector2::AngleToVector2(Duin::Maths::DegreesToRadians(c_movement.currRotation));
-			c_movement.inputDir = (c_movement.inputDir * speed).Normalized();
+			c_movement.targetSpeed = 0;
+			if (e.IsKeyDown(Duin::KEY_W))
+			{
+				c_movement.targetSpeed += c_movement.maxSpeed;
+			}
+			if (e.IsKeyDown(Duin::KEY_S))
+			{
+				c_movement.targetSpeed -= c_movement.brakingSpeed;
+			}
+
+			c_movement.targetRotation = c_movement.currRotation;
+			if (e.IsKeyDown(Duin::KEY_A))
+			{
+				c_movement.targetRotation -= c_movement.maxRotationSpeed;
+			}
+			if (e.IsKeyDown(Duin::KEY_D))
+			{
+				c_movement.targetRotation += c_movement.maxRotationSpeed;
+			}
+
+			c_movement.inputVel = Duin::Vector2::AngleToVector2(Duin::Maths::DegreesToRadians(c_movement.targetRotation - 90.0f)) 
+				* c_movement.targetSpeed;
 		}
 	}
 };
@@ -41,12 +59,9 @@ struct Handler_PlayerMovement
 		for (auto [entity, c_pinput, c_movement] : view.each())
 		{
 			c_movement.prevVelocity = c_movement.currVelocity;
-			c_movement.currVelocity += c_movement.inputDir * c_movement.acceleration;
+			c_movement.currVelocity += c_movement.inputVel * c_movement.acceleration;
 			c_movement.currVelocity.LimitLength(0.0f, c_movement.maxSpeed);
-			if (c_movement.inputDir.Magnitude() > 0)
-			{
-				c_movement.currRotation = Duin::Maths::RadiansToDegrees(c_movement.currVelocity.ToAngle()) + 90.0f;
-			}
+			c_movement.currRotation = c_movement.targetRotation;
 		}
 	}
 };

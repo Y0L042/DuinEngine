@@ -7,8 +7,10 @@
 class Player : public Duin::Node
 {
 public:
+	std::shared_ptr<Duin::Entity> entity;
+
 	Player(Duin::Registry* registry);
 	~Player();
 
-	std::shared_ptr<Duin::Entity> entity;
+	void PhysicsUpdate(double pDelta) override;
 };

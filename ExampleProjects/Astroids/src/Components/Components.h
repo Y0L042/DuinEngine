@@ -13,14 +13,17 @@ struct Component_Movement
 {
 	float maxSpeed = 1.0f;
 	float acceleration = 1.0f;
-	float braking = 0.7f;
+	float brakingSpeed = 0.7f;
 	float maxRotationSpeed = 1.0f;
 
 	float currRotation = 0.0f;
 	float currSpeed = 0.0f;
-	Duin::Vector2 inputDir;
 	Duin::Vector2 prevVelocity;
 	Duin::Vector2 currVelocity;
+
+	Duin::Vector2 inputVel;
+	float targetSpeed = 0.0f;
+	float targetRotation = 0.0f;
 
 	Component_Movement() = default;
 	Component_Movement(float maxSpeed, float acceleration)
