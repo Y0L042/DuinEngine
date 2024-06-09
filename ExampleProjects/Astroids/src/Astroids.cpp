@@ -3,7 +3,8 @@
 
 #include <memory>
 
-#include "Components/AllComponents.h"
+#include "Components/Components.h"
+#include "Components/Handlers.h"
 #include "Player.h"
 
 class Astroids : public Duin::Application
@@ -16,8 +17,8 @@ public:
 	void Exit() override;
 	void Ready() override;
 	void HandleInputs(Duin::InputEvent e) override;
-	void Process(double rDelta) override;
-	void PhysicsProcess(double pDelta) override;
+	void Update(double rDelta) override;
+	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
 
 	Duin::Registry* registry;
@@ -49,7 +50,7 @@ void Astroids::Exit()
 
 void Astroids::Ready()
 {
-	player = std::make_shared<Player>(registry);
+	player = GetSceneManager().CreateNode<Player>(registry);
 }
 
 void Astroids::HandleInputs(Duin::InputEvent e)
@@ -57,11 +58,11 @@ void Astroids::HandleInputs(Duin::InputEvent e)
 	handlerPlayerInput->Update(e);
 }
 
-void Astroids::Process(double rDelta)
+void Astroids::Update(double rDelta)
 {
 }
 
-void Astroids::PhysicsProcess(double pDelta)
+void Astroids::PhysicsUpdate(double pDelta)
 {
 	handlerPlayerMovement->Update();
 

@@ -2,9 +2,9 @@
 
 #include <Duin.h>
 
-#include "Components/AllComponents.h"
+#include "Components/Components.h"
 
-class Player
+class Player : public Duin::Node
 {
 public:
 	Player(Duin::Registry* registry);

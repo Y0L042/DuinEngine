@@ -7,7 +7,7 @@ Player::Player(Duin::Registry* registry)
 	entity = Duin::Entity::Create(registry);
 	entity->AddComponent<Component_PlayerInput>();
 	entity->AddComponent<Component_Movement>();
-	entity->AddComponent<Component_Transform>();
+	entity->AddComponent<Component_Transform>(Duin::Vector2{ 100, 100 });
 	entity->AddComponent<Component_Renderable>(texture, Duin::Vector2{ 25, 25 }, true);
 }
 

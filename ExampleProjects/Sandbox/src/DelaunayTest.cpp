@@ -36,11 +36,11 @@ void DelaunayTest::HandleInputs(Duin::InputEvent e)
 {
 }
 
-void DelaunayTest::Process(double rDelta)
+void DelaunayTest::Update(double rDelta)
 {
 }
 
-void DelaunayTest::PhysicsProcess(double pDelta)
+void DelaunayTest::PhysicsUpdate(double pDelta)
 {
 }
 

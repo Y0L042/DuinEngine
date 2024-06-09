@@ -39,11 +39,7 @@
 // ---------- [DEPRECIATED] -----------
 // ---------- Objects -----------
 #include "Duin/Object/Object.h"
-#include "Duin/Object/ObjectManager.h"
+#include "Duin/Object/Node.h"
 #include "Duin/Object/Blackboard.h"
-#include "Duin/Object/Node/Node.h"
-#include "Duin/Object/Node/Node2D/Node2D.h"
-#include "Duin/Object/Node/Node2D/Sprite2D.h"
-#include "Duin/Object/Node/Node3D/Node3D.h"
 
 

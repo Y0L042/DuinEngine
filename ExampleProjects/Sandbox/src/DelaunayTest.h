@@ -13,8 +13,8 @@ public:
 	void Initialize() override;
 	void Ready() override;
 	void HandleInputs(Duin::InputEvent e) override;
-	void Process(double rDelta) override;
-	void PhysicsProcess(double pDelta) override;
+	void Update(double rDelta) override;
+	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
 
 	Duin::Delaunay delaunayGraph;

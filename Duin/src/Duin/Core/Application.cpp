@@ -39,13 +39,13 @@ namespace Duin
             EngineHandleInputs(e);
             HandleInputs(e);
 
-            EngineProcess(::GetFrameTime());
-            Process(::GetFrameTime());
+            EngineUpdate(::GetFrameTime());
+            Update(::GetFrameTime());
 
             if (::GetFrameTime() > 0.0f)
             {
-                EnginePhysicsProcess(::GetFrameTime()); // TODO
-                PhysicsProcess(::GetFrameTime()); // TODO
+                EnginePhysicsUpdate(::GetFrameTime()); // TODO
+                PhysicsUpdate(::GetFrameTime()); // TODO
             }
 
             ::ClearBackground(RAYWHITE);
@@ -75,6 +75,7 @@ namespace Duin
 
     void Application::EngineReady()
     {
+        sceneManager.CallReady();
     }
 
     void Application::Ready()
@@ -83,30 +84,34 @@ namespace Duin
 
     void Application::EngineHandleInputs(InputEvent e)
     {
+        sceneManager.CallHandleInput(e);
     }
 
     void Application::HandleInputs(InputEvent e)
     {
     }
 
-    void Application::EngineProcess(double rDelta)
+    void Application::EngineUpdate(double rDelta)
+    {
+        sceneManager.CallUpdate(rDelta);
+    }
+
+    void Application::Update(double rDelta)
     {
     }
 
-    void Application::Process(double rDelta)
+    void Application::EnginePhysicsUpdate(double pDelta)
     {
+        sceneManager.CallPhysicsUpdate(pDelta);
     }
 
-    void Application::EnginePhysicsProcess(double pDelta)
-    {
-    }
-
-    void Application::PhysicsProcess(double pDelta)
+    void Application::PhysicsUpdate(double pDelta)
     {
     }
 
     void Application::EngineDraw()
     {
+        sceneManager.CallDraw();
     }
 
     void Application::Draw()

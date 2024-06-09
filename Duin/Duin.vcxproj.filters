@@ -142,25 +142,10 @@
     <ClInclude Include="src\Duin\Object\Blackboard.h">
       <Filter>Duin\Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Object\Node\Node.h">
+    <ClInclude Include="src\Duin\Object\Node.h">
       <Filter>Duin\Object\Node</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h">
-      <Filter>Duin\Object\Node\Node2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Object\Node\Node2D\Sprite2D.h">
-      <Filter>Duin\Object\Node\Node2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h">
-      <Filter>Duin\Object\Node\Node3D</Filter>
-    </ClInclude>
     <ClInclude Include="src\Duin\Object\Object.h">
-      <Filter>Duin\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Object\ObjectFactory.h">
-      <Filter>Duin\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Object\ObjectManager.h">
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
@@ -211,22 +196,10 @@
     <ClCompile Include="src\Duin\Object\Blackboard.cpp">
       <Filter>Duin\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Object\Node\Node.cpp">
+    <ClCompile Include="src\Duin\Object\Node.cpp">
       <Filter>Duin\Object\Node</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp">
-      <Filter>Duin\Object\Node\Node2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Duin\Object\Node\Node2D\Sprite2D.cpp">
-      <Filter>Duin\Object\Node\Node2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp">
-      <Filter>Duin\Object\Node\Node3D</Filter>
-    </ClCompile>
     <ClCompile Include="src\Duin\Object\Object.cpp">
-      <Filter>Duin\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Duin\Object\ObjectManager.cpp">
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />

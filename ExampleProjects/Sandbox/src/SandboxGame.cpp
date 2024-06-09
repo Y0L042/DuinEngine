@@ -27,12 +27,12 @@ void Sandbox::HandleInputs(Duin::InputEvent e)
 	PlayerCMPManager::Update(registry.get(), e);
 }
 
-void Sandbox::Process(double rDelta)
+void Sandbox::Update(double rDelta)
 {
 }
 
 
-void Sandbox::PhysicsProcess(double pDelta)
+void Sandbox::PhysicsUpdate(double pDelta)
 {
 	Duin::Timer timer;
 

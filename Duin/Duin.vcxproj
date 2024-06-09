@@ -193,13 +193,8 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\Duin\Events\InputMap.h" />
     <ClInclude Include="src\Duin\Graphics\TextureResource.h" />
     <ClInclude Include="src\Duin\Object\Blackboard.h" />
-    <ClInclude Include="src\Duin\Object\Node\Node.h" />
-    <ClInclude Include="src\Duin\Object\Node\Node2D\Node2D.h" />
-    <ClInclude Include="src\Duin\Object\Node\Node2D\Sprite2D.h" />
-    <ClInclude Include="src\Duin\Object\Node\Node3D\Node3D.h" />
+    <ClInclude Include="src\Duin\Object\Node.h" />
     <ClInclude Include="src\Duin\Object\Object.h" />
-    <ClInclude Include="src\Duin\Object\ObjectFactory.h" />
-    <ClInclude Include="src\Duin\Object\ObjectManager.h" />
     <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -218,12 +213,8 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
     <ClCompile Include="src\Duin\Graphics\TextureResource.cpp" />
     <ClCompile Include="src\Duin\Object\Blackboard.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\Node.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\Node2D\Node2D.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\Node2D\Sprite2D.cpp" />
-    <ClCompile Include="src\Duin\Object\Node\Node3D\Node3D.cpp" />
+    <ClCompile Include="src\Duin\Object\Node.cpp" />
     <ClCompile Include="src\Duin\Object\Object.cpp" />
-    <ClCompile Include="src\Duin\Object\ObjectManager.cpp" />
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

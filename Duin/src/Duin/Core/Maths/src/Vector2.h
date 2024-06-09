@@ -12,6 +12,11 @@ namespace Duin
 
         float x, y;
 
+        static Vector2 AngleToVector2(float radians)
+        {
+            return Vector2(std::cos(radians), std::sin(radians));
+        }
+
         Vector2()
             : x(0), y(0)
         {}

@@ -31,10 +31,10 @@ namespace Duin
 		virtual void Ready();
 		void EngineHandleInputs(InputEvent e);
 		virtual void HandleInputs(InputEvent e);
-		void EngineProcess(double rDelta);
-		virtual void Process(double rDelta);
-		void EnginePhysicsProcess(double pDelta);
-		virtual void PhysicsProcess(double pDelta);
+		void EngineUpdate(double rDelta);
+		virtual void Update(double rDelta);
+		void EnginePhysicsUpdate(double pDelta);
+		virtual void PhysicsUpdate(double pDelta);
 		void EngineDraw();
 		virtual void Draw();
 		void EngineExit();
