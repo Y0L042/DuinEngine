@@ -21,11 +21,11 @@ struct Handler_PlayerInput
 			c_movement.targetSpeed = 0;
 			if (e.IsKeyDown(Duin::KEY_W))
 			{
-				c_movement.targetSpeed += c_movement.maxSpeed;
+				c_movement.targetSpeed += c_movement.maxLinearSpeed;
 			}
 			if (e.IsKeyDown(Duin::KEY_S))
 			{
-				c_movement.targetSpeed -= c_movement.brakingSpeed;
+				c_movement.targetSpeed -= c_movement.maxLinearSpeed * c_movement.brakingFactor;
 			}
 
 			c_movement.targetRotation = c_movement.currRotation;
@@ -53,15 +53,16 @@ struct Handler_PlayerMovement
 		: registry(registry)
 	{}
 
-	void Update()
+	void Update(double delta)
 	{
 		auto view = registry->View<Component_PlayerInput, Component_Movement>();
 		for (auto [entity, c_pinput, c_movement] : view.each())
 		{
 			c_movement.prevVelocity = c_movement.currVelocity;
-			c_movement.currVelocity += c_movement.inputVel * c_movement.acceleration;
-			c_movement.currVelocity.LimitLength(0.0f, c_movement.maxSpeed);
+			c_movement.currVelocity += c_movement.inputVel * c_movement.accelerationFactor * delta;
+			c_movement.currVelocity.LimitLength(0.0f, c_movement.maxLinearSpeed);
 			c_movement.currRotation = c_movement.targetRotation;
+			c_movement.currSpeed = c_movement.currVelocity.Length();
 		}
 	}
 };

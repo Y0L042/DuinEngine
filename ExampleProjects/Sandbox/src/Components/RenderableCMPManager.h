@@ -12,7 +12,7 @@ struct RenderableCMPManager
         auto view = registry->View<TransformCMP, RenderableCMP>();
         for (auto [entity, transform, renderable] : view.each()) 
         {
-            renderable.texture->Draw(transform.position);
+            renderable.texture->Draw(transform.position, 0);
         }
     }
 };

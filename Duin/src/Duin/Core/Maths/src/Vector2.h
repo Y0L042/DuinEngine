@@ -8,7 +8,12 @@
 namespace Duin
 {
     struct DUIN_MATHS_API Vector2 {
-        #define ZERO Vector2(0, 0)
+        #define ZERO Vector2(0.0f, 0.0f)
+        #define ONE Vector2(1.0f, 1.0f)
+        #define UP Vector2(0.0f, -1.0f)
+        #define DOWN Vector2(0.0f, 1.0f)
+        #define LEFT Vector2(-1.0f, 0.0f)
+        #define RIGHT Vector2(1.0f, 0.0f)
 
         float x, y;
 
@@ -97,30 +102,36 @@ namespace Duin
         {
             return x * other.x + y * other.y;
         }
-
-        float Magnitude() const
+            
+        float Length() const
         {
             return sqrt(x * x + y * y);
         }
 
+        float LengthSqrd() const
+        {
+            return (x * x + y * y);
+        }
+
         Vector2 Normalized() const
         {
-            float mag = Magnitude();
+            float mag = Length();
             if (Maths::AreSame(mag, 0))
             {
                 return ZERO;
             }
-            return Vector2(x / mag, y / mag);
+            float invMag = 1.0f / mag;
+            return Vector2(x * invMag, y * invMag);
         }
 
         Vector2 LimitLength(float minLength, float maxLength) const
         {
-            float mag = Magnitude();
-            if (mag < minLength)
+            float mag = LengthSqrd();
+            if (mag < (minLength * minLength))
             {
                 return Normalized() * minLength;
             }
-            else if (mag > maxLength)
+            else if (mag > (maxLength * maxLength))
             {
                 return Normalized() * maxLength;
             }

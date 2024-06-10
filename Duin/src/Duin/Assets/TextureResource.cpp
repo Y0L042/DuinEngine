@@ -34,8 +34,8 @@ namespace Duin
 
 	TextureResource& TextureResource::LoadTexture(const char* texturePath)
 	{
-		Texture texture = ::LoadTexture(texturePath); // supposed to call Raylib's LoadTexture()
-		texturePtr.reset(new Texture(texture), [](Texture* ptr) {
+		::Texture texture = ::LoadTexture(texturePath); // supposed to call Raylib's LoadTexture()
+		texturePtr.reset(new ::Texture(texture), [](::Texture* ptr) {
 			UnloadTexture(*ptr);  // Custom deleter that calls Raylib's UnloadTexture
 			delete ptr;           // Delete the pointer after unloading the texture
 			});
@@ -88,7 +88,7 @@ namespace Duin
 			{ position.x, position.y, textureSize.x, textureSize.y },
 			{ origin.x, origin.y },
 			rotation_deg,
-			{ 255, 255, 255, 255 }
+			{ tintColor.r, tintColor.g, tintColor.b, tintColor.a }
 		);
 		//std::cout << "Drawing texture with size: " << textureSize.x << ", " << textureSize.y << "\n";
 		return *this;
@@ -97,6 +97,12 @@ namespace Duin
 	TextureResource& TextureResource::SetCentered(bool centered)
 	{
 		isCentered = centered;
+		return *this;
+	}
+
+	TextureResource& TextureResource::SetTintColor(Color color)
+	{
+		tintColor = color;
 		return *this;
 	}
 

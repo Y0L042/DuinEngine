@@ -13,6 +13,11 @@ namespace Duin
     {
     }
 
+    void Application::SetBackgroundColor(Color color)
+    {
+        backgroundColor = color;
+    }
+
     void Application::Run()
     {
         int screenWidth = 1280;
@@ -48,7 +53,7 @@ namespace Duin
                 PhysicsUpdate(::GetFrameTime()); // TODO
             }
 
-            ::ClearBackground(RAYWHITE);
+            ::ClearBackground(::Color{ backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a });
             
 
             EngineDraw();

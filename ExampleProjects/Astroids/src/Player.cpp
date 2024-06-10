@@ -4,6 +4,8 @@ Player::Player(Duin::Registry* registry)
 {
 	std::shared_ptr<Duin::TextureResource> texture = std::make_shared<Duin::TextureResource>("assets/spaceship.png");
 	texture->SetCentered(true);
+	texture->SetTintColor(Duin::BLUE);
+
 	entity = Duin::Entity::Create(registry);
 	entity->AddComponent<Component_PlayerInput>();
 	entity->AddComponent<Component_Movement>();
@@ -16,5 +18,9 @@ Player::~Player()
 }
 
 void Player::PhysicsUpdate(double pDelta)
+{
+}
+
+void Player::Draw()
 {
 }

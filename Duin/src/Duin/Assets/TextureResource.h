@@ -4,6 +4,7 @@
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Debug/Log.h"
 #include "Duin/Core/Maths/DuinMaths.h"
+#include "Duin/Core/Structures/RenderStructs.h"
 
 #include <RayGuiComponent.h>
 
@@ -27,6 +28,7 @@ namespace Duin
 		TextureResource& Draw(Vector2 position, float rotation_deg);
 
 		TextureResource& SetCentered(bool centered);
+		TextureResource& SetTintColor(Color color);
 
 		void ClearTexture();
 
@@ -34,5 +36,6 @@ namespace Duin
 		std::shared_ptr<::Texture> texturePtr;
 		Vector2 textureSize;
 		bool isCentered = false;
+		Color tintColor = WHITE;
 	};
 } 

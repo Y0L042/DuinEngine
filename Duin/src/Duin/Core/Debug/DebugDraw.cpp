@@ -13,7 +13,7 @@ namespace Duin
 	void DebugDraw::DrawLine(Vector2 v1, Vector2 v2, Color color)
 	{
 		::Color rlColor{ color.r, color.g, color.b, color.a };
-		::DrawLine(v1.x, v1.y, v2.x, v2.y, rlColor);
+		::DrawLine((int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, rlColor);
 	}
 
 	void DebugDraw::DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color)

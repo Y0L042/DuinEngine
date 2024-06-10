@@ -5,6 +5,7 @@
 #include "Duin/Events/InputMap.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Core/Scene/SceneManager.h"
+#include "Duin/Core/Structures/RenderStructs.h"
 
 #include <RayGuiComponent.h>
 
@@ -22,6 +23,7 @@ namespace Duin
 			TARGET_RENDER_FRAMERATE = framerate;
 			TARGET_PHYSICS_FRAMERATE = framerate;
 		}
+		void SetBackgroundColor(Color color);
 
 		void Run();
 
@@ -45,6 +47,7 @@ namespace Duin
 	private:
 		int TARGET_RENDER_FRAMERATE = 60;
 		int TARGET_PHYSICS_FRAMERATE = 60;
+		Color backgroundColor = WHITE;
 		SceneManager sceneManager;
 	};
 

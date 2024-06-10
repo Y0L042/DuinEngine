@@ -2,8 +2,8 @@
 #include <Duin/EntryPoint.h>
 
 
-//#include "SandboxGame.h"
-//Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
+#include "SandboxGame.h"
+Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
-#include "DelaunayTest.h"
-Duin::Application* Duin::CreateApplication() { return new DelaunayTest(); }
+//#include "DelaunayTest.h"
+//Duin::Application* Duin::CreateApplication() { return new DelaunayTest(); }

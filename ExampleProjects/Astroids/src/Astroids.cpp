@@ -32,6 +32,8 @@ Duin::Application* Duin::CreateApplication() { return new Astroids(); }
 
 void Astroids::Initialize()
 {
+	SetBackgroundColor(Duin::BLACK);
+
 	registry = new Duin::Registry();
 	handlerPlayerInput = new Handler_PlayerInput(registry);
 	handlerPlayerMovement = new Handler_PlayerMovement(registry);
@@ -64,7 +66,7 @@ void Astroids::Update(double rDelta)
 
 void Astroids::PhysicsUpdate(double pDelta)
 {
-	handlerPlayerMovement->Update();
+	handlerPlayerMovement->Update(pDelta);
 
 	handlerUpdateTransform->Update(pDelta);
 }

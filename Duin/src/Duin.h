@@ -25,7 +25,7 @@
 #include "Duin/Events/InputMap.h"
 
 // ---------- Graphics -----------
-#include "Duin/Graphics/TextureResource.h"
+#include "Duin/Assets/TextureResource.h"
 
 // ---------- Entities -----------
 #include "Duin/Entity/Entity.h"

@@ -136,7 +136,7 @@
     <ClInclude Include="src\Duin\Events\InputMap.h">
       <Filter>Duin\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Graphics\TextureResource.h">
+    <ClInclude Include="src\Duin\Assets\TextureResource.h">
       <Filter>Duin\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Object\Blackboard.h">
@@ -149,6 +149,8 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="src\Duin\Assets\Particle2D.h" />
+    <ClInclude Include="src\Duin\Assets\AssetManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -190,7 +192,7 @@
     <ClCompile Include="src\Duin\Events\InputEvent.cpp">
       <Filter>Duin\Events</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Graphics\TextureResource.cpp">
+    <ClCompile Include="src\Duin\Assets\TextureResource.cpp">
       <Filter>Duin\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Object\Blackboard.cpp">
@@ -203,5 +205,6 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
+    <ClCompile Include="src\Duin\Assets\AssetManager.cpp" />
   </ItemGroup>
 </Project>

@@ -13,4 +13,5 @@ public:
 	~Player();
 
 	void PhysicsUpdate(double pDelta) override;
+	void Draw() override;
 };

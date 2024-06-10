@@ -161,6 +161,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
+    <ClInclude Include="src\Duin\Assets\AssetManager.h" />
     <ClInclude Include="src\Duin\Core\Application.h" />
     <ClInclude Include="src\Duin\Core\Core.h" />
     <ClInclude Include="src\Duin\Core\Debug\DebugDraw.h" />
@@ -191,13 +192,15 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\Duin\EntryPoint.h" />
     <ClInclude Include="src\Duin\Events\InputEvent.h" />
     <ClInclude Include="src\Duin\Events\InputMap.h" />
-    <ClInclude Include="src\Duin\Graphics\TextureResource.h" />
+    <ClInclude Include="src\Duin\Assets\Particle2D.h" />
+    <ClInclude Include="src\Duin\Assets\TextureResource.h" />
     <ClInclude Include="src\Duin\Object\Blackboard.h" />
     <ClInclude Include="src\Duin\Object\Node.h" />
     <ClInclude Include="src\Duin\Object\Object.h" />
     <ClInclude Include="src\dnpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duin\Assets\AssetManager.cpp" />
     <ClCompile Include="src\Duin\Core\Application.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\DebugDraw.cpp" />
     <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
@@ -211,7 +214,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClCompile Include="src\Duin\Entity\Entity.cpp" />
     <ClCompile Include="src\Duin\Entity\Registry.cpp" />
     <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
-    <ClCompile Include="src\Duin\Graphics\TextureResource.cpp" />
+    <ClCompile Include="src\Duin\Assets\TextureResource.cpp" />
     <ClCompile Include="src\Duin\Object\Blackboard.cpp" />
     <ClCompile Include="src\Duin\Object\Node.cpp" />
     <ClCompile Include="src\Duin\Object\Object.cpp" />

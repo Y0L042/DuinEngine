@@ -6,19 +6,19 @@
 
 namespace Duin
 {
-	#define EPSILON 0.05
+	#define EPSILON std::numeric_limits<float>::epsilon()
 
 	class DUIN_MATHS_API Maths
 	{
 	public:
 		static bool AreSame(double a, double b)
 		{
-			return fabs(a - b) < EPSILON;
+			return std::fabs(a - b) < EPSILON;
 		}
 
 		static bool AreSame(float a, float b)
 		{
-			return fabs(a - b) < EPSILON;
+			return std::fabs(a - b) < EPSILON;
 		}
 
 		static double RadiansToDegrees(double radians) {

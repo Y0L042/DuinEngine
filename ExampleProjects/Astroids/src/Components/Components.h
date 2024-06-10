@@ -11,10 +11,10 @@ struct Component_AstroidInput
 
 struct Component_Movement
 {
-	float maxSpeed = 1.0f;
-	float acceleration = 1.0f;
-	float brakingSpeed = 0.7f;
+	float maxLinearSpeed = 25.0f;
 	float maxRotationSpeed = 1.0f;
+	float accelerationFactor = 3.5f;
+	float brakingFactor = 1.0f;
 
 	float currRotation = 0.0f;
 	float currSpeed = 0.0f;
@@ -27,7 +27,7 @@ struct Component_Movement
 
 	Component_Movement() = default;
 	Component_Movement(float maxSpeed, float acceleration)
-		: maxSpeed(maxSpeed), acceleration(acceleration)
+		: maxLinearSpeed(maxSpeed), accelerationFactor(acceleration)
 	{}
 };
 
@@ -51,6 +51,7 @@ struct Component_Renderable
 {
 	std::shared_ptr<Duin::TextureResource> texture;
 	Duin::Vector2 size;
+	Duin::Color tint = Duin::WHITE;
 	bool pointInInputDir = false;
 
 	Component_Renderable(std::shared_ptr<Duin::TextureResource> texture, Duin::Vector2 size)
