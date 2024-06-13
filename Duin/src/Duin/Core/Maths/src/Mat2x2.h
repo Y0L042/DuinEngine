@@ -5,11 +5,15 @@
 
 namespace Duin
 {
-    struct DUIN_MATHS_API Matrix2x2 
+    struct DUIN_MATHS_API Mat2x2 
     {
+        #define Mat2x2_ZERO Mat2x2(0, 0, 0, 0)
+        #define Mat2x2_IDENTITY Mat2x2(1, 0, 0, 1)
+        #define Mat2x2_ONE Mat2x2(1, 1, 1, 1)
+
         float m[2][2];
 
-        Matrix2x2() 
+        Mat2x2() 
         {
             for (int i = 0; i < 2; ++i)
             {
@@ -20,7 +24,7 @@ namespace Duin
             }
         }
 
-        Matrix2x2(float a, float b, float c, float d) 
+        Mat2x2(float a, float b, float c, float d) 
         {
             m[0][0] = a;
             m[0][1] = b;
@@ -28,21 +32,21 @@ namespace Duin
             m[1][1] = d;
         }
 
-        static Matrix2x2 Rotate(float angle) 
+        static Mat2x2 Rotate(float angle) 
         {
             float c = cos(angle);
             float s = sin(angle);
-            return Matrix2x2(c, -s, s, c);
+            return Mat2x2(c, -s, s, c);
         }
 
-        static Matrix2x2 Scale(float sx, float sy) 
+        static Mat2x2 Scale(float sx, float sy) 
         {
-            return Matrix2x2(sx, 0, 0, sy);
+            return Mat2x2(sx, 0, 0, sy);
         }
 
-        Matrix2x2 operator+(const Matrix2x2& other) const
+        Mat2x2 operator+(const Mat2x2& other) const
         {
-            return Matrix2x2(
+            return Mat2x2(
                 m[0][0] + other.m[0][0],
                 m[0][1] + other.m[0][1],
                 m[1][0] + other.m[1][0],
@@ -50,9 +54,9 @@ namespace Duin
             );
         }
 
-        Matrix2x2 operator-(const Matrix2x2& other) const
+        Mat2x2 operator-(const Mat2x2& other) const
         {
-            return Matrix2x2(
+            return Mat2x2(
                 m[0][0] - other.m[0][0],
                 m[0][1] - other.m[0][1],
                 m[1][0] - other.m[1][0],
@@ -60,13 +64,13 @@ namespace Duin
             );
         }
 
-        Matrix2x2 operator+=(const Matrix2x2& other)
+        Mat2x2 operator+=(const Mat2x2& other)
         {
             m[0][0] += other.m[0][0];
             m[0][1] += other.m[0][1];
             m[1][0] += other.m[1][0];
             m[1][1] += other.m[1][1];
-            return Matrix2x2(
+            return Mat2x2(
                 m[0][0],
                 m[0][1],
                 m[1][0],
@@ -74,13 +78,13 @@ namespace Duin
             );
         }
 
-        Matrix2x2 operator-=(const Matrix2x2& other)
+        Mat2x2 operator-=(const Mat2x2& other)
         {
             m[0][0] -= other.m[0][0];
             m[0][1] -= other.m[0][1];
             m[1][0] -= other.m[1][0];
             m[1][1] -= other.m[1][1];
-            return Matrix2x2(
+            return Mat2x2(
                 m[0][0],
                 m[0][1],
                 m[1][0],
@@ -88,9 +92,9 @@ namespace Duin
             );
         }
 
-        Matrix2x2 operator*(const Matrix2x2& other) const 
+        Mat2x2 operator*(const Mat2x2& other) const 
         {
-            return Matrix2x2(
+            return Mat2x2(
                 m[0][0] * other.m[0][0] + m[0][1] * other.m[1][0],
                 m[0][0] * other.m[0][1] + m[0][1] * other.m[1][1],
                 m[1][0] * other.m[0][0] + m[1][1] * other.m[1][0],

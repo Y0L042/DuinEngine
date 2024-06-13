@@ -5,9 +5,11 @@
 
 namespace Duin
 {
-	class DUIN_API Particle2D : public Object
+	class DUIN_API AnimatedSprite2D : public Object
 	{
 	public:
-		
+
+	private:
+
 	};
 }

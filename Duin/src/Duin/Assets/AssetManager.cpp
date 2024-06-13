@@ -12,7 +12,13 @@ namespace Duin
 	{
 	}
 
-	void AssetManager::LoadTexture(const char* texturePath)
+	void AssetManager::AddToAssetRegistry(std::shared_ptr<_Asset> asset)
 	{
+		assetRegistry[asset->guid] = asset;
+	}
+
+	void AssetManager::RemoveFromAssetRegistry(GUID guid)
+	{
+		assetRegistry.erase(guid);
 	}
 }

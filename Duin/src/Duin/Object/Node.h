@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Duin/Core/Core.h"
-#include "Duin/Object/Object.h"
+#include "Duin/Core/Scene/Object.h"
 #include "Duin/Core/Scene/SceneManager.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Events/InputMap.h"

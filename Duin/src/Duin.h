@@ -18,14 +18,16 @@
 #include "Duin/Core/Structures/RenderStructs.h"
 #include "Duin/Core/Structures/QuadTree.h"
 #include "Duin/Core/Structures/Delaunay.h"
+#include "Duin/Core/Scene/Object.h"
 #include "Duin/Core/Scene/SceneManager.h"
 
 // ---------- Events -----------
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Events/InputMap.h"
 
-// ---------- Graphics -----------
+// ---------- Assets -----------
 #include "Duin/Assets/TextureResource.h"
+#include "Duin/Assets/AssetManager.h"
 
 // ---------- Entities -----------
 #include "Duin/Entity/Entity.h"
@@ -38,7 +40,6 @@
 
 // ---------- [DEPRECIATED] -----------
 // ---------- Objects -----------
-#include "Duin/Object/Object.h"
 #include "Duin/Object/Node.h"
 #include "Duin/Object/Blackboard.h"
 

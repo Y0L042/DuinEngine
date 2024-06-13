@@ -136,21 +136,24 @@
     <ClInclude Include="src\Duin\Events\InputMap.h">
       <Filter>Duin\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Assets\TextureResource.h">
-      <Filter>Duin\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Duin\Object\Blackboard.h">
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Object\Node.h">
       <Filter>Duin\Object\Node</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Object\Object.h">
-      <Filter>Duin\Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\Duin\Assets\Particle2D.h" />
     <ClInclude Include="src\Duin\Assets\AssetManager.h" />
+    <ClInclude Include="src\Duin\Assets\AssetStructs.h" />
+    <ClInclude Include="src\Duin\Assets\GUID.h" />
+    <ClInclude Include="src\Duin\Assets\Image.h" />
+    <ClInclude Include="src\Duin\Core\Scene\Object.h" />
+    <ClInclude Include="src\Duin\Core\Scene\SharedRef.h" />
+    <ClInclude Include="src\Duin\Assets\AnimatedSprite2D.h" />
+    <ClInclude Include="src\Duin\Assets\Sprite2D.h" />
+    <ClInclude Include="src\Duin\Assets\Texture.h" />
+    <ClInclude Include="src\Duin\Assets\Asset.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">
@@ -192,19 +195,23 @@
     <ClCompile Include="src\Duin\Events\InputEvent.cpp">
       <Filter>Duin\Events</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Assets\TextureResource.cpp">
-      <Filter>Duin\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Duin\Object\Blackboard.cpp">
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Object\Node.cpp">
       <Filter>Duin\Object\Node</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\Object\Object.cpp">
-      <Filter>Duin\Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
     <ClCompile Include="src\Duin\Assets\AssetManager.cpp" />
+    <ClCompile Include="src\Duin\Assets\AssetStructs.cpp" />
+    <ClCompile Include="src\Duin\Assets\GUID.cpp" />
+    <ClCompile Include="src\Duin\Assets\Image.cpp" />
+    <ClCompile Include="src\Duin\Core\Scene\Object.cpp" />
+    <ClCompile Include="src\Duin\Core\Scene\SharedRef.cpp" />
+    <ClCompile Include="src\Duin\Assets\AnimatedSprite2D.cpp" />
+    <ClCompile Include="src\Duin\Assets\Sprite2D.cpp" />
+    <ClCompile Include="src\Duin\Assets\Particle2D.cpp" />
+    <ClCompile Include="src\Duin\Assets\Texture.cpp" />
+    <ClCompile Include="src\Duin\Assets\Asset.cpp" />
   </ItemGroup>
 </Project>

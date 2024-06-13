@@ -149,57 +149,20 @@ namespace Duin
 	};
 	
 
-	// Image, pixel data stored in CPU memory (RAM)
-	struct DUIN_API Image 
-	{
-		void* data;             // Image raw data
-		int width;              // Image base width
-		int height;             // Image base height
-		int mipmaps;            // Mipmap levels, 1 by default
-		int format;             // Data format (PixelFormat type)
-		UUID _uuid;				// Base resource UUID
-
-		Image() : data(nullptr), width(0), height(0), mipmaps(1), format(0) {}  // Default constructor
-
-		Image(const ::Image& image)  // Conversion constructor from raylib::Image
-			: data(image.data), width(image.width), height(image.height),
-			mipmaps(image.mipmaps), format(image.format) {}
-		::Image ToRaylibImage() const // Method to convert back to raylib::Image
-		{ return { data, width, height, mipmaps, format }; }
-	};
-
-
-	// Texture, tex data stored in GPU memory (VRAM)
-	struct DUIN_API Texture {
-		unsigned int id;        // OpenGL texture id
-		int width;              // Texture base width
-		int height;             // Texture base height
-		int mipmaps;            // Mipmap levels, 1 by default
-		int format;             // Data format (PixelFormat type)
-		UUID _uuid;				// Base resource UUID
-
-		Texture() : id(0), width(0), height(0), mipmaps(1), format(0) {}  // Default constructor
-
-		Texture(const ::Texture& texture)  // Conversion constructor from raylib::Texture
-			: id(texture.id), width(texture.width), height(texture.height),
-			mipmaps(texture.mipmaps), format(texture.format) {}
-		::Texture ToRaylibTexture() const // Method to convert back to raylib::Texture
-		{ return { id, width, height, mipmaps, format }; }
-	};
-
 
 	// RenderTexture, fbo for texture rendering
 	struct DUIN_API RenderTexture {
 		unsigned int id;        // OpenGL framebuffer object id
-		Texture texture;        // Color buffer attachment texture
-		Texture depth;          // Depth buffer attachment texture
+		_TextureAsset texture;        // Color buffer attachment texture
+		_TextureAsset depth;          // Depth buffer attachment texture
 		UUID _uuid;				// Base resource UUID
 
 		RenderTexture() : id(0) {}  // Default constructor
 
 		RenderTexture(const ::RenderTexture& rt)  // Conversion constructor from raylib::RenderTexture
-			: id(rt.id), texture(Texture(rt.texture)), depth(Texture(rt.depth)) {}
-		::RenderTexture ToRaylibRenderTexture() const {  // Method to convert back to raylib::RenderTexture
+			: id(rt.id), texture(_TextureAsset(rt.texture)), depth(_TextureAsset(rt.depth)) {}
+		::RenderTexture ToRaylibRenderTexture() const 
+		{  // Method to convert back to raylib::RenderTexture
 			return { id, texture.ToRaylibTexture(), depth.ToRaylibTexture() };
 		}
 	};
@@ -212,19 +175,22 @@ namespace Duin
 
 
 		Shader() : id(0), locs(nullptr) {}  // Default constructor
-		~Shader() {  // Destructor to clean up allocated memory
+		~Shader() 
+		{  // Destructor to clean up allocated memory
 			delete[] locs;
 		}
 
 		Shader(const ::Shader& shader)  // Conversion constructor from raylib::Shader
 			: id(shader.id) {
 			locs = new int[32];
-			for (int i = 0; i < 32; ++i) {
+			for (int i = 0; i < 32; ++i) 
+			{
 				locs[i] = shader.locs[i];
 			}
 		}
 
-		::Shader ToRaylibShader() const {  // Method to convert back to raylib::Shader
+		::Shader ToRaylibShader() const 
+		{  // Method to convert back to raylib::Shader
 			::Shader shader;
 			shader.id = id;
 			shader.locs = locs;
@@ -234,44 +200,52 @@ namespace Duin
 
 
 	// MaterialMap
-	struct DUIN_API MaterialMap {
-		Texture texture;      // Material map texture
+	struct DUIN_API MaterialMap 
+	{
+		_TextureAsset texture;      // Material map texture
 		Color color;            // Material map color
 		float value;            // Material map value
 
 		MaterialMap() : value(0.0f) {}  // Default constructor
 
 		MaterialMap(const ::MaterialMap& map)  // Conversion constructor from raylib::MaterialMap
-			: texture(Texture(map.texture)), color(map.color), value(map.value) {}
-		::MaterialMap ToRaylibMaterialMap() const {  // Method to convert back to raylib::MaterialMap
+			: texture(_TextureAsset(map.texture)), color(map.color), value(map.value) {}
+		::MaterialMap ToRaylibMaterialMap() const 
+		{  // Method to convert back to raylib::MaterialMap
 			return { texture.ToRaylibTexture(), color.ToRaylibColor(), value };
 		}
 	};
 
 
 	// Material, includes shader and maps
-	struct DUIN_API Material {
+	struct DUIN_API Material 
+	{
 		Shader shader;          // Material shader
 		MaterialMap* maps;      // Material maps array (MAX_MATERIAL_MAPS)
 		float params[4];        // Material generic parameters (if required)
 
-		Material() : maps(nullptr) {  // Default constructor
+		Material() : maps(nullptr) 
+		{  // Default constructor
 			std::fill(std::begin(params), std::end(params), 0.0f);
 		}
 
 		Material(const ::Material& material)  // Conversion constructor from raylib::Material
-			: shader(material.shader), maps(new MaterialMap[32]) {
-			for (int i = 0; i < 32; ++i) {
+			: shader(material.shader), maps(new MaterialMap[32]) 
+		{
+			for (int i = 0; i < 32; ++i) 
+			{
 				maps[i] = MaterialMap(material.maps[i]);
 			}
 			std::copy(std::begin(material.params), std::end(material.params), std::begin(params));
 		}
 
-		~Material() {  // Destructor to clean up allocated memory
+		~Material() 
+		{  // Destructor to clean up allocated memory
 			delete[] maps;
 		}
 
-		::Material ToRaylibMaterial() const {  // Method to convert back to raylib::Material
+		::Material ToRaylibMaterial() const 
+		{  // Method to convert back to raylib::Material
 			::Material material;
 			material.shader = shader.ToRaylibShader();
 			material.maps = (::MaterialMap*)maps;
@@ -282,7 +256,8 @@ namespace Duin
 
 
 	// NPatchInfo, n-patch layout info
-	struct DUIN_API NPatchInfo {
+	struct DUIN_API NPatchInfo 
+	{
 		Rectangle source;       // Texture source rectangle
 		int left;               // Left border offset
 		int top;                // Top border offset
@@ -292,15 +267,18 @@ namespace Duin
 
 		NPatchInfo() : left(0), top(0), right(0), bottom(0), layout(0) {}  // Default constructor
 
-		//NPatchInfo(const ::NPatchInfo& npi)  // Conversion constructor from raylib::NPatchInfo
-		//	: source(npi.source), left(npi.left), top(npi.top),
-		//	right(npi.right), bottom(npi.bottom), layout(npi.layout) {}
-		//::NPatchInfo ToRaylibNPatchInfo() const {  // Method to convert back to raylib::NPatchInfo
-		//	return { source, left, top, right, bottom, layout };
+		NPatchInfo(const ::NPatchInfo& npi)  // Conversion constructor from raylib::NPatchInfo
+			: source({ npi.source.x, npi.source.y, npi.source.width, npi.source.height }), left(npi.left), top(npi.top),
+			right(npi.right), bottom(npi.bottom), layout(npi.layout) {}
+		::NPatchInfo ToRaylibNPatchInfo() const
+		{  // Method to convert back to raylib::NPatchInfo
+			return { { source.origin.x, source.origin.y, source.width, source.height }, left, top, right, bottom, layout };
+		}
 	};
 
 	// GlyphInfo, font characters glyphs info
-	struct DUIN_API GlyphInfo {
+	struct DUIN_API GlyphInfo 
+	{
 		int value;              // Character value (Unicode)
 		int offsetX;            // Character offset X when drawing
 		int offsetY;            // Character offset Y when drawing
@@ -312,13 +290,15 @@ namespace Duin
 		GlyphInfo(const ::GlyphInfo& gi)  // Conversion constructor from raylib::GlyphInfo
 			: value(gi.value), offsetX(gi.offsetX), offsetY(gi.offsetY),
 			advanceX(gi.advanceX), image(Image(gi.image)) {}
-		::GlyphInfo ToRaylibGlyphInfo() const {  // Method to convert back to raylib::GlyphInfo
+		::GlyphInfo ToRaylibGlyphInfo() const 
+		{  // Method to convert back to raylib::GlyphInfo
 			return { value, offsetX, offsetY, advanceX, image.ToRaylibImage() };
 		}
 	};
 
 	// Font, font texture and GlyphInfo array data
-	struct DUIN_API Font {
+	struct DUIN_API Font 
+	{
 		int baseSize;           // Base size (default chars height)
 		int glyphCount;         // Number of glyph characters
 		int glyphPadding;       // Padding around the glyph characters
@@ -328,7 +308,8 @@ namespace Duin
 	};
 
 	// Camera, defines position/orientation in 3d space
-	struct DUIN_API Camera3D {
+	struct DUIN_API Camera3D 
+	{
 		Vector3 position;       // Camera position
 		Vector3 target;         // Camera target it looks-at
 		Vector3 up;             // Camera up vector (rotation over its axis)
@@ -339,7 +320,8 @@ namespace Duin
 	typedef Camera3D Camera;    // Camera type fallback, defaults to Camera3D
 
 	// Camera2D, defines position/orientation in 2d space
-	struct DUIN_API Camera2D {
+	struct DUIN_API Camera2D 
+	{
 		Vector2 offset;         // Camera offset (displacement from target)
 		Vector2 target;         // Camera target (rotation and zoom origin)
 		float rotation;         // Camera rotation in degrees
@@ -347,7 +329,8 @@ namespace Duin
 	};
 
 	// Mesh, vertex data and vao/vbo
-	struct DUIN_API Mesh {
+	struct DUIN_API Mesh 
+	{
 		int vertexCount;        // Number of vertices stored in arrays
 		int triangleCount;      // Number of triangles stored (indexed or not)
 
@@ -372,20 +355,23 @@ namespace Duin
 	};
 
 	// Transform, vertex transformation data
-	struct DUIN_API Transform {
+	struct DUIN_API Transform 
+	{
 		Vector3 translation;    // Translation
 		Quaternion rotation;    // Rotation
 		Vector3 scale;          // Scale
 	};
 
 	// Bone, skeletal animation bone
-	struct DUIN_API BoneInfo {
+	struct DUIN_API BoneInfo 
+	{
 		char name[32];          // Bone name
 		int parent;             // Bone parent
 	};
 
 	// Model, meshes, materials and animation data
-	struct DUIN_API Model {
+	struct DUIN_API Model 
+	{
 		Matrix transform;       // Local transform matrix
 
 		int meshCount;          // Number of meshes
@@ -401,7 +387,8 @@ namespace Duin
 	};
 
 	// ModelAnimation
-	struct DUIN_API ModelAnimation {
+	struct DUIN_API ModelAnimation 
+	{
 		int boneCount;          // Number of bones
 		int frameCount;         // Number of animation frames
 		BoneInfo* bones;        // Bones information (skeleton)

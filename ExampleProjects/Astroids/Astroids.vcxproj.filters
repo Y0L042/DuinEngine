@@ -9,9 +9,11 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Components\Handlers.h" />
     <ClInclude Include="src\Components\Components.h" />
+    <ClInclude Include="src\AstroidCluster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Astroids.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\AstroidCluster.cpp" />
   </ItemGroup>
 </Project>
