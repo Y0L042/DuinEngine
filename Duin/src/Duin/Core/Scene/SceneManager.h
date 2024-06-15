@@ -3,9 +3,10 @@
 #include "Duin/Core/Core.h"
 
 #include "Duin/Entity/Entity.h"
+#include "Duin/Events/InputEvent.h"
 #include "Duin/Entity/Registry.h"
 #include "Duin/Entity/ComponentManager.h"
-#include "Duin/Events/InputEvent.h"
+#include "Duin/Assets/AssetManager.h"
 
 #include <entt/entt.hpp>
 
@@ -20,15 +21,22 @@ namespace Duin
     class DUIN_API SceneManager {
     public:
         SceneManager()
-            : registry(std::make_shared<Registry>()) 
+            : registry(std::make_shared<Registry>()), assetManager(std::make_shared<AssetManager>())
         {}
         ~SceneManager() = default; 
 
-        std::shared_ptr<Entity> CreateEntity();
         std::shared_ptr<Registry> GetRegistry()
         {
             return registry;
         }
+
+        std::shared_ptr<AssetManager> GetAssetManager()
+        {
+            return assetManager;
+        }
+
+        std::shared_ptr<Entity> CreateEntity();
+
         template<typename CompMgr, typename... Args>
         CompMgr& CreateComponentManager(Args&&... args)
         {
@@ -37,6 +45,7 @@ namespace Duin
             compMgr->SetRegistry(registry.get());
             return *compMgr;
         }
+
         template<typename... Component>
         auto ViewEntitiesWith()
         {
@@ -72,6 +81,7 @@ namespace Duin
         std::shared_ptr<Registry> registry;
         std::vector<std::shared_ptr<Node>> rootNodeList;
         std::unordered_map<UUID, std::shared_ptr<Node>> nodeMap;
+        std::shared_ptr<AssetManager> assetManager;
 
         void AddNodeToRootNodeList(std::shared_ptr<Node> node);
         void RemoveNodeFromRootNodeList(std::shared_ptr<Node> node);

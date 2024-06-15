@@ -42,9 +42,10 @@ public:
 
 
 	std::shared_ptr<Duin::Registry> registry;
+	std::shared_ptr<Duin::AssetManager> assetManager;
 	NewTransformCMPManager* newTFCMPManager;
 	int entityCount = 0;
-	std::shared_ptr<Duin::TextureResource> texture;
+	std::shared_ptr<Duin::Texture> texture;
 	Duin::QuadTree qTree;
 	Duin::Profiler profiler;
 	int numEntities = 2500;

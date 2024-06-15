@@ -154,6 +154,7 @@
     <ClInclude Include="src\Duin\Assets\Sprite2D.h" />
     <ClInclude Include="src\Duin\Assets\Texture.h" />
     <ClInclude Include="src\Duin\Assets\Asset.h" />
+    <ClInclude Include="vendor\patches\include\RLWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">

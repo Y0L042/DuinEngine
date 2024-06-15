@@ -22,6 +22,7 @@ public:
 	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
 
+	Duin::AssetManager* assetManager;
 	Duin::Registry* registry;
 	Handler_PlayerInput* handlerPlayerInput;
 	Handler_PlayerMovement* handlerPlayerMovement;
@@ -36,6 +37,9 @@ Duin::Application* Duin::CreateApplication() { return new Astroids(); }
 void Astroids::Initialize()
 {
 	SetBackgroundColor(Duin::BLACK);
+	SetWindowName("Astroids");
+
+	assetManager = new Duin::AssetManager();
 
 	registry = new Duin::Registry();
 	handlerPlayerInput = new Handler_PlayerInput(registry);
@@ -46,6 +50,7 @@ void Astroids::Initialize()
 
 void Astroids::Exit()
 {
+	delete assetManager;
 	delete registry;
 	delete handlerPlayerInput;
 	delete handlerPlayerMovement;
@@ -55,8 +60,8 @@ void Astroids::Exit()
 
 void Astroids::Ready()
 {
-	player = GetSceneManager().CreateNode<Player>(registry);
-	astroidCluster = GetSceneManager().CreateNode<AstroidCluster>(registry);
+	player = GetSceneManager().CreateNode<Player>(registry, assetManager);
+	astroidCluster = GetSceneManager().CreateNode<AstroidCluster>(registry, assetManager);
 }
 
 void Astroids::HandleInputs(Duin::InputEvent e)

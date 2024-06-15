@@ -3,6 +3,7 @@
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/UUID.h"
+#include "Duin/Assets/AssetStructs.h"
 
 #include <RLImGuiComponent.h>
 
@@ -150,24 +151,6 @@ namespace Duin
 	
 
 
-	// RenderTexture, fbo for texture rendering
-	struct DUIN_API RenderTexture {
-		unsigned int id;        // OpenGL framebuffer object id
-		_TextureAsset texture;        // Color buffer attachment texture
-		_TextureAsset depth;          // Depth buffer attachment texture
-		UUID _uuid;				// Base resource UUID
-
-		RenderTexture() : id(0) {}  // Default constructor
-
-		RenderTexture(const ::RenderTexture& rt)  // Conversion constructor from raylib::RenderTexture
-			: id(rt.id), texture(_TextureAsset(rt.texture)), depth(_TextureAsset(rt.depth)) {}
-		::RenderTexture ToRaylibRenderTexture() const 
-		{  // Method to convert back to raylib::RenderTexture
-			return { id, texture.ToRaylibTexture(), depth.ToRaylibTexture() };
-		}
-	};
-
-
 	// Shader
 	struct DUIN_API Shader {
 		unsigned int id;        // Shader program id
@@ -198,9 +181,27 @@ namespace Duin
 		}
 	};
 
+	// RenderTexture, fbo for texture rendering
+	struct DUIN_API _RenderTextureAsset : public _Asset
+	{
+		unsigned int id;        // OpenGL framebuffer object id
+		_TextureAsset texture;        // Color buffer attachment texture
+		_TextureAsset depth;          // Depth buffer attachment texture
+		UUID _uuid;				// Base resource UUID
+
+		_RenderTextureAsset(const ::RenderTexture& rt, const char* path)  // Conversion constructor from raylib::RenderTexture
+			: id(rt.id), texture(_TextureAsset(rt.texture, path)), depth(_TextureAsset(rt.depth, path)) {}
+
+		::RenderTexture ToRaylibRenderTexture() const
+		{  // Method to convert back to raylib::RenderTexture
+			return { id, texture.ToRaylibTexture(), depth.ToRaylibTexture() };
+		}
+	};
+
+
 
 	// MaterialMap
-	struct DUIN_API MaterialMap 
+	struct DUIN_API MaterialMap
 	{
 		_TextureAsset texture;      // Material map texture
 		Color color;            // Material map color
@@ -208,9 +209,10 @@ namespace Duin
 
 		MaterialMap() : value(0.0f) {}  // Default constructor
 
-		MaterialMap(const ::MaterialMap& map)  // Conversion constructor from raylib::MaterialMap
-			: texture(_TextureAsset(map.texture)), color(map.color), value(map.value) {}
-		::MaterialMap ToRaylibMaterialMap() const 
+		MaterialMap(const ::MaterialMap& map, const char* path)  // Conversion constructor from raylib::MaterialMap
+			: texture(_TextureAsset(map.texture, path)), color(map.color), value(map.value) {}
+
+		::MaterialMap ToRaylibMaterialMap() const
 		{  // Method to convert back to raylib::MaterialMap
 			return { texture.ToRaylibTexture(), color.ToRaylibColor(), value };
 		}
@@ -234,7 +236,7 @@ namespace Duin
 		{
 			for (int i = 0; i < 32; ++i) 
 			{
-				maps[i] = MaterialMap(material.maps[i]);
+				//maps[i] = (MaterialMap)material.maps[i];
 			}
 			std::copy(std::begin(material.params), std::end(material.params), std::begin(params));
 		}
@@ -290,10 +292,10 @@ namespace Duin
 		GlyphInfo(const ::GlyphInfo& gi)  // Conversion constructor from raylib::GlyphInfo
 			: value(gi.value), offsetX(gi.offsetX), offsetY(gi.offsetY),
 			advanceX(gi.advanceX), image(Image(gi.image)) {}
-		::GlyphInfo ToRaylibGlyphInfo() const 
-		{  // Method to convert back to raylib::GlyphInfo
-			return { value, offsetX, offsetY, advanceX, image.ToRaylibImage() };
-		}
+		//::GlyphInfo ToRaylibGlyphInfo() const 
+		//{  // Method to convert back to raylib::GlyphInfo
+		//	//return { value, offsetX, offsetY, advanceX, image.ToRaylibImage() };
+		//}
 	};
 
 	// Font, font texture and GlyphInfo array data

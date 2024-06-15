@@ -14,6 +14,7 @@ namespace Duin
 		: Asset(assetManager)
 	{
 		_textureAsset = assetManager->LoadAsset<_TextureAsset, _TextureAssetFactory>(path);
+		_defaultSize = size = Vector2(_textureAsset->width, _textureAsset->height);
 	}
 
 	Texture::~Texture()
@@ -22,16 +23,33 @@ namespace Duin
 
 	Vector2 Texture::GetTextureSize()
 	{
-		return Vector2{ (int)_textureAsset->width, (int)_textureAsset->height };
+		return Vector2{ (float)_textureAsset->width, (float)_textureAsset->height };
 	}
 
-	void Texture::SetCentered(bool centered)
+	void Texture::SetTextureSize(Vector2 size)
 	{
-		this->centered = centered;
+		this->size = size;
 	}
 
-	void Texture::Draw(Vector2 position, float rotation)
+	void Texture::ResetTextureSize()
 	{
-		// TODO
+		size = _defaultSize;
+	}
+
+	void Texture::Draw(Vector2 position, float rotation_deg, Color color, float scale, bool centered)
+	{	
+		float scaledWidth = size.x * scale;
+		float scaledHeight = size.y * scale;
+		float halfW = scaledWidth / 2.0f;
+		float halfH = scaledHeight / 2.0f;
+
+		::DrawTexturePro(
+			_textureAsset->rlTextureCache,
+			::Rectangle(0, 0, _textureAsset->width, _textureAsset->height),
+			::Rectangle(position.x, position.y, scaledWidth, scaledHeight),
+			::Vector2(halfW, halfH),
+			rotation_deg,
+			::Color(color.r, color.g, color.b, color.a)
+		);
 	}
 }

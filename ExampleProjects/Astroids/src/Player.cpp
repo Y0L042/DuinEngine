@@ -1,10 +1,11 @@
 #include "Player.h"
 
-Player::Player(Duin::Registry* registry)
+Player::Player(Duin::Registry* registry, Duin::AssetManager* assetManager)
+	: registry(registry), assetManager(assetManager)
 {
-	std::shared_ptr<Duin::TextureResource> texture = std::make_shared<Duin::TextureResource>("assets/spaceship.png");
-	texture->SetCentered(true);
-	texture->SetTintColor(Duin::BLUE);
+	std::shared_ptr<Duin::Texture> texture = std::make_shared<Duin::Texture>(assetManager, "assets/spaceship.png");
+	//texture->SetCentered(true);
+	//texture->SetTintColor(Duin::BLUE);
 
 	entity = Duin::Entity::Create(registry);
 	entity->AddComponent<Component_PlayerInput>();

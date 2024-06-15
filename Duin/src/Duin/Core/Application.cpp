@@ -18,19 +18,24 @@ namespace Duin
         backgroundColor = color;
     }
 
+    void Application::SetWindowName(const char* string)
+    {
+        windowName = std::string(string);
+    }
+
     void Application::Run()
     {
+        EngineInitialize();
+        Initialize();
+        
         int screenWidth = 1280;
         int screenHeight = 720;
 
-        ::InitWindow(screenWidth, screenHeight, "Test");
+        ::InitWindow(screenWidth, screenHeight, windowName.c_str());
         ::SetTargetFPS(144);
         ::rlImGuiSetup(true);
         
-        EngineInitialize();
         EngineReady();
-        
-        Initialize();
         Ready();
    
         while(!::WindowShouldClose())
@@ -117,6 +122,7 @@ namespace Duin
     void Application::EngineDraw()
     {
         sceneManager.CallDraw();
+        DebugDraw::Draw();
     }
 
     void Application::Draw()

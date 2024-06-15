@@ -1,14 +1,15 @@
 #pragma once
-#include "dnpch.h"
 
 #include "Duin/Core/Core.h"
 #include "Duin/Events/InputMap.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Core/Scene/SceneManager.h"
 #include "Duin/Core/Structures/RenderStructs.h"
+#include "Duin/Core/Debug/DebugDraw.h"
 
 #include <RayGuiComponent.h>
 
+#include <string>
 
 namespace Duin
 {
@@ -24,6 +25,7 @@ namespace Duin
 			TARGET_PHYSICS_FRAMERATE = framerate;
 		}
 		void SetBackgroundColor(Color color);
+		void SetWindowName(const char* string);
 
 		void Run();
 
@@ -39,8 +41,8 @@ namespace Duin
 		virtual void PhysicsUpdate(double pDelta);
 		void EngineDraw();
 		virtual void Draw();
-		void EngineExit();
 		virtual void Exit();
+		void EngineExit();
 
 		SceneManager& GetSceneManager();
 
@@ -48,6 +50,8 @@ namespace Duin
 		int TARGET_RENDER_FRAMERATE = 60;
 		int TARGET_PHYSICS_FRAMERATE = 60;
 		Color backgroundColor = WHITE;
+		std::string windowName = "Game";
+
 		SceneManager sceneManager;
 	};
 

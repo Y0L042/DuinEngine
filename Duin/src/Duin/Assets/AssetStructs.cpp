@@ -9,7 +9,7 @@ namespace Duin
 	{
 		// TODO
 		::Texture rlTexture = ::LoadTexture(path);
-		std::shared_ptr<_TextureAsset> textureAsset = std::make_shared<_TextureAsset>(rlTexture);
+		std::shared_ptr<_TextureAsset> textureAsset = std::make_shared<_TextureAsset>(rlTexture, path);
 
 		return textureAsset;
 	}
@@ -18,7 +18,7 @@ namespace Duin
 	{
 		// TODO
 		::Image rlImage = ::LoadImage(path);
-		std::shared_ptr<_ImageAsset> imageAsset = std::make_shared<_ImageAsset>(rlImage);
+		std::shared_ptr<_ImageAsset> imageAsset = std::make_shared<_ImageAsset>(rlImage, path);
 
 		return imageAsset;
 	}

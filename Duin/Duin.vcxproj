@@ -205,6 +205,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\Duin\Object\Blackboard.h" />
     <ClInclude Include="src\Duin\Object\Node.h" />
     <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="vendor\patches\include\RLWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Assets\AnimatedSprite2D.cpp" />

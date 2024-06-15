@@ -26,8 +26,13 @@
 #include "Duin/Events/InputMap.h"
 
 // ---------- Assets -----------
-#include "Duin/Assets/TextureResource.h"
 #include "Duin/Assets/AssetManager.h"
+#include "Duin/Assets/Asset.h"
+#include "Duin/Assets/Texture.h"
+#include "Duin/Assets/Image.h"
+#include "Duin/Assets/Sprite2D.h"
+#include "Duin/Assets/AnimatedSprite2D.h"
+#include "Duin/Assets/Particle2D.h"
 
 // ---------- Entities -----------
 #include "Duin/Entity/Entity.h"

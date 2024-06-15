@@ -49,18 +49,18 @@ struct Component_PlayerInput
 
 struct Component_Renderable
 {
-	std::shared_ptr<Duin::TextureResource> texture;
+	std::shared_ptr<Duin::Texture> texture;
 	Duin::Vector2 size;
 	Duin::Color tint = Duin::WHITE;
 	bool pointInInputDir = false;
 
-	Component_Renderable(std::shared_ptr<Duin::TextureResource> texture, Duin::Vector2 size)
+	Component_Renderable(std::shared_ptr<Duin::Texture> texture, Duin::Vector2 size)
 		: texture(texture), size(size)
 	{
 		texture->SetTextureSize(size);
 	}
 
-	Component_Renderable(std::shared_ptr<Duin::TextureResource> texture, Duin::Vector2 size, bool pointInInputDir)
+	Component_Renderable(std::shared_ptr<Duin::Texture> texture, Duin::Vector2 size, bool pointInInputDir)
 		: texture(texture), size(size), pointInInputDir(pointInInputDir)
 	{
 		texture->SetTextureSize(size);

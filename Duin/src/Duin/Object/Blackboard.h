@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Duin/Core/Core.h"
-#include "Duin/Object/Object.h"
+#include "Duin/Core/Scene/Object.h"
 
 #include <unordered_map>
 #include <any>

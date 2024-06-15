@@ -105,6 +105,7 @@ struct Handler_RenderableEntity
 			{
 				rot = c_movement.currRotation;
 			}
+			Duin::DebugDraw::DrawCircle(c_transform.position, 5, Duin::Color{ 0, 228, 48, 255 });
 			c_renderable.texture->Draw(c_transform.position, rot);
 		}
 	}

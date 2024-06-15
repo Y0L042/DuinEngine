@@ -8,9 +8,10 @@ void Sandbox::Initialize()
 
 
 	registry = GetSceneManager().GetRegistry();
+	assetManager = GetSceneManager().GetAssetManager();
 	newTFCMPManager = &GetSceneManager().CreateComponentManager<NewTransformCMPManager>();
 
-	texture = std::make_shared<Duin::TextureResource>("Textures/at_symbol.png");
+	texture = std::make_shared<Duin::Texture>(assetManager, "Textures/at_symbol.png");
 }
 
 void Sandbox::Ready()

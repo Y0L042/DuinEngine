@@ -6,6 +6,8 @@
 
 #include <RLImGuiComponent.h>
 
+#include <functional>
+
 namespace Duin
 {
 	class DUIN_API DebugDraw
@@ -18,5 +20,19 @@ namespace Duin
 
 		static void DrawCircle(Vector2 center, float radius, Color color);
 		static void DrawCircleLines(Vector2 center, float radius, Color color);
+
+		static void Draw();
+
+	private:
+		std::vector<std::function<void()>> drawQueue;
+
+		static DebugDraw& GetInstance()
+		{
+			static DebugDraw* instance = new DebugDraw();
+			return *instance;
+		}
+
+		DebugDraw() {}
+		~DebugDraw() {}
 	};
 }

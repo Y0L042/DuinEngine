@@ -28,8 +28,11 @@ namespace Duin
 
     class DUIN_API _AssetFactory
     {
-        _AssetFactory() = default;
-        ~_AssetFactory() = default;
+    public:
+        _AssetFactory() {};
+        ~_AssetFactory() {};
+
+        bool enabled = true;
 
         virtual std::shared_ptr<_Asset> CreateAsset(AssetManager* assetManager, const char* path) = 0;
     };
@@ -44,13 +47,16 @@ namespace Duin
         int height;             // Texture base height
         int mipmaps;            // Mipmap levels, 1 by default
         int format;             // Data format (PixelFormat type)
+        ::Texture rlTextureCache;
+        
+        _TextureAsset() {}
 
         _TextureAsset(const char* path)
             : _Asset(path), id(0), width(0), height(0), mipmaps(1), format(0) {}  // Default constructor
 
         _TextureAsset(const ::Texture& texture, const char* path)  // Conversion constructor from raylib::Texture
             : _Asset(path), id(texture.id), width(texture.width), height(texture.height),
-            mipmaps(texture.mipmaps), format(texture.format) {}
+            mipmaps(texture.mipmaps), format(texture.format), rlTextureCache(texture) {}
 
         ::Texture ToRaylibTexture() const // Method to convert back to raylib::Texture
         {
@@ -74,13 +80,16 @@ namespace Duin
         int height;             // Image base height
         int mipmaps;            // Mipmap levels, 1 by default
         int format;             // Data format (PixelFormat type)
+        ::Image rlImageCache;
+
+        _ImageAsset() {}
 
         _ImageAsset(const char* path) 
             : _Asset(path), data(nullptr), width(0), height(0), mipmaps(1), format(0) {}  // Default constructor
 
         _ImageAsset(const ::Image& image, const char* path)  // Conversion constructor from raylib::Image
             : _Asset(path), data(image.data), width(image.width), height(image.height),
-            mipmaps(image.mipmaps), format(image.format) {}
+            mipmaps(image.mipmaps), format(image.format), rlImageCache(image) {}
 
         ::Image ToRaylibImage() const // Method to convert back to raylib::Image
         {
@@ -93,4 +102,5 @@ namespace Duin
     public:
         std::shared_ptr<_Asset> CreateAsset(AssetManager* assetManager, const char* path) override;
     };
+
 }
