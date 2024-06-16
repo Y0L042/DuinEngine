@@ -3,7 +3,8 @@
 Player::Player(Duin::Registry* registry, Duin::AssetManager* assetManager)
 	: registry(registry), assetManager(assetManager)
 {
-	std::shared_ptr<Duin::Texture> texture = std::make_shared<Duin::Texture>(assetManager, "assets/spaceship.png");
+	std::shared_ptr<Duin::Texture> texture = std::make_shared<Duin::Texture>(assetManager, "assets/pixspaceship.png");
+	texture->SetTextureWidthKeepRatio(35.0f);
 	//texture->SetCentered(true);
 	//texture->SetTintColor(Duin::BLUE);
 
@@ -11,7 +12,7 @@ Player::Player(Duin::Registry* registry, Duin::AssetManager* assetManager)
 	entity->AddComponent<Component_PlayerInput>();
 	entity->AddComponent<Component_Movement>();
 	entity->AddComponent<Component_Transform>(Duin::Vector2{ 100, 100 });
-	entity->AddComponent<Component_Renderable>(texture, Duin::Vector2{ 25, 25 }, true);
+	entity->AddComponent<Component_Renderable>(texture, true);
 }
 
 Player::~Player()

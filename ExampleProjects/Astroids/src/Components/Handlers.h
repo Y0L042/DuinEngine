@@ -4,6 +4,7 @@
 
 #include "Components.h"
 
+//	Handler_PlayerInput(Duin::Registry* registry)
 struct Handler_PlayerInput
 {
 	Duin::Registry* registry;
@@ -44,6 +45,8 @@ struct Handler_PlayerInput
 	}
 };
 
+
+// 	Handler_PlayerMovement(Duin::Registry* registry)
 struct Handler_PlayerMovement
 {
 	Duin::Registry* registry;
@@ -67,6 +70,7 @@ struct Handler_PlayerMovement
 	}
 };
 
+// 	Handler_Renderable(Duin::Registry* registry)
 struct Handler_Renderable
 {
 	Duin::Registry* registry;
@@ -86,6 +90,7 @@ struct Handler_Renderable
 	}
 };
 
+//	Handler_RenderableEntity(Duin::Registry* registry)
 struct Handler_RenderableEntity
 {
 	Duin::Registry* registry;
@@ -111,6 +116,8 @@ struct Handler_RenderableEntity
 	}
 };
 
+
+// 	Handler_UpdateTransform(Duin::Registry* registry, int borderWidth, int borderHeight)
 struct Handler_UpdateTransform
 {
 	Duin::Registry* registry;

@@ -9,6 +9,7 @@ struct Component_AstroidInput
 	bool enableStatusComponent = true;
 };
 
+//	Component_Movement(float maxSpeed, float acceleration)
 struct Component_Movement
 {
 	float maxLinearSpeed = 25.0f;
@@ -31,6 +32,7 @@ struct Component_Movement
 	{}
 };
 
+//	Component_Transform(Duin::Vector2 position)
 struct Component_Transform
 {
 	Duin::Vector2 prevPosition;
@@ -47,6 +49,7 @@ struct Component_PlayerInput
 	bool enableStatusComponent = true;
 };
 
+// 	Component_Renderable(std::shared_ptr<Duin::Texture> texture, Duin::Vector2 size)
 struct Component_Renderable
 {
 	std::shared_ptr<Duin::Texture> texture;
@@ -54,15 +57,13 @@ struct Component_Renderable
 	Duin::Color tint = Duin::WHITE;
 	bool pointInInputDir = false;
 
-	Component_Renderable(std::shared_ptr<Duin::Texture> texture, Duin::Vector2 size)
-		: texture(texture), size(size)
+	Component_Renderable(std::shared_ptr<Duin::Texture> texture)
+		: texture(texture)
 	{
-		texture->SetTextureSize(size);
 	}
 
-	Component_Renderable(std::shared_ptr<Duin::Texture> texture, Duin::Vector2 size, bool pointInInputDir)
-		: texture(texture), size(size), pointInInputDir(pointInInputDir)
+	Component_Renderable(std::shared_ptr<Duin::Texture> texture, bool pointInInputDir)
+		: texture(texture), pointInInputDir(pointInInputDir)
 	{
-		texture->SetTextureSize(size);
 	}
 };

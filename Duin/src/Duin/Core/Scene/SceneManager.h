@@ -56,10 +56,11 @@ namespace Duin
         std::shared_ptr<T> CreateNode(Args&&... args)
         {
             static_assert(std::is_base_of<Node, T>::value, "T must be a Node derived class");
+            DN_CORE_INFO("Node <{}> created", typeid(T).name());
             std::shared_ptr<T> tPtr = std::make_shared<T>(std::forward<Args>(args)...);
-            NodeSetup(tPtr);
-            AddNodeToRootNodeList(tPtr);
-            AddToNodeMap(tPtr);
+            AddNodeToRootNodeList(tPtr); // nodes stored in scenemanager
+            AddToNodeMap(tPtr); // map of ALL nodes
+            NodeSetup(tPtr); // Sets node parent & scenemanager & and node.Ready()
             return tPtr;
         }
 

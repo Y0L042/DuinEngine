@@ -14,6 +14,7 @@ namespace Duin
 	{
 		node->SetParent(nullptr);
 		node->SetSceneManager(this);
+		node->ProcessOnReady();
 	}
 
 	void SceneManager::RemoveNode(std::shared_ptr<Node> node)

@@ -26,6 +26,8 @@ namespace Duin
 
 		Vector2 GetTextureSize();
 		void SetTextureSize(Vector2 size);
+		void SetTextureWidthKeepRatio(float width);
+		void SetTextureHeightKeepRatio(float height);
 		void ResetTextureSize();
 
 		void Draw(Vector2 position, float rotation_deg = 1.0f, Color color = Duin::WHITE, float scale = 1.0f, bool centered = true);

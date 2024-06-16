@@ -6,6 +6,7 @@
 #include "Components/Components.h"
 #include "Components/Handlers.h"
 #include "Player.h"
+#include "PlayerBoids.h"
 #include "AstroidCluster.h"
 
 class Astroids : public Duin::Application
@@ -30,6 +31,7 @@ public:
 	Handler_RenderableEntity* handlerRenderableEntity;
 
 	std::shared_ptr<Player> player;
+	std::shared_ptr<PlayerBoids> playerBoids;
 	std::shared_ptr<AstroidCluster> astroidCluster;
 };
 Duin::Application* Duin::CreateApplication() { return new Astroids(); }
@@ -61,6 +63,7 @@ void Astroids::Exit()
 void Astroids::Ready()
 {
 	player = GetSceneManager().CreateNode<Player>(registry, assetManager);
+	playerBoids = GetSceneManager().CreateNode<PlayerBoids>(registry, assetManager);
 	astroidCluster = GetSceneManager().CreateNode<AstroidCluster>(registry, assetManager);
 }
 

@@ -31,6 +31,20 @@ namespace Duin
 		this->size = size;
 	}
 
+	void Texture::SetTextureWidthKeepRatio(float width)
+	{
+		float ratio = _defaultSize.x / _defaultSize.y;
+		size.x = width;
+		size.y = width / ratio;
+	}
+
+	void Texture::SetTextureHeightKeepRatio(float height)
+	{
+		float ratio = _defaultSize.x / _defaultSize.y;
+		size.y = height;
+		size.x = height * ratio;
+	}
+
 	void Texture::ResetTextureSize()
 	{
 		size = _defaultSize;
