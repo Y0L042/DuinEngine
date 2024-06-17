@@ -84,6 +84,7 @@ project "Duin"
 		"DN_PLATFORM_WINDOWS",
 		"DN_BUILD_DLL",
 		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
+		"SUPPORT_GIF_RECORDING",
 	}
 	
 	postbuildcommands
@@ -287,6 +288,7 @@ project "Astroids"
 	defines(global_defines)
 	defines
 	{
+		"SUPPORT_GIF_RECORDING",
 	}
 	
 	links(global_links)

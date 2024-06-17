@@ -4,6 +4,9 @@
     <Filter Include="Duin">
       <UniqueIdentifier>{F558847C-E18F-850D-8A7C-6B107692010F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Duin\Assets">
+      <UniqueIdentifier>{375A243E-A30F-9D33-2C04-970A98B89337}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Duin\Core">
       <UniqueIdentifier>{6D5EF473-D9C8-A8EA-2207-5A908EB0863F}</UniqueIdentifier>
     </Filter>
@@ -28,24 +31,39 @@
     <Filter Include="Duin\Events">
       <UniqueIdentifier>{39BFA747-A574-203D-2E69-1A149A1D1741}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\Graphics">
-      <UniqueIdentifier>{D504F86B-41C5-73A2-0A00-BD1F767FB87E}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Duin\Object">
       <UniqueIdentifier>{DB00945D-47B6-0C53-D0AA-062A3C5F0357}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Duin\Object\Node">
-      <UniqueIdentifier>{70EC6CFC-5CE5-8B4E-8517-71D3716F6B5A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Duin\Object\Node\Node2D">
-      <UniqueIdentifier>{1B41ED37-8778-35CF-9082-99F2FC385CC8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Duin\Object\Node\Node3D">
-      <UniqueIdentifier>{3C41ED37-A878-35CF-B182-99F21D395CC8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Duin.h" />
+    <ClInclude Include="src\Duin\Assets\AnimatedSprite2D.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\Asset.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\AssetManager.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\AssetStructs.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\GUID.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\Image.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\Particle2D.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\Sprite2D.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Assets\Texture.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Core\Application.h">
       <Filter>Duin\Core</Filter>
     </ClInclude>
@@ -85,6 +103,9 @@
     <ClInclude Include="src\Duin\Core\Maths\src\Quaternion.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Random.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Core\Maths\src\Rectangle.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
@@ -100,7 +121,13 @@
     <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Duin\Core\Scene\Object.h">
+      <Filter>Duin\Core\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\Core\Scene\SceneManager.h">
+      <Filter>Duin\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Scene\SharedRef.h">
       <Filter>Duin\Core\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Signal.h">
@@ -140,24 +167,38 @@
       <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Object\Node.h">
-      <Filter>Duin\Object\Node</Filter>
+      <Filter>Duin\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\Duin\Assets\Particle2D.h" />
-    <ClInclude Include="src\Duin\Assets\AssetManager.h" />
-    <ClInclude Include="src\Duin\Assets\AssetStructs.h" />
-    <ClInclude Include="src\Duin\Assets\GUID.h" />
-    <ClInclude Include="src\Duin\Assets\Image.h" />
-    <ClInclude Include="src\Duin\Core\Scene\Object.h" />
-    <ClInclude Include="src\Duin\Core\Scene\SharedRef.h" />
-    <ClInclude Include="src\Duin\Assets\AnimatedSprite2D.h" />
-    <ClInclude Include="src\Duin\Assets\Sprite2D.h" />
-    <ClInclude Include="src\Duin\Assets\Texture.h" />
-    <ClInclude Include="src\Duin\Assets\Asset.h" />
-    <ClInclude Include="vendor\patches\include\RLWrapper.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Random.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duin\Assets\AnimatedSprite2D.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\Asset.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\AssetManager.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\AssetStructs.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\GUID.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\Image.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\Particle2D.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\Sprite2D.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Assets\Texture.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duin\Core\Application.cpp">
       <Filter>Duin\Core</Filter>
     </ClCompile>
@@ -173,7 +214,13 @@
     <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp">
       <Filter>Duin\Core\Maths</Filter>
     </ClCompile>
+    <ClCompile Include="src\Duin\Core\Scene\Object.cpp">
+      <Filter>Duin\Core\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duin\Core\Scene\SceneManager.cpp">
+      <Filter>Duin\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Core\Scene\SharedRef.cpp">
       <Filter>Duin\Core\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Core\Structures\Delaunay.cpp">
@@ -201,19 +248,8 @@
       <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\Object\Node.cpp">
-      <Filter>Duin\Object\Node</Filter>
+      <Filter>Duin\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
-    <ClCompile Include="src\Duin\Assets\AssetManager.cpp" />
-    <ClCompile Include="src\Duin\Assets\AssetStructs.cpp" />
-    <ClCompile Include="src\Duin\Assets\GUID.cpp" />
-    <ClCompile Include="src\Duin\Assets\Image.cpp" />
-    <ClCompile Include="src\Duin\Core\Scene\Object.cpp" />
-    <ClCompile Include="src\Duin\Core\Scene\SharedRef.cpp" />
-    <ClCompile Include="src\Duin\Assets\AnimatedSprite2D.cpp" />
-    <ClCompile Include="src\Duin\Assets\Sprite2D.cpp" />
-    <ClCompile Include="src\Duin\Assets\Particle2D.cpp" />
-    <ClCompile Include="src\Duin\Assets\Texture.cpp" />
-    <ClCompile Include="src\Duin\Assets\Asset.cpp" />
   </ItemGroup>
 </Project>
