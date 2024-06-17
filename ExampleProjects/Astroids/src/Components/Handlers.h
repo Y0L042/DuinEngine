@@ -4,6 +4,9 @@
 
 #include "Components.h"
 
+#include <vector>
+#include <queue>
+
 //	Handler_PlayerInput(Duin::Registry* registry)
 struct Handler_PlayerInput
 {
@@ -14,35 +17,7 @@ struct Handler_PlayerInput
 		: registry(registry)
 	{}
 
-	void Update(Duin::InputEvent e)
-	{
-		auto view = registry->View<Component_PlayerInput, Component_Movement>();
-		for (auto [entity, c_pinput, c_movement] : view.each())
-		{
-			c_movement.targetSpeed = 0;
-			if (e.IsKeyDown(Duin::KEY_W))
-			{
-				c_movement.targetSpeed += c_movement.maxLinearSpeed;
-			}
-			if (e.IsKeyDown(Duin::KEY_S))
-			{
-				c_movement.targetSpeed -= c_movement.maxLinearSpeed * c_movement.brakingFactor;
-			}
-
-			c_movement.targetRotation = c_movement.currRotation;
-			if (e.IsKeyDown(Duin::KEY_A))
-			{
-				c_movement.targetRotation -= c_movement.maxRotationSpeed;
-			}
-			if (e.IsKeyDown(Duin::KEY_D))
-			{
-				c_movement.targetRotation += c_movement.maxRotationSpeed;
-			}
-
-			c_movement.inputVel = Duin::Vector2::AngleToVector2(Duin::Maths::DegreesToRadians(c_movement.targetRotation - 90.0f)) 
-				* c_movement.targetSpeed;
-		}
-	}
+	void Update(Duin::InputEvent e);
 };
 
 
@@ -56,18 +31,7 @@ struct Handler_PlayerMovement
 		: registry(registry)
 	{}
 
-	void Update(double delta)
-	{
-		auto view = registry->View<Component_PlayerInput, Component_Movement>();
-		for (auto [entity, c_pinput, c_movement] : view.each())
-		{
-			c_movement.prevVelocity = c_movement.currVelocity;
-			c_movement.currVelocity += c_movement.inputVel * c_movement.accelerationFactor * delta;
-			c_movement.currVelocity.LimitLength(0.0f, c_movement.maxLinearSpeed);
-			c_movement.currRotation = c_movement.targetRotation;
-			c_movement.currSpeed = c_movement.currVelocity.Length();
-		}
-	}
+	void Update(double delta);
 };
 
 // 	Handler_Renderable(Duin::Registry* registry)
@@ -80,14 +44,7 @@ struct Handler_Renderable
 		: registry(registry)
 	{}
 
-	void Update()
-	{
-		auto view = registry->View<Component_Renderable, Component_Transform>();
-		for (auto [entity, c_renderable, c_transform] : view.each())
-		{
-			c_renderable.texture->Draw(c_transform.position, 0);
-		}
-	}
+	void Update();
 };
 
 //	Handler_RenderableEntity(Duin::Registry* registry)
@@ -100,20 +57,7 @@ struct Handler_RenderableEntity
 		: registry(registry)
 	{}
 
-	void Update()
-	{
-		auto view = registry->View<Component_Movement, Component_Renderable, Component_Transform>();
-		for (auto [entity, c_movement, c_renderable, c_transform] : view.each())
-		{
-			float rot = 0.0f;
-			if (c_renderable.pointInInputDir)
-			{
-				rot = c_movement.currRotation;
-			}
-			Duin::DebugDraw::DrawCircle(c_transform.position, 5, Duin::Color{ 0, 228, 48, 255 });
-			c_renderable.texture->Draw(c_transform.position, rot);
-		}
-	}
+	void Update();
 };
 
 
@@ -129,26 +73,47 @@ struct Handler_UpdateTransform
 		: registry(registry), width(borderWidth), height(borderHeight)
 	{}
 
-	void Update(double delta)
-	{
-		Duin::Vector2 testPos;
+	void Update(double delta);
+};
 
-		auto view = registry->View<Component_Transform, Component_Movement>();
-		for (auto [entity, c_transform, c_movement] : view.each())
-		{
-			c_transform.prevPosition = c_transform.position;
+struct Handler_ProcessBoids
+{
+	Duin::Registry* registry;
 
-			testPos = c_transform.position;
-			testPos += c_movement.currVelocity * delta;
+	Handler_ProcessBoids() = default;
+	Handler_ProcessBoids(Duin::Registry* registry)
+		: registry(registry)
+	{}
 
-			if ((testPos.x < 0 || testPos.x > width) || (testPos.y < 0 || testPos.y > height))
-			{
-				c_movement.currVelocity = Duin::Vector2::ZERO;
-			}
-			else
-			{
-				c_transform.position = testPos;
-			}
-		}
-	}
+	/*
+	* for local_boids (exl this):
+	*	cohesion: move towards boids' avg position
+	*	alignment: get boids' avg velocity
+	*	separation: get avg vec away from boids position
+	*/
+	void Update(double delta);
+};
+
+struct Handler_PlayerBoidMovement
+{
+	Duin::Registry* registry;
+
+	Handler_PlayerBoidMovement() = default;
+	Handler_PlayerBoidMovement(Duin::Registry* registry)
+		: registry(registry)
+	{}
+
+	void Update(double delta);
+};
+
+struct Handler_BoidsFollowLeader
+{
+	Duin::Registry* registry;
+
+	Handler_BoidsFollowLeader() = default;
+	Handler_BoidsFollowLeader(Duin::Registry* registry)
+		: registry(registry)
+	{}
+
+	void Update(double delta);
 };

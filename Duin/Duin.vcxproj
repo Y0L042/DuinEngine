@@ -182,6 +182,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dis
     <ClInclude Include="src\Duin\Core\Maths\src\Maths.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Matrix.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Quaternion.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Random.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Rectangle.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Shapes2D.h" />
     <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h" />

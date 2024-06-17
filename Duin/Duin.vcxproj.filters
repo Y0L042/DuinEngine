@@ -155,6 +155,7 @@
     <ClInclude Include="src\Duin\Assets\Texture.h" />
     <ClInclude Include="src\Duin\Assets\Asset.h" />
     <ClInclude Include="vendor\patches\include\RLWrapper.h" />
+    <ClInclude Include="src\Duin\Core\Maths\src\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\Core\Application.cpp">

@@ -13,6 +13,7 @@
 #include "./src/Matrix.h"
 #include "./src/Shapes2D.h"
 #include "./src/Maths.h"
+#include "./src/Random.h"
 // ----- Duin Maths Lib -----
 
 namespace Duin

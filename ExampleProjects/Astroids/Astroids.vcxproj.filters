@@ -17,5 +17,6 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\AstroidCluster.cpp" />
     <ClCompile Include="src\PlayerBoids.cpp" />
+    <ClCompile Include="src\Components\Handlers.cpp" />
   </ItemGroup>
 </Project>
