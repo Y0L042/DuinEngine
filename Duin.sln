@@ -2,12 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "ExampleProjects\Sandbox\Sandbox.vcxproj", "{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Astroids", "ExampleProjects\Astroids\Astroids.vcxproj", "{4E9EB723-3A6B-122F-6384-00D74FB047BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F558847C-E18F-850D-8A7C-6B107692010F} = {F558847C-E18F-850D-8A7C-6B107692010F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Duin", "Duin\Duin.vcxproj", "{F558847C-E18F-850D-8A7C-6B107692010F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuinEditor", "DuinEditor\DuinEditor.vcxproj", "{7C922328-684A-6575-D151-3ED1BD280066}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F558847C-E18F-850D-8A7C-6B107692010F} = {F558847C-E18F-850D-8A7C-6B107692010F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,12 +26,6 @@ Global
 		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Dist|x64.Build.0 = Dist|x64
 		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.ActiveCfg = Release|x64
 		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.Build.0 = Release|x64
-		{4E9EB723-3A6B-122F-6384-00D74FB047BD}.Debug|x64.ActiveCfg = Debug|x64
-		{4E9EB723-3A6B-122F-6384-00D74FB047BD}.Debug|x64.Build.0 = Debug|x64
-		{4E9EB723-3A6B-122F-6384-00D74FB047BD}.Dist|x64.ActiveCfg = Dist|x64
-		{4E9EB723-3A6B-122F-6384-00D74FB047BD}.Dist|x64.Build.0 = Dist|x64
-		{4E9EB723-3A6B-122F-6384-00D74FB047BD}.Release|x64.ActiveCfg = Release|x64
-		{4E9EB723-3A6B-122F-6384-00D74FB047BD}.Release|x64.Build.0 = Release|x64
 		{F558847C-E18F-850D-8A7C-6B107692010F}.Debug|x64.ActiveCfg = Debug|x64
 		{F558847C-E18F-850D-8A7C-6B107692010F}.Debug|x64.Build.0 = Debug|x64
 		{F558847C-E18F-850D-8A7C-6B107692010F}.Dist|x64.ActiveCfg = Dist|x64

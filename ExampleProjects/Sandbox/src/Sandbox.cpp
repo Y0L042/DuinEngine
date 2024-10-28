@@ -1,9 +1,33 @@
+#include "sandbox.h"
+
 #include <Duin.h>
-#include <Duin/EntryPoint.h>
+#include <Duin/entrypoint.h>
 
-
-#include "SandboxGame.h"
 Duin::Application* Duin::CreateApplication() { return new Sandbox(); }
 
-//#include "DelaunayTest.h"
-//Duin::Application* Duin::CreateApplication() { return new DelaunayTest(); }
+
+void Sandbox::Initialize()
+{
+}
+
+void Sandbox::Ready()
+{
+}
+
+void Sandbox::HandleInputs()
+{
+}
+
+void Sandbox::Update(double rDelta)
+{
+}
+
+
+void Sandbox::PhysicsUpdate(double pDelta)
+{
+}
+
+void Sandbox::Draw()
+{
+}
+

@@ -1,10 +1,7 @@
-#include "dnpch.h"
-
-#include "Application.h"
+#include "application.h"
 
 namespace Duin
 {
-
     Application::Application()
     {
     }
@@ -38,27 +35,27 @@ namespace Duin
         EngineReady();
         Ready();
    
-        while(!::WindowShouldClose())
-        {
+        while(!::WindowShouldClose()) {
             ::BeginDrawing();
             ::rlImGuiBegin();
 
-            // TODO Generate event, then pass to handleinputs
-
-            InputEvent e;
-            EngineHandleInputs(e);
-            HandleInputs(e);
+            // InputEvent e;
+            EngineHandleInputs();
+            HandleInputs();
 
             EngineUpdate(::GetFrameTime());
             Update(::GetFrameTime());
 
-            if (::GetFrameTime() > 0.0f)
-            {
+            if (::GetFrameTime() > 0.0f) {
                 EnginePhysicsUpdate(::GetFrameTime()); // TODO
                 PhysicsUpdate(::GetFrameTime()); // TODO
             }
 
-            ::ClearBackground(::Color{ backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a });
+            ::ClearBackground(::Color{ 
+                backgroundColor.r, 
+                backgroundColor.g, 
+                backgroundColor.b, 
+                backgroundColor.a });
             
 
             EngineDraw();
@@ -85,25 +82,22 @@ namespace Duin
 
     void Application::EngineReady()
     {
-        sceneManager.CallReady();
     }
 
     void Application::Ready()
     {
     }
 
-    void Application::EngineHandleInputs(InputEvent e)
+    void Application::EngineHandleInputs()
     {
-        sceneManager.CallHandleInput(e);
     }
 
-    void Application::HandleInputs(InputEvent e)
+    void Application::HandleInputs()
     {
     }
 
     void Application::EngineUpdate(double rDelta)
     {
-        sceneManager.CallUpdate(rDelta);
     }
 
     void Application::Update(double rDelta)
@@ -112,7 +106,6 @@ namespace Duin
 
     void Application::EnginePhysicsUpdate(double pDelta)
     {
-        sceneManager.CallPhysicsUpdate(pDelta);
     }
 
     void Application::PhysicsUpdate(double pDelta)
@@ -121,8 +114,6 @@ namespace Duin
 
     void Application::EngineDraw()
     {
-        sceneManager.CallDraw();
-        DebugDraw::Draw();
     }
 
     void Application::Draw()
@@ -135,11 +126,6 @@ namespace Duin
 
     void Application::Exit()
     {
-    }
-
-    SceneManager& Application::GetSceneManager()
-    {
-        return sceneManager;
     }
 
 }

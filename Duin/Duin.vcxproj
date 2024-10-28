@@ -22,19 +22,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
@@ -53,65 +53,56 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Debug-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Release-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Dist-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_BUILD_STATIC;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\rlimgui\imgui-master;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>..\bin\Debug-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\DuinEditor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\DuinEditor &gt; nul)
-IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\Astroids &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Duin\Duin.dll ..\bin\Debug-windows-x86_64\Astroids &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static_debug.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\flecs\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_BUILD_STATIC;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\rlimgui\imgui-master;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -119,29 +110,24 @@ IF EXIST ..\bin\Debug-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\De
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>..\bin\Release-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\bin\Release-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\DuinEditor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\DuinEditor &gt; nul)
-IF EXIST ..\bin\Release-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\Astroids &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Duin\Duin.dll ..\bin\Release-windows-x86_64\Astroids &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static_debug.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\flecs\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\patches\include;vendor\spdlog\include;vendor\raylib5\include;vendor\raylib5\src;vendor\raylib-cpp\include;vendor\imgui;vendor\rlgui;vendor\entt\single_include;vendor\fmt\include;vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_BUILD_STATIC;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\rlimgui\imgui-master;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -149,94 +135,23 @@ IF EXIST ..\bin\Release-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\raylib5\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>..\bin\Dist-windows-x86_64\Duin\Duin.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Duin\Duin.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Duin\Duin.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Duin\Duin.dll ..\bin\Dist-windows-x86_64\DuinEditor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Duin\Duin.dll ..\bin\Dist-windows-x86_64\DuinEditor &gt; nul)
-IF EXIST ..\bin\Dist-windows-x86_64\Duin\Duin.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Duin\Duin.dll ..\bin\Dist-windows-x86_64\Astroids &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Duin\Duin.dll ..\bin\Dist-windows-x86_64\Astroids &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static_debug.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\flecs\lib;vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Duin.h" />
-    <ClInclude Include="src\Duin\Assets\AnimatedSprite2D.h" />
-    <ClInclude Include="src\Duin\Assets\Asset.h" />
-    <ClInclude Include="src\Duin\Assets\AssetManager.h" />
-    <ClInclude Include="src\Duin\Assets\AssetStructs.h" />
-    <ClInclude Include="src\Duin\Assets\GUID.h" />
-    <ClInclude Include="src\Duin\Assets\Image.h" />
-    <ClInclude Include="src\Duin\Assets\Particle2D.h" />
-    <ClInclude Include="src\Duin\Assets\Sprite2D.h" />
-    <ClInclude Include="src\Duin\Assets\Texture.h" />
-    <ClInclude Include="src\Duin\Core\Application.h" />
-    <ClInclude Include="src\Duin\Core\Core.h" />
-    <ClInclude Include="src\Duin\Core\Debug\DebugDraw.h" />
-    <ClInclude Include="src\Duin\Core\Debug\Log.h" />
-    <ClInclude Include="src\Duin\Core\Debug\Profiler.h" />
-    <ClInclude Include="src\Duin\Core\Debug\Timer.h" />
-    <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h" />
-    <ClInclude Include="src\Duin\Core\Maths\MathsCore.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Mat2x2.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Mat3x3.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Maths.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Matrix.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Quaternion.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Random.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Rectangle.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Shapes2D.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Vector2.h" />
-    <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h" />
-    <ClInclude Include="src\Duin\Core\Scene\Object.h" />
-    <ClInclude Include="src\Duin\Core\Scene\SceneManager.h" />
-    <ClInclude Include="src\Duin\Core\Scene\SharedRef.h" />
-    <ClInclude Include="src\Duin\Core\Signal.h" />
-    <ClInclude Include="src\Duin\Core\Structures\Delaunay.h" />
-    <ClInclude Include="src\Duin\Core\Structures\QuadTree.h" />
-    <ClInclude Include="src\Duin\Core\Structures\RenderStructs.h" />
-    <ClInclude Include="src\Duin\Core\UUID.h" />
-    <ClInclude Include="src\Duin\Entity\ComponentManager.h" />
-    <ClInclude Include="src\Duin\Entity\Entity.h" />
-    <ClInclude Include="src\Duin\Entity\Registry.h" />
-    <ClInclude Include="src\Duin\EntryPoint.h" />
-    <ClInclude Include="src\Duin\Events\InputEvent.h" />
-    <ClInclude Include="src\Duin\Events\InputMap.h" />
-    <ClInclude Include="src\Duin\Object\Blackboard.h" />
-    <ClInclude Include="src\Duin\Object\Node.h" />
-    <ClInclude Include="src\dnpch.h" />
+    <ClInclude Include="src\Duin\core\application.h" />
+    <ClInclude Include="src\Duin\core\core.h" />
+    <ClInclude Include="src\Duin\core\debug\dn_log.h" />
+    <ClInclude Include="src\Duin\dep_raygui.h" />
+    <ClInclude Include="src\Duin\entrypoint.h" />
+    <ClInclude Include="src\duin.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Duin\Assets\AnimatedSprite2D.cpp" />
-    <ClCompile Include="src\Duin\Assets\Asset.cpp" />
-    <ClCompile Include="src\Duin\Assets\AssetManager.cpp" />
-    <ClCompile Include="src\Duin\Assets\AssetStructs.cpp" />
-    <ClCompile Include="src\Duin\Assets\GUID.cpp" />
-    <ClCompile Include="src\Duin\Assets\Image.cpp" />
-    <ClCompile Include="src\Duin\Assets\Particle2D.cpp" />
-    <ClCompile Include="src\Duin\Assets\Sprite2D.cpp" />
-    <ClCompile Include="src\Duin\Assets\Texture.cpp" />
-    <ClCompile Include="src\Duin\Core\Application.cpp" />
-    <ClCompile Include="src\Duin\Core\Debug\DebugDraw.cpp" />
-    <ClCompile Include="src\Duin\Core\Debug\Log.cpp" />
-    <ClCompile Include="src\Duin\Core\Debug\Profiler.cpp" />
-    <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp" />
-    <ClCompile Include="src\Duin\Core\Scene\Object.cpp" />
-    <ClCompile Include="src\Duin\Core\Scene\SceneManager.cpp" />
-    <ClCompile Include="src\Duin\Core\Scene\SharedRef.cpp" />
-    <ClCompile Include="src\Duin\Core\Structures\Delaunay.cpp" />
-    <ClCompile Include="src\Duin\Core\Structures\QuadTree.cpp" />
-    <ClCompile Include="src\Duin\Core\UUID.cpp" />
-    <ClCompile Include="src\Duin\Entity\ComponentManager.cpp" />
-    <ClCompile Include="src\Duin\Entity\Entity.cpp" />
-    <ClCompile Include="src\Duin\Entity\Registry.cpp" />
-    <ClCompile Include="src\Duin\Events\InputEvent.cpp" />
-    <ClCompile Include="src\Duin\Object\Blackboard.cpp" />
-    <ClCompile Include="src\Duin\Object\Node.cpp" />
-    <ClCompile Include="src\dnpch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="src\Duin\core\application.cpp" />
+    <ClCompile Include="src\Duin\core\debug\dn_log.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
