@@ -5,7 +5,9 @@ bin/
 Duin/docs/DuinDocs/
 
 bin-int/
-!vendor/bin/*
+vendor/bin/*
+vendor/*
+Duin/vendor/*
 
 # Files
 *.user
