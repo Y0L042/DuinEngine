@@ -30,6 +30,7 @@ namespace Duin
         Vector2 position;
     };
 
+    // QuadTree(Rectangle bounds, int maxNodes, int maxLevels, int currentLevel);
     struct DUIN_API QuadTree
     {
     public:
@@ -45,7 +46,7 @@ namespace Duin
         UUID GetUUID() const;
 
         void Insert(QuadTreeComponent node);
-        void Query(Rectangle area, std::vector<UUID>& resultVec);
+        void Query(Rectangle area, std::vector<UUID>& resultVec) const;
         bool Remove(QuadTreeComponent node);
 
         void AddNodeToRebuildQueue(QuadTreeComponent node);
@@ -61,6 +62,6 @@ namespace Duin
 
         void Split();
         void PassOnNodes();
-        int GetQuadIndex(Vector2 pos);
+        int GetQuadIndex(Vector2 pos) const;
     };
 }

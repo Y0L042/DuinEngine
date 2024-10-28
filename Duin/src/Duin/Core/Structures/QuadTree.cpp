@@ -8,12 +8,12 @@
 namespace Duin
 {
     QuadTreeComponent::QuadTreeComponent(UUID uuid, Vector2 position)
-        : uuid(uuid), position(position)
+        : uuid(uuid), position(position), tree(nullptr)
     {
     }
 
     QuadTreeComponent::QuadTreeComponent(QuadTree* tree, UUID uuid, Vector2 position)
-        : uuid(uuid), position(position)
+        : uuid(uuid), position(position), tree(tree)
     {
         if (tree)
         {
@@ -28,28 +28,11 @@ namespace Duin
 
     void QuadTreeComponent::UpdatePosition(Vector2 newPosition)
     {
-        Vector2 oldPos = position;
-        position = newPosition;
-        if (oldPos != position) // TODO Terribly inefficient. Would it not be better to simply clear and rebuild the whole tree?
-        {
-            //if (tree)
-            //{
-            //    tree->Remove(*this);
-            //}
-            //if (tree)
-            //{
-            //    tree->Insert(*this);
-            //}
 
-            if (tree)
-            {
-                tree->AddNodeToRebuildQueue(*this);
-            }
-        }
     }
 
     QuadTree::QuadTree(Rectangle bounds, int maxNodes, int maxLevels, int currentLevel)
-        : bounds(bounds), maxNodes(maxNodes), maxLevels(maxLevels), currentLevel(currentLevel)
+        : bounds(bounds), maxNodes(maxNodes), maxLevels(maxLevels), currentLevel(currentLevel), uuid(UUID())
     {
     }
 
@@ -73,7 +56,7 @@ namespace Duin
 
         // TODO Make it clearer when tree is empty/when children are empty/does not exist/when children are full...
         // If there is space
-        if (nodes.size() < maxNodes && !children[0])// || currentLevel >= maxLevels)
+        if (!children[0] && nodes.size() < maxNodes)// || currentLevel >= maxLevels)
         {
             //DN_CORE_INFO("Tree {0} inserts node {1}.", static_cast<uint64_t>(uuid), static_cast<uint64_t>(node.uuid));
             nodes.push_back(node);
@@ -91,13 +74,13 @@ namespace Duin
         }
         // Insert nodes into children
         int index = GetQuadIndex(node.GetPosition());
-        if (index != -1 && children[index]) 
+        if (index != -1) 
         {
             children[index]->Insert(node);
         }
     }
 
-    void QuadTree::Query(Rectangle area, std::vector<UUID>& resultVec)
+    void QuadTree::Query(Rectangle area, std::vector<UUID>& resultVec) const
     {
         if (!bounds.Intersects(area))
         {
@@ -241,7 +224,7 @@ namespace Duin
         nodes.clear();
     }
 
-    int QuadTree::GetQuadIndex(Vector2 pos)
+    int QuadTree::GetQuadIndex(Vector2 pos) const
     {
         int index = -1;
         float verticalMidpoint = bounds.origin.x + bounds.width / 2.0f;

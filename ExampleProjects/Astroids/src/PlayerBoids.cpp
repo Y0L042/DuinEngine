@@ -1,7 +1,14 @@
 #include "PlayerBoids.h"
 
-PlayerBoids::PlayerBoids(Duin::Registry* registry, Duin::AssetManager* assetManager, std::shared_ptr<Duin::Entity> leader)
-	: registry(registry), assetManager(assetManager), leader(leader)
+PlayerBoids::PlayerBoids(
+	std::shared_ptr<Duin::Blackboard> sharedData,
+	std::shared_ptr<Duin::Entity> leader
+)
+	: 
+	registry(sharedData->GetValueCast<std::shared_ptr<Duin::Registry>>("REG")),
+	assetManager(sharedData->GetValueCast<std::shared_ptr<Duin::AssetManager>>("ASSETMGR")),
+	quadTree(sharedData->GetValueCast<std::shared_ptr<Duin::QuadTree>>("QTREE")),
+	leader(leader)
 {
 }
 
@@ -33,12 +40,12 @@ void PlayerBoids::Draw()
 
 void PlayerBoids::CreateBoid(Duin::Vector2 position)
 {
-	static std::shared_ptr<Duin::Texture> texture = std::make_shared<Duin::Texture>(assetManager, "assets/boidship.png");
+	static std::shared_ptr<Duin::Texture> texture = std::make_shared<Duin::Texture>(assetManager.get(), "assets/boidship.png");
 	texture->SetTextureWidthKeepRatio(22.5f);
 
 	Duin::UUID boidGroupID;
 
-	std::shared_ptr<Duin::Entity> boid = Duin::Entity::Create(registry);
+	std::shared_ptr<Duin::Entity> boid = Duin::Entity::Create(registry.get());
 	boid->AddComponent<Component_Movement>(10.0f, 10.0f);
 	boid->AddComponent<Component_Transform>(position);
 	boid->AddComponent<Component_Renderable>(texture, true);

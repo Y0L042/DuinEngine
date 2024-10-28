@@ -8,6 +8,7 @@
 #include "./src/Mat2x2.h"
 #include "./src/Mat3x3.h"
 #include "./src/Transform2D.h"
+#include "./src/Transform3D.h"
 #include "./src/Rectangle.h"
 #include "./src/Quaternion.h"
 #include "./src/Matrix.h"

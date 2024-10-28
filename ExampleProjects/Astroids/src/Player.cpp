@@ -1,14 +1,15 @@
 #include "Player.h"
 
-Player::Player(Duin::Registry* registry, Duin::AssetManager* assetManager)
-	: registry(registry), assetManager(assetManager)
+Player::Player(std::shared_ptr<Duin::Blackboard> sharedData)
+	:
+	registry(sharedData->GetValueCast<std::shared_ptr<Duin::Registry>>("REG")),
+	assetManager(sharedData->GetValueCast<std::shared_ptr<Duin::AssetManager>>("ASSETMGR")),
+	quadTree(sharedData->GetValueCast<std::shared_ptr<Duin::QuadTree>>("QTREE"))
 {
-	std::shared_ptr<Duin::Texture> texture = std::make_shared<Duin::Texture>(assetManager, "assets/pixspaceship.png");
+	std::shared_ptr<Duin::Texture> texture = std::make_shared<Duin::Texture>(assetManager.get(), "assets/pixspaceship.png");
 	texture->SetTextureWidthKeepRatio(35.0f);
-	//texture->SetCentered(true);
-	//texture->SetTintColor(Duin::BLUE);
 
-	entity = Duin::Entity::Create(registry);
+	entity = Duin::Entity::Create(registry.get());
 	entity->AddComponent<Component_PlayerInput>();
 	entity->AddComponent<Component_Movement>(100.0f, 100.0f);
 	entity->AddComponent<Component_Transform>(Duin::Vector2{ 100, 100 });

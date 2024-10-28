@@ -4,6 +4,7 @@
 #include "Duin/Events/InputMap.h"
 #include "Duin/Events/InputEvent.h"
 #include "Duin/Core/Scene/SceneManager.h"
+#include "Duin/Core/Scene/Camera.h"
 #include "Duin/Core/Structures/RenderStructs.h"
 #include "Duin/Core/Debug/DebugDraw.h"
 
@@ -16,6 +17,11 @@ namespace Duin
 	class DUIN_API Application
 	{
 	public:
+		enum Mode {
+			MODE2D,
+			MODE3D,
+		};
+
 		Application();
 		virtual ~Application();
 
@@ -26,6 +32,8 @@ namespace Duin
 		}
 		void SetBackgroundColor(Color color);
 		void SetWindowName(const char* string);
+		void SetRenderMode(Mode renderMode);
+		void SetCurrentCamera(Camera* camera);
 
 		void Run();
 
@@ -47,12 +55,18 @@ namespace Duin
 		SceneManager& GetSceneManager();
 
 	private:
+		Mode renderMode = MODE2D;
+
 		int TARGET_RENDER_FRAMERATE = 60;
 		int TARGET_PHYSICS_FRAMERATE = 60;
 		Color backgroundColor = WHITE;
 		std::string windowName = "Game";
 
 		SceneManager sceneManager;
+
+		Camera* currentCamera = nullptr;
+
+
 	};
 
 	Application* CreateApplication();

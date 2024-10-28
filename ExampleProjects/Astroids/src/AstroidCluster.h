@@ -7,10 +7,11 @@
 class AstroidCluster : public Duin::Node
 {
 public:
-	AstroidCluster(Duin::Registry* registry, Duin::AssetManager* assetManager);
+	AstroidCluster(std::shared_ptr<Duin::Blackboard> sharedData);
 	~AstroidCluster();
 
 private:
-	Duin::Registry* registry;
-	Duin::AssetManager* assetManager;
+	std::shared_ptr<Duin::Registry> registry;
+	std::shared_ptr<Duin::AssetManager> assetManager;
+	std::shared_ptr<Duin::QuadTree> quadTree;
 };

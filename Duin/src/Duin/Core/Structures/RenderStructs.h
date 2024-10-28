@@ -289,9 +289,9 @@ namespace Duin
 
 		GlyphInfo() : value(0), offsetX(0), offsetY(0), advanceX(0) {}  // Default constructor
 
-		GlyphInfo(const ::GlyphInfo& gi)  // Conversion constructor from raylib::GlyphInfo
-			: value(gi.value), offsetX(gi.offsetX), offsetY(gi.offsetY),
-			advanceX(gi.advanceX), image(Image(gi.image)) {}
+		//GlyphInfo(const ::GlyphInfo& gi)  // Conversion constructor from raylib::GlyphInfo
+		//	: value(gi.value), offsetX(gi.offsetX), offsetY(gi.offsetY),
+		//	advanceX(gi.advanceX), image(Image(gi.image)) {}
 		//::GlyphInfo ToRaylibGlyphInfo() const 
 		//{  // Method to convert back to raylib::GlyphInfo
 		//	//return { value, offsetX, offsetY, advanceX, image.ToRaylibImage() };
@@ -309,26 +309,6 @@ namespace Duin
 		GlyphInfo* glyphs;      // Glyphs info data
 	};
 
-	// Camera, defines position/orientation in 3d space
-	struct DUIN_API Camera3D 
-	{
-		Vector3 position;       // Camera position
-		Vector3 target;         // Camera target it looks-at
-		Vector3 up;             // Camera up vector (rotation over its axis)
-		float fovy;             // Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic
-		int projection;         // Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC
-	};
-
-	typedef Camera3D Camera;    // Camera type fallback, defaults to Camera3D
-
-	// Camera2D, defines position/orientation in 2d space
-	struct DUIN_API Camera2D 
-	{
-		Vector2 offset;         // Camera offset (displacement from target)
-		Vector2 target;         // Camera target (rotation and zoom origin)
-		float rotation;         // Camera rotation in degrees
-		float zoom;             // Camera zoom (scaling), should be 1.0f by default
-	};
 
 	// Mesh, vertex data and vao/vbo
 	struct DUIN_API Mesh 

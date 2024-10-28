@@ -23,6 +23,16 @@ namespace Duin
         windowName = std::string(string);
     }
 
+    void Application::SetRenderMode(Mode renderMode)
+    {
+        this->renderMode = renderMode;
+    }
+
+    void Application::SetCurrentCamera(Camera* camera)
+    {
+        currentCamera = camera;
+    }
+
     void Application::Run()
     {
         EngineInitialize();
@@ -43,7 +53,14 @@ namespace Duin
             ::BeginDrawing();
             ::rlImGuiBegin();
 
-            // TODO Generate event, then pass to handleinputs
+            if (renderMode == MODE2D)
+            {
+                //BeginMode2D();
+            }
+            else if (renderMode == MODE3D)
+            {
+                //BeginMode3D();
+            }
 
             InputEvent e;
             EngineHandleInputs(e);
@@ -61,15 +78,24 @@ namespace Duin
             ::ClearBackground(::Color{ backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a });
             
 
-            EngineDraw();
             Draw();
+            EngineDraw();
 
             ::rlImGuiEnd();
             ::EndDrawing();
         }
 
-        EngineExit();
         Exit();
+        EngineExit();
+
+        if (renderMode == MODE2D)
+        {
+            ::EndMode2D();
+        }
+        else if (renderMode == MODE3D)
+        {
+            ::EndMode3D();
+        }
 
         ::rlImGuiShutdown();
         ::CloseWindow();

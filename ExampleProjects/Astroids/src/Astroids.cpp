@@ -23,8 +23,8 @@ public:
 	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
 
-	Duin::AssetManager* assetManager;
-	Duin::Registry* registry;
+	std::shared_ptr<Duin::AssetManager> assetManager;
+	std::shared_ptr<Duin::Registry> registry;
 	std::shared_ptr<Handler_PlayerInput> handlerPlayerInput;
 	std::shared_ptr<Handler_PlayerMovement> handlerPlayerMovement;
 	std::shared_ptr<Handler_UpdateTransform> handlerUpdateTransform;
@@ -32,6 +32,9 @@ public:
 	std::shared_ptr<Handler_ProcessBoids> handlerProcessBoids;
 	std::shared_ptr<Handler_PlayerBoidMovement> handlerPlayerBoidMovement;
 	std::shared_ptr<Handler_BoidsFollowLeader> handlerBoidsFollowLeader;
+
+	std::shared_ptr<Duin::Blackboard> sharedData;
+	std::shared_ptr<Duin::QuadTree> quadTree;
 
 	std::shared_ptr<Player> player;
 	std::shared_ptr<PlayerBoids> playerBoids;
@@ -46,8 +49,14 @@ void Astroids::Initialize()
 	SetBackgroundColor(Duin::BLACK);
 	SetWindowName("Astroids");
 
-	assetManager = new Duin::AssetManager();
-	registry = new Duin::Registry();
+	assetManager = std::make_shared<Duin::AssetManager>();
+	registry = std::make_shared<Duin::Registry>();
+	quadTree = std::make_shared<Duin::QuadTree>(Duin::Rectangle{ 0, 0, 1280, 720 }, 5, 10, 0);
+
+	sharedData = std::make_shared<Duin::Blackboard>();
+	sharedData->AddValue("ASSETMGR", assetManager);
+	sharedData->AddValue("REG", registry);
+	sharedData->AddValue("QTREE", quadTree);
 
 	handlerPlayerInput = std::make_shared<Handler_PlayerInput>(registry);
 	handlerPlayerMovement = std::make_shared<Handler_PlayerMovement>(registry);
@@ -56,20 +65,18 @@ void Astroids::Initialize()
 	handlerProcessBoids = std::make_shared<Handler_ProcessBoids>(registry);
 	handlerPlayerBoidMovement = std::make_shared<Handler_PlayerBoidMovement>(registry);
 	handlerBoidsFollowLeader = std::make_shared<Handler_BoidsFollowLeader>(registry);
-	
 }
 
 void Astroids::Exit()
 {
-	delete assetManager;
-	delete registry;
+
 }
 
 void Astroids::Ready()
 {
-	player = GetSceneManager().CreateNode<Player>(registry, assetManager);
-	playerBoids = GetSceneManager().CreateNode<PlayerBoids>(registry, assetManager, player->entity);
-	astroidCluster = GetSceneManager().CreateNode<AstroidCluster>(registry, assetManager);
+	player = GetSceneManager().CreateNode<Player>(sharedData);
+	playerBoids = GetSceneManager().CreateNode<PlayerBoids>(sharedData, player->entity);
+	astroidCluster = GetSceneManager().CreateNode<AstroidCluster>(sharedData);
 }
 
 void Astroids::HandleInputs(Duin::InputEvent e)

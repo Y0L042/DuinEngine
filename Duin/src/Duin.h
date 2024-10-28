@@ -19,6 +19,9 @@
 #include "Duin/Core/Structures/QuadTree.h"
 #include "Duin/Core/Structures/Delaunay.h"
 #include "Duin/Core/Scene/Object.h"
+#include "Duin/Core/Scene/Camera.h"
+#include "Duin/Core/Scene/Camera2D.h"
+#include "Duin/Core/Scene/Camera3D.h"
 #include "Duin/Core/Scene/SceneManager.h"
 
 // ---------- Events -----------
