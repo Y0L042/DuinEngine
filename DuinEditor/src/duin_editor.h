@@ -1,15 +1,14 @@
-#ifndef SANDBOX_H
-#define SANDBOX_H
+#ifndef DUIN_EDITOR_H
+#define DUIN_EDITOR_H
 
-#define CAMERA3D
 #include <Duin.h>
 
 
-class Sandbox : public Duin::Application
+class DuinEditor : public Duin::Application
 {
 public:
-	Sandbox() {}
-	~Sandbox() {}
+	DuinEditor() {}
+	~DuinEditor() {}
 
 	void Initialize() override;
 	void Ready() override;
@@ -17,7 +16,8 @@ public:
 	void Update(double rDelta) override;
 	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
+    void DrawUI() override;
 
 };
 
-#endif /* SANDBOX_H */
+#endif /* DUIN_EDITOR_H */

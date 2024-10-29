@@ -1,4 +1,11 @@
+#include "dnpch.h"
 #include "application.h"
+
+#define RAYMATH_IMPLEMENTATION
+#define RCAMERA_IMPLEMENTATION
+
+::Camera2D *active_camera2d;
+::Camera3D *active_camera3d;
 
 namespace Duin
 {
@@ -10,7 +17,7 @@ namespace Duin
     {
     }
 
-    void Application::SetBackgroundColor(Color color)
+    void Application::SetBackgroundColor(::Color color)
     {
         backgroundColor = color;
     }
@@ -18,6 +25,16 @@ namespace Duin
     void Application::SetWindowName(const char* string)
     {
         windowName = std::string(string);
+    }
+
+    void Application::SetActiveCamera2D(::Camera2D *camera2d)
+    {
+        active_camera2d = camera2d;
+    }
+
+    void Application::SetActiveCamera3D(::Camera3D *camera3d)
+    {
+        active_camera3d = camera3d;
     }
 
     void Application::Run()
@@ -58,8 +75,23 @@ namespace Duin
                 backgroundColor.a });
             
 
-            EngineDraw();
-            Draw();
+                if (active_camera2d != NULL) {
+                    BeginMode2D(*active_camera2d);
+                        EngineDraw();
+                        Draw();
+                    EndMode2D();
+                } else if (active_camera3d != NULL) {
+                    BeginMode3D(*active_camera3d);
+                        EngineDraw();
+                        Draw();
+                    EndMode3D();
+                } else {
+                    EngineDraw();
+                    Draw();
+                }
+                
+                EngineDrawUI();
+                DrawUI();
 
             ::rlImGuiEnd();
             ::EndDrawing();
@@ -117,6 +149,14 @@ namespace Duin
     }
 
     void Application::Draw()
+    {
+    }
+
+    void Application::EngineDrawUI()
+    {
+    }
+
+    void Application::DrawUI()
     {
     }
 

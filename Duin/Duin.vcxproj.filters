@@ -7,11 +7,20 @@
     <Filter Include="Duin\core">
       <UniqueIdentifier>{8DEA0574-F954-BAEA-4293-6B90AE3C983F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Duin\core\Maths">
+      <UniqueIdentifier>{B9E06B38-256C-D9FC-2E7D-5CF19A8735FD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Duin\core\debug">
       <UniqueIdentifier>{E3FA0D3A-4F86-7BFE-5897-FEF2C4A1D7FE}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Duin\core\Maths\DuinMaths.h">
+      <Filter>Duin\core\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\core\Maths\MathsCore.h">
+      <Filter>Duin\core\Maths</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\core\application.h">
       <Filter>Duin\core</Filter>
     </ClInclude>
@@ -27,14 +36,22 @@
     <ClInclude Include="src\Duin\entrypoint.h">
       <Filter>Duin</Filter>
     </ClInclude>
+    <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\duin.h" />
+    <ClInclude Include="vendor\rlimgui\raylib-master\src\raymath.h" />
+    <ClInclude Include="vendor\rlimgui\raylib-master\src\raylib.h" />
+    <ClInclude Include="vendor\rlimgui\raylib-master\src\rcamera.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duin\core\Maths\DuinMaths.cpp">
+      <Filter>Duin\core\Maths</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duin\core\application.cpp">
       <Filter>Duin\core</Filter>
     </ClCompile>
     <ClCompile Include="src\Duin\core\debug\dn_log.cpp">
       <Filter>Duin\core\debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\dnpch.cpp" />
   </ItemGroup>
 </Project>

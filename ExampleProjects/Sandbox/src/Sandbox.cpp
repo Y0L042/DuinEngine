@@ -22,7 +22,6 @@ void Sandbox::Update(double rDelta)
 {
 }
 
-
 void Sandbox::PhysicsUpdate(double pDelta)
 {
 }

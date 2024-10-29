@@ -29,7 +29,6 @@ workspace "Duin"
 
 project "Duin"
 	location "Duin"
-	-- kind "SharedLib"
     kind "StaticLib"
 	language "C++"
 
@@ -37,8 +36,8 @@ project "Duin"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	-- pchheader "dnpch.h"
-	-- pchsource "Duin/src/dnpch.cpp"
+	pchheader "dnpch.h"
+	pchsource "Duin/src/dnpch.cpp"
 
 	files 
 	{
@@ -51,6 +50,10 @@ project "Duin"
 	includedirs
 	{
         "%{prj.name}/src",
+	}
+
+    externalincludedirs 
+    {
         "%{IncludeDir.spdlog}",
 		"%{IncludeDir.raylib}",
 		"%{IncludeDir.imgui}",
@@ -58,19 +61,19 @@ project "Duin"
 		"%{IncludeDir.flecs}",
 		"%{IncludeDir.fmt}",
 		"%{IncludeDir.patches}",
-	}
+    }
 
 	libdirs
 	{
-		"%{prj.name}/vendor/flecs/lib",	
 		"%{prj.name}/vendor/rlimgui/bin/Debug",
+		"%{prj.name}/vendor/flecs/build_vs2022/build/Debug",	
 	}
 
 	links
 	{
 		"raylib.lib", 
 		"rlImGui.lib",
-        "flecs_static_debug.lib",
+        "flecs_static.lib",
 		"winmm.lib",
 	}
 
@@ -83,11 +86,13 @@ project "Duin"
         "DN_BUILD_STATIC",
 		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
 		"SUPPORT_GIF_RECORDING",
+        "flecs_STATIC",
 	}
 	
     -- Define DN_STATIC if building as a Static Library
     filter "kind:StaticLib"
         defines "DN_BUILD_STATIC"
+        defines "flecs_STATIC"
 
     -- Define DN_BUILD_DLL if building as a Shared Library
     filter "kind:SharedLib"
@@ -96,6 +101,7 @@ project "Duin"
 	postbuildcommands
 	{
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/DuinEditor"),
+		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
 	}
 	
 	filter "configurations:Debug"
@@ -117,33 +123,39 @@ project "Duin"
 global_includedirs = 
 {
 	"Duin/src",
-	"%{IncludeDir.spdlog}",
+}
+
+global_externalincludedirs =
+{
+    "%{IncludeDir.spdlog}",
     "%{IncludeDir.raylib}",
     "%{IncludeDir.imgui}",
-	"%{IncludeDir.rlimgui}",
+    "%{IncludeDir.rlimgui}",
     "%{IncludeDir.flecs}",
-	"%{IncludeDir.fmt}",
+    "%{IncludeDir.fmt}",
+    "%{IncludeDir.patches}",
 }
 
 global_libdirs =
 {
-	"Duin/vendor/rlimgui/bin/Debug",
-    "Duin/vendor/flecs/lib",	
     "bin/" .. outputdir .. "/Duin",  -- Duin's output directory
+	"Duin/vendor/rlimgui/bin/Debug",
+    "Duin/vendor/flecs/build_vs2022/build/Debug",	
 }
 
 global_defines =
 {
 	"DN_PLATFORM_WINDOWS",
     "DN_BUILD_STATIC",
+    "flecs_STATIC",
 }
 
 global_links =
 {
 	"raylib.lib", 
 	"rlImGui.lib",
-	-- "winmm.lib",
-    "flecs_static_debug.lib",
+    "flecs_static.lib",
+	"winmm.lib",
 	"Duin.lib",
 }
 
@@ -170,6 +182,12 @@ project "DuinEditor"
 
 	includedirs(global_includedirs)
 	includedirs
+	{
+        "%{prj.name}/src",
+	}
+
+	externalincludedirs(global_externalincludedirs)
+	externalincludedirs
 	{
 	}
 
@@ -225,6 +243,12 @@ project "Sandbox"
 
 	includedirs(global_includedirs)
 	includedirs
+	{
+        "%{prj.name}/src",
+	}
+
+	externalincludedirs(global_externalincludedirs)
+	externalincludedirs
 	{
 	}
 

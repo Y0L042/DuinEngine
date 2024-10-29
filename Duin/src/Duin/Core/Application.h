@@ -9,7 +9,7 @@
 
 namespace Duin
 {
-	class DUIN_API Application
+	class DAPI Application
 	{
 	public:
 		Application();
@@ -20,8 +20,11 @@ namespace Duin
 			TARGET_RENDER_FRAMERATE = framerate;
 			TARGET_PHYSICS_FRAMERATE = framerate;
 		}
-		void SetBackgroundColor(Color color);
-		void SetWindowName(const char* string);
+		void SetBackgroundColor(::Color color);
+		void SetWindowName(const char *string);
+
+        void SetActiveCamera2D(::Camera2D *camera2d);
+        void SetActiveCamera3D(::Camera3D *camera3d);
 
 		void Run();
 
@@ -37,6 +40,9 @@ namespace Duin
 		virtual void PhysicsUpdate(double pDelta);
 		void EngineDraw();
 		virtual void Draw();
+		void EngineDrawUI();
+		virtual void DrawUI();
+
 		virtual void Exit();
 		void EngineExit();
 

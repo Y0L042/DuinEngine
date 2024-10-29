@@ -3,12 +3,12 @@
 
 #ifdef DN_PLATFORM_WINDOWS
 	#ifdef DN_BUILD_STATIC
-		#define DUIN_API
+		#define DAPI
 	#else
         #ifdef DN_BUILD_DLL
-            #define DUIN_API __declspec(dllexport)
+            #define DAPI __declspec(dllexport)
         #else
-            #define DUIN_API __declspec(dllimport)
+            #define DAPI __declspec(dllimport)
         #endif
 	#endif
 

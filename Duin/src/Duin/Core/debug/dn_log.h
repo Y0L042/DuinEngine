@@ -7,7 +7,7 @@
 
 namespace Duin
 {
-	class DUIN_API Log
+	class DAPI Log
 	{
 	public:
 		static void Init();
