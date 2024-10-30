@@ -148,6 +148,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Duin\C_Modules\c_modules.h" />
+    <ClInclude Include="src\Duin\C_Modules\camera_extention.h" />
     <ClInclude Include="src\Duin\core\Maths\DuinMaths.h" />
     <ClInclude Include="src\Duin\core\Maths\MathsCore.h" />
     <ClInclude Include="src\Duin\core\application.h" />
@@ -157,11 +159,17 @@
     <ClInclude Include="src\Duin\entrypoint.h" />
     <ClInclude Include="src\dnpch.h" />
     <ClInclude Include="src\duin.h" />
-    <ClInclude Include="vendor\rlimgui\raylib-master\src\raylib.h" />
-    <ClInclude Include="vendor\rlimgui\raylib-master\src\raymath.h" />
-    <ClInclude Include="vendor\rlimgui\raylib-master\src\rcamera.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duin\C_Modules\camera_extention.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderOutputFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\Duin\core\Maths\DuinMaths.cpp" />
     <ClCompile Include="src\Duin\core\application.cpp" />
     <ClCompile Include="src\Duin\core\debug\dn_log.cpp" />

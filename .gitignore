@@ -11,3 +11,5 @@ Duin/vendor/*
 
 # Files
 *.user
+/.cache/clangd/index
+/compile_commands.json

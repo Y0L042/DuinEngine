@@ -36,8 +36,13 @@ project "Duin"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	pchheader "dnpch.h"
-	pchsource "Duin/src/dnpch.cpp"
+
+    pchheader "dnpch.h"
+    pchsource "Duin/src/dnpch.cpp"
+
+    -- Exclude precompiled headers for C files
+    -- filter "files:**.c"
+    --     pchheader ""  -- Ensures .c files ignore PCH
 
 	files 
 	{

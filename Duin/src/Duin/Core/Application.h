@@ -20,6 +20,7 @@ namespace Duin
 			TARGET_RENDER_FRAMERATE = framerate;
 			TARGET_PHYSICS_FRAMERATE = framerate;
 		}
+        void SetWindowStartupSize(int width, int height);
 		void SetBackgroundColor(::Color color);
 		void SetWindowName(const char *string);
 

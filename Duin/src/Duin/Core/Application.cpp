@@ -4,6 +4,9 @@
 #define RAYMATH_IMPLEMENTATION
 #define RCAMERA_IMPLEMENTATION
 
+static int screenWidth = 1280;
+static int screenHeight = 720;
+
 ::Camera2D *active_camera2d;
 ::Camera3D *active_camera3d;
 
@@ -15,6 +18,12 @@ namespace Duin
 
     Application::~Application()
     {
+    }
+
+    void Application::SetWindowStartupSize(int width, int height)
+    {
+        screenWidth = width;
+        screenHeight = height;
     }
 
     void Application::SetBackgroundColor(::Color color)
@@ -42,8 +51,6 @@ namespace Duin
         EngineInitialize();
         Initialize();
         
-        int screenWidth = 1280;
-        int screenHeight = 720;
 
         ::InitWindow(screenWidth, screenHeight, windowName.c_str());
         ::SetTargetFPS(144);
