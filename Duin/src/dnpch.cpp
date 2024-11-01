@@ -1,1 +1,4 @@
+#define RAYMATH_IMPLEMENTATION
+#define RAYGUI_IMPLEMENTATION
+
 #include "dnpch.h"

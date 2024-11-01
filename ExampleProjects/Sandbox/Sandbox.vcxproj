@@ -58,7 +58,7 @@
     <IntDir>..\..\bin-int\Debug-windows-x86_64\Sandbox\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -66,7 +66,7 @@
     <IntDir>..\..\bin-int\Release-windows-x86_64\Sandbox\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -74,7 +74,7 @@
     <IntDir>..\..\bin-int\Dist-windows-x86_64\Sandbox\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -142,10 +142,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\sandbox.h" />
+    <ClInclude Include="src\main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\sandbox.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

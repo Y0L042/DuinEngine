@@ -15,10 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7C922328-684A-6575-D151-3ED1BD280066}</ProjectGuid>
+    <ProjectGuid>{3EE5CC8E-AAC4-4B2A-B3DC-D6001F3BB28B}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>DuinEditor</RootNamespace>
+    <RootNamespace>DuinFPS</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -54,34 +54,34 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\Debug-windows-x86_64\DuinEditor\</OutDir>
-    <IntDir>..\bin-int\Debug-windows-x86_64\DuinEditor\</IntDir>
-    <TargetName>DuinEditor</TargetName>
+    <OutDir>..\..\bin\Debug-windows-x86_64\DuinFPS\</OutDir>
+    <IntDir>..\..\bin-int\Debug-windows-x86_64\DuinFPS\</IntDir>
+    <TargetName>DuinFPS</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-master;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Release-windows-x86_64\DuinEditor\</OutDir>
-    <IntDir>..\bin-int\Release-windows-x86_64\DuinEditor\</IntDir>
-    <TargetName>DuinEditor</TargetName>
+    <OutDir>..\..\bin\Release-windows-x86_64\DuinFPS\</OutDir>
+    <IntDir>..\..\bin-int\Release-windows-x86_64\DuinFPS\</IntDir>
+    <TargetName>DuinFPS</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-master;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Dist-windows-x86_64\DuinEditor\</OutDir>
-    <IntDir>..\bin-int\Dist-windows-x86_64\DuinEditor\</IntDir>
-    <TargetName>DuinEditor</TargetName>
+    <OutDir>..\..\bin\Dist-windows-x86_64\DuinFPS\</OutDir>
+    <IntDir>..\..\bin-int\Dist-windows-x86_64\DuinFPS\</IntDir>
+    <TargetName>DuinFPS</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-master;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_STATIC;flecs_STATIC;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Duin\src;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\DuinFPS\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -92,7 +92,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\bin\Debug-windows-x86_64\Duin;..\Duin\vendor\rlimgui\bin\Debug;..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\bin\Debug-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -100,7 +100,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_STATIC;flecs_STATIC;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Duin\src;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\DuinFPS\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\bin\Release-windows-x86_64\Duin;..\Duin\vendor\rlimgui\bin\Debug;..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\bin\Release-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -123,7 +123,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_STATIC;flecs_STATIC;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Duin\src;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\DuinFPS\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -138,18 +138,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\bin\Dist-windows-x86_64\Duin;..\Duin\vendor\rlimgui\bin\Debug;..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\bin\Dist-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\duin_editor.h" />
-    <ClInclude Include="src\editor_camera.h" />
-    <ClInclude Include="src\file_browser.h" />
+    <ClInclude Include="src\game.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\duin_editor.cpp" />
-    <ClCompile Include="src\editor_camera.cpp" />
-    <ClCompile Include="src\file_browser.cpp" />
+    <ClCompile Include="src\game.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

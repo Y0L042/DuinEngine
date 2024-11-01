@@ -20,10 +20,12 @@
 
 
 #include <raylib.h>
+#include <raygui.h>
 #include <raymath.h>
 #include <rcamera.h>
 
 #include <imgui.h>
+#include <ImGuiFileDialog.h>
 #include <rlImGui.h>
 
 #pragma warning(default: 4006)

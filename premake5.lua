@@ -18,10 +18,13 @@ workspace "Duin"
     IncludeDir["spdlog"] = "Duin/vendor/spdlog/include"
 	IncludeDir["rlimgui"] = "Duin/vendor/rlimgui"
 	IncludeDir["raylib"] = "Duin/vendor/rlimgui/raylib-master/src"
+	IncludeDir["raygui"] = "Duin/vendor/raygui/src"
 	IncludeDir["imgui"] = "Duin/vendor/rlimgui/imgui-master"
 	IncludeDir["flecs"] = "Duin/vendor/flecs/include"
 	IncludeDir["fmt"] = "Duin/vendor/fmt/include"
 	IncludeDir["patches"] = "Duin/vendor/patches"
+	IncludeDir["rapidjson"] = "Duin/vendor/rapidjson/include"
+	IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog/"
 
 
 
@@ -41,8 +44,10 @@ project "Duin"
     pchsource "Duin/src/dnpch.cpp"
 
     -- Exclude precompiled headers for C files
-    -- filter "files:**.c"
-    --     pchheader ""  -- Ensures .c files ignore PCH
+    filter "files:**.c"
+        flags { "NoPCH" }
+        pchheader ""  -- Ensures .c files ignore PCH
+    filter {} -- Clear the filter
 
 	files 
 	{
@@ -61,11 +66,14 @@ project "Duin"
     {
         "%{IncludeDir.spdlog}",
 		"%{IncludeDir.raylib}",
+		"%{IncludeDir.raygui}",
 		"%{IncludeDir.imgui}",
+		"%{IncludeDir.imguifilex}",
 		"%{IncludeDir.rlimgui}",
 		"%{IncludeDir.flecs}",
 		"%{IncludeDir.fmt}",
 		"%{IncludeDir.patches}",
+		"%{IncludeDir.rapidjson}",
     }
 
 	libdirs
@@ -107,6 +115,7 @@ project "Duin"
 	{
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/DuinEditor"),
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
+		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/DuinFPS"),
 	}
 	
 	filter "configurations:Debug"
@@ -134,11 +143,14 @@ global_externalincludedirs =
 {
     "%{IncludeDir.spdlog}",
     "%{IncludeDir.raylib}",
+    "%{IncludeDir.raygui}",
     "%{IncludeDir.imgui}",
+    "%{IncludeDir.imguifilex}",
     "%{IncludeDir.rlimgui}",
     "%{IncludeDir.flecs}",
     "%{IncludeDir.fmt}",
     "%{IncludeDir.patches}",
+    "%{IncludeDir.rapidjson}",
 }
 
 global_libdirs =
@@ -275,6 +287,65 @@ project "Sandbox"
 	filter "system:windows"
 		cppdialect "C++20"
 		-- staticruntime "On"
+
+	filter "configurations:Debug"
+		defines "DN_DEBUG"
+		symbols "On"
+
+	filter "configurations:Release"
+		defines "DN_RELEASE"
+		optimize "On"
+
+	filter "configurations:Dist"
+		defines "DN_DIST"
+		optimize "On"
+
+
+project "DuinFPS"
+	location "ExampleProjects/DuinFPS"
+	kind "ConsoleApp"
+	language "C++"
+
+    dependson { "Duin" }
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files 
+	{
+		"ExampleProjects/%{prj.name}/src/**.h",
+		"ExampleProjects/%{prj.name}/src/**.hpp",
+		"ExampleProjects/%{prj.name}/src/**.cpp",
+	}
+
+	includedirs(global_includedirs)
+	includedirs
+	{
+        "%{prj.name}/src",
+	}
+
+	externalincludedirs(global_externalincludedirs)
+	externalincludedirs
+	{
+	}
+
+	libdirs(global_libdirs)
+	libdirs
+	{
+	}
+
+	defines(global_defines)
+	defines
+	{
+	}
+	
+	links(global_links)
+	links
+	{
+	}
+	
+	filter "system:windows"
+		cppdialect "C++20"
 
 	filter "configurations:Debug"
 		defines "DN_DEBUG"

@@ -8,6 +8,7 @@
 */
 
 #include "./camera_extention.h"
+#include "./guid.h"
 
 
 #if defined(__cplusplus)

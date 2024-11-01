@@ -57,21 +57,21 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\rlimgui\imgui-master;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\Release-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\rlimgui\imgui-master;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <OutDir>..\bin\Dist-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\rlimgui\imgui-master;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -150,11 +150,15 @@
   <ItemGroup>
     <ClInclude Include="src\Duin\C_Modules\c_modules.h" />
     <ClInclude Include="src\Duin\C_Modules\camera_extention.h" />
+    <ClInclude Include="src\Duin\C_Modules\guid.h" />
+    <ClInclude Include="src\Duin\assets\asset_manager.h" />
     <ClInclude Include="src\Duin\core\Maths\DuinMaths.h" />
     <ClInclude Include="src\Duin\core\Maths\MathsCore.h" />
     <ClInclude Include="src\Duin\core\application.h" />
     <ClInclude Include="src\Duin\core\core.h" />
+    <ClInclude Include="src\Duin\core\debug\debugging_panel.h" />
     <ClInclude Include="src\Duin\core\debug\dn_log.h" />
+    <ClInclude Include="src\Duin\core\utils\serialisation_manager.h" />
     <ClInclude Include="src\Duin\dep_raygui.h" />
     <ClInclude Include="src\Duin\entrypoint.h" />
     <ClInclude Include="src\dnpch.h" />
@@ -162,17 +166,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Duin\C_Modules\camera_extention.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderOutputFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Duin\C_Modules\guid.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Duin\assets\asset_manager.cpp" />
     <ClCompile Include="src\Duin\core\Maths\DuinMaths.cpp" />
     <ClCompile Include="src\Duin\core\application.cpp" />
+    <ClCompile Include="src\Duin\core\debug\debugging_panel.cpp" />
     <ClCompile Include="src\Duin\core\debug\dn_log.cpp" />
+    <ClCompile Include="src\Duin\core\utils\serialisation_manager.cpp" />
     <ClCompile Include="src\dnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

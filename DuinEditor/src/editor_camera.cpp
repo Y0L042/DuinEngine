@@ -22,22 +22,11 @@ void HandleInfiniteMouseDragging(int mouse_button)
         isDragging = 0;
         current_mouse_button = -1;
         EnableCursor();  // Show the cursor again
-        SetMousePosition(dragStartPos.x, dragStartPos.y); // Reset cursor to original position
+        SetMousePosition((int)dragStartPos.x, (int)dragStartPos.y); // Reset cursor to original position
         dragStartPos = {0};  // Reset starting position
     }
 
     return;
-    // If dragging, capture and reposition the mouse
-    if (isDragging)
-    {
-        Vector2 currentPos = GetMousePosition();
-        Vector2 mouseDelta = Vector2Subtract(currentPos, dragStartPos);
-
-        // Process the mouseDelta for camera rotation or other movement logic
-
-        // Recenter the mouse to dragStartPos after processing delta
-        SetMousePosition(dragStartPos.x, dragStartPos.y);
-    }
 }
 
 int IsMouseDragging()
@@ -219,7 +208,7 @@ void DrawCompass3D(Camera3D compassCamera, RenderTexture2D compassTexture)
             unsigned char B_COL = 50;
             int T_OPACITY = 175; // Top opacity
             int B_OPACITY = 240; // Bottom opacity
-            float opacity = pitch < 0 ? T_OPACITY : B_OPACITY;
+            float opacity = pitch < 0 ? (float)T_OPACITY : (float)B_OPACITY;
             unsigned char colorGrad = pitch < 0 ? T_COL : B_COL;
             Color cylinderColor = { 
                 colorGrad, 
@@ -262,10 +251,10 @@ void DrawCompassUI(RenderTexture2D compassTexture, Rectangle compassArea)
 
     // Draw compass border for better visibility
     DrawRectangleLines(
-        compassArea.x, 
-        compassArea.y, 
-        compassArea.width, 
-        compassArea.height, 
+        (int)compassArea.x, 
+        (int)compassArea.y, 
+        (int)compassArea.width, 
+        (int)compassArea.height, 
         {75, 75, 75, 0}
     );
 }

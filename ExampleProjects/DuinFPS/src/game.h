@@ -1,15 +1,15 @@
-#ifndef SANDBOX_H
-#define SANDBOX_H
+#ifndef GAME_H
+#define GAME_H
 
 #define CAMERA3D
 #include <Duin.h>
 
 
-class Sandbox : public Duin::Application
+class Game : public Duin::Application
 {
 public:
-	Sandbox() {}
-	~Sandbox() {}
+	Game() {}
+	~Game() {}
 
 	void Initialize() override;
 	void Ready() override;
@@ -20,4 +20,4 @@ public:
 
 };
 
-#endif /* SANDBOX_H */
+#endif /* GAME_H */
