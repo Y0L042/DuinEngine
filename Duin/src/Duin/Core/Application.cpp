@@ -1,5 +1,5 @@
 #include "dnpch.h"
-#include "application.h"
+#include "Application.h"
 
 #define RAYMATH_IMPLEMENTATION
 #define RCAMERA_IMPLEMENTATION
@@ -7,11 +7,24 @@
 static int screenWidth = 1280;
 static int screenHeight = 720;
 
-::Camera2D *active_camera2d;
-::Camera3D *active_camera3d;
+Color backgroundColor = WHITE;
+::Camera3D activeCamera3D;
 
 namespace Duin
 {
+    void SetActiveCamera3D(::Camera3D camera3d)
+    {
+        activeCamera3D = camera3d;
+    }
+
+    void SetBackgroundColor(::Color color)
+    {
+        backgroundColor = color;
+    }
+
+
+
+
     Application::Application()
     {
     }
@@ -36,15 +49,6 @@ namespace Duin
         windowName = std::string(string);
     }
 
-    void Application::SetActiveCamera2D(::Camera2D *camera2d)
-    {
-        active_camera2d = camera2d;
-    }
-
-    void Application::SetActiveCamera3D(::Camera3D *camera3d)
-    {
-        active_camera3d = camera3d;
-    }
 
     void Application::Run()
     {
@@ -82,13 +86,8 @@ namespace Duin
                 backgroundColor.a });
             
 
-                if (active_camera2d != NULL) {
-                    BeginMode2D(*active_camera2d);
-                        EngineDraw();
-                        Draw();
-                    EndMode2D();
-                } else if (active_camera3d != NULL) {
-                    BeginMode3D(*active_camera3d);
+                if (1) {
+                    BeginMode3D(activeCamera3D);
                         EngineDraw();
                         Draw();
                     EndMode3D();

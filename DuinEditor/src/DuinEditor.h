@@ -1,15 +1,13 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef DUIN_EDITOR_H
+#define DUIN_EDITOR_H
 
-#define CAMERA3D
 #include <Duin.h>
 
-
-class Game : public Duin::Application
+class DuinEditor : public Duin::Application
 {
 public:
-	Game() {}
-	~Game() {}
+	DuinEditor() {}
+	~DuinEditor() {}
 
 	void Initialize() override;
 	void Ready() override;
@@ -21,4 +19,4 @@ public:
 
 };
 
-#endif /* GAME_H */
+#endif /* DUIN_EDITOR_H */

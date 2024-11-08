@@ -1,5 +1,5 @@
-#ifndef CAMERA_EXTENTION_H
-#define CAMERA_EXTENTION_H
+#ifndef C_CAMERA_EXTENTION_H
+#define C_CAMERA_EXTENTION_H
 
 #include <raylib.h>
 #include <raymath.h>
@@ -17,4 +17,4 @@ float CalculateCameraPitch(Camera3D *camera);
 #endif
 
 
-#endif /* CAMERA_EXTENTION_H */
+#endif /* C_CAMERA_EXTENTION_H */

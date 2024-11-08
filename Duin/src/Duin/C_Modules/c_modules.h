@@ -8,7 +8,9 @@
 */
 
 #include "./camera_extention.h"
-#include "./guid.h"
+#include "./input_extended.h"
+#include "./uuid.h"
+#include "./statemachine.h"
 
 
 #if defined(__cplusplus)

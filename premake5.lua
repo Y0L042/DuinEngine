@@ -1,3 +1,11 @@
+archiveBaseDir = "build_archive"
+
+function os.gettimestamp()
+    return os.date('%Y%m%d_%H%M%S')
+end
+
+
+
 workspace "Duin"
 	architecture "x64"
 	startproject "Sandbox"	
@@ -6,7 +14,8 @@ workspace "Duin"
 	{
 		"Debug",
 		"Release",
-		"Dist"
+		"Dist",
+        "Archive"
 	}
 
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -25,6 +34,8 @@ workspace "Duin"
 	IncludeDir["patches"] = "Duin/vendor/patches"
 	IncludeDir["rapidjson"] = "Duin/vendor/rapidjson/include"
 	IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog/"
+
+    IncludeDir["nativefiledialog"] = "DuinEditor/vendor/nativefiledialog-extended/src/include"
 
 
 
@@ -130,6 +141,30 @@ project "Duin"
 	defines "DN_DIST"
 	optimize "On"
 
+    filter "configurations:Archive"
+        defines "DN_ARCHIVE"
+        symbols "On"
+
+        -- Construct the archive directory path
+        archiveDir = archiveBaseDir .. "/%{cfg.buildcfg}/%{prj.name}/" .. os.gettimestamp()
+
+        -- Post-build commands
+        postbuildcommands
+        {
+            -- Create the archive directory
+            "{MKDIR} " .. archiveDir,
+
+            -- Copy build outputs to the archive directory
+            "{COPY} %{cfg.buildtarget.relpath} " .. archiveDir,
+
+            -- Retrieve the latest Git commit information
+            "cmd /c Latest Commit: > " .. archiveDir .. "/latest_commit.txt",
+            "git log -1 --pretty=format:\"%H%n%an%n%ad%n%s\" >> " .. archiveDir .. "/latest_commit.txt",
+
+            -- Retrieve the last 50 Git commits
+            "cmd /c Last 50 Commits: > " .. archiveDir .. "/last_50_commits.txt",
+            "git log -n 50 --pretty=format:\"%H%n%an%n%ad%n%s\" >> " .. archiveDir .. "/last_50_commits.txt"
+        }
 
 -- MODIFY THESE WHEN ADDING LIBS AND NEW PROJECTS
 
@@ -206,11 +241,13 @@ project "DuinEditor"
 	externalincludedirs(global_externalincludedirs)
 	externalincludedirs
 	{
+        "%{IncludeDir.nativefiledialog}",
 	}
 
 	libdirs(global_libdirs)
 	libdirs
 	{
+        "%{prj.name}/vendor/nativefiledialog-extended/build/src/Release",
 	}
 
 	defines(global_defines)
@@ -221,6 +258,7 @@ project "DuinEditor"
 	links(global_links)
 	links
 	{
+        "nfd.lib",
 	}
 	
 	filter "system:windows"
@@ -238,6 +276,9 @@ project "DuinEditor"
 		defines "DN_DIST"
 		optimize "On"
 
+    filter "configurations:Archive"
+        defines "DN_ARCHIVE"
+        symbols "On"
 		
 
 
@@ -300,6 +341,11 @@ project "Sandbox"
 		defines "DN_DIST"
 		optimize "On"
 
+    filter "configurations:Archive"
+        defines "DN_ARCHIVE"
+        symbols "On"
+
+
 
 project "DuinFPS"
 	location "ExampleProjects/DuinFPS"
@@ -358,4 +404,10 @@ project "DuinFPS"
 	filter "configurations:Dist"
 		defines "DN_DIST"
 		optimize "On"
+
+    filter "configurations:Archive"
+        defines "DN_ARCHIVE"
+        symbols "On"
+
+
 

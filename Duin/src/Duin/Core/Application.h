@@ -3,12 +3,17 @@
 
 #include <string>
 
-#include "Duin/core/core.h"
-#include "Duin/dep_raygui.h"
+#include "Duin/Core/Core.h"
+#include <dep_raygui.h>
+
 
 
 namespace Duin
 {
+
+    void SetActiveCamera3D(::Camera3D camera3d);
+    void SetBackgroundColor(::Color color);
+
 	class DAPI Application
 	{
 	public:
@@ -24,8 +29,6 @@ namespace Duin
 		void SetBackgroundColor(::Color color);
 		void SetWindowName(const char *string);
 
-        void SetActiveCamera2D(::Camera2D *camera2d);
-        void SetActiveCamera3D(::Camera3D *camera3d);
 
 		void Run();
 
@@ -50,7 +53,6 @@ namespace Duin
 	private:
 		int TARGET_RENDER_FRAMERATE = 60;
 		int TARGET_PHYSICS_FRAMERATE = 60;
-		Color backgroundColor = WHITE;
 		std::string windowName = "Game";
 	};
 

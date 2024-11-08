@@ -17,6 +17,6 @@
 #include <sstream>
 #include <string>
 
-#include "Duin/dep_raygui.h"
+#include <dep_raygui.h>
 #include <flecs.h>
 

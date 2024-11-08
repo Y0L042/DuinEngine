@@ -1,0 +1,45 @@
+#pragma once
+
+#include <cinttypes>
+#include <functional>
+
+namespace Duin {
+class UUID
+{
+public:
+    UUID();
+    UUID(uint64_t uuid);
+    ~UUID();
+
+    bool operator==(const UUID& uuid) const
+    {
+        return this->uuid == uuid.uuid;
+    }
+
+    bool operator!=(const UUID& uuid) const
+    {
+        return this->uuid != uuid.uuid;
+    }
+
+    operator uint64_t() const
+    {
+        return uuid;
+    }
+
+private:
+    uint64_t uuid;
+};
+
+}
+
+namespace std 
+{
+	template <>
+	struct hash<Duin::UUID>
+	{
+		std::size_t operator()(const Duin::UUID& uuid) const
+		{
+			return std::hash<uint64_t>()(static_cast<uint64_t>(uuid));
+		}
+	};
+}

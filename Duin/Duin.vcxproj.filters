@@ -4,92 +4,122 @@
     <Filter Include="Duin">
       <UniqueIdentifier>{F558847C-E18F-850D-8A7C-6B107692010F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Duin\Assets">
+      <UniqueIdentifier>{375A243E-A30F-9D33-2C04-970A98B89337}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Duin\C_Modules">
       <UniqueIdentifier>{7F7E008A-6B4C-F48F-54E0-64B6404DD0F4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\assets">
-      <UniqueIdentifier>{576EC988-C323-427E-4C18-3C55B8CC3882}</UniqueIdentifier>
+    <Filter Include="Duin\Core">
+      <UniqueIdentifier>{6D5EF473-D9C8-A8EA-2207-5A908EB0863F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\core">
-      <UniqueIdentifier>{8DEA0574-F954-BAEA-4293-6B90AE3C983F}</UniqueIdentifier>
+    <Filter Include="Duin\Core\Debug">
+      <UniqueIdentifier>{A3C678B6-0F52-E67A-1863-696F846D427B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\core\Maths">
-      <UniqueIdentifier>{B9E06B38-256C-D9FC-2E7D-5CF19A8735FD}</UniqueIdentifier>
+    <Filter Include="Duin\Core\Maths">
+      <UniqueIdentifier>{99BC19B7-0548-877B-0E59-0A707A63E37B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\core\debug">
-      <UniqueIdentifier>{E3FA0D3A-4F86-7BFE-5897-FEF2C4A1D7FE}</UniqueIdentifier>
+    <Filter Include="Duin\Core\Utils">
+      <UniqueIdentifier>{8DBDB4B7-F948-227C-025A-A5706E647E7C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Duin\core\utils">
-      <UniqueIdentifier>{CDF1493B-397D-B7FF-428E-3AF4AE981300}</UniqueIdentifier>
+    <Filter Include="Duin\ECS">
+      <UniqueIdentifier>{BFBF5C68-AB8C-B773-D4A5-A51BC0D1EC01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Duin.h" />
+    <ClInclude Include="src\Duin\Assets\AssetManager.h">
+      <Filter>Duin\Assets</Filter>
+    </ClInclude>
     <ClInclude Include="src\Duin\C_Modules\c_modules.h">
       <Filter>Duin\C_Modules</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\C_Modules\camera_extention.h">
       <Filter>Duin\C_Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\C_Modules\guid.h">
+    <ClInclude Include="src\Duin\C_Modules\input_extended.h">
       <Filter>Duin\C_Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\assets\asset_manager.h">
-      <Filter>Duin\assets</Filter>
+    <ClInclude Include="src\Duin\C_Modules\statemachine.h">
+      <Filter>Duin\C_Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\core\Maths\DuinMaths.h">
-      <Filter>Duin\core\Maths</Filter>
+    <ClInclude Include="src\Duin\C_Modules\uuid.h">
+      <Filter>Duin\C_Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\core\Maths\MathsCore.h">
-      <Filter>Duin\core\Maths</Filter>
+    <ClInclude Include="src\Duin\Core\Application.h">
+      <Filter>Duin\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\core\application.h">
-      <Filter>Duin\core</Filter>
+    <ClInclude Include="src\Duin\Core\Core.h">
+      <Filter>Duin\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\core\core.h">
-      <Filter>Duin\core</Filter>
+    <ClInclude Include="src\Duin\Core\Debug\DNLog.h">
+      <Filter>Duin\Core\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\core\debug\debugging_panel.h">
-      <Filter>Duin\core\debug</Filter>
+    <ClInclude Include="src\Duin\Core\Debug\DebugTools.h">
+      <Filter>Duin\Core\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\core\debug\dn_log.h">
-      <Filter>Duin\core\debug</Filter>
+    <ClInclude Include="src\Duin\Core\Maths\DuinMaths.h">
+      <Filter>Duin\Core\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\core\utils\serialisation_manager.h">
-      <Filter>Duin\core\utils</Filter>
+    <ClInclude Include="src\Duin\Core\Maths\MathsCore.h">
+      <Filter>Duin\Core\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\dep_raygui.h">
-      <Filter>Duin</Filter>
+    <ClInclude Include="src\Duin\Core\Utils\GameStateMachine.h">
+      <Filter>Duin\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\entrypoint.h">
+    <ClInclude Include="src\Duin\Core\Utils\SerialisationManager.h">
+      <Filter>Duin\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Utils\UUID.h">
+      <Filter>Duin\Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\ECS\Components.h">
+      <Filter>Duin\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\EntryPoint.h">
       <Filter>Duin</Filter>
     </ClInclude>
     <ClInclude Include="src\dnpch.h" />
-    <ClInclude Include="src\duin.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duin\Assets\AssetManager.cpp">
+      <Filter>Duin\Assets</Filter>
+    </ClCompile>
     <ClCompile Include="src\Duin\C_Modules\camera_extention.c">
       <Filter>Duin\C_Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\C_Modules\guid.c">
+    <ClCompile Include="src\Duin\C_Modules\input_extended.c">
       <Filter>Duin\C_Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\assets\asset_manager.cpp">
-      <Filter>Duin\assets</Filter>
+    <ClCompile Include="src\Duin\C_Modules\statemachine.c">
+      <Filter>Duin\C_Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\core\Maths\DuinMaths.cpp">
-      <Filter>Duin\core\Maths</Filter>
+    <ClCompile Include="src\Duin\C_Modules\uuid.c">
+      <Filter>Duin\C_Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\core\application.cpp">
-      <Filter>Duin\core</Filter>
+    <ClCompile Include="src\Duin\Core\Application.cpp">
+      <Filter>Duin\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\core\debug\debugging_panel.cpp">
-      <Filter>Duin\core\debug</Filter>
+    <ClCompile Include="src\Duin\Core\Debug\DNLog.cpp">
+      <Filter>Duin\Core\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\core\debug\dn_log.cpp">
-      <Filter>Duin\core\debug</Filter>
+    <ClCompile Include="src\Duin\Core\Debug\DebugTools.cpp">
+      <Filter>Duin\Core\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\Duin\core\utils\serialisation_manager.cpp">
-      <Filter>Duin\core\utils</Filter>
+    <ClCompile Include="src\Duin\Core\Maths\DuinMaths.cpp">
+      <Filter>Duin\Core\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Core\Utils\GameStateMachine.cpp">
+      <Filter>Duin\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Core\Utils\SerialisationManager.cpp">
+      <Filter>Duin\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\Core\Utils\UUID.cpp">
+      <Filter>Duin\Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Duin\ECS\Components.cpp">
+      <Filter>Duin\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\dnpch.cpp" />
   </ItemGroup>

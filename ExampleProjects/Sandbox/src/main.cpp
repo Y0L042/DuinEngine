@@ -1,7 +1,7 @@
-#include "main.h"
+#include "Main.h"
 
 #include <Duin.h>
-#include <Duin/entrypoint.h>
+#include <Duin/EntryPoint.h>
 
 Duin::Application* Duin::CreateApplication() { return new Game(); }
 
