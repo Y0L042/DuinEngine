@@ -2,7 +2,6 @@
 .usr
 .vs/
 bin/
-Duin/docs/DuinDocs/
 
 bin-int/
 vendor/bin/*
@@ -13,3 +12,54 @@ Duin/vendor/*
 *.user
 /.cache/clangd/index
 /compile_commands.json
+
+# Binary files and build artifacts
+*.exe
+*.dll
+*.lib
+*.so
+*.a
+*.o
+*.obj
+*.pdb
+
+# Build directories
+/build/
+/bin/
+/Debug/
+/Release/
+/dist/
+
+# Archive or backup folders (customize paths as needed)
+**/build_archive/
+**/Archive-windows-x86_64/
+
+# IDE and editor-specific files
+.vscode/
+.idea/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.db
+
+# Temporary files and cache
+*.log
+*.tmp
+*.cache
+*.bak
+*.swp
+*.swo
+
+# Ignoring Neovim or other editor config files
+*.DS_Store
+*~
+
+# Editor-specific configurations
+DuinEditor/imgui.ini
+ExampleProjects/DuinFPS/imgui.ini
+ExampleProjects/build_archive/
+
+# Node modules or external dependencies
+node_modules/
+vendor/
+
