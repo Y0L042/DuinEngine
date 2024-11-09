@@ -97,12 +97,15 @@ void StateGameLoop::State_HandleInput()
     PlayerMovementInputVec2 mI = input;
     player.set<PlayerMovementInputVec2>(input);
 
+
     if (IsKeyPressed(KEY_P)) {
         SetFPSCamera(!fpsCameraEnabled);
     }
 
     Vector2 mouseDelta = GetMouseDelta();
     cameraRoot.set<MouseInputVec2>(mouseDelta);
+    player.set<MouseInputVec2>(mouseDelta);
+    debugWatchlist.Post("MouseInput", "{ %.1f, %.1f }", mouseDelta.x, mouseDelta.y);
 
 }
 
@@ -115,7 +118,6 @@ void StateGameLoop::State_Update(double delta)
     }
 
     ecsManager.ExecuteQueryControlPlayerMovement(delta);
-    // ecsManager.ExecuteQueryControlPlayerRotation(delta);
 
     ecsManager.ExecuteQueryUpdatePlayerYaw(delta);
     ecsManager.ExecuteQueryUpdateCameraPitch(delta);
@@ -124,7 +126,6 @@ void StateGameLoop::State_Update(double delta)
 void StateGameLoop::State_PhysicsUpdate(double delta)
 {
     ecsManager.ExecuteQueryMovementInput();
-    ecsManager.ExecuteQueryRotationInput();
 
     ecsManager.ExecuteQueryUpdatePosition3D(delta);
     ecsManager.ExecuteQueryHierarchicalUpdatePosition3D();
@@ -143,15 +144,28 @@ void StateGameLoop::State_Draw()
 void StateGameLoop::State_DrawUI()
 {
 
+    const Rotation3D *playerRot = player.get<Rotation3D, Local>();
+    if (playerRot)
+        debugWatchlist.Post("PlayerRot", "{ %.1f, %.1f, %.1f %.1f }", 
+                            playerRot->value.x, 
+                            playerRot->value.y, 
+                            playerRot->value.z, 
+                            playerRot->value.w);
+
     const Rotation3D *pRot = (fpsCamera).get<Rotation3D, Global>();
     if (pRot)
-        // dbgConsole.LogEx(Duin::LogLevel::Info, "pRot{ %.1f, %.1f, %.1f }", pRot->value.x, pRot->value.y, pRot->value.z);
-        debugWatchlist.Post("pRot", "{ %.1f, %.1f, %.1f }", pRot->value.x, pRot->value.y, pRot->value.z);
+        debugWatchlist.Post("pRot", "{ %.1f, %.1f, %.1f, %.1f }", 
+                            pRot->value.x, 
+                            pRot->value.y, 
+                            pRot->value.z,
+                            pRot->value.w);
 
     const Camera3D *pCam = (fpsCamera).get<Camera3D>();
     if (pCam)
-        // dbgConsole.LogEx(Duin::LogLevel::Info, "pCam{ %.1f, %.1f, %.1f }", pCam->position.x, pCam->position.y, pCam->position.z);
-        debugWatchlist.Post("pCam", "{ %.1f, %.1f, %.1f }", pCam->position.x, pCam->position.y, pCam->position.z);
+        debugWatchlist.Post("pCam", "{ %.1f, %.1f, %.1f }", 
+                            pCam->position.x, 
+                            pCam->position.y, 
+                            pCam->position.z);
 
     debugWatchlist.Draw("Watchlist");
 }
@@ -183,6 +197,9 @@ static flecs::entity ConstructPlayer()
     cameraRoot = ecsManager.world.entity()
         .is_a(Node3D)
         .child_of(entity)
+        .add<MouseInputVec2>()
+        .add<RotationInput3D>()
+        .add<CameraTag>()
         ;
 
     fpsCamera = ecsManager.world.entity()
@@ -192,10 +209,9 @@ static flecs::entity ConstructPlayer()
             .position = { 0.0f, 0.0f, 0.0f },
             .target = { 0.0f, 0.0f, 0.0f },
             .up = { 0.0f, 1.0f, 0.0f },
-            .fovy = 60.0f,
+            .fovy = 90.0f,
             .projection = CAMERA_PERSPECTIVE
             })
-        .add<CameraTag>()
         ;
 
     return entity;

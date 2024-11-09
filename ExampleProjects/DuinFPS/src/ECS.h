@@ -26,19 +26,15 @@ public:
     void ExecuteQueryControlCamera(double delta);
 
     void ExecuteQueryMovementInput();
-    void ExecuteQueryRotationInput();
 
     void ExecuteQueryUpdatePlayerYaw(double delta);
     void ExecuteQueryUpdateCameraPitch(double delta);
 
     void ExecuteQueryControlPlayerMovement(double delta);
-    void ExecuteQueryControlPlayerRotation(double delta);
-
-    void ExecuteQueryControlFPView(double delta);
 
 private:
 
-    flecs::query<Position3D, const Velocity3D> queryUpdatePosition3D;
+    flecs::query<Position3D, const Velocity3D, const Rotation3D> queryUpdatePosition3D;
     flecs::query<const Position3D, const Position3D *, Position3D> queryHierarchicalUpdatePosition3D;
 
     flecs::query<Rotation3D, const AngularVelocity3D> queryUpdateRotation3D;

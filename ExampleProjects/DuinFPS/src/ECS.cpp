@@ -1,6 +1,7 @@
 #include "ECS.h"
 #include "Singletons.h"
 
+const Vector2 MOUSE_SENSITIVITY = { 0.001f, 0.001f };
 
 ECSManager::ECSManager()
 {}
@@ -34,8 +35,9 @@ void ECSManager::RegisterComponents()
 
 void ECSManager::CreateQueries()
 {
-    queryUpdatePosition3D = world.query_builder<Position3D, const Velocity3D>()
+    queryUpdatePosition3D = world.query_builder<Position3D, const Velocity3D, const Rotation3D>()
         .term_at(0).second<Local>()
+        .term_at(2).second<Local>()
         .cached().build();
     queryHierarchicalUpdatePosition3D = world.query_builder<const Position3D, const Position3D *, Position3D>()
         .term_at(0).second<Local>()
@@ -58,19 +60,15 @@ void ECSManager::CreateQueries()
 
     // Query to update player yaw
     queryUpdatePlayerYaw = world.query_builder<Rotation3D, RotationInput3D, MouseInputVec2>()
+        .term_at(0).second<Local>()
         .with<PlayerTag>() // Filter entities tagged as Player
-        .with<Rotation3D, Local>()
-        .with<RotationInput3D>()
-        .with<MouseInputVec2>()
-        .build();
+        .cached().build();
 
     // Query to update camera pitch
     queryUpdateCameraPitch = world.query_builder<Rotation3D, RotationInput3D, MouseInputVec2>()
+        .term_at(0).second<Local>()
         .with<CameraTag>() // Filter entities tagged as Camera
-        .with<Rotation3D, Local>()
-        .with<RotationInput3D>()
-        .with<MouseInputVec2>()
-        .build();
+        .cached().build();
 
     queryMovementInput = world.query_builder<Velocity3D, const MovementInput3D>()
         .cached().build();
@@ -108,11 +106,11 @@ void ECSManager::ExecuteQueryUpdatePosition3D(double delta)
 {
     queryUpdatePosition3D.each(
         [delta](
-            Position3D& p, const Velocity3D& v) 
+            Position3D& p_local, const Velocity3D& v, const Rotation3D& r_local) 
         {
-            Vector3 dv = Vector3Scale(v.value, static_cast<float>(delta)); 
-            p.value = Vector3Add(p.value, dv); 
-            // dbgConsole.LogEx(Duin::LogLevel::Info, "VALUES{ %.1f, %.1f, %.1f }", p.value.x, p.value.y, p.value.z);
+            Vector3 rotatedVel = Vector3RotateByQuaternion(v.value, r_local.value);
+            Vector3 dv = Vector3Scale(rotatedVel, static_cast<float>(delta)); 
+            p_local.value = Vector3Add(p_local.value, dv); 
         }
     );
 }
@@ -153,6 +151,7 @@ void ECSManager::ExecuteQueryHierarchicalUpdateRotation3D()
         [](flecs::iter& it, size_t index,
            const Rotation3D& r, const Rotation3D *r_parent, Rotation3D& r_out)
         {
+            r_out.value = r.value;
             if (r_parent) {
                 r_out.value = QuaternionMultiply(r_parent->value, r.value);
                 r_out.value = QuaternionNormalize(r_out.value);
@@ -173,18 +172,6 @@ void ECSManager::ExecuteQueryMovementInput()
     );
 }
 
-void ECSManager::ExecuteQueryRotationInput()
-{
-    queryRotationInput.each(
-        [](flecs::iter& it, size_t index,
-                AngularVelocity3D& v, const RotationInput3D& i) 
-        {
-            Vector3 inputFactor = Vector3Scale(i.value, 30);
-            v.value = inputFactor;
-        }
-    );
-}
-
 void ECSManager::ExecuteQueryControlPlayerMovement(double delta)
 {
     queryControlPlayerMovement.each(
@@ -192,18 +179,7 @@ void ECSManager::ExecuteQueryControlPlayerMovement(double delta)
                 MovementInput3D& i, const PlayerMovementInputVec2& pv) 
         {
             i.value.x = pv.value.x;
-            i.value.z = pv.value.y;
-        }
-    );
-}
-
-void ECSManager::ExecuteQueryControlPlayerRotation(double delta)
-{
-    queryControlPlayerRotation.each(
-        [](flecs::iter& it, size_t index,
-                RotationInput3D& i, const MouseInputVec2& pv) 
-        {
-            // TODO
+            i.value.z = -pv.value.y;
         }
     );
 }
@@ -215,10 +191,10 @@ void ECSManager::ExecuteQueryUpdatePlayerYaw(double delta)
             Rotation3D& r, RotationInput3D& ri, const MouseInputVec2& mouseDelta) 
         {
             // Define sensitivity factor for yaw
-            const float sensitivity = 0.001f; // Adjust as needed
+            const float sensitivity = MOUSE_SENSITIVITY.x; // Adjust as needed
 
             // Calculate yaw rotation quaternion based on mouse X movement
-            float yawAngle = mouseDelta.value.x * sensitivity;
+            float yawAngle = -mouseDelta.value.x * sensitivity;
             Quaternion yawQuat = QuaternionFromAxisAngle(Vector3{0.0f, 1.0f, 0.0f}, yawAngle);
 
             // Update current rotation by applying yaw
@@ -234,22 +210,27 @@ void ECSManager::ExecuteQueryUpdateCameraPitch(double delta)
         [](flecs::iter& it, size_t index,
             Rotation3D& r, RotationInput3D& ri, const MouseInputVec2& mouseDelta) 
         {
-            // // Define sensitivity factor for pitch
-            // const float sensitivity = 0.001f; // Adjust as needed
-            //
-            // // Calculate pitch rotation quaternion based on mouse Y movement
-            // float pitchAngle = mouseDelta.value.y * sensitivity;
-            // Quaternion pitchQuat = QuaternionFromAxisAngle((Vector3){1.0f, 0.0f, 0.0f}, pitchAngle);
-            //
-            // // Update current rotation by applying pitch
-            // r.value = QuaternionMultiply(pitchQuat, r.value);
-            // r.value = QuaternionNormalize(r.value);
-            //
-            // // Clamp the pitch to prevent flipping
-            // Vector3 euler = QuaternionToEuler(r.value);
-            // if (euler.x > 89.0f) euler.x = 89.0f;
-            // if (euler.x < -89.0f) euler.x = -89.0f;
-            // r.value = QuaternionFromEuler(euler);
+            // Define sensitivity factor for pitch
+            const float sensitivity = MOUSE_SENSITIVITY.y; // Adjust as needed
+
+            // Calculate pitch rotation quaternion based on mouse Y movement
+            float pitchAngle = -mouseDelta.value.y * sensitivity;
+            Quaternion pitchQuat = QuaternionFromAxisAngle({1.0f, 0.0f, 0.0f}, pitchAngle);
+
+            // Update current rotation by applying pitch
+            r.value = QuaternionMultiply(r.value, pitchQuat);
+            r.value = QuaternionNormalize(r.value);
+
+            // Convert quaternion to Euler angles
+            Vector3 euler = QuaternionToEuler(r.value);
+
+            // Clamp the pitch angle to prevent flipping
+            const float maxPitch = DEG2RAD * 89.0f; // Convert degrees to radians
+            if (euler.x > maxPitch) euler.x = maxPitch;
+            if (euler.x < -maxPitch) euler.x = -maxPitch;
+
+            // Reconstruct quaternion from clamped Euler angles
+            r.value = QuaternionFromEuler(euler.x, euler.y, euler.z);
         }
     );
 }
@@ -262,12 +243,19 @@ void ECSManager::ExecuteQueryControlCamera(double delta)
         {
             c.position = p.value;
             
-            // TODO
+            // Define the default forward vector (0, 0, -1) in Raylib's coordinate system
+            Vector3 defaultForward = { 0.0f, 0.0f, -1.0f };
+            
+            // Rotate the default forward vector by the Rotation3D quaternion to get the actual forward direction
+            Vector3 forward = Vector3RotateByQuaternion(defaultForward, r.value);
+            
+            // Set the camera's target to position + forward direction
+            c.target = Vector3Add(p.value, forward);
+            
+            // Set the up vector to keep the camera upright (0, 1, 0)
+            c.up = { 0.0f, 1.0f, 0.0f };
         }
     );
 }
 
 
-void ECSManager::ExecuteQueryControlFPView(double delta)
-{
-}
