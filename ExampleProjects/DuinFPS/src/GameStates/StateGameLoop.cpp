@@ -5,6 +5,7 @@
 #include "../Components.h"
 #include "../ECS.h"
 
+
 Duin::DebugWatchlist debugWatchlist;
 
 std::string ENTITY_DEFS_PATH = "data/entity_defs.json";
@@ -23,10 +24,102 @@ flecs::entity player;
 flecs::entity cameraRoot;
 flecs::entity fpsCamera;
 
-flecs::entity *test;
+/* ----- PhysX Test ----- */
+physx::PxDefaultAllocator defaultAllocatorCallback;
+physx::PxDefaultErrorCallback defaultErrorCallback;
+physx::PxDefaultCpuDispatcher *pxDispatcher = NULL;
+
+physx::PxTolerancesScale pxToleranceScale;
+physx::PxFoundation *pxFoundation = NULL;
+physx::PxPhysics *pxPhysics = NULL;
+
+physx::PxScene *pxScene = NULL;
+physx::PxMaterial *pxMaterial = NULL;
+
+physx::PxPvd *pxPvd = NULL;
+
+physx::PxReal stackZ = 10.0f;
+
+physx::PxRigidDynamic *pxBall = NULL;
+/* ----- PhysX Test ----- */
 
 static void SetFPSCamera(int enable);
 static flecs::entity ConstructPlayer();
+
+/* ----- PhysX Test ----- */
+static physx::PxRigidDynamic* CreateDynamic(    const physx::PxTransform& t, 
+                                                const physx::PxGeometry& geometry, 
+                                                const physx::PxVec3& velocity = physx::PxVec3(0))
+{
+    physx::PxRigidDynamic* dynamic = physx::PxCreateDynamic(    *pxPhysics, 
+                                                                t,
+                                                                geometry, 
+                                                                *pxMaterial, 
+                                                                10.0f);
+    dynamic->setAngularDamping(0.5f);
+    dynamic->setLinearVelocity(velocity);
+    pxScene->addActor(*dynamic);
+    return dynamic;
+}
+
+
+static void InitPhysics(bool interactive)
+{
+	pxFoundation = PxCreateFoundation(  PX_PHYSICS_VERSION, 
+                                        defaultAllocatorCallback, 
+                                        defaultErrorCallback);
+
+	pxPvd = physx::PxCreatePvd(*pxFoundation);
+	physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+	pxPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
+
+	pxPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true, pxPvd);
+
+	physx::PxSceneDesc sceneDesc(pxPhysics->getTolerancesScale());
+	sceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
+	pxDispatcher = physx::PxDefaultCpuDispatcherCreate(2);
+	sceneDesc.cpuDispatcher	= pxDispatcher;
+	sceneDesc.filterShader	= physx::PxDefaultSimulationFilterShader;
+	pxScene = pxPhysics->createScene(sceneDesc);
+
+	physx::PxPvdSceneClient* pvdClient = pxScene->getScenePvdClient();
+	if(pvdClient)
+	{
+		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
+		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
+		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
+	}
+	pxMaterial = pxPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+
+	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*pxPhysics, physx::PxPlane(0,1,0,0), *pxMaterial);
+	pxScene->addActor(*groundPlane);
+
+	if (!interactive)
+		pxBall = CreateDynamic(physx::PxTransform(physx::PxVec3(0,40,100)), physx::PxSphereGeometry(10), physx::PxVec3(0,-50,-5));
+}
+
+static void StepPhysics(bool /*interactive*/)
+{
+	pxScene->simulate(1.0f/60.0f);
+	pxScene->fetchResults(true);
+}
+
+static void CleanupPhysics(bool /*interactive*/)
+{
+	PX_RELEASE(pxScene);
+	PX_RELEASE(pxDispatcher);
+	PX_RELEASE(pxPhysics);
+	if(pxPvd)
+	{
+		physx::PxPvdTransport* transport = pxPvd->getTransport();
+		PX_RELEASE(pxPvd);
+		PX_RELEASE(transport);
+	}
+	PX_RELEASE(pxFoundation);
+	
+	printf("SnippetHelloWorld done.\n");
+}
+/* ----- PhysX Test ----- */
 
 StateGameLoop::StateGameLoop(Duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -46,6 +139,8 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
+    InitPhysics(false);
+
     ecsManager.RegisterComponents();
     ecsManager.CreateQueries();
 
@@ -79,6 +174,7 @@ void StateGameLoop::State_Enter()
 
 void StateGameLoop::State_Exit()
 {
+    CleanupPhysics(false);
 }
 
 void StateGameLoop::State_HandleInput()
@@ -107,10 +203,14 @@ void StateGameLoop::State_HandleInput()
     player.set<MouseInputVec2>(mouseDelta);
     debugWatchlist.Post("MouseInput", "{ %.1f, %.1f }", mouseDelta.x, mouseDelta.y);
 
+    if (IsKeyPressed(KEY_SPACE)) {
+        pxBall->setLinearVelocity({0, 20, 5});
+    }
 }
 
 void StateGameLoop::State_Update(double delta)
 {
+    StepPhysics(true);
     Duin::SetActiveCamera3D(*(fpsCamera.get<Camera3D>()));
 
     if (fpsCameraEnabled && !IsCursorHidden()) {
@@ -138,7 +238,11 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
 
 void StateGameLoop::State_Draw()
 {
-    DrawGrid(100, 1.0f);
+    physx::PxTransform globalPose = pxBall->getGlobalPose();
+    physx::PxVec3 pos = globalPose.p;
+    DrawSphereWires({pos.x, pos.y, pos.z}, 10, 8, 8, BLUE);
+
+    DrawGrid(10000, 10.0f);
 }
 
 void StateGameLoop::State_DrawUI()

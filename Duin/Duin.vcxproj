@@ -70,35 +70,35 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\Release-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <OutDir>..\bin\Dist-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
     <OutDir>..\bin\Archive-windows-x86_64\Duin\</OutDir>
     <IntDir>..\bin-int\Archive-windows-x86_64\Duin\</IntDir>
     <TargetName>Duin</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>vendor\spdlog\include;vendor\rlimgui\raylib-master\src;vendor\raygui\src;vendor\rlimgui\imgui-master;vendor\ImGuiFileDialog;vendor\rlimgui;vendor\flecs\include;vendor\fmt\include;vendor\patches;vendor\rapidjson\include;vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_BUILD_STATIC;flecs_STATIC;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;PhysX_static_64;PhysXCommon_static_64;PhysXFoundation_static_64;PhysXCooking_static_64;PhysXPvdSDK_static_64;PhysXExtensions_static_64;PhysXCharacterKinematic_static_64;DN_BUILD_STATIC;flecs_STATIC;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -112,7 +112,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -120,7 +120,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_BUILD_STATIC;flecs_STATIC;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;PhysX_static_64;PhysXCommon_static_64;PhysXFoundation_static_64;PhysXCooking_static_64;PhysXPvdSDK_static_64;PhysXExtensions_static_64;PhysXCharacterKinematic_static_64;DN_BUILD_STATIC;flecs_STATIC;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -138,7 +138,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -146,7 +146,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_BUILD_STATIC;flecs_STATIC;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;PhysX_static_64;PhysXCommon_static_64;PhysXFoundation_static_64;PhysXCooking_static_64;PhysXPvdSDK_static_64;PhysXExtensions_static_64;PhysXCharacterKinematic_static_64;DN_BUILD_STATIC;flecs_STATIC;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -164,7 +164,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
@@ -172,7 +172,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;DN_BUILD_STATIC;flecs_STATIC;DN_ARCHIVE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;IMGUI_IMPL_OPENGL_LOADER_GLAD;SUPPORT_GIF_RECORDING;PhysX_static_64;PhysXCommon_static_64;PhysXFoundation_static_64;PhysXCooking_static_64;PhysXPvdSDK_static_64;PhysXExtensions_static_64;PhysXCharacterKinematic_static_64;DN_BUILD_STATIC;flecs_STATIC;DN_ARCHIVE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -186,15 +186,15 @@
     </Link>
     <Lib>
       <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\rlimgui\bin\Debug;vendor\flecs\build_vs2022\build\Debug;vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>IF NOT EXIST build_archive\Archive\$(ProjectName)\20241108_201050 (mkdir build_archive\Archive\$(ProjectName)\20241108_201050)
-IF EXIST ..\bin\Archive-windows-x86_64\Duin\Duin.lib\ (xcopy /Q /E /Y /I ..\bin\Archive-windows-x86_64\Duin\Duin.lib build_archive\Archive\$(ProjectName)\20241108_201050 &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Archive-windows-x86_64\Duin\Duin.lib build_archive\Archive\$(ProjectName)\20241108_201050 &gt; nul)
-cmd /c Latest Commit: &gt; build_archive/Archive/$(ProjectName)/20241108_201050/latest_commit.txt
-git log -1 --pretty=format:"%H%n%an%n%ad%n%s" &gt;&gt; build_archive/Archive/$(ProjectName)/20241108_201050/latest_commit.txt
-cmd /c Last 50 Commits: &gt; build_archive/Archive/$(ProjectName)/20241108_201050/last_50_commits.txt
-git log -n 50 --pretty=format:"%H%n%an%n%ad%n%s" &gt;&gt; build_archive/Archive/$(ProjectName)/20241108_201050/last_50_commits.txt</Command>
+      <Command>IF NOT EXIST build_archive\Archive\$(ProjectName)\20241109_154128 (mkdir build_archive\Archive\$(ProjectName)\20241109_154128)
+IF EXIST ..\bin\Archive-windows-x86_64\Duin\Duin.lib\ (xcopy /Q /E /Y /I ..\bin\Archive-windows-x86_64\Duin\Duin.lib build_archive\Archive\$(ProjectName)\20241109_154128 &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Archive-windows-x86_64\Duin\Duin.lib build_archive\Archive\$(ProjectName)\20241109_154128 &gt; nul)
+cmd /c Latest Commit: &gt; build_archive/Archive/$(ProjectName)/20241109_154128/latest_commit.txt
+git log -1 --pretty=format:"%H%n%an%n%ad%n%s" &gt;&gt; build_archive/Archive/$(ProjectName)/20241109_154128/latest_commit.txt
+cmd /c Last 50 Commits: &gt; build_archive/Archive/$(ProjectName)/20241109_154128/last_50_commits.txt
+git log -n 50 --pretty=format:"%H%n%an%n%ad%n%s" &gt;&gt; build_archive/Archive/$(ProjectName)/20241109_154128/last_50_commits.txt</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

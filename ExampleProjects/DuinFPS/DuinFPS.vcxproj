@@ -71,7 +71,7 @@
     <IntDir>..\..\bin-int\Debug-windows-x86_64\DuinFPS\</IntDir>
     <TargetName>DuinFPS</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -79,7 +79,7 @@
     <IntDir>..\..\bin-int\Release-windows-x86_64\DuinFPS\</IntDir>
     <TargetName>DuinFPS</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,7 +87,7 @@
     <IntDir>..\..\bin-int\Dist-windows-x86_64\DuinFPS\</IntDir>
     <TargetName>DuinFPS</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -95,7 +95,7 @@
     <IntDir>..\..\bin-int\Archive-windows-x86_64\DuinFPS\</IntDir>
     <TargetName>DuinFPS</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-master;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,8 +112,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\bin\Debug-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXCooking_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Debug-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,8 +135,8 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\bin\Release-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXCooking_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Release-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -158,8 +158,8 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\bin\Dist-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXCooking_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Dist-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
@@ -177,8 +177,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\bin\Archive-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXCooking_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Archive-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

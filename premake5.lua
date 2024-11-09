@@ -34,8 +34,8 @@ workspace "Duin"
 	IncludeDir["patches"] = "Duin/vendor/patches"
 	IncludeDir["rapidjson"] = "Duin/vendor/rapidjson/include"
 	IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog/"
-
     IncludeDir["nativefiledialog"] = "DuinEditor/vendor/nativefiledialog-extended/src/include"
+	IncludeDir["physx"] = "Duin/vendor/PhysX/physx/include"
 
 
 
@@ -84,13 +84,15 @@ project "Duin"
 		"%{IncludeDir.flecs}",
 		"%{IncludeDir.fmt}",
 		"%{IncludeDir.patches}",
-		"%{IncludeDir.rapidjson}",
+        "%{IncludeDir.rapidjson}",
+		"%{IncludeDir.physx}",
     }
 
 	libdirs
 	{
 		"%{prj.name}/vendor/rlimgui/bin/Debug",
 		"%{prj.name}/vendor/flecs/build_vs2022/build/Debug",	
+        "%{prj.name}/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
 	}
 
 	links
@@ -99,6 +101,7 @@ project "Duin"
 		"rlImGui.lib",
         "flecs_static.lib",
 		"winmm.lib",
+
 	}
 
 	filter "system:windows"
@@ -111,6 +114,13 @@ project "Duin"
 		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
 		"SUPPORT_GIF_RECORDING",
         "flecs_STATIC",
+        "PhysX_static_64",
+        "PhysXCommon_static_64",
+        "PhysXFoundation_static_64",
+        "PhysXCooking_static_64",
+        "PhysXPvdSDK_static_64",
+        "PhysXExtensions_static_64",
+        "PhysXCharacterKinematic_static_64",
 	}
 	
     -- Define DN_STATIC if building as a Static Library
@@ -186,6 +196,7 @@ global_externalincludedirs =
     "%{IncludeDir.fmt}",
     "%{IncludeDir.patches}",
     "%{IncludeDir.rapidjson}",
+    "%{IncludeDir.physx}",
 }
 
 global_libdirs =
@@ -193,6 +204,7 @@ global_libdirs =
     "bin/" .. outputdir .. "/Duin",  -- Duin's output directory
 	"Duin/vendor/rlimgui/bin/Debug",
     "Duin/vendor/flecs/build_vs2022/build/Debug",	
+    "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
 }
 
 global_defines =
@@ -209,6 +221,13 @@ global_links =
     "flecs_static.lib",
 	"winmm.lib",
 	"Duin.lib",
+    "PhysX_static_64",
+    "PhysXCommon_static_64",
+    "PhysXFoundation_static_64",
+    "PhysXCooking_static_64",
+    "PhysXPvdSDK_static_64",
+    "PhysXExtensions_static_64",
+    "PhysXCharacterKinematic_static_64",
 }
 
 -- 

@@ -20,3 +20,6 @@
 #include <dep_raygui.h>
 #include <flecs.h>
 
+#define PX_PHYSX_STATIC_LIB
+#include <PxPhysicsAPI.h>
+#include <PxPhysics.h>
