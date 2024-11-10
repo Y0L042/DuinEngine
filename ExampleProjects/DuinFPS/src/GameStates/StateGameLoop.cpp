@@ -34,12 +34,15 @@ physx::PxFoundation *pxFoundation = NULL;
 physx::PxPhysics *pxPhysics = NULL;
 
 physx::PxScene *pxScene = NULL;
+physx::PxControllerManager *pxManager = NULL;
 physx::PxMaterial *pxMaterial = NULL;
 
 physx::PxPvd *pxPvd = NULL;
 
 physx::PxReal stackZ = 10.0f;
 
+physx::PxController *playerController = NULL;
+physx::PxCapsuleControllerDesc playerControllerDesc;
 physx::PxRigidDynamic *pxBall = NULL;
 /* ----- PhysX Test ----- */
 
@@ -81,6 +84,20 @@ static void InitPhysics(bool interactive)
 	sceneDesc.cpuDispatcher	= pxDispatcher;
 	sceneDesc.filterShader	= physx::PxDefaultSimulationFilterShader;
 	pxScene = pxPhysics->createScene(sceneDesc);
+
+    pxManager =  PxCreateControllerManager(*pxScene);
+    playerControllerDesc.height = 1.75f;  // Height of the character
+    playerControllerDesc.radius = 0.5f;   // Radius of the capsule
+    playerControllerDesc.position = physx::PxExtendedVec3(0.0, 0.0, 0.0);  // Initial position
+    playerControllerDesc.material = pxPhysics->createMaterial(0.5f, 0.5f, 0.5f);  // Material properties
+    playerControllerDesc.upDirection = physx::PxVec3(0, 1, 0);  // Up direction
+    playerControllerDesc.slopeLimit = cosf(physx::PxPi / 4);    // Maximum slope angle
+    playerControllerDesc.stepOffset = 0.5f;              // Maximum step height
+    playerControllerDesc.contactOffset = 0.1f;           // Contact offset
+    playerControllerDesc.reportCallback = nullptr;       // Optional: collision callback
+    playerControllerDesc.behaviorCallback = nullptr;     // Optional: behavior callback
+
+    playerController = pxManager->createController(playerControllerDesc);
 
 	physx::PxPvdSceneClient* pvdClient = pxScene->getScenePvdClient();
 	if(pvdClient)

@@ -23,3 +23,5 @@
 #define PX_PHYSX_STATIC_LIB
 #include <PxPhysicsAPI.h>
 #include <PxPhysics.h>
+#include <characterkinematic/PxController.h>
+#include <characterkinematic/PxControllerManager.h>
