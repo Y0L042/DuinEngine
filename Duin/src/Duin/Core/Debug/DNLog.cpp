@@ -1,7 +1,7 @@
 #include "dnpch.h"
 #include "DNLog.h"
 
-namespace Duin
+namespace duin
 {
 	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
 	std::shared_ptr<spdlog::logger> Log::s_ClientLogger;

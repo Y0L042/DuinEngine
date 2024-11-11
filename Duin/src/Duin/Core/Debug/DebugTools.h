@@ -7,7 +7,7 @@
 #include <string>
 #include <mutex>
 
-namespace Duin {
+namespace duin {
 
     enum class LogLevel {
         Fatal,
@@ -44,7 +44,7 @@ namespace Duin {
     };
 }
 
-namespace Duin {
+namespace duin {
 
     class DebugWatchlist {
     public:

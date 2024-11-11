@@ -16,7 +16,7 @@ FileExplorer explorer;
 
 
 
-StateStartupMenu::StateStartupMenu(Duin::GameStateMachine& owner)
+StateStartupMenu::StateStartupMenu(duin::GameStateMachine& owner)
     : GameState(owner)
 {
     Enter = [this]() { State_Enter(); };
@@ -35,7 +35,7 @@ StateStartupMenu::~StateStartupMenu()
 
 void StateStartupMenu::State_Enter()
 {
-    dbgConsole.LogEx(Duin::LogLevel::Info, "ENTERING STARTUPMENU");
+    dbgConsole.LogEx(duin::LogLevel::Info, "ENTERING STARTUPMENU");
     NFD_Init();
 }
 
@@ -65,14 +65,14 @@ void StateStartupMenu::LoadCurrentProject()
 {
     rapidjson::Document doc;
     if (ReadJSONFile(EDITOR_CFG_PATH, &doc)) {
-            dbgConsole.LogEx(Duin::LogLevel::Warn, 
+            dbgConsole.LogEx(duin::LogLevel::Warn, 
                              "EditorConfig empty. Select project root.\n");
         return;
     }
 
     // Ensure "EditorConfig" exists and is an object
     if (!doc.HasMember("EditorConfig") || !doc["EditorConfig"].IsObject()) {
-            dbgConsole.LogEx(Duin::LogLevel::Warn, 
+            dbgConsole.LogEx(duin::LogLevel::Warn, 
                              "EditorConfig not found. Select project root.\n");
         return;
     }
@@ -82,7 +82,7 @@ void StateStartupMenu::LoadCurrentProject()
     // Ensure "CurrentProjectDir" exists and is a string
     if (!editorConfig.HasMember("CurrentProjectDir") 
         || !editorConfig["CurrentProjectDir"].IsString()) {
-            dbgConsole.LogEx(Duin::LogLevel::Warn, 
+            dbgConsole.LogEx(duin::LogLevel::Warn, 
                              "Project directory not found. Select project root.\n");
         return;
     }
@@ -93,14 +93,14 @@ void StateStartupMenu::LoadCurrentProject()
     if (!currentProjectDir.empty()) {
         fs::path projectPath = currentProjectDir;
         if (fs::exists(projectPath) && fs::is_directory(projectPath)) {
-            dbgConsole.LogEx(Duin::LogLevel::Info, 
+            dbgConsole.LogEx(duin::LogLevel::Info, 
                              "Project loaded: %s", projectPath.string().c_str());
         } else {
-            dbgConsole.LogEx(Duin::LogLevel::Warn, 
+            dbgConsole.LogEx(duin::LogLevel::Warn, 
                              "Project directory invalid. Select project root.\n");
         }
     } else {
-            dbgConsole.LogEx(Duin::LogLevel::Warn, 
+            dbgConsole.LogEx(duin::LogLevel::Warn, 
                              "Project directory empty. Select project root.\n");
     }
 }
@@ -138,17 +138,17 @@ void StateStartupMenu::ImportProject()
     args.filterCount = 1;
     nfdresult_t result = NFD_OpenDialogU8_With(&outPath, &args);
     if (result == NFD_OKAY) {
-        dbgConsole.LogEx(Duin::LogLevel::Info, 
+        dbgConsole.LogEx(duin::LogLevel::Info, 
                          "Success: %s", outPath);
         // remember to free the memory (since NFD_OKAY is returned)
         importedProjPath = std::string(outPath);
         NFD_FreePath(outPath);
     } else if (result == NFD_CANCEL) {
-        dbgConsole.LogEx(Duin::LogLevel::Info, 
+        dbgConsole.LogEx(duin::LogLevel::Info, 
                          "Canceled");
         return;
     } else {
-        dbgConsole.LogEx(Duin::LogLevel::Warn, 
+        dbgConsole.LogEx(duin::LogLevel::Warn, 
                          "Error: %s", NFD_GetError());
         return;
     }

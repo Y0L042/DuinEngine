@@ -1,7 +1,7 @@
 #include "dnpch.h"
 #include "GameStateMachine.h"
 
-namespace Duin {
+namespace duin {
 GameState::GameState(GameStateMachine& owner)
     : owner(owner)
 {}
@@ -13,7 +13,7 @@ const std::string GameState::GetName()
 
 }
 
-namespace Duin {
+namespace duin {
 GameStateMachine::GameStateMachine()
 {}
 

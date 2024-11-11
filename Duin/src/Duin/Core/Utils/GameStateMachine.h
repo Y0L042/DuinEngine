@@ -10,7 +10,7 @@
 
 
 
-namespace Duin {
+namespace duin {
 class GameStateMachine;
 class GameState
 {

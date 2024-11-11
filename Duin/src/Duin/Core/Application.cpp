@@ -10,7 +10,7 @@ static int screenHeight = 720;
 Color backgroundColor = WHITE;
 ::Camera3D activeCamera3D;
 
-namespace Duin
+namespace duin
 {
     void SetActiveCamera3D(::Camera3D camera3d)
     {

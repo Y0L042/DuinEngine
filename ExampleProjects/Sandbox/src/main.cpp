@@ -3,7 +3,7 @@
 #include <Duin.h>
 #include <Duin/EntryPoint.h>
 
-Duin::Application* Duin::CreateApplication() { return new Game(); }
+duin::Application* duin::CreateApplication() { return new Game(); }
 
 
 void Game::Initialize()

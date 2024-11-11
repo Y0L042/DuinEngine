@@ -3,7 +3,7 @@
 
 #include <Duin.h>
 
-class DuinEditor : public Duin::Application
+class DuinEditor : public duin::Application
 {
 public:
 	DuinEditor() {}

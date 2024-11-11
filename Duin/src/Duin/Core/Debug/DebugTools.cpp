@@ -7,7 +7,7 @@
 
 
 
-namespace Duin {
+namespace duin {
 DebugConsole::DebugConsole()
 {
     startTime = std::chrono::steady_clock::now();
@@ -162,7 +162,7 @@ void DebugConsole::LogEx(LogLevel level, const char* format, ...) {
 
 }
 
-namespace Duin {
+namespace duin {
 DebugWatchlist::DebugWatchlist()
 {}
 

@@ -6,12 +6,12 @@
 #include "Singletons.h"
 #include "GameStates/States.h"
 
-Duin::Application* Duin::CreateApplication() { return new Game(); }
+duin::Application* duin::CreateApplication() { return new Game(); }
 
-Duin::DebugConsole dbgConsole;
+duin::DebugConsole dbgConsole;
 
 
-Duin::GameStateMachine gameSM;
+duin::GameStateMachine gameSM;
 
 
 

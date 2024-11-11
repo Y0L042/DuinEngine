@@ -8,7 +8,7 @@
 
 
 
-namespace Duin
+namespace duin
 {
 
     void SetActiveCamera3D(::Camera3D camera3d);

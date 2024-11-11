@@ -67,16 +67,7 @@
     <ClInclude Include="src\Duin\Core\Maths\MathsCore.h">
       <Filter>Duin\Core\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Core\Maths\src\Mat2x2.h">
-      <Filter>Duin\Core\Maths\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Core\Maths\src\Mat3x3.h">
-      <Filter>Duin\Core\Maths\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Core\Maths\src\Maths.h">
-      <Filter>Duin\Core\Maths\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Core\Maths\src\Matrix.h">
+    <ClInclude Include="src\Duin\Core\Maths\src\Mat4x4.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Maths\src\Quaternion.h">
@@ -85,19 +76,16 @@
     <ClInclude Include="src\Duin\Core\Maths\src\Random.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Duin\Core\Maths\src\Rectangle.h">
-      <Filter>Duin\Core\Maths\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Core\Maths\src\Shapes2D.h">
-      <Filter>Duin\Core\Maths\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Duin\Core\Maths\src\Transform2D.h">
+    <ClInclude Include="src\Duin\Core\Maths\src\Utils.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Maths\src\Vector2.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Maths\src\Vector3.h">
+      <Filter>Duin\Core\Maths\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Duin\Core\Maths\src\Vector4.h">
       <Filter>Duin\Core\Maths\src</Filter>
     </ClInclude>
     <ClInclude Include="src\Duin\Core\Utils\GameStateMachine.h">

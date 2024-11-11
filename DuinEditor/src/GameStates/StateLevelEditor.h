@@ -2,10 +2,10 @@
 
 #include <Duin.h>
 
-class StateLevelEditor : public Duin::GameState
+class StateLevelEditor : public duin::GameState
 {
 public:
-   StateLevelEditor(Duin::GameStateMachine& owner);
+   StateLevelEditor(duin::GameStateMachine& owner);
     ~StateLevelEditor() override;
 
 private:

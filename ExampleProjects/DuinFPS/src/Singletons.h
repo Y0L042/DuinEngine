@@ -2,4 +2,4 @@
 
 #include <Duin.h>
 
-extern Duin::DebugConsole dbgConsole;
+extern duin::DebugConsole dbgConsole;

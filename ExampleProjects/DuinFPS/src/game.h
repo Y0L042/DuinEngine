@@ -5,7 +5,7 @@
 #include <Duin.h>
 
 
-class Game : public Duin::Application
+class Game : public duin::Application
 {
 public:
 	Game() {}

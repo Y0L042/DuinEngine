@@ -5,7 +5,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-namespace Duin
+namespace duin
 {
 	class DAPI Log
 	{
@@ -30,17 +30,17 @@ namespace Duin
 
 
 // Core log macros
-#define DN_CORE_FATAL(...) ::Duin::Log::GetCoreLogger()->critical(__VA_ARGS__)
-#define DN_CORE_ERROR(...) ::Duin::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define DN_CORE_WARN(...)  ::Duin::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define DN_CORE_INFO(...)  ::Duin::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define DN_CORE_TRACE(...) ::Duin::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define DN_CORE_FATAL(...) ::duin::Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define DN_CORE_ERROR(...) ::duin::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define DN_CORE_WARN(...)  ::duin::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define DN_CORE_INFO(...)  ::duin::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define DN_CORE_TRACE(...) ::duin::Log::GetCoreLogger()->trace(__VA_ARGS__)
 
 // Client log macros
-#define DN_FATAL(...)      ::Duin::Log::GetClientLogger()->critical(__VA_ARGS__)
-#define DN_ERROR(...)      ::Duin::Log::GetClientLogger()->error(__VA_ARGS__)
-#define DN_WARN(...)       ::Duin::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define DN_INFO(...)       ::Duin::Log::GetClientLogger()->info(__VA_ARGS__)
-#define DN_TRACE(...)      ::Duin::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define DN_FATAL(...)      ::duin::Log::GetClientLogger()->critical(__VA_ARGS__)
+#define DN_ERROR(...)      ::duin::Log::GetClientLogger()->error(__VA_ARGS__)
+#define DN_WARN(...)       ::duin::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define DN_INFO(...)       ::duin::Log::GetClientLogger()->info(__VA_ARGS__)
+#define DN_TRACE(...)      ::duin::Log::GetClientLogger()->trace(__VA_ARGS__)
 
 #endif /* DN_LOG_H */

@@ -2,7 +2,7 @@
 
 #include "DuinMaths.h"
 
-namespace Duin
+namespace duin
 {
 
 }

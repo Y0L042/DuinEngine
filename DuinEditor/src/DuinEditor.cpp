@@ -8,10 +8,10 @@
 #include "GameStates/States.h"
 
 
-Duin::Application* Duin::CreateApplication() { return new DuinEditor(); }
+duin::Application* duin::CreateApplication() { return new DuinEditor(); }
 
-Duin::GameStateMachine gameSM;
-Duin::DebugConsole dbgConsole;
+duin::GameStateMachine gameSM;
+duin::DebugConsole dbgConsole;
 DuinEditor *application;
 
 

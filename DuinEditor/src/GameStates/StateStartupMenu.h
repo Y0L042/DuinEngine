@@ -2,10 +2,10 @@
 
 #include <Duin.h>
 
-class StateStartupMenu : public Duin::GameState
+class StateStartupMenu : public duin::GameState
 {
 public:
-    StateStartupMenu(Duin::GameStateMachine& owner);
+    StateStartupMenu(duin::GameStateMachine& owner);
     ~StateStartupMenu() override;
 
 private:

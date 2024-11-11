@@ -1,7 +1,7 @@
 #include "dnpch.h"
 #include "AssetManager.h"
 
-namespace Duin {
+namespace duin {
 
 AssetManager::AssetManager()
 {

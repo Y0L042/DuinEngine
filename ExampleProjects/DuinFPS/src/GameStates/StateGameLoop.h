@@ -2,10 +2,10 @@
 
 #include <Duin.h>
 
-class StateGameLoop : public Duin::GameState
+class StateGameLoop : public duin::GameState
 {
 public:
-   StateGameLoop(Duin::GameStateMachine& owner);
+   StateGameLoop(duin::GameStateMachine& owner);
     ~StateGameLoop() override;
 
 private:

@@ -3,7 +3,7 @@
 
 #include "Duin/Core/Utils/UUID.h"
 
-namespace Duin {
+namespace duin {
 class AssetManager
 {
 public:

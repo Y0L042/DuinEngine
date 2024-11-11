@@ -6,7 +6,7 @@
 #include "../ECS.h"
 
 
-Duin::DebugWatchlist debugWatchlist;
+duin::DebugWatchlist debugWatchlist;
 
 std::string ENTITY_DEFS_PATH = "data/entity_defs.json";
 
@@ -138,7 +138,7 @@ static void CleanupPhysics(bool /*interactive*/)
 }
 /* ----- PhysX Test ----- */
 
-StateGameLoop::StateGameLoop(Duin::GameStateMachine& owner)
+StateGameLoop::StateGameLoop(duin::GameStateMachine& owner)
 	: GameState(owner)
 {
     Enter = [this]() { State_Enter(); };
@@ -181,7 +181,7 @@ void StateGameLoop::State_Enter()
         .add<Position3D>()
         .add<Velocity3D>(); */
 
-    dbgConsole.LogEx(Duin::LogLevel::Info, "Entity: %ull", player);
+    dbgConsole.LogEx(duin::LogLevel::Info, "Entity: %ull", player);
 
     SetWindowFocused();
     SetFPSCamera(1);
@@ -215,20 +215,21 @@ void StateGameLoop::State_HandleInput()
         SetFPSCamera(!fpsCameraEnabled);
     }
 
-    Vector2 mouseDelta = GetMouseDelta();
-    cameraRoot.set<MouseInputVec2>(mouseDelta);
-    player.set<MouseInputVec2>(mouseDelta);
+    duin::Vector2 mouseDelta = duin::Vector2(GetMouseDelta());
+    cameraRoot.set<MouseInputVec2>(mouseDelta.ToRaylib());
+    player.set<MouseInputVec2>(mouseDelta.ToRaylib());
     debugWatchlist.Post("MouseInput", "{ %.1f, %.1f }", mouseDelta.x, mouseDelta.y);
 
+    duin::Vector3 ballVel = { 0, 20, 5 };
     if (IsKeyPressed(KEY_SPACE)) {
-        pxBall->setLinearVelocity({0, 20, 5});
+        pxBall->setLinearVelocity(ballVel.ToPhysX());
     }
 }
 
 void StateGameLoop::State_Update(double delta)
 {
     StepPhysics(true);
-    Duin::SetActiveCamera3D(*(fpsCamera.get<Camera3D>()));
+    duin::SetActiveCamera3D(*(fpsCamera.get<Camera3D>()));
 
     if (fpsCameraEnabled && !IsCursorHidden()) {
         SetFPSCamera(1);
@@ -255,9 +256,13 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
 
 void StateGameLoop::State_Draw()
 {
+    // physx::PxTransform globalPose = pxBall->getGlobalPose();
+    // physx::PxVec3 pos = globalPose.p;
+    // DrawSphereWires({pos.x, pos.y, pos.z}, 10, 8, 8, BLUE);
+
     physx::PxTransform globalPose = pxBall->getGlobalPose();
-    physx::PxVec3 pos = globalPose.p;
-    DrawSphereWires({pos.x, pos.y, pos.z}, 10, 8, 8, BLUE);
+    duin::Vector3 pos = duin::Vector3(globalPose.p);
+    DrawSphereWires(pos.ToRaylib(), 10, 8, 8, BLUE);
 
     DrawGrid(10000, 10.0f);
 }

@@ -3,7 +3,7 @@
 #include <cinttypes>
 #include <functional>
 
-namespace Duin {
+namespace duin {
 class UUID
 {
 public:
@@ -35,9 +35,9 @@ private:
 namespace std 
 {
 	template <>
-	struct hash<Duin::UUID>
+	struct hash<duin::UUID>
 	{
-		std::size_t operator()(const Duin::UUID& uuid) const
+		std::size_t operator()(const duin::UUID& uuid) const
 		{
 			return std::hash<uint64_t>()(static_cast<uint64_t>(uuid));
 		}

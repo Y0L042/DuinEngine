@@ -15,7 +15,7 @@ flecs::entity EntityManager::CreateEntity(std::string entityName, flecs::world *
     
     assert(document.HasMember("entity_defs"));
     //const char* members = document["entity_defs"];
-    dbgConsole.LogEx(Duin::LogLevel::Info, "Entity: ");
+    dbgConsole.LogEx(duin::LogLevel::Info, "Entity: ");
 
     flecs::entity e;
     return e;
