@@ -63,3 +63,5 @@ ExampleProjects/build_archive/
 node_modules/
 vendor/
 
+/Duin/Duin.vcxproj.filters
+/Duin/Duin.vcxproj
