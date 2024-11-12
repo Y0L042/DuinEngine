@@ -89,11 +89,26 @@ typedef struct Rotation3D {
     }                                            
 } Rotation3D;
 
+struct PxCapsuleCharacter3DCreation {
+    physx::PxCapsuleControllerDesc desc;
+    duin::UUID characterID;
+};
+
+struct PxCapsuleCharacter3D {
+    duin::UUID id;
+};
+
 /* Tags */
 struct Local {};
 struct Global {};
 struct PlayerTag {};
 struct CameraTag {};
+struct ExternalRefTag {};
+struct BasicControlledTag {};
+struct PxControlledTag {};
+struct PxKinematicTag {};
+struct PxDynamicTag {};
+struct PxStaticTag {};
 
 #undef DEFINE_VECTOR3_COMPONENT
 #undef DEFINE_VECTOR2_COMPONENT

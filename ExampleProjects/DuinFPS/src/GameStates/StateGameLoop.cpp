@@ -49,6 +49,8 @@ physx::PxRigidDynamic *pxBall = NULL;
 static void SetFPSCamera(int enable);
 static flecs::entity ConstructPlayer();
 
+std::unordered_map<duin::UUID, physx::PxController *> controllerRegistry;
+
 /* ----- PhysX Test ----- */
 static physx::PxRigidDynamic* CreateDynamic(    const physx::PxTransform& t, 
                                                 const physx::PxGeometry& geometry, 
@@ -96,8 +98,6 @@ static void InitPhysics(bool interactive)
     playerControllerDesc.contactOffset = 0.1f;           // Contact offset
     playerControllerDesc.reportCallback = nullptr;       // Optional: collision callback
     playerControllerDesc.behaviorCallback = nullptr;     // Optional: behavior callback
-
-    playerController = pxManager->createController(playerControllerDesc);
 
 	physx::PxPvdSceneClient* pvdClient = pxScene->getScenePvdClient();
 	if(pvdClient)
@@ -312,12 +312,14 @@ static flecs::entity ConstructPlayer()
 {
     flecs::entity entity = ecsManager.world.entity()
         .is_a(CharacterBody3D)
+        .set<PxCapsuleCharacter3DCreation>({ playerControllerDesc, duin::UUID() })
         .set<Position3D, Local>({ 0, 5, 0 })
         .add<MovementInput3D>()
         .add<RotationInput3D>()
         .add<PlayerMovementInputVec2>()
         .add<MouseInputVec2>()
         .add<PlayerTag>()
+        .add<PxControlledTag>()
         ;
 
     cameraRoot = ecsManager.world.entity()
@@ -326,6 +328,7 @@ static flecs::entity ConstructPlayer()
         .add<MouseInputVec2>()
         .add<RotationInput3D>()
         .add<CameraTag>()
+        .add<PxControlledTag>()
         ;
 
     fpsCamera = ecsManager.world.entity()
@@ -338,6 +341,7 @@ static flecs::entity ConstructPlayer()
             .fovy = 90.0f,
             .projection = CAMERA_PERSPECTIVE
             })
+        .add<PxControlledTag>()
         ;
 
     return entity;

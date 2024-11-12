@@ -32,6 +32,9 @@ public:
 
     void ExecuteQueryControlPlayerMovement(double delta);
 
+    void ExecuteQueryCreatePxCapsuleCharacter3D(std::unordered_map<duin::UUID, physx::PxController *>& controllerRegistry, physx::PxControllerManager *pxManager);
+    void ExecuteQueryMovePxCapsuleCharacter3D(double delta);
+
 private:
 
     flecs::query<Position3D, const Velocity3D, const Rotation3D> queryUpdatePosition3D;
@@ -52,6 +55,10 @@ private:
     flecs::query<Camera3D, const Position3D, const Rotation3D> queryControlCamera;
 
     flecs::query<Camera3D, const Position3D> queryUpdateCameraPosition;
+
+    flecs::query<PxCapsuleCharacter3DCreation> queryCreatePxCapsuleCharacter3D;
+
+    flecs::query<PxCapsuleCharacter3D> queryMovePxCapsuleCharacter3D;
 };
 
 

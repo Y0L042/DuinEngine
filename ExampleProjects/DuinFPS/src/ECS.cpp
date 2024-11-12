@@ -1,3 +1,5 @@
+#include "ECSManager.h"
+#include "ECSManager.h"
 #include "ECS.h"
 #include "Singletons.h"
 
@@ -14,6 +16,8 @@ flecs::world ECSManager::GetWorld()
     return world;
 }
 
+
+
 void ECSManager::RegisterComponents()
 {
     world.component<Position3D>();
@@ -26,11 +30,18 @@ void ECSManager::RegisterComponents()
     world.component<Camera3D>();
     world.component<PlayerMovementInputVec2>();
     world.component<MouseInputVec2>();
+    world.component<PxCapsuleCharacter3D>();
 
     world.component<Global>();
     world.component<Local>();
     world.component<PlayerTag>();
     world.component<CameraTag>();
+    world.component<ExternalRefTag>();
+    world.component<BasicControlledTag>();
+    world.component<PxControlledTag>();
+    world.component<PxKinematicTag>();
+    world.component<PxDynamicTag>();
+    world.component<PxStaticTag>();
 }
 
 void ECSManager::CreateQueries()
@@ -38,6 +49,7 @@ void ECSManager::CreateQueries()
     queryUpdatePosition3D = world.query_builder<Position3D, const Velocity3D, const Rotation3D>()
         .term_at(0).second<Local>()
         .term_at(2).second<Local>()
+        .with<BasicControlledTag>()
         .cached().build();
     queryHierarchicalUpdatePosition3D = world.query_builder<const Position3D, const Position3D *, Position3D>()
         .term_at(0).second<Local>()
@@ -45,10 +57,12 @@ void ECSManager::CreateQueries()
         .term_at(2).second<Global>()
         .term_at(1)
             .parent().cascade()
+        .with<BasicControlledTag>()
         .cached().build();
 
     queryUpdateRotation3D = world.query_builder<Rotation3D, const AngularVelocity3D>()
         .term_at(0).second<Local>()
+        .with<BasicControlledTag>()
         .cached().build();
     queryHierarchicalUpdateRotation3D = world.query_builder<const Rotation3D, const Rotation3D *, Rotation3D>()
         .term_at(0).second<Local>()
@@ -56,6 +70,7 @@ void ECSManager::CreateQueries()
         .term_at(2).second<Global>()
         .term_at(1)
             .parent().cascade()
+        .with<BasicControlledTag>()
         .cached().build();
 
     // Query to update player yaw
@@ -85,21 +100,39 @@ void ECSManager::CreateQueries()
         .term_at(2).second<Global>()
         .cached().build();
 
+    queryCreatePxCapsuleCharacter3D = world.query_builder<PxCapsuleCharacter3DCreation>()
+        .build();
 
+    queryMovePxCapsuleCharacter3D = world.query_builder<PxCapsuleCharacter3D>()
+        .build();
 }
 
 void ECSManager::FreeQueries()
 {
-    queryHierarchicalUpdatePosition3D.destruct();
-    queryUpdatePosition3D.destruct();
-    queryMovementInput.destruct();
-    queryControlCamera.destruct();
-    queryControlPlayerMovement.destruct();
+
 }
 
 void ECSManager::CreatePrefabs()
 {
 
+}
+
+void ECSManager::ExecuteQueryCreatePxCapsuleCharacter3D(std::unordered_map<duin::UUID, physx::PxController *>& controllerRegistry, physx::PxControllerManager* pxManager)
+{
+    queryCreatePxCapsuleCharacter3D.each(
+        [&controllerRegistry, pxManager](flecs::iter& it, size_t index,
+            PxCapsuleCharacter3DCreation& c) 
+        {
+            if (controllerRegistry.find(c.characterID) != controllerRegistry.end()) {
+                
+            }
+            else {
+                controllerRegistry[c.characterID] = pxManager->createController(c.desc);
+                it.entity(index).set<PxCapsuleCharacter3D, ExternalRefTag>({ c.characterID });
+                it.entity(index).remove<PxCapsuleCharacter3DCreation>();
+            }
+        }
+    );
 }
 
 void ECSManager::ExecuteQueryUpdatePosition3D(double delta) 
@@ -258,4 +291,13 @@ void ECSManager::ExecuteQueryControlCamera(double delta)
     );
 }
 
+void ECSManager::ExecuteQueryMovePxCapsuleCharacter3D(double delta)
+{
+    queryMovePxCapsuleCharacter3D.each(
+        [](flecs::iter& it, size_t index,
+                PxCapsuleCharacter3D& c, Velocity3D& v) 
+        {
+        }
+    );
+}
 
