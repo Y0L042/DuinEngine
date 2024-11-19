@@ -1,6 +1,8 @@
 #include "dnpch.h"
 #include "DNLog.h"
 
+#include <spdlog/sinks/stdout_color_sinks.h>
+
 namespace duin
 {
 	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;

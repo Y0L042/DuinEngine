@@ -1,7 +1,7 @@
 #ifndef EDITOR_CAMERA_H
 #define EDITOR_CAMERA_H
 
-#include <duin.h>
+#include <Duin.h>
 
 void HandleInfiniteMouseDragging(int mouse_button);
 int IsMouseDragging();

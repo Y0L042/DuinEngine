@@ -8,7 +8,7 @@
 
 duin::Application* duin::CreateApplication() { return new Game(); }
 
-duin::DebugConsole dbgConsole;
+duin::DebugConsole debugConsole;
 
 
 duin::GameStateMachine gameSM;
@@ -18,6 +18,7 @@ duin::GameStateMachine gameSM;
 
 void Game::Initialize()
 {
+    SetFramerate(60);
 }
 
 void Game::Ready()
@@ -49,6 +50,6 @@ void Game::Draw()
 void Game::DrawUI()
 {
     gameSM.ExecuteDrawUI();
-    dbgConsole.Draw("Console");
+    debugConsole.Draw("Console");
 }
 

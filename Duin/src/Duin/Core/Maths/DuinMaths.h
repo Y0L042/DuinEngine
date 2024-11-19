@@ -177,6 +177,9 @@ typedef struct Vector3 {
     explicit Vector3(const physx::PxVec3T<float>& physxVec)
         : x(physxVec.x), y(physxVec.y), z(physxVec.z) {}
 
+    explicit Vector3(const physx::PxVec3T<double>& physxVec)
+        : x((float)physxVec.x), y((float)physxVec.y), z((float)physxVec.z) {}
+
     ::Vector3 ToRaylib() const
     {
         return ::Vector3(x, y, z);
@@ -185,6 +188,11 @@ typedef struct Vector3 {
     physx::PxVec3T<float> ToPhysX() const
     {
         return physx::PxVec3T<float>(x, y, z);
+    }
+
+    physx::PxVec3T<double> ToPhysXd() const
+    {
+        return physx::PxVec3T<double>((double)x, (double)y, (double)z);
     }
 
     // physx::PxVec3Padded ToPhysXPadded() const

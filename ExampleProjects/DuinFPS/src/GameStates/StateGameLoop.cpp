@@ -2,141 +2,33 @@
 #include "States.h"
 #include "../Singletons.h"
 #include "../EntityManager.h"
-#include "../Components.h"
 #include "../ECS.h"
+#include <flecs.h>
 
+using namespace duin::ECSComponent;
+using namespace duin::ECSTag;
 
 duin::DebugWatchlist debugWatchlist;
-
-std::string ENTITY_DEFS_PATH = "data/entity_defs.json";
-
-int fpsCameraEnabled = 1;
-EntityManager entityManager(ENTITY_DEFS_PATH);
-ECSManager ecsManager;
-
-/* Prefabs */
-const char *node3DName = "Node3D";
-flecs::entity Node3D;
-const char *characterBody3DName = "CharacterBody3D";
-flecs::entity CharacterBody3D;
+duin::PhysXManager pxManager;
+duin::ECSManager ecsManager;
 
 flecs::entity player;
 flecs::entity cameraRoot;
 flecs::entity fpsCamera;
+flecs::entity debugCamera;
 
-/* ----- PhysX Test ----- */
-physx::PxDefaultAllocator defaultAllocatorCallback;
-physx::PxDefaultErrorCallback defaultErrorCallback;
-physx::PxDefaultCpuDispatcher *pxDispatcher = NULL;
+physx::PxRigidDynamic *ball;
 
-physx::PxTolerancesScale pxToleranceScale;
-physx::PxFoundation *pxFoundation = NULL;
-physx::PxPhysics *pxPhysics = NULL;
+int fpsCameraEnabled = 1;
+static int test;
 
-physx::PxScene *pxScene = NULL;
-physx::PxControllerManager *pxManager = NULL;
-physx::PxMaterial *pxMaterial = NULL;
+struct Pos { 
+    float x, y; 
+};
 
-physx::PxPvd *pxPvd = NULL;
-
-physx::PxReal stackZ = 10.0f;
-
-physx::PxController *playerController = NULL;
-physx::PxCapsuleControllerDesc playerControllerDesc;
-physx::PxRigidDynamic *pxBall = NULL;
-/* ----- PhysX Test ----- */
-
-static void SetFPSCamera(int enable);
-static flecs::entity ConstructPlayer();
-
-std::unordered_map<duin::UUID, physx::PxController *> controllerRegistry;
-
-/* ----- PhysX Test ----- */
-static physx::PxRigidDynamic* CreateDynamic(    const physx::PxTransform& t, 
-                                                const physx::PxGeometry& geometry, 
-                                                const physx::PxVec3& velocity = physx::PxVec3(0))
-{
-    physx::PxRigidDynamic* dynamic = physx::PxCreateDynamic(    *pxPhysics, 
-                                                                t,
-                                                                geometry, 
-                                                                *pxMaterial, 
-                                                                10.0f);
-    dynamic->setAngularDamping(0.5f);
-    dynamic->setLinearVelocity(velocity);
-    pxScene->addActor(*dynamic);
-    return dynamic;
-}
-
-
-static void InitPhysics(bool interactive)
-{
-	pxFoundation = PxCreateFoundation(  PX_PHYSICS_VERSION, 
-                                        defaultAllocatorCallback, 
-                                        defaultErrorCallback);
-
-	pxPvd = physx::PxCreatePvd(*pxFoundation);
-	physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-	pxPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
-
-	pxPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true, pxPvd);
-
-	physx::PxSceneDesc sceneDesc(pxPhysics->getTolerancesScale());
-	sceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
-	pxDispatcher = physx::PxDefaultCpuDispatcherCreate(2);
-	sceneDesc.cpuDispatcher	= pxDispatcher;
-	sceneDesc.filterShader	= physx::PxDefaultSimulationFilterShader;
-	pxScene = pxPhysics->createScene(sceneDesc);
-
-    pxManager =  PxCreateControllerManager(*pxScene);
-    playerControllerDesc.height = 1.75f;  // Height of the character
-    playerControllerDesc.radius = 0.5f;   // Radius of the capsule
-    playerControllerDesc.position = physx::PxExtendedVec3(0.0, 0.0, 0.0);  // Initial position
-    playerControllerDesc.material = pxPhysics->createMaterial(0.5f, 0.5f, 0.5f);  // Material properties
-    playerControllerDesc.upDirection = physx::PxVec3(0, 1, 0);  // Up direction
-    playerControllerDesc.slopeLimit = cosf(physx::PxPi / 4);    // Maximum slope angle
-    playerControllerDesc.stepOffset = 0.5f;              // Maximum step height
-    playerControllerDesc.contactOffset = 0.1f;           // Contact offset
-    playerControllerDesc.reportCallback = nullptr;       // Optional: collision callback
-    playerControllerDesc.behaviorCallback = nullptr;     // Optional: behavior callback
-
-	physx::PxPvdSceneClient* pvdClient = pxScene->getScenePvdClient();
-	if(pvdClient)
-	{
-		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
-		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
-		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
-	}
-	pxMaterial = pxPhysics->createMaterial(0.5f, 0.5f, 0.6f);
-
-	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*pxPhysics, physx::PxPlane(0,1,0,0), *pxMaterial);
-	pxScene->addActor(*groundPlane);
-
-	if (!interactive)
-		pxBall = CreateDynamic(physx::PxTransform(physx::PxVec3(0,40,100)), physx::PxSphereGeometry(10), physx::PxVec3(0,-50,-5));
-}
-
-static void StepPhysics(bool /*interactive*/)
-{
-	pxScene->simulate(1.0f/60.0f);
-	pxScene->fetchResults(true);
-}
-
-static void CleanupPhysics(bool /*interactive*/)
-{
-	PX_RELEASE(pxScene);
-	PX_RELEASE(pxDispatcher);
-	PX_RELEASE(pxPhysics);
-	if(pxPvd)
-	{
-		physx::PxPvdTransport* transport = pxPvd->getTransport();
-		PX_RELEASE(pxPvd);
-		PX_RELEASE(transport);
-	}
-	PX_RELEASE(pxFoundation);
-	
-	printf("SnippetHelloWorld done.\n");
-}
-/* ----- PhysX Test ----- */
+struct Test {
+    const char* test = "Hello!\0";
+};
 
 StateGameLoop::StateGameLoop(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -156,143 +48,152 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
-    InitPhysics(false);
+    ecsManager.Initialize();
 
-    ecsManager.RegisterComponents();
-    ecsManager.CreateQueries();
+    float playerHeight = 1.75f;
+    player = ecsManager.world.entity()
+       .is_a(duin::ECSPrefab::CharacterBody3D)
+        .add<PlayerMovementInputVec3>()
+        .add<GravityComponent>()
+       ;
+    cameraRoot = ecsManager.world.entity()
+       .is_a(duin::ECSPrefab::Node3D)
+       .child_of(player)
+       ;
+    fpsCamera = ecsManager.world.entity()
+       .is_a(duin::ECSPrefab::Camera3D)
+       .child_of(cameraRoot)
+       .set<Position3D, Local>({{ 0.0f, playerHeight, 0.0f }})
+       .set<::Camera3D>({
+                .position = { 0.0f, 0.0f, 0.0f },
+                .target = { 0.0f, 0.0f, 0.0f },
+                .up = { 0.0f, 1.0f, 0.0f },
+                .fovy = 72.0f,
+                .projection = ::CAMERA_PERSPECTIVE
+            })
+       .add<duin::ECSTag::ActiveCamera>()
+       ;
+    ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::DebugCapsule)
+        .child_of(player)
+        ;
+    duin::CharacterBody3DDesc desc = {
+        .height = playerHeight,
+        .radius = 0.5f,
+        .slopeLimit = std::cosf(physx::PxPi / 4.0),
+        .stepOffset = 0.5f,
+        .contactOffset = 0.1f,
+        .position = duin::Vector3(0.0f, playerHeight / 2.0f + 0.0001f, 0.0f),
+        .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
+        .material = pxManager.pxPhysics->createMaterial(0.5f, 0.5f, 0.5f),
+        .reportCallback = nullptr,
+        .behaviourCallback = nullptr
+    };
+    static duin::CharacterBody3D playerBody(pxManager, desc);
+    player.set<duin::ECSComponent::CharacterBody3DComponent >({ &playerBody });
 
-    Node3D = ecsManager.world.prefab(node3DName)
-        .add<Position3D, Global>()
-        .add<Position3D, Local>()
-        .add<Rotation3D, Global>()
-        .add<Rotation3D, Local>()
-        .add<Scale3D, Global>()
-        .add<Scale3D, Local>();
+    debugCamera = ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::Camera3D)
+        .set<Position3D, Local>({ { 0.0f, 25.0f, 25.0f } })
+        .set<::Camera3D>({
+                 .target = { 0.0f, 0.0f, 0.0f },
+                 .up = { 0.0f, 1.0f, 0.0f },
+                 .fovy = 72.0f,
+                 .projection = ::CAMERA_PERSPECTIVE
+            })
+        ;
 
-    CharacterBody3D = ecsManager.world.prefab(characterBody3DName)
-        .is_a(Node3D)
-        .add<Velocity3D>()
-        .add<AngularVelocity3D>();
+    duin::StaticCollisionPlane ground(pxManager);
+    ecsManager.ActivateCameraEntity(debugCamera);
 
-
-    player = ConstructPlayer();
-
-    /* ecsManager.world.entity()
-        .add<Position3D>()
-        .add<Velocity3D>(); */
-
-    dbgConsole.LogEx(duin::LogLevel::Info, "Entity: %ull", player);
-
-    SetWindowFocused();
-    SetFPSCamera(1);
-
-
+    //CreateDynamic(physx::PxTransform(physx::PxVec3(0, 40, 100)), physx::PxSphereGeometry(10), physx::PxVec3(0, -50, -5));
+    ball = physx::PxCreateDynamic(*pxManager.pxPhysics,
+        physx::PxTransform(physx::PxVec3(0, 1, 0)),
+        physx::PxSphereGeometry(1),
+        *pxManager.pxMaterial,
+        10.0f);
+    ball->setAngularDamping(0.5f);
+    ball->setLinearVelocity(physx::PxVec3(0, -9.81, 0));
+    pxManager.pxScene->addActor(*ball);
 }
 
 void StateGameLoop::State_Exit()
 {
-    CleanupPhysics(false);
 }
 
 void StateGameLoop::State_HandleInput()
 {
-    int U, D, L, R = 0;
-    float x, y = 0.0f;
-
-    U = IsKeyDown(KEY_W);
-    D = IsKeyDown(KEY_S);
-    L = IsKeyDown(KEY_A);
-    R = IsKeyDown(KEY_D);
-    x = (float)(R - L);
-    y = (float)(U - D);
-    Vector2 input = Vector2Normalize(Vector2{ x, y });
-    
-    PlayerMovementInputVec2 mI = input;
-    player.set<PlayerMovementInputVec2>(input);
-
+    duin::Vector2 input(GetInputVector2D(KEY_W, KEY_S, KEY_A, KEY_D));
+    player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
 
     if (IsKeyPressed(KEY_P)) {
-        SetFPSCamera(!fpsCameraEnabled);
+        if (debugCamera.has<ActiveCamera>()) {
+            ecsManager.ActivateCameraEntity(fpsCamera);
+        }
+        else {
+            ecsManager.ActivateCameraEntity(debugCamera);
+        }
     }
 
-    duin::Vector2 mouseDelta = duin::Vector2(GetMouseDelta());
-    cameraRoot.set<MouseInputVec2>(mouseDelta.ToRaylib());
-    player.set<MouseInputVec2>(mouseDelta.ToRaylib());
-    debugWatchlist.Post("MouseInput", "{ %.1f, %.1f }", mouseDelta.x, mouseDelta.y);
-
-    duin::Vector3 ballVel = { 0, 20, 5 };
-    if (IsKeyPressed(KEY_SPACE)) {
-        pxBall->setLinearVelocity(ballVel.ToPhysX());
-    }
 }
 
 void StateGameLoop::State_Update(double delta)
 {
-    StepPhysics(true);
-    duin::SetActiveCamera3D(*(fpsCamera.get<Camera3D>()));
+    debugWatchlist.Post("FPS | Frametime", "%d | %.1f", GetFPS(), 1000 * GetFrameTime());
 
-    if (fpsCameraEnabled && !IsCursorHidden()) {
-        SetFPSCamera(1);
-    }
+    const duin::Vector3 playerPosG = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Global>()->value;
+    debugCamera.set<DebugCameraTarget>({ { playerPosG } });
 
-    ecsManager.ExecuteQueryControlPlayerMovement(delta);
-
-    ecsManager.ExecuteQueryUpdatePlayerYaw(delta);
-    ecsManager.ExecuteQueryUpdateCameraPitch(delta);
+    ecsManager.ExecuteQuerySetCameraAsActive(ecsManager.world);
 }
 
 void StateGameLoop::State_PhysicsUpdate(double delta)
-{
-    ecsManager.ExecuteQueryMovementInput();
+{    
+    ExecuteQueryComputePlayerInputVelocity(ecsManager.world);
+    ExecuteQueryGravity(ecsManager.world);
+    ExecuteQueryGravityDebugCameraTarget(ecsManager.world);
 
-    ecsManager.ExecuteQueryUpdatePosition3D(delta);
-    ecsManager.ExecuteQueryHierarchicalUpdatePosition3D();
+    ecsManager.ExecuteQueryUpdatePosition3D(ecsManager.world);
+    ecsManager.ExecuteQueryHierarchicalUpdatePosition3D(ecsManager.world);
+    ecsManager.ExecuteQueryUpdateRotation3D(ecsManager.world);
+    ecsManager.ExecuteQueryHierarchicalUpdateRotation3D(ecsManager.world);
 
-    ecsManager.ExecuteQueryUpdateRotation3D(delta);
-    ecsManager.ExecuteQueryHierarchicalUpdateRotation3D();
+    ecsManager.ExecuteQueryUpdateCharacterBodyPosition(ecsManager.world);
+    ecsManager.ExecuteQueryUpdateCameraPosition(ecsManager.world);
 
-    ecsManager.ExecuteQueryControlCamera(delta);
+
+    const duin::Vector3 playerPosL = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Local>()->value;
+    debugWatchlist.Post("PlayerPosLocal: ", "{ %.1f, %.1f, %.1f }", playerPosL.x, playerPosL.y, playerPosL.z);
+
+    const duin::Vector3 playerPosG = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Global>()->value;
+    debugWatchlist.Post("PlayerPosGlobal: ", "{ %.1f, %.1f, %.1f }", playerPosG.x, playerPosG.y, playerPosG.z);
+
+    const duin::Vector3 playerVel = player.get<duin::ECSComponent::Velocity3D>()->value;
+    debugWatchlist.Post("PlayerVel: ", "{ %.1f, %.1f, %.1f }", playerVel.x, playerVel.y, playerVel.z);
+
+    const Camera3D* camera = ecsManager.world.get<Camera3D>();
+    debugWatchlist.Post("Camera: ", "{ %.1f, %.1f, %.1f }", camera->position.x, camera->position.y, camera->position.z);
+
+    pxManager.StepPhysics(delta);
 }
 
 void StateGameLoop::State_Draw()
 {
-    // physx::PxTransform globalPose = pxBall->getGlobalPose();
-    // physx::PxVec3 pos = globalPose.p;
-    // DrawSphereWires({pos.x, pos.y, pos.z}, 10, 8, 8, BLUE);
+    DrawGrid(1000, 10.0f);
 
-    physx::PxTransform globalPose = pxBall->getGlobalPose();
-    duin::Vector3 pos = duin::Vector3(globalPose.p);
-    DrawSphereWires(pos.ToRaylib(), 10, 8, 8, BLUE);
-
-    DrawGrid(10000, 10.0f);
+    duin::Vector3 pxBodyPos = duin::Vector3(player.get<CharacterBody3DComponent>()->characterBody->controller->getFootPosition());
+    DrawCapsuleWires(pxBodyPos.ToRaylib(),
+        Vector3Add(pxBodyPos, { 0.0f, 1.75f, 0.0f }).ToRaylib(),
+        1.0f,
+        12, 16,
+        BLUE
+    );
+    DrawSphereWires(duin::Vector3(ball->getGlobalPose().p).ToRaylib(), 1.0f, 32, 32, RED);
+    ecsManager.ExecuteQueryDrawDebugCapsule(ecsManager.world);
 }
 
 void StateGameLoop::State_DrawUI()
 {
-
-    const Rotation3D *playerRot = player.get<Rotation3D, Local>();
-    if (playerRot)
-        debugWatchlist.Post("PlayerRot", "{ %.1f, %.1f, %.1f %.1f }", 
-                            playerRot->value.x, 
-                            playerRot->value.y, 
-                            playerRot->value.z, 
-                            playerRot->value.w);
-
-    const Rotation3D *pRot = (fpsCamera).get<Rotation3D, Global>();
-    if (pRot)
-        debugWatchlist.Post("pRot", "{ %.1f, %.1f, %.1f, %.1f }", 
-                            pRot->value.x, 
-                            pRot->value.y, 
-                            pRot->value.z,
-                            pRot->value.w);
-
-    const Camera3D *pCam = (fpsCamera).get<Camera3D>();
-    if (pCam)
-        debugWatchlist.Post("pCam", "{ %.1f, %.1f, %.1f }", 
-                            pCam->position.x, 
-                            pCam->position.y, 
-                            pCam->position.z);
-
     debugWatchlist.Draw("Watchlist");
 }
 
@@ -307,43 +208,3 @@ static void SetFPSCamera(int enable)
         EnableCursor();
     }
 }
-
-static flecs::entity ConstructPlayer()
-{
-    flecs::entity entity = ecsManager.world.entity()
-        .is_a(CharacterBody3D)
-        .set<PxCapsuleCharacter3DCreation>({ playerControllerDesc, duin::UUID() })
-        .set<Position3D, Local>({ 0, 5, 0 })
-        .add<MovementInput3D>()
-        .add<RotationInput3D>()
-        .add<PlayerMovementInputVec2>()
-        .add<MouseInputVec2>()
-        .add<PlayerTag>()
-        .add<PxControlledTag>()
-        ;
-
-    cameraRoot = ecsManager.world.entity()
-        .is_a(Node3D)
-        .child_of(entity)
-        .add<MouseInputVec2>()
-        .add<RotationInput3D>()
-        .add<CameraTag>()
-        .add<PxControlledTag>()
-        ;
-
-    fpsCamera = ecsManager.world.entity()
-        .is_a(Node3D)
-        .child_of(cameraRoot)
-        .set<Camera3D>({
-            .position = { 0.0f, 0.0f, 0.0f },
-            .target = { 0.0f, 0.0f, 0.0f },
-            .up = { 0.0f, 1.0f, 0.0f },
-            .fovy = 90.0f,
-            .projection = CAMERA_PERSPECTIVE
-            })
-        .add<PxControlledTag>()
-        ;
-
-    return entity;
-}
-

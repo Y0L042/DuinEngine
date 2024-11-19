@@ -1,8 +1,7 @@
 #ifndef DEBUGGING_PANEL_H
 #define DEBUGGING_PANEL_H
 
-#include "dnpch.h"
-
+#include <unordered_map>
 #include <vector>
 #include <string>
 #include <mutex>

@@ -20,6 +20,15 @@
 #include <dep_raygui.h>
 #include <flecs.h>
 
+#include <spdlog/spdlog.h>
+#include <spdlog/common.h>
+#include <spdlog/fmt/fmt.h>
+#include <spdlog/fmt/bundled/core.h>
+#include <spdlog/fmt/bundled/format.h>
+#include <spdlog/details/registry.h>
+#include <spdlog/logger.h>
+#include "Duin/Core/Debug/DNLog.h"
+
 #define PX_PHYSX_STATIC_LIB
 #include <PxPhysicsAPI.h>
 #include <PxPhysics.h>

@@ -132,6 +132,10 @@ project "Duin"
     filter "kind:SharedLib"
         defines "DN_BUILD_DLL"
 
+   -- Enable multi-processor compilation
+   filter "action:vs*"
+      flags { "MultiProcessorCompile" }
+
 	postbuildcommands
 	{
 		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/DuinEditor"),
@@ -299,6 +303,9 @@ project "DuinEditor"
         defines "DN_ARCHIVE"
         symbols "On"
 		
+   -- Enable multi-processor compilation
+   filter "action:vs*"
+      flags { "MultiProcessorCompile" }
 
 
 project "Sandbox"
@@ -364,6 +371,10 @@ project "Sandbox"
         defines "DN_ARCHIVE"
         symbols "On"
 
+   -- Enable multi-processor compilation
+   filter "action:vs*"
+      flags { "MultiProcessorCompile" }
+
 
 
 project "DuinFPS"
@@ -428,5 +439,8 @@ project "DuinFPS"
         defines "DN_ARCHIVE"
         symbols "On"
 
+   -- Enable multi-processor compilation
+   filter "action:vs*"
+      flags { "MultiProcessorCompile" }
 
 

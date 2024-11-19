@@ -9,6 +9,11 @@
 #include "Duin/Core/Utils/SerialisationManager.h"
 #include "Duin/Core/Utils/GameStateMachine.h"
 
+#include "Duin/ECS/ECSManager.h"
+
+#include "Duin/Physics/PhysXManager.h"
+#include "Duin/Physics/CharacterBody3D.h"
+
 /* ---------- C ----------- */
 #include "Duin/C_Modules/c_modules.h"
 

@@ -12,5 +12,5 @@ Vector2 GetInputVector2D(int up, int down, int left, int right)
     x = R - L;
     y = U - D;
     
-    return Vector2Normalize((Vector2){ (float)x, (float)y });
+    return Vector2Normalize((Vector2){ (float)x, -(float)y });
 }

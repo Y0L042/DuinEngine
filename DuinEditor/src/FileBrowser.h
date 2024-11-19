@@ -1,7 +1,7 @@
 #ifndef FILE_BROWSER_H
 #define FILE_BROWSER_H
 
-#include <duin.h>
+#include <Duin.h>
 
 #include <vector>
 #include <string>

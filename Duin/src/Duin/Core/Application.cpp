@@ -4,6 +4,7 @@
 #define RAYMATH_IMPLEMENTATION
 #define RCAMERA_IMPLEMENTATION
 
+
 static int screenWidth = 1280;
 static int screenHeight = 720;
 
@@ -12,6 +13,11 @@ Color backgroundColor = WHITE;
 
 namespace duin
 {
+    static std::vector<std::function<void(double)>> postUpdateCallbacks;
+    static std::vector<std::function<void(double)>> postPhysicsUpdateCallbacks;
+    static std::vector<std::function<void(void)>> postDrawCallbacks;
+    static std::vector<std::function<void(void)>> postDrawUICallbacks;
+
     void SetActiveCamera3D(::Camera3D camera3d)
     {
         activeCamera3D = camera3d;
@@ -22,6 +28,25 @@ namespace duin
         backgroundColor = color;
     }
 
+	void QueuePostUpdateCallback(std::function<void(double)> f)
+    {
+        postUpdateCallbacks.push_back(f);
+    }
+
+	void QueuePostPhysicsUpdateCallback(std::function<void(double)> f)
+    {
+        postPhysicsUpdateCallbacks.push_back(f);
+    }
+
+	void QueuePostDrawCallback(std::function<void()> f)
+    {
+        postDrawCallbacks.push_back(f);
+    }
+
+	void QueuePostDrawUICallback(std::function<void()> f)
+    {
+        postDrawUICallbacks.push_back(f);
+    }
 
 
 
@@ -54,10 +79,9 @@ namespace duin
     {
         EngineInitialize();
         Initialize();
-        
 
+        ::SetTargetFPS(TARGET_RENDER_FRAMERATE);
         ::InitWindow(screenWidth, screenHeight, windowName.c_str());
-        ::SetTargetFPS(144);
         ::rlImGuiSetup(true);
         
         EngineReady();
@@ -73,10 +97,12 @@ namespace duin
 
             EngineUpdate(::GetFrameTime());
             Update(::GetFrameTime());
+            EnginePostUpdate(::GetFrameTime());
 
             if (::GetFrameTime() > 0.0f) {
                 EnginePhysicsUpdate(::GetFrameTime()); // TODO
                 PhysicsUpdate(::GetFrameTime()); // TODO
+                EnginePostPhysicsUpdate(::GetFrameTime());
             }
 
             ::ClearBackground(::Color{ 
@@ -90,17 +116,22 @@ namespace duin
                     BeginMode3D(activeCamera3D);
                         EngineDraw();
                         Draw();
+                        EnginePostDraw();
                     EndMode3D();
                 } else {
                     EngineDraw();
                     Draw();
+                    EnginePostDraw();
                 }
                 
                 EngineDrawUI();
                 DrawUI();
+                EnginePostDrawUI();
 
             ::rlImGuiEnd();
             ::EndDrawing();
+
+            EnginePostFrame();
         }
 
         EngineExit();
@@ -134,20 +165,34 @@ namespace duin
     {
     }
 
-    void Application::EngineUpdate(double rDelta)
+    void Application::EngineUpdate(double delta)
     {
     }
 
-    void Application::Update(double rDelta)
+    void Application::Update(double delta)
     {
     }
 
-    void Application::EnginePhysicsUpdate(double pDelta)
+    void Application::EnginePostUpdate(double delta)
+    {
+        for (auto callback : postUpdateCallbacks) {
+            callback(delta);
+        }
+    }
+
+    void Application::EnginePhysicsUpdate(double delta)
     {
     }
 
-    void Application::PhysicsUpdate(double pDelta)
+    void Application::PhysicsUpdate(double delta)
     {
+    }
+
+    void Application::EnginePostPhysicsUpdate(double delta)
+    {
+        for (auto callback : postPhysicsUpdateCallbacks) {
+            callback(delta);
+        }
     }
 
     void Application::EngineDraw()
@@ -158,12 +203,34 @@ namespace duin
     {
     }
 
+    void Application::EnginePostDraw()
+    {
+        for (auto callback : postDrawCallbacks) {
+            callback();
+        }
+    }
+
     void Application::EngineDrawUI()
     {
     }
 
     void Application::DrawUI()
     {
+    }
+
+    void Application::EnginePostDrawUI()
+    {
+        for (auto callback : postDrawUICallbacks) {
+            callback();
+        }
+    }
+
+    void Application::EnginePostFrame()
+    {
+        postUpdateCallbacks.clear();
+        postPhysicsUpdateCallbacks.clear();
+        postDrawCallbacks.clear();
+        postDrawUICallbacks.clear();
     }
 
     void Application::EngineExit()

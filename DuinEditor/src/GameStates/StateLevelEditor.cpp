@@ -31,7 +31,7 @@ StateLevelEditor::~StateLevelEditor()
 
 void StateLevelEditor::State_Enter()
 {
-    dbgConsole.LogEx(duin::LogLevel::Info, "ENTERING LEVELEDITOR");
+    debugConsole.LogEx(duin::LogLevel::Info, "ENTERING LEVELEDITOR");
 
     camera.position = { 0.0f, 10.0f, 10.0f };
     camera.target = { 0.0f, 0.0f, 0.0f };
@@ -76,7 +76,7 @@ void StateLevelEditor::State_Update(double delta)
 void StateLevelEditor::State_PhysicsUpdate(double delta)
 {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        dbgConsole.LogEx(duin::LogLevel::Info, "Left Click!");
+        debugConsole.LogEx(duin::LogLevel::Info, "Left Click!");
         if (!selectionCollision.hit) {
             selectionRay = GetScreenToWorldRay(GetMousePosition(), camera);
 

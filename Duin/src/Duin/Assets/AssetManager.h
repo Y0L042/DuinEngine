@@ -4,6 +4,8 @@
 #include "Duin/Core/Utils/UUID.h"
 
 namespace duin {
+
+class UUID;
 class AssetManager
 {
 public:

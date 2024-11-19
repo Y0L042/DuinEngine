@@ -1,3 +1,22 @@
+vim.opt.expandtab = true       -- Use spaces instead of tabs
+vim.opt.tabstop = 4            -- Number of spaces that a <Tab> counts for
+vim.opt.shiftwidth = 4         -- Number of spaces to use for each step of (auto)indent
+vim.opt.softtabstop = 4        -- Number of spaces that a <Tab> counts for while editing
+vim.opt.autoindent = true      -- Copy indent from current line when starting a new line
+vim.opt.smartindent = true     -- Smart autoindenting for programming languages
+vim.opt.cindent = true
+vim.opt.cinoptions = "(0"
+
+vim.cmd('filetype plugin indent on')
+
+
+vim.filetype.add({
+  extension = {
+    prefab = "json",
+  },
+})
+
+
 -- Function to switch between header and source files
 function switch_source_header()
     -- Update (save) the current file before switching
@@ -71,3 +90,5 @@ vim.api.nvim_set_keymap('v', '<F4>', '<Esc><cmd>lua switch_source_header()<CR>',
 vim.api.nvim_set_keymap('n', '<S-F4>', '<cmd>lua switch_and_search()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<S-F4>', '<Esc><cmd>lua switch_and_search()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<S-F4>', '<Esc><cmd>lua switch_and_search()<CR>', { noremap = true, silent = true })
+
+

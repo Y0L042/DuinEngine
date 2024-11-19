@@ -11,7 +11,7 @@
 duin::Application* duin::CreateApplication() { return new DuinEditor(); }
 
 duin::GameStateMachine gameSM;
-duin::DebugConsole dbgConsole;
+duin::DebugConsole debugConsole;
 DuinEditor *application;
 
 
@@ -68,7 +68,7 @@ void DuinEditor::Draw()
 void DuinEditor::DrawUI()
 {                
     gameSM.ExecuteDrawUI();
-    dbgConsole.Draw("Console");
+    debugConsole.Draw("Console");
 }
 
 
