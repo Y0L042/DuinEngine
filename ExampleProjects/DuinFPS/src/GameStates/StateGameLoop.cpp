@@ -9,7 +9,7 @@ using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
 duin::DebugWatchlist debugWatchlist;
-duin::PhysXManager pxManager;
+duin::Physics3DServer pxManager;
 duin::ECSManager ecsManager;
 
 flecs::entity player;
@@ -29,6 +29,8 @@ struct Pos {
 struct Test {
     const char* test = "Hello!\0";
 };
+
+static void SetFPSCamera(int enable);
 
 StateGameLoop::StateGameLoop(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -54,11 +56,15 @@ void StateGameLoop::State_Enter()
     player = ecsManager.world.entity()
        .is_a(duin::ECSPrefab::CharacterBody3D)
         .add<PlayerMovementInputVec3>()
+        .add<MouseInputVec2>()
+        .add<CameraYawComponent>()
         .add<GravityComponent>()
        ;
     cameraRoot = ecsManager.world.entity()
        .is_a(duin::ECSPrefab::Node3D)
        .child_of(player)
+       .add<MouseInputVec2>()
+       .add<CameraPitchComponent>()
        ;
     fpsCamera = ecsManager.world.entity()
        .is_a(duin::ECSPrefab::Camera3D)
@@ -92,6 +98,8 @@ void StateGameLoop::State_Enter()
     static duin::CharacterBody3D playerBody(pxManager, desc);
     player.set<duin::ECSComponent::CharacterBody3DComponent >({ &playerBody });
 
+
+
     debugCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
         .set<Position3D, Local>({ { 0.0f, 25.0f, 25.0f } })
@@ -103,10 +111,13 @@ void StateGameLoop::State_Enter()
             })
         ;
 
+
+
     duin::StaticCollisionPlane ground(pxManager);
     ecsManager.ActivateCameraEntity(debugCamera);
 
-    //CreateDynamic(physx::PxTransform(physx::PxVec3(0, 40, 100)), physx::PxSphereGeometry(10), physx::PxVec3(0, -50, -5));
+
+
     ball = physx::PxCreateDynamic(*pxManager.pxPhysics,
         physx::PxTransform(physx::PxVec3(0, 1, 0)),
         physx::PxSphereGeometry(1),
@@ -125,16 +136,20 @@ void StateGameLoop::State_HandleInput()
 {
     duin::Vector2 input(GetInputVector2D(KEY_W, KEY_S, KEY_A, KEY_D));
     player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
+    duin::Vector2 mouseInput(GetMouseDelta());
+    player.set<MouseInputVec2>({ { mouseInput } });
+    cameraRoot.set<MouseInputVec2>({ { mouseInput } });
 
     if (IsKeyPressed(KEY_P)) {
         if (debugCamera.has<ActiveCamera>()) {
             ecsManager.ActivateCameraEntity(fpsCamera);
+            SetFPSCamera(0);
         }
         else {
             ecsManager.ActivateCameraEntity(debugCamera);
+            SetFPSCamera(1);
         }
     }
-
 }
 
 void StateGameLoop::State_Update(double delta)
@@ -144,23 +159,17 @@ void StateGameLoop::State_Update(double delta)
     const duin::Vector3 playerPosG = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Global>()->value;
     debugCamera.set<DebugCameraTarget>({ { playerPosG } });
 
-    ecsManager.ExecuteQuerySetCameraAsActive(ecsManager.world);
+    
 }
 
 void StateGameLoop::State_PhysicsUpdate(double delta)
 {    
     ExecuteQueryComputePlayerInputVelocity(ecsManager.world);
+    ExecuteQueryUpdatePlayerYaw(ecsManager.world);
+    ExecuteQueryUpdateCameraPitch(ecsManager.world);
+
     ExecuteQueryGravity(ecsManager.world);
     ExecuteQueryGravityDebugCameraTarget(ecsManager.world);
-
-    ecsManager.ExecuteQueryUpdatePosition3D(ecsManager.world);
-    ecsManager.ExecuteQueryHierarchicalUpdatePosition3D(ecsManager.world);
-    ecsManager.ExecuteQueryUpdateRotation3D(ecsManager.world);
-    ecsManager.ExecuteQueryHierarchicalUpdateRotation3D(ecsManager.world);
-
-    ecsManager.ExecuteQueryUpdateCharacterBodyPosition(ecsManager.world);
-    ecsManager.ExecuteQueryUpdateCameraPosition(ecsManager.world);
-
 
     const duin::Vector3 playerPosL = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Local>()->value;
     debugWatchlist.Post("PlayerPosLocal: ", "{ %.1f, %.1f, %.1f }", playerPosL.x, playerPosL.y, playerPosL.z);
@@ -189,7 +198,7 @@ void StateGameLoop::State_Draw()
         BLUE
     );
     DrawSphereWires(duin::Vector3(ball->getGlobalPose().p).ToRaylib(), 1.0f, 32, 32, RED);
-    ecsManager.ExecuteQueryDrawDebugCapsule(ecsManager.world);
+    
 }
 
 void StateGameLoop::State_DrawUI()
@@ -200,11 +209,9 @@ void StateGameLoop::State_DrawUI()
 static void SetFPSCamera(int enable)
 {
     fpsCameraEnabled = enable;
-    if (fpsCameraEnabled) {
-        HideCursor();
+    if (!fpsCameraEnabled) {
         DisableCursor();
     } else {
-        ShowCursor();
         EnableCursor();
     }
 }

@@ -48,17 +48,17 @@ namespace duin {
         }
     };
 
-    class PhysXManager;
+    class Physics3DServer;
     class CharacterBody3D
     {
     public:
-        PhysXManager& manager;
+        Physics3DServer& manager;
         physx::PxCapsuleControllerDesc desc;
         physx::PxController *controller = NULL;
         physx::PxControllerFilters filters;
         physx::PxObstacleContext *obstacles = NULL;
 
-        CharacterBody3D(PhysXManager& manager, CharacterBody3DDesc desc);
+        CharacterBody3D(Physics3DServer& manager, CharacterBody3DDesc desc);
         ~CharacterBody3D();
 
         void Move(Vector3 displacement, double delta);
@@ -74,19 +74,19 @@ namespace duin {
         
     };
 
-    class PhysXManager;
+    class Physics3DServer;
     class StaticCollisionPlane
     {
     public:
-        PhysXManager& manager;
+        Physics3DServer& manager;
 
-        StaticCollisionPlane(PhysXManager& manager);
+        StaticCollisionPlane(Physics3DServer& manager);
 
     private:
 
     };
 
-    class PhysXManager
+    class Physics3DServer
     {
     public:
         physx::PxDefaultAllocator pxAllocatorCallback;
@@ -103,16 +103,16 @@ namespace duin {
 
         physx::PxPvd* pxPvd = NULL;
 
-        PhysXManager();
-        ~PhysXManager();
+        Physics3DServer();
+        ~Physics3DServer();
 
         void Initialize();
         void Clean();
 
         void StepPhysics(double delta);
 
-        PhysXManager(const PhysXManager&) = delete;
-        PhysXManager& operator=(const PhysXManager&) = delete;
+        Physics3DServer(const Physics3DServer&) = delete;
+        Physics3DServer& operator=(const Physics3DServer&) = delete;
 
     private:
 

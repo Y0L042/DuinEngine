@@ -1,20 +1,20 @@
 #include "dnpch.h"
-#include "PhysXManager.h"
+#include "Physics3DServer.h"
 
 #include "Duin/Core/Debug/DNLog.h"
 
 namespace duin {
 
-    PhysXManager::PhysXManager()
+    Physics3DServer::Physics3DServer()
     {
         Initialize();
     }
 
-    PhysXManager::~PhysXManager()
+    Physics3DServer::~Physics3DServer()
     {
     }
 
-    void PhysXManager::Initialize()
+    void Physics3DServer::Initialize()
     {
         pxFoundation = PxCreateFoundation(PX_PHYSICS_VERSION,
             pxAllocatorCallback,
@@ -46,7 +46,7 @@ namespace duin {
         pxControllerManager = PxCreateControllerManager(*pxScene);
     }
 
-    void PhysXManager::Clean()
+    void Physics3DServer::Clean()
     {
         PX_RELEASE(pxScene);
         PX_RELEASE(pxDispatcher);
@@ -60,13 +60,13 @@ namespace duin {
         PX_RELEASE(pxFoundation);
     }
 
-    void PhysXManager::StepPhysics(double delta)
+    void Physics3DServer::StepPhysics(double delta)
     {
         pxScene->simulate((float)delta);
         pxScene->fetchResults(true);
     }
 
-    CharacterBody3D::CharacterBody3D(PhysXManager& manager, CharacterBody3DDesc desc)
+    CharacterBody3D::CharacterBody3D(Physics3DServer& manager, CharacterBody3DDesc desc)
         : manager(manager)
     {
         controller = manager.pxControllerManager->createController(desc.ToPhysX());
@@ -86,7 +86,7 @@ namespace duin {
                                   );
     }
 
-    StaticCollisionPlane::StaticCollisionPlane(PhysXManager& manager)
+    StaticCollisionPlane::StaticCollisionPlane(Physics3DServer& manager)
         : manager(manager)
     {
         physx::PxMaterial *pxMaterial = manager.pxPhysics->createMaterial(0.5f, 0.5f, 0.6f);

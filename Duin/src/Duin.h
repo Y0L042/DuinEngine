@@ -11,7 +11,7 @@
 
 #include "Duin/ECS/ECSManager.h"
 
-#include "Duin/Physics/PhysXManager.h"
+#include "Duin/Physics/Physics3DServer.h"
 #include "Duin/Physics/CharacterBody3D.h"
 
 /* ---------- C ----------- */

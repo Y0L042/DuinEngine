@@ -5,7 +5,7 @@
 #include <flecs.h>
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Utils/UUID.h"
-#include "Duin/Physics/PhysXManager.h"
+#include "Duin/Physics/Physics3DServer.h"
 
 namespace duin {
 
@@ -220,15 +220,23 @@ namespace duin {
         void ActivateCameraEntity(flecs::entity entity);
         void SetGlobalPosition3D(flecs::entity entity, Vector3 newPos);
 
-        void ExecuteQuerySetCameraAsActive(flecs::world& world);
-        void ExecuteCharacterBody3DCreation(PhysXManager& manager);
-        void ExecuteQueryUpdatePosition3D(flecs::world& world);        
-        void ExecuteQueryHierarchicalUpdatePosition3D(flecs::world& world);
-        void ExecuteQueryUpdateRotation3D(flecs::world& world);
-        void ExecuteQueryHierarchicalUpdateRotation3D(flecs::world& world);
-        void ExecuteQueryUpdateCharacterBodyPosition(flecs::world& world);
-        void ExecuteQueryUpdateCameraPosition(flecs::world& world);
-        void ExecuteQueryDrawDebugCapsule(flecs::world& world);
+        void PostUpdateQueryExecution(double delta);
+        void PostPhysicsUpdateQueryExecution(double delta);
+        void PostDrawQueryExecution();
+        void PostDrawUIQueryExecution();
+
+
+        void ExecuteCharacterBody3DCreation(Physics3DServer& manager);
+
+        void ExecuteQuerySetCameraAsActive();
+        void ExecuteQueryUpdatePosition3D();        
+        void ExecuteQueryHierarchicalUpdatePosition3D();
+        void ExecuteQueryUpdateRotation3D();
+        void ExecuteQueryHierarchicalUpdateRotation3D();
+        void ExecuteQueryUpdateCharacterBodyPosition();
+        void ExecuteQueryUpdateCameraPosition();
+        void ExecuteQueryControlCamera();
+        void ExecuteQueryDrawDebugCapsule();
 
     private:
         // WIP: Not ready to be used

@@ -227,10 +227,10 @@ namespace duin
 
     void Application::EnginePostFrame()
     {
-        postUpdateCallbacks.clear();
-        postPhysicsUpdateCallbacks.clear();
-        postDrawCallbacks.clear();
-        postDrawUICallbacks.clear();
+        //postUpdateCallbacks.clear();
+        //postPhysicsUpdateCallbacks.clear();
+        //postDrawCallbacks.clear();
+        //postDrawUICallbacks.clear();
     }
 
     void Application::EngineExit()
