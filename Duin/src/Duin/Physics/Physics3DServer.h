@@ -145,7 +145,7 @@ namespace duin {
         physx::PxMaterial *pxMaterial = NULL;
         physx::PxObstacleContext *pxObstacles = NULL;
 
-        int OnFloorRaycast(double delta);
+        int OnFloorShapeCast(double delta);
 
         void CreatePxController(physx::PxCapsuleControllerDesc pxDesc);
     };

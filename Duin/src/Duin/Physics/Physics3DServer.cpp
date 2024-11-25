@@ -190,7 +190,7 @@ namespace duin {
 
         timeSinceLastMove = ::GetTime();
 
-        OnFloorRaycast(timeSinceLastMove);
+        OnFloorShapeCast(timeSinceLastMove);
     }
 
     int CharacterBody3D::IsOnFloor()
@@ -203,45 +203,76 @@ namespace duin {
         return 0;
     }
 
-    int CharacterBody3D::OnFloorRaycast(double delta)
+    int CharacterBody3D::OnFloorShapeCast(double delta)
     {
-        int onFloor = 0;
         float maxSlopeAngleDegrees = 50.0f;
 
-        float rayDistance = 0.05f;
-        
+        float sphereRadius = desc.radius * 0.95f;
+
         float footOffset = 0.25f;
-        Vector3 rayOrigin = Vector3(pxController->getFootPosition() + physx::PxExtendedVec3(0.0, (double)footOffset, 0.0));
-        Vector3 rayDirection = Vector3(physx::PxVec3(0.0f, -1.0f, 0.0f));
+        float castDistance = 0.00001f;
 
-        // Prepare hit buffer
-        physx::PxRaycastBuffer hit;
+        // Position the sphere at the character's foot position with an upward offset
+        Vector3 castOrigin = Vector3(pxController->getFootPosition() + physx::PxExtendedVec3(0.0, (double)(footOffset + sphereRadius), 0.0));
 
-        // Perform the raycast
-        int hasHit = pxController->getScene()->raycast(rayOrigin.ToPhysX(), rayDirection.ToPhysX(), rayDistance + footOffset, hit,
-            physx::PxHitFlag::eDEFAULT, physx::PxQueryFilterData(physx::PxQueryFlag::eSTATIC));
+        // Direction to sweep the shape (downwards)
+        Vector3 castDirection = Vector3(physx::PxVec3(0.0f, -1.0f, 0.0f));
 
-        // If raycast hits an object
-        if (hasHit) {
-            float maxSlope = physx::PxCos(physx::PxPi * maxSlopeAngleDegrees / 180.0f);
-            if (hit.block.normal.dot(physx::PxVec3(0, 1, 0)) >= maxSlope) {
+        // Define the shape to cast (sphere in this case)
+        
+        physx::PxSphereGeometry sphereGeometry(sphereRadius);
+
+        // Define the pose of the sphere (position and orientation)
+        physx::PxTransform castPose(castOrigin.ToPhysX());
+
+        // Prepare the hit buffer
+        physx::PxSweepBuffer hit;
+
+        // Perform the shape cast (sweep)
+        bool hasHit = pxController->getScene()->sweep(
+            sphereGeometry,
+            castPose,
+            castDirection.ToPhysX(),
+            (castDistance + sphereRadius),
+            hit,
+            physx::PxHitFlag::eDEFAULT,
+            physx::PxQueryFilterData(physx::PxQueryFlag::eSTATIC)
+        );
+
+        // If the shape cast hits an object
+        int onFloor = 0;
+        if (hasHit)
+        {
+            float maxSlopeCosine = physx::PxCos(physx::PxPi * maxSlopeAngleDegrees / 180.0f);
+            if (hit.block.normal.dot(physx::PxVec3(0, 1, 0)) >= maxSlopeCosine)
+            {
                 onFloor = 1;
             }
         }
 
-        if (onFloor) {
+        
+        if (!onFloor)
+        {
             timeSinceOnFloor += delta;
         }
-        else {
+        else
+        {
             timeSinceOnFloor = 0;
         }
 
-        if (!onFloor && (timeSinceOnFloor > onFloorGrace)) {
-            isOnFloor = onFloor;
+        if (isOnFloor) {
+            if (!onFloor) {
+                if (timeSinceOnFloor > onFloorGrace) {
+                    isOnFloor = onFloor;
+                }
+            }
         }
         else {
             isOnFloor = onFloor;
         }
+        
+
+        //isOnFloor = onFloor;
 
         return onFloor;
     }
