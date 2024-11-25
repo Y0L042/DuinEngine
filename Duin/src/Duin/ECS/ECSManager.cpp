@@ -16,12 +16,16 @@ namespace duin {
         {
             world.component<ECSTag::Local>();
             world.component<ECSTag::Global>();
+
             world.component<ECSTag::CreateExternalRef>();
             world.component<ECSTag::ActiveExternalRef>();
             world.component<ECSTag::DeleteExternalRef>();
+
             world.component<ECSTag::PxKinematic>();
             world.component<ECSTag::PxDynamic>();
             world.component<ECSTag::PxStatic>();
+            world.component<ECSTag::NonPx>();
+
             world.component<ECSTag::SetCameraAsActive>();
             world.component<ECSTag::CameraIsActive>();
             world.component<ECSTag::ActiveCamera>();
@@ -42,7 +46,7 @@ namespace duin {
             world.component<ECSComponent::CharacterBody3DComponent>();
             world.component<::Camera3D>();
 
-            world.component<ECSComponent::DebugCapsuleDesc>();
+            world.component<ECSComponent::DebugCapsuleComponent>();
         }
     }
 
@@ -92,6 +96,7 @@ namespace duin {
 
             CharacterBody3D = world.prefab("CharacterBody3D")
                 .is_a(ECSPrefab::Node3D)
+                .add<ECSTag::PxKinematic>()
                 .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })
                 .set<ECSComponent::CharacterBody3DComponent>({ nullptr });
                 ;
@@ -113,7 +118,7 @@ namespace duin {
 
             DebugCapsule = world.prefab("DebugCapsule")
                 .is_a(ECSPrefab::Node3D)
-                .set<ECSComponent::DebugCapsuleDesc>({
+                .set<ECSComponent::DebugCapsuleComponent>({
                     1.75f,
                     1.0f,
                     8, 16,
@@ -165,19 +170,21 @@ namespace duin {
 
     void ECSManager::PostUpdateQueryExecution(double delta)
     {
-        ExecuteQuerySetCameraAsActive();
+        
     }
 
     void ECSManager::PostPhysicsUpdateQueryExecution(double delta)
     {
-        ExecuteQueryUpdatePosition3D();
+        ExecuteQueryUpdateCharacterBody3DPosition();
+        //ExecuteQueryUpdatePosition3D();
         ExecuteQueryHierarchicalUpdatePosition3D();
 
         ExecuteQueryUpdateRotation3D();
         ExecuteQueryHierarchicalUpdateRotation3D();
 
-        ExecuteQueryUpdateCharacterBodyPosition();
+
         ExecuteQueryControlCamera();
+        ExecuteQuerySetCameraAsActive();
     }
 
     void ECSManager::PostDrawQueryExecution()
@@ -238,7 +245,7 @@ namespace duin {
             ECSComponent::Position3D& p,
             const ECSComponent::Velocity3D& v
             ) {
-                duin::Vector3 vDelta = duin::Vector3Scale(v.value, ::GetFrameTime());
+                duin::Vector3 vDelta = duin::Vector3Scale(v.value, GetPhysicsFrameTime());
                 p.value = duin::Vector3Add(p.value, vDelta);
             });
     }
@@ -283,7 +290,7 @@ namespace duin {
             ECSComponent::Rotation3D& p,
             const ECSComponent::Rotation3D& v
             ) {
- 
+                // TODO
             });
     }
 
@@ -313,31 +320,43 @@ namespace duin {
                 }
             });
     }
-
-    void ECSManager::ExecuteQueryUpdateCharacterBodyPosition()
+    
+    void ECSManager::ExecuteQueryUpdateCharacterBody3DPosition()
     {
         static flecs::query q = world.query_builder<
             ECSComponent::CharacterBody3DComponent,
             ECSComponent::Position3D,
-            const ECSComponent::Velocity3D
+            const ECSComponent::Position3D,
+            ECSComponent::Velocity3D
         >()
-        .term_at(1).second<ECSTag::Local>()
-        .cached()
-        .build();
-
-        world.defer_begin();
-            q.each([this](
+            .term_at(1).second<ECSTag::Local>()
+            .term_at(2).second<ECSTag::Global>()
+            .with<ECSTag::PxKinematic>()
+            .cached()
+            .build();
+        q.each([](
                 flecs::entity e,
                 ECSComponent::CharacterBody3DComponent& cb,
-                ECSComponent::Position3D& global_pos,
-                const ECSComponent::Velocity3D& v
-                ) {
-                    Vector3 vDelta = Vector3Scale(v.value, ::GetFrameTime());
-                    cb.characterBody->Move(vDelta, (double)GetFrameTime());
-                    Vector3 bodyPos = duin::Vector3(cb.characterBody->controller->getPosition());
-                    SetGlobalPosition3D(e, bodyPos);
-                });
-        world.defer_end();
+                ECSComponent::Position3D& localPos,
+                const ECSComponent::Position3D& globalPos,
+                ECSComponent::Velocity3D& velocity
+            ) {
+                // Move CharacterBody3D and get physics-resolved global position
+                Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
+
+                Vector3 oldPos = cb.characterBody->GetPosition();
+                cb.characterBody->Move(vDelta);
+                Vector3 newPos = cb.characterBody->GetPosition();
+
+                // Update entity's positions to fit with resolved position
+                Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
+
+                
+                // add distance between current globalPos (old) and pxBody global pos (new) to localPos
+                localPos.value = Vector3Add(Vector3Subtract(newPos, globalPos.value), localPos.value);
+
+                velocity.value = cb.characterBody->GetCurrentVelocity();
+            });
     }
 
     void ECSManager::ExecuteQueryUpdateCameraPosition()
@@ -397,7 +416,7 @@ namespace duin {
     void ECSManager::ExecuteQueryDrawDebugCapsule()
     {
         static flecs::query q = world.query_builder<
-            const ECSComponent::DebugCapsuleDesc,
+            const ECSComponent::DebugCapsuleComponent,
             const ECSComponent::Position3D
         >()
         .term_at(1).second<ECSTag::Global>()
@@ -405,7 +424,7 @@ namespace duin {
         .build();
 
         q.each([](
-            const ECSComponent::DebugCapsuleDesc& capsule,
+            const ECSComponent::DebugCapsuleComponent& capsule,
             const ECSComponent::Position3D& pos
             ) {
                 ::DrawCapsuleWires(pos.value.ToRaylib(),

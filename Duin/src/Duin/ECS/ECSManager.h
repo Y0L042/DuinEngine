@@ -33,6 +33,7 @@ namespace duin {
         struct PxKinematic {};
         struct PxDynamic {};
         struct PxStatic {};
+        struct NonPx {};
 
         /* Tags used to set and track camera as active */
         struct SetCameraAsActive {};
@@ -41,7 +42,9 @@ namespace duin {
     };
 
 
-
+    /*------------------------------------------------------------------------*/
+    //  ECS Components
+    /*------------------------------------------------------------------------*/
     namespace ECSComponent {
         /*------------------------------------------------------------------------*/
         //  2D Components
@@ -181,9 +184,9 @@ namespace duin {
         };
 
         /*------------------------------------------------------------------------*/
-        //  Physics Components
+        //  Debug Components
         /*------------------------------------------------------------------------*/
-        struct DebugCapsuleDesc {
+        struct DebugCapsuleComponent {
             float height, radius;
             int slices, rings;
             ::Color color;
@@ -191,7 +194,9 @@ namespace duin {
     };
 
 
-
+    /*------------------------------------------------------------------------*/
+    //  ECS Prefabs
+    /*------------------------------------------------------------------------*/
     namespace ECSPrefab {
         extern flecs::entity Node;
         extern flecs::entity Node2D;
@@ -226,14 +231,14 @@ namespace duin {
         void PostDrawUIQueryExecution();
 
 
-        void ExecuteCharacterBody3DCreation(Physics3DServer& manager);
+        void ExecuteCharacterBody3DCreation(Physics3DServer& server);
 
         void ExecuteQuerySetCameraAsActive();
         void ExecuteQueryUpdatePosition3D();        
         void ExecuteQueryHierarchicalUpdatePosition3D();
         void ExecuteQueryUpdateRotation3D();
         void ExecuteQueryHierarchicalUpdateRotation3D();
-        void ExecuteQueryUpdateCharacterBodyPosition();
+        void ExecuteQueryUpdateCharacterBody3DPosition();
         void ExecuteQueryUpdateCameraPosition();
         void ExecuteQueryControlCamera();
         void ExecuteQueryDrawDebugCapsule();

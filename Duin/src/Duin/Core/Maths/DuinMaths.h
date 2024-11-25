@@ -715,6 +715,15 @@ DNMAPI int Vector2Equals(Vector2 p, Vector2 q)
     return result;
 }
 
+// Check whether two given vectors are approximate, given an epsilon
+DNMAPI int Vector2Approximates(Vector2 p, Vector2 q, float epsilon)
+{
+    int result = ((fabsf(p.x - q.x)) <= (epsilon * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))))) &&
+                 ((fabsf(p.y - q.y)) <= (epsilon * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y)))));
+
+    return result;
+}
+
 // Compute the direction of a refracted ray
 // v: normalized direction of the incoming ray
 // n: normalized normal vector of the interface of two optical media
@@ -1361,6 +1370,16 @@ DNMAPI int Vector3Equals(Vector3 p, Vector3 q)
     int result = ((fabsf(p.x - q.x)) <= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))))) &&
                  ((fabsf(p.y - q.y)) <= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))))) &&
                  ((fabsf(p.z - q.z)) <= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z)))));
+
+    return result;
+}
+
+// Check whether two given vectors are approximate, given an epsilon
+DNMAPI int Vector3Approximates(Vector3 p, Vector3 q, float epsilon)
+{
+    int result = ((fabsf(p.x - q.x)) <= (epsilon * fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))))) &&
+                 ((fabsf(p.y - q.y)) <= (epsilon * fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))))) &&
+                 ((fabsf(p.z - q.z)) <= (epsilon * fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z)))));
 
     return result;
 }

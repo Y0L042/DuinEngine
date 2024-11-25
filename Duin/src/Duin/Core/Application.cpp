@@ -4,6 +4,8 @@
 #define RAYMATH_IMPLEMENTATION
 #define RCAMERA_IMPLEMENTATION
 
+static size_t physicsFrameCount = 0;
+static size_t renderFrameCount = 0;
 
 static int screenWidth = 1280;
 static int screenHeight = 720;
@@ -17,6 +19,8 @@ namespace duin
     static std::vector<std::function<void(double)>> postPhysicsUpdateCallbacks;
     static std::vector<std::function<void(void)>> postDrawCallbacks;
     static std::vector<std::function<void(void)>> postDrawUICallbacks;
+    static std::vector<std::function<void(void)>> preFrameCallbacks;
+    static std::vector<std::function<void(void)>> postFrameCallbacks;
 
     void SetActiveCamera3D(::Camera3D camera3d)
     {
@@ -26,6 +30,40 @@ namespace duin
     void SetBackgroundColor(::Color color)
     {
         backgroundColor = color;
+    }
+
+    float GetPhysicsFPS()
+    {
+        float fps = ::GetFPS();
+        return fps;
+    }
+
+    float GetPhysicsFrameTime()
+    {
+        float frametime = ::GetFrameTime();
+        return frametime;
+    }
+
+    float GetRenderFPS()
+    {
+        float fps = ::GetFPS();
+        return fps;
+    }
+
+    float GetRenderFrameTime()
+    {
+        float frametime = ::GetFrameTime();
+        return frametime;
+    }
+
+    size_t GetPhysicsFrameCount()
+    {
+        return physicsFrameCount;
+    }
+
+    size_t GetRenderFrameCount()
+    {
+        return renderFrameCount;
     }
 
 	void QueuePostUpdateCallback(std::function<void(double)> f)
@@ -46,6 +84,16 @@ namespace duin
 	void QueuePostDrawUICallback(std::function<void()> f)
     {
         postDrawUICallbacks.push_back(f);
+    }
+
+    void QueuePreFrameCallback(std::function<void()> f)
+    {
+        preFrameCallbacks.push_back(f);
+    }
+
+    void QueuePostFrameCallback(std::function<void()> f)
+    {
+        postFrameCallbacks.push_back(f);
     }
 
 
@@ -90,6 +138,8 @@ namespace duin
         while(!::WindowShouldClose()) {
             ::BeginDrawing();
             ::rlImGuiBegin();
+
+            EnginePreFrame();
 
             // InputEvent e;
             EngineHandleInputs();
@@ -157,6 +207,13 @@ namespace duin
     {
     }
 
+    void Application::EnginePreFrame()
+    {
+        for (auto& callback : preFrameCallbacks) {
+            callback();
+        }
+    }
+
     void Application::EngineHandleInputs()
     {
     }
@@ -167,6 +224,7 @@ namespace duin
 
     void Application::EngineUpdate(double delta)
     {
+        ++renderFrameCount;
     }
 
     void Application::Update(double delta)
@@ -175,13 +233,14 @@ namespace duin
 
     void Application::EnginePostUpdate(double delta)
     {
-        for (auto callback : postUpdateCallbacks) {
+        for (auto& callback : postUpdateCallbacks) {
             callback(delta);
         }
     }
 
     void Application::EnginePhysicsUpdate(double delta)
     {
+        ++physicsFrameCount;
     }
 
     void Application::PhysicsUpdate(double delta)
@@ -190,7 +249,7 @@ namespace duin
 
     void Application::EnginePostPhysicsUpdate(double delta)
     {
-        for (auto callback : postPhysicsUpdateCallbacks) {
+        for (auto& callback : postPhysicsUpdateCallbacks) {
             callback(delta);
         }
     }
@@ -205,7 +264,7 @@ namespace duin
 
     void Application::EnginePostDraw()
     {
-        for (auto callback : postDrawCallbacks) {
+        for (auto& callback : postDrawCallbacks) {
             callback();
         }
     }
@@ -220,17 +279,16 @@ namespace duin
 
     void Application::EnginePostDrawUI()
     {
-        for (auto callback : postDrawUICallbacks) {
+        for (auto& callback : postDrawUICallbacks) {
             callback();
         }
     }
 
     void Application::EnginePostFrame()
     {
-        //postUpdateCallbacks.clear();
-        //postPhysicsUpdateCallbacks.clear();
-        //postDrawCallbacks.clear();
-        //postDrawUICallbacks.clear();
+        for (auto& callback : postFrameCallbacks) {
+            callback();
+        }
     }
 
     void Application::EngineExit()

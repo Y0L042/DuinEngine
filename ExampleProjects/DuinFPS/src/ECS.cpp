@@ -15,6 +15,20 @@ void RegisterComponents(flecs::world& world)
     world.component<MouseInputVec2>();
     world.component<CameraPitchComponent>();
     world.component<CameraYawComponent>();
+    world.component<InputVelocities>();
+    world.component<InputForces>();
+    world.component<InputVelocityDirection>();
+    world.component<Mass>();
+
+    world.component<CanRunComponent>();
+    world.component<RunTag>();
+    world.component<CanJumpComponent>();
+    world.component<JumpTag>();
+    world.component<CanSprintComponent>();
+    world.component<SprintTag>();
+    world.component<OnGroundTag>();
+    world.component<InAirTag>();
+    world.component<CanGravity>();
 }
 
 
@@ -22,45 +36,25 @@ void RegisterComponents(flecs::world& world)
 void ExecuteQueryComputePlayerInputVelocity(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
-        Velocity3D,
-        const Rotation3D,
-        const PlayerMovementInputVec3
+        PlayerMovementInputVec3,
+        InputVelocityDirection,
+        const Rotation3D
     >()
-    .term_at(1).second<Global>()
+    .term_at(2).second<Global>()
     .cached()
     .build();
      
     q.each([](
-            Velocity3D& v,
-            const Rotation3D& r,
-            const PlayerMovementInputVec3& input
+            PlayerMovementInputVec3& input,
+            InputVelocityDirection& iDir,
+            const Rotation3D& r
         ) {
-            float speed = 7.0f;
-
-            duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r.value);
-            v.value = duin::Vector3Scale(alignedInput, speed);
-            debugWatchlist.Post("Input: ", "{ %.1f, %.1f, %.1f }", input.value.x, input.value.y, input.value.z);
+           duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r.value);
+           iDir.value = duin::Vector3(alignedInput.x, 0.0f, alignedInput.z);
     });
 }
 
-void ExecuteQueryGravity(flecs::world& world)
-{
-    static flecs::query q = world.query_builder<
-        Velocity3D,
-        const GravityComponent
-    >()
-    .cached()
-    .build();
-
-    q.each([](
-            Velocity3D& v,
-            const GravityComponent& gravity
-        ) {
-            v.value = duin::Vector3Add(v.value, gravity.value);
-        });
-}
-
-void ExecuteQueryGravityDebugCameraTarget(flecs::world& world)
+void ExecuteQueryDebugCameraTarget(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
         Camera3D,
@@ -93,35 +87,16 @@ void ExecuteQueryUpdatePlayerYaw(flecs::world& world)
             CameraYawComponent& yaw,
             const MouseInputVec2& mouseDelta
         ) {
-            //// Define sensitivity factor for yaw
-            //const float sensitivity = MOUSE_SENSITIVITY.x; // Adjust as needed
+            const float sensitivity = MOUSE_SENSITIVITY.x;
 
-            //// Calculate yaw rotation quaternion based on mouse X movement
-            //float yawAngle = -mouseDelta.value.x * sensitivity;
-            //duin::Quaternion yawQuat = duin::QuaternionFromAxisAngle(duin::Vector3{ 0.0f, 1.0f, 0.0f }, yawAngle);
-
-            //// Update current rotation by applying yaw
-            //r.value = duin::QuaternionMultiply(yawQuat, r.value);
-            //r.value = duin::QuaternionNormalize(r.value);
-
-                        // Define sensitivity factor for yaw (ensure this is appropriately scaled)
-            const float sensitivity = MOUSE_SENSITIVITY.x; // Adjust as needed
-
-            // Update cumulative yaw based on mouse delta
             float deltaYaw = -mouseDelta.value.x * sensitivity;
             yaw.value += deltaYaw;
 
-            // (Optional) Clamp the yaw angle to prevent excessive rotation
-            // For a typical first-person camera, yaw can usually wrap around 360 degrees
-            // Hence, clamping might not be necessary. If needed, implement wrapping:
             if (yaw.value > 2.0f * PI) yaw.value -= 2.0f * PI;
             if (yaw.value < -2.0f * PI) yaw.value += 2.0f * PI;
 
-            // Create a yaw quaternion around the Y-axis
             duin::Quaternion yawQuat = duin::QuaternionFromAxisAngle(duin::Vector3{ 0.0f, 1.0f, 0.0f }, deltaYaw);
 
-            // Apply the yaw rotation by multiplying the current rotation by the yaw quaternion
-            // Note the order: current rotation * yawQuat
             r.value = duin::QuaternionMultiply(r.value, yawQuat);
             r.value = duin::QuaternionNormalize(r.value);
         }
@@ -153,7 +128,7 @@ void ExecuteQueryUpdateCameraPitch(flecs::world& world)
 
             // Clamp the pitch angle to prevent flipping
             const float maxPitch = DEG2RAD * 89.0f;
-            const float minPitch = DEG2RAD *  -87.0f;
+            const float minPitch = DEG2RAD * -87.0f;
             if (pitch.value > maxPitch) pitch.value = maxPitch;
             if (pitch.value < -maxPitch) pitch.value = minPitch;
 
@@ -164,6 +139,171 @@ void ExecuteQueryUpdateCameraPitch(flecs::world& world)
             // Reconstruct the rotation quaternion with clamped pitch and existing yaw
             r.value = duin::QuaternionFromEuler(pitch.value, currentYaw, 0.0f); // Assuming roll is zero
             r.value = duin::QuaternionNormalize(r.value);
+        }
+    );
+}
+
+void ExecuteQueryGravity(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputForces,
+        const CharacterBody3DComponent,
+        const GravityComponent,
+        const Mass
+    >()
+        .with<CanGravity>()
+        .cached()
+        .build();
+
+    q.each([](
+            InputForces& iF,
+            const CharacterBody3DComponent& cb,
+            const GravityComponent& gravity,
+            const Mass& mass
+        ) {
+            duin::Vector3 g(duin::Vector3Scale(gravity.value, mass.value));
+            if (!cb.characterBody->IsOnFloor()) {
+                iF.vec.push_back(g);
+            }
+        });
+}
+
+void ExecuteQueryRun(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputVelocities,
+        InputVelocityDirection,
+        const CanRunComponent
+        //const Velocity3D
+    >()
+        .with<RunTag>()
+        .with<OnGroundTag>()
+        .build();
+    
+    world.defer_begin();
+        q.each([](
+            flecs::entity e,
+            InputVelocities& inputVels,
+            InputVelocityDirection& iDir,
+            const CanRunComponent& moveSpeed
+            //const Velocity3D& velocity
+            ) {
+               duin::Vector3 iVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
+               inputVels.vec.push_back(iVel);
+               e.remove<RunTag>();
+            }
+        );
+    world.defer_end();
+}
+
+void ExecuteQuerySprint(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputVelocities,
+        InputVelocityDirection,
+        const CanSprintComponent
+        //const Velocity3D
+    >()
+        .with<SprintTag>()
+        .with<OnGroundTag>()
+        .build();
+
+    world.defer_begin();
+        q.each([](
+            flecs::entity e,
+            InputVelocities& inputVels,
+            InputVelocityDirection& iDir,
+            const CanSprintComponent& moveSpeed
+            //const Velocity3D& velocity
+            ) {
+               duin::Vector3 iVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
+               inputVels.vec.push_back(iVel);
+               e.remove<SprintTag>();
+            }
+        );
+    world.defer_end();
+}
+
+void ExecuteQueryJump(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputForces,
+        const CanJumpComponent
+    >()
+        .with<JumpTag>()
+        .with<OnGroundTag>()
+        .build();
+
+    world.defer_begin();
+        q.each([](
+            flecs::entity e,
+            InputForces& inputForces,
+            const CanJumpComponent& moveSpeed
+            ) {
+                debugConsole.Log("Jumping!");
+                duin::Vector3 iForce(0.0f, moveSpeed.impulse, 0.0f);
+                inputForces.vec.push_back(iForce);                
+                e.remove<JumpTag>();
+            }
+        );
+    world.defer_end();
+}
+
+void ExecuteQueryResolveInputVelocities(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputVelocities,
+        Velocity3D
+    >()
+        .cached()
+        .build();
+
+    q.each([](
+        InputVelocities& inputVels,
+        Velocity3D& velocity
+        ) {
+            duin::Vector3 accumVel = duin::Vector3Zero();
+            for (duin::Vector3& vec : inputVels.vec) {
+                accumVel = duin::Vector3Add(accumVel, vec);
+            }
+
+            velocity.value = accumVel;
+
+            inputVels.vec.clear();
+        }
+    );
+}
+
+void ExecuteQueryResolveInputForces(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputForces,
+        InputVelocities,
+        Velocity3D,
+        const Mass
+    >()
+        .cached()
+        .build();
+
+    q.each([](
+        InputForces& inputForces,
+        InputVelocities& inputVelocities,
+        Velocity3D& velocity,
+        const Mass& mass
+        ) {
+            duin::Vector3 netForce = duin::Vector3Zero();
+            for (duin::Vector3& vec : inputForces.vec) {
+                netForce = duin::Vector3Add(netForce, vec);
+            }
+            float mass_ = mass.value < 0.1f ? 1.0f : mass.value;
+            duin::Vector3 a(duin::Vector3Scale(netForce, (1.0f / mass_)));
+
+            debugWatchlist.Post("Fnet", "%.2f", duin::Vector3Length(a));
+
+            duin::Vector3Scale(a, duin::GetPhysicsFrameTime());
+            inputVelocities.vec.push_back(a);
+
+            inputForces.vec.clear();
         }
     );
 }

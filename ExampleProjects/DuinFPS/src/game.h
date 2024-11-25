@@ -4,7 +4,6 @@
 #define CAMERA3D
 #include <Duin.h>
 
-
 class Game : public duin::Application
 {
 public:

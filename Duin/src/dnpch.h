@@ -20,6 +20,7 @@
 #include <dep_raygui.h>
 #include <flecs.h>
 
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
 #include <spdlog/spdlog.h>
 #include <spdlog/common.h>
 #include <spdlog/fmt/fmt.h>

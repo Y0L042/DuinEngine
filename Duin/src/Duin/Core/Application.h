@@ -15,10 +15,19 @@ namespace duin
     void SetActiveCamera3D(::Camera3D camera3d);
     void SetBackgroundColor(::Color color);
 
+	float GetPhysicsFPS();
+	float GetPhysicsFrameTime();
+	float GetRenderFPS();
+	float GetRenderFrameTime();
+	size_t GetPhysicsFrameCount();
+	size_t GetRenderFrameCount();
+
 	void QueuePostUpdateCallback(std::function<void(double)>);
 	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
 	void QueuePostDrawCallback(std::function<void()>);
 	void QueuePostDrawUICallback(std::function<void()>);
+	void QueuePreFrameCallback(std::function<void()>);
+	void QueuePostFrameCallback(std::function<void()>);
 
 	class DAPI Application
 	{
@@ -43,6 +52,8 @@ namespace duin
 
 		void EngineReady();
 		virtual void Ready();
+
+		void EnginePreFrame();
 
 		void EngineHandleInputs();
 		virtual void HandleInputs();
