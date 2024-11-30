@@ -11,6 +11,9 @@
 
 namespace duin
 {
+    void DebugPauseGame();
+    void DebugResumeGame();
+    int DebugIsGamePaused();
 
     void SetActiveCamera3D(::Camera3D camera3d);
     void SetBackgroundColor(::Color color);
@@ -28,6 +31,7 @@ namespace duin
 	void QueuePostDrawUICallback(std::function<void()>);
 	void QueuePreFrameCallback(std::function<void()>);
 	void QueuePostFrameCallback(std::function<void()>);
+	void QueuePostDebugCallback(std::function<void()>);
 
 	class DAPI Application
 	{
@@ -73,6 +77,10 @@ namespace duin
 		void EngineDrawUI();
 		virtual void DrawUI();
         void EnginePostDrawUI();
+
+		void EngineDebug();
+		virtual void Debug();
+        void EnginePostDebug();
 
         void EnginePostFrame();
 

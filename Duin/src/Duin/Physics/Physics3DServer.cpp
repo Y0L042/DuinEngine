@@ -170,9 +170,12 @@ namespace duin {
         return currentVelocity;
     }
 
-    void CharacterBody3D::Move(Vector3 displacement)
+    void CharacterBody3D::Move(Vector3 displacement, double delta)
     {
-        timeSinceLastMove = ::GetTime() - timeSinceLastMove;
+        // TODO refactor and clean!
+
+        double timeSinceLastMove = ::GetTime() - timeWhenLastMoved;
+        timeSinceLastMove = delta;
 
         Vector3 oldPos = Vector3(pxController->getPosition());
         physx::PxControllerCollisionFlags collisionFlags = pxController->move(
@@ -188,9 +191,9 @@ namespace duin {
         
         currentVelocity = Vector3Scale(distanceMoved, 1.0f / timeSinceLastMove);
 
-        timeSinceLastMove = ::GetTime();
-
         OnFloorShapeCast(timeSinceLastMove);
+
+        timeWhenLastMoved = ::GetTime();
     }
 
     int CharacterBody3D::IsOnFloor()

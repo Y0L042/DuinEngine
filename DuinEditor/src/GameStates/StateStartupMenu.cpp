@@ -1,17 +1,21 @@
 #include "StateStartupMenu.h"
 #include "../Singletons.h"
-#include "../FileBrowser.h"
+#include "../FileManager.h"
 #include "States.h"
 
 #include <nfd.h>
+#include <iostream>
+#include <vector>
+#include <string>
 
 
 #define MAX_DIR_LEN 512
 
 const char *EDITOR_CFG_PATH = "./data/editor_cfg.json\0";
-FileExplorer explorer;
+const char *PROJECT_FILE_NAME = "duin.project\0";
 
-
+static std::vector<std::string> recentProjectDirsVec;
+static int selectedProjectIndex = -1;
 
 
 
@@ -37,6 +41,8 @@ void StateStartupMenu::State_Enter()
 {
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING STARTUPMENU");
     NFD_Init();
+
+    InitProjectList();
 }
 
 void StateStartupMenu::State_Exit()
@@ -61,8 +67,10 @@ void StateStartupMenu::State_DrawUI()
     DrawGUI();
 }
 
-void StateStartupMenu::LoadCurrentProject()
+void StateStartupMenu::InitProjectList()
 {
+    debugConsole.LogEx(duin::LogLevel::Info, 
+                     "Initialising Project List.\n");
     rapidjson::Document doc;
     if (ReadJSONFile(EDITOR_CFG_PATH, &doc)) {
             debugConsole.LogEx(duin::LogLevel::Warn, 
@@ -76,32 +84,68 @@ void StateStartupMenu::LoadCurrentProject()
                              "EditorConfig not found. Select project root.\n");
         return;
     }
-
     const rapidjson::Value& editorConfig = doc["EditorConfig"];
+    debugConsole.LogEx(duin::LogLevel::Info, 
+                     "EditorConfig loaded.\n");
 
-    // Ensure "CurrentProjectDir" exists and is a string
-    if (!editorConfig.HasMember("CurrentProjectDir") 
-        || !editorConfig["CurrentProjectDir"].IsString()) {
-            debugConsole.LogEx(duin::LogLevel::Warn, 
-                             "Project directory not found. Select project root.\n");
-        return;
-    }
+    // Read "RecentProjectDirs"
+    if (editorConfig.HasMember("RecentProjectDirs") && editorConfig["RecentProjectDirs"].IsArray()) {
+        const rapidjson::Value& recentDirs = editorConfig["RecentProjectDirs"];
 
-    std::string currentProjectDir = 
-        editorConfig["CurrentProjectDir"].GetString();
+        debugConsole.LogEx(duin::LogLevel::Info, 
+                         "RecentProjectDirs:");
 
-    if (!currentProjectDir.empty()) {
-        fs::path projectPath = currentProjectDir;
-        if (fs::exists(projectPath) && fs::is_directory(projectPath)) {
-            debugConsole.LogEx(duin::LogLevel::Info, 
-                             "Project loaded: %s", projectPath.string().c_str());
-        } else {
-            debugConsole.LogEx(duin::LogLevel::Warn, 
-                             "Project directory invalid. Select project root.\n");
+        for (rapidjson::SizeType i = 0; i < recentDirs.Size(); ++i) {
+            if (recentDirs[i].IsString()) {
+                recentProjectDirsVec.push_back(recentDirs[i].GetString());
+
+                debugConsole.LogEx(duin::LogLevel::Info, 
+                                 "%s", recentDirs[i].GetString());
+            }
         }
     } else {
+        debugConsole.LogEx(duin::LogLevel::Error, 
+                         "RecentProjectDirs is missing or not an array.");
+    }
+}
+
+void StateStartupMenu::LoadSelectedProject()
+{
+    if (selectedProjectIndex == -1) { return; }
+
+    const char *selectedProjectDir = recentProjectDirsVec[selectedProjectIndex].c_str();
+
+    fs::path projectPath = selectedProjectDir;
+    if (fs::exists(projectPath) && fs::is_directory(projectPath)) {
+        int fileFound = 0;
+        // Search for the file in the directory
+        for (const auto& entry : fs::directory_iterator(projectPath)) {
+            if (entry.is_regular_file() && entry.path().filename() == PROJECT_FILE_NAME) {
+                fileFound = true;
+
+                // Log the full path of the found file
+                debugConsole.LogEx(duin::LogLevel::Info,
+                                 "Project loaded: %s, File found: %s", 
+                                 projectPath.string().c_str(), 
+                                 entry.path().string().c_str());
+
+                SetActiveProject(entry.path().string());
+                fileManager.rootPath = projectPath.string();
+
+                owner.SwitchState<StateLevelEditor>();
+                break;
+            }
+        }
+
+        if (!fileFound) {
             debugConsole.LogEx(duin::LogLevel::Warn, 
-                             "Project directory empty. Select project root.\n");
+                             "File '%s' not found in the selected project directory: %s", 
+                             PROJECT_FILE_NAME,
+                             projectPath.string().c_str());
+        }
+    } else {
+        debugConsole.LogEx(duin::LogLevel::Warn, 
+                         "Project directory invalid. Select project root.\n");
     }
 }
 
@@ -114,8 +158,15 @@ void StateStartupMenu::DrawGUI()
     }
     ImGui::SameLine();
     if (ImGui::Button("Load Project")) {
-        LoadCurrentProject();
-        owner.SwitchState<StateLevelEditor>();
+        LoadSelectedProject();
+    }
+    for (size_t i = 0; i < recentProjectDirsVec.size(); ++i) {
+        bool projectIsSelected = ImGui::Selectable(recentProjectDirsVec[i].c_str(), selectedProjectIndex == i);
+        if (projectIsSelected) {
+            selectedProjectIndex = i;
+            debugConsole.LogEx(duin::LogLevel::Info, 
+                             "Project[%d] {%s} selected", i, recentProjectDirsVec[i].c_str());
+        }
     }
     ImGui::EndChild();
 
@@ -132,7 +183,6 @@ void StateStartupMenu::ImportProject()
     std::string importedProjPath;
     nfdchar_t *outPath;
     nfdfilteritem_t filterItem[1] = {{"Duin Project", "dnproj"}};
-    // show the dialog
     nfdopendialogu8args_t args = {0};
     args.filterList = filterItem;
     args.filterCount = 1;
@@ -140,7 +190,6 @@ void StateStartupMenu::ImportProject()
     if (result == NFD_OKAY) {
         debugConsole.LogEx(duin::LogLevel::Info, 
                          "Success: %s", outPath);
-        // remember to free the memory (since NFD_OKAY is returned)
         importedProjPath = std::string(outPath);
         NFD_FreePath(outPath);
     } else if (result == NFD_CANCEL) {
@@ -152,6 +201,4 @@ void StateStartupMenu::ImportProject()
                          "Error: %s", NFD_GetError());
         return;
     }
-
-
 }

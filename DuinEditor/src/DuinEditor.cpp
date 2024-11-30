@@ -6,13 +6,19 @@
 #include "Singletons.h"
 
 #include "GameStates/States.h"
+#include "Project.h"
+#include "FileManager.h"
 
+#include <string>
 
 duin::Application* duin::CreateApplication() { return new DuinEditor(); }
 
 duin::GameStateMachine gameSM;
 duin::DebugConsole debugConsole;
 DuinEditor *application;
+
+FileManager fileManager;
+Project activeProject;
 
 
 
@@ -23,8 +29,6 @@ void DuinEditor::Initialize()
     SetWindowName("Duin Editor");
     SetFramerate(60);
     SetWindowStartupSize(1600, 900);
-
-
 
 }
 
@@ -71,4 +75,12 @@ void DuinEditor::DrawUI()
     debugConsole.Draw("Console");
 }
 
+Project& GetActiveProject()
+{
+    return activeProject;
+}
 
+void SetActiveProject(Project project)
+{
+    activeProject = project;
+}

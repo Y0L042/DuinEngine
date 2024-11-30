@@ -2,6 +2,9 @@
 
 #include <Duin.h>
 
+extern flecs::entity player;
+extern InputVector2DKeys MOVEMENT_KEYS;
+
 class StateGameLoop : public duin::GameState
 {
 public:

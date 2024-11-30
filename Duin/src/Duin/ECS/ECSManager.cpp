@@ -342,10 +342,11 @@ namespace duin {
                 ECSComponent::Velocity3D& velocity
             ) {
                 // Move CharacterBody3D and get physics-resolved global position
+                double delta = GetPhysicsFrameTime();
                 Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
 
                 Vector3 oldPos = cb.characterBody->GetPosition();
-                cb.characterBody->Move(vDelta);
+                cb.characterBody->Move(vDelta, delta);
                 Vector3 newPos = cb.characterBody->GetPosition();
 
                 // Update entity's positions to fit with resolved position

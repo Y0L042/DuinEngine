@@ -1,0 +1,14 @@
+<VSTemplate Version="2.0.0" Type="Item" Version="2.0.0"> 
+  <TemplateData>
+    <Name>GameState Template</Name>
+    <Description>Template for a C++ class with a header and source file.</Description>
+    <ProjectType>VC</ProjectType> 
+    <DefaultName>State</DefaultName> 
+    <SortOrder>10</SortOrder> 
+    <ProvideDefaultName>true</ProvideDefaultName> 
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem ReplaceParameters="true">MyClass.h</ProjectItem> 
+    <ProjectItem ReplaceParameters="true">MyClass.cpp</ProjectItem> 
+  </TemplateContent>
+</VSTemplate>

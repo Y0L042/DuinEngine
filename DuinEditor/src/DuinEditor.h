@@ -16,7 +16,6 @@ public:
 	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
     void DrawUI() override;
-
 };
 
 #endif /* DUIN_EDITOR_H */

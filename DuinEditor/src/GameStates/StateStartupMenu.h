@@ -16,7 +16,9 @@ private:
     void State_PhysicsUpdate(double delta);
     void State_Draw();
     void State_DrawUI();
-    void LoadCurrentProject();
+
+    void InitProjectList();
+    void LoadSelectedProject();
     void DrawGUI();
     void LoadEditorCFG();
     void ImportProject();

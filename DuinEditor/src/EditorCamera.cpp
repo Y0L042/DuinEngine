@@ -1,5 +1,7 @@
 #include "EditorCamera.h"
 
+#include "Singletons.h"
+
 
 static int isDragging = 0;
 void HandleInfiniteMouseDragging(int mouse_button)

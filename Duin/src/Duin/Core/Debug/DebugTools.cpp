@@ -3,11 +3,13 @@
 
 #include <chrono>
 
+#include <raylib.h>
 #include "Duin/Core/Debug/DNLog.h" 
 
 
 
 namespace duin {
+
 DebugConsole::DebugConsole()
 {
     startTime = std::chrono::steady_clock::now();
@@ -48,13 +50,27 @@ void DebugConsole::Log(const char* format, ...) {
     newMessageAdded = 1;
 }
 
-void DebugConsole::Draw(const char* title) {
+void DebugConsole::Draw(const char* title) 
+{
+    ImGuiWindowFlags windowFlags;
+    if(IsKeyPressed(KEY_O)) {
+        ToggleEditing();
+        DN_CORE_INFO("DebugConsoleEditing {}", enableEditing);
+    }
+    if (!enableEditing && enableSilent) {
+        ImGui::SetWindowFocus(NULL);
+        windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
+    } else {
+        windowFlags = ImGuiWindowFlags_MenuBar;
+    }
     // Set semitransparent background for the entire console window
 
     float bgAlpha = 0.8f;
     float linesAlpha = 0.875f;
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, bgAlpha));
-    ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar);
+    // ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar);
+
+    ImGui::Begin(title, nullptr, windowFlags);
 
     // Title bar menu with dropdown for AutoScroll, Copy, and Clear
     if (ImGui::BeginMenuBar()) {
@@ -125,6 +141,11 @@ void DebugConsole::Draw(const char* title) {
 
     ImGui::End();
     ImGui::PopStyleColor();
+}
+
+void DebugConsole::ToggleEditing()
+{
+    enableEditing = !enableEditing;
 }
 
 
@@ -211,12 +232,26 @@ void DebugWatchlist::Post(const std::string description, const std::string forma
 
 void DebugWatchlist::Draw(const char *title)
 {
+    ImGuiWindowFlags windowFlags;
+    if(IsKeyPressed(KEY_O)) {
+        ToggleEditing();
+        DN_CORE_INFO("DebugWatchlistEditing {}", enableEditing);
+    }
+    if (!enableEditing && enableSilent) {
+        ImGui::SetWindowFocus(NULL);
+        windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
+    } else {
+        windowFlags = ImGuiWindowFlags_MenuBar;
+    }
+
     std::lock_guard<std::mutex> lock(mutex_); // Ensure thread safety
 
     // Begin a new ImGui window with the given title
     float bgAlpha = 0.8f;
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, bgAlpha));
-    if ( ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar)) {
+    // if ( ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar)) {
+
+    if (ImGui::Begin(title, nullptr, windowFlags)) {
 
         // Title bar menu with dropdown for AutoScroll, Copy, and Clear
         if (ImGui::BeginMenuBar()) {
@@ -263,4 +298,10 @@ void DebugWatchlist::Draw(const char *title)
         ImGui::PopStyleColor();
     }
 }
+
+void DebugWatchlist::ToggleEditing()
+{
+    enableEditing = !enableEditing;
+}
+
 }

@@ -115,7 +115,8 @@ namespace duin {
         Vector3 GetFootPosition();
         Vector3 GetCurrentVelocity();
 
-        void Move(Vector3 displacement);
+        // void Move(Vector3 displacement);
+        void Move(Vector3 displacement, double delta);
         int IsOnFloor();
         int IsOnFloorOnly();
 
@@ -123,7 +124,7 @@ namespace duin {
         CharacterBody3D& operator=(const CharacterBody3D&) = delete;
 
     private:
-        double timeSinceLastMove = 0.0;
+        double timeWhenLastMoved = 0.0;
         Vector3 currentVelocity;
         int isOnFloor;
         double timeSinceOnFloor;

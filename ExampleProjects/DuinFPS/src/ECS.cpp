@@ -1,6 +1,8 @@
 #include "ECS.h"
 #include "Singletons.h"
 
+#include <iostream>
+
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
@@ -19,6 +21,9 @@ void RegisterComponents(flecs::world& world)
     world.component<InputForces>();
     world.component<InputVelocityDirection>();
     world.component<Mass>();
+    world.component<GroundFriction>();
+    world.component<AirFriction>();
+    world.component<OnGroundIdleTag>();
 
     world.component<CanRunComponent>();
     world.component<RunTag>();
@@ -44,14 +49,18 @@ void ExecuteQueryComputePlayerInputVelocity(flecs::world& world)
     .cached()
     .build();
      
-    q.each([](
-            PlayerMovementInputVec3& input,
-            InputVelocityDirection& iDir,
-            const Rotation3D& r
-        ) {
-           duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r.value);
-           iDir.value = duin::Vector3(alignedInput.x, 0.0f, alignedInput.z);
-    });
+    world.defer_begin();
+        q.each([](
+                flecs::entity e,
+                PlayerMovementInputVec3& input,
+                InputVelocityDirection& iDir,
+                const Rotation3D& r
+            ) {
+               duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r.value);
+               iDir.value = duin::Vector3(alignedInput.x, 0.0f, alignedInput.z);
+               e.remove<PlayerMovementInputVec3>();
+        });
+    world.defer_end();
 }
 
 void ExecuteQueryDebugCameraTarget(flecs::world& world)
@@ -146,7 +155,7 @@ void ExecuteQueryUpdateCameraPitch(flecs::world& world)
 void ExecuteQueryGravity(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
-        InputForces,
+        InputVelocities,
         const CharacterBody3DComponent,
         const GravityComponent,
         const Mass
@@ -156,16 +165,71 @@ void ExecuteQueryGravity(flecs::world& world)
         .build();
 
     q.each([](
-            InputForces& iF,
+            InputVelocities& inputVelocities,
             const CharacterBody3DComponent& cb,
             const GravityComponent& gravity,
             const Mass& mass
         ) {
-            duin::Vector3 g(duin::Vector3Scale(gravity.value, mass.value));
-            if (!cb.characterBody->IsOnFloor()) {
-                iF.vec.push_back(g);
-            }
+            duin::Vector3 gravityVel = duin::Vector3Scale(gravity.value, duin::GetPhysicsFrameTime());
+            inputVelocities.vec.push_back(gravityVel);
         });
+}
+
+void ExecuteQueryFriction(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputVelocities,
+        const GroundFriction,
+        const Mass
+    >()
+        .with<CanGravity>()
+        .cached()
+        .build();
+
+    q.each([](
+            InputVelocities& inputVelocities,
+            const GroundFriction& friction,
+            const Mass& mass
+        ) {
+
+        });
+}
+
+void ExecuteQueryOnGroundIdle(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        InputVelocities,
+        InputVelocityDirection,
+        const Velocity3D
+    >()
+        .with<OnGroundIdleTag>()
+        .with<OnGroundTag>()
+        .build();
+
+    world.defer_begin();
+    q.each([](
+        flecs::entity e,
+        InputVelocities& inputVels,
+        InputVelocityDirection& iDir,
+        const Velocity3D& velocity
+        ) {
+            double delta = duin::GetPhysicsFrameTime();
+
+            // Scale movement input vector by speed to get target velocity
+            duin::Vector3 targetVel = duin::Vector3Zero();
+
+            float outputVelX = targetVel.x - velocity.value.x;
+            float outputVelZ = targetVel.z - velocity.value.z;
+
+            debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
+
+            duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+
+            inputVels.vec.push_back(outputVel);
+            e.remove<OnGroundIdleTag>();
+        }
+    );
+    world.defer_end();
 }
 
 void ExecuteQueryRun(flecs::world& world)
@@ -173,8 +237,8 @@ void ExecuteQueryRun(flecs::world& world)
     static flecs::query q = world.query_builder<
         InputVelocities,
         InputVelocityDirection,
-        const CanRunComponent
-        //const Velocity3D
+        const CanRunComponent,
+        const Velocity3D
     >()
         .with<RunTag>()
         .with<OnGroundTag>()
@@ -185,11 +249,26 @@ void ExecuteQueryRun(flecs::world& world)
             flecs::entity e,
             InputVelocities& inputVels,
             InputVelocityDirection& iDir,
-            const CanRunComponent& moveSpeed
-            //const Velocity3D& velocity
+            const CanRunComponent& moveSpeed,
+            const Velocity3D& velocity
             ) {
-               duin::Vector3 iVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
-               inputVels.vec.push_back(iVel);
+               double delta = duin::GetPhysicsFrameTime();
+
+               // Scale movement input vector by speed to get target velocity
+               duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
+
+               float smoothFactor = 10.75f;
+               float alpha = 1.0f - std::expf(-smoothFactor * delta);
+
+               float outputVelX = targetVel.x - velocity.value.x;
+               float outputVelZ = targetVel.z - velocity.value.z;
+
+               debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
+
+               duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+               outputVel = duin::Vector3Scale(outputVel, alpha);
+
+               inputVels.vec.push_back(outputVel);
                e.remove<RunTag>();
             }
         );
@@ -201,8 +280,9 @@ void ExecuteQuerySprint(flecs::world& world)
     static flecs::query q = world.query_builder<
         InputVelocities,
         InputVelocityDirection,
-        const CanSprintComponent
-        //const Velocity3D
+        const CanRunComponent,
+        const CanSprintComponent,
+        const Velocity3D
     >()
         .with<SprintTag>()
         .with<OnGroundTag>()
@@ -213,16 +293,63 @@ void ExecuteQuerySprint(flecs::world& world)
             flecs::entity e,
             InputVelocities& inputVels,
             InputVelocityDirection& iDir,
-            const CanSprintComponent& moveSpeed
-            //const Velocity3D& velocity
+            const CanRunComponent& runSpeed,
+            const CanSprintComponent& moveSpeed,
+            const Velocity3D& velocity
             ) {
-               duin::Vector3 iVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
-               inputVels.vec.push_back(iVel);
-               e.remove<SprintTag>();
+                double delta = duin::GetPhysicsFrameTime();
+
+                // Scale movement input vector by speed to get target velocity
+                duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
+
+                float smoothFactor = 4.5f;
+                if (duin::Vector3LengthSqr(velocity.value) < (runSpeed.speed * runSpeed.speed)) {
+                    smoothFactor = 10.75f;
+                }
+                float alpha = 1.0f - std::expf(-smoothFactor * delta);
+
+                float outputVelX = targetVel.x - velocity.value.x;
+                float outputVelZ = targetVel.z - velocity.value.z;
+
+                debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
+
+                duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+                outputVel = duin::Vector3Scale(outputVel, alpha);
+
+                inputVels.vec.push_back(outputVel);
+                e.remove<SprintTag>();
             }
         );
     world.defer_end();
 }
+
+/*
+void ExecuteQueryVelocityBob(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        VelocityBob,
+        Position3D,
+        const Velocity3D,
+        const Velocity3D *
+    >()
+        .term_at(1).second<Local>()
+        .term_at(3).parent().cascade()
+        .cached()
+        .build();
+
+    world.defer_begin();
+    q.each([](
+            flecs::entity e,
+            VelocityBob& vc,
+            Position3D& localPos,
+            const Velocity3D& velocity
+        ){
+            kj
+        }
+    );
+    world.defer_end();
+}
+*/
 
 void ExecuteQueryJump(flecs::world& world)
 {
@@ -267,7 +394,11 @@ void ExecuteQueryResolveInputVelocities(flecs::world& world)
                 accumVel = duin::Vector3Add(accumVel, vec);
             }
 
-            velocity.value = accumVel;
+            debugWatchlist.Post("accumVel:", "{ %.2f, %.2f, %.2f }", accumVel.x, accumVel.y, accumVel.z);
+            debugWatchlist.Post("accumVel size:", "%d", inputVels.vec.size());
+
+            // velocity.value = accumVel;
+            velocity.value = duin::Vector3Add(velocity.value, accumVel);
 
             inputVels.vec.clear();
         }
@@ -297,11 +428,14 @@ void ExecuteQueryResolveInputForces(flecs::world& world)
             }
             float mass_ = mass.value < 0.1f ? 1.0f : mass.value;
             duin::Vector3 a(duin::Vector3Scale(netForce, (1.0f / mass_)));
-
-            debugWatchlist.Post("Fnet", "%.2f", duin::Vector3Length(a));
-
             duin::Vector3Scale(a, duin::GetPhysicsFrameTime());
-            inputVelocities.vec.push_back(a);
+
+            if (inputForces.vec.size() > 0) {
+                inputVelocities.vec.push_back(a);
+            }
+
+            debugWatchlist.Post("Forces size", "%d", inputForces.vec.size());
+            debugWatchlist.Post("Fnet", "%.2f", duin::Vector3Length(a));
 
             inputForces.vec.clear();
         }

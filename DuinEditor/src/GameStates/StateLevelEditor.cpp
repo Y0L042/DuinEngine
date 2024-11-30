@@ -1,7 +1,15 @@
 #include "StateLevelEditor.h"
-#include "../Singletons.h"
 #include "States.h"
-#include "EditorCamera.h"
+
+#include "../Singletons.h"
+#include "../Project.h"
+#include "../FileManager.h"
+
+#include "../EditorCamera.h"
+
+#include <string>
+
+
 
 Camera3D camera = { { 0 } };
 Camera3D compass_camera =  { { 0 } };
@@ -32,6 +40,9 @@ StateLevelEditor::~StateLevelEditor()
 void StateLevelEditor::State_Enter()
 {
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING LEVELEDITOR");
+
+    fileManager.BuildFileSystemTree();
+    fileManager.PrintTree();
 
     camera.position = { 0.0f, 10.0f, 10.0f };
     camera.target = { 0.0f, 0.0f, 0.0f };
@@ -75,8 +86,7 @@ void StateLevelEditor::State_Update(double delta)
 
 void StateLevelEditor::State_PhysicsUpdate(double delta)
 {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        debugConsole.LogEx(duin::LogLevel::Info, "Left Click!");
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         if (!selectionCollision.hit) {
             selectionRay = GetScreenToWorldRay(GetMousePosition(), camera);
 
@@ -101,9 +111,11 @@ void StateLevelEditor::State_PhysicsUpdate(double delta)
 
 void StateLevelEditor::State_Draw()
 {
+    duin::SetActiveCamera3D(camera);
+
     DrawGrid(100, 1.0f);
 
-    DrawModel(test, {1, 1, 1}, 1, WHITE);
+    DrawModel(test, {1, 1, 1}, 1, BLACK);
 
     if (selectionCollision.hit)
     {
@@ -136,8 +148,9 @@ void StateLevelEditor::State_Draw()
 
 void StateLevelEditor::State_DrawUI()
 {
-
-    GuiLabel(Rectangle{ 10, 10, 75, 75 }, "TEST");
+    std::string projectFileDir = GetActiveProject().projectDir.string();
+    GuiLabel(Rectangle{ 10, 10, 1075, 75 }, projectFileDir.c_str());
+    fileManager.DrawGUI();
 
     DrawCompass3D(compass_camera, compassRenderTexture);
     DrawCompassUI(compassRenderTexture, compassTarget);

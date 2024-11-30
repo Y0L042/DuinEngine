@@ -64,7 +64,8 @@
 #include <foundation/PxVec4.h>
 #include <foundation/PxMat44.h>
 
-
+// Fast square root dependencies
+#include <xmmintrin.h>
 
 #define DUINMATHS_STATIC_INLINE
 // #if defined(RAYMATH_IMPLEMENTATION) && defined(RAYMATH_STATIC_INLINE)
@@ -394,6 +395,36 @@ DNMAPI int FloatEquals(float x, float y)
     return result;
 }
 
+// Fast square root using RSQRTSS
+DNMAPI float QuakeSqrt(float x) 
+{
+    __m128 input = _mm_set_ss(x);
+    __m128 rsqrt = _mm_rsqrt_ss(input);
+    __m128 sqrt = _mm_mul_ss(input, rsqrt);
+    float result = _mm_cvtss_f32(sqrt);
+
+    return result;
+}
+
+// Refined square root with Newton-Raphson iteration
+DNMAPI float FastSqrt(float x) 
+{
+    __m128 input = _mm_set_ss(x);
+    __m128 rsqrt = _mm_rsqrt_ss(input);
+
+    // Perform one iteration of Newton-Raphson to refine the result:
+    // rsqrt = rsqrt * (1.5 - 0.5 * x * rsqrt * rsqrt);
+    __m128 half = _mm_set_ss(0.5f);
+    __m128 three = _mm_set_ss(1.5f);
+    __m128 refined = _mm_mul_ss(rsqrt, _mm_sub_ss(three, _mm_mul_ss(half, _mm_mul_ss(input, _mm_mul_ss(rsqrt, rsqrt)))));
+
+    // Multiply the refined reciprocal square root by x to get sqrt(x)
+    __m128 sqrt = _mm_mul_ss(input, refined);
+    float result = _mm_cvtss_f32(sqrt);
+
+    return result;
+}
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Vector2 math
 //----------------------------------------------------------------------------------
@@ -454,6 +485,14 @@ DNMAPI float Vector2Length(Vector2 v)
     return result;
 }
 
+// Calculate vector length using FastSqrt
+DNMAPI float Vector2LengthF(Vector2 v)
+{
+    float result = FastSqrt((v.x*v.x) + (v.y*v.y));
+
+    return result;
+}
+
 // Calculate vector square length
 DNMAPI float Vector2LengthSqr(Vector2 v)
 {
@@ -474,6 +513,14 @@ DNMAPI float Vector2DotProduct(Vector2 v1, Vector2 v2)
 DNMAPI float Vector2Distance(Vector2 v1, Vector2 v2)
 {
     float result = sqrtf((v1.x - v2.x)*(v1.x - v2.x) + (v1.y - v2.y)*(v1.y - v2.y));
+
+    return result;
+}
+
+// Calculate distance between two vectors using FastSqrt
+DNMAPI float Vector2DistanceF(Vector2 v1, Vector2 v2)
+{
+    float result = FastSqrt((v1.x - v2.x)*(v1.x - v2.x) + (v1.y - v2.y)*(v1.y - v2.y));
 
     return result;
 }
@@ -550,6 +597,22 @@ DNMAPI Vector2 Vector2Normalize(Vector2 v)
 {
     Vector2 result;
     float length = sqrtf((v.x*v.x) + (v.y*v.y));
+
+    if (length > 0)
+    {
+        float ilength = 1.0f/length;
+        result.x = v.x*ilength;
+        result.y = v.y*ilength;
+    }
+
+    return result;
+}
+
+// Normalize provided vector using FastSqrt
+DNMAPI Vector2 Vector2NormalizeF(Vector2 v)
+{
+    Vector2 result;
+    float length = FastSqrt((v.x*v.x) + (v.y*v.y));
 
     if (length > 0)
     {
@@ -655,6 +718,25 @@ DNMAPI Vector2 Vector2MoveTowards(Vector2 v, Vector2 target, float maxDistance)
     return result;
 }
 
+// Move Vector towards target using FastSqrt
+DNMAPI Vector2 Vector2MoveTowardsF(Vector2 v, Vector2 target, float maxDistance)
+{
+    Vector2 result;
+
+    float dx = target.x - v.x;
+    float dy = target.y - v.y;
+    float value = (dx*dx) + (dy*dy);
+
+    if ((value == 0) || ((maxDistance >= 0) && (value <= maxDistance*maxDistance))) return target;
+
+    float dist = FastSqrt(value);
+
+    result.x = v.x + dx/dist*maxDistance;
+    result.y = v.y + dy/dist*maxDistance;
+
+    return result;
+}
+
 // Invert the given vector
 DNMAPI Vector2 Vector2Invert(Vector2 v)
 {
@@ -702,6 +784,33 @@ DNMAPI Vector2 Vector2ClampValue(Vector2 v, float min, float max)
     return result;
 }
 
+// Clamp the magnitude of the vector between two min and max values using
+// FastSqrt
+DNMAPI Vector2 Vector2ClampValueF(Vector2 v, float min, float max)
+{
+    Vector2 result = v;
+
+    float length = (v.x*v.x) + (v.y*v.y);
+    if (length > 0.0f)
+    {
+        length = FastSqrt(length);
+
+        float scale = 1;    // By default, 1 as the neutral element.
+        if (length < min)
+        {
+            scale = min/length;
+        }
+        else if (length > max)
+        {
+            scale = max/length;
+        }
+
+        result.x = v.x*scale;
+        result.y = v.y*scale;
+    }
+
+    return result;
+}
 // Check whether two given vectors are almost equal
 DNMAPI int Vector2Equals(Vector2 p, Vector2 q)
 {
@@ -748,6 +857,30 @@ DNMAPI Vector2 Vector2Refract(Vector2 v, Vector2 n, float r)
     return result;
 }
 
+
+// Compute the direction of a refracted ray using FastSqrt
+// v: normalized direction of the incoming ray
+// n: normalized normal vector of the interface of two optical media
+// r: ratio of the refractive index of the medium from where the ray comes
+//    to the refractive index of the medium on the other side of the surface
+DNMAPI Vector2 Vector2RefractF(Vector2 v, Vector2 n, float r)
+{
+    Vector2 result;
+
+    float dot = v.x*n.x + v.y*n.y;
+    float d = 1.0f - r*r*(1.0f - dot*dot);
+
+    if (d >= 0.0f)
+    {
+        d = FastSqrt(d);
+        v.x = r*v.x - (r*dot + d)*n.x;
+        v.y = r*v.y - (r*dot + d)*n.y;
+
+        result = v;
+    }
+
+    return result;
+}
 
 //----------------------------------------------------------------------------------
 // Module Functions Definition - Vector3 math
@@ -862,6 +995,14 @@ DNMAPI float Vector3Length(const Vector3 v)
     return result;
 }
 
+// Calculate vector length using FastSqrt
+DNMAPI float Vector3LengthF(const Vector3 v)
+{
+    float result = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+
+    return result;
+}
+
 // Calculate vector square length
 DNMAPI float Vector3LengthSqr(const Vector3 v)
 {
@@ -887,6 +1028,19 @@ DNMAPI float Vector3Distance(Vector3 v1, Vector3 v2)
     float dy = v2.y - v1.y;
     float dz = v2.z - v1.z;
     result = sqrtf(dx*dx + dy*dy + dz*dz);
+
+    return result;
+}
+
+// Calculate distance between two vectors using FastSqrt
+DNMAPI float Vector3DistanceF(Vector3 v1, Vector3 v2)
+{
+    float result = 0.0f;
+
+    float dx = v2.x - v1.x;
+    float dy = v2.y - v1.y;
+    float dz = v2.z - v1.z;
+    result = FastSqrt(dx*dx + dy*dy + dz*dz);
 
     return result;
 }
@@ -917,6 +1071,19 @@ DNMAPI float Vector3Angle(Vector3 v1, Vector3 v2)
     return result;
 }
 
+// Calculate angle between two vectors using FastSqrt
+DNMAPI float Vector3AngleF(Vector3 v1, Vector3 v2)
+{
+    float result = 0.0f;
+
+    Vector3 cross = { v1.y*v2.z - v1.z*v2.y, v1.z*v2.x - v1.x*v2.z, v1.x*v2.y - v1.y*v2.x };
+    float len = FastSqrt(cross.x*cross.x + cross.y*cross.y + cross.z*cross.z);
+    float dot = (v1.x*v2.x + v1.y*v2.y + v1.z*v2.z);
+    result = atan2f(len, dot);
+
+    return result;
+}
+
 // Negate provided vector (invert direction)
 DNMAPI Vector3 Vector3Negate(Vector3 v)
 {
@@ -939,6 +1106,24 @@ DNMAPI Vector3 Vector3Normalize(Vector3 v)
     Vector3 result = v;
 
     float length = sqrtf(v.x*v.x + v.y*v.y + v.z*v.z);
+    if (length != 0.0f)
+    {
+        float ilength = 1.0f/length;
+
+        result.x *= ilength;
+        result.y *= ilength;
+        result.z *= ilength;
+    }
+
+    return result;
+}
+
+// Normalize provided vector using FastSqrt
+DNMAPI Vector3 Vector3NormalizeF(Vector3 v)
+{
+    Vector3 result = v;
+
+    float length = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
     if (length != 0.0f)
     {
         float ilength = 1.0f/length;
@@ -1008,6 +1193,41 @@ DNMAPI void Vector3OrthoNormalize(Vector3 *v1, Vector3 *v2)
     // Vector3Normalize(vn1);
     v = vn1;
     length = sqrtf(v.x*v.x + v.y*v.y + v.z*v.z);
+    if (length == 0.0f) length = 1.0f;
+    ilength = 1.0f/length;
+    vn1.x *= ilength;
+    vn1.y *= ilength;
+    vn1.z *= ilength;
+
+    // Vector3CrossProduct(vn1, *v1)
+    Vector3 vn2 = { vn1.y*v1->z - vn1.z*v1->y, vn1.z*v1->x - vn1.x*v1->z, vn1.x*v1->y - vn1.y*v1->x };
+
+    *v2 = vn2;
+}
+
+// Orthonormalize provided vectors using FastSqrt
+// Makes vectors normalized and orthogonal to each other
+// Gram-Schmidt function implementation
+DNMAPI void Vector3OrthoNormalizeF(Vector3 *v1, Vector3 *v2)
+{
+    float length = 0.0f;
+    float ilength = 0.0f;
+
+    // Vector3Normalize(*v1);
+    Vector3 v = *v1;
+    length = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+    if (length == 0.0f) length = 1.0f;
+    ilength = 1.0f/length;
+    v1->x *= ilength;
+    v1->y *= ilength;
+    v1->z *= ilength;
+
+    // Vector3CrossProduct(*v1, *v2)
+    Vector3 vn1 = { v1->y*v2->z - v1->z*v2->y, v1->z*v2->x - v1->x*v2->z, v1->x*v2->y - v1->y*v2->x };
+
+    // Vector3Normalize(vn1);
+    v = vn1;
+    length = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
     if (length == 0.0f) length = 1.0f;
     ilength = 1.0f/length;
     vn1.x *= ilength;
@@ -1113,6 +1333,27 @@ DNMAPI Vector3 Vector3MoveTowards(Vector3 v, Vector3 target, float maxDistance)
     if ((value == 0) || ((maxDistance >= 0) && (value <= maxDistance*maxDistance))) return target;
 
     float dist = sqrtf(value);
+
+    result.x = v.x + dx/dist*maxDistance;
+    result.y = v.y + dy/dist*maxDistance;
+    result.z = v.z + dz/dist*maxDistance;
+
+    return result;
+}
+
+// Move Vector towards target using FastSqrt
+DNMAPI Vector3 Vector3MoveTowardsF(Vector3 v, Vector3 target, float maxDistance)
+{
+    Vector3 result;
+
+    float dx = target.x - v.x;
+    float dy = target.y - v.y;
+    float dz = target.z - v.z;
+    float value = (dx*dx) + (dy*dy) + (dz*dz);
+
+    if ((value == 0) || ((maxDistance >= 0) && (value <= maxDistance*maxDistance))) return target;
+
+    float dist = FastSqrt(value);
 
     result.x = v.x + dx/dist*maxDistance;
     result.y = v.y + dy/dist*maxDistance;
@@ -1360,6 +1601,34 @@ DNMAPI Vector3 Vector3ClampValue(Vector3 v, float min, float max)
     return result;
 }
 
+// Clamp the magnitude of the vector between two values using FastSqrt
+DNMAPI Vector3 Vector3ClampValueF(Vector3 v, float min, float max)
+{
+    Vector3 result = v;
+
+    float length = (v.x*v.x) + (v.y*v.y) + (v.z*v.z);
+    if (length > 0.0f)
+    {
+        length = FastSqrt(length);
+
+        float scale = 1;    // By default, 1 as the neutral element.
+        if (length < min)
+        {
+            scale = min/length;
+        }
+        else if (length > max)
+        {
+            scale = max/length;
+        }
+
+        result.x = v.x*scale;
+        result.y = v.y*scale;
+        result.z = v.z*scale;
+    }
+
+    return result;
+}
+
 // Check whether two given vectors are almost equal
 DNMAPI int Vector3Equals(Vector3 p, Vector3 q)
 {
@@ -1399,6 +1668,31 @@ DNMAPI Vector3 Vector3Refract(Vector3 v, Vector3 n, float r)
     if (d >= 0.0f)
     {
         d = sqrtf(d);
+        v.x = r*v.x - (r*dot + d)*n.x;
+        v.y = r*v.y - (r*dot + d)*n.y;
+        v.z = r*v.z - (r*dot + d)*n.z;
+
+        result = v;
+    }
+
+    return result;
+}
+
+// Compute the direction of a refracted ray using FastSqrt
+// v: normalized direction of the incoming ray
+// n: normalized normal vector of the interface of two optical media
+// r: ratio of the refractive index of the medium from where the ray comes
+//    to the refractive index of the medium on the other side of the surface
+DNMAPI Vector3 Vector3RefractF(Vector3 v, Vector3 n, float r)
+{
+    Vector3 result;
+
+    float dot = v.x*n.x + v.y*n.y + v.z*n.z;
+    float d = 1.0f - r*r*(1.0f - dot*dot);
+
+    if (d >= 0.0f)
+    {
+        d = FastSqrt(d);
         v.x = r*v.x - (r*dot + d)*n.x;
         v.y = r*v.y - (r*dot + d)*n.y;
         v.z = r*v.z - (r*dot + d)*n.z;
@@ -1476,6 +1770,12 @@ DNMAPI float Vector4Length(Vector4 v)
     return result;
 }
 
+DNMAPI float Vector4LengthF(Vector4 v)
+{
+    float result = FastSqrt((v.x*v.x) + (v.y*v.y) + (v.z*v.z) + (v.w*v.w));
+    return result;
+}
+
 DNMAPI float Vector4LengthSqr(Vector4 v)
 {
     float result = (v.x*v.x) + (v.y*v.y) + (v.z*v.z) + (v.w*v.w);
@@ -1492,6 +1792,15 @@ DNMAPI float Vector4DotProduct(Vector4 v1, Vector4 v2)
 DNMAPI float Vector4Distance(Vector4 v1, Vector4 v2)
 {
     float result = sqrtf(
+        (v1.x - v2.x)*(v1.x - v2.x) + (v1.y - v2.y)*(v1.y - v2.y) +
+        (v1.z - v2.z)*(v1.z - v2.z) + (v1.w - v2.w)*(v1.w - v2.w));
+    return result;
+}
+
+// Calculate distance between two vectors using FastSqrt
+DNMAPI float Vector4DistanceF(Vector4 v1, Vector4 v2)
+{
+    float result = FastSqrt(
         (v1.x - v2.x)*(v1.x - v2.x) + (v1.y - v2.y)*(v1.y - v2.y) +
         (v1.z - v2.z)*(v1.z - v2.z) + (v1.w - v2.w)*(v1.w - v2.w));
     return result;
@@ -1539,6 +1848,24 @@ DNMAPI Vector4 Vector4Normalize(Vector4 v)
 {
     Vector4 result;
     float length = sqrtf((v.x*v.x) + (v.y*v.y) + (v.z*v.z) + (v.w*v.w));
+
+    if (length > 0)
+    {
+        float ilength = 1.0f/length;
+        result.x = v.x*ilength;
+        result.y = v.y*ilength;
+        result.z = v.z*ilength;
+        result.w = v.w*ilength;
+    }
+
+    return result;
+}
+
+// Normalize provided vector using FastSqrt
+DNMAPI Vector4 Vector4NormalizeF(Vector4 v)
+{
+    Vector4 result;
+    float length = FastSqrt((v.x*v.x) + (v.y*v.y) + (v.z*v.z) + (v.w*v.w));
 
     if (length > 0)
     {
@@ -1605,6 +1932,29 @@ DNMAPI Vector4 Vector4MoveTowards(Vector4 v, Vector4 target, float maxDistance)
     if ((value == 0) || ((maxDistance >= 0) && (value <= maxDistance*maxDistance))) return target;
 
     float dist = sqrtf(value);
+
+    result.x = v.x + dx/dist*maxDistance;
+    result.y = v.y + dy/dist*maxDistance;
+    result.z = v.z + dz/dist*maxDistance;
+    result.w = v.w + dw/dist*maxDistance;
+
+    return result;
+}
+
+// Move Vector towards target using FastSqrt
+DNMAPI Vector4 Vector4MoveTowardsF(Vector4 v, Vector4 target, float maxDistance)
+{
+    Vector4 result;
+
+    float dx = target.x - v.x;
+    float dy = target.y - v.y;
+    float dz = target.z - v.z;
+    float dw = target.w - v.w;
+    float value = (dx*dx) + (dy*dy) + (dz*dz) + (dw*dw);
+
+    if ((value == 0) || ((maxDistance >= 0) && (value <= maxDistance*maxDistance))) return target;
+
+    float dist = FastSqrt(value);
 
     result.x = v.x + dx/dist*maxDistance;
     result.y = v.y + dy/dist*maxDistance;
@@ -2166,6 +2516,61 @@ DNMAPI Matrix MatrixLookAt(Vector3 eye, Vector3 target, Vector3 up)
     return result;
 }
 
+// Get camera look-at matrix (view matrix) using FastSqrt
+DNMAPI Matrix MatrixLookAtF(Vector3 eye, Vector3 target, Vector3 up)
+{
+    Matrix result;
+
+    float length = 0.0f;
+    float ilength = 0.0f;
+
+    // Vector3Subtract(eye, target)
+    Vector3 vz = { eye.x - target.x, eye.y - target.y, eye.z - target.z };
+
+    // Vector3Normalize(vz)
+    Vector3 v = vz;
+    length = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+    if (length == 0.0f) length = 1.0f;
+    ilength = 1.0f/length;
+    vz.x *= ilength;
+    vz.y *= ilength;
+    vz.z *= ilength;
+
+    // Vector3CrossProduct(up, vz)
+    Vector3 vx = { up.y*vz.z - up.z*vz.y, up.z*vz.x - up.x*vz.z, up.x*vz.y - up.y*vz.x };
+
+    // Vector3Normalize(x)
+    v = vx;
+    length = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+    if (length == 0.0f) length = 1.0f;
+    ilength = 1.0f/length;
+    vx.x *= ilength;
+    vx.y *= ilength;
+    vx.z *= ilength;
+
+    // Vector3CrossProduct(vz, vx)
+    Vector3 vy = { vz.y*vx.z - vz.z*vx.y, vz.z*vx.x - vz.x*vx.z, vz.x*vx.y - vz.y*vx.x };
+
+    result.m0 = vx.x;
+    result.m1 = vy.x;
+    result.m2 = vz.x;
+    result.m3 = 0.0f;
+    result.m4 = vx.y;
+    result.m5 = vy.y;
+    result.m6 = vz.y;
+    result.m7 = 0.0f;
+    result.m8 = vx.z;
+    result.m9 = vy.z;
+    result.m10 = vz.z;
+    result.m11 = 0.0f;
+    result.m12 = -(vx.x*eye.x + vx.y*eye.y + vx.z*eye.z);   // Vector3DotProduct(vx, eye)
+    result.m13 = -(vy.x*eye.x + vy.y*eye.y + vy.z*eye.z);   // Vector3DotProduct(vy, eye)
+    result.m14 = -(vz.x*eye.x + vz.y*eye.y + vz.z*eye.z);   // Vector3DotProduct(vz, eye)
+    result.m15 = 1.0f;
+
+    return result;
+}
+
 // Get float array of matrix data
 DNMAPI float16 MatrixToFloatV(Matrix mat)
 {
@@ -2243,12 +2648,37 @@ DNMAPI float QuaternionLength(Quaternion q)
     return result;
 }
 
+// Computes the length of a quaternion using FastSqrt
+DNMAPI float QuaternionLengthF(Quaternion q)
+{
+    float result = FastSqrt(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w);
+
+    return result;
+}
+
 // Normalize provided quaternion
 DNMAPI Quaternion QuaternionNormalize(Quaternion q)
 {
     Quaternion result;
 
     float length = sqrtf(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w);
+    if (length == 0.0f) length = 1.0f;
+    float ilength = 1.0f/length;
+
+    result.x = q.x*ilength;
+    result.y = q.y*ilength;
+    result.z = q.z*ilength;
+    result.w = q.w*ilength;
+
+    return result;
+}
+
+// Normalize provided quaternion using FastSqrt
+DNMAPI Quaternion QuaternionNormalizeF(Quaternion q)
+{
+    Quaternion result;
+
+    float length = FastSqrt(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w);
     if (length == 0.0f) length = 1.0f;
     float ilength = 1.0f/length;
 
@@ -2344,6 +2774,32 @@ DNMAPI Quaternion QuaternionNlerp(Quaternion q1, Quaternion q2, float amount)
     // QuaternionNormalize(q);
     Quaternion q = result;
     float length = sqrtf(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w);
+    if (length == 0.0f) length = 1.0f;
+    float ilength = 1.0f/length;
+
+    result.x = q.x*ilength;
+    result.y = q.y*ilength;
+    result.z = q.z*ilength;
+    result.w = q.w*ilength;
+
+    return result;
+}
+
+// Calculate slerp-optimized interpolation between two quaternions using
+// FastSqrt
+DNMAPI Quaternion QuaternionNlerpF(Quaternion q1, Quaternion q2, float amount)
+{
+    Quaternion result;
+
+    // QuaternionLerp(q1, q2, amount)
+    result.x = q1.x + amount*(q2.x - q1.x);
+    result.y = q1.y + amount*(q2.y - q1.y);
+    result.z = q1.z + amount*(q2.z - q1.z);
+    result.w = q1.w + amount*(q2.w - q1.w);
+
+    // QuaternionNormalize(q);
+    Quaternion q = result;
+    float length = FastSqrt(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w);
     if (length == 0.0f) length = 1.0f;
     float ilength = 1.0f/length;
 

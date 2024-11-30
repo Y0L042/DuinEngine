@@ -71,7 +71,7 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\DuinEditor\</IntDir>
     <TargetName>DuinEditor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-master;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-docking;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -79,7 +79,7 @@
     <IntDir>..\bin-int\Release-windows-x86_64\DuinEditor\</IntDir>
     <TargetName>DuinEditor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-master;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-docking;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,7 +87,7 @@
     <IntDir>..\bin-int\Dist-windows-x86_64\DuinEditor\</IntDir>
     <TargetName>DuinEditor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-master;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-docking;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -95,7 +95,7 @@
     <IntDir>..\bin-int\Archive-windows-x86_64\DuinEditor\</IntDir>
     <TargetName>DuinEditor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-master;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Duin\vendor\spdlog\include;..\Duin\vendor\rlimgui\raylib-master\src;..\Duin\vendor\raygui\src;..\Duin\vendor\rlimgui\imgui-docking;..\Duin\vendor\ImGuiFileDialog;..\Duin\vendor\rlimgui;..\Duin\vendor\flecs\include;..\Duin\vendor\fmt\include;..\Duin\vendor\patches;..\Duin\vendor\rapidjson\include;..\Duin\vendor\PhysX\physx\include;vendor\nativefiledialog-extended\src\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -191,19 +191,21 @@
     <ClInclude Include="src\DuinEditor.h" />
     <ClInclude Include="src\EditorCFGManager.h" />
     <ClInclude Include="src\EditorCamera.h" />
-    <ClInclude Include="src\FileBrowser.h" />
+    <ClInclude Include="src\FileManager.h" />
     <ClInclude Include="src\GameStates\StateLevelEditor.h" />
     <ClInclude Include="src\GameStates\StateStartupMenu.h" />
     <ClInclude Include="src\GameStates\States.h" />
+    <ClInclude Include="src\Project.h" />
     <ClInclude Include="src\Singletons.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DuinEditor.cpp" />
     <ClCompile Include="src\EditorCFGManager.cpp" />
     <ClCompile Include="src\EditorCamera.cpp" />
-    <ClCompile Include="src\FileBrowser.cpp" />
+    <ClCompile Include="src\FileManager.cpp" />
     <ClCompile Include="src\GameStates\StateLevelEditor.cpp" />
     <ClCompile Include="src\GameStates\StateStartupMenu.cpp" />
+    <ClCompile Include="src\Project.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

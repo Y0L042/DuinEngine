@@ -18,6 +18,8 @@ namespace duin {
 
     class DebugConsole {
     public:
+        int enableSilent = 0;
+
         DebugConsole();
         ~DebugConsole();
 
@@ -31,10 +33,13 @@ namespace duin {
 
         void LogEx(LogLevel level, const char* format, ...); 
 
+        void ToggleEditing();
+
 
 
     private:
         bool scrollToBottom_ = true;
+        int enableEditing = 0;
 
         std::vector<std::string> logMessages_;
         std::mutex mutex_;
@@ -47,6 +52,8 @@ namespace duin {
 
     class DebugWatchlist {
     public:
+        int enableSilent = 0;
+
         DebugWatchlist();
         ~DebugWatchlist();
 
@@ -54,10 +61,12 @@ namespace duin {
 
         void Post(const std::string description, const std::string format, ...);
         void Draw(const char* title);
+        void ToggleEditing();
 
 
 
     private:
+        int enableEditing = 0;
 
         std::unordered_map<std::string, std::string> watchlist;
         std::vector<std::string> order;

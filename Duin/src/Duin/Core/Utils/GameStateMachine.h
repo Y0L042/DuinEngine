@@ -66,7 +66,28 @@ public:
             if (stateStack.top()->Exit) {
                 stateStack.top()->Exit();
             }
-            stateStack.pop();
+            if (!stateStack.empty()) {
+                stateStack.pop();
+            }
+        }
+        auto newState = std::make_unique<T>(*this);
+        stateStack.emplace(std::move(newState));
+        if (stateStack.top()->Enter) {
+            stateStack.top()->Enter();
+        }
+    }
+
+    template<typename T>
+    void FlushAndSwitchState()
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        while (!stateStack.empty()) {
+            if (stateStack.top()->Exit) {
+                stateStack.top()->Exit();
+            }
+            if (!stateStack.empty()) {
+                stateStack.pop();
+            }
         }
         auto newState = std::make_unique<T>(*this);
         stateStack.emplace(std::move(newState));
@@ -87,6 +108,7 @@ public:
     }
 
     void PopState();
+    void FlushStack();
     
     void ExecuteHandleInput();
     void ExecuteUpdate(double delta);

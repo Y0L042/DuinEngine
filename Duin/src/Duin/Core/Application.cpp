@@ -1,8 +1,13 @@
 #include "dnpch.h"
 #include "Application.h"
 
+//#include <imgui_impl_glfw.h>
+//#include <imgui_impl_opengl3.h>
+
 #define RAYMATH_IMPLEMENTATION
 #define RCAMERA_IMPLEMENTATION
+
+static int debugIsGamePaused_ = 0;
 
 static size_t physicsFrameCount = 0;
 static size_t renderFrameCount = 0;
@@ -21,6 +26,22 @@ namespace duin
     static std::vector<std::function<void(void)>> postDrawUICallbacks;
     static std::vector<std::function<void(void)>> preFrameCallbacks;
     static std::vector<std::function<void(void)>> postFrameCallbacks;
+    static std::vector<std::function<void(void)>> postDebugCallbacks;
+
+    void DebugPauseGame()
+    {
+        debugIsGamePaused_ = 1;
+    }
+
+    void DebugResumeGame()
+    {
+        debugIsGamePaused_ = 0;
+    }
+
+    int DebugIsGamePaused()
+    {
+        return debugIsGamePaused_;
+    }
 
     void SetActiveCamera3D(::Camera3D camera3d)
     {
@@ -96,6 +117,10 @@ namespace duin
         postFrameCallbacks.push_back(f);
     }
 
+	void QueuePostDebugCallback(std::function<void()> f)
+    {
+        postDebugCallbacks.push_back(f);
+    }
 
 
     Application::Application()
@@ -125,23 +150,44 @@ namespace duin
 
     void Application::Run()
     {
+        // Custom timming variables
+        double previousTime = GetTime();    // Previous time measure
+        double currentTime = 0.0;           // Current time measure
+        double updateDrawTime = 0.0;        // Update + Draw time
+        double waitTime = 0.0;              // Wait time (if target fps required)
+        float deltaTime = 0.0f;             // Frame time (Update + Draw + Wait time)
+        
+        float timeCounter = 0.0f;           // Accumulative time counter (seconds)
+        float position = 0.0f;              // Circle position
+        bool pause = false;                 // Pause control flag
+        
+        int targetFPS = 60;                 // Our initial target fps
+
         EngineInitialize();
         Initialize();
+
+        ::SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
 
         ::SetTargetFPS(TARGET_RENDER_FRAMERATE);
         ::InitWindow(screenWidth, screenHeight, windowName.c_str());
         ::rlImGuiSetup(true);
+
+        ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         
         EngineReady();
         Ready();
    
         while(!::WindowShouldClose()) {
-            ::BeginDrawing();
-            ::rlImGuiBegin();
+
+#ifdef DN_DEBUG
+            if (!debugIsGamePaused_) {
+#endif /* DN_DEBUG */
 
             EnginePreFrame();
 
+
             // InputEvent e;
+            PollInputEvents();
             EngineHandleInputs();
             HandleInputs();
 
@@ -155,12 +201,16 @@ namespace duin
                 EnginePostPhysicsUpdate(::GetFrameTime());
             }
 
+            ::BeginDrawing();
+            ::rlImGuiBegin();
+
             ::ClearBackground(::Color{ 
                 backgroundColor.r, 
                 backgroundColor.g, 
                 backgroundColor.b, 
                 backgroundColor.a });
-            
+
+                ImGui::DockSpaceOverViewport(0,  NULL, ImGuiDockNodeFlags_PassthruCentralNode); // set ImGuiDockNodeFlags_PassthruCentralNode so that we can see the raylib contents behind the dockspace  
 
                 if (1) {
                     BeginMode3D(activeCamera3D);
@@ -178,10 +228,55 @@ namespace duin
                 DrawUI();
                 EnginePostDrawUI();
 
+
+                ImGui::Begin("Another Window");   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+                ImGui::Text("Hello from another window!");
+                ImGui::Button("Close Me");
+                ImGui::End();
+
+            // Update and Render additional Platform Windows
+            ImGuiIO& io = ImGui::GetIO();
+            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+            {
+                ImGui::UpdatePlatformWindows();
+                ImGui::RenderPlatformWindowsDefault();
+                // TODO for OpenGL: restore current GL context.
+            }
+
+            EnginePostFrame();
+#ifdef DN_DEBUG
+            } 
+#endif /* DN_DEBUG */
             ::rlImGuiEnd();
             ::EndDrawing();
 
-            EnginePostFrame();
+
+
+
+            ::SwapScreenBuffer();
+            currentTime = ::GetTime();
+            updateDrawTime = currentTime - previousTime;
+            
+            if (targetFPS > 0)          // We want a fixed frame rate
+            {
+                waitTime = (1.0f/(float)targetFPS) - updateDrawTime;
+                if (waitTime > 0.0) 
+                {
+                    ::WaitTime((float)waitTime);
+                    currentTime = ::GetTime();
+                    deltaTime = (float)(currentTime - previousTime);
+                }
+            }
+            else deltaTime = (float)updateDrawTime;    // Framerate could be variable
+
+            previousTime = currentTime;
+
+#ifdef DN_DEBUG
+                EngineDebug();
+                Debug();
+                EnginePostDebug();
+#endif /* DN_DEBUG */
+
         }
 
         EngineExit();
@@ -280,6 +375,30 @@ namespace duin
     void Application::EnginePostDrawUI()
     {
         for (auto& callback : postDrawUICallbacks) {
+            callback();
+        }
+    }
+
+    void Application::EngineDebug()
+    {
+#ifdef DN_DEBUG
+        if (IsKeyPressed(KEY_GRAVE)) {
+            if (DebugIsGamePaused()) {
+                DebugResumeGame();
+            } else {
+                DebugPauseGame();
+            }
+        }
+#endif /* DN_DEBUG */
+    }
+
+    void Application::Debug()
+    {
+    }
+
+    void Application::EnginePostDebug()
+    {
+        for (auto& callback : postDebugCallbacks) {
             callback();
         }
     }

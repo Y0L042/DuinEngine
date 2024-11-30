@@ -33,6 +33,11 @@ function switch_source_header()
     local current_ext = vim.fn.expand('%:e')
     local target_files = {}
 
+    -- Save the current position in a global table
+    local file_pos = vim.g.file_positions or {}
+    file_pos[filepath] = { line = vim.fn.line('.'), col = vim.fn.col('.') }
+    vim.g.file_positions = file_pos
+
     if vim.tbl_contains(header_extensions, '.' .. current_ext) then
         for _, ext in ipairs(source_extensions) do
             table.insert(target_files, dir .. '/' .. base .. ext)
@@ -49,6 +54,11 @@ function switch_source_header()
     for _, file in ipairs(target_files) do
         if vim.fn.filereadable(file) == 1 then
             vim.cmd('edit ' .. vim.fn.fnameescape(file))
+            -- Restore cursor position in the target file
+            local target_pos = file_pos[file]
+            if target_pos then
+                vim.fn.cursor(target_pos.line, target_pos.col)
+            end
             return
         end
     end
