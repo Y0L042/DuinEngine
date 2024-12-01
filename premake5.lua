@@ -29,6 +29,8 @@ workspace "Duin"
 	IncludeDir["raylib"] = "Duin/vendor/rlimgui/raylib-master/src"
 	IncludeDir["raygui"] = "Duin/vendor/raygui/src"
 	IncludeDir["imgui"] = "Duin/vendor/rlimgui/imgui-docking"
+	IncludeDir["imguibackends"] = "Duin/vendor/rlimgui/imgui-docking/backends"
+    IncludeDir["glfw"] = "Duin/vendor/rlimgui/raylib-master/src/external/glfw/include"
 	IncludeDir["flecs"] = "Duin/vendor/flecs/include"
 	IncludeDir["fmt"] = "Duin/vendor/fmt/include"
 	IncludeDir["patches"] = "Duin/vendor/patches"
@@ -60,13 +62,29 @@ project "Duin"
         pchheader ""  -- Ensures .c files ignore PCH
     filter {} -- Clear the filter
 
+
 	files 
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.hpp",
 		"%{prj.name}/src/**.c",
 		"%{prj.name}/src/**.cpp",
+
+        -- To enable multi-view with ImGui
+        "%{IncludeDir.imguibackends}/imgui_impl_glfw.cpp",
+        "%{IncludeDir.imguibackends}/imgui_impl_opengl3.cpp",
 	}
+
+    -- Exclude precompiled headers for imgui_impl_glfw.cpp
+    filter "files:**/imgui_impl_glfw.cpp"
+        flags { "NoPCH" }
+        pchheader ""  -- Ensures this file ignores PCH
+
+    -- Exclude precompiled headers for imgui_impl_opengl3.cpp
+    filter "files:**/imgui_impl_opengl3.cpp"
+        flags { "NoPCH" }
+        pchheader ""  -- Ensures this file ignores PCH
+    filter {} -- Clear the filter
 
 	includedirs
 	{
@@ -79,6 +97,8 @@ project "Duin"
 		"%{IncludeDir.raylib}",
 		"%{IncludeDir.raygui}",
 		"%{IncludeDir.imgui}",
+		"%{IncludeDir.imguibackends}",
+		"%{IncludeDir.glfw}",
 		"%{IncludeDir.imguifilex}",
 		"%{IncludeDir.rlimgui}",
 		"%{IncludeDir.flecs}",
