@@ -70,6 +70,11 @@ struct CanSprintComponent {
 };
 struct SprintTag {};
 
+struct VelocityBob {
+    float frequency = 1.0f;
+    float amplitude = 1.0f;
+};
+
 struct OnGroundTag {};
 struct InAirTag {};
 
@@ -80,6 +85,7 @@ void ExecuteQueryUpdateCameraPitch(flecs::world& world);
 void ExecuteQueryComputePlayerInputVelocity(flecs::world& world);
 void ExecuteQueryGravity(flecs::world& world);
 void ExecuteQueryDebugCameraTarget(flecs::world& world);
+void ExecuteQueryVelocityBob(flecs::world& world);
 
 void ExecuteQueryOnGroundIdle(flecs::world& world);
 void ExecuteQueryRun(flecs::world& world);

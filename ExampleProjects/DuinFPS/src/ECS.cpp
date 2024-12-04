@@ -24,6 +24,7 @@ void RegisterComponents(flecs::world& world)
     world.component<GroundFriction>();
     world.component<AirFriction>();
     world.component<OnGroundIdleTag>();
+    world.component<VelocityBob>();
 
     world.component<CanRunComponent>();
     world.component<RunTag>();
@@ -323,33 +324,35 @@ void ExecuteQuerySprint(flecs::world& world)
     world.defer_end();
 }
 
-/*
 void ExecuteQueryVelocityBob(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
         VelocityBob,
         Position3D,
-        const Velocity3D,
         const Velocity3D *
     >()
         .term_at(1).second<Local>()
-        .term_at(3).parent().cascade()
+        .term_at(2).parent().cascade()
         .cached()
         .build();
 
     world.defer_begin();
     q.each([](
             flecs::entity e,
-            VelocityBob& vc,
+            VelocityBob& bob,
             Position3D& localPos,
-            const Velocity3D& velocity
+            const Velocity3D *velocity
         ){
-            kj
+            if (velocity) {
+                duin::Vector3 hVelocity(velocity->value.x, 0.0f, velocity->value.z);
+                float velocityMagnitude = duin::Vector3LengthF(hVelocity);
+                float bobEffect = std::sin(GetTime() * bob.frequency); // * velocityMagnitude / 30.0f * bob.amplitude; 
+                localPos.value.y += bobEffect * 0.001f;
+            }
         }
     );
     world.defer_end();
 }
-*/
 
 void ExecuteQueryJump(flecs::world& world)
 {

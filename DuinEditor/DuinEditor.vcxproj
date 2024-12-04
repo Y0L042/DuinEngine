@@ -196,6 +196,7 @@
     <ClInclude Include="src\GameStates\StateStartupMenu.h" />
     <ClInclude Include="src\GameStates\States.h" />
     <ClInclude Include="src\Project.h" />
+    <ClInclude Include="src\SceneViewport.h" />
     <ClInclude Include="src\Singletons.h" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +207,7 @@
     <ClCompile Include="src\GameStates\StateLevelEditor.cpp" />
     <ClCompile Include="src\GameStates\StateStartupMenu.cpp" />
     <ClCompile Include="src\Project.cpp" />
+    <ClCompile Include="src\SceneViewport.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

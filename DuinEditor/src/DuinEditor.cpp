@@ -27,7 +27,7 @@ void DuinEditor::Initialize()
     application = this;
 
     SetWindowName("Duin Editor");
-    SetFramerate(60);
+    duin::SetFramerate(96);
     SetWindowStartupSize(1600, 900);
 
 }

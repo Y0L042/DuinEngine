@@ -60,6 +60,14 @@ void StateGameLoop::State_Enter()
 {
     ecsManager.Initialize();
 
+    flecs::entity testEntity;
+    duin::JSONDocument testDef;
+    duin::ReadJSONFile("./data/testDef.json", testDef);
+    duin::JSONMember testECSData = testDef.GetMember("entity").GetMember("ecs_data");
+    if (testECSData.IsValid()) {
+        testEntity = ecsManager.CreateEntityFromJSON(testECSData);
+    };
+
     float playerHeight = 1.75f;
     player = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::CharacterBody3D)
@@ -93,6 +101,8 @@ void StateGameLoop::State_Enter()
                 .fovy = 72.0f,
                 .projection = ::CAMERA_PERSPECTIVE
             })
+        .set<VelocityBob>({ 10.0f, 1.0f })
+        .set<DebugCapsuleComponent>({ 0.5f, 0.25f, 8, 16, ::RED })
         .add<duin::ECSTag::ActiveCamera>()
         ;
     duin::CharacterBody3DDesc desc = {
@@ -173,8 +183,15 @@ void StateGameLoop::State_HandleInput()
     playerSM.ExecuteHandleInput();
 
     duin::Vector2 mouseInput(GetMouseDelta());
-    player.set<MouseInputVec2>({ { mouseInput } });
-    cameraRoot.set<MouseInputVec2>({ { mouseInput } });
+
+
+    if (fpsCameraEnabled) {
+        player.set<MouseInputVec2>({ { mouseInput } });
+        cameraRoot.set<MouseInputVec2>({ { mouseInput } });
+    }
+    else {
+        debugCamera.set<MouseInputVec2>({ { mouseInput } });
+    }
 
     int isOnFloor = player.get<CharacterBody3DComponent>()->characterBody->IsOnFloor();
     if (isOnFloor) {
@@ -212,6 +229,7 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
     ExecuteQueryComputePlayerInputVelocity(ecsManager.world);
     ExecuteQueryUpdatePlayerYaw(ecsManager.world);
     ExecuteQueryUpdateCameraPitch(ecsManager.world);
+    ExecuteQueryVelocityBob(ecsManager.world);
 
     ExecuteQueryOnGroundIdle(ecsManager.world);
     ExecuteQueryRun(ecsManager.world);
@@ -268,6 +286,9 @@ void StateGameLoop::State_DrawUI()
     debugWatchlist.Post("Speed:", "%.1f", duin::Vector3Length(playerVel));
 
     debugWatchlist.Draw("Watchlist");
+
+    duin::DrawPhysicsFPS(15, 50);
+    duin::DrawRenderFPS(15, 15);
 }
 
 static void SetFPSCamera(int enable)

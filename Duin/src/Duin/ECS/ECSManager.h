@@ -212,6 +212,7 @@ namespace duin {
     /*----------------------------------------------------------------------------*/
     //  ECS Manager Class
     /*----------------------------------------------------------------------------*/
+    class JSONMember;
     class ECSManager
     {
     public:
@@ -221,6 +222,8 @@ namespace duin {
         ~ECSManager() = default;
 
         void Initialize();
+
+        flecs::entity CreateEntityFromJSON(JSONMember& member);
 
         void ActivateCameraEntity(flecs::entity entity);
         void SetGlobalPosition3D(flecs::entity entity, Vector3 newPos);

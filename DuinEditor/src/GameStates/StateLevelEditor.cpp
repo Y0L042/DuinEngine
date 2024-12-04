@@ -5,8 +5,10 @@
 #include "../Project.h"
 #include "../FileManager.h"
 
+#include "../SceneViewport.h"
 #include "../EditorCamera.h"
 
+#include <imgui.h>
 #include <string>
 
 
@@ -65,6 +67,8 @@ void StateLevelEditor::State_Enter()
     compassRenderTexture = LoadRenderTexture(600, 600);
     compass_camera = InitializeCompassCamera();
 
+    InitializeSceneViewport();
+
     test = LoadModel("C:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\DuinFPS\\assets\\cube.glb");
 }
 
@@ -111,51 +115,60 @@ void StateLevelEditor::State_PhysicsUpdate(double delta)
 
 void StateLevelEditor::State_Draw()
 {
-    duin::SetActiveCamera3D(camera);
+    DrawCompass3D(compass_camera, compassRenderTexture);
 
-    DrawGrid(100, 1.0f);
+    DrawToSceneViewport(std::function<void(void)>([this]() 
+        {
+            BeginMode3D(camera);
+                ClearBackground({ 255, 255, 255, 255 });
+                duin::SetActiveCamera3D(camera);
 
-    DrawModel(test, {1, 1, 1}, 1, BLACK);
+                DrawGrid(100, 1.0f);
+                DrawModel(test, {1, 1, 1}, 1, BLACK);
 
-    if (selectionCollision.hit)
-    {
-        DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
-        DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
+                if (selectionCollision.hit)
+                {
+                    DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
+                    DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
 
-        DrawCubeWires(
-            cubePosition, 
-            cubeSize.x + 0.2f, 
-            cubeSize.y + 0.2f, 
-            cubeSize.z + 0.2f, 
-            GREEN);
-    }
-    else
-    {
-        DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
-        DrawCubeWires(
-            cubePosition, 
-            cubeSize.x, 
-            cubeSize.y, 
-            cubeSize.z, 
-            DARKGRAY);
-    }
+                    DrawCubeWires(
+                        cubePosition, 
+                        cubeSize.x + 0.2f, 
+                        cubeSize.y + 0.2f, 
+                        cubeSize.z + 0.2f, 
+                        GREEN);
+                }
+                else
+                {
+                    DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
+                    DrawCubeWires(
+                        cubePosition, 
+                        cubeSize.x, 
+                        cubeSize.y, 
+                        cubeSize.z, 
+                        DARKGRAY);
+                }
 
-    float len = 10.0f;
-    DrawLine3D({ 0.0f, 0.0f, 0.0f }, { len, 0.0f, 0.0f }, RED);
-    DrawLine3D({ 0.0f, 0.0f, 0.0f }, { 0.0f, len, 0.0f }, GREEN);
-    DrawLine3D({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, len }, BLUE);
+                float len = 10.0f;
+                DrawLine3D({ 0.0f, 0.0f, 0.0f }, { len, 0.0f, 0.0f }, RED);
+                DrawLine3D({ 0.0f, 0.0f, 0.0f }, { 0.0f, len, 0.0f }, GREEN);
+                DrawLine3D({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, len }, BLUE);
+            EndMode3D();
+
+            BeginTextureMode(GetViewportRenderTexture());
+                duin::DrawRenderFPS(15, 15);
+                duin::DrawPhysicsFPS(15, 15 + 35);
+                DrawCompassUI(compassRenderTexture, compassTarget);
+            EndTextureMode();
+            }));
 }
 
 void StateLevelEditor::State_DrawUI()
 {
+    DrawSceneViewport();
     std::string projectFileDir = GetActiveProject().projectDir.string();
     GuiLabel(Rectangle{ 10, 10, 1075, 75 }, projectFileDir.c_str());
     fileManager.DrawGUI();
-
-    DrawCompass3D(compass_camera, compassRenderTexture);
-    DrawCompassUI(compassRenderTexture, compassTarget);
-
-    DrawFPS(15, 15);
 }
 
 

@@ -1,6 +1,7 @@
 #include "dnpch.h"
 #include "ECSManager.h"
 #include "Duin/Core/Application.h"
+#include "Duin/Core/Utils/SerialisationManager.h"
 
 #include <functional>
 
@@ -146,6 +147,14 @@ namespace duin {
         QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { PostPhysicsUpdateQueryExecution(delta); }));
         QueuePostDrawCallback(std::function<void()>([this]() { PostDrawQueryExecution(); }));
         QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
+    }
+
+    flecs::entity ECSManager::CreateEntityFromJSON(JSONMember& member)
+    {
+        std::string ecsData = member.GetMemberDataAsString();
+        flecs::entity entity = world.entity();
+        entity.from_json(ecsData.c_str());
+        return flecs::entity();
     }
 
     void ECSManager::ActivateCameraEntity(flecs::entity entity)

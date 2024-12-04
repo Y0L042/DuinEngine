@@ -13,6 +13,12 @@ static int debugIsGamePaused_ = 0;
 static size_t physicsFrameCount = 0;
 static size_t renderFrameCount = 0;
 
+static double physicsFrameTime = 0.0;
+static double renderFrameTime = 0.0;
+
+static int TARGET_RENDER_FRAMERATE = 72;
+static int TARGET_PHYSICS_FRAMERATE = 60;
+
 static int screenWidth = 1280;
 static int screenHeight = 720;
 
@@ -54,27 +60,97 @@ void SetBackgroundColor(::Color color)
     backgroundColor = color;
 }
 
+void SetFramerate(int framerate)
+{
+    TARGET_RENDER_FRAMERATE = framerate;
+}
+
+/*
+void DrawPhysicsFPS(float x, float y)
+{
+    char buffer[10];
+    std::snprintf(buffer, sizeof(buffer), "P: %.2f", GetPhysicsFPS());
+    ::DrawText(buffer, x, y, 30, ::GREEN);
+}
+
+void DrawRenderFPS(float x, float y)
+{
+    char buffer[10];
+    std::snprintf(buffer, sizeof(buffer), "R: %.2f", GetRenderFPS());
+    ::DrawText(buffer, x, y, 30, ::GREEN);
+}
+*/
+void DrawPhysicsFPS(float x, float y) {
+    static constexpr size_t bufferSize = 60; // Buffer size (approx. 1 second at 60 FPS)
+    static std::array<float, bufferSize> physicsFPSBuffer = {};
+    static size_t bufferIndex = 0;
+    static float physicsFPSAverage = 0.0f;
+    static float totalFPS = 0.0f; // Running total for quick average calculation
+
+    // Get current frame's physics FPS
+    float currentPhysicsFPS = GetPhysicsFPS();
+
+    // Update circular buffer
+    totalFPS -= physicsFPSBuffer[bufferIndex];     // Remove old value from total
+    physicsFPSBuffer[bufferIndex] = currentPhysicsFPS; // Add new value to buffer
+    totalFPS += currentPhysicsFPS;                // Add new value to total
+    bufferIndex = (bufferIndex + 1) % bufferSize; // Move to next index (circular)
+
+    // Calculate average FPS
+    physicsFPSAverage = totalFPS / bufferSize;
+
+    // Format and draw the average
+    char buffer[16];
+    std::snprintf(buffer, sizeof(buffer), "P: %.2f", physicsFPSAverage);
+    ::DrawText(buffer, x, y, 30, ::GREEN);
+}
+
+void DrawRenderFPS(float x, float y) {
+    static constexpr size_t bufferSize = 60; // Buffer size (approx. 1 second at 60 FPS)
+    static std::array<float, bufferSize> renderFPSBuffer = {};
+    static size_t bufferIndex = 0;
+    static float renderFPSAverage = 0.0f;
+    static float totalFPS = 0.0f; // Running total for quick average calculation
+
+    // Get current frame's render FPS
+    float currentRenderFPS = GetRenderFPS();
+
+    // Update circular buffer
+    totalFPS -= renderFPSBuffer[bufferIndex];     // Remove old value from total
+    renderFPSBuffer[bufferIndex] = currentRenderFPS; // Add new value to buffer
+    totalFPS += currentRenderFPS;                // Add new value to total
+    bufferIndex = (bufferIndex + 1) % bufferSize; // Move to next index (circular)
+
+    // Calculate average FPS
+    renderFPSAverage = totalFPS / bufferSize;
+
+    // Format and draw the average
+    char buffer[16];
+    std::snprintf(buffer, sizeof(buffer), "R: %.2f", renderFPSAverage);
+    ::DrawText(buffer, x, y, 30, ::GREEN);
+}
+
 float GetPhysicsFPS()
 {
-    float fps = ::GetFPS();
+    float fps = 1.0f / (float)physicsFrameTime;
     return fps;
 }
 
 float GetPhysicsFrameTime()
 {
-    float frametime = ::GetFrameTime();
+    float frametime = physicsFrameTime;
     return frametime;
 }
 
 float GetRenderFPS()
 {
-    float fps = ::GetFPS();
+    float fps = 1.0f / (float)renderFrameTime;
     return fps;
 }
 
 float GetRenderFrameTime()
 {
-    float frametime = ::GetFrameTime();
+    float frametime = renderFrameTime;
     return frametime;
 }
 
@@ -149,27 +225,34 @@ void Application::SetWindowName(const char* string)
 }
 
 
+
+
+
 void Application::Run()
 {
-    // Custom timming variables
-    double previousTime = GetTime();    // Previous time measure
-    double currentTime = 0.0;           // Current time measure
-    double updateDrawTime = 0.0;        // Update + Draw time
-    double waitTime = 0.0;              // Wait time (if target fps required)
-    float deltaTime = 0.0f;             // Frame time (Update + Draw + Wait time)
-    
-    float timeCounter = 0.0f;           // Accumulative time counter (seconds)
-    float position = 0.0f;              // Circle position
-    bool pause = false;                 // Pause control flag
-    
-    int targetFPS = 60;                 // Our initial target fps
+    const double MAX_ACCUMULATOR = 0.25;
+    double physicsCurrentTime = ::GetTime();
+    double physicsPreviousTime = 0.0;
+    double physicsDeltaTime = 0.0;
+    double physicsAccumTime = 0.0;
+
+    double previousTime = ::GetTime();
+    double currentTime = 0.0;
+    double updateDrawTime = 0.0;
+    double waitTime = 0.0;
+    double deltaTime = 0.0;
 
     EngineInitialize();
     Initialize();
 
-    ::SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
+    DN_CORE_INFO("Set render FPS {}", TARGET_RENDER_FRAMERATE);
+    ::SetConfigFlags(
+              FLAG_MSAA_4X_HINT 
+            // | FLAG_VSYNC_HINT 
+            | FLAG_WINDOW_RESIZABLE 
+            | FLAG_WINDOW_HIGHDPI
+    );
 
-    ::SetTargetFPS(TARGET_RENDER_FRAMERATE);
     ::InitWindow(screenWidth, screenHeight, windowName.c_str());
     ::rlImGuiSetup(true);
 
@@ -177,99 +260,91 @@ void Application::Run()
     Ready();
 
     while(!::WindowShouldClose()) {
-
-        ::rlImGuiBegin();
-#ifdef DN_DEBUG
-        if (!debugIsGamePaused_) {
-#endif /* DN_DEBUG */
+        #ifdef DN_DEBUG
+            if (!debugIsGamePaused_) {
+        #endif /* DN_DEBUG */
 
         EnginePreFrame();
 
-
-
-        // InputEvent e;
         PollInputEvents();
         EngineHandleInputs();
         HandleInputs();
 
-        EngineUpdate(::GetFrameTime());
-        Update(::GetFrameTime());
-        EnginePostUpdate(::GetFrameTime());
+        EngineUpdate(deltaTime);
+        Update(deltaTime);
+        EnginePostUpdate(deltaTime);
 
-        if (::GetFrameTime() > 0.0f) {
-            EnginePhysicsUpdate(::GetFrameTime()); // TODO
-            PhysicsUpdate(::GetFrameTime()); // TODO
-            EnginePostPhysicsUpdate(::GetFrameTime());
-        }
+        physicsCurrentTime = ::GetTime();
+        physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
+        physicsAccumTime += physicsDeltaTime;
+        static const double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
+        while (physicsAccumTime >= physicsTimeStep) {
+            physicsPreviousTime = physicsCurrentTime;
+            physicsAccumTime -= physicsTimeStep;
 
+            physicsFrameTime = physicsTimeStep;
+            ++physicsFrameCount;
+
+            EnginePhysicsUpdate(physicsDeltaTime);
+            PhysicsUpdate(physicsDeltaTime); 
+            EnginePostPhysicsUpdate(physicsDeltaTime);
+        } // End of Physics
 
         ::BeginDrawing();
+        ::rlImGuiBegin();
 
-            ::ClearBackground(::Color{ 
+        ::ClearBackground(::Color{ 
                 backgroundColor.r, 
                 backgroundColor.g, 
                 backgroundColor.b, 
                 backgroundColor.a });
 
-            ImGui::DockSpaceOverViewport(0,  NULL, ImGuiDockNodeFlags_PassthruCentralNode); // set ImGuiDockNodeFlags_PassthruCentralNode so that we can see the raylib contents behind the dockspace  
+        ImGui::DockSpaceOverViewport(0,  NULL, ImGuiDockNodeFlags_PassthruCentralNode);
 
-            if (1) {
-                BeginMode3D(activeCamera3D);
-                    EngineDraw();
-                    Draw();
-                    EnginePostDraw();
-                EndMode3D();
-            } else {
-                EngineDraw();
-                Draw();
-                EnginePostDraw();
-            }
-            
-            EngineDrawUI();
-            DrawUI();
-            EnginePostDrawUI();
+        if (1) {
+            BeginMode3D(activeCamera3D);
+            EngineDraw();
+            Draw();
+            EnginePostDraw();
+            EndMode3D();
+        } else {
+            EngineDraw();
+            Draw();
+            EnginePostDraw();
+        }
 
+        EngineDrawUI();
+        DrawUI();
+        EnginePostDrawUI();
 
-            ImGui::Begin("Another Window");   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            ImGui::Button("Close Me");
-            ImGui::End();
-
-
-            EnginePostFrame();
-#ifdef DN_DEBUG
-        } 
-#endif /* DN_DEBUG */
         ::rlImGuiEnd();
         ::EndDrawing();
-
-
-
         ::SwapScreenBuffer();
+        EnginePostFrame();
+
+        renderFrameTime = updateDrawTime;
+        ++renderFrameCount;
+        static const double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
         currentTime = ::GetTime();
         updateDrawTime = currentTime - previousTime;
-        
-        if (targetFPS > 0)          // We want a fixed frame rate
-        {
-            waitTime = (1.0f/(float)targetFPS) - updateDrawTime;
-            if (waitTime > 0.0) 
-            {
+        if (TARGET_RENDER_FRAMERATE > -1) {
+            waitTime = targetFrameTime - updateDrawTime;
+            if (waitTime > 0.0) {
                 ::WaitTime((float)waitTime);
                 currentTime = ::GetTime();
-                deltaTime = (float)(currentTime - previousTime);
+                deltaTime = currentTime - previousTime;
             }
-        }
-        else deltaTime = (float)updateDrawTime;    // Framerate could be variable
-
+        } else { deltaTime = updateDrawTime; }
         previousTime = currentTime;
 
-#ifdef DN_DEBUG
+        #ifdef DN_DEBUG
+            } 
             EngineDebug();
             Debug();
             EnginePostDebug();
-#endif /* DN_DEBUG */
+        #endif /* DN_DEBUG */
 
-    }
+    } // End of Application While
 
     EngineExit();
     Exit();
@@ -277,6 +352,10 @@ void Application::Run()
     ::rlImGuiShutdown();
     ::CloseWindow();
 }
+
+
+
+
 
 void Application::EngineInitialize()
 {

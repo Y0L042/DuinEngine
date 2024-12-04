@@ -18,6 +18,9 @@ namespace duin
     void SetActiveCamera3D(::Camera3D camera3d);
     void SetBackgroundColor(::Color color);
 
+    void SetFramerate(int framerate);
+    void DrawPhysicsFPS(float x, float y);
+    void DrawRenderFPS(float x, float y);
 	float GetPhysicsFPS();
 	float GetPhysicsFrameTime();
 	float GetRenderFPS();
@@ -39,11 +42,7 @@ namespace duin
 		Application();
 		virtual ~Application();
 
-		void SetFramerate(int framerate)
-		{
-			TARGET_RENDER_FRAMERATE = framerate;
-			TARGET_PHYSICS_FRAMERATE = framerate;
-		}
+
         void SetWindowStartupSize(int width, int height);
 		void SetBackgroundColor(::Color color);
 		void SetWindowName(const char *string);
@@ -88,8 +87,6 @@ namespace duin
 		void EngineExit();
 
 	private:
-		int TARGET_RENDER_FRAMERATE = 60;
-		int TARGET_PHYSICS_FRAMERATE = 60;
 		std::string windowName = "Game";
 	};
 
