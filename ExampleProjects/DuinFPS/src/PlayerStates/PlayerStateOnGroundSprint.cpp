@@ -61,6 +61,7 @@ void PlayerStateOnGroundSprint::State_DrawUI()
 
 void PlayerStateOnGroundSprint::State_Exit()
 {
+    player.remove<SprintTag>();
     debugWatchlist.Post("PlayerState", "");
 
     player.remove<SprintTag>();

@@ -53,7 +53,7 @@ struct AirFriction {
     float value = 0.25f;
 };
 
-struct OnGroundIdleTag {};
+struct IdleTag {};
 
 struct CanRunComponent {
     float speed = 7.5f;
@@ -87,10 +87,11 @@ void ExecuteQueryGravity(flecs::world& world);
 void ExecuteQueryDebugCameraTarget(flecs::world& world);
 void ExecuteQueryVelocityBob(flecs::world& world);
 
-void ExecuteQueryOnGroundIdle(flecs::world& world);
+void ExecuteQueryIdle(flecs::world& world);
 void ExecuteQueryRun(flecs::world& world);
 void ExecuteQuerySprint(flecs::world& world);
-void ExecuteQueryJump(flecs::world& world);
+void ExecuteQueryOnGroundJump(flecs::world& world);
 
 void ExecuteQueryResolveInputVelocities(flecs::world& world);
 void ExecuteQueryResolveInputForces(flecs::world& world);
+

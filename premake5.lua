@@ -122,6 +122,14 @@ project "Duin"
         "flecs_static.lib",
 		"winmm.lib",
 
+        "PhysX_static_64.lib",
+        "PhysXCooking_static_64.lib",
+        "PhysXCommon_static_64.lib",
+        "PhysXFoundation_static_64.lib",
+        "PhysXPvdSDK_static_64.lib",
+        "PhysXExtensions_static_64.lib",
+        "PhysXCharacterKinematic_static_64.lib",
+
 	}
 
 	filter "system:windows"
@@ -134,13 +142,7 @@ project "Duin"
 		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
 		"SUPPORT_GIF_RECORDING",
         "flecs_STATIC",
-        "PhysX_static_64",
-        "PhysXCommon_static_64",
-        "PhysXFoundation_static_64",
-        "PhysXCooking_static_64",
-        "PhysXPvdSDK_static_64",
-        "PhysXExtensions_static_64",
-        "PhysXCharacterKinematic_static_64",
+        "PX_PHYSX_STATIC_LIB",
 	}
 	
     -- Define DN_STATIC if building as a Static Library
@@ -236,6 +238,8 @@ global_defines =
 	"DN_PLATFORM_WINDOWS",
     "DN_BUILD_STATIC",
     "flecs_STATIC",
+    "IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
+    "PX_PHYSX_STATIC_LIB",
 }
 
 global_links =
@@ -245,13 +249,13 @@ global_links =
     "flecs_static.lib",
 	"winmm.lib",
 	"Duin.lib",
-    "PhysX_static_64",
-    "PhysXCommon_static_64",
-    "PhysXFoundation_static_64",
-    "PhysXCooking_static_64",
-    "PhysXPvdSDK_static_64",
-    "PhysXExtensions_static_64",
-    "PhysXCharacterKinematic_static_64",
+    "PhysX_static_64.lib",
+    "PhysXCooking_static_64.lib",
+    "PhysXCommon_static_64.lib",
+    "PhysXFoundation_static_64.lib",
+    "PhysXPvdSDK_static_64.lib",
+    "PhysXExtensions_static_64.lib",
+    "PhysXCharacterKinematic_static_64.lib",
 }
 
 -- 

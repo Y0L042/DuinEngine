@@ -62,6 +62,7 @@ void PlayerStateOnGroundRun::State_DrawUI()
 
 void PlayerStateOnGroundRun::State_Exit()
 {
+    player.remove<RunTag>();
     debugWatchlist.Post("PlayerState", "");
 
     player.remove<RunTag>();

@@ -39,6 +39,7 @@ struct Test {
 InputVector2DKeys MOVEMENT_KEYS{ KEY_W, KEY_S, KEY_A, KEY_D };
 
 static void SetFPSCamera(int enable);
+static void CookCollisions();
 
 StateGameLoop::StateGameLoop(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -58,6 +59,7 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
+    duin::QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { pxServer.StepPhysics(delta); }));
     ecsManager.Initialize();
 
     flecs::entity testEntity;
@@ -71,6 +73,12 @@ void StateGameLoop::State_Enter()
     float playerHeight = 1.75f;
     player = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::CharacterBody3D)
+        .set<Position3D, Local>({{ 0.0f, 5.0f, 0.0f }})
+        .set<Mass>({ .value = 80.0f })
+        .set<CanRunComponent>({ .speed = 10.0f })
+        .set<CanSprintComponent>({ .speed = 17.5f })
+        .set<CanJumpComponent>({ .impulse = 525.0f })
+        .set<DebugCapsuleComponent>({ 1.75f, 0.35f, 8, 16, ::GREEN })
         .add<InputVelocities>()
         .add<InputForces>()
         .add<PlayerMovementInputVec3>()
@@ -78,11 +86,6 @@ void StateGameLoop::State_Enter()
         .add<MouseInputVec2>()
         .add<CameraYawComponent>()
         .add<GravityComponent>()
-        .set<Mass>({ .value = 80.0f })
-        .set<CanRunComponent>({ .speed = 10.0f })
-        .set<CanSprintComponent>({ .speed = 17.5f })
-        .set<CanJumpComponent>({ .impulse = 125.0f })
-        .set<DebugCapsuleComponent>({ 1.75f, 0.35f, 8, 16, ::GREEN })
         .add<OnGroundTag>()
         ;
     cameraRoot = ecsManager.world.entity()
@@ -101,7 +104,7 @@ void StateGameLoop::State_Enter()
                 .fovy = 72.0f,
                 .projection = ::CAMERA_PERSPECTIVE
             })
-        .set<VelocityBob>({ 10.0f, 1.0f })
+        // .set<VelocityBob>({ 10.0f, 5.0f })
         .set<DebugCapsuleComponent>({ 0.5f, 0.25f, 8, 16, ::RED })
         .add<duin::ECSTag::ActiveCamera>()
         ;
@@ -111,7 +114,7 @@ void StateGameLoop::State_Enter()
         .slopeLimit = std::cosf(physx::PxPi / 4.0),
         .stepOffset = 0.5f,
         .contactOffset = 0.1f,
-        .position = duin::Vector3(0.0f, playerHeight / 2.0f + 150, 0.0f),
+        .position = duin::Vector3(0.0f, playerHeight / 2.0f + 15, 0.0f),
         .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
     };
     static duin::CharacterBody3D playerBody(pxServer);
@@ -121,13 +124,16 @@ void StateGameLoop::State_Enter()
 
     debugCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
-        .set<Position3D, Local>({ { 0.0f, 25.0f, 25.0f } })
+        .set<Position3D, Local>({ { 0.0f, 5.0f, 15.0f } })
         .set<::Camera3D>({
                  .target = { 0.0f, 0.0f, 0.0f },
                  .up = { 0.0f, 1.0f, 0.0f },
                  .fovy = 72.0f,
                  .projection = ::CAMERA_PERSPECTIVE
             })
+        .add<MouseInputVec2>()
+        .add<CameraPitchComponent>()
+        .add<CameraYawComponent>()
         ;
 
 
@@ -151,7 +157,8 @@ void StateGameLoop::State_Enter()
     SetFPSCamera(1);
     ecsManager.ActivateCameraEntity(fpsCamera);
 
-    duin::QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { pxServer.StepPhysics(delta); }));
+
+    CookCollisions();
 
     playerSM.SwitchState<PlayerStateOnGround>();
 }
@@ -231,10 +238,10 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
     ExecuteQueryUpdateCameraPitch(ecsManager.world);
     ExecuteQueryVelocityBob(ecsManager.world);
 
-    ExecuteQueryOnGroundIdle(ecsManager.world);
+    ExecuteQueryIdle(ecsManager.world);
     ExecuteQueryRun(ecsManager.world);
     ExecuteQuerySprint(ecsManager.world);
-    ExecuteQueryJump(ecsManager.world);
+    ExecuteQueryOnGroundJump(ecsManager.world);
 
     ExecuteQueryGravity(ecsManager.world);
     ExecuteQueryDebugCameraTarget(ecsManager.world);
@@ -272,6 +279,7 @@ void StateGameLoop::State_Draw()
         12, 16,
         BLUE
     );
+    DrawCube({0.0f, 0.0f, 0.0f}, 2.0f, 2.0f, 2.0f, RED);
     DrawSphereWires(duin::Vector3(ball->getGlobalPose().p).ToRaylib(), 1.0f, 32, 32, RED);
     
 }
@@ -297,8 +305,43 @@ static void SetFPSCamera(int enable)
     if (fpsCameraEnabled) {
         DisableCursor();
     } else {
-        EnableCursor();
-        ShowCursor();
+        DisableCursor();
     }
+}
+
+static void CookCollisions()
+{
+    physx::PxRigidStatic *staticActor = pxServer.pxPhysics->createRigidStatic(physx::PxTransform(physx::PxVec3(0, 0, 0)));
+
+    const physx::PxVec3 convexVerts[] = {
+        physx::PxVec3(-1, -1, -1), // Bottom-left-back corner
+        physx::PxVec3(1, -1, -1),  // Bottom-right-back corner
+        physx::PxVec3(1, -1, 1),   // Bottom-right-front corner
+        physx::PxVec3(-1, -1, 1),  // Bottom-left-front corner
+        physx::PxVec3(-1, 1, -1),  // Top-left-back corner
+        physx::PxVec3(1, 1, -1),   // Top-right-back corner
+        physx::PxVec3(1, 1, 1),    // Top-right-front corner
+        physx::PxVec3(-1, 1, 1)    // Top-left-front corner
+    };
+    physx::PxConvexMeshDesc convexDesc;
+    convexDesc.points.count     = 8;
+    convexDesc.points.stride    = sizeof(physx::PxVec3);
+    convexDesc.points.data      = convexVerts;
+    convexDesc.flags            = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+    physx::PxTolerancesScale scale;
+    physx::PxCookingParams params(scale);
+
+    physx::PxDefaultMemoryOutputStream buf;
+    physx::PxConvexMeshCookingResult::Enum result;
+    if(!PxCookConvexMesh(params, convexDesc, buf, &result))
+        return;
+    physx::PxDefaultMemoryInputData input(buf.getData(), buf.getSize());
+    physx::PxConvexMesh* convexMesh = pxServer.pxPhysics->createConvexMesh(input);
+    physx::PxShape* aConvexShape = physx::PxRigidActorExt::createExclusiveShape(
+            *staticActor,
+            physx::PxConvexMeshGeometry(convexMesh), 
+            *pxServer.pxMaterial);
+
+    pxServer.pxScene->addActor(*staticActor);
 }
 

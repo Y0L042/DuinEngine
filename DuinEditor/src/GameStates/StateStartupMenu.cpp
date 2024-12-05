@@ -71,20 +71,20 @@ void StateStartupMenu::InitProjectList()
 {
     debugConsole.LogEx(duin::LogLevel::Info, 
                      "Initialising Project List.\n");
-    rapidjson::Document doc;
-    if (ReadJSONFile(EDITOR_CFG_PATH, &doc)) {
+    duin::JSONDocument doc;
+    if (ReadJSONFile(EDITOR_CFG_PATH, doc)) {
             debugConsole.LogEx(duin::LogLevel::Warn, 
                              "EditorConfig empty. Select project root.\n");
         return;
     }
 
     // Ensure "EditorConfig" exists and is an object
-    if (!doc.HasMember("EditorConfig") || !doc["EditorConfig"].IsObject()) {
+    if (!doc.HasMember("EditorConfig") || !doc.GetDocument()["EditorConfig"].IsObject()) {
             debugConsole.LogEx(duin::LogLevel::Warn, 
                              "EditorConfig not found. Select project root.\n");
         return;
     }
-    const rapidjson::Value& editorConfig = doc["EditorConfig"];
+    const rapidjson::Value& editorConfig = doc.GetDocument()["EditorConfig"];
     debugConsole.LogEx(duin::LogLevel::Info, 
                      "EditorConfig loaded.\n");
 

@@ -21,7 +21,7 @@ PlayerStateOnGroundIdle::PlayerStateOnGroundIdle(duin::GameStateMachine& owner)
 
 void PlayerStateOnGroundIdle::State_Enter()
 {
-    player.add<OnGroundIdleTag>();
+    player.add<IdleTag>();
 }
 
 void PlayerStateOnGroundIdle::State_HandleInput()
@@ -54,5 +54,6 @@ void PlayerStateOnGroundIdle::State_DrawUI()
 
 void PlayerStateOnGroundIdle::State_Exit()
 {
+    player.remove<IdleTag>();
     debugWatchlist.Post("PlayerState", "");
 }

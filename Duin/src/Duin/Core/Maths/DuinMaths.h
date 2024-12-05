@@ -409,6 +409,13 @@ DNMAPI float QuakeSqrt(float x)
 // Refined square root with Newton-Raphson iteration
 DNMAPI float FastSqrt(float x) 
 {
+#if !defined(EPSILON)
+    #define EPSILON 0.000001f
+#endif
+    float result = 0.0f;
+    if (fabs(x) <= EPSILON) {
+        return result;
+    }
     __m128 input = _mm_set_ss(x);
     __m128 rsqrt = _mm_rsqrt_ss(input);
 
@@ -420,7 +427,7 @@ DNMAPI float FastSqrt(float x)
 
     // Multiply the refined reciprocal square root by x to get sqrt(x)
     __m128 sqrt = _mm_mul_ss(input, refined);
-    float result = _mm_cvtss_f32(sqrt);
+    result = _mm_cvtss_f32(sqrt);
 
     return result;
 }
@@ -998,7 +1005,17 @@ DNMAPI float Vector3Length(const Vector3 v)
 // Calculate vector length using FastSqrt
 DNMAPI float Vector3LengthF(const Vector3 v)
 {
-    float result = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+#if !defined(EPSILON)
+    #define EPSILON 0.000001f
+#endif
+    float result = 0.0f;
+    int zero =     ((fabsf(v.x)) <= (EPSILON)) &&
+                 ((fabsf(v.y)) <= (EPSILON)) &&
+                 ((fabsf(v.z)) <= (EPSILON));
+
+    if (!zero) {
+        result = FastSqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+    }
 
     return result;
 }
