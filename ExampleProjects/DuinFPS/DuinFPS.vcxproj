@@ -203,6 +203,7 @@
     <ClInclude Include="src\PlayerStates\PlayerStates.h" />
     <ClInclude Include="src\SaveManager.h" />
     <ClInclude Include="src\Singletons.h" />
+    <ClInclude Include="src\rlights.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ECS.cpp" />

@@ -7,6 +7,7 @@
 
 #define RAYMATH_IMPLEMENTATION
 #define RCAMERA_IMPLEMENTATION
+#define RLIGHTS_IMPLEMENTATION
 
 static int debugIsGamePaused_ = 0;
 
@@ -229,7 +230,7 @@ void Application::SetWindowName(const char* string)
 
 
 void Application::Run()
-{
+{    
     const double MAX_ACCUMULATOR = 0.25;
     double physicsCurrentTime = ::GetTime();
     double physicsPreviousTime = 0.0;
@@ -246,11 +247,12 @@ void Application::Run()
     Initialize();
 
     DN_CORE_INFO("Set render FPS {}", TARGET_RENDER_FRAMERATE);
+
     ::SetConfigFlags(
               FLAG_MSAA_4X_HINT 
-            // | FLAG_VSYNC_HINT 
             | FLAG_WINDOW_RESIZABLE 
             | FLAG_WINDOW_HIGHDPI
+            // | FLAG_VSYNC_HINT 
     );
 
     ::InitWindow(screenWidth, screenHeight, windowName.c_str());

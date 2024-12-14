@@ -201,7 +201,7 @@ void ExecuteQueryIdle(flecs::world& world)
         const Velocity3D
     >()
         .with<IdleTag>()
-        .with<OnGroundTag>()
+        // .with<OnGroundTag>()
         .build();
 
     world.defer_begin();
@@ -210,15 +210,29 @@ void ExecuteQueryIdle(flecs::world& world)
         InputVelocities& inputVels,
         const Velocity3D& velocity
         ) {
+            double delta = duin::GetPhysicsFrameTime();
+
             // Scale movement input vector by speed to get target velocity
             duin::Vector3 targetVel = duin::Vector3Zero();
+
+            float smoothFactor = 20.75f;
+            float alpha = 1.0f - std::expf(-smoothFactor * delta);
 
             float outputVelX = targetVel.x - velocity.value.x;
             float outputVelZ = targetVel.z - velocity.value.z;
 
             debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
 
+            float friction = 1.0f;
+            if (e.has<OnGroundTag>()) {
+               friction = 1.0f;
+            } else if (e.has<InAirTag>()) {
+               friction = 0.01f;
+            }
+
             duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+            outputVel = duin::Vector3Scale(outputVel, friction);
+            outputVel = duin::Vector3Scale(outputVel, alpha);
 
             inputVels.vec.push_back(outputVel);
             //e.remove<OnGroundIdleTag>();
@@ -236,7 +250,7 @@ void ExecuteQueryRun(flecs::world& world)
         const Velocity3D
     >()
         .with<RunTag>()
-        .with<OnGroundTag>()
+        // .with<OnGroundTag>()
         .build();
     
     world.defer_begin();
@@ -247,10 +261,23 @@ void ExecuteQueryRun(flecs::world& world)
             const CanRunComponent& moveSpeed,
             const Velocity3D& velocity
             ) {
+               float acceleration = 1.0f;
+               float targetSpeed = moveSpeed.speed;
+
+               if (e.has<OnGroundTag>()) {
+                   acceleration = 1.0f;
+               } else if (e.has<InAirTag>()) {
+                   constexpr float airSpeedFactor = 0.65f;
+                   acceleration = 0.25f;
+                   duin::Vector3 velXZ(velocity.value.x, 0.0f, velocity.value.z);
+                   float currentSpeed = duin::Vector3LengthF(velXZ);
+                   targetSpeed = std::max(currentSpeed, moveSpeed.speed * airSpeedFactor);
+               }
+
                double delta = duin::GetPhysicsFrameTime();
 
                // Scale movement input vector by speed to get target velocity
-               duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
+               duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, targetSpeed);
 
                float smoothFactor = 10.75f;
                float alpha = 1.0f - std::expf(-smoothFactor * delta);
@@ -261,6 +288,9 @@ void ExecuteQueryRun(flecs::world& world)
                debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
 
                duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+
+
+               outputVel = duin::Vector3Scale(outputVel, acceleration);
                outputVel = duin::Vector3Scale(outputVel, alpha);
 
                inputVels.vec.push_back(outputVel);
@@ -327,6 +357,7 @@ void ExecuteQueryVelocityBob(flecs::world& world)
     >()
         .term_at(1).second<Local>()
         .term_at(2).parent().cascade()
+        .with<OnGroundTag>()
         .cached()
         .build();
 
@@ -340,9 +371,10 @@ void ExecuteQueryVelocityBob(flecs::world& world)
             if (velocity) {
                 duin::Vector3 hVelocity(velocity->value.x, 0.0f, velocity->value.z);
                 float velocityMagnitude = duin::Vector3LengthF(hVelocity);
-                float bobEffect = std::sin(GetTime() * bob.frequency) * (velocityMagnitude / 1000.0f) * bob.amplitude; 
-                DN_INFO("VelMag {}", velocityMagnitude);
-                localPos.value.y += bobEffect * duin::GetPhysicsFPS();
+                float bobEffectX = std::sin(GetTime() * bob.frequency / 2.0f) * (velocityMagnitude / 15000.0f) * bob.amplitude; 
+                float bobEffectY = std::sin(GetTime() * bob.frequency) * (velocityMagnitude / 10000.0f) * bob.amplitude; 
+                localPos.value.x = bobEffectX * duin::GetPhysicsFPS();
+                localPos.value.y = bobEffectY * duin::GetPhysicsFPS();
             }
         }
     );

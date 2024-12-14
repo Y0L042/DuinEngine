@@ -6,6 +6,7 @@
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Utils/UUID.h"
 #include "Duin/Physics/Physics3DServer.h"
+#include "Duin/Physics/PhysicsCharacterBody3D.h"
 
 namespace duin {
 
@@ -180,7 +181,7 @@ namespace duin {
         //  Physics Components
         /*------------------------------------------------------------------------*/
         struct CharacterBody3DComponent {
-            CharacterBody3D *characterBody;
+            CharacterCollisionBody3D *characterBody;
         };
 
         /*------------------------------------------------------------------------*/
@@ -201,7 +202,7 @@ namespace duin {
         extern flecs::entity Node;
         extern flecs::entity Node2D;
         extern flecs::entity Node3D;
-        extern flecs::entity CharacterBody3D;
+        extern flecs::entity CharacterCollisionBody3D;
         extern flecs::entity Camera3D;
 
         extern flecs::entity DebugCapsule;

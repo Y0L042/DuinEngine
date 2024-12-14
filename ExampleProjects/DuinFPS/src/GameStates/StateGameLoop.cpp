@@ -4,9 +4,15 @@
 #include "../EntityManager.h"
 #include "../ECS.h"
 #include "../PlayerStates/PlayerStates.h"
+
+#define RLIGHTS_IMPLEMENTATION
+#include "../rlights.h"
+
 #include <flecs.h>
 
 #include <iostream>
+
+#define GLSL_VERSION            330
 
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
@@ -21,6 +27,9 @@ flecs::entity cameraRoot;
 flecs::entity fpsCamera;
 flecs::entity debugCamera;
 
+Shader shader;
+
+static const char *TERRAIN_PATH = "./assets/.maps/testMap.obj";
 Model terrain;
 
 physx::PxRigidDynamic *ball;
@@ -40,6 +49,7 @@ InputVector2DKeys MOVEMENT_KEYS{ KEY_W, KEY_S, KEY_A, KEY_D };
 
 static void SetFPSCamera(int enable);
 static void CookCollisions();
+static void CookMap();
 
 StateGameLoop::StateGameLoop(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -59,7 +69,20 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
+    // Load basic lighting shader
+    shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
+                               TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
+    // Get some required shader locations
+    shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+
+    // Ambient light level (some basic lighting)
+    int ambientLoc = GetShaderLocation(shader, "ambient");
+    float lighting[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
+    SetShaderValue(shader, ambientLoc, lighting, SHADER_UNIFORM_VEC4);
+    CreateLight(LIGHT_POINT, { -2, 3, -2 }, Vector3Zero(), YELLOW, shader);
+
     duin::QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { pxServer.StepPhysics(delta); }));
+
     ecsManager.Initialize();
 
     flecs::entity testEntity;
@@ -71,14 +94,27 @@ void StateGameLoop::State_Enter()
     };
 
     float playerHeight = 1.75f;
+    duin::Vector3 playerPosition(0.0f, 0.01f, 5.0f);
+    duin::CharacterBody3DDesc playerDesc = {
+        .height = playerHeight,
+        .radius = 0.3f,
+        .slopeLimit = std::cosf(physx::PxPi / 4.0),
+        .stepOffset = 0.5f,
+        .contactOffset = 0.1f,
+        .position = duin::Vector3(playerPosition),
+        .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
+    };
+    duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
+    static duin::CharacterCollisionBody3D playerBody(pxServer, playerDesc, playerMaterial);
     player = ecsManager.world.entity()
-        .is_a(duin::ECSPrefab::CharacterBody3D)
-        .set<Position3D, Local>({{ 0.0f, 5.0f, 0.0f }})
+        .is_a(duin::ECSPrefab::CharacterCollisionBody3D)
+        .set<Position3D, Local>({ playerPosition })
         .set<Mass>({ .value = 80.0f })
         .set<CanRunComponent>({ .speed = 10.0f })
         .set<CanSprintComponent>({ .speed = 17.5f })
-        .set<CanJumpComponent>({ .impulse = 525.0f })
+        .set<CanJumpComponent>({ .impulse = 925.0f })
         .set<DebugCapsuleComponent>({ 1.75f, 0.35f, 8, 16, ::GREEN })
+        .set<CharacterBody3DComponent >({ &playerBody })
         .add<InputVelocities>()
         .add<InputForces>()
         .add<PlayerMovementInputVec3>()
@@ -91,34 +127,23 @@ void StateGameLoop::State_Enter()
     cameraRoot = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Node3D)
         .child_of(player)
+        .set<Position3D, Local>({{ 0.0f, playerHeight, 0.0f }})
         .add<MouseInputVec2>()
         .add<CameraPitchComponent>()
         ;
     fpsCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
         .child_of(cameraRoot)
-        .set<Position3D, Local>({{ 0.0f, playerHeight, 0.0f }})
         .set<::Camera3D>({
                 .target = { 0.0f, 0.0f, 0.0f },
                 .up = { 0.0f, 1.0f, 0.0f },
                 .fovy = 72.0f,
                 .projection = ::CAMERA_PERSPECTIVE
             })
-        // .set<VelocityBob>({ 10.0f, 5.0f })
+        .set<VelocityBob>({ 10.0f, 1.0f })
         .set<DebugCapsuleComponent>({ 0.5f, 0.25f, 8, 16, ::RED })
         .add<duin::ECSTag::ActiveCamera>()
         ;
-    duin::CharacterBody3DDesc desc = {
-        .height = playerHeight,
-        .radius = 0.5f,
-        .slopeLimit = std::cosf(physx::PxPi / 4.0),
-        .stepOffset = 0.5f,
-        .contactOffset = 0.1f,
-        .position = duin::Vector3(0.0f, playerHeight / 2.0f + 15, 0.0f),
-        .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
-    };
-    static duin::CharacterBody3D playerBody(pxServer);
-    player.set<duin::ECSComponent::CharacterBody3DComponent >({ &playerBody });
 
 
 
@@ -136,6 +161,10 @@ void StateGameLoop::State_Enter()
         .add<CameraYawComponent>()
         ;
 
+    CookMap();
+    ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::Node3D)
+        ;
 
 
     duin::StaticCollisionPlane ground(pxServer);
@@ -250,12 +279,14 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
 
     // pxServer.StepPhysics(delta);
 
-     const duin::Vector3 playerPosL = player.get<duin::ECSComponent::CharacterBody3DComponent>()->characterBody->GetFootPosition();
-     debugWatchlist.Post("FootPos: ", "{ %.1f, %.1f, %.1f }", playerPosL.x, playerPosL.y, playerPosL.z);
-    //
-    // const duin::Vector3 playerPosG = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Global>()->value;
+    // const duin::Vector3 playerPosL = player.get<duin::ECSComponent::CharacterBody3DComponent>()->characterBody->GetFootPosition();
+    // debugWatchlist.Post("FootPos: ", "{ %.1f, %.1f, %.1f }", playerPosL.x, playerPosL.y, playerPosL.z);
+
+    const duin::Vector3 playerPosG = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Global>()->value;
+    debugWatchlist.Post("PlayerPosition:", " { %.1f, %.1f, %.1f }", playerPosG.x, playerPosG.y, playerPosG.z);
+    // debugConsole.LogEx(duin::LogLevel::Info, "PlayerPosition: { %.1f, %.1f, %.1f }", playerPosG.x, playerPosG.y, playerPosG.z);
+
     // debugWatchlist.Post("PlayerPosGlobal: ", "{ %.1f, %.1f, %.1f }", playerPosG.x, playerPosG.y, playerPosG.z);
-    //
     // const duin::Vector3 playerVel = player.get<duin::ECSComponent::Velocity3D>()->value;
     // debugWatchlist.Post("PlayerVel: ", "{ %.1f, %.1f, %.1f }", playerVel.x, playerVel.y, playerVel.z);
 
@@ -268,9 +299,15 @@ void StateGameLoop::State_Draw()
 {
     playerSM.ExecuteDraw();
 
+    // DrawCube({0.0f, 0.0f, 0.0f}, 2.9f, 2.9f, 2.9f, BLUE);
+    BeginShaderMode(shader);
+        DrawCube({0.0f, 0.0f, 0.0f}, 3.0f, 3.0f, 3.0f, WHITE);
+        DrawModel(terrain, { 0.0f, 0.0f, 0.0f }, 1, RAYWHITE);
+    EndShaderMode();
+
+
     DrawGrid(1000, 10.0f);
 
-    DrawModel(terrain, { 0.0f, -2.0f, 0.0f }, 2, BLACK);
 
     duin::Vector3 pxBodyPos = duin::Vector3(player.get<CharacterBody3DComponent>()->characterBody->GetPxController()->getFootPosition());
     DrawCapsuleWires(pxBodyPos.ToRaylib(),
@@ -279,9 +316,7 @@ void StateGameLoop::State_Draw()
         12, 16,
         BLUE
     );
-    DrawCube({0.0f, 0.0f, 0.0f}, 2.0f, 2.0f, 2.0f, RED);
     DrawSphereWires(duin::Vector3(ball->getGlobalPose().p).ToRaylib(), 1.0f, 32, 32, RED);
-    
 }
 
 void StateGameLoop::State_DrawUI()
@@ -291,7 +326,11 @@ void StateGameLoop::State_DrawUI()
     const duin::Vector3 playerVel = player.get<duin::ECSComponent::Velocity3D>()->value;
     // debugConsole.Log("Vel: { %.1f, %.1f, %.1f }", playerVel.x, playerVel.y, playerVel.z);
     debugWatchlist.Post("Vel:", "{ %.1f, %.1f, %.1f }", playerVel.x, playerVel.y, playerVel.z);
-    debugWatchlist.Post("Speed:", "%.1f", duin::Vector3Length(playerVel));
+    duin::Vector3 hSpeed(playerVel.x, 0.0f, playerVel.z);
+    debugWatchlist.Post("Speed:", "Total: %.1f\t H: %.1f\t V: %.1f", 
+            duin::Vector3LengthF(playerVel),
+            duin::Vector3LengthF(hSpeed),
+            playerVel.y);
 
     debugWatchlist.Draw("Watchlist");
 
@@ -345,3 +384,42 @@ static void CookCollisions()
     pxServer.pxScene->addActor(*staticActor);
 }
 
+static void CookMap()
+{
+    physx::PxRigidStatic *staticActor = pxServer.pxPhysics->createRigidStatic(physx::PxTransform(physx::PxVec3(0, 0, 0)));
+
+    terrain = LoadModel(TERRAIN_PATH);
+
+    const Mesh& mesh = terrain.meshes[0];
+    std::vector<physx::PxVec3> convexVerts(mesh.vertexCount);
+    for (int i = 0; i < mesh.vertexCount; ++i)
+    {
+        convexVerts[i] = physx::PxVec3(
+            mesh.vertices[i * 3 + 0], // X-coordinate
+            mesh.vertices[i * 3 + 1], // Y-coordinate
+            mesh.vertices[i * 3 + 2]  // Z-coordinate
+        );
+    }
+
+    physx::PxConvexMeshDesc convexDesc;
+    convexDesc.points.count = static_cast<physx::PxU32>(convexVerts.size());
+    convexDesc.points.stride = sizeof(physx::PxVec3);
+    convexDesc.points.data = convexVerts.data();
+    convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+
+    physx::PxTolerancesScale scale;
+    physx::PxCookingParams params(scale);
+
+    physx::PxDefaultMemoryOutputStream buf;
+    physx::PxConvexMeshCookingResult::Enum result;
+    if(!PxCookConvexMesh(params, convexDesc, buf, &result))
+        return;
+    physx::PxDefaultMemoryInputData input(buf.getData(), buf.getSize());
+    physx::PxConvexMesh* convexMesh = pxServer.pxPhysics->createConvexMesh(input);
+    physx::PxShape* aConvexShape = physx::PxRigidActorExt::createExclusiveShape(
+            *staticActor,
+            physx::PxConvexMeshGeometry(convexMesh), 
+            *pxServer.pxMaterial);
+
+    pxServer.pxScene->addActor(*staticActor);
+}

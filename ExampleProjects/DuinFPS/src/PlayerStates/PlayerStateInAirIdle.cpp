@@ -1,7 +1,9 @@
 #include "PlayerStateInAirIdle.h"
 #include "./PlayerStates.h"
 
+#include "../ECS.h"
 #include "../Singletons.h"
+#include "../GameStates/StateGameLoop.h"
 
 PlayerStateInAirIdle::PlayerStateInAirIdle(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -17,10 +19,14 @@ PlayerStateInAirIdle::PlayerStateInAirIdle(duin::GameStateMachine& owner)
 
 void PlayerStateInAirIdle::State_Enter()
 {
+    player.add<IdleTag>();
 }
 
 void PlayerStateInAirIdle::State_HandleInput()
 {
+    if (IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
+        owner.SwitchState<PlayerStateInAirStrafe>();
+    }
 }
 
 void PlayerStateInAirIdle::State_Update(double delta)
@@ -42,5 +48,6 @@ void PlayerStateInAirIdle::State_DrawUI()
 
 void PlayerStateInAirIdle::State_Exit()
 {
+    player.remove<IdleTag>();
     debugWatchlist.Post("PlayerState", "");
 }
