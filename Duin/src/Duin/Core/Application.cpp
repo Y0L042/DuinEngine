@@ -5,6 +5,8 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include <filesystem>
+
 #define RAYMATH_IMPLEMENTATION
 #define RCAMERA_IMPLEMENTATION
 #define RLIGHTS_IMPLEMENTATION
@@ -35,6 +37,12 @@ static std::vector<std::function<void(void)>> postDrawUICallbacks;
 static std::vector<std::function<void(void)>> preFrameCallbacks;
 static std::vector<std::function<void(void)>> postFrameCallbacks;
 static std::vector<std::function<void(void)>> postDebugCallbacks;
+
+std::string GetRootDirectory()
+{
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    return currentPath.string();
+}
 
 void DebugPauseGame()
 {

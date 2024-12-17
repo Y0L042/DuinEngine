@@ -18,6 +18,8 @@ project "Duin"
         pchheader ""  -- Ensures .c files ignore PCH
     filter {} -- Clear the filter
 
+    include "vendor"
+
     -- files(global_files)
 	files 
 	{

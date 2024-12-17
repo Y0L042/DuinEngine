@@ -11,6 +11,7 @@
 
 namespace duin
 {
+    std::string GetRootDirectory();
     void DebugPauseGame();
     void DebugResumeGame();
     int DebugIsGamePaused();

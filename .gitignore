@@ -13,6 +13,10 @@ Duin/vendor/*
 /.cache/clangd/index
 /compile_commands.json
 
+!vendor/premake5.lua
+!Duin/vendor/premake5.lua
+!premake5.lua.old
+
 # Binary files and build artifacts
 *.exe
 *.dll
