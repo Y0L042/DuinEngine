@@ -79,7 +79,7 @@ void StateGameLoop::State_Enter()
     int ambientLoc = GetShaderLocation(shader, "ambient");
     float lighting[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
     SetShaderValue(shader, ambientLoc, lighting, SHADER_UNIFORM_VEC4);
-    CreateLight(LIGHT_POINT, { -2, 3, -2 }, Vector3Zero(), YELLOW, shader);
+    CreateLight(LIGHT_POINT, { -2, 3, -2 }, Vector3Zero(), WHITE, shader);
 
     duin::QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { pxServer.StepPhysics(delta); }));
 
