@@ -2,6 +2,7 @@
 .usr
 .vs/
 bin/
+generated_docs/
 
 bin-int/
 vendor/bin/*
@@ -69,3 +70,5 @@ vendor/
 
 /Duin/Duin.vcxproj.filters
 /Duin/Duin.vcxproj
+ExampleProjects/Sandbox/Sandbox.dnproj
+nuget.config
