@@ -3,6 +3,7 @@
 .vs/
 bin/
 generated_docs/
+DuinEngine.wiki/
 
 bin-int/
 vendor/bin/*
