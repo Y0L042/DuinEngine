@@ -104,9 +104,9 @@ void StateGameLoop::State_Enter()
         .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
     };
     duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
-    static duin::CharacterCollisionBody3D playerBody(pxServer, playerDesc, playerMaterial);
+    static duin::PhysicsCharacterBody3D playerBody(pxServer, playerDesc, playerMaterial);
     player = ecsManager.world.entity()
-        .is_a(duin::ECSPrefab::CharacterCollisionBody3D)
+        .is_a(duin::ECSPrefab::PhysicsCharacterBody3D)
         .set<Position3D, Local>({ playerPosition })
         .set<Mass>({ .value = 80.0f })
         .set<CanRunComponent>({ .speed = 10.0f })
@@ -170,7 +170,7 @@ void StateGameLoop::State_Enter()
         ;
 
 
-    duin::StaticCollisionPlane ground(pxServer);
+    duin::PhysicsStaticPlane3D ground(pxServer);
     ecsManager.ActivateCameraEntity(debugCamera);
 
 

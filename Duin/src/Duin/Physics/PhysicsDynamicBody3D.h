@@ -9,7 +9,7 @@
 #include "Duin/Core/Maths/DuinMaths.h"
 
 namespace duin {
-    class DynamicCollisionBody3D
+    class PhysicsDynamicBody3D
     {
 
     };

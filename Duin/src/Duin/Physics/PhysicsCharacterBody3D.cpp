@@ -7,7 +7,7 @@
 constexpr int MAX_HIT_REPORTS = 8;
 
 namespace duin {
-    ControllerHitReport::ControllerHitReport(CharacterCollisionBody3D& owner)
+    ControllerHitReport::ControllerHitReport(PhysicsCharacterBody3D& owner)
         : owner(owner)
     {
         QueuePostFrameCallback(std::function<void(void)>([this]() { CleanHitReports(); }));
@@ -101,7 +101,7 @@ namespace duin {
 
 
 namespace duin {
-    CharacterCollisionBody3D::CharacterCollisionBody3D(Physics3DServer& server)
+    PhysicsCharacterBody3D::PhysicsCharacterBody3D(Physics3DServer& server)
         : server(server), controllerHitReportCallback(*this)
     {
         pxMaterial = server.CreateMaterial(0.5f, 0.5f, 0.5f);
@@ -114,7 +114,7 @@ namespace duin {
         pxController->setFootPosition(pxDesc.position);
     }
 
-    CharacterCollisionBody3D::CharacterCollisionBody3D(Physics3DServer& server, CharacterBody3DDesc desc, PhysicsMaterial material)
+    PhysicsCharacterBody3D::PhysicsCharacterBody3D(Physics3DServer& server, CharacterBody3DDesc desc, PhysicsMaterial material)
         : server(server), desc(desc), controllerHitReportCallback(*this)
     {
         pxMaterial = server.CreateMaterial(material);
@@ -127,52 +127,52 @@ namespace duin {
         pxController->setFootPosition(pxDesc.position);
     }
 
-    CharacterCollisionBody3D::~CharacterCollisionBody3D()
+    PhysicsCharacterBody3D::~PhysicsCharacterBody3D()
     {
         //if (pxController)
     }
 
-    const CharacterBody3DDesc CharacterCollisionBody3D::GetDescriptor() const
+    const CharacterBody3DDesc PhysicsCharacterBody3D::GetDescriptor() const
     {
         return desc;
     }
 
-    physx::PxController* CharacterCollisionBody3D::GetPxController() const
+    physx::PxController* PhysicsCharacterBody3D::GetPxController() const
     {
         return pxController;
     }
 
-    void CharacterCollisionBody3D::SetShapeHitCallback(std::function<void(const physx::PxControllerShapeHit&)> OnShapeHitCallback)
+    void PhysicsCharacterBody3D::SetShapeHitCallback(std::function<void(const physx::PxControllerShapeHit&)> OnShapeHitCallback)
     {
         controllerHitReportCallback.OnShapeHitCallback = OnShapeHitCallback;
     }
 
-    void CharacterCollisionBody3D::SetControllerHitCallback(std::function<void(const physx::PxControllersHit&)> OnControllerHitCallback)
+    void PhysicsCharacterBody3D::SetControllerHitCallback(std::function<void(const physx::PxControllersHit&)> OnControllerHitCallback)
     {
         controllerHitReportCallback.OnControllerHitCallback = OnControllerHitCallback;
     }
 
-    void CharacterCollisionBody3D::SetObstacleHitCallback(std::function<void(const physx::PxControllerObstacleHit&)> OnObstacleHitCallback)
+    void PhysicsCharacterBody3D::SetObstacleHitCallback(std::function<void(const physx::PxControllerObstacleHit&)> OnObstacleHitCallback)
     {
         controllerHitReportCallback.OnObstacleHitCallback = OnObstacleHitCallback;
     }
 
-    Vector3 CharacterCollisionBody3D::GetPosition()
+    Vector3 PhysicsCharacterBody3D::GetPosition()
     {
         return Vector3(pxController->getPosition());
     }
 
-    Vector3 CharacterCollisionBody3D::GetFootPosition()
+    Vector3 PhysicsCharacterBody3D::GetFootPosition()
     {
         return Vector3(pxController->getFootPosition());
     }
 
-    Vector3 CharacterCollisionBody3D::GetCurrentVelocity()
+    Vector3 PhysicsCharacterBody3D::GetCurrentVelocity()
     {
         return currentVelocity;
     }
 
-    void CharacterCollisionBody3D::Move(Vector3 displacement, double delta)
+    void PhysicsCharacterBody3D::Move(Vector3 displacement, double delta)
     {
         // TODO refactor and clean!
 
@@ -198,17 +198,17 @@ namespace duin {
         timeWhenLastMoved = ::GetTime();
     }
 
-    int CharacterCollisionBody3D::IsOnFloor()
+    int PhysicsCharacterBody3D::IsOnFloor()
     {
         return isOnFloor;
     }
 
-    int CharacterCollisionBody3D::IsOnFloorOnly()
+    int PhysicsCharacterBody3D::IsOnFloorOnly()
     {
         return 0;
     }
 
-    int CharacterCollisionBody3D::OnFloorShapeCast(double delta)
+    int PhysicsCharacterBody3D::OnFloorShapeCast(double delta)
     {
         float maxSlopeAngleDegrees = 50.0f;
 
@@ -282,7 +282,7 @@ namespace duin {
         return onFloor;
     }
 
-    void CharacterCollisionBody3D::CreatePxController(physx::PxCapsuleControllerDesc pxDesc)
+    void PhysicsCharacterBody3D::CreatePxController(physx::PxCapsuleControllerDesc pxDesc)
     {
         pxController = server.pxControllerManager->createController(pxDesc);
     }

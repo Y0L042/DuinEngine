@@ -57,7 +57,7 @@ namespace ECSPrefab {
     flecs::entity Node;
     flecs::entity Node2D;
     flecs::entity Node3D;
-    flecs::entity CharacterCollisionBody3D;
+    flecs::entity PhysicsCharacterBody3D;
     flecs::entity Camera3D;
     flecs::entity Cube;
     flecs::entity DebugCapsule;
@@ -97,7 +97,7 @@ namespace ECSPrefab {
 
 
 
-        CharacterCollisionBody3D = world.prefab("CharacterBody3D")
+        PhysicsCharacterBody3D = world.prefab("CharacterBody3D")
             .is_a(ECSPrefab::Node3D)
             .add<ECSTag::PxKinematic>()
             .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })

@@ -12,7 +12,7 @@
 #include <functional>
 
 namespace duin {
-    class CharacterCollisionBody3D;
+    class PhysicsCharacterBody3D;
     class ControllerHitReport : public physx::PxUserControllerHitReport
     {
     public:
@@ -20,7 +20,7 @@ namespace duin {
         std::function<void(const physx::PxControllersHit&)> OnControllerHitCallback;
         std::function<void(const physx::PxControllerObstacleHit&)> OnObstacleHitCallback;
 
-        ControllerHitReport(CharacterCollisionBody3D& owner);
+        ControllerHitReport(PhysicsCharacterBody3D& owner);
         virtual ~ControllerHitReport() = default;
 
         virtual void OnShapeHit(const physx::PxControllerShapeHit& hit) {};
@@ -37,7 +37,7 @@ namespace duin {
         const std::vector<physx::PxControllersHit>& GetControllerHitReports();
         const std::vector<physx::PxControllerObstacleHit>& GetObstacleHitReports();
     private:
-        CharacterCollisionBody3D& owner;
+        PhysicsCharacterBody3D& owner;
         std::vector<physx::PxControllerShapeHit> shapeHitReports_1;
         std::vector<physx::PxControllerShapeHit> shapeHitReports_2;
         std::vector<physx::PxControllerShapeHit> *currentFrameShapeHitReports = NULL;
@@ -87,14 +87,14 @@ namespace duin {
 
     class Physics3DServer;
     struct PhysicsMaterial;
-    class CharacterCollisionBody3D
+    class PhysicsCharacterBody3D
     {
     public:
         Physics3DServer& server;
 
-        CharacterCollisionBody3D(Physics3DServer& server);
-        CharacterCollisionBody3D(Physics3DServer& server, CharacterBody3DDesc desc, PhysicsMaterial material);
-        ~CharacterCollisionBody3D();
+        PhysicsCharacterBody3D(Physics3DServer& server);
+        PhysicsCharacterBody3D(Physics3DServer& server, CharacterBody3DDesc desc, PhysicsMaterial material);
+        ~PhysicsCharacterBody3D();
 
         const CharacterBody3DDesc GetDescriptor() const;
         physx::PxController* GetPxController() const;
@@ -112,8 +112,8 @@ namespace duin {
         int IsOnFloor();
         int IsOnFloorOnly();
 
-        CharacterCollisionBody3D(const CharacterCollisionBody3D&) = delete;
-        CharacterCollisionBody3D& operator=(const CharacterCollisionBody3D&) = delete;
+        PhysicsCharacterBody3D(const PhysicsCharacterBody3D&) = delete;
+        PhysicsCharacterBody3D& operator=(const PhysicsCharacterBody3D&) = delete;
 
     private:
         double timeWhenLastMoved = 0.0;

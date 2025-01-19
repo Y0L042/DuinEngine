@@ -3,7 +3,7 @@
 #include "Physics3DServer.h"
 
 namespace duin {
-    StaticCollisionPlane::StaticCollisionPlane(Physics3DServer& server)
+    PhysicsStaticPlane3D::PhysicsStaticPlane3D(Physics3DServer& server)
         : server(server)
     {
         physx::PxMaterial *pxMaterial = server.pxPhysics->createMaterial(0.5f, 0.5f, 0.6f);

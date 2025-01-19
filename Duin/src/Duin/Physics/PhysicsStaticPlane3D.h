@@ -17,12 +17,12 @@ namespace duin {
     };
 
     class Physics3DServer;
-    class StaticCollisionPlane
+    class PhysicsStaticPlane3D
     {
         public:
             Physics3DServer& server;
 
-            StaticCollisionPlane(Physics3DServer& server);
+            PhysicsStaticPlane3D(Physics3DServer& server);
 
         private:
 

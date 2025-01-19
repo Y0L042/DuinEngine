@@ -189,7 +189,7 @@ namespace duin {
         //  3D Physics Components
         /*------------------------------------------------------------------------*/
         struct CharacterBody3DComponent {
-            CharacterCollisionBody3D *characterBody;
+            PhysicsCharacterBody3D *characterBody;
         };
 
         /*------------------------------------------------------------------------*/
@@ -210,7 +210,7 @@ namespace duin {
         extern flecs::entity Node;
         extern flecs::entity Node2D;
         extern flecs::entity Node3D;
-        extern flecs::entity CharacterCollisionBody3D;
+        extern flecs::entity PhysicsCharacterBody3D;
         extern flecs::entity Camera3D;
         extern flecs::entity Cube;
 
