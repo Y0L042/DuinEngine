@@ -13,6 +13,9 @@
 
 #include "Duin/Physics/Physics3DServer.h"
 #include "Duin/Physics/PhysicsCharacterBody3D.h"
+#include "Duin/Physics/PhysicsStaticBody3D.h"
+#include "Duin/Physics/PhysicsStaticPlane3D.h"
+#include "Duin/Physics/PhysicsDynamicBody3D.h"
 
 /* ---------- C ----------- */
 #include "Duin/C_Modules/c_modules.h"

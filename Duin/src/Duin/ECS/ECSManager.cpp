@@ -44,6 +44,7 @@ namespace ECSComponent {
         world.component<ECSComponent::Rotation3D>();
         world.component<ECSComponent::Scale3D>();
         world.component<ECSComponent::Velocity3D>();
+        world.component<ECSComponent::CubeComponent>();
         world.component<ECSComponent::CharacterBody3DComponent>();
         world.component<::Camera3D>();
 
@@ -58,6 +59,7 @@ namespace ECSPrefab {
     flecs::entity Node3D;
     flecs::entity CharacterCollisionBody3D;
     flecs::entity Camera3D;
+    flecs::entity Cube;
     flecs::entity DebugCapsule;
 
 
@@ -113,6 +115,16 @@ namespace ECSPrefab {
                                  .fovy = 72.0f,
                                  .projection = ::CAMERA_PERSPECTIVE
                              })
+            ;
+
+        Cube = world.prefab("Cube")
+            .is_a(ECSPrefab::Node3D)
+            .set<ECSComponent::CubeComponent>({
+                                              .width = 1.0f,
+                                              .height = 1.0f,
+                                              .length = 1.0f,
+                                              .color = ::GRAY
+                                              })
             ;
 
         
@@ -198,6 +210,7 @@ void ECSManager::PostPhysicsUpdateQueryExecution(double delta)
 
 void ECSManager::PostDrawQueryExecution()
 {
+    ExecuteQueryDrawCube();
     ExecuteQueryDrawDebugCapsule();
 }
 
@@ -426,6 +439,28 @@ void ECSManager::ExecuteQueryControlCamera()
     );
 }
 
+void ECSManager::ExecuteQueryDrawCube()
+{
+    static flecs::query q = world.query_builder<
+        const ECSComponent::CubeComponent,
+        const ECSComponent::Position3D
+    >()
+    .term_at(1).second<ECSTag::Global>()
+    .cached()
+    .build();
+
+    q.each([](
+        const ECSComponent::CubeComponent& cube,
+        const ECSComponent::Position3D& pos
+        ) {
+           ::DrawCube(pos.value.ToRaylib(),
+                      cube.width,
+                      cube.height,
+                      cube.length,
+                      cube.color);
+        });
+}
+
 void ECSManager::ExecuteQueryDrawDebugCapsule()
 {
     static flecs::query q = world.query_builder<
@@ -449,4 +484,5 @@ void ECSManager::ExecuteQueryDrawDebugCapsule()
             );
         });
 }
+
 }

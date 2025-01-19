@@ -16,6 +16,11 @@ vim.filetype.add({
   },
 })
 
+vim.filetype.add({
+    extension = {
+        dnent = "json", -- Replace 'myjson' with your custom extension
+    },
+})
 
 -- Function to switch between header and source files
 function switch_source_header()

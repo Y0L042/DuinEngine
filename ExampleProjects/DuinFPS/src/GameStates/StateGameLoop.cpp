@@ -29,7 +29,7 @@ flecs::entity debugCamera;
 
 Shader shader;
 
-static const char *TERRAIN_PATH = "./assets/.maps/testMap.obj";
+static const char *TERRAIN_PATH = "./assets/.maps/testMap.glb";
 Model terrain;
 
 physx::PxRigidDynamic *ball;
@@ -74,7 +74,6 @@ void StateGameLoop::State_Enter()
                                TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
     // Get some required shader locations
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
-
     // Ambient light level (some basic lighting)
     int ambientLoc = GetShaderLocation(shader, "ambient");
     float lighting[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
@@ -113,7 +112,6 @@ void StateGameLoop::State_Enter()
         .set<CanRunComponent>({ .speed = 10.0f })
         .set<CanSprintComponent>({ .speed = 17.5f })
         .set<CanJumpComponent>({ .impulse = 925.0f })
-        .set<DebugCapsuleComponent>({ 1.75f, 0.35f, 8, 16, ::GREEN })
         .set<CharacterBody3DComponent >({ &playerBody })
         .add<InputVelocities>()
         .add<InputForces>()
@@ -141,7 +139,6 @@ void StateGameLoop::State_Enter()
                 .projection = ::CAMERA_PERSPECTIVE
             })
         .set<VelocityBob>({ 10.0f, 1.0f })
-        .set<DebugCapsuleComponent>({ 0.5f, 0.25f, 8, 16, ::RED })
         .add<duin::ECSTag::ActiveCamera>()
         ;
 
@@ -159,6 +156,12 @@ void StateGameLoop::State_Enter()
         .add<MouseInputVec2>()
         .add<CameraPitchComponent>()
         .add<CameraYawComponent>()
+        ;
+
+    ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::Cube)
+        .set<CubeComponent>({ 3.0f, 3.0f, 3.0f, GRAY})
+        .set<Position3D, Local>({{ 4.0f, 0.0f, 4.0f }})
         ;
 
     CookMap();
@@ -198,6 +201,7 @@ void StateGameLoop::State_Exit()
 
 void StateGameLoop::State_HandleInput()
 {
+    /* --- DEBUG --- */
     if (fpsCameraEnabled && !IsCursorHidden()) {
         SetFPSCamera(1);
     }
@@ -213,7 +217,16 @@ void StateGameLoop::State_HandleInput()
             SetFPSCamera(0);
         }
     }
-
+    static int debugShapesEnabled = 0;
+    if (IsKeyPressed(KEY_F3)) {
+        if (debugShapesEnabled) {
+            player.remove<DebugCapsuleComponent>();
+        } else {
+            player.set<DebugCapsuleComponent>({ 1.75f, 0.35f, 8, 16, ::GREEN });
+        }
+        debugShapesEnabled = !debugShapesEnabled;
+    }
+    /* --- DEBUG --- */
 
 
     playerSM.ExecuteHandleInput();
@@ -302,20 +315,23 @@ void StateGameLoop::State_Draw()
     // DrawCube({0.0f, 0.0f, 0.0f}, 2.9f, 2.9f, 2.9f, BLUE);
     BeginShaderMode(shader);
         DrawCube({0.0f, 0.0f, 0.0f}, 3.0f, 3.0f, 3.0f, WHITE);
-        DrawModel(terrain, { 0.0f, 0.0f, 0.0f }, 1, RAYWHITE);
+        DrawModel(terrain, { 0.0f, 0.0f, 0.0f }, 1, WHITE);
     EndShaderMode();
 
 
     DrawGrid(1000, 10.0f);
 
 
-    duin::Vector3 pxBodyPos = duin::Vector3(player.get<CharacterBody3DComponent>()->characterBody->GetPxController()->getFootPosition());
+    /* --- DEBUG --- */
+    /* duin::Vector3 pxBodyPos = duin::Vector3(player.get<CharacterBody3DComponent>()->characterBody->GetPxController()->getFootPosition());
     DrawCapsuleWires(pxBodyPos.ToRaylib(),
         Vector3Add(pxBodyPos, { 0.0f, 1.75f, 0.0f }).ToRaylib(),
         0.3f,
         12, 16,
         BLUE
-    );
+    ); */
+    /* --- DEBUG --- */
+
     DrawSphereWires(duin::Vector3(ball->getGlobalPose().p).ToRaylib(), 1.0f, 32, 32, RED);
 }
 

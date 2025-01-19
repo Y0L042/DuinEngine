@@ -178,14 +178,22 @@ namespace duin {
         };
 
         /*------------------------------------------------------------------------*/
-        //  Physics Components
+        //  3D Visual Components
+        /*------------------------------------------------------------------------*/
+        struct CubeComponent {
+            float width, height, length;
+            ::Color color;
+        };
+
+        /*------------------------------------------------------------------------*/
+        //  3D Physics Components
         /*------------------------------------------------------------------------*/
         struct CharacterBody3DComponent {
             CharacterCollisionBody3D *characterBody;
         };
 
         /*------------------------------------------------------------------------*/
-        //  Debug Components
+        //  3D Debug Components
         /*------------------------------------------------------------------------*/
         struct DebugCapsuleComponent {
             float height, radius;
@@ -204,6 +212,7 @@ namespace duin {
         extern flecs::entity Node3D;
         extern flecs::entity CharacterCollisionBody3D;
         extern flecs::entity Camera3D;
+        extern flecs::entity Cube;
 
         extern flecs::entity DebugCapsule;
     };
@@ -245,6 +254,7 @@ namespace duin {
         void ExecuteQueryUpdateCharacterBody3DPosition();
         void ExecuteQueryUpdateCameraPosition();
         void ExecuteQueryControlCamera();
+        void ExecuteQueryDrawCube();
         void ExecuteQueryDrawDebugCapsule();
 
     private:

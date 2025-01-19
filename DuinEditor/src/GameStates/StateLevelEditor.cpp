@@ -4,7 +4,7 @@
 #include "../Singletons.h"
 #include "../Project.h"
 #include "../FileManager.h"
-
+#include "../SceneTree.h"
 #include "../SceneViewport.h"
 #include "../EditorCamera.h"
 
@@ -12,6 +12,7 @@
 #include <string>
 
 
+SceneTree sceneTree;
 
 Camera3D camera = { { 0 } };
 Camera3D compass_camera =  { { 0 } };
@@ -165,6 +166,7 @@ void StateLevelEditor::State_Draw()
 
 void StateLevelEditor::State_DrawUI()
 {
+    sceneTree.DrawGUI();
     DrawSceneViewport();
     std::string projectFileDir = GetActiveProject().projectDir.string();
     GuiLabel(Rectangle{ 10, 10, 1075, 75 }, projectFileDir.c_str());

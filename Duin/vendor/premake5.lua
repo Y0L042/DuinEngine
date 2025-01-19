@@ -193,12 +193,12 @@ function Flecs()
 end
 
 function main()
-    PhysX()
-    RLImGUI()
-    FMT()
-    RapidJSON()
-    Spdlog()
-    Flecs()
+    -- PhysX()
+    -- RLImGUI()
+    -- FMT()
+    -- RapidJSON()
+    -- Spdlog()
+    -- Flecs()
 end
 
 main()

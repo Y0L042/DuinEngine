@@ -23,22 +23,6 @@ namespace duin {
     
 
 
-    struct StaticCollisionPlaneDesc
-    {
-        
-    };
-
-    class Physics3DServer;
-    class StaticCollisionPlane
-    {
-    public:
-        Physics3DServer& server;
-
-        StaticCollisionPlane(Physics3DServer& server);
-
-    private:
-
-    };
 
 
 
