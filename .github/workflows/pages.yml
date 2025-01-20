@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - engine-overhaul  # Trigger the workflow when changes are pushed to the main branch
+      - docs
 
 jobs:
   build:
@@ -13,6 +14,8 @@ jobs:
     # 1. Checkout the source branch
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        ref: engine-overhaul  # Ensure we use the source branch
 
     # 2. Install Doxygen
     - name: Install Doxygen
