@@ -1,0 +1,68 @@
+\doxysection{duin\+::Game\+State Class Reference}
+\hypertarget{classduin_1_1_game_state}{}\label{classduin_1_1_game_state}\index{duin::GameState@{duin::GameState}}
+
+
+Collaboration diagram for duin\+::Game\+State\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classduin_1_1_game_state__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classduin_1_1_game_state_ac05857a7ce4eb17210400fa8753eb1ee}\label{classduin_1_1_game_state_ac05857a7ce4eb17210400fa8753eb1ee} 
+{\bfseries Game\+State} (\mbox{\hyperlink{classduin_1_1_game_state_machine}{Game\+State\+Machine}} \&owner)
+\item 
+\Hypertarget{classduin_1_1_game_state_af7164cb18ee814e7a17ba0529ce7cf6a}\label{classduin_1_1_game_state_af7164cb18ee814e7a17ba0529ce7cf6a} 
+const std\+::string {\bfseries Get\+Name} ()
+\item 
+\Hypertarget{classduin_1_1_game_state_af7e29e2f841e16d775952ae99a55735d}\label{classduin_1_1_game_state_af7e29e2f841e16d775952ae99a55735d} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{classduin_1_1_game_state}{Game\+State}} \&state) const
+\item 
+\Hypertarget{classduin_1_1_game_state_a1d04ea95e2047b6d344ff094465eb03e}\label{classduin_1_1_game_state_a1d04ea95e2047b6d344ff094465eb03e} 
+bool {\bfseries operator!=} (const \mbox{\hyperlink{classduin_1_1_game_state}{Game\+State}} \&state) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classduin_1_1_game_state_a6bc4b50881bff93fda46c8b6be833c73}\label{classduin_1_1_game_state_a6bc4b50881bff93fda46c8b6be833c73} 
+\mbox{\hyperlink{classduin_1_1_u_u_i_d}{UUID}} {\bfseries uuid}
+\item 
+\Hypertarget{classduin_1_1_game_state_a653956914d6bb391ff462801a2881e3c}\label{classduin_1_1_game_state_a653956914d6bb391ff462801a2881e3c} 
+\mbox{\hyperlink{classduin_1_1_game_state_machine}{Game\+State\+Machine}} \& {\bfseries owner}
+\item 
+\Hypertarget{classduin_1_1_game_state_afc45de276399054e4f6310277bdce3ef}\label{classduin_1_1_game_state_afc45de276399054e4f6310277bdce3ef} 
+std\+::function$<$ void()$>$ {\bfseries Enter}
+\item 
+\Hypertarget{classduin_1_1_game_state_a0ac9dda1467cb1340b0e4bf216db9205}\label{classduin_1_1_game_state_a0ac9dda1467cb1340b0e4bf216db9205} 
+std\+::function$<$ void()$>$ {\bfseries Handle\+Input}
+\item 
+\Hypertarget{classduin_1_1_game_state_a13b1c8e4dca6588c9cad15438b8e3b50}\label{classduin_1_1_game_state_a13b1c8e4dca6588c9cad15438b8e3b50} 
+std\+::function$<$ void(double)$>$ {\bfseries Update}
+\item 
+\Hypertarget{classduin_1_1_game_state_ace03e2fed919ffac10f45cf07190d814}\label{classduin_1_1_game_state_ace03e2fed919ffac10f45cf07190d814} 
+std\+::function$<$ void(double)$>$ {\bfseries Physics\+Update}
+\item 
+\Hypertarget{classduin_1_1_game_state_a4e830fd99b26d2afdb3900d14d1d6701}\label{classduin_1_1_game_state_a4e830fd99b26d2afdb3900d14d1d6701} 
+std\+::function$<$ void()$>$ {\bfseries Draw}
+\item 
+\Hypertarget{classduin_1_1_game_state_abc2a67dae54aa9b1b8b66428732fc561}\label{classduin_1_1_game_state_abc2a67dae54aa9b1b8b66428732fc561} 
+std\+::function$<$ void()$>$ {\bfseries Draw\+UI}
+\item 
+\Hypertarget{classduin_1_1_game_state_ad96f59f036e895b21bd91b6746bd19a4}\label{classduin_1_1_game_state_ad96f59f036e895b21bd91b6746bd19a4} 
+std\+::function$<$ void()$>$ {\bfseries Exit}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classduin_1_1_game_state_aab33cdcca4745848b7e3d4fbffa7f7e9}\label{classduin_1_1_game_state_aab33cdcca4745848b7e3d4fbffa7f7e9} 
+std\+::string {\bfseries state\+Name}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Duin/src/\+Duin/\+Core/\+Utils/Game\+State\+Machine.\+h\item 
+Duin/src/\+Duin/\+Core/\+Utils/Game\+State\+Machine.\+cpp\end{DoxyCompactItemize}

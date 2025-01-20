@@ -1,0 +1,52 @@
+\doxysection{statemachine.\+h}
+\hypertarget{statemachine_8h_source}{}\label{statemachine_8h_source}\index{Duin/src/Duin/C\_Modules/statemachine.h@{Duin/src/Duin/C\_Modules/statemachine.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ C\_STATEMACHINE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ C\_STATEMACHINE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ SM\_NAME\_LENGTH\ 50}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ SM\_MAX\_STATES\ 256}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ SM\_STACK\_SIZE\ 8}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ SM\_ERR\ int}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ SM\_ERR\_OK\ 0}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ SM\_ERR\_NAME\_NOT\_FOUND\ 1}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ SM\_ERR\_NO\_CALLBACK\ 2}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{char}\ state\_name[SM\_NAME\_LENGTH];}
+\DoxyCodeLine{00019\ \ \ \ \ void\ (*state\_enter)(void);}
+\DoxyCodeLine{00020\ \ \ \ \ void\ (*state\_update)(double);}
+\DoxyCodeLine{00021\ \ \ \ \ void\ (*state\_physics\_update)(double);}
+\DoxyCodeLine{00022\ \ \ \ \ void\ (*state\_draw)(double);}
+\DoxyCodeLine{00023\ \ \ \ \ void\ (*state\_handle\_ui)(double);}
+\DoxyCodeLine{00024\ \ \ \ \ void\ (*state\_exit)(void);}
+\DoxyCodeLine{00025\ \}\ \mbox{\hyperlink{struct_s_m___state}{SM\_State}};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{char}\ machine\_name[SM\_NAME\_LENGTH];}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{struct_s_m___state}{SM\_State}}\ *\_sm\_registered\_states[SM\_MAX\_STATES];}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ \_sm\_registered\_states\_count;}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{struct_s_m___state}{SM\_State}}\ *\_sm\_current\_state;}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{struct_s_m___state}{SM\_State}}\ *\_sm\_previous\_state;}
+\DoxyCodeLine{00033\ \}\ \mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ sm\_create\_state\_machine(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *machine\_name);}
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{void}\ sm\_register\_state(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \mbox{\hyperlink{struct_s_m___state}{SM\_State}}\ *state,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *state\_name);}
+\DoxyCodeLine{00037\ SM\_ERR\ sm\_switch\_state(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *state\_name);}
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ sm\_switch\_previous\_state(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm);}
+\DoxyCodeLine{00039\ \textcolor{keywordtype}{void}\ sm\_switch\_state\_pointer(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \mbox{\hyperlink{struct_s_m___state}{SM\_State}}\ *new\_state);}
+\DoxyCodeLine{00040\ SM\_ERR\ sm\_execute\_state\_update(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \textcolor{keywordtype}{double}\ delta);}
+\DoxyCodeLine{00041\ SM\_ERR\ sm\_execute\_state\_physics\_update(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \textcolor{keywordtype}{double}\ delta);}
+\DoxyCodeLine{00042\ SM\_ERR\ sm\_execute\_state\_draw(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \textcolor{keywordtype}{double}\ delta);}
+\DoxyCodeLine{00043\ SM\_ERR\ sm\_execute\_state\_handle\_ui(\mbox{\hyperlink{struct_s_m___machine}{SM\_Machine}}\ *fsm,\ \textcolor{keywordtype}{double}\ delta);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ C\_STATEMACHINE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,71 @@
+\doxysection{duin\+::ECSManager Class Reference}
+\hypertarget{classduin_1_1_e_c_s_manager}{}\label{classduin_1_1_e_c_s_manager}\index{duin::ECSManager@{duin::ECSManager}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_ad4c0044b3f6eb5b6300dc1421e1f4e56}\label{classduin_1_1_e_c_s_manager_ad4c0044b3f6eb5b6300dc1421e1f4e56} 
+void {\bfseries Initialize} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a1268fa6f425a1f39316fdc757e5e706e}\label{classduin_1_1_e_c_s_manager_a1268fa6f425a1f39316fdc757e5e706e} 
+flecs\+::entity {\bfseries Create\+Entity\+From\+JSON} (\mbox{\hyperlink{classduin_1_1_j_s_o_n_member}{JSONMember}} \&member)
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a0a80ca8e1a43168194925b40c3a76af7}\label{classduin_1_1_e_c_s_manager_a0a80ca8e1a43168194925b40c3a76af7} 
+void {\bfseries Activate\+Camera\+Entity} (flecs\+::entity entity)
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a6ed2c8d7a51e1c5c3a79ecbe42b7e316}\label{classduin_1_1_e_c_s_manager_a6ed2c8d7a51e1c5c3a79ecbe42b7e316} 
+void {\bfseries Set\+Global\+Position3D} (flecs\+::entity entity, \mbox{\hyperlink{structduin_1_1_vector3}{Vector3}} new\+Pos)
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_acd46c0ac5cf06d856dc9fe2a6516e946}\label{classduin_1_1_e_c_s_manager_acd46c0ac5cf06d856dc9fe2a6516e946} 
+void {\bfseries Post\+Update\+Query\+Execution} (double delta)
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a4a3ff0734747b98bf7c458087b9d99c3}\label{classduin_1_1_e_c_s_manager_a4a3ff0734747b98bf7c458087b9d99c3} 
+void {\bfseries Post\+Physics\+Update\+Query\+Execution} (double delta)
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_ab78d79de8ed5c09f341e3d1523410548}\label{classduin_1_1_e_c_s_manager_ab78d79de8ed5c09f341e3d1523410548} 
+void {\bfseries Post\+Draw\+Query\+Execution} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_aa11cad89fbe873589f093d5d69e412b4}\label{classduin_1_1_e_c_s_manager_aa11cad89fbe873589f093d5d69e412b4} 
+void {\bfseries Post\+Draw\+UIQuery\+Execution} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a2e538c6d39004662b0b6f46a43957e41}\label{classduin_1_1_e_c_s_manager_a2e538c6d39004662b0b6f46a43957e41} 
+void {\bfseries Execute\+Character\+Body3\+DCreation} (\mbox{\hyperlink{classduin_1_1_physics3_d_server}{Physics3\+DServer}} \&server)
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_aa54869c664fdf4a2a0258d065282eed3}\label{classduin_1_1_e_c_s_manager_aa54869c664fdf4a2a0258d065282eed3} 
+void {\bfseries Execute\+Query\+Set\+Camera\+As\+Active} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a6f5182f57ffaab47d9110b0a786931ad}\label{classduin_1_1_e_c_s_manager_a6f5182f57ffaab47d9110b0a786931ad} 
+void {\bfseries Execute\+Query\+Update\+Position3D} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_ad217353ab9493e9b94064116f971033d}\label{classduin_1_1_e_c_s_manager_ad217353ab9493e9b94064116f971033d} 
+void {\bfseries Execute\+Query\+Hierarchical\+Update\+Position3D} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_af511701eabebe978487aa5886b3fb4b6}\label{classduin_1_1_e_c_s_manager_af511701eabebe978487aa5886b3fb4b6} 
+void {\bfseries Execute\+Query\+Update\+Rotation3D} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a2c5e0306e5d3c221862a564d93d96153}\label{classduin_1_1_e_c_s_manager_a2c5e0306e5d3c221862a564d93d96153} 
+void {\bfseries Execute\+Query\+Hierarchical\+Update\+Rotation3D} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a73fb8efdbcf84dff811ed740ac3a1884}\label{classduin_1_1_e_c_s_manager_a73fb8efdbcf84dff811ed740ac3a1884} 
+void {\bfseries Execute\+Query\+Update\+Character\+Body3\+DPosition} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_ad5b840d4d77da3200b53d3b9aa03cbbc}\label{classduin_1_1_e_c_s_manager_ad5b840d4d77da3200b53d3b9aa03cbbc} 
+void {\bfseries Execute\+Query\+Update\+Camera\+Position} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a96ea9f7b44960ed00124affc7f1efa14}\label{classduin_1_1_e_c_s_manager_a96ea9f7b44960ed00124affc7f1efa14} 
+void {\bfseries Execute\+Query\+Control\+Camera} ()
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a45a3e2da886bc68d73c9ee9fe81c2a19}\label{classduin_1_1_e_c_s_manager_a45a3e2da886bc68d73c9ee9fe81c2a19} 
+void {\bfseries Execute\+Query\+Draw\+Debug\+Capsule} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classduin_1_1_e_c_s_manager_a404235aea8778cc12bfd1e8307ca7c21}\label{classduin_1_1_e_c_s_manager_a404235aea8778cc12bfd1e8307ca7c21} 
+flecs\+::world {\bfseries world}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Duin/src/\+Duin/\+ECS/ECSManager.\+h\item 
+Duin/src/\+Duin/\+ECS/ECSManager.\+cpp\end{DoxyCompactItemize}

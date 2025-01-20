@@ -1,0 +1,62 @@
+\doxysection{duin\+::Controller\+Hit\+Report Class Reference}
+\hypertarget{classduin_1_1_controller_hit_report}{}\label{classduin_1_1_controller_hit_report}\index{duin::ControllerHitReport@{duin::ControllerHitReport}}
+
+
+Collaboration diagram for duin\+::Controller\+Hit\+Report\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classduin_1_1_controller_hit_report__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_aeaee3439c3755861ffa55dc7f75c5007}\label{classduin_1_1_controller_hit_report_aeaee3439c3755861ffa55dc7f75c5007} 
+{\bfseries Controller\+Hit\+Report} (\mbox{\hyperlink{classduin_1_1_character_collision_body3_d}{Character\+Collision\+Body3D}} \&owner)
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a1fd06484cdfe30b921b4071fde3f4baf}\label{classduin_1_1_controller_hit_report_a1fd06484cdfe30b921b4071fde3f4baf} 
+virtual void {\bfseries On\+Shape\+Hit} (const physx\+::\+Px\+Controller\+Shape\+Hit \&hit)
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_aebd4b799173e251f2453adec086c8bb5}\label{classduin_1_1_controller_hit_report_aebd4b799173e251f2453adec086c8bb5} 
+virtual void {\bfseries On\+Controller\+Hit} (const physx\+::\+Px\+Controllers\+Hit \&hit)
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a6b74dada7020c416fd54053adcf8903f}\label{classduin_1_1_controller_hit_report_a6b74dada7020c416fd54053adcf8903f} 
+virtual void {\bfseries On\+Obstacle\+Hit} (const physx\+::\+Px\+Controller\+Obstacle\+Hit \&hit)
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_aa474b5ec801a53602f88634aecbdf877}\label{classduin_1_1_controller_hit_report_aa474b5ec801a53602f88634aecbdf877} 
+void {\bfseries on\+Shape\+Hit} (const physx\+::\+Px\+Controller\+Shape\+Hit \&hit) override
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a40e64850f1e10835b90569c2454bdbd0}\label{classduin_1_1_controller_hit_report_a40e64850f1e10835b90569c2454bdbd0} 
+void {\bfseries on\+Controller\+Hit} (const physx\+::\+Px\+Controllers\+Hit \&hit) override
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a8a98340f86bb712734dba3f008ef9330}\label{classduin_1_1_controller_hit_report_a8a98340f86bb712734dba3f008ef9330} 
+void {\bfseries on\+Obstacle\+Hit} (const physx\+::\+Px\+Controller\+Obstacle\+Hit \&hit) override
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a5e0b7d352c50dd0c90d9f8da9b82fd0e}\label{classduin_1_1_controller_hit_report_a5e0b7d352c50dd0c90d9f8da9b82fd0e} 
+const std\+::vector$<$ physx\+::\+Px\+Controller\+Shape\+Hit $>$ \& {\bfseries Get\+Shape\+Hit\+Reports} ()
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a17f2d1d48e5c7bdc7f959ac44bf60a0d}\label{classduin_1_1_controller_hit_report_a17f2d1d48e5c7bdc7f959ac44bf60a0d} 
+const std\+::vector$<$ physx\+::\+Px\+Controllers\+Hit $>$ \& {\bfseries Get\+Controller\+Hit\+Reports} ()
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_ac72aa0a9481cc83885065de933072253}\label{classduin_1_1_controller_hit_report_ac72aa0a9481cc83885065de933072253} 
+const std\+::vector$<$ physx\+::\+Px\+Controller\+Obstacle\+Hit $>$ \& {\bfseries Get\+Obstacle\+Hit\+Reports} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a7270e38308491029937f48954beefd6a}\label{classduin_1_1_controller_hit_report_a7270e38308491029937f48954beefd6a} 
+std\+::function$<$ void(const physx\+::\+Px\+Controller\+Shape\+Hit \&)$>$ {\bfseries On\+Shape\+Hit\+Callback}
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a9530cb56fb91cf220e9348c7e75568b6}\label{classduin_1_1_controller_hit_report_a9530cb56fb91cf220e9348c7e75568b6} 
+std\+::function$<$ void(const physx\+::\+Px\+Controllers\+Hit \&)$>$ {\bfseries On\+Controller\+Hit\+Callback}
+\item 
+\Hypertarget{classduin_1_1_controller_hit_report_a9dc0843974ec282ae368c786ac0120c6}\label{classduin_1_1_controller_hit_report_a9dc0843974ec282ae368c786ac0120c6} 
+std\+::function$<$ void(const physx\+::\+Px\+Controller\+Obstacle\+Hit \&)$>$ {\bfseries On\+Obstacle\+Hit\+Callback}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Duin/src/\+Duin/\+Physics/Physics\+Character\+Body3\+D.\+h\item 
+Duin/src/\+Duin/\+Physics/Physics\+Character\+Body3\+D.\+cpp\end{DoxyCompactItemize}

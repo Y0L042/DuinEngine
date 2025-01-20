@@ -1,0 +1,132 @@
+\doxysection{Game\+State\+Machine.\+h}
+\hypertarget{_game_state_machine_8h_source}{}\label{_game_state_machine_8h_source}\index{Duin/src/Duin/Core/Utils/GameStateMachine.h@{Duin/src/Duin/Core/Utils/GameStateMachine.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Duin/Core/Utils/UUID.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }duin\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }GameStateMachine;}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classduin_1_1_game_state}{GameState}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classduin_1_1_u_u_i_d}{UUID}}\ uuid;}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classduin_1_1_game_state_machine}{GameStateMachine}}\&\ owner;}
+\DoxyCodeLine{00019\ \ \ \ \ std::function<void()>\ Enter;}
+\DoxyCodeLine{00020\ \ \ \ \ std::function<void()>\ HandleInput;}
+\DoxyCodeLine{00021\ \ \ \ \ std::function<void(\textcolor{keywordtype}{double})>\ Update;}
+\DoxyCodeLine{00022\ \ \ \ \ std::function<void(\textcolor{keywordtype}{double})>\ PhysicsUpdate;}
+\DoxyCodeLine{00023\ \ \ \ \ std::function<void()>\ Draw;}
+\DoxyCodeLine{00024\ \ \ \ \ std::function<void()>\ DrawUI;}
+\DoxyCodeLine{00025\ \ \ \ \ std::function<void()>\ Exit;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{classduin_1_1_game_state}{GameState}}(\mbox{\hyperlink{classduin_1_1_game_state_machine}{GameStateMachine}}\&\ owner);}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classduin_1_1_game_state}{\string~GameState}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ GetName();}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classduin_1_1_game_state}{GameState}}\ \&state)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>uuid\ ==\ state.uuid;}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classduin_1_1_game_state}{GameState}}\ \&state)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00040\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>uuid\ !=\ state.uuid;}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00045\ \ \ \ \ std::string\ stateName;}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classduin_1_1_game_state_machine}{GameStateMachine}}}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{classduin_1_1_u_u_i_d}{UUID}}\ uuid;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{classduin_1_1_game_state_machine}{GameStateMachine}}();}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{classduin_1_1_game_state_machine}{\string~GameStateMachine}}();}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ SwitchState()}
+\DoxyCodeLine{00063\ \ \ \ \ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<GameState,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ derive\ from\ GameState"{}});}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!stateStack.empty())\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stateStack.top()-\/>Exit)\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stateStack.top()-\/>Exit();}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!stateStack.empty())\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stateStack.pop();}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ newState\ =\ std::make\_unique<T>(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ stateStack.emplace(std::move(newState));}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stateStack.top()-\/>Enter)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ stateStack.top()-\/>Enter();}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ FlushAndSwitchState()}
+\DoxyCodeLine{00082\ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<GameState,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ derive\ from\ GameState"{}});}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!stateStack.empty())\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stateStack.top()-\/>Exit)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stateStack.top()-\/>Exit();}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!stateStack.empty())\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stateStack.pop();}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ newState\ =\ std::make\_unique<T>(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ stateStack.emplace(std::move(newState));}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stateStack.top()-\/>Enter)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ stateStack.top()-\/>Enter();}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ PushState()}
+\DoxyCodeLine{00101\ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<GameState,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ derive\ from\ GameState"{}});}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ newState\ =\ std::make\_unique<T>(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ stateStack.emplace(std::move(newState));}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stateStack.top()-\/>Enter)\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ stateStack.top()-\/>Enter();}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ PopState();}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ FlushStack();}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ ExecuteHandleInput();}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ ExecuteUpdate(\textcolor{keywordtype}{double}\ delta);}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ ExecutePhysicsUpdate(\textcolor{keywordtype}{double}\ delta);}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ ExecuteDraw();}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ ExecuteDrawUI();}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00120\ \ \ \ \ std::stack<std::unique\_ptr<GameState>>\ stateStack;}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \}}
+
+\end{DoxyCode}
