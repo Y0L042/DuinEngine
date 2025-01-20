@@ -1,4 +1,4 @@
-<map id="src/Duin/Core" name="src/Duin/Core">
+<map id="Core" name="Core">
 <area shape="rect" id="node2" href="dir_adc84b64c3e31638e183f7983f4e174a.html" title="Debug" alt="" coords="112,64,171,91"/>
 <area shape="rect" id="node3" href="dir_035665b1485da821b7fab5d1c5a00dc8.html" title="Maths" alt="" coords="195,64,253,91"/>
 <area shape="rect" id="node4" href="dir_cd463a93d1524e455358c0c423bc7a1b.html" title="Utils" alt="" coords="277,64,326,91"/>
