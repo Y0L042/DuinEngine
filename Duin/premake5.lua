@@ -95,11 +95,11 @@ project "Duin"
         cppdialect "C++20"
 
     filter "configurations:Debug"
-        defines "DN_DEBUG"
+        defines { "DN_DEBUG", "_DEBUG" }
         symbols "On"
 
     filter "configurations:Release"
-        defines "DN_RELEASE"
+        defines { "DN_RELEASE", "NDEBUG" }
         optimize "On"
 
     filter "configurations:Dist"

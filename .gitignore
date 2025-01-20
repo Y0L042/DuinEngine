@@ -4,6 +4,7 @@
 bin/
 generated_docs/
 DuinEngine.wiki/
+Duin/doxygen/
 
 bin-int/
 vendor/bin/*
@@ -73,3 +74,4 @@ vendor/
 /Duin/Duin.vcxproj
 ExampleProjects/Sandbox/Sandbox.dnproj
 nuget.config
+/doxygen/docs

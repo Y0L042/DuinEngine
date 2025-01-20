@@ -5,6 +5,7 @@
 
 # Duin Engine Home
 
+home
 Duin Engine is small C++ game engine. It is based on an ECS design.
 
 ## Features
