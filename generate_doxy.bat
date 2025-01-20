@@ -6,7 +6,7 @@ echo.
 
 rem -- Project #1 : Duin --
 echo === Generating docs for Project #1 ===
-doxygen "C:\Projects\CPP_Projects\Duin\Duin\doxygen\Doxyfile"
+doxygen ".\Duin\Doxyfile"
 
 echo.
 echo All done! Press any key to exit...

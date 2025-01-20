@@ -10,7 +10,7 @@ echo "=== Generating docs for Project #1 ==="
 # If you are in WSL or Cygwin, convert the Windows path to a Unix-like path, for example:
 # doxygen "/mnt/c/Projects/CPP_Projects/Duin/Duin/doxygen/Doxyfile"
 # Otherwise, if your environment understands backslashes, adjust accordingly:
-doxygen "C:/Projects/CPP_Projects/Duin/Duin/doxygen/Doxyfile"
+doxygen "./Duin/Doxyfile"
 
 echo
 echo "All done!"
