@@ -17,7 +17,7 @@ jobs:
       run: sudo apt-get install doxygen -y
 
     - name: Generate Documentation
-      run: cd Duin && doxygen Doxyfile
+      run: doxygen Doxyfile
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
