@@ -18,9 +18,11 @@ jobs:
         ref: engine-overhaul  # Always use the source branch for building docs
         submodules: false
 
-    # 2. Install Doxygen
-    - name: Install Doxygen
-      run: sudo apt-get install doxygen -y
+    # 2. Install Doxygen and Graphviz
+    - name: Install Doxygen and Graphviz
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz
 
     # 3. Generate Documentation
     - name: Generate Documentation
@@ -34,4 +36,5 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: docs         # Deploy to the "docs" branch
-        publish_dir: ./Duin/docs    # Directory where Doxygen outputs the HTML
+        publish_dir: ./Duin/doxygen    # Directory where Doxygen outputs the HTML
+
