@@ -16,6 +16,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: engine-overhaul  # Always use the source branch for building docs
+        submodules: false
 
     # 2. Install Doxygen
     - name: Install Doxygen
