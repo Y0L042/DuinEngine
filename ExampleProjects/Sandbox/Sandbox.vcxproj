@@ -13,6 +13,10 @@
       <Configuration>Dist</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Archive|x64">
+      <Configuration>Archive</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}</ProjectGuid>
@@ -39,6 +43,12 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -51,6 +61,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -58,6 +71,7 @@
     <IntDir>..\..\bin-int\Debug-windows-x86_64\Sandbox\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-docking;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -65,6 +79,7 @@
     <IntDir>..\..\bin-int\Release-windows-x86_64\Sandbox\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-docking;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -72,38 +87,50 @@
     <IntDir>..\..\bin-int\Dist-windows-x86_64\Sandbox\</IntDir>
     <TargetName>Sandbox</TargetName>
     <TargetExt>.exe</TargetExt>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-docking;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\bin\Archive-windows-x86_64\Sandbox\</OutDir>
+    <IntDir>..\..\bin-int\Archive-windows-x86_64\Sandbox\</IntDir>
+    <TargetName>Sandbox</TargetName>
+    <TargetExt>.exe</TargetExt>
+    <ExternalIncludePath>..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\rlimgui\raylib-master\src;..\..\Duin\vendor\raygui\src;..\..\Duin\vendor\rlimgui\imgui-docking;..\..\Duin\vendor\ImGuiFileDialog;..\..\Duin\vendor\rlimgui;..\..\Duin\vendor\flecs\include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\patches;..\..\Duin\vendor\rapidjson\include;..\..\Duin\vendor\PhysX\physx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_STATIC;flecs_STATIC;IMGUI_IMPL_OPENGL_LOADER_GLAD;PX_PHYSX_STATIC_LIB;DN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Sandbox\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\Duin\vendor\raylib5\lib;..\..\Duin\vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCooking_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Debug-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_STATIC;flecs_STATIC;IMGUI_IMPL_OPENGL_LOADER_GLAD;PX_PHYSX_STATIC_LIB;DN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Sandbox\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -111,22 +138,23 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\Duin\vendor\raylib5\lib;..\..\Duin\vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCooking_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Release-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Duin\vendor\patches\include;..\..\Duin\vendor\spdlog\include;..\..\Duin\vendor\raylib5\include;..\..\Duin\vendor\raylib5\src;..\..\Duin\vendor\raylib-cpp\include;..\..\Duin\vendor\imgui;..\..\Duin\vendor\rlgui;..\..\Duin\vendor\entt\single_include;..\..\Duin\vendor\fmt\include;..\..\Duin\vendor\cdt\CDT\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_STATIC;flecs_STATIC;IMGUI_IMPL_OPENGL_LOADER_GLAD;PX_PHYSX_STATIC_LIB;DN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Sandbox\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -134,33 +162,36 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>raylib.lib;rlImGui.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\Duin\vendor\raylib5\lib;..\..\Duin\vendor\rlimgui\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCooking_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Dist-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Archive|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DN_PLATFORM_WINDOWS;DN_BUILD_STATIC;flecs_STATIC;IMGUI_IMPL_OPENGL_LOADER_GLAD;PX_PHYSX_STATIC_LIB;DN_ARCHIVE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Duin\src;..\..\Sandbox\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>raylib.lib;rlImGui.lib;flecs_static.lib;winmm.lib;Duin.lib;PhysX_static_64.lib;PhysXCooking_static_64.lib;PhysXCommon_static_64.lib;PhysXFoundation_static_64.lib;PhysXPvdSDK_static_64.lib;PhysXExtensions_static_64.lib;PhysXCharacterKinematic_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\bin\Archive-windows-x86_64\Duin;..\..\Duin\vendor\rlimgui\bin\Debug;..\..\Duin\vendor\flecs\build_vs2022\build\Debug;..\..\Duin\vendor\PhysX\physx\bin\win.x86_64.vc143.mt\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Components\MovementCMPManager.h" />
-    <ClInclude Include="src\Components\MovementComponent.h" />
-    <ClInclude Include="src\Components\NewTransfromCMPManager.h" />
-    <ClInclude Include="src\Components\PlayerCMPManager.h" />
-    <ClInclude Include="src\Components\PlayerComponent.h" />
-    <ClInclude Include="src\Components\PlayerInputComponent.h" />
-    <ClInclude Include="src\Components\RenderableCMPManager.h" />
-    <ClInclude Include="src\Components\RenderableComponent.h" />
-    <ClInclude Include="src\Components\TransformCMPManager.h" />
-    <ClInclude Include="src\Components\TransformComponent.h" />
-    <ClInclude Include="src\DelaunayTest.h" />
-    <ClInclude Include="src\SandboxGame.h" />
+    <ClInclude Include="src\Main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\DelaunayTest.cpp" />
-    <ClCompile Include="src\Sandbox.cpp" />
-    <ClCompile Include="src\SandboxGame.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Duin\Duin.vcxproj">
-      <Project>{F558847C-E18F-850D-8A7C-6B107692010F}</Project>
-    </ProjectReference>
+    <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,59 @@
+{
+    "entity_defs":
+    [
+        {
+            "meta":
+            {
+                "key_name":"Player"
+            },
+            "ecs_data":
+            {
+                "components":
+                {
+                    "Position2D":
+                    {
+                        "x":17,
+                        "y":27
+                    }
+                }
+            }
+        },
+        {
+            "meta":
+            {
+                "key_name":"Dog"
+            },
+            "ecs_data":
+            {
+                "components":
+                {
+                    "Position2D":
+                    {
+                        "x":87,
+                        "y":97
+                    }
+                }
+            }
+        },
+        {
+            "meta":
+            {
+                "key_name":"Kobold"
+
+            },
+            "ecs_data":
+            {
+                "components":
+                {
+                    "Position2D":
+                    {
+                        "x":47,
+                        "y":57
+                    }
+                }
+            }
+        }
+    ]
+}
+
+

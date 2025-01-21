@@ -1,61 +1,98 @@
-#pragma once
-
-#include "Duin/Core/Core.h"
-#include "Duin/Events/InputMap.h"
-#include "Duin/Events/InputEvent.h"
-#include "Duin/Core/Scene/SceneManager.h"
-#include "Duin/Core/Structures/RenderStructs.h"
-#include "Duin/Core/Debug/DebugDraw.h"
-
-#include <RayGuiComponent.h>
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include <string>
+#include <functional>
 
-namespace Duin
+#include "Duin/Core/Core.h"
+#include <dep_raygui.h>
+
+
+
+namespace duin
 {
-	class DUIN_API Application
+    std::string GetRootDirectory();
+    void DebugPauseGame();
+    void DebugResumeGame();
+    int DebugIsGamePaused();
+
+    void SetActiveCamera3D(::Camera3D camera3d);
+    void SetBackgroundColor(::Color color);
+
+    void SetFramerate(int framerate);
+    void DrawPhysicsFPS(float x, float y);
+    void DrawRenderFPS(float x, float y);
+	float GetPhysicsFPS();
+	float GetPhysicsFrameTime();
+	float GetRenderFPS();
+	float GetRenderFrameTime();
+	size_t GetPhysicsFrameCount();
+	size_t GetRenderFrameCount();
+
+	void QueuePostUpdateCallback(std::function<void(double)>);
+	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
+	void QueuePostDrawCallback(std::function<void()>);
+	void QueuePostDrawUICallback(std::function<void()>);
+	void QueuePreFrameCallback(std::function<void()>);
+	void QueuePostFrameCallback(std::function<void()>);
+	void QueuePostDebugCallback(std::function<void()>);
+
+	class DAPI Application
 	{
 	public:
 		Application();
 		virtual ~Application();
 
-		void SetFramerate(int framerate)
-		{
-			TARGET_RENDER_FRAMERATE = framerate;
-			TARGET_PHYSICS_FRAMERATE = framerate;
-		}
-		void SetBackgroundColor(Color color);
-		void SetWindowName(const char* string);
+
+        void SetWindowStartupSize(int width, int height);
+		void SetBackgroundColor(::Color color);
+		void SetWindowName(const char *string);
+
 
 		void Run();
 
 		void EngineInitialize();
 		virtual void Initialize();
+
 		void EngineReady();
 		virtual void Ready();
-		void EngineHandleInputs(InputEvent e);
-		virtual void HandleInputs(InputEvent e);
-		void EngineUpdate(double rDelta);
-		virtual void Update(double rDelta);
-		void EnginePhysicsUpdate(double pDelta);
-		virtual void PhysicsUpdate(double pDelta);
+
+		void EnginePreFrame();
+
+		void EngineHandleInputs();
+		virtual void HandleInputs();
+
+		void EngineUpdate(double delta);
+		virtual void Update(double delta);
+        void EnginePostUpdate(double delta);
+
+		void EnginePhysicsUpdate(double delta);
+		virtual void PhysicsUpdate(double delta);
+        void EnginePostPhysicsUpdate(double delta);
+
 		void EngineDraw();
 		virtual void Draw();
+        void EnginePostDraw();
+
+		void EngineDrawUI();
+		virtual void DrawUI();
+        void EnginePostDrawUI();
+
+		void EngineDebug();
+		virtual void Debug();
+        void EnginePostDebug();
+
+        void EnginePostFrame();
+
 		virtual void Exit();
 		void EngineExit();
 
-		SceneManager& GetSceneManager();
-
 	private:
-		int TARGET_RENDER_FRAMERATE = 60;
-		int TARGET_PHYSICS_FRAMERATE = 60;
-		Color backgroundColor = WHITE;
 		std::string windowName = "Game";
-
-		SceneManager sceneManager;
 	};
 
 	Application* CreateApplication();
 
 }
 
+#endif /* APPLICATION_H */

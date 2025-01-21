@@ -1,0 +1,31 @@
+{
+    "entity" :
+    {
+        "uuid" : "898",
+
+        "meta" :
+        {
+            "key_name" : "Map_1"
+        },
+
+        "ecs_data" :
+        {
+            "components" : 
+            {
+                "Position3D" :
+                {
+                    "x" : 0,
+                    "y" : 0,
+                    "z" : 0
+                }
+            }
+        }, 
+
+        "parent" : "null",
+
+        "children" : 
+        [
+            "entity_ref" : "720"
+        ]
+    }
+}

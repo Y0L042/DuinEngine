@@ -1,0 +1,17 @@
+{
+    "entity" : 
+    {
+        "meta" : 
+        {
+
+        },
+
+        "ecs_data" :
+        {
+            "pairs" : 
+            {
+                "flecs.core.IsA" : "DebugCapsule"
+            }
+        }
+    }
+}

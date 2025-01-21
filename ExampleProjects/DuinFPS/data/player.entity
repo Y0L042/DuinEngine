@@ -1,0 +1,31 @@
+{
+    "entity" :
+    {
+        "uuid" : "720",
+
+        "meta" :
+        {
+            "key_name" : "Player"
+        },
+
+        "ecs_data" :
+        {
+            "components" : 
+            {
+                "Position3D" :
+                {
+                    "x" : 17,
+                    "y" : 27,
+                    "z" : 0
+                }
+            }
+        }, 
+
+        "parent" : "null",
+
+        "children" : 
+        [
+
+        ]
+    }
+}

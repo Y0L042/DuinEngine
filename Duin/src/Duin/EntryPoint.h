@@ -1,16 +1,17 @@
-#pragma once
+#ifndef ENTRYPOINT_H
+#define ENTRYPOINT_H
 
 #ifdef DN_PLATFORM_WINDOWS
 
-extern Duin::Application* Duin::CreateApplication();
+extern duin::Application* duin::CreateApplication();
 
 int main(int argc, char** argv)
 {
-	Duin::Log::Init();
+	duin::Log::Init();
 	DN_CORE_WARN("Initialized Log.");
 	DN_INFO("Initialized Log.");
 
-	auto app = Duin::CreateApplication();
+    auto app = duin::CreateApplication();
 	app->Run();
 	delete app;
 
@@ -18,3 +19,5 @@ int main(int argc, char** argv)
 }
 
 #endif
+
+#endif /* ENTRYPOINT_H */

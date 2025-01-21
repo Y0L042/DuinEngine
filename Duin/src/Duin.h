@@ -1,51 +1,28 @@
-#pragma once
-#include "dnpch.h"
+#ifndef DUIN_H
+#define DUIN_H
 
-// --------------------------------
-// Client API Headers
-// --------------------------------
-
-// ---------- Root -----------
-
-// ---------- Core -----------
+/* ---------- Core ----------- */
 #include "Duin/Core/Application.h"
-#include "Duin/Core/Signal.h"
-#include "Duin/Core/Debug/Log.h"
-#include "Duin/Core/Debug/Profiler.h"
-#include "Duin/Core/Debug/Timer.h"
-#include "Duin/Core/Debug/DebugDraw.h"
+#include "Duin/Core/Debug/DNLog.h"
+#include "Duin/Core/Debug/DebugTools.h"
 #include "Duin/Core/Maths/DuinMaths.h"
-#include "Duin/Core/Structures/RenderStructs.h"
-#include "Duin/Core/Structures/QuadTree.h"
-#include "Duin/Core/Structures/Delaunay.h"
-#include "Duin/Core/Scene/Object.h"
-#include "Duin/Core/Scene/SceneManager.h"
+#include "Duin/Core/Utils/SerialisationManager.h"
+#include "Duin/Core/Utils/GameStateMachine.h"
 
-// ---------- Events -----------
-#include "Duin/Events/InputEvent.h"
-#include "Duin/Events/InputMap.h"
+#include "Duin/ECS/ECSManager.h"
 
-// ---------- Assets -----------
-#include "Duin/Assets/AssetManager.h"
-#include "Duin/Assets/Asset.h"
-#include "Duin/Assets/Texture.h"
-#include "Duin/Assets/Image.h"
-#include "Duin/Assets/Sprite2D.h"
-#include "Duin/Assets/AnimatedSprite2D.h"
-#include "Duin/Assets/Particle2D.h"
+#include "Duin/Physics/Physics3DServer.h"
+#include "Duin/Physics/PhysicsCharacterBody3D.h"
+#include "Duin/Physics/PhysicsStaticBody3D.h"
+#include "Duin/Physics/PhysicsStaticPlane3D.h"
+#include "Duin/Physics/PhysicsDynamicBody3D.h"
 
-// ---------- Entities -----------
-#include "Duin/Entity/Entity.h"
-#include "Duin/Entity/Registry.h"
-#include "Duin/Entity/ComponentManager.h"
+/* ---------- C ----------- */
+#include "Duin/C_Modules/c_modules.h"
 
-// ---------- External Dependencies -----------
+/* ---------- Externals ----------- */
+// #include "Duin/dep_raygui.h"
 
+// #include <flecs.h>
 
-
-// ---------- [DEPRECIATED] -----------
-// ---------- Objects -----------
-#include "Duin/Object/Node.h"
-#include "Duin/Object/Blackboard.h"
-
-
+#endif /* DUIN_H */

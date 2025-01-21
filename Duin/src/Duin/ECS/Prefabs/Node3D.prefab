@@ -1,0 +1,20 @@
+{
+    "Prefab" :
+    {
+        "meta":
+        {
+            "key_name":"Node3D"
+        },
+        "ecs_data":
+        {
+            "components":
+            {
+                "Position2D":
+                {
+                    "x":17,
+                    "y":27
+                }
+            }
+        }
+    }
+}
