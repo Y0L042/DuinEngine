@@ -31,7 +31,7 @@ jobs:
 
     # 4. Deploy to the "docs" branch
     - name: Deploy to GitHub Pages
-      if: github.ref_name != 'docs'  # Skip deployment if already on docs branch
+    if: startsWith(github.ref, 'refs/heads/main')
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
