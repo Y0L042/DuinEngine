@@ -34,4 +34,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: docs         # Deploy to the "docs" branch
-        publish_dir: ./docs    # Directory where Doxygen outputs the HTML
+        publish_dir: ./Duin/docs    # Directory where Doxygen outputs the HTML
