@@ -1,0 +1,5 @@
+<map id="SM_Machine" name="SM_Machine">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,123,109,148"/>
+<area shape="rect" id="Node000002" href="$structSM__State.html" title=" " alt="" coords="16,5,99,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,44,60,123,55,123,55,44"/>
+</map>

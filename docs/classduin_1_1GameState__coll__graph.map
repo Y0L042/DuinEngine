@@ -1,0 +1,8 @@
+<map id="duin::GameState" name="duin::GameState">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,181,136,207"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title=" " alt="" coords="25,5,117,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,45,65,80,64,119,71,181,66,181,59,119,59,79,63,44"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1GameStateMachine.html" title=" " alt="" coords="107,93,293,119"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="101,36,184,91,181,95,98,40"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="173,128,90,183,87,179,170,124"/>
+</map>
