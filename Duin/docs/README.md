@@ -1,9 +1,6 @@
 \mainpage Duin Engine Home
 
-\include groups.md
-\include index.md
-
-# Readme
+# ReadMe
 
 Duin Engine is small C++ game engine. It is based on an ECS design.
 
