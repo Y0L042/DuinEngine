@@ -3,7 +3,7 @@ name: Deploy Doxygen Documentation to GitHub Pages
 on:
   push:
     branches:
-      - engine-overhaul  # Trigger when pushing to the source branch
+      - main  # Trigger when pushing to the source branch
       - docs             # Trigger when pushing to the docs branch
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        ref: engine-overhaul  # Always use the source branch for building docs
+        ref: main  # Always use the source branch for building docs
         submodules: false
 
     # 2. Install Doxygen and Graphviz
