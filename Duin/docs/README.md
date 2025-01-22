@@ -9,4 +9,6 @@ Duin Engine is small C++ game engine. It is based on an ECS design.
 - PhysX physics
 - raylib functionality
 
+- [Physics](\ref Physics)
+
 See [TODO](\ref todo_page) for planned features.
