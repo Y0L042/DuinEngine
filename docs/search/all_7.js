@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['ideas_0',['Cool Ideas',['../todo_page.html#autotoc_md8',1,'']]],
-  ['index_1',['index',['../md_docs_2index.html',1,'']]],
-  ['inprogress_2',['InProgress',['../todo_page.html#autotoc_md4',1,'']]],
-  ['inputvector2dkeys_3',['InputVector2DKeys',['../structInputVector2DKeys.html',1,'']]]
+  ['jsondocument_0',['JSONDocument',['../classduin_1_1JSONDocument.html',1,'duin']]],
+  ['jsonmember_1',['JSONMember',['../classduin_1_1JSONMember.html',1,'duin']]]
 ];

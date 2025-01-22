@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['matrix_0',['Matrix',['../structduin_1_1Matrix.html',1,'duin']]],
-  ['module_1',['Wiki Module',['../group__wiki__module.html',1,'']]]
+  ['nonpx_0',['NonPx',['../structduin_1_1ECSTag_1_1NonPx.html',1,'duin::ECSTag']]]
 ];

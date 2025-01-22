@@ -25,22 +25,9 @@
 var NAVTREE =
 [
   [ "Duin", "index.html", [
-    [ "Duin Engine Home", "index.html", "index" ],
-    [ "groups", "md_docs_2groups.html", null ],
-    [ "index", "md_docs_2index.html", null ],
-    [ "Physics", "md_docs_2Physics.html", null ],
+    [ "ReadMe", "index.html", null ],
+    [ "Physics", "page_Physics.html", null ],
     [ "TODO", "md_docs_2TODO.html", null ],
-    [ "TODO", "todo_page.html", [
-      [ "TODO list", "todo_page.html#autotoc_md3", [
-        [ "InProgress", "todo_page.html#autotoc_md4", null ],
-        [ "ToDo", "todo_page.html#autotoc_md5", null ],
-        [ "Done", "todo_page.html#autotoc_md6", null ],
-        [ "Roadmap", "todo_page.html#autotoc_md7", null ],
-        [ "Cool Ideas", "todo_page.html#autotoc_md8", null ],
-        [ "Shelved", "todo_page.html#autotoc_md9", null ]
-      ] ]
-    ] ],
-    [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
