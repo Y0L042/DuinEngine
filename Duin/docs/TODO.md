@@ -1,7 +1,5 @@
-\ingroup wiki_group
-\page todo_page TODO
+@subpage ToDo ToDo
 
-# TODO list
 
 ## InProgress
 

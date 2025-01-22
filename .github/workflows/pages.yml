@@ -23,12 +23,19 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y doxygen graphviz
 
-    # 3. Generate Documentation
+    # 3. Copy custom files
+    - name: Copy custom Doxygen files
+      run: |
+        mkdir -p ./Duin/doxygen-extra
+        curl -o Duin/doxygen-extra/doxygen-awesome-paragraph-link.js https://raw.githubusercontent.com/jothepro/doxygen-awesome-css/main/doxygen-awesome-paragraph-link.js
+        echo '<html><head><script type="text/javascript" src="$relpath^doxygen-awesome-paragraph-link.js"></script><script type="text/javascript">DoxygenAwesomeParagraphLink.init()</script></head><body>' > Duin/doxygen-extra/header.html
+
+    # 4. Generate Documentation
     - name: Generate Documentation
       if: github.ref_name != 'docs'  # Skip if push originates from docs branch
       run: cd Duin && doxygen Doxyfile
 
-    # 4. Deploy to the "docs" branch
+    # 5. Deploy to the "docs" branch
     - name: Deploy to GitHub Pages
       if: startsWith(github.ref, 'refs/heads/main')
       uses: peaceiris/actions-gh-pages@v4
