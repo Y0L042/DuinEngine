@@ -359,7 +359,6 @@ EXTENSION_MAPPING      =
 # The default value is: YES.
 
 MARKDOWN_SUPPORT       = YES
-GENERATE_GROUPS        = YES
 GROUP_NESTED_COMPOUNDS = YES
 
 # When the TOC_INCLUDE_HEADINGS tag is set to a non-zero value, all headings up
@@ -1333,7 +1332,6 @@ IGNORE_PREFIX          =
 # The default value is: YES.
 
 GENERATE_HTML          = YES
-GENERATE_HTML_SOURCE   = YES
 
 # The HTML_OUTPUT tag is used to specify where the HTML docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -1368,7 +1366,7 @@ HTML_FILE_EXTENSION    = .html
 # of the possible markers and block names see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_HEADER            =
+HTML_HEADER            = ./docs/cfg/header.html
 
 # The HTML_FOOTER tag can be used to specify a user-defined HTML footer for each
 # generated HTML page. If the tag is left blank doxygen will generate a standard
