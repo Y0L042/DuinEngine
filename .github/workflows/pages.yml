@@ -23,11 +23,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y doxygen graphviz
 
-    # 3. Copy custom files
-    - name: Copy custom Doxygen files
-      run: |
-        echo '<html><head><script type="text/javascript" src="$relpath^doxygen-awesome-paragraph-link.js"></script><script type="text/javascript">DoxygenAwesomeParagraphLink.init()</script></head><body>' > ./Duin/doxygen/html/header.html
-
     # 4. Generate Documentation
     - name: Generate Documentation
       if: github.ref_name != 'docs'  # Skip if push originates from docs branch
