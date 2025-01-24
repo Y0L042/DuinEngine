@@ -19,7 +19,7 @@ static size_t renderFrameCount = 0;
 static double physicsFrameTime = 0.0;
 static double renderFrameTime = 0.0;
 
-static int TARGET_RENDER_FRAMERATE = 72;
+static int TARGET_RENDER_FRAMERATE = 60;
 static int TARGET_PHYSICS_FRAMERATE = 60;
 
 static int screenWidth = 1280;
@@ -153,7 +153,12 @@ float GetPhysicsFrameTime()
 
 float GetRenderFPS()
 {
-    float fps = 1.0f / (float)renderFrameTime;
+    float fps = 0.0f;
+    if (renderFrameTime < 0.00001) {
+        fps = 9999.9f;
+    } else {
+        fps = 1.0f / (float)renderFrameTime;
+    }
     return fps;
 }
 
@@ -245,9 +250,9 @@ void Application::Run()
     double physicsDeltaTime = 0.0;
     double physicsAccumTime = 0.0;
 
-    double previousTime = ::GetTime();
-    double currentTime = 0.0;
-    double updateDrawTime = 0.0;
+    double frameEndTime = 0.0;
+    double frameStartTime = 0.0;
+    double deltaDrawTime = 0.0;
     double waitTime = 0.0;
     double deltaTime = 0.0;
 
@@ -274,11 +279,9 @@ void Application::Run()
             if (!debugIsGamePaused_) {
         #endif /* DN_DEBUG */
 
-        EnginePreFrame();
+        frameStartTime = ::GetTime();
 
-        PollInputEvents();
-        EngineHandleInputs();
-        HandleInputs();
+        EnginePreFrame();
 
         EngineUpdate(deltaTime);
         Update(deltaTime);
@@ -287,7 +290,7 @@ void Application::Run()
         physicsCurrentTime = ::GetTime();
         physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
         physicsAccumTime += physicsDeltaTime;
-        static const double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
+        double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
         while (physicsAccumTime >= physicsTimeStep) {
             physicsPreviousTime = physicsCurrentTime;
             physicsAccumTime -= physicsTimeStep;
@@ -295,14 +298,20 @@ void Application::Run()
             physicsFrameTime = physicsTimeStep;
             ++physicsFrameCount;
 
+            PollInputEvents();
+            EngineHandleInputs();
+            HandleInputs();
+
             EnginePhysicsUpdate(physicsDeltaTime);
             PhysicsUpdate(physicsDeltaTime); 
             EnginePostPhysicsUpdate(physicsDeltaTime);
         } // End of Physics
 
+
         ::BeginDrawing();
         ::rlImGuiBegin();
 
+        ++renderFrameCount;
         ::ClearBackground(::Color{ 
                 backgroundColor.r, 
                 backgroundColor.g, 
@@ -332,20 +341,25 @@ void Application::Run()
         ::SwapScreenBuffer();
         EnginePostFrame();
 
-        renderFrameTime = updateDrawTime;
-        ++renderFrameCount;
-        static const double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
-        currentTime = ::GetTime();
-        updateDrawTime = currentTime - previousTime;
-        if (TARGET_RENDER_FRAMERATE > -1) {
-            waitTime = targetFrameTime - updateDrawTime;
+        frameEndTime = ::GetTime();
+        deltaDrawTime = frameEndTime - frameStartTime;
+
+        if (TARGET_RENDER_FRAMERATE > 0) {
+            double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
+            waitTime = targetFrameTime - deltaDrawTime;
+
+            printf("Target FT:\t %.6f\n", targetFrameTime);
+            printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
+            printf("waittime:\t %.6f\n", waitTime);
+
             if (waitTime > 0.0) {
                 ::WaitTime((float)waitTime);
-                currentTime = ::GetTime();
-                deltaTime = currentTime - previousTime;
             }
-        } else { deltaTime = updateDrawTime; }
-        previousTime = currentTime;
+        } 
+
+        deltaTime = ::GetTime() - frameStartTime; 
+        renderFrameTime = deltaTime;
+
 
         #ifdef DN_DEBUG
             } 
@@ -400,7 +414,6 @@ void Application::HandleInputs()
 
 void Application::EngineUpdate(double delta)
 {
-    ++renderFrameCount;
 }
 
 void Application::Update(double delta)
@@ -416,7 +429,6 @@ void Application::EnginePostUpdate(double delta)
 
 void Application::EnginePhysicsUpdate(double delta)
 {
-    ++physicsFrameCount;
 }
 
 void Application::PhysicsUpdate(double delta)

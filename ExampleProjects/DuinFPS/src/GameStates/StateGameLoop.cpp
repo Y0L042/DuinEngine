@@ -350,8 +350,8 @@ void StateGameLoop::State_DrawUI()
 
     debugWatchlist.Draw("Watchlist");
 
-    duin::DrawPhysicsFPS(15, 50);
     duin::DrawRenderFPS(15, 15);
+    duin::DrawPhysicsFPS(15, 50);
 }
 
 static void SetFPSCamera(int enable)
