@@ -1,11 +1,7 @@
 var searchData=
 [
-  ['scale2d_0',['Scale2D',['../structduin_1_1ECSComponent_1_1Scale2D.html',1,'duin::ECSComponent']]],
-  ['scale3d_1',['Scale3D',['../structduin_1_1ECSComponent_1_1Scale3D.html',1,'duin::ECSComponent']]],
-  ['scenemanager_2',['SceneManager',['../classduin_1_1SceneManager.html',1,'duin']]],
-  ['setcameraasactive_3',['SetCameraAsActive',['../structduin_1_1ECSTag_1_1SetCameraAsActive.html',1,'duin::ECSTag']]],
-  ['shelved_4',['Shelved',['../md_docs_2TODO.html#autotoc_md6',1,'']]],
-  ['sm_5fmachine_5',['SM_Machine',['../structSM__Machine.html',1,'']]],
-  ['sm_5fstate_6',['SM_State',['../structSM__State.html',1,'']]],
-  ['staticcollisionplanedesc_7',['StaticCollisionPlaneDesc',['../structduin_1_1StaticCollisionPlaneDesc.html',1,'duin']]]
+  ['readme_0',['ReadMe',['../index.html',1,'']]],
+  ['roadmap_1',['Roadmap',['../md_docs_2TODO.html#autotoc_md4',1,'']]],
+  ['rotation2d_2',['Rotation2D',['../structduin_1_1ECSComponent_1_1Rotation2D.html',1,'duin::ECSComponent']]],
+  ['rotation3d_3',['Rotation3D',['../structduin_1_1ECSComponent_1_1Rotation3D.html',1,'duin::ECSComponent']]]
 ];

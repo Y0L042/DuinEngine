@@ -466,9 +466,9 @@ $(document).ready(function(){initNavTree('Application_8cpp_source.html',''); ini
 <div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>            <span class="keywordtype">double</span> targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;</div>
 <div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>            waitTime = targetFrameTime - deltaDrawTime;</div>
 <div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            printf(<span class="stringliteral">&quot;Target FT:\t %.6f\n&quot;</span>, targetFrameTime);</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>            printf(<span class="stringliteral">&quot;deltaDrawTime:\t %.6f\n&quot;</span>, deltaDrawTime);</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>            printf(<span class="stringliteral">&quot;waittime:\t %.6f\n&quot;</span>, waitTime);</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            <span class="comment">// printf(&quot;Target FT:\t %.6f\n&quot;, targetFrameTime);</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>            <span class="comment">// printf(&quot;deltaDrawTime:\t %.6f\n&quot;, deltaDrawTime);</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>            <span class="comment">// printf(&quot;waittime:\t %.6f\n&quot;, waitTime);</span></div>
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            <span class="keywordflow">if</span> (waitTime &gt; 0.0) {</div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                ::WaitTime((<span class="keywordtype">float</span>)waitTime);</div>

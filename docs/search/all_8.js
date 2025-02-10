@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['local_0',['Local',['../structduin_1_1ECSTag_1_1Local.html',1,'duin::ECSTag']]],
-  ['log_1',['Log',['../classduin_1_1Log.html',1,'duin']]]
+  ['kinematicbody3d_0',['KinematicBody3D',['../classduin_1_1KinematicBody3D.html',1,'duin']]]
 ];
