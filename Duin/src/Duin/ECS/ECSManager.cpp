@@ -44,11 +44,14 @@ namespace ECSComponent {
         world.component<ECSComponent::Rotation3D>();
         world.component<ECSComponent::Scale3D>();
         world.component<ECSComponent::Velocity3D>();
+
         world.component<ECSComponent::CubeComponent>();
         world.component<ECSComponent::CharacterBody3DComponent>();
+        world.component<ECSComponent::PhysicsStaticCubeComponent>();
         world.component<::Camera3D>();
 
         world.component<ECSComponent::DebugCapsuleComponent>();
+        world.component<ECSComponent::DebugCubeComponent>();
     }
 }
 
@@ -212,6 +215,7 @@ void ECSManager::PostDrawQueryExecution()
 {
     ExecuteQueryDrawCube();
     ExecuteQueryDrawDebugCapsule();
+    ExecuteQueryDrawDebugCube();
 }
 
 void ECSManager::PostDrawUIQueryExecution()
@@ -481,6 +485,30 @@ void ECSManager::ExecuteQueryDrawDebugCapsule()
                 capsule.slices,
                 capsule.rings,
                 capsule.color
+            );
+        });
+}
+
+void ECSManager::ExecuteQueryDrawDebugCube()
+{
+    static flecs::query q = world.query_builder<
+        const ECSComponent::DebugCubeComponent,
+        const ECSComponent::Position3D
+    >()
+    .term_at(1).second<ECSTag::Global>()
+    .cached()
+    .build();
+
+    q.each([](
+        const ECSComponent::DebugCubeComponent& cube,
+        const ECSComponent::Position3D& pos
+        ) {
+            ::DrawCubeWires(
+                Vector3Add(pos.value, { cube.width / 2.0f, cube.height / 2.0f, cube.length / 2.0f }).ToRaylib(),
+                cube.width,
+                cube.height,
+                cube.length,
+                cube.color
             );
         });
 }

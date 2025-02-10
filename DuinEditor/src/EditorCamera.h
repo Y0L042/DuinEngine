@@ -3,6 +3,20 @@
 
 #include <Duin.h>
 
+class Draggable
+{
+    public:
+        Draggable(int mouseKey)
+            : mouseButton(mouseKey) {};
+        
+        Vector2 HandleInfiniteDragging();
+
+    private:
+        int isDragging = 0;
+        ::Vector2 dragStartPos = {0};
+        int mouseButton = -1;
+};
+
 void HandleInfiniteMouseDragging(int mouse_button);
 int IsMouseDragging();
 

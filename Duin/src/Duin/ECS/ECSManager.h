@@ -192,12 +192,20 @@ namespace duin {
             PhysicsCharacterBody3D *characterBody;
         };
 
+        struct PhysicsStaticCubeComponent {
+            PhysicsStaticCubeComponent *cube;
+        };
         /*------------------------------------------------------------------------*/
         //  3D Debug Components
         /*------------------------------------------------------------------------*/
         struct DebugCapsuleComponent {
             float height, radius;
             int slices, rings;
+            ::Color color;
+        };
+
+        struct DebugCubeComponent {
+            float width, height, length;
             ::Color color;
         };
     };
@@ -256,6 +264,7 @@ namespace duin {
         void ExecuteQueryControlCamera();
         void ExecuteQueryDrawCube();
         void ExecuteQueryDrawDebugCapsule();
+        void ExecuteQueryDrawDebugCube();
 
     private:
         // WIP: Not ready to be used

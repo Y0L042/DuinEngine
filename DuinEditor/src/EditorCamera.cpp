@@ -2,28 +2,38 @@
 
 #include "Singletons.h"
 
+Vector2 Draggable::HandleInfiniteDragging()
+{
+
+}
 
 static int isDragging = 0;
 void HandleInfiniteMouseDragging(int mouse_button)
 {
     static Vector2 dragStartPos = {0};
-    static int current_mouse_button = -1;
+    static int mouseButton = -1;
 
-    // Start drag when the right mouse button is pressed
+    // Start drag when the mouse button is pressed
     if (!isDragging && IsMouseButtonDown(mouse_button))
     {
         isDragging = 1;
-        current_mouse_button = mouse_button;
+        mouseButton = mouse_button;
         dragStartPos = GetMousePosition();  // Store initial click position
         DisableCursor();  // Hide the cursor
     }
 
-    // Stop drag when the right mouse button is released
-    if (isDragging && !IsMouseButtonDown(current_mouse_button))
+    if (isDragging && IsMouseButtonDown(mouse_button))
+    {
+
+    }
+
+    // Stop drag when the mouse button is released
+    if (isDragging && !IsMouseButtonDown(mouseButton))
     {
         isDragging = 0;
-        current_mouse_button = -1;
+        mouseButton = -1;
         EnableCursor();  // Show the cursor again
+
         SetMousePosition((int)dragStartPos.x, (int)dragStartPos.y); // Reset cursor to original position
         dragStartPos = {0};  // Reset starting position
     }

@@ -71,6 +71,8 @@ void StateStartupMenu::InitProjectList()
 {
     debugConsole.LogEx(duin::LogLevel::Info, 
                      "Initialising Project List.\n");
+
+    // Read editor config
     duin::JSONDocument doc;
     if (ReadJSONFile(EDITOR_CFG_PATH, doc)) {
             debugConsole.LogEx(duin::LogLevel::Warn, 
@@ -114,7 +116,6 @@ void StateStartupMenu::LoadSelectedProject()
     if (selectedProjectIndex == -1) { return; }
 
     const char *selectedProjectDir = recentProjectDirsVec[selectedProjectIndex].c_str();
-
     fs::path projectPath = selectedProjectDir;
     if (fs::exists(projectPath) && fs::is_directory(projectPath)) {
         int fileFound = 0;
@@ -157,7 +158,10 @@ void StateStartupMenu::DrawGUI()
         ImportProject();
     }
     ImGui::SameLine();
+
     if (ImGui::Button("Load Project")) {
+        debugConsole.LogEx(duin::LogLevel::Info, 
+                         "Loading project...");
         LoadSelectedProject();
     }
     for (size_t i = 0; i < recentProjectDirsVec.size(); ++i) {
@@ -202,3 +206,4 @@ void StateStartupMenu::ImportProject()
         return;
     }
 }
+

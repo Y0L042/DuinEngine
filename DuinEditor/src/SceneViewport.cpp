@@ -6,6 +6,8 @@
 static RenderTexture2D viewportRenderTexture;
 static ImVec2 viewportPosition;
 static ImVec2 viewportSize;
+static int isSceneViewportHovered = 0;
+static int isSceneViewportFocused = 0;
 
 RenderTexture2D& GetViewportRenderTexture()
 {
@@ -20,6 +22,16 @@ float GetSceneViewportX()
 float GetSceneViewportY()
 {
     return viewportPosition.y;
+}
+
+int IsSceneViewportHovered()
+{
+    return isSceneViewportHovered;
+}
+
+int IsSceneViewportFocused()
+{
+    return isSceneViewportFocused;
 }
 
 float ScaleToSceneViewportX(float width)
@@ -42,6 +54,8 @@ void InitializeSceneViewport()
 void DrawSceneViewport()
 {
     ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+    isSceneViewportHovered = ImGui::IsWindowHovered();
+    isSceneViewportFocused = ImGui::IsWindowFocused();
         viewportPosition = ImGui::GetCursorScreenPos();
         viewportSize = ImGui::GetContentRegionAvail();
 

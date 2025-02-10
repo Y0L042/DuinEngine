@@ -20,12 +20,6 @@ namespace duin {
     };
 
 
-    
-
-
-
-
-
     class Physics3DServer
     {
     public:
@@ -48,10 +42,13 @@ namespace duin {
 
         void Initialize();
         void Clean();
+
         physx::PxMaterial* CreateMaterial(float staticFriction, float dynamicFriction, float restitution);
         physx::PxMaterial* CreateMaterial(PhysicsMaterial material);
 
         void StepPhysics(double delta);
+
+        
 
         Physics3DServer(const Physics3DServer&) = delete;
         Physics3DServer& operator=(const Physics3DServer&) = delete;

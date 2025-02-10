@@ -18,7 +18,7 @@ duin::GameStateMachine gameSM;
 
 void Game::Initialize()
 {
-    duin::SetFramerate(144);
+    duin::SetFramerate(244);
     SetWindowStartupSize(1600, 900);
 }
 

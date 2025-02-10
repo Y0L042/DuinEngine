@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #define CAMERA3D
 #include <Duin.h>
@@ -17,7 +16,5 @@ public:
 	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
     void DrawUI() override;
-
 };
 
-#endif /* GAME_H */

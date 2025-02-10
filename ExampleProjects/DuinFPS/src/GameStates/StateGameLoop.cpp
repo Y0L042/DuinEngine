@@ -173,6 +173,19 @@ void StateGameLoop::State_Enter()
     duin::PhysicsStaticPlane3D ground(pxServer);
     ecsManager.ActivateCameraEntity(debugCamera);
 
+    duin::Vector3 cubePos({ 10, 2, 10 });
+    duin::Vector3 cubeSize({ 1, 1, 1 });
+    duin::PhysicsStaticCube3D cube(pxServer, cubePos, cubeSize);
+    ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::Node3D)
+        .set<DebugCubeComponent>({
+                              .width = cubeSize.x,
+                              .height = cubeSize.y,
+                              .length = cubeSize.z,
+                              .color = ::RED
+                          })
+        .set<Position3D, Local>({ cubePos })
+        ;
 
     physx::PxMaterial *pxBallMaterial = pxServer.pxPhysics->createMaterial(0.2f, 0.1f, 0.6f);
     ball = physx::PxCreateDynamic(*pxServer.pxPhysics,
@@ -184,6 +197,7 @@ void StateGameLoop::State_Enter()
     ball->setLinearVelocity(physx::PxVec3(0, -9.81, 1));
     pxServer.pxScene->addActor(*ball);
 
+/*     CreateStaticBody3DCube( pxServer, pos, width, height, depth, material); */
 
 
     SetFPSCamera(1);

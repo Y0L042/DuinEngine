@@ -15,6 +15,10 @@
 SceneTree sceneTree;
 
 Camera3D camera = { { 0 } };
+InputVector2DKeys cameraMovementKeys = { KEY_W, KEY_S, KEY_A, KEY_D };
+int cameraUpKey = KEY_Q;
+int cameraDownKey = KEY_E;
+float cameraMovementSpeed = 3.0f;
 Camera3D compass_camera =  { { 0 } };
 RenderTexture2D compassRenderTexture;
 Rectangle compassTarget = { 25, 25, 300, 300 };
@@ -77,20 +81,33 @@ void StateLevelEditor::State_Exit()
 {}
 
 void StateLevelEditor::State_HandleInput()
-{}
+{
+    if (IsSceneViewportHovered() || IsSceneViewportFocused() || IsMouseDragging())
+    {
+        if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+            HandleInfiniteMouseDragging(MOUSE_BUTTON_RIGHT);
+            UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+        } else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+            HandleInfiniteMouseDragging(MOUSE_BUTTON_LEFT);
+            UpdateCamera(&camera, CAMERA_FIRST_PERSON);
+        }
+    } else { EnableCursor(); }
+    
+
+    UpdateCompassCamera(&compass_camera, &camera);
+}
 
 void StateLevelEditor::State_Update(double delta)
 {
-    HandleInfiniteMouseDragging(MOUSE_BUTTON_RIGHT);
-
-    if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-        UpdateCamera(&camera, CAMERA_THIRD_PERSON);
-    }
-    UpdateCompassCamera(&compass_camera, &camera);
 }
 
 void StateLevelEditor::State_PhysicsUpdate(double delta)
 {
+    duin::Vector2 cameraInputVec(GetInputVector2DStruct(cameraMovementKeys));
+    camera.position.x += cameraInputVec.x * cameraMovementSpeed * delta; 
+    camera.position.z += cameraInputVec.y * cameraMovementSpeed * delta; 
+    camera.position.y += (IsKeyDown(cameraUpKey) - IsKeyDown(cameraDownKey)) * cameraMovementSpeed * delta;
+
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         if (!selectionCollision.hit) {
             selectionRay = GetScreenToWorldRay(GetMousePosition(), camera);
@@ -161,7 +178,8 @@ void StateLevelEditor::State_Draw()
                 duin::DrawPhysicsFPS(15, 15 + 35);
                 DrawCompassUI(compassRenderTexture, compassTarget);
             EndTextureMode();
-            }));
+        }
+    ));
 }
 
 void StateLevelEditor::State_DrawUI()

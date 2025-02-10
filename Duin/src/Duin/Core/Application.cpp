@@ -348,9 +348,9 @@ void Application::Run()
             double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
             waitTime = targetFrameTime - deltaDrawTime;
 
-            printf("Target FT:\t %.6f\n", targetFrameTime);
-            printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
-            printf("waittime:\t %.6f\n", waitTime);
+            // printf("Target FT:\t %.6f\n", targetFrameTime);
+            // printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
+            // printf("waittime:\t %.6f\n", waitTime);
 
             if (waitTime > 0.0) {
                 ::WaitTime((float)waitTime);
