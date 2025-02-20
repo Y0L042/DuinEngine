@@ -7,6 +7,7 @@ var hierarchy =
     [ "duin::ECSTag::CameraIsActive", "structduin_1_1ECSTag_1_1CameraIsActive.html", null ],
     [ "duin::ECSComponent::CharacterBody3DComponent", "structduin_1_1ECSComponent_1_1CharacterBody3DComponent.html", null ],
     [ "duin::CharacterBody3DDesc", "structduin_1_1CharacterBody3DDesc.html", null ],
+    [ "duin::CollisionLayer", "structduin_1_1CollisionLayer.html", null ],
     [ "duin::CollisionObject", "classduin_1_1CollisionObject.html", [
       [ "duin::Area3D", "classduin_1_1Area3D.html", null ],
       [ "duin::PhysicsBody3D", "classduin_1_1PhysicsBody3D.html", [
@@ -33,6 +34,7 @@ var hierarchy =
     [ "duin::GameStateMachine", "classduin_1_1GameStateMachine.html", null ],
     [ "duin::ECSTag::Global", "structduin_1_1ECSTag_1_1Global.html", null ],
     [ "InputVector2DKeys", "structInputVector2DKeys.html", null ],
+    [ "duin::IPhysicsMaterial", "structduin_1_1IPhysicsMaterial.html", null ],
     [ "duin::JSONDocument", "classduin_1_1JSONDocument.html", null ],
     [ "duin::JSONMember", "classduin_1_1JSONMember.html", null ],
     [ "duin::ECSTag::Local", "structduin_1_1ECSTag_1_1Local.html", null ],
@@ -43,6 +45,9 @@ var hierarchy =
     [ "duin::PhysicsCharacterBody3D", "classduin_1_1PhysicsCharacterBody3D.html", null ],
     [ "duin::PhysicsDynamicBody3D", "classduin_1_1PhysicsDynamicBody3D.html", null ],
     [ "duin::PhysicsMaterial", "structduin_1_1PhysicsMaterial.html", null ],
+    [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", [
+      [ "duin::PhysXServer", "classduin_1_1PhysXServer.html", null ]
+    ] ],
     [ "duin::PhysicsStaticBody3D", "classduin_1_1PhysicsStaticBody3D.html", [
       [ "duin::PhysicsStaticCube3D", "classduin_1_1PhysicsStaticCube3D.html", null ],
       [ "duin::PhysicsStaticPlane3D", "classduin_1_1PhysicsStaticPlane3D.html", null ]
