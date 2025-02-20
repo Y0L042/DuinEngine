@@ -75,3 +75,8 @@ vendor/
 ExampleProjects/Sandbox/Sandbox.dnproj
 nuget.config
 /doxygen/docs
+/ExampleProjects/DuinFPS/DuinFPS.vcxproj
+/DuinEditor/DuinEditor.vcxproj.filters
+/DuinEditor/DuinEditor.vcxproj
+/Duin/Duin.vcxproj.filters
+/Duin/Duin.vcxproj

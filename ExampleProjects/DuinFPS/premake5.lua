@@ -37,6 +37,7 @@ project "DuinFPS"
     links(global_links)
 
     filter "system:windows"
+        buildoptions { "/openmp" }
         cppdialect "C++20"
 
     -- Enable multi-processor compilation

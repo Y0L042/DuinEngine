@@ -11,6 +11,7 @@
 #include <flecs.h>
 
 #include <iostream>
+#include <omp.h>
 
 #define GLSL_VERSION            330
 
@@ -21,6 +22,7 @@ duin::DebugWatchlist debugWatchlist;
 duin::Physics3DServer pxServer;
 duin::ECSManager ecsManager;
 duin::GameStateMachine playerSM;
+duin::PhysicsServer *physicsServer;
 
 flecs::entity player;
 flecs::entity cameraRoot;
@@ -69,6 +71,8 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
+    physicsServer = duin::PhysicsServer::Create();
+
     // Load basic lighting shader
     shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
                                TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
@@ -207,6 +211,18 @@ void StateGameLoop::State_Enter()
     CookCollisions();
 
     playerSM.SwitchState<PlayerStateOnGround>();
+
+    int thread_id = -1;
+    int public_id = -1;
+
+    #pragma omp parallel shared(public_id) private(thread_id)
+    {
+        thread_id = omp_get_thread_num();
+        public_id = omp_get_thread_num() * 10;
+        printf("Hello from process: %d , %d\n", thread_id, public_id);
+    }
+
+    printf("thread & public id: %d , %d\n", thread_id, public_id);
 }
 
 void StateGameLoop::State_Exit()

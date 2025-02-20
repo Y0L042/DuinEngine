@@ -47,6 +47,7 @@ project "DuinEditor"
 	}
 
     filter "system:windows"
+        buildoptions { "/openmp" }
         cppdialect "C++20"
 
     -- Enable multi-processor compilation

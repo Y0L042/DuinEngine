@@ -12,6 +12,7 @@
 #include "Duin/ECS/ECSManager.h"
 
 #include "Duin/Physics/Physics3DServer.h"
+#include "Duin/Physics/PhysicsServer.h"
 #include "Duin/Physics/PhysicsCharacterBody3D.h"
 #include "Duin/Physics/PhysicsStaticBody3D.h"
 #include "Duin/Physics/PhysicsDynamicBody3D.h"

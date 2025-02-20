@@ -92,6 +92,7 @@ project "Duin"
       flags { "MultiProcessorCompile" }
 
     filter "system:windows"
+        buildoptions { "/openmp" }
         cppdialect "C++20"
 
     filter "configurations:Debug"

@@ -29,11 +29,6 @@ namespace duin
 
 
 // Core log macros
-//#define DN_CORE_FATAL(...) ::duin::Log::GetCoreLogger()->critical(__VA_ARGS__)
-//#define DN_CORE_ERROR(...) ::duin::Log::GetCoreLogger()->error(__VA_ARGS__)
-//#define DN_CORE_WARN(...)  ::duin::Log::GetCoreLogger()->warn(__VA_ARGS__)
-//#define DN_CORE_INFO(...)  ::duin::Log::GetCoreLogger()->info(__VA_ARGS__)
-//#define DN_CORE_TRACE(...) ::duin::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define DN_CORE_FATAL(...) SPDLOG_LOGGER_CRITICAL(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 #define DN_CORE_ERROR(...) SPDLOG_LOGGER_ERROR(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 #define DN_CORE_WARN(...)  SPDLOG_LOGGER_WARN(::duin::Log::GetCoreLogger(), __VA_ARGS__)
@@ -41,11 +36,6 @@ namespace duin
 #define DN_CORE_TRACE(...) SPDLOG_LOGGER_TRACE(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 
 // Client log macros
-//#define DN_FATAL(...)      ::duin::Log::GetClientLogger()->critical(__VA_ARGS__)
-//#define DN_ERROR(...)      ::duin::Log::GetClientLogger()->error(__VA_ARGS__)
-//#define DN_WARN(...)       ::duin::Log::GetClientLogger()->warn(__VA_ARGS__)
-//#define DN_INFO(...)       ::duin::Log::GetClientLogger()->info(__VA_ARGS__)
-//#define DN_TRACE(...)      ::duin::Log::GetClientLogger()->trace(__VA_ARGS__)
 #define DN_FATAL(...)      SPDLOG_LOGGER_CRITICAL(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_ERROR(...)      SPDLOG_LOGGER_ERROR(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_WARN(...)       SPDLOG_LOGGER_WARN(::duin::Log::GetClientLogger(), __VA_ARGS__)

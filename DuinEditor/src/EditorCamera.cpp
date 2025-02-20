@@ -4,7 +4,7 @@
 
 Vector2 Draggable::HandleInfiniteDragging()
 {
-
+    return { 0.0f, 0.0f };
 }
 
 static int isDragging = 0;
