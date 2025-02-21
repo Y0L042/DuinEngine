@@ -1,7 +1,7 @@
 #pragma once
 
 namespace duin {
-    enum PhysicsServerErrors {
+    enum PhysicsServerError {
         SUCCESS = 0,
         INIT_FAILED,
         MATERIAL_CREATION_FAILED
@@ -10,13 +10,13 @@ namespace duin {
     class PhysicsServer
     {
         public:
-            static PhysicsServer* Create();
+            static PhysicsServer& Get();
             static int CatchError(void *ptr, int errorCode);
 
             PhysicsServer() = default;
             virtual ~PhysicsServer() = default;
 
-            virtual int Initialize() = 0;
+            virtual void Initialize() = 0;
             virtual void Clean() = 0;
 
             virtual void StepPhysics(double delta) = 0;

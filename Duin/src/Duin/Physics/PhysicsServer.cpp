@@ -10,17 +10,14 @@
 #ifdef JOLT
 #ifndef PHYSX
 #define PHYSICS_SERVER JoltServer
-// #include "./impl/jolt/JoltIncludes.h"
 #endif
 #endif
 
 namespace duin {
-    PhysicsServer* PhysicsServer::Create()
+    PhysicsServer& PhysicsServer::Get()
     {
-        PHYSICS_SERVER* server = new PHYSICS_SERVER();
-        server->Initialize();
-
-        return server;
+        static PHYSICS_SERVER physicsServer;
+        return physicsServer; 
     }
 
     int PhysicsServer::CatchError(void *ptr, int errorCode)
@@ -37,14 +34,14 @@ namespace duin {
     void PhysicsServer::PrintErrorCode(int errorCode)
     {
         switch (errorCode) {
-            case PhysicsServerErrors::SUCCESS:
-                DN_CORE_INFO("[{}] Material creation failed!", INIT_FAILED);
+            case PhysicsServerError::SUCCESS:
+                // DN_CORE_INFO("[{}] Material creation failed!", INIT_FAILED);
                 break;
-            case PhysicsServerErrors::INIT_FAILED:
-                DN_CORE_ERROR("[{}] PhysicsServerInitialization failed!", INIT_FAILED);
+            case PhysicsServerError::INIT_FAILED:
+                // DN_CORE_ERROR("[{}] PhysicsServerInitialization failed!", INIT_FAILED);
                 break;
-            case PhysicsServerErrors::MATERIAL_CREATION_FAILED:
-                DN_CORE_ERROR("[{}] Material creation failed!", INIT_FAILED);
+            case PhysicsServerError::MATERIAL_CREATION_FAILED:
+                // DN_CORE_ERROR("[{}] Material creation failed!", INIT_FAILED);
                 break;
             default:
                 break;

@@ -15,7 +15,6 @@ duin::GameStateMachine gameSM;
 
 
 
-
 void Game::Initialize()
 {
     duin::SetFramerate(244);

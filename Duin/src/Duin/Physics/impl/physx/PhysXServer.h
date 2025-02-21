@@ -15,7 +15,7 @@ namespace duin {
             PhysXServer();
             ~PhysXServer() override;
 
-            int Initialize() override;
+            void Initialize() override;
             void Clean() override;
 
             void StepPhysics(double delta) override;

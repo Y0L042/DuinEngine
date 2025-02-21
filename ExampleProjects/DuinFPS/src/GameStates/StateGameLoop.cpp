@@ -22,7 +22,6 @@ duin::DebugWatchlist debugWatchlist;
 duin::Physics3DServer pxServer;
 duin::ECSManager ecsManager;
 duin::GameStateMachine playerSM;
-duin::PhysicsServer *physicsServer;
 
 flecs::entity player;
 flecs::entity cameraRoot;
@@ -71,7 +70,7 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
-    physicsServer = duin::PhysicsServer::Create();
+    duin::PhysicsServer::Get();
 
     // Load basic lighting shader
     shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
@@ -227,6 +226,7 @@ void StateGameLoop::State_Enter()
 
 void StateGameLoop::State_Exit()
 {
+    
 }
 
 void StateGameLoop::State_HandleInput()
