@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kinematicbody3d_0',['KinematicBody3D',['../classduin_1_1KinematicBody3D.html',1,'duin']]]
+  ['kinematicbody_0',['KinematicBody',['../classduin_1_1KinematicBody.html',1,'duin']]]
 ];

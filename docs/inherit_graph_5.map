@@ -1,3 +1,19 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classduin_1_1DebugConsole.html" title=" " alt="" coords="5,5,157,31"/>
+<area shape="rect" id="Node000000" href="$classduin_1_1CollisionObject.html" title=" " alt="" coords="5,55,161,80"/>
+<area shape="rect" id="Node000001" href="$classduin_1_1Area3D.html" title=" " alt="" coords="253,5,360,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="154,49,253,27,254,32,155,54"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1PhysXCollisionObject.html" title=" " alt="" coords="209,55,404,80"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="175,65,209,65,209,70,175,70"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1PhysicsBody.html" title=" " alt="" coords="237,104,377,129"/>
+<area shape="poly" id="edge5_Node000000_Node000006" title=" " alt="" coords="155,80,249,101,248,107,154,86"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1PhysXPhysicsBody.html" title=" " alt="" coords="452,55,632,80"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="418,65,452,65,452,70,418,70"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1PhysXCharacterBody.html" title=" " alt="" coords="680,80,873,105"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="646,76,680,80,680,85,645,81"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="381,99,480,77,481,83,382,104"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1CharacterBody.html" title=" " alt="" coords="465,104,619,129"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="391,114,464,114,464,119,391,119"/>
+<area shape="rect" id="Node000007" href="$classduin_1_1KinematicBody.html" title=" " alt="" coords="463,153,621,179"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="382,130,481,151,480,156,381,135"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="633,105,679,100,680,105,634,110"/>
 </map>
