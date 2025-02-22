@@ -1,9 +1,9 @@
 #pragma once
 
-#include "./PhysicsBody3D.h"
+#include "./PhysicsBody.h"
 
 namespace duin {
-    class KinematicBody3D : public PhysicsBody3D
+    class KinematicBody : public PhysicsBody
     {
         public:
         private:

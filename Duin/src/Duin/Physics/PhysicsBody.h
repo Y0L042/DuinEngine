@@ -3,7 +3,7 @@
 #include "./CollisionObject.h"
 
 namespace duin {
-    class PhysicsBody3D : public CollisionObject
+    class PhysicsBody : public CollisionObject
     {
         public:
         private:

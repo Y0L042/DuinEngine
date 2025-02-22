@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#include "PhysXServer.h"
+#include "PhysX_PhysicsServer.h"
 
 namespace duin {
-    PhysXServer::PhysXServer()
+    PhysXPhysicsServer::PhysXPhysicsServer()
     {
         try {
             Initialize();
@@ -14,12 +14,12 @@ namespace duin {
         };
     }
 
-    PhysXServer::~PhysXServer()
+    PhysXPhysicsServer::~PhysXPhysicsServer()
     {
         Clean();
     }
 
-    void PhysXServer::Initialize()
+    void PhysXPhysicsServer::Initialize()
     {
         pxFoundation = PxCreateFoundation(PX_PHYSICS_VERSION,
             pxAllocatorCallback,
@@ -74,7 +74,7 @@ namespace duin {
             throw std::runtime_error("PxControllerManager creation failed!");
     }
 
-    void PhysXServer::Clean()
+    void PhysXPhysicsServer::Clean()
     {
         PX_RELEASE(pxScene);
         PX_RELEASE(pxDispatcher);
@@ -87,7 +87,7 @@ namespace duin {
         PX_RELEASE(pxFoundation);
     }
 
-    void PhysXServer::StepPhysics(double delta)
+    void PhysXPhysicsServer::StepPhysics(double delta)
     {
         pxScene->simulate((float)delta);
         pxScene->fetchResults(true);

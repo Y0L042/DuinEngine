@@ -9,19 +9,19 @@
 #include <cooking/PxCooking.h>
 
 namespace duin {
-    class PhysXServer : public PhysicsServer
+    class PhysXPhysicsServer : public PhysicsServer
     {
         public:
-            PhysXServer();
-            ~PhysXServer() override;
+            PhysXPhysicsServer();
+            ~PhysXPhysicsServer() override;
 
             void Initialize() override;
             void Clean() override;
 
             void StepPhysics(double delta) override;
 
-            PhysXServer(const PhysXServer&) = delete;
-            PhysXServer& operator=(const PhysXServer&) = delete;
+            PhysXPhysicsServer(const PhysXPhysicsServer&) = delete;
+            PhysXPhysicsServer& operator=(const PhysXPhysicsServer&) = delete;
 
         private:
             physx::PxDefaultAllocator pxAllocatorCallback;

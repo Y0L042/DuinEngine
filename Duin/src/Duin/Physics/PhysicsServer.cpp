@@ -3,8 +3,8 @@
 
 // Use PhysX by default
 #ifndef JOLT
-#define PHYSICS_SERVER PhysXServer
-#include "./impl/physx/PhysXIncludes.h"
+#define PHYSICS_SERVER PhysXPhysicsServer
+#include "./impl/physx/PhysX_Includes.h"
 #endif
 
 #ifdef JOLT
