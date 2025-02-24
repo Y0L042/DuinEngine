@@ -1,9 +1,0 @@
-<map id="duin::ECSComponent::CharacterBody3DComponent" name="duin::ECSComponent::CharacterBody3DComponent">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,243,224,283"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1CharacterBody.html" title=" " alt="" coords="37,155,192,180"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,194,117,242,112,242,112,194"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1PhysicsBody.html" title=" " alt="" coords="45,80,185,105"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="117,120,117,154,112,154,112,120"/>
-<area shape="rect" id="Node000004" href="$classduin_1_1CollisionObject.html" title=" " alt="" coords="37,5,193,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="117,45,117,80,112,80,112,45"/>
-</map>

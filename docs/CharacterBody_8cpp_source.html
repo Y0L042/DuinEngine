@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('CharacterBody_8cpp_source.html',''); i
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;CharacterBody.h&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;CharacterBody.h&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// Use PhysX by default</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef JOLT</span></div>
@@ -133,12 +133,14 @@ $(document).ready(function(){initNavTree('CharacterBody_8cpp_source.html',''); i
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span>duin {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    CharacterBody* CharacterBody::Create()</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    std::shared_ptr&lt;CharacterBody&gt; CharacterBody::Create()</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        PHYSICS_BODY *body = <span class="keyword">new</span> PHYSICS_BODY();</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordflow">return</span> body;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    }</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>}</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        std::shared_ptr&lt;PHYSICS_BODY&gt; body = std::make_shared&lt;PHYSICS_BODY&gt;();</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        std::shared_ptr&lt;CharacterBody&gt; characterBody = std::static_pointer_cast&lt;CharacterBody&gt;(body);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">return</span> characterBody;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

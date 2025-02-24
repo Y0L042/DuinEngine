@@ -2,7 +2,7 @@ var annotated_dup =
 [
     [ "duin", null, [
       [ "ECSComponent", null, [
-        [ "CharacterBody3DComponent", "structduin_1_1ECSComponent_1_1CharacterBody3DComponent.html", null ],
+        [ "CharacterBodyComponent", "structduin_1_1ECSComponent_1_1CharacterBodyComponent.html", null ],
         [ "CubeComponent", "structduin_1_1ECSComponent_1_1CubeComponent.html", null ],
         [ "DebugCapsuleComponent", "structduin_1_1ECSComponent_1_1DebugCapsuleComponent.html", null ],
         [ "DebugCubeComponent", "structduin_1_1ECSComponent_1_1DebugCubeComponent.html", null ],
@@ -44,12 +44,12 @@ var annotated_dup =
       [ "GameObject", "classduin_1_1GameObject.html", null ],
       [ "GameState", "classduin_1_1GameState.html", null ],
       [ "GameStateMachine", "classduin_1_1GameStateMachine.html", null ],
-      [ "IPhysicsMaterial", "structduin_1_1IPhysicsMaterial.html", null ],
       [ "JSONDocument", "classduin_1_1JSONDocument.html", null ],
       [ "JSONMember", "classduin_1_1JSONMember.html", null ],
       [ "Log", "classduin_1_1Log.html", null ],
       [ "Matrix", "structduin_1_1Matrix.html", null ],
       [ "PhysicsBody", "classduin_1_1PhysicsBody.html", null ],
+      [ "PhysicsMaterial", "structduin_1_1PhysicsMaterial.html", null ],
       [ "PhysicsServer", "classduin_1_1PhysicsServer.html", null ],
       [ "PhysXCharacterBody", "classduin_1_1PhysXCharacterBody.html", null ],
       [ "PhysXCollisionObject", "classduin_1_1PhysXCollisionObject.html", null ],

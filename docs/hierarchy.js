@@ -5,7 +5,7 @@ var hierarchy =
     [ "duin::Application", "classduin_1_1Application.html", null ],
     [ "duin::AssetManager", "classduin_1_1AssetManager.html", null ],
     [ "duin::ECSTag::CameraIsActive", "structduin_1_1ECSTag_1_1CameraIsActive.html", null ],
-    [ "duin::ECSComponent::CharacterBody3DComponent", "structduin_1_1ECSComponent_1_1CharacterBody3DComponent.html", null ],
+    [ "duin::ECSComponent::CharacterBodyComponent", "structduin_1_1ECSComponent_1_1CharacterBodyComponent.html", null ],
     [ "duin::CharacterBodyDesc", "structduin_1_1CharacterBodyDesc.html", null ],
     [ "duin::CollisionLayer", "structduin_1_1CollisionLayer.html", null ],
     [ "duin::CollisionObject", "classduin_1_1CollisionObject.html", [
@@ -38,13 +38,13 @@ var hierarchy =
     [ "duin::GameStateMachine", "classduin_1_1GameStateMachine.html", null ],
     [ "duin::ECSTag::Global", "structduin_1_1ECSTag_1_1Global.html", null ],
     [ "InputVector2DKeys", "structInputVector2DKeys.html", null ],
-    [ "duin::IPhysicsMaterial", "structduin_1_1IPhysicsMaterial.html", null ],
     [ "duin::JSONDocument", "classduin_1_1JSONDocument.html", null ],
     [ "duin::JSONMember", "classduin_1_1JSONMember.html", null ],
     [ "duin::ECSTag::Local", "structduin_1_1ECSTag_1_1Local.html", null ],
     [ "duin::Log", "classduin_1_1Log.html", null ],
     [ "duin::Matrix", "structduin_1_1Matrix.html", null ],
     [ "duin::ECSTag::NonPx", "structduin_1_1ECSTag_1_1NonPx.html", null ],
+    [ "duin::PhysicsMaterial", "structduin_1_1PhysicsMaterial.html", null ],
     [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", [
       [ "duin::PhysXPhysicsServer", "classduin_1_1PhysXPhysicsServer.html", null ]
     ] ],

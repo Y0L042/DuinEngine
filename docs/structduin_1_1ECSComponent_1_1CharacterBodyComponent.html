@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Duin: duin::IPhysicsMaterial Struct Reference</title>
+<title>Duin: duin::ECSComponent::CharacterBodyComponent Struct Reference</title>
 <!--BEGIN PROJECT_ICON-->
 <link rel="icon" href="$projecticon" type="image/x-icon" />
 <!--END PROJECT_ICON-->
@@ -82,7 +82,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structduin_1_1IPhysicsMaterial.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structduin_1_1ECSComponent_1_1CharacterBodyComponent.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -110,81 +110,45 @@ $(document).ready(function(){initNavTree('structduin_1_1IPhysicsMaterial.html','
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structduin_1_1IPhysicsMaterial-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::IPhysicsMaterial Struct Reference</div></div>
+<a href="structduin_1_1ECSComponent_1_1CharacterBodyComponent-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">duin::ECSComponent::CharacterBodyComponent Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:af098589e525ac47a503c31a5b840268b" id="r_af098589e525ac47a503c31a5b840268b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1IPhysicsMaterial.html#af098589e525ac47a503c31a5b840268b">staticFriction</a></td></tr>
-<tr class="separator:af098589e525ac47a503c31a5b840268b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb0ff215a9e838acb8b911c69311c569" id="r_adb0ff215a9e838acb8b911c69311c569"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1IPhysicsMaterial.html#adb0ff215a9e838acb8b911c69311c569">dynamicFriction</a></td></tr>
-<tr class="separator:adb0ff215a9e838acb8b911c69311c569"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad30f1a2bd706c1368ebfad6ebdb52c40" id="r_ad30f1a2bd706c1368ebfad6ebdb52c40"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1IPhysicsMaterial.html#ad30f1a2bd706c1368ebfad6ebdb52c40">restitutionCoeff</a></td></tr>
-<tr class="separator:ad30f1a2bd706c1368ebfad6ebdb52c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f33c08d47c9c9398cf46dae3446c739" id="r_a1f33c08d47c9c9398cf46dae3446c739"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1ECSComponent_1_1CharacterBodyComponent.html#a1f33c08d47c9c9398cf46dae3446c739">characterBody</a></td></tr>
+<tr class="separator:a1f33c08d47c9c9398cf46dae3446c739"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00004">4</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8h_source.html#l00190">190</a> of file <a class="el" href="ECSManager_8h_source.html">ECSManager.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="adb0ff215a9e838acb8b911c69311c569" name="adb0ff215a9e838acb8b911c69311c569"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb0ff215a9e838acb8b911c69311c569">&#9670;&#160;</a></span>dynamicFriction</h2>
+<a id="a1f33c08d47c9c9398cf46dae3446c739" name="a1f33c08d47c9c9398cf46dae3446c739"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f33c08d47c9c9398cf46dae3446c739">&#9670;&#160;</a></span>characterBody</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float duin::IPhysicsMaterial::dynamicFriction</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a>&gt; duin::ECSComponent::CharacterBodyComponent::characterBody</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00008">8</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
-
-</div>
-</div>
-<a id="ad30f1a2bd706c1368ebfad6ebdb52c40" name="ad30f1a2bd706c1368ebfad6ebdb52c40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad30f1a2bd706c1368ebfad6ebdb52c40">&#9670;&#160;</a></span>restitutionCoeff</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">float duin::IPhysicsMaterial::restitutionCoeff</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00009">9</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
-
-</div>
-</div>
-<a id="af098589e525ac47a503c31a5b840268b" name="af098589e525ac47a503c31a5b840268b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af098589e525ac47a503c31a5b840268b">&#9670;&#160;</a></span>staticFriction</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">float duin::IPhysicsMaterial::staticFriction</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00007">7</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8h_source.html#l00191">191</a> of file <a class="el" href="ECSManager_8h_source.html">ECSManager.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a></li>
+<li><a class="el" href="ECSManager_8h_source.html">ECSManager.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>duin</b></li><li class="navelem"><a class="el" href="structduin_1_1IPhysicsMaterial.html">IPhysicsMaterial</a></li>
+    <li class="navelem"><b>duin</b></li><li class="navelem"><b>ECSComponent</b></li><li class="navelem"><a class="el" href="structduin_1_1ECSComponent_1_1CharacterBodyComponent.html">CharacterBodyComponent</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
