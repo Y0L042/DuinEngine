@@ -187,8 +187,8 @@ namespace duin {
         /*------------------------------------------------------------------------*/
         //  3D Physics Components
         /*------------------------------------------------------------------------*/
-        struct CharacterBody3DComponent {
-            CharacterBody *characterBody;
+        struct CharacterBodyComponent {
+            std::shared_ptr<CharacterBody> characterBody;
         };
 
         struct PhysicsStaticCubeComponent {

@@ -1,6 +1,8 @@
 #pragma once
-
 #include "PhysicsBody.h"
+
+#include <memory>
+
 #include "Duin/Core/Maths/DuinMaths.h"
 
 namespace duin {
@@ -18,7 +20,7 @@ namespace duin {
     class CharacterBody : public PhysicsBody
     {
         public:
-            static CharacterBody* Create();
+            static std::shared_ptr<CharacterBody> Create();
             CharacterBody() = default;
             virtual ~CharacterBody() = default;
 

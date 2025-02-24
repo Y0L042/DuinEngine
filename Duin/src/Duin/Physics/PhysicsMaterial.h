@@ -1,7 +1,7 @@
 #pragma once
 
 namespace duin {
-    struct IPhysicsMaterial
+    struct PhysicsMaterial
     {
         public:
             float staticFriction;

@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "Duin/Core/Debug/DNLog.h"
 #include "PhysX_PhysicsServer.h"
 
 namespace duin {

@@ -12,6 +12,7 @@
 #include "Duin/ECS/ECSManager.h"
 
 #include "Duin/Physics/PhysicsServer.h"
+#include "Duin/Physics/PhysicsMaterial.h"
 #include "Duin/Physics/CollisionObject.h"
 #include "Duin/Physics/CollisionMeta.h"
 #include "Duin/Physics/PhysicsBody.h"

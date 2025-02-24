@@ -1,5 +1,8 @@
 #pragma once
 
+#include <unordered_map>
+#include <memory>
+
 namespace duin {
     enum PhysicsServerError {
         SUCCESS = 0,
@@ -7,6 +10,9 @@ namespace duin {
         MATERIAL_CREATION_FAILED
     };
 
+    class UUID;
+    class CollisionObject;
+    class CharacterBody;
     class PhysicsServer
     {
         public:

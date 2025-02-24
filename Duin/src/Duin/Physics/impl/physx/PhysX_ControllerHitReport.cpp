@@ -8,7 +8,8 @@ constexpr int MAX_HIT_REPORTS = 8;
 namespace duin {
     PhysXControllerHitReport::PhysXControllerHitReport()
     {
-        QueuePostFrameCallback(std::function<void(void)>([this]() { CleanHitReports(); }));
+        // TODO
+        // QueuePostFrameCallback(std::function<void(void)>([this]() { CleanHitReports(); }));
 
         currentFrameShapeHitReports = &shapeHitReports_1;
         previousFrameShapeHitReports = &shapeHitReports_2;

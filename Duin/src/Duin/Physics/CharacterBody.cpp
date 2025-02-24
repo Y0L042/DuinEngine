@@ -1,6 +1,6 @@
 #include "dnpch.h"
-
 #include "CharacterBody.h"
+
 
 // Use PhysX by default
 #ifndef JOLT
@@ -15,9 +15,11 @@
 #endif
 
 namespace duin {
-    CharacterBody* CharacterBody::Create()
+    std::shared_ptr<CharacterBody> CharacterBody::Create()
     {
-        PHYSICS_BODY *body = new PHYSICS_BODY();
-        return body;
+        std::shared_ptr<PHYSICS_BODY> body = std::make_shared<PHYSICS_BODY>();
+        std::shared_ptr<CharacterBody> characterBody = std::static_pointer_cast<CharacterBody>(body);
+
+        return characterBody;
     }
 }

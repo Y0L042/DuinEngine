@@ -1,6 +1,10 @@
 #include "dnpch.h"
 #include "PhysicsServer.h"
 
+#include "Duin/Core/Debug/DNLog.h"
+#include "Duin/Core/Utils/UUID.h"
+#include "CollisionObject.h"
+
 // Use PhysX by default
 #ifndef JOLT
 #define PHYSICS_SERVER PhysXPhysicsServer

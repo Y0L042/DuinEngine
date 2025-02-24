@@ -10,6 +10,7 @@
 
 #include <flecs.h>
 
+#include <memory>
 #include <iostream>
 #include <omp.h>
 
@@ -66,7 +67,6 @@ StateGameLoop::~StateGameLoop()
 void StateGameLoop::State_Enter()
 {
     duin::PhysicsServer& pserver = duin::PhysicsServer::Get();
-    duin::CharacterBody *playerCharacterBody = duin::CharacterBody::Create();
 
     // Load basic lighting shader
     shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
@@ -100,26 +100,26 @@ void StateGameLoop::State_Enter()
         .position = duin::Vector3(playerPosition),
         .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
     };
-    // duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
-    // duin::CharacterBody *playerBody = duin::CharacterBody::Create();
+    duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
+    std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create();
     player = ecsManager.world.entity();
-    // player = ecsManager.world.entity()
-    //     .is_a(duin::ECSPrefab::PhysicsCharacterBody3D)
-    //     .set<Position3D, Local>({ playerPosition })
-    //     .set<Mass>({ .value = 80.0f })
-    //     .set<CanRunComponent>({ .speed = 10.0f })
-    //     .set<CanSprintComponent>({ .speed = 17.5f })
-    //     .set<CanJumpComponent>({ .impulse = 925.0f })
-    //     .set<CharacterBody3DComponent >({ playerBody })
-    //     .add<InputVelocities>()
-    //     .add<InputForces>()
-    //     .add<PlayerMovementInputVec3>()
-    //     .add<InputVelocityDirection>()
-    //     .add<MouseInputVec2>()
-    //     .add<CameraYawComponent>()
-    //     .add<GravityComponent>()
-    //     .add<OnGroundTag>()
-    //     ;
+    player = ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::PhysicsCharacterBody)
+        .set<Position3D, Local>({ playerPosition })
+        .set<Mass>({ .value = 80.0f })
+        .set<CanRunComponent>({ .speed = 10.0f })
+        .set<CanSprintComponent>({ .speed = 17.5f })
+        .set<CanJumpComponent>({ .impulse = 925.0f })
+        .set<CharacterBodyComponent >({ playerBody })
+        .add<InputVelocities>()
+        .add<InputForces>()
+        .add<PlayerMovementInputVec3>()
+        .add<InputVelocityDirection>()
+        .add<MouseInputVec2>()
+        .add<CameraYawComponent>()
+        .add<GravityComponent>()
+        .add<OnGroundTag>()
+        ;
     cameraRoot = ecsManager.world.entity();
     // cameraRoot = ecsManager.world.entity()
     //     .is_a(duin::ECSPrefab::Node3D)

@@ -11,11 +11,12 @@
 #include <cooking/PxCooking.h>
 
 namespace duin {
+    class PhysXPhysicsServer;
     class PhysXCharacterBody 
         : public PhysXPhysicsBody, virtual public CharacterBody
     {
         public:
-             ~PhysXCharacterBody() = default;
+             ~PhysXCharacterBody();
 
             Vector3 GetPosition() override;
             Vector3 GetFootPosition() override;
@@ -41,5 +42,9 @@ namespace duin {
                 .upDirection = Vector3(0.0f, 1.0f, 0.0f),
             };
 
+            physx::PxControllerFilters pxFilters;
+            physx::PxController *pxController = NULL;
+            physx::PxMaterial *pxMaterial = NULL;
+            physx::PxObstacleContext *pxObstacles = NULL;
     };
 }

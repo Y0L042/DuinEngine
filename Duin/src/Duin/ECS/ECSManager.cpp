@@ -46,7 +46,7 @@ namespace ECSComponent {
         world.component<ECSComponent::Velocity3D>();
 
         world.component<ECSComponent::CubeComponent>();
-        world.component<ECSComponent::CharacterBody3DComponent>();
+        world.component<ECSComponent::CharacterBodyComponent>();
         world.component<ECSComponent::PhysicsStaticCubeComponent>();
         world.component<::Camera3D>();
 
@@ -104,7 +104,7 @@ namespace ECSPrefab {
             .is_a(ECSPrefab::Node3D)
             .add<ECSTag::PxKinematic>()
             .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })
-            .set<ECSComponent::CharacterBody3DComponent>({ nullptr });
+            .set<ECSComponent::CharacterBodyComponent>({ nullptr });
             ;
 
 
@@ -243,7 +243,7 @@ void ECSManager::ExecuteQuerySetCameraAsActive()
 void ECSManager::ExecuteCharacterBody3DCreation(PhysicsServer& server)
 {
     static flecs::query q = world.query_builder<
-        ECSComponent::CharacterBody3DComponent,
+        ECSComponent::CharacterBodyComponent,
         const ECSComponent::Position3D
     >()
     .term_at(1).second<ECSTag::Global>()
@@ -251,7 +251,7 @@ void ECSManager::ExecuteCharacterBody3DCreation(PhysicsServer& server)
     .build();
      
     q.each([&server](
-        ECSComponent::CharacterBody3DComponent& cb,
+        ECSComponent::CharacterBodyComponent& cb,
         const ECSComponent::Position3D& p
     ) {
     });
@@ -350,7 +350,7 @@ void ECSManager::ExecuteQueryHierarchicalUpdateRotation3D()
 void ECSManager::ExecuteQueryUpdateCharacterBody3DPosition()
 {
     static flecs::query q = world.query_builder<
-        ECSComponent::CharacterBody3DComponent,
+        ECSComponent::CharacterBodyComponent,
         ECSComponent::Position3D,
         const ECSComponent::Position3D,
         ECSComponent::Velocity3D
@@ -362,7 +362,7 @@ void ECSManager::ExecuteQueryUpdateCharacterBody3DPosition()
         .build();
     q.each([](
             flecs::entity e,
-            ECSComponent::CharacterBody3DComponent& cb,
+            ECSComponent::CharacterBodyComponent& cb,
             ECSComponent::Position3D& localPos,
             const ECSComponent::Position3D& globalPos,
             ECSComponent::Velocity3D& velocity

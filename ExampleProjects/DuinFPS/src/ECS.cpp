@@ -154,7 +154,7 @@ void ExecuteQueryGravity(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
         InputVelocities,
-        const CharacterBody3DComponent,
+        const CharacterBodyComponent,
         const GravityComponent,
         const Mass
     >()
@@ -164,7 +164,7 @@ void ExecuteQueryGravity(flecs::world& world)
 
     q.each([](
             InputVelocities& inputVelocities,
-            const CharacterBody3DComponent& cb,
+            const CharacterBodyComponent& cb,
             const GravityComponent& gravity,
             const Mass& mass
         ) {

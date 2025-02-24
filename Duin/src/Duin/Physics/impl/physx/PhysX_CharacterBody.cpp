@@ -3,7 +3,14 @@
 #include "PhysX_CharacterBody.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 
+
 namespace duin {
+
+    PhysXCharacterBody::~PhysXCharacterBody()
+    {
+        // TODO clean physx objects
+    }
+
     Vector3 PhysXCharacterBody::GetPosition()
     {
         return Vector3();
