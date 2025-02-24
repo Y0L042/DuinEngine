@@ -178,7 +178,7 @@ $(document).ready(function(){initNavTree('ECSManager_8cpp_source.html',''); init
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    flecs::entity Node;</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    flecs::entity Node2D;</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    flecs::entity Node3D;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    flecs::entity PhysicsCharacterBody3D;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    flecs::entity PhysicsCharacterBody;</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    flecs::entity Camera3D;</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    flecs::entity Cube;</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    flecs::entity DebugCapsule;</div>
@@ -218,7 +218,7 @@ $(document).ready(function(){initNavTree('ECSManager_8cpp_source.html',''); init
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        PhysicsCharacterBody3D = world.prefab(<span class="stringliteral">&quot;CharacterBody3D&quot;</span>)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        PhysicsCharacterBody = world.prefab(<span class="stringliteral">&quot;CharacterBody3D&quot;</span>)</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            .is_a(ECSPrefab::Node3D)</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            .add&lt;ECSTag::PxKinematic&gt;()</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            .set&lt;ECSComponent::Velocity3D&gt;({ 0.0f, 0.0f, 0.0f })</div>
@@ -358,7 +358,7 @@ $(document).ready(function(){initNavTree('ECSManager_8cpp_source.html',''); init
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        });</div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>}</div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span><span class="keywordtype">void</span> ECSManager::ExecuteCharacterBody3DCreation(Physics3DServer&amp; server)</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span><span class="keywordtype">void</span> ECSManager::ExecuteCharacterBody3DCreation(PhysicsServer&amp; server)</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>{</div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    <span class="keyword">static</span> flecs::query q = world.query_builder&lt;</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        ECSComponent::CharacterBody3DComponent,</div>

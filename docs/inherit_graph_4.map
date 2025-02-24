@@ -1,3 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structduin_1_1CollisionLayer.html" title=" " alt="" coords="5,5,156,31"/>
+<area shape="rect" id="Node000000" href="$classduin_1_1CollisionObject.html" title=" " alt="" coords="5,31,161,56"/>
+<area shape="rect" id="Node000001" href="$classduin_1_1PhysXCollisionObject.html" title=" " alt="" coords="209,5,404,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="175,30,209,26,209,32,176,36"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1PhysicsBody.html" title=" " alt="" coords="237,55,377,80"/>
+<area shape="poly" id="edge4_Node000000_Node000005" title=" " alt="" coords="175,51,237,57,236,63,175,56"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1PhysXPhysicsBody.html" title=" " alt="" coords="452,5,632,31"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="418,15,452,15,452,21,418,21"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1PhysXCharacterBody.html" title=" " alt="" coords="680,31,873,56"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="646,27,680,30,680,36,645,32"/>
+<area shape="poly" id="edge7_Node000005_Node000002" title=" " alt="" coords="381,49,480,28,481,33,382,54"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1CharacterBody.html" title=" " alt="" coords="465,55,619,80"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="391,65,464,65,464,70,391,70"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="633,55,679,51,680,56,634,61"/>
 </map>

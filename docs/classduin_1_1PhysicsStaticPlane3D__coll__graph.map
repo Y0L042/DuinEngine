@@ -1,7 +1,0 @@
-<map id="duin::PhysicsStaticPlane3D" name="duin::PhysicsStaticPlane3D">
-<area shape="rect" id="Node000001" title=" " alt="" coords="106,93,305,119"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1PhysicsStaticBody3D.html" title=" " alt="" coords="5,5,200,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,38,193,91,189,95,126,42"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1Physics3DServer.html" title=" " alt="" coords="225,5,391,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="285,42,221,95,218,91,282,38"/>
-</map>
