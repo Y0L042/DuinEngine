@@ -121,27 +121,27 @@ void StateGameLoop::State_Enter()
         .add<OnGroundTag>()
         ;
     cameraRoot = ecsManager.world.entity();
-    // cameraRoot = ecsManager.world.entity()
-    //     .is_a(duin::ECSPrefab::Node3D)
-    //     .child_of(player)
-    //     .set<Position3D, Local>({{ 0.0f, playerHeight, 0.0f }})
-    //     .add<MouseInputVec2>()
-    //     .add<CameraPitchComponent>()
-    //     ;
+    cameraRoot = ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::Node3D)
+        .child_of(player)
+        .set<Position3D, Local>({{ 0.0f, playerHeight, 0.0f }})
+        .add<MouseInputVec2>()
+        .add<CameraPitchComponent>()
+        ;
     fpsCamera = ecsManager.world.entity();
-    // fpsCamera = ecsManager.world.entity()
-    //     .is_a(duin::ECSPrefab::Camera3D)
-    //     .child_of(cameraRoot)
-    //     .set<::Camera3D>({
-    //             .target = { 0.0f, 0.0f, 0.0f },
-    //             .up = { 0.0f, 1.0f, 0.0f },
-    //             .fovy = 72.0f,
-    //             .projection = ::CAMERA_PERSPECTIVE
-    //         })
-    //     .set<VelocityBob>({ 10.0f, 1.0f })
-    //     .add<duin::ECSTag::ActiveCamera>()
-    //     ;
-    //
+    fpsCamera = ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::Camera3D)
+        .child_of(cameraRoot)
+        .set<::Camera3D>({
+                .target = { 0.0f, 0.0f, 0.0f },
+                .up = { 0.0f, 1.0f, 0.0f },
+                .fovy = 72.0f,
+                .projection = ::CAMERA_PERSPECTIVE
+            })
+        .set<VelocityBob>({ 10.0f, 1.0f })
+        .add<duin::ECSTag::ActiveCamera>()
+        ;
+
 
 
     debugCamera = ecsManager.world.entity()
@@ -187,7 +187,7 @@ void StateGameLoop::State_Enter()
         ;
 
     SetFPSCamera(1);
-    //ecsManager.ActivateCameraEntity(fpsCamera);
+    ecsManager.ActivateCameraEntity(fpsCamera);
 
 
     playerSM.SwitchState<PlayerStateOnGround>();
@@ -254,7 +254,7 @@ void StateGameLoop::State_HandleInput()
     }
 
     int isOnFloor = 0;
-    //int isOnFloor = player.get<CharacterBody3DComponent>()->characterBody->IsOnFloor();
+    //int isOnFloor = player.get<CharacterBodyComponent>()->characterBody->IsOnFloor();
     //if (isOnFloor) {
     //    player.add<OnGroundTag>();
     //    player.remove<InAirTag>();
@@ -302,7 +302,7 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
     ExecuteQueryResolveInputForces(ecsManager.world);
     ExecuteQueryResolveInputVelocities(ecsManager.world);
 
-    // pxServer.StepPhysics(delta);
+    duin::PhysicsServer::Get().StepPhysics(delta);
 
     // const duin::Vector3 playerPosL = player.get<duin::ECSComponent::CharacterBody3DComponent>()->characterBody->GetFootPosition();
     // debugWatchlist.Post("FootPos: ", "{ %.1f, %.1f, %.1f }", playerPosL.x, playerPosL.y, playerPosL.z);
