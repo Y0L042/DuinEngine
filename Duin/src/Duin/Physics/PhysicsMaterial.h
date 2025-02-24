@@ -8,5 +8,5 @@ namespace duin {
             float dynamicFriction;
             float restitutionCoeff;
         private:
-    }
+    };
 }

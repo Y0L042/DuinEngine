@@ -7,15 +7,15 @@
 #include <functional>
 
 namespace duin {
-    class ControllerHitReport : public physx::PxUserControllerHitReport
+    class PhysXControllerHitReport : public physx::PxUserControllerHitReport
     {
         public:
             std::function<void(const physx::PxControllerShapeHit&)> OnShapeHitCallback;
             std::function<void(const physx::PxControllersHit&)> OnControllerHitCallback;
             std::function<void(const physx::PxControllerObstacleHit&)> OnObstacleHitCallback;
 
-            ControllerHitReport();
-            virtual ~ControllerHitReport() = default;
+            PhysXControllerHitReport();
+            virtual ~PhysXControllerHitReport() = default;
 
             virtual void OnShapeHit(const physx::PxControllerShapeHit& hit) {};
 

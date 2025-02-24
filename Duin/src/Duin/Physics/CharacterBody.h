@@ -18,15 +18,16 @@ namespace duin {
     class CharacterBody : public PhysicsBody
     {
         public:
+            static CharacterBody* Create();
             CharacterBody() = default;
             virtual ~CharacterBody() = default;
 
-            virtual Vector3 GetPosition();
-            virtual Vector3 GetFootPosition();
-            virtual Vector3 GetCurrentVelocity();
-            virtual int IsOnFloor();
-            virtual int IsOnFloorOnly();
-            virtual void Move(Vector3 displacement, double delta);
+            virtual Vector3 GetPosition() = 0;
+            virtual Vector3 GetFootPosition() = 0;
+            virtual Vector3 GetCurrentVelocity() = 0;
+            virtual int IsOnFloor() = 0;
+            virtual int IsOnFloorOnly() = 0;
+            virtual void Move(Vector3 displacement, double delta) = 0;
 
             virtual void OnShapeHit(/*TODO*/) {};
             virtual void OnCharacterHit(/*TODO*/) {};

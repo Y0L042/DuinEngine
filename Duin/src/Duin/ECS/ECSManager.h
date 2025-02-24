@@ -5,8 +5,7 @@
 #include <flecs.h>
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Utils/UUID.h"
-#include "Duin/Physics/Physics3DServer.h"
-#include "Duin/Physics/PhysicsCharacterBody3D.h"
+#include "Duin/Physics/PhysicsIncludes.h"
 
 namespace duin {
 
@@ -189,7 +188,7 @@ namespace duin {
         //  3D Physics Components
         /*------------------------------------------------------------------------*/
         struct CharacterBody3DComponent {
-            PhysicsCharacterBody3D *characterBody;
+            CharacterBody *characterBody;
         };
 
         struct PhysicsStaticCubeComponent {
@@ -218,7 +217,7 @@ namespace duin {
         extern flecs::entity Node;
         extern flecs::entity Node2D;
         extern flecs::entity Node3D;
-        extern flecs::entity PhysicsCharacterBody3D;
+        extern flecs::entity PhysicsCharacterBody;
         extern flecs::entity Camera3D;
         extern flecs::entity Cube;
 
@@ -252,7 +251,7 @@ namespace duin {
         void PostDrawUIQueryExecution();
 
 
-        void ExecuteCharacterBody3DCreation(Physics3DServer& server);
+        void ExecuteCharacterBody3DCreation(PhysicsServer& server);
 
         void ExecuteQuerySetCameraAsActive();
         void ExecuteQueryUpdatePosition3D();        

@@ -11,11 +11,11 @@
 
 #include "Duin/ECS/ECSManager.h"
 
-#include "Duin/Physics/Physics3DServer.h"
 #include "Duin/Physics/PhysicsServer.h"
-#include "Duin/Physics/PhysicsCharacterBody3D.h"
-#include "Duin/Physics/PhysicsStaticBody3D.h"
-#include "Duin/Physics/PhysicsDynamicBody3D.h"
+#include "Duin/Physics/CollisionObject.h"
+#include "Duin/Physics/CollisionMeta.h"
+#include "Duin/Physics/PhysicsBody.h"
+#include "Duin/Physics/CharacterBody.h"
 
 /* ---------- C ----------- */
 #include "Duin/C_Modules/c_modules.h"

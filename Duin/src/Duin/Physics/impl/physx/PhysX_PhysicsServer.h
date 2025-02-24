@@ -9,7 +9,7 @@
 #include <cooking/PxCooking.h>
 
 namespace duin {
-    class PhysXPhysicsServer : public PhysicsServer
+    class PhysXPhysicsServer : virtual public PhysicsServer
     {
         public:
             PhysXPhysicsServer();

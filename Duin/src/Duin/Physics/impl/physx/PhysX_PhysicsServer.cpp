@@ -9,6 +9,7 @@ namespace duin {
     {
         try {
             Initialize();
+            DN_CORE_INFO("PhysX_PhysicsServer initialised.");
         } catch (const std::runtime_error& e) {
             DN_CORE_ERROR("Caught {0}", e.what());
         };

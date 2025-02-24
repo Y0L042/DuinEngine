@@ -6,7 +6,7 @@
 constexpr int MAX_HIT_REPORTS = 8;
 
 namespace duin {
-    ControllerHitReport::ControllerHitReport()
+    PhysXControllerHitReport::PhysXControllerHitReport()
     {
         QueuePostFrameCallback(std::function<void(void)>([this]() { CleanHitReports(); }));
 
@@ -20,7 +20,7 @@ namespace duin {
         previousFrameObstacleHitReports = &obstacleHitReports_2;
     }
 
-    void ControllerHitReport::onShapeHit(const physx::PxControllerShapeHit& hit)
+    void PhysXControllerHitReport::onShapeHit(const physx::PxControllerShapeHit& hit)
     {
         OnShapeHit(hit);
         if (OnShapeHitCallback) 
@@ -33,7 +33,7 @@ namespace duin {
         }
     }
 
-    void ControllerHitReport::onControllerHit(const physx::PxControllersHit& hit)
+    void PhysXControllerHitReport::onControllerHit(const physx::PxControllersHit& hit)
     {
         OnControllerHit(hit);
         if (OnControllerHitCallback)
@@ -46,7 +46,7 @@ namespace duin {
         }
     }
 
-    void ControllerHitReport::onObstacleHit(const physx::PxControllerObstacleHit& hit)
+    void PhysXControllerHitReport::onObstacleHit(const physx::PxControllerObstacleHit& hit)
     {
         OnObstacleHit(hit);
         if (OnObstacleHitCallback)
@@ -59,22 +59,22 @@ namespace duin {
         }
     }
 
-    const std::vector<physx::PxControllerShapeHit>& ControllerHitReport::GetShapeHitReports()
+    const std::vector<physx::PxControllerShapeHit>& PhysXControllerHitReport::GetShapeHitReports()
     {
         return *previousFrameShapeHitReports;
     }
 
-    const std::vector<physx::PxControllersHit>& ControllerHitReport::GetControllerHitReports()
+    const std::vector<physx::PxControllersHit>& PhysXControllerHitReport::GetControllerHitReports()
     {
         return *previousFrameControllerHitReports;
     }
 
-    const std::vector<physx::PxControllerObstacleHit>& ControllerHitReport::GetObstacleHitReports()
+    const std::vector<physx::PxControllerObstacleHit>& PhysXControllerHitReport::GetObstacleHitReports()
     {
         return *previousFrameObstacleHitReports;
     }
 
-    void ControllerHitReport::CleanHitReports()
+    void PhysXControllerHitReport::CleanHitReports()
     {
         previousFrameShapeHitReports->clear();
         previousFrameControllerHitReports->clear();

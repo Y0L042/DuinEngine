@@ -60,7 +60,7 @@ namespace ECSPrefab {
     flecs::entity Node;
     flecs::entity Node2D;
     flecs::entity Node3D;
-    flecs::entity PhysicsCharacterBody3D;
+    flecs::entity PhysicsCharacterBody;
     flecs::entity Camera3D;
     flecs::entity Cube;
     flecs::entity DebugCapsule;
@@ -100,7 +100,7 @@ namespace ECSPrefab {
 
 
 
-        PhysicsCharacterBody3D = world.prefab("CharacterBody3D")
+        PhysicsCharacterBody = world.prefab("CharacterBody3D")
             .is_a(ECSPrefab::Node3D)
             .add<ECSTag::PxKinematic>()
             .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })
@@ -240,7 +240,7 @@ void ECSManager::ExecuteQuerySetCameraAsActive()
         });
 }
 
-void ECSManager::ExecuteCharacterBody3DCreation(Physics3DServer& server)
+void ECSManager::ExecuteCharacterBody3DCreation(PhysicsServer& server)
 {
     static flecs::query q = world.query_builder<
         ECSComponent::CharacterBody3DComponent,

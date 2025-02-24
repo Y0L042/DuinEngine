@@ -12,7 +12,7 @@
 
 namespace duin {
     class PhysXCharacterBody 
-        : public PhysXPhysicsBody, public CharacterBody
+        : public PhysXPhysicsBody, virtual public CharacterBody
     {
         public:
              ~PhysXCharacterBody() = default;
@@ -29,5 +29,17 @@ namespace duin {
             void OnObstacleHit(/*TODO*/) override;
 
         private:
+            PhysXControllerHitReport pxControllerHitReport;
+
+            CharacterBodyDesc desc{
+                .height = 1.85f,
+                .radius = 0.35f,
+                .slopeLimit = std::cosf(physx::PxPi / 4.0),
+                .stepOffset = 0.5f,
+                .contactOffset = 0.1f,
+                .position = Vector3(0.0f, 1.85f / 2.0f, 0.0f),
+                .upDirection = Vector3(0.0f, 1.0f, 0.0f),
+            };
+
     };
 }

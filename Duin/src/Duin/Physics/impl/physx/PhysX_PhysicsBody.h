@@ -2,13 +2,15 @@
 
 #include "Duin/Physics/PhysicsBody.h"
 #include "PhysX_CollisionObject.h"
+#include "PhysX_ControllerHitReport.h"
 
 namespace duin {
     class PhysXPhysicsBody 
-        : public PhysXCollisionObject, public PhysicsBody
+        : public PhysXCollisionObject, virtual public PhysicsBody
     {
         public:
 
         private:
+            PhysXControllerHitReport hitReport;
     };
 }
