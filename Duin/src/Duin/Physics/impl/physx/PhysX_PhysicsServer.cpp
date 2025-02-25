@@ -6,6 +6,11 @@
 #include "PhysX_PhysicsServer.h"
 
 namespace duin {
+    PhysXPhysicsServer& PhysXPhysicsServer::GetPxServer()
+    {
+        return *implServer.get();
+    }
+
     PhysXPhysicsServer::PhysXPhysicsServer()
     {
         try {

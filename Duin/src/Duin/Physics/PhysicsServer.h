@@ -3,6 +3,17 @@
 #include <unordered_map>
 #include <memory>
 
+// Use PhysX by default
+#ifndef JOLT
+#define PHYSICS_SERVER PhysXPhysicsServer
+#endif
+
+#ifdef JOLT
+#ifndef PHYSX
+#define PHYSICS_SERVER JoltServer
+#endif
+#endif
+
 namespace duin {
     enum PhysicsServerError {
         SUCCESS = 0,
@@ -13,6 +24,7 @@ namespace duin {
     class UUID;
     class CollisionObject;
     class CharacterBody;
+    class PHYSICS_SERVER;
     class PhysicsServer
     {
         public:
@@ -27,7 +39,8 @@ namespace duin {
 
             virtual void StepPhysics(double delta) = 0;
 
-        private:
+       protected:
+            static std::unique_ptr<PHYSICS_SERVER> implServer;
             static void PrintErrorCode(int errorCode);
     };
 }

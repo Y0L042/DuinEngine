@@ -6,9 +6,16 @@
 
 namespace duin {
 
+    PhysXCharacterBody::PhysXCharacterBody()
+    {}
+
+    PhysXCharacterBody::PhysXCharacterBody(CharacterBodyDesc desc)
+        : desc(desc) {}
+
     PhysXCharacterBody::~PhysXCharacterBody()
     {
         // TODO clean physx objects
+        pxController->release();
     }
 
     Vector3 PhysXCharacterBody::GetPosition()

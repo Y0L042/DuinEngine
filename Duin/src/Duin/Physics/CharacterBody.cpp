@@ -22,4 +22,12 @@ namespace duin {
 
         return characterBody;
     }
+
+    std::shared_ptr<CharacterBody> CharacterBody::Create(CharacterBodyDesc desc)
+    {
+        std::shared_ptr<PHYSICS_BODY> body = std::make_shared<PHYSICS_BODY>(desc);
+        std::shared_ptr<CharacterBody> characterBody = std::static_pointer_cast<CharacterBody>(body);
+
+        return characterBody;
+    }
 }

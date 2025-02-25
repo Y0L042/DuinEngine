@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../PhysicsServer.h"
+#include "Duin/Physics/PhysicsServer.h"
 
 #include <PxPhysicsAPI.h>
 #include <PxPhysics.h>
@@ -12,8 +12,10 @@ namespace duin {
     class PhysXPhysicsServer : virtual public PhysicsServer
     {
         public:
+            static PhysXPhysicsServer& GetPxServer();
+
             PhysXPhysicsServer();
-            ~PhysXPhysicsServer() override;
+            ~PhysXPhysicsServer();
 
             void Initialize() override;
             void Clean() override;
@@ -23,7 +25,7 @@ namespace duin {
             PhysXPhysicsServer(const PhysXPhysicsServer&) = delete;
             PhysXPhysicsServer& operator=(const PhysXPhysicsServer&) = delete;
 
-        private:
+        protected:
             physx::PxDefaultAllocator pxAllocatorCallback;
             physx::PxDefaultErrorCallback pxErrorCallback;
             physx::PxDefaultCpuDispatcher* pxDispatcher = NULL;

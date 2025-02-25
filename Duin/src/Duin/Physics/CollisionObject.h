@@ -4,19 +4,23 @@
 #include "./CollisionMeta.h"
 
 namespace duin {
+    class PhysicsServer;
     class CollisionObject
     {
         public:
-            UUID GetUUID();
+            const UUID GetUUID();
 
             CollisionLayer GetCollisionLayer();
             CollisionMask GetCollisionMask();
             void SetCollisionLayer(CollisionLayer bits);
             void SetCollisionMask(CollisionMask bits);
 
+            PhysicsServer& GetServer();
+
         private:
             UUID uuid;
             CollisionLayer collisionLayer;
             CollisionMask collisionMask;
+
     };
 }

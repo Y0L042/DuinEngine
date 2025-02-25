@@ -16,6 +16,8 @@ namespace duin {
         : public PhysXPhysicsBody, virtual public CharacterBody
     {
         public:
+            PhysXCharacterBody();
+            PhysXCharacterBody(CharacterBodyDesc desc);
              ~PhysXCharacterBody();
 
             Vector3 GetPosition() override;

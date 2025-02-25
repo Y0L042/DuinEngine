@@ -18,10 +18,15 @@
 #endif
 
 namespace duin {
+    /** Singleton variable */
+    std::unique_ptr<PHYSICS_SERVER> PhysicsServer::implServer;
+
     PhysicsServer& PhysicsServer::Get()
     {
-        static PHYSICS_SERVER physicsServer;
-        return physicsServer; 
+        if (implServer == nullptr) {
+            implServer = std::make_unique<PHYSICS_SERVER>();
+        }
+        return *implServer.get(); 
     }
 
     int PhysicsServer::CatchError(void *ptr, int errorCode)
