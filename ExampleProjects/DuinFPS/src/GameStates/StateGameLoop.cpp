@@ -67,6 +67,7 @@ StateGameLoop::~StateGameLoop()
 void StateGameLoop::State_Enter()
 {
     duin::PhysicsServer& pserver = duin::PhysicsServer::Get();
+    std::shared_ptr<duin::StaticBody> floor = duin::StaticBody::Create();
 
     // Load basic lighting shader
     shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
@@ -101,7 +102,7 @@ void StateGameLoop::State_Enter()
         .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
     };
     duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
-    std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create();
+    std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
     player = ecsManager.world.entity();
     player = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::PhysicsCharacterBody)

@@ -10,6 +10,7 @@
 #include <characterkinematic/PxControllerManager.h>
 #include <cooking/PxCooking.h>
 
+
 namespace duin {
     class PhysXPhysicsServer;
     class PhysXCharacterBody 
@@ -31,8 +32,14 @@ namespace duin {
             void OnCharacterHit(/*TODO*/) override;
             void OnObstacleHit(/*TODO*/) override;
 
+            int OnFloorShapeCast(double delta);
+
         private:
-            PhysXControllerHitReport pxControllerHitReport;
+            Vector3 currentVelocity;
+            double onFloorGrace = 0.1;
+            double timeWhenLastMoved;
+            double timeSinceOnFloor;
+            int isOnFloor;
 
             CharacterBodyDesc desc{
                 .height = 1.85f,
@@ -43,6 +50,7 @@ namespace duin {
                 .position = Vector3(0.0f, 1.85f / 2.0f, 0.0f),
                 .upDirection = Vector3(0.0f, 1.0f, 0.0f),
             };
+            PhysXControllerHitReport pxControllerHitReport;
 
             physx::PxControllerFilters pxFilters;
             physx::PxController *pxController = NULL;

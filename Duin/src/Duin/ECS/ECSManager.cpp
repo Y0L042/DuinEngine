@@ -100,7 +100,7 @@ namespace ECSPrefab {
 
 
 
-        PhysicsCharacterBody = world.prefab("CharacterBody3D")
+        PhysicsCharacterBody = world.prefab("CharacterBody")
             .is_a(ECSPrefab::Node3D)
             .add<ECSTag::PxKinematic>()
             .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })

@@ -14,18 +14,6 @@ namespace duin {
         public:
             static PhysXPhysicsServer& GetPxServer();
 
-            PhysXPhysicsServer();
-            ~PhysXPhysicsServer();
-
-            void Initialize() override;
-            void Clean() override;
-
-            void StepPhysics(double delta) override;
-
-            PhysXPhysicsServer(const PhysXPhysicsServer&) = delete;
-            PhysXPhysicsServer& operator=(const PhysXPhysicsServer&) = delete;
-
-        protected:
             physx::PxDefaultAllocator pxAllocatorCallback;
             physx::PxDefaultErrorCallback pxErrorCallback;
             physx::PxDefaultCpuDispatcher* pxDispatcher = NULL;
@@ -39,6 +27,20 @@ namespace duin {
             physx::PxMaterial* pxMaterial = NULL;
 
             physx::PxPvd* pxPvd = NULL;
+
+            PhysXPhysicsServer();
+            ~PhysXPhysicsServer();
+
+            void Initialize() override;
+            void Clean() override;
+
+            void StepPhysics(double delta) override;
+
+            PhysXPhysicsServer(const PhysXPhysicsServer&) = delete;
+            PhysXPhysicsServer& operator=(const PhysXPhysicsServer&) = delete;
+
+
+        protected:
 
     };
 }

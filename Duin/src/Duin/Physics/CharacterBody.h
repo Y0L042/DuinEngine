@@ -22,8 +22,9 @@ namespace duin {
         public:
             static std::shared_ptr<CharacterBody> Create();
             static std::shared_ptr<CharacterBody> Create(CharacterBodyDesc desc);
+
             CharacterBody() = default;
-            virtual ~CharacterBody() = default;
+            ~CharacterBody() = default;
 
             virtual Vector3 GetPosition() = 0;
             virtual Vector3 GetFootPosition() = 0;

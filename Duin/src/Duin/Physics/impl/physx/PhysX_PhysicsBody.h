@@ -10,7 +10,6 @@ namespace duin {
     {
         public:
 
-        private:
-            PhysXControllerHitReport hitReport;
+        protected:
     };
 }
