@@ -10,9 +10,10 @@ var searchData=
   ['physxcontrollerhitreport_7',['PhysXControllerHitReport',['../classduin_1_1PhysXControllerHitReport.html',1,'duin']]],
   ['physxphysicsbody_8',['PhysXPhysicsBody',['../classduin_1_1PhysXPhysicsBody.html',1,'duin']]],
   ['physxphysicsserver_9',['PhysXPhysicsServer',['../classduin_1_1PhysXPhysicsServer.html',1,'duin']]],
-  ['position2d_10',['Position2D',['../structduin_1_1ECSComponent_1_1Position2D.html',1,'duin::ECSComponent']]],
-  ['position3d_11',['Position3D',['../structduin_1_1ECSComponent_1_1Position3D.html',1,'duin::ECSComponent']]],
-  ['pxdynamic_12',['PxDynamic',['../structduin_1_1ECSTag_1_1PxDynamic.html',1,'duin::ECSTag']]],
-  ['pxkinematic_13',['PxKinematic',['../structduin_1_1ECSTag_1_1PxKinematic.html',1,'duin::ECSTag']]],
-  ['pxstatic_14',['PxStatic',['../structduin_1_1ECSTag_1_1PxStatic.html',1,'duin::ECSTag']]]
+  ['physxstaticbody_10',['PhysXStaticBody',['../classduin_1_1PhysXStaticBody.html',1,'duin']]],
+  ['position2d_11',['Position2D',['../structduin_1_1ECSComponent_1_1Position2D.html',1,'duin::ECSComponent']]],
+  ['position3d_12',['Position3D',['../structduin_1_1ECSComponent_1_1Position3D.html',1,'duin::ECSComponent']]],
+  ['pxdynamic_13',['PxDynamic',['../structduin_1_1ECSTag_1_1PxDynamic.html',1,'duin::ECSTag']]],
+  ['pxkinematic_14',['PxKinematic',['../structduin_1_1ECSTag_1_1PxKinematic.html',1,'duin::ECSTag']]],
+  ['pxstatic_15',['PxStatic',['../structduin_1_1ECSTag_1_1PxStatic.html',1,'duin::ECSTag']]]
 ];

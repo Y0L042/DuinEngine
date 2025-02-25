@@ -10,5 +10,7 @@ var dir_4b0af77f68463f918569c7c48d16fd49 =
     [ "PhysicsIncludes.h", "PhysicsIncludes_8h_source.html", null ],
     [ "PhysicsMaterial.h", "PhysicsMaterial_8h_source.html", null ],
     [ "PhysicsServer.cpp", "PhysicsServer_8cpp_source.html", null ],
-    [ "PhysicsServer.h", "PhysicsServer_8h_source.html", null ]
+    [ "PhysicsServer.h", "PhysicsServer_8h_source.html", null ],
+    [ "StaticBody.cpp", "StaticBody_8cpp_source.html", null ],
+    [ "StaticBody.h", "StaticBody_8h_source.html", null ]
 ];

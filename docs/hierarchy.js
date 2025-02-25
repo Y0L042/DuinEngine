@@ -11,14 +11,18 @@ var hierarchy =
     [ "duin::CollisionObject", "classduin_1_1CollisionObject.html", [
       [ "duin::PhysXCollisionObject", "classduin_1_1PhysXCollisionObject.html", [
         [ "duin::PhysXPhysicsBody", "classduin_1_1PhysXPhysicsBody.html", [
-          [ "duin::PhysXCharacterBody", "classduin_1_1PhysXCharacterBody.html", null ]
+          [ "duin::PhysXCharacterBody", "classduin_1_1PhysXCharacterBody.html", null ],
+          [ "duin::PhysXStaticBody", "classduin_1_1PhysXStaticBody.html", null ]
         ] ]
       ] ],
       [ "duin::PhysicsBody", "classduin_1_1PhysicsBody.html", [
         [ "duin::CharacterBody", "classduin_1_1CharacterBody.html", [
           [ "duin::PhysXCharacterBody", "classduin_1_1PhysXCharacterBody.html", null ]
         ] ],
-        [ "duin::PhysXPhysicsBody", "classduin_1_1PhysXPhysicsBody.html", null ]
+        [ "duin::PhysXPhysicsBody", "classduin_1_1PhysXPhysicsBody.html", null ],
+        [ "duin::StaticBody", "classduin_1_1StaticBody.html", [
+          [ "duin::PhysXStaticBody", "classduin_1_1PhysXStaticBody.html", null ]
+        ] ]
       ] ]
     ] ],
     [ "duin::ECSTag::CreateExternalRef", "structduin_1_1ECSTag_1_1CreateExternalRef.html", null ],

@@ -5,5 +5,6 @@ var searchData=
   ['scenemanager_2',['SceneManager',['../classduin_1_1SceneManager.html',1,'duin']]],
   ['setcameraasactive_3',['SetCameraAsActive',['../structduin_1_1ECSTag_1_1SetCameraAsActive.html',1,'duin::ECSTag']]],
   ['sm_5fmachine_4',['SM_Machine',['../structSM__Machine.html',1,'']]],
-  ['sm_5fstate_5',['SM_State',['../structSM__State.html',1,'']]]
+  ['sm_5fstate_5',['SM_State',['../structSM__State.html',1,'']]],
+  ['staticbody_6',['StaticBody',['../classduin_1_1StaticBody.html',1,'duin']]]
 ];

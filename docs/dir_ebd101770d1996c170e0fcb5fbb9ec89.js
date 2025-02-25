@@ -10,5 +10,7 @@ var dir_ebd101770d1996c170e0fcb5fbb9ec89 =
     [ "PhysX_PhysicsBody.cpp", "PhysX__PhysicsBody_8cpp_source.html", null ],
     [ "PhysX_PhysicsBody.h", "PhysX__PhysicsBody_8h_source.html", null ],
     [ "PhysX_PhysicsServer.cpp", "PhysX__PhysicsServer_8cpp_source.html", null ],
-    [ "PhysX_PhysicsServer.h", "PhysX__PhysicsServer_8h_source.html", null ]
+    [ "PhysX_PhysicsServer.h", "PhysX__PhysicsServer_8h_source.html", null ],
+    [ "PhysX_StaticBody.cpp", "PhysX__StaticBody_8cpp_source.html", null ],
+    [ "PhysX_StaticBody.h", "PhysX__StaticBody_8h_source.html", null ]
 ];
