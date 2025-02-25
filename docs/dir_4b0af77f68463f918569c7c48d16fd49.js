@@ -4,6 +4,7 @@ var dir_4b0af77f68463f918569c7c48d16fd49 =
     [ "CharacterBody.cpp", "CharacterBody_8cpp_source.html", null ],
     [ "CharacterBody.h", "CharacterBody_8h_source.html", null ],
     [ "CollisionMeta.h", "CollisionMeta_8h_source.html", null ],
+    [ "CollisionObject.cpp", "CollisionObject_8cpp_source.html", null ],
     [ "CollisionObject.h", "CollisionObject_8h_source.html", null ],
     [ "PhysicsBody.h", "PhysicsBody_8h_source.html", null ],
     [ "PhysicsIncludes.h", "PhysicsIncludes_8h_source.html", null ],
