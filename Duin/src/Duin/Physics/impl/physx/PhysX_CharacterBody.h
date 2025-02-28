@@ -21,6 +21,7 @@ namespace duin {
             PhysXCharacterBody(CharacterBodyDesc desc);
              ~PhysXCharacterBody();
 
+            void SetCollisionShape() override;
             Vector3 GetPosition() override;
             Vector3 GetFootPosition() override;
             Vector3 GetCurrentVelocity() override;

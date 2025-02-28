@@ -255,17 +255,20 @@ void StateGameLoop::State_HandleInput()
     }
 
     int isOnFloor = 0;
-    //int isOnFloor = player.get<CharacterBodyComponent>()->characterBody->IsOnFloor();
-    //if (isOnFloor) {
-    //    player.add<OnGroundTag>();
-    //    player.remove<InAirTag>();
-    //    debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
-    //}
-    //else {
-    //    player.remove<OnGroundTag>();
-    //    player.add<InAirTag>();
-    //    debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
-    //}
+    const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
+    if (cbc) {
+        isOnFloor = cbc->characterBody->IsOnFloor();
+        if (isOnFloor) {
+            player.add<OnGroundTag>();
+            player.remove<InAirTag>();
+            debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
+        }
+        else {
+            player.remove<OnGroundTag>();
+            player.add<InAirTag>();
+            debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
+        }
+    }
 
     if (IsKeyPressed(KEY_SPACE) && isOnFloor) {
         player.add<JumpTag>();

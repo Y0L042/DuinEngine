@@ -38,6 +38,11 @@ namespace duin {
         // TODO clean physx objects
     }
 
+    void PhysXCharacterBody::SetCollisionShape()
+    {
+
+    }
+
     Vector3 PhysXCharacterBody::GetPosition()
     {
         return Vector3(pxController->getPosition());

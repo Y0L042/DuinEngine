@@ -2,6 +2,7 @@
 
 #include "PhysX_PhysicsBody.h"
 #include "Duin/Physics/StaticBody.h"
+#include "Duin/Physics/PhysicsMaterial.h"
 
 namespace duin {
     class PhysXStaticBody
@@ -9,7 +10,10 @@ namespace duin {
     {
         public:
             PhysXStaticBody();
+            PhysXStaticBody(PhysicsMaterial material);
             ~PhysXStaticBody();
+
+            void SetCollisionShape() override;
 
         private:
             physx::PxRigidStatic *pxActor = NULL;

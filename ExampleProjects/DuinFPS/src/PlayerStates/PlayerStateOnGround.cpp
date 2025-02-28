@@ -37,11 +37,14 @@ void PlayerStateOnGround::State_Update(double delta)
 
 void PlayerStateOnGround::State_PhysicsUpdate(double delta)
 {
-    //int isOnFloor = player.get<CharacterBody3DComponent>()->characterBody->IsOnFloor();
-    //if (!isOnFloor) {
-    //    playerSM.SwitchState<PlayerStateInAir>();
-    //    return;
-    //}
+    const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
+    if (cbc) {
+        int isOnFloor = cbc->characterBody->IsOnFloor();
+        if (!isOnFloor) {
+           playerSM.SwitchState<PlayerStateInAir>();
+           return;
+        }
+    }
 
     onGroundSM.ExecutePhysicsUpdate(delta);
 }

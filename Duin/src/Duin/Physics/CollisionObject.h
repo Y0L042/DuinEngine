@@ -1,13 +1,16 @@
 #pragma once
 
 #include "Duin/Core/Utils/UUID.h"
-#include "./CollisionMeta.h"
+#include "CollisionMeta.h"
+#include "CollisionShapes.h"
 
 namespace duin {
     class PhysicsServer;
     class CollisionObject
     {
         public:
+            virtual void SetCollisionShape() = 0;
+
             const UUID GetUUID();
 
             CollisionLayer GetCollisionLayer();
