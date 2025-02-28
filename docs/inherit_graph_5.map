@@ -1,3 +1,35 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classduin_1_1DebugConsole.html" title=" " alt="" coords="5,5,157,31"/>
+<area shape="rect" id="Node000000" href="$classduin_1_1CollisionShape.html" title=" " alt="" coords="5,153,160,179"/>
+<area shape="rect" id="Node000001" href="$classduin_1_1BoxShape.html" title=" " alt="" coords="243,5,366,31"/>
+<area shape="poly" id="edge11_Node000000_Node000001" title=" " alt="" coords="99,141,144,89,174,62,207,40,242,26,244,30,209,44,177,67,148,93,103,144"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1CapsuleShape.html" title=" " alt="" coords="229,55,380,80"/>
+<area shape="poly" id="edge13_Node000000_Node000005" title=" " alt="" coords="111,143,155,115,207,89,241,78,242,83,209,94,158,120,114,148"/>
+<area shape="rect" id="Node000007" href="$classduin_1_1ConvexMeshShape.html" title=" " alt="" coords="213,104,396,129"/>
+<area shape="poly" id="edge15_Node000000_Node000007" title=" " alt="" coords="153,148,246,127,247,132,154,153"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1PhysXCollisionShape.html" title=" " alt="" coords="208,153,401,179"/>
+<area shape="poly" id="edge17_Node000000_Node000003" title=" " alt="" coords="174,163,208,163,208,169,174,169"/>
+<area shape="rect" id="Node000009" href="$classduin_1_1PlaneShape.html" title=" " alt="" coords="237,203,372,228"/>
+<area shape="poly" id="edge24_Node000000_Node000009" title=" " alt="" coords="154,179,247,200,246,205,153,184"/>
+<area shape="rect" id="Node000011" href="$classduin_1_1SphereShape.html" title=" " alt="" coords="233,252,376,277"/>
+<area shape="poly" id="edge26_Node000000_Node000011" title=" " alt="" coords="115,184,158,211,209,237,246,249,244,254,207,242,156,216,112,189"/>
+<area shape="rect" id="Node000013" href="$classduin_1_1TriangleMeshShape.html" title=" " alt="" coords="213,301,397,327"/>
+<area shape="poly" id="edge28_Node000000_Node000013" title=" " alt="" coords="104,188,148,238,177,264,209,286,238,299,236,304,207,291,174,268,144,242,100,191"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1PhysXBoxShape.html" title=" " alt="" coords="480,12,643,37"/>
+<area shape="poly" id="edge12_Node000001_Node000002" title=" " alt="" coords="380,17,480,20,480,25,380,23"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1PhysXCapsuleShape.html" title=" " alt="" coords="467,68,656,93"/>
+<area shape="poly" id="edge14_Node000005_Node000004" title=" " alt="" coords="394,69,466,73,466,78,394,75"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1PhysXConvexMeshShape.html" title=" " alt="" coords="451,129,672,155"/>
+<area shape="poly" id="edge16_Node000007_Node000006" title=" " alt="" coords="410,124,451,128,450,134,409,130"/>
+<area shape="poly" id="edge18_Node000003_Node000002" title=" " alt="" coords="390,145,400,139,416,119,423,97,430,75,448,53,482,35,484,40,451,57,435,78,428,99,421,121,403,143,393,149"/>
+<area shape="poly" id="edge19_Node000003_Node000004" title=" " alt="" coords="374,147,400,138,448,114,515,91,517,96,450,119,402,143,376,152"/>
+<area shape="poly" id="edge20_Node000003_Node000006" title=" " alt="" coords="415,153,450,150,451,155,415,158"/>
+<area shape="rect" id="Node000008" href="$classduin_1_1PhysXPlaneShape.html" title=" " alt="" coords="474,203,649,228"/>
+<area shape="poly" id="edge21_Node000003_Node000008" title=" " alt="" coords="385,179,495,200,494,205,384,184"/>
+<area shape="rect" id="Node000010" href="$classduin_1_1PhysXSphereShape.html" title=" " alt="" coords="470,252,653,277"/>
+<area shape="poly" id="edge22_Node000003_Node000010" title=" " alt="" coords="390,181,403,188,418,200,427,213,436,226,451,237,480,250,478,254,448,242,432,229,423,216,414,204,400,192,387,186"/>
+<area shape="rect" id="Node000012" href="$classduin_1_1PhysXTriangleMeshShape.html" title=" " alt="" coords="449,301,673,327"/>
+<area shape="poly" id="edge23_Node000003_Node000012" title=" " alt="" coords="396,183,403,188,415,200,422,213,428,239,434,264,440,275,451,287,472,299,470,304,448,291,436,279,429,266,423,240,417,215,411,203,400,192,393,187"/>
+<area shape="poly" id="edge25_Node000009_Node000008" title=" " alt="" coords="386,213,474,213,474,218,386,218"/>
+<area shape="poly" id="edge27_Node000011_Node000010" title=" " alt="" coords="390,262,470,262,470,267,390,267"/>
+<area shape="poly" id="edge29_Node000013_Node000012" title=" " alt="" coords="411,311,449,311,449,317,411,317"/>
 </map>

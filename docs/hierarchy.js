@@ -25,6 +25,34 @@ var hierarchy =
         ] ]
       ] ]
     ] ],
+    [ "duin::CollisionShape", "classduin_1_1CollisionShape.html", [
+      [ "duin::BoxShape", "classduin_1_1BoxShape.html", [
+        [ "duin::PhysXBoxShape", "classduin_1_1PhysXBoxShape.html", null ]
+      ] ],
+      [ "duin::CapsuleShape", "classduin_1_1CapsuleShape.html", [
+        [ "duin::PhysXCapsuleShape", "classduin_1_1PhysXCapsuleShape.html", null ]
+      ] ],
+      [ "duin::ConvexMeshShape", "classduin_1_1ConvexMeshShape.html", [
+        [ "duin::PhysXConvexMeshShape", "classduin_1_1PhysXConvexMeshShape.html", null ]
+      ] ],
+      [ "duin::PhysXCollisionShape", "classduin_1_1PhysXCollisionShape.html", [
+        [ "duin::PhysXBoxShape", "classduin_1_1PhysXBoxShape.html", null ],
+        [ "duin::PhysXCapsuleShape", "classduin_1_1PhysXCapsuleShape.html", null ],
+        [ "duin::PhysXConvexMeshShape", "classduin_1_1PhysXConvexMeshShape.html", null ],
+        [ "duin::PhysXPlaneShape", "classduin_1_1PhysXPlaneShape.html", null ],
+        [ "duin::PhysXSphereShape", "classduin_1_1PhysXSphereShape.html", null ],
+        [ "duin::PhysXTriangleMeshShape", "classduin_1_1PhysXTriangleMeshShape.html", null ]
+      ] ],
+      [ "duin::PlaneShape", "classduin_1_1PlaneShape.html", [
+        [ "duin::PhysXPlaneShape", "classduin_1_1PhysXPlaneShape.html", null ]
+      ] ],
+      [ "duin::SphereShape", "classduin_1_1SphereShape.html", [
+        [ "duin::PhysXSphereShape", "classduin_1_1PhysXSphereShape.html", null ]
+      ] ],
+      [ "duin::TriangleMeshShape", "classduin_1_1TriangleMeshShape.html", [
+        [ "duin::PhysXTriangleMeshShape", "classduin_1_1PhysXTriangleMeshShape.html", null ]
+      ] ]
+    ] ],
     [ "duin::ECSTag::CreateExternalRef", "structduin_1_1ECSTag_1_1CreateExternalRef.html", null ],
     [ "duin::ECSComponent::CubeComponent", "structduin_1_1ECSComponent_1_1CubeComponent.html", null ],
     [ "spdlog::custom_flag_formatter", null, [

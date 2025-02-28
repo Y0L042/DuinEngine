@@ -1,0 +1,12 @@
+<map id="duin::PhysXPlaneShape" name="duin::PhysXPlaneShape">
+<area shape="rect" id="Node000001" title=" " alt="" coords="108,168,283,193"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1PhysXCollisionShape.html" title=" " alt="" coords="5,93,199,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,125,182,165,178,170,126,129"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1CollisionShape.html" title=" " alt="" coords="50,5,205,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,45,108,94,103,92,117,43"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1PlaneShape.html" title=" " alt="" coords="223,93,357,119"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="162,35,269,91,267,95,160,39"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="265,129,212,170,209,165,262,125"/>
+<area shape="rect" id="Node000005" href="$structduin_1_1Vector3.html" title=" " alt="" coords="237,5,343,31"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="293,45,293,93,287,93,287,45"/>
+</map>

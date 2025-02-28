@@ -4,6 +4,8 @@ var dir_ebd101770d1996c170e0fcb5fbb9ec89 =
     [ "PhysX_CharacterBody.h", "PhysX__CharacterBody_8h_source.html", null ],
     [ "PhysX_CollisionObject.cpp", "PhysX__CollisionObject_8cpp_source.html", null ],
     [ "PhysX_CollisionObject.h", "PhysX__CollisionObject_8h_source.html", null ],
+    [ "PhysX_CollisionShapes.cpp", "PhysX__CollisionShapes_8cpp_source.html", null ],
+    [ "PhysX_CollisionShapes.h", "PhysX__CollisionShapes_8h_source.html", null ],
     [ "PhysX_ControllerHitReport.cpp", "PhysX__ControllerHitReport_8cpp_source.html", null ],
     [ "PhysX_ControllerHitReport.h", "PhysX__ControllerHitReport_8h_source.html", null ],
     [ "PhysX_Includes.h", "PhysX__Includes_8h_source.html", null ],
