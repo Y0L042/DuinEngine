@@ -1,9 +1,10 @@
 #include "dnpch.h"
+#include "PhysX_PhysicsServer.h"
 
 #include <iostream>
 
+#include "PhysX_CollisionShapes.h"
 #include "Duin/Core/Debug/DNLog.h"
-#include "PhysX_PhysicsServer.h"
 
 namespace duin {
     PhysXPhysicsServer& PhysXPhysicsServer::GetPxServer()
@@ -98,5 +99,22 @@ namespace duin {
     {
         pxScene->simulate((float)delta);
         pxScene->fetchResults(true);
+    }
+
+
+    std::shared_ptr<CollisionShape> PhysXPhysicsServer::CreateCollisionShape()
+    {
+        std::shared_ptr<PhysXCollisionShape> shape = std::make_shared<PhysXCollisionShape>();
+        shapesMap[shape->GetUUID()] = shape;
+        return shape;
+    }
+
+    std::shared_ptr<PhysXCollisionShape> PhysXPhysicsServer::GetPhysXCollisionShape(UUID uuid)
+    {
+        if (shapesMap[uuid]) {
+            return shapesMap[uuid];
+        }
+
+        return nullptr;
     }
 }

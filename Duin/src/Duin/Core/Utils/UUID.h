@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <cstdint>
 
 namespace duin {
 
@@ -35,8 +36,7 @@ private:
 namespace std 
 {
 	template <>
-	struct hash<duin::UUID>
-	{
+	struct hash<duin::UUID> {
 		std::size_t operator()(const duin::UUID& uuid) const
 		{
 			return std::hash<uint64_t>()(static_cast<uint64_t>(uuid));

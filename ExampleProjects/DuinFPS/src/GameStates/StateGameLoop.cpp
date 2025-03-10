@@ -170,7 +170,11 @@ void StateGameLoop::State_Enter()
         ;
 
 
-    // duin::PhysicsStaticPlane3D ground(pxServer);
+    // Create CubeGeometry
+    duin::BoxGeometry boxGeometry(2, 2, 2);
+    // Create CollisionShape(CubeGeometry)
+    // Create PhysicsObject(CollisionShape)
+
     ecsManager.ActivateCameraEntity(debugCamera);
 
     duin::Vector3 cubePos({ 10, 2, 10 });

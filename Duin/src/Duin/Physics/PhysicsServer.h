@@ -23,6 +23,7 @@ namespace duin {
 
     class UUID;
     class CollisionObject;
+    class CollisionShape;
     class CharacterBody;
     class PHYSICS_SERVER;
     class PhysicsServer
@@ -38,6 +39,7 @@ namespace duin {
             virtual void Clean() = 0;
 
             virtual void StepPhysics(double delta) = 0;
+            virtual std::shared_ptr<CollisionShape> CreateCollisionShape() = 0;
 
        protected:
             static std::unique_ptr<PHYSICS_SERVER> implServer;
