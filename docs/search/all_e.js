@@ -7,6 +7,6 @@ var searchData=
   ['shelved_4',['Shelved',['../md_docs_2TODO.html#autotoc_md6',1,'']]],
   ['sm_5fmachine_5',['SM_Machine',['../structSM__Machine.html',1,'']]],
   ['sm_5fstate_6',['SM_State',['../structSM__State.html',1,'']]],
-  ['sphereshape_7',['SphereShape',['../classduin_1_1SphereShape.html',1,'duin']]],
+  ['spheregeometry_7',['SphereGeometry',['../classduin_1_1SphereGeometry.html',1,'duin']]],
   ['staticbody_8',['StaticBody',['../classduin_1_1StaticBody.html',1,'duin']]]
 ];

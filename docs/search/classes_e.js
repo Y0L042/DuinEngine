@@ -6,6 +6,6 @@ var searchData=
   ['setcameraasactive_3',['SetCameraAsActive',['../structduin_1_1ECSTag_1_1SetCameraAsActive.html',1,'duin::ECSTag']]],
   ['sm_5fmachine_4',['SM_Machine',['../structSM__Machine.html',1,'']]],
   ['sm_5fstate_5',['SM_State',['../structSM__State.html',1,'']]],
-  ['sphereshape_6',['SphereShape',['../classduin_1_1SphereShape.html',1,'duin']]],
+  ['spheregeometry_6',['SphereGeometry',['../classduin_1_1SphereGeometry.html',1,'duin']]],
   ['staticbody_7',['StaticBody',['../classduin_1_1StaticBody.html',1,'duin']]]
 ];

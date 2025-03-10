@@ -112,6 +112,7 @@ $(document).ready(function(){initNavTree('classduin_1_1PhysXPhysicsServer.html',
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classduin_1_1PhysXPhysicsServer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">duin::PhysXPhysicsServer Class Reference</div></div>
 </div><!--header-->
@@ -135,6 +136,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af23ea4df78f9e3c3a543ad9d20e8caf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0940d14983acda60df950da7daf2a787" id="r_a0940d14983acda60df950da7daf2a787"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysXPhysicsServer.html#a0940d14983acda60df950da7daf2a787">StepPhysics</a> (double delta) override</td></tr>
 <tr class="separator:a0940d14983acda60df950da7daf2a787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94436d9e303b0abae41c938acb56c11f" id="r_a94436d9e303b0abae41c938acb56c11f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysXPhysicsServer.html#a94436d9e303b0abae41c938acb56c11f">CreateCollisionShape</a> () override</td></tr>
+<tr class="separator:a94436d9e303b0abae41c938acb56c11f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137731250f7ae9d714016479e602ab76" id="r_a137731250f7ae9d714016479e602ab76"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1PhysXCollisionShape.html">PhysXCollisionShape</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysXPhysicsServer.html#a137731250f7ae9d714016479e602ab76">GetPhysXCollisionShape</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:a137731250f7ae9d714016479e602ab76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05c28511665debb5371636e53edb5c78" id="r_a05c28511665debb5371636e53edb5c78"><td class="memItemLeft" align="right" valign="top"><a id="a05c28511665debb5371636e53edb5c78" name="a05c28511665debb5371636e53edb5c78"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>PhysXPhysicsServer</b> (const <a class="el" href="classduin_1_1PhysXPhysicsServer.html">PhysXPhysicsServer</a> &amp;)=delete</td></tr>
 <tr class="separator:a05c28511665debb5371636e53edb5c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,6 +180,11 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aaa2f48e3fb78b45b5f73691457f6a862" id="r_aaa2f48e3fb78b45b5f73691457f6a862"><td class="memItemLeft" align="right" valign="top">physx::PxPvd *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysXPhysicsServer.html#aaa2f48e3fb78b45b5f73691457f6a862">pxPvd</a> = NULL</td></tr>
 <tr class="separator:aaa2f48e3fb78b45b5f73691457f6a862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:af6246c68b82d02b12519507bac5de255" id="r_af6246c68b82d02b12519507bac5de255"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="classduin_1_1UUID.html">UUID</a>, std::shared_ptr&lt; <a class="el" href="classduin_1_1PhysXCollisionShape.html">PhysXCollisionShape</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysXPhysicsServer.html#af6246c68b82d02b12519507bac5de255">shapesMap</a></td></tr>
+<tr class="separator:af6246c68b82d02b12519507bac5de255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_static_methods_classduin_1_1PhysicsServer"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classduin_1_1PhysicsServer')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classduin_1_1PhysicsServer.html">duin::PhysicsServer</a></td></tr>
@@ -186,7 +196,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00012">12</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00017">17</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa8de264a2e47736b3dece4911047ed9c" name="aa8de264a2e47736b3dece4911047ed9c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa8de264a2e47736b3dece4911047ed9c">&#9670;&#160;</a></span>PhysXPhysicsServer()</h2>
@@ -203,7 +213,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00014">14</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00015">15</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,7 +232,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00024">24</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00025">25</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -252,7 +262,56 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classduin_1_1PhysicsServer.html">duin::PhysicsServer</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00084">84</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00085">85</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a94436d9e303b0abae41c938acb56c11f" name="a94436d9e303b0abae41c938acb56c11f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94436d9e303b0abae41c938acb56c11f">&#9670;&#160;</a></span>CreateCollisionShape()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> &gt; duin::PhysXPhysicsServer::CreateCollisionShape </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classduin_1_1PhysicsServer.html">duin::PhysicsServer</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00105">105</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a137731250f7ae9d714016479e602ab76" name="a137731250f7ae9d714016479e602ab76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a137731250f7ae9d714016479e602ab76">&#9670;&#160;</a></span>GetPhysXCollisionShape()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1PhysXCollisionShape.html">PhysXCollisionShape</a> &gt; duin::PhysXPhysicsServer::GetPhysXCollisionShape </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td>
+          <td class="paramname"><em>uuid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00112">112</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -279,7 +338,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00009">9</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00010">10</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -308,7 +367,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classduin_1_1PhysicsServer.html">duin::PhysicsServer</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00029">29</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00030">30</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -338,7 +397,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classduin_1_1PhysicsServer.html">duin::PhysicsServer</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00097">97</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8cpp_source.html#l00098">98</a> of file <a class="el" href="PhysX__PhysicsServer_8cpp_source.html">PhysX_PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -355,7 +414,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00017">17</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00022">22</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -371,7 +430,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00026">26</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00029">29</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -387,7 +446,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00019">19</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00024">24</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -403,7 +462,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00018">18</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00023">23</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -419,7 +478,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00022">22</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00026">26</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -435,7 +494,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00027">27</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00030">30</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -451,7 +510,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00023">23</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00027">27</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -467,7 +526,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00029">29</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00031">31</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -483,7 +542,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00025">25</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00028">28</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>
@@ -499,7 +558,31 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00021">21</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00025">25</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="af6246c68b82d02b12519507bac5de255" name="af6246c68b82d02b12519507bac5de255"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6246c68b82d02b12519507bac5de255">&#9670;&#160;</a></span>shapesMap</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="classduin_1_1UUID.html">UUID</a>, std::shared_ptr&lt;<a class="el" href="classduin_1_1PhysXCollisionShape.html">PhysXCollisionShape</a>&gt; &gt; duin::PhysXPhysicsServer::shapesMap</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysX__PhysicsServer_8h_source.html#l00047">47</a> of file <a class="el" href="PhysX__PhysicsServer_8h_source.html">PhysX_PhysicsServer.h</a>.</p>
 
 </div>
 </div>

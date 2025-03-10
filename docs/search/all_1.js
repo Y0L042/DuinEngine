@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boxshape_0',['BoxShape',['../classduin_1_1BoxShape.html',1,'duin']]]
+  ['boxgeometry_0',['BoxGeometry',['../classduin_1_1BoxGeometry.html',1,'duin']]]
 ];

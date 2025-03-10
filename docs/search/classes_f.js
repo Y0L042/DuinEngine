@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['trianglemeshshape_0',['TriangleMeshShape',['../classduin_1_1TriangleMeshShape.html',1,'duin']]]
+  ['trianglemeshgeometry_0',['TriangleMeshGeometry',['../classduin_1_1TriangleMeshGeometry.html',1,'duin']]]
 ];

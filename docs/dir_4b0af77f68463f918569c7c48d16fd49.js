@@ -3,6 +3,8 @@ var dir_4b0af77f68463f918569c7c48d16fd49 =
     [ "impl", "dir_edd0ec726c6831427e60f8904ca7f47a.html", "dir_edd0ec726c6831427e60f8904ca7f47a" ],
     [ "CharacterBody.cpp", "CharacterBody_8cpp_source.html", null ],
     [ "CharacterBody.h", "CharacterBody_8h_source.html", null ],
+    [ "CollisionGeometry.cpp", "CollisionGeometry_8cpp_source.html", null ],
+    [ "CollisionGeometry.h", "CollisionGeometry_8h_source.html", null ],
     [ "CollisionMeta.h", "CollisionMeta_8h_source.html", null ],
     [ "CollisionObject.cpp", "CollisionObject_8cpp_source.html", null ],
     [ "CollisionObject.h", "CollisionObject_8h_source.html", null ],
