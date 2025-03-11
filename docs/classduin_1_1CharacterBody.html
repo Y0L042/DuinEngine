@@ -112,7 +112,7 @@ $(document).ready(function(){initNavTree('classduin_1_1CharacterBody.html',''); 
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classduin_1_1CharacterBody-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::CharacterBody Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">duin::CharacterBody Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
@@ -121,7 +121,7 @@ Collaboration diagram for duin::CharacterBody:</div>
 <div class="center"><img src="classduin_1_1CharacterBody__coll__graph.png" border="0" usemap="#aduin_1_1CharacterBody_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1CharacterBody_coll__map" id="aduin_1_1CharacterBody_coll__map">
 <area shape="rect" title=" " alt="" coords="6,152,161,177"/>
-<area shape="rect" href="classduin_1_1PhysicsBody.html" title=" " alt="" coords="13,79,153,104"/>
+<area shape="rect" href="classduin_1_1PhysicsObject.html" title=" " alt="" coords="9,79,158,104"/>
 <area shape="poly" title=" " alt="" coords="86,118,86,152,81,152,81,118"/>
 <area shape="rect" href="classduin_1_1CollisionObject.html" title=" " alt="" coords="5,5,161,31"/>
 <area shape="poly" title=" " alt="" coords="86,44,86,79,81,79,81,44"/>
@@ -130,30 +130,28 @@ Collaboration diagram for duin::CharacterBody:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac155c92af211edb66ba84766bf8b9215" id="r_ac155c92af211edb66ba84766bf8b9215"><td class="memItemLeft" align="right" valign="top"><a id="ac155c92af211edb66ba84766bf8b9215" name="ac155c92af211edb66ba84766bf8b9215"></a>
-virtual <a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetPosition</b> ()=0</td></tr>
-<tr class="separator:ac155c92af211edb66ba84766bf8b9215"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4beb5e85cb0a6d5214fd864865d06db2" id="r_a4beb5e85cb0a6d5214fd864865d06db2"><td class="memItemLeft" align="right" valign="top"><a id="a4beb5e85cb0a6d5214fd864865d06db2" name="a4beb5e85cb0a6d5214fd864865d06db2"></a>
-virtual <a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetFootPosition</b> ()=0</td></tr>
-<tr class="separator:a4beb5e85cb0a6d5214fd864865d06db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4f45af31ab344f5c5328343edc5b911" id="r_ae4f45af31ab344f5c5328343edc5b911"><td class="memItemLeft" align="right" valign="top"><a id="ae4f45af31ab344f5c5328343edc5b911" name="ae4f45af31ab344f5c5328343edc5b911"></a>
-virtual <a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetCurrentVelocity</b> ()=0</td></tr>
-<tr class="separator:ae4f45af31ab344f5c5328343edc5b911"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b98f4f1bd8c435e7bd3b62cd7105d66" id="r_a7b98f4f1bd8c435e7bd3b62cd7105d66"><td class="memItemLeft" align="right" valign="top"><a id="a7b98f4f1bd8c435e7bd3b62cd7105d66" name="a7b98f4f1bd8c435e7bd3b62cd7105d66"></a>
-virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>IsOnFloor</b> ()=0</td></tr>
-<tr class="separator:a7b98f4f1bd8c435e7bd3b62cd7105d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9dae5fc18ce2ad99108b6e033f947c9" id="r_aa9dae5fc18ce2ad99108b6e033f947c9"><td class="memItemLeft" align="right" valign="top"><a id="aa9dae5fc18ce2ad99108b6e033f947c9" name="aa9dae5fc18ce2ad99108b6e033f947c9"></a>
-virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>IsOnFloorOnly</b> ()=0</td></tr>
-<tr class="separator:aa9dae5fc18ce2ad99108b6e033f947c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a551d21c86712ab819afcab369019bd05" id="r_a551d21c86712ab819afcab369019bd05"><td class="memItemLeft" align="right" valign="top"><a id="a551d21c86712ab819afcab369019bd05" name="a551d21c86712ab819afcab369019bd05"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Move</b> (<a class="el" href="structduin_1_1Vector3.html">Vector3</a> displacement, double delta)=0</td></tr>
-<tr class="separator:a551d21c86712ab819afcab369019bd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ef86581dd704ec1aee49577da30beee" id="r_a9ef86581dd704ec1aee49577da30beee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#a9ef86581dd704ec1aee49577da30beee">OnShapeHit</a> ()</td></tr>
-<tr class="separator:a9ef86581dd704ec1aee49577da30beee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4f64be08f2c994203f52c428b345272" id="r_ac4f64be08f2c994203f52c428b345272"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ac4f64be08f2c994203f52c428b345272">OnCharacterHit</a> ()</td></tr>
-<tr class="separator:ac4f64be08f2c994203f52c428b345272"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ced4bfa3e37c9c2319cc0910b5e9d9e" id="r_a4ced4bfa3e37c9c2319cc0910b5e9d9e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#a4ced4bfa3e37c9c2319cc0910b5e9d9e">OnObstacleHit</a> ()</td></tr>
-<tr class="separator:a4ced4bfa3e37c9c2319cc0910b5e9d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab79030375baa19bbc50f41251d87a9b7" id="r_ab79030375baa19bbc50f41251d87a9b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ab79030375baa19bbc50f41251d87a9b7">CharacterBody</a> (<a class="el" href="structduin_1_1CharacterBodyDesc.html">CharacterBodyDesc</a> desc)</td></tr>
+<tr class="separator:ab79030375baa19bbc50f41251d87a9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ccd00bebf3a1af0e15e7d5660312391" id="r_a0ccd00bebf3a1af0e15e7d5660312391"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#a0ccd00bebf3a1af0e15e7d5660312391">GetPosition</a> ()</td></tr>
+<tr class="separator:a0ccd00bebf3a1af0e15e7d5660312391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30e66a26a8bcfbf644db7141e2179962" id="r_a30e66a26a8bcfbf644db7141e2179962"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#a30e66a26a8bcfbf644db7141e2179962">GetFootPosition</a> ()</td></tr>
+<tr class="separator:a30e66a26a8bcfbf644db7141e2179962"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6599e7bdefe74d38f915ade4de77f939" id="r_a6599e7bdefe74d38f915ade4de77f939"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#a6599e7bdefe74d38f915ade4de77f939">GetCurrentVelocity</a> ()</td></tr>
+<tr class="separator:a6599e7bdefe74d38f915ade4de77f939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4de5015e3bdd49cbd83bfd998ddff62" id="r_ab4de5015e3bdd49cbd83bfd998ddff62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ab4de5015e3bdd49cbd83bfd998ddff62">IsOnFloor</a> ()</td></tr>
+<tr class="separator:ab4de5015e3bdd49cbd83bfd998ddff62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae67c01e1a7db107a56132bbb51eea4c6" id="r_ae67c01e1a7db107a56132bbb51eea4c6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ae67c01e1a7db107a56132bbb51eea4c6">IsOnFloorOnly</a> ()</td></tr>
+<tr class="separator:ae67c01e1a7db107a56132bbb51eea4c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9b9d0d7df320cf3c9762c2bf3baaa75" id="r_ac9b9d0d7df320cf3c9762c2bf3baaa75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ac9b9d0d7df320cf3c9762c2bf3baaa75">Move</a> (<a class="el" href="structduin_1_1Vector3.html">Vector3</a> displacement, double delta)</td></tr>
+<tr class="separator:ac9b9d0d7df320cf3c9762c2bf3baaa75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65fbca61ae38950ebe57d9f3f6b5d309" id="r_a65fbca61ae38950ebe57d9f3f6b5d309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#a65fbca61ae38950ebe57d9f3f6b5d309">OnShapeHit</a> ()</td></tr>
+<tr class="separator:a65fbca61ae38950ebe57d9f3f6b5d309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb42d45d6394e0c9dbe2417699549dfe" id="r_aeb42d45d6394e0c9dbe2417699549dfe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#aeb42d45d6394e0c9dbe2417699549dfe">OnCharacterHit</a> ()</td></tr>
+<tr class="separator:aeb42d45d6394e0c9dbe2417699549dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab197afc91470f03e09362c7e5175cb7c" id="r_ab197afc91470f03e09362c7e5175cb7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ab197afc91470f03e09362c7e5175cb7c">OnObstacleHit</a> ()</td></tr>
+<tr class="separator:ab197afc91470f03e09362c7e5175cb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa44c74bf401458de785a388b7402e9c1" id="r_aa44c74bf401458de785a388b7402e9c1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#aa44c74bf401458de785a388b7402e9c1">OnFloorShapeCast</a> (double delta)</td></tr>
+<tr class="separator:aa44c74bf401458de785a388b7402e9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a556fbb34308c01ba27f617c12e455dd1" id="r_a556fbb34308c01ba27f617c12e455dd1"><td class="memItemLeft" align="right" valign="top"><a id="a556fbb34308c01ba27f617c12e455dd1" name="a556fbb34308c01ba27f617c12e455dd1"></a>
 const <a class="el" href="structduin_1_1CharacterBodyDesc.html">CharacterBodyDesc</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetDescriptor</b> () const</td></tr>
 <tr class="separator:a556fbb34308c01ba27f617c12e455dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,62 +162,72 @@ const <a class="el" href="structduin_1_1CharacterBodyDesc.html">CharacterBodyDes
 <a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a> &amp;)=delete</td></tr>
 <tr class="separator:a5a8518fc7b4afc65868ce9a7a3955c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classduin_1_1CollisionObject"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classduin_1_1CollisionObject')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classduin_1_1CollisionObject.html">duin::CollisionObject</a></td></tr>
-<tr class="memitem:a71463080bbbdaa32c4175e0c9c9315c3 inherit pub_methods_classduin_1_1CollisionObject" id="r_a71463080bbbdaa32c4175e0c9c9315c3"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetCollisionShape</b> ()=0</td></tr>
-<tr class="separator:a71463080bbbdaa32c4175e0c9c9315c3 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af99a5a0b31d6267adbdc5814bc9898bc inherit pub_methods_classduin_1_1CollisionObject" id="r_af99a5a0b31d6267adbdc5814bc9898bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#af99a5a0b31d6267adbdc5814bc9898bc">SetCollisionShape</a> ()</td></tr>
+<tr class="separator:af99a5a0b31d6267adbdc5814bc9898bc inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab86c6209327f16321b476c8d3b7bb5c9 inherit pub_methods_classduin_1_1CollisionObject" id="r_ab86c6209327f16321b476c8d3b7bb5c9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#ab86c6209327f16321b476c8d3b7bb5c9">GetUUID</a> ()</td></tr>
 <tr class="separator:ab86c6209327f16321b476c8d3b7bb5c9 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8139a9c6f5d5d619800cd1a612a45c61 inherit pub_methods_classduin_1_1CollisionObject" id="r_a8139a9c6f5d5d619800cd1a612a45c61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1CollisionLayer.html">CollisionLayer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a8139a9c6f5d5d619800cd1a612a45c61">GetCollisionLayer</a> ()</td></tr>
+<tr class="memitem:a8139a9c6f5d5d619800cd1a612a45c61 inherit pub_methods_classduin_1_1CollisionObject" id="r_a8139a9c6f5d5d619800cd1a612a45c61"><td class="memItemLeft" align="right" valign="top">CollisionLayer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a8139a9c6f5d5d619800cd1a612a45c61">GetCollisionLayer</a> ()</td></tr>
 <tr class="separator:a8139a9c6f5d5d619800cd1a612a45c61 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bee2e6c8f30757878e130468d568e17 inherit pub_methods_classduin_1_1CollisionObject" id="r_a9bee2e6c8f30757878e130468d568e17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1CollisionLayer.html">CollisionMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a9bee2e6c8f30757878e130468d568e17">GetCollisionMask</a> ()</td></tr>
+<tr class="memitem:a9bee2e6c8f30757878e130468d568e17 inherit pub_methods_classduin_1_1CollisionObject" id="r_a9bee2e6c8f30757878e130468d568e17"><td class="memItemLeft" align="right" valign="top">CollisionMask&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a9bee2e6c8f30757878e130468d568e17">GetCollisionMask</a> ()</td></tr>
 <tr class="separator:a9bee2e6c8f30757878e130468d568e17 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21d9f630f10aa732bfd0d9e7f2a072a7 inherit pub_methods_classduin_1_1CollisionObject" id="r_a21d9f630f10aa732bfd0d9e7f2a072a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a21d9f630f10aa732bfd0d9e7f2a072a7">SetCollisionLayer</a> (<a class="el" href="structduin_1_1CollisionLayer.html">CollisionLayer</a> bits)</td></tr>
+<tr class="memitem:a21d9f630f10aa732bfd0d9e7f2a072a7 inherit pub_methods_classduin_1_1CollisionObject" id="r_a21d9f630f10aa732bfd0d9e7f2a072a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a21d9f630f10aa732bfd0d9e7f2a072a7">SetCollisionLayer</a> (CollisionLayer bits)</td></tr>
 <tr class="separator:a21d9f630f10aa732bfd0d9e7f2a072a7 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b47846381bbca7160d87d39096a66b0 inherit pub_methods_classduin_1_1CollisionObject" id="r_a7b47846381bbca7160d87d39096a66b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a7b47846381bbca7160d87d39096a66b0">SetCollisionMask</a> (<a class="el" href="structduin_1_1CollisionLayer.html">CollisionMask</a> bits)</td></tr>
+<tr class="memitem:a7b47846381bbca7160d87d39096a66b0 inherit pub_methods_classduin_1_1CollisionObject" id="r_a7b47846381bbca7160d87d39096a66b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a7b47846381bbca7160d87d39096a66b0">SetCollisionMask</a> (CollisionMask bits)</td></tr>
 <tr class="separator:a7b47846381bbca7160d87d39096a66b0 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75add929adadabb98d4d888d33a04e9a inherit pub_methods_classduin_1_1CollisionObject" id="r_a75add929adadabb98d4d888d33a04e9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1PhysicsServer.html">PhysicsServer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a75add929adadabb98d4d888d33a04e9a">GetServer</a> ()</td></tr>
-<tr class="separator:a75add929adadabb98d4d888d33a04e9a inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add1d287aa7e7b291e0d2bf5116a00536 inherit pub_methods_classduin_1_1CollisionObject" id="r_add1d287aa7e7b291e0d2bf5116a00536"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1PhysicsServer.html">PhysicsServer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#add1d287aa7e7b291e0d2bf5116a00536">GetPhysicsServer</a> ()</td></tr>
+<tr class="separator:add1d287aa7e7b291e0d2bf5116a00536 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ade7db954f7cd7fcbf80990bd45f48bcf" id="r_ade7db954f7cd7fcbf80990bd45f48bcf"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ade7db954f7cd7fcbf80990bd45f48bcf">Create</a> ()</td></tr>
-<tr class="separator:ade7db954f7cd7fcbf80990bd45f48bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad541f689b7f04c0277cd60c6ed206c2f" id="r_ad541f689b7f04c0277cd60c6ed206c2f"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CharacterBody.html#ad541f689b7f04c0277cd60c6ed206c2f">Create</a> (<a class="el" href="structduin_1_1CharacterBodyDesc.html">CharacterBodyDesc</a> desc)</td></tr>
 <tr class="separator:ad541f689b7f04c0277cd60c6ed206c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="CharacterBody_8h_source.html#l00020">20</a> of file <a class="el" href="CharacterBody_8h_source.html">CharacterBody.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ade7db954f7cd7fcbf80990bd45f48bcf" name="ade7db954f7cd7fcbf80990bd45f48bcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade7db954f7cd7fcbf80990bd45f48bcf">&#9670;&#160;</a></span>Create() <span class="overload">[1/2]</span></h2>
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8h_source.html#l00027">27</a> of file <a class="el" href="CharacterBody_8h_source.html">CharacterBody.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab79030375baa19bbc50f41251d87a9b7" name="ab79030375baa19bbc50f41251d87a9b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab79030375baa19bbc50f41251d87a9b7">&#9670;&#160;</a></span>CharacterBody()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a> &gt; duin::CharacterBody::Create </td>
+          <td class="memname">duin::CharacterBody::CharacterBody </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structduin_1_1CharacterBodyDesc.html">CharacterBodyDesc</a>&#160;</td>
+          <td class="paramname"><em>desc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00012">12</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae578833611a8baf8beaa142e9f28bf9f" name="ae578833611a8baf8beaa142e9f28bf9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae578833611a8baf8beaa142e9f28bf9f">&#9670;&#160;</a></span>~CharacterBody()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">duin::CharacterBody::~CharacterBody </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00018">18</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00034">34</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad541f689b7f04c0277cd60c6ed206c2f" name="ad541f689b7f04c0277cd60c6ed206c2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad541f689b7f04c0277cd60c6ed206c2f">&#9670;&#160;</a></span>Create() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad541f689b7f04c0277cd60c6ed206c2f">&#9670;&#160;</a></span>Create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -242,88 +250,209 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00024">24</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00007">7</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
 
 </div>
 </div>
-<a id="ac4f64be08f2c994203f52c428b345272" name="ac4f64be08f2c994203f52c428b345272"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4f64be08f2c994203f52c428b345272">&#9670;&#160;</a></span>OnCharacterHit()</h2>
+<a id="a6599e7bdefe74d38f915ade4de77f939" name="a6599e7bdefe74d38f915ade4de77f939"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6599e7bdefe74d38f915ade4de77f939">&#9670;&#160;</a></span>GetCurrentVelocity()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void duin::CharacterBody::OnCharacterHit </td>
+          <td class="memname"><a class="el" href="structduin_1_1Vector3.html">Vector3</a> duin::CharacterBody::GetCurrentVelocity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="CharacterBody_8h_source.html#l00037">37</a> of file <a class="el" href="CharacterBody_8h_source.html">CharacterBody.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00049">49</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a4ced4bfa3e37c9c2319cc0910b5e9d9e" name="a4ced4bfa3e37c9c2319cc0910b5e9d9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ced4bfa3e37c9c2319cc0910b5e9d9e">&#9670;&#160;</a></span>OnObstacleHit()</h2>
+<a id="a30e66a26a8bcfbf644db7141e2179962" name="a30e66a26a8bcfbf644db7141e2179962"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30e66a26a8bcfbf644db7141e2179962">&#9670;&#160;</a></span>GetFootPosition()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void duin::CharacterBody::OnObstacleHit </td>
+          <td class="memname"><a class="el" href="structduin_1_1Vector3.html">Vector3</a> duin::CharacterBody::GetFootPosition </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="CharacterBody_8h_source.html#l00038">38</a> of file <a class="el" href="CharacterBody_8h_source.html">CharacterBody.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00044">44</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a9ef86581dd704ec1aee49577da30beee" name="a9ef86581dd704ec1aee49577da30beee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ef86581dd704ec1aee49577da30beee">&#9670;&#160;</a></span>OnShapeHit()</h2>
+<a id="a0ccd00bebf3a1af0e15e7d5660312391" name="a0ccd00bebf3a1af0e15e7d5660312391"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ccd00bebf3a1af0e15e7d5660312391">&#9670;&#160;</a></span>GetPosition()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void duin::CharacterBody::OnShapeHit </td>
+          <td class="memname"><a class="el" href="structduin_1_1Vector3.html">Vector3</a> duin::CharacterBody::GetPosition </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="CharacterBody_8h_source.html#l00036">36</a> of file <a class="el" href="CharacterBody_8h_source.html">CharacterBody.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00039">39</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab4de5015e3bdd49cbd83bfd998ddff62" name="ab4de5015e3bdd49cbd83bfd998ddff62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4de5015e3bdd49cbd83bfd998ddff62">&#9670;&#160;</a></span>IsOnFloor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int duin::CharacterBody::IsOnFloor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00054">54</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae67c01e1a7db107a56132bbb51eea4c6" name="ae67c01e1a7db107a56132bbb51eea4c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae67c01e1a7db107a56132bbb51eea4c6">&#9670;&#160;</a></span>IsOnFloorOnly()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int duin::CharacterBody::IsOnFloorOnly </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00059">59</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac9b9d0d7df320cf3c9762c2bf3baaa75" name="ac9b9d0d7df320cf3c9762c2bf3baaa75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9b9d0d7df320cf3c9762c2bf3baaa75">&#9670;&#160;</a></span>Move()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::CharacterBody::Move </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td>
+          <td class="paramname"><em>displacement</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>delta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00064">64</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aeb42d45d6394e0c9dbe2417699549dfe" name="aeb42d45d6394e0c9dbe2417699549dfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb42d45d6394e0c9dbe2417699549dfe">&#9670;&#160;</a></span>OnCharacterHit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::CharacterBody::OnCharacterHit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00092">92</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa44c74bf401458de785a388b7402e9c1" name="aa44c74bf401458de785a388b7402e9c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa44c74bf401458de785a388b7402e9c1">&#9670;&#160;</a></span>OnFloorShapeCast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int duin::CharacterBody::OnFloorShapeCast </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>delta</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00100">100</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab197afc91470f03e09362c7e5175cb7c" name="ab197afc91470f03e09362c7e5175cb7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab197afc91470f03e09362c7e5175cb7c">&#9670;&#160;</a></span>OnObstacleHit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::CharacterBody::OnObstacleHit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00096">96</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a65fbca61ae38950ebe57d9f3f6b5d309" name="a65fbca61ae38950ebe57d9f3f6b5d309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65fbca61ae38950ebe57d9f3f6b5d309">&#9670;&#160;</a></span>OnShapeHit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::CharacterBody::OnShapeHit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="CharacterBody_8cpp_source.html#l00088">88</a> of file <a class="el" href="CharacterBody_8cpp_source.html">CharacterBody.cpp</a>.</p>
 
 </div>
 </div>

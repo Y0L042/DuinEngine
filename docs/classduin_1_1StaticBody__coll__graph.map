@@ -1,6 +1,6 @@
 <map id="duin::StaticBody" name="duin::StaticBody">
 <area shape="rect" id="Node000001" title=" " alt="" coords="19,152,147,177"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1PhysicsBody.html" title=" " alt="" coords="13,79,153,104"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1PhysicsObject.html" title=" " alt="" coords="9,79,158,104"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,118,86,152,81,152,81,118"/>
 <area shape="rect" id="Node000003" href="$classduin_1_1CollisionObject.html" title=" " alt="" coords="5,5,161,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="86,44,86,79,81,79,81,44"/>

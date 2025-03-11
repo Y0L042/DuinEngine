@@ -7,55 +7,14 @@ var hierarchy =
     [ "duin::ECSTag::CameraIsActive", "structduin_1_1ECSTag_1_1CameraIsActive.html", null ],
     [ "duin::ECSComponent::CharacterBodyComponent", "structduin_1_1ECSComponent_1_1CharacterBodyComponent.html", null ],
     [ "duin::CharacterBodyDesc", "structduin_1_1CharacterBodyDesc.html", null ],
-    [ "duin::CollisionGeometry", "classduin_1_1CollisionGeometry.html", [
-      [ "duin::BoxGeometry", "classduin_1_1BoxGeometry.html", [
-        [ "duin::PhysXBoxGeometry", "classduin_1_1PhysXBoxGeometry.html", null ]
-      ] ],
-      [ "duin::CapsuleGeometry", "classduin_1_1CapsuleGeometry.html", [
-        [ "duin::PhysXCapsuleGeometry", "classduin_1_1PhysXCapsuleGeometry.html", null ]
-      ] ],
-      [ "duin::ConvexMeshGeometry", "classduin_1_1ConvexMeshGeometry.html", [
-        [ "duin::PhysXConvexMeshGeometry", "classduin_1_1PhysXConvexMeshGeometry.html", null ]
-      ] ],
-      [ "duin::PhysXCollisionGeometry", "classduin_1_1PhysXCollisionGeometry.html", [
-        [ "duin::PhysXBoxGeometry", "classduin_1_1PhysXBoxGeometry.html", null ],
-        [ "duin::PhysXCapsuleGeometry", "classduin_1_1PhysXCapsuleGeometry.html", null ],
-        [ "duin::PhysXConvexMeshGeometry", "classduin_1_1PhysXConvexMeshGeometry.html", null ],
-        [ "duin::PhysXPlaneGeometry", "classduin_1_1PhysXPlaneGeometry.html", null ],
-        [ "duin::PhysXSphereGeometry", "classduin_1_1PhysXSphereGeometry.html", null ],
-        [ "duin::PhysXTriangleMeshGeometry", "classduin_1_1PhysXTriangleMeshGeometry.html", null ]
-      ] ],
-      [ "duin::PlaneGeometry", "classduin_1_1PlaneGeometry.html", [
-        [ "duin::PhysXPlaneGeometry", "classduin_1_1PhysXPlaneGeometry.html", null ]
-      ] ],
-      [ "duin::SphereGeometry", "classduin_1_1SphereGeometry.html", [
-        [ "duin::PhysXSphereGeometry", "classduin_1_1PhysXSphereGeometry.html", null ]
-      ] ],
-      [ "duin::TriangleMeshGeometry", "classduin_1_1TriangleMeshGeometry.html", [
-        [ "duin::PhysXTriangleMeshGeometry", "classduin_1_1PhysXTriangleMeshGeometry.html", null ]
-      ] ]
-    ] ],
-    [ "duin::CollisionLayer", "structduin_1_1CollisionLayer.html", null ],
     [ "duin::CollisionObject", "classduin_1_1CollisionObject.html", [
-      [ "duin::PhysXCollisionObject", "classduin_1_1PhysXCollisionObject.html", [
-        [ "duin::PhysXPhysicsBody", "classduin_1_1PhysXPhysicsBody.html", [
-          [ "duin::PhysXCharacterBody", "classduin_1_1PhysXCharacterBody.html", null ],
-          [ "duin::PhysXStaticBody", "classduin_1_1PhysXStaticBody.html", null ]
-        ] ]
-      ] ],
-      [ "duin::PhysicsBody", "classduin_1_1PhysicsBody.html", [
-        [ "duin::CharacterBody", "classduin_1_1CharacterBody.html", [
-          [ "duin::PhysXCharacterBody", "classduin_1_1PhysXCharacterBody.html", null ]
-        ] ],
-        [ "duin::PhysXPhysicsBody", "classduin_1_1PhysXPhysicsBody.html", null ],
-        [ "duin::StaticBody", "classduin_1_1StaticBody.html", [
-          [ "duin::PhysXStaticBody", "classduin_1_1PhysXStaticBody.html", null ]
-        ] ]
+      [ "duin::Area", "classduin_1_1Area.html", null ],
+      [ "duin::PhysicsObject", "classduin_1_1PhysicsObject.html", [
+        [ "duin::CharacterBody", "classduin_1_1CharacterBody.html", null ],
+        [ "duin::StaticBody", "classduin_1_1StaticBody.html", null ]
       ] ]
     ] ],
-    [ "duin::CollisionShape", "classduin_1_1CollisionShape.html", [
-      [ "duin::PhysXCollisionShape", "classduin_1_1PhysXCollisionShape.html", null ]
-    ] ],
+    [ "duin::CollisionShape", "classduin_1_1CollisionShape.html", null ],
     [ "duin::ECSTag::CreateExternalRef", "structduin_1_1ECSTag_1_1CreateExternalRef.html", null ],
     [ "duin::ECSComponent::CubeComponent", "structduin_1_1ECSComponent_1_1CubeComponent.html", null ],
     [ "spdlog::custom_flag_formatter", null, [
@@ -79,19 +38,14 @@ var hierarchy =
     [ "duin::Log", "classduin_1_1Log.html", null ],
     [ "duin::Matrix", "structduin_1_1Matrix.html", null ],
     [ "duin::ECSTag::NonPx", "structduin_1_1ECSTag_1_1NonPx.html", null ],
-    [ "duin::PhysicsMaterial", "structduin_1_1PhysicsMaterial.html", null ],
-    [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", [
-      [ "duin::PhysXPhysicsServer", "classduin_1_1PhysXPhysicsServer.html", null ]
-    ] ],
+    [ "duin::PhysicsMaterial", "classduin_1_1PhysicsMaterial.html", null ],
+    [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", null ],
     [ "duin::ECSComponent::PhysicsStaticCubeComponent", "structduin_1_1ECSComponent_1_1PhysicsStaticCubeComponent.html", null ],
     [ "duin::ECSComponent::Position2D", "structduin_1_1ECSComponent_1_1Position2D.html", null ],
     [ "duin::ECSComponent::Position3D", "structduin_1_1ECSComponent_1_1Position3D.html", null ],
     [ "duin::ECSTag::PxDynamic", "structduin_1_1ECSTag_1_1PxDynamic.html", null ],
     [ "duin::ECSTag::PxKinematic", "structduin_1_1ECSTag_1_1PxKinematic.html", null ],
     [ "duin::ECSTag::PxStatic", "structduin_1_1ECSTag_1_1PxStatic.html", null ],
-    [ "physx::PxUserControllerHitReport", null, [
-      [ "duin::PhysXControllerHitReport", "classduin_1_1PhysXControllerHitReport.html", null ]
-    ] ],
     [ "duin::ECSComponent::Rotation2D", "structduin_1_1ECSComponent_1_1Rotation2D.html", null ],
     [ "duin::ECSComponent::Rotation3D", "structduin_1_1ECSComponent_1_1Rotation3D.html", null ],
     [ "duin::ECSComponent::Scale2D", "structduin_1_1ECSComponent_1_1Scale2D.html", null ],

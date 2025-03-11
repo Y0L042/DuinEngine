@@ -111,51 +111,63 @@ $(document).ready(function(){initNavTree('classduin_1_1PhysicsServer.html',''); 
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
-<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classduin_1_1PhysicsServer-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::PhysicsServer Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">duin::PhysicsServer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac514743536c5660886e18a944890ad86" id="r_ac514743536c5660886e18a944890ad86"><td class="memItemLeft" align="right" valign="top"><a id="ac514743536c5660886e18a944890ad86" name="ac514743536c5660886e18a944890ad86"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Initialize</b> ()=0</td></tr>
-<tr class="separator:ac514743536c5660886e18a944890ad86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c5906637571de5558ef2477e1d35693" id="r_a0c5906637571de5558ef2477e1d35693"><td class="memItemLeft" align="right" valign="top"><a id="a0c5906637571de5558ef2477e1d35693" name="a0c5906637571de5558ef2477e1d35693"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Clean</b> ()=0</td></tr>
-<tr class="separator:a0c5906637571de5558ef2477e1d35693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a400f683d2ec250eff76176d0b6006d58" id="r_a400f683d2ec250eff76176d0b6006d58"><td class="memItemLeft" align="right" valign="top"><a id="a400f683d2ec250eff76176d0b6006d58" name="a400f683d2ec250eff76176d0b6006d58"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>StepPhysics</b> (double delta)=0</td></tr>
-<tr class="separator:a400f683d2ec250eff76176d0b6006d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d95ab2c89651037fb521115df528390" id="r_a9d95ab2c89651037fb521115df528390"><td class="memItemLeft" align="right" valign="top"><a id="a9d95ab2c89651037fb521115df528390" name="a9d95ab2c89651037fb521115df528390"></a>
-virtual std::shared_ptr&lt; <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>CreateCollisionShape</b> ()=0</td></tr>
-<tr class="separator:a9d95ab2c89651037fb521115df528390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0539ef81e30be42293ca094122ae4903" id="r_a0539ef81e30be42293ca094122ae4903"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a0539ef81e30be42293ca094122ae4903">Initialize</a> ()</td></tr>
+<tr class="separator:a0539ef81e30be42293ca094122ae4903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7207ac5cd5f6d3e3297578fe2c2f9f9a" id="r_a7207ac5cd5f6d3e3297578fe2c2f9f9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a7207ac5cd5f6d3e3297578fe2c2f9f9a">Clean</a> ()</td></tr>
+<tr class="separator:a7207ac5cd5f6d3e3297578fe2c2f9f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9c5bdf4e040c3eff5b28b7cdc53fabb" id="r_af9c5bdf4e040c3eff5b28b7cdc53fabb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb">StepPhysics</a> (double delta)</td></tr>
+<tr class="separator:af9c5bdf4e040c3eff5b28b7cdc53fabb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e867b0f1a2de8a48b7a25b5a7b8b145" id="r_a1e867b0f1a2de8a48b7a25b5a7b8b145"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a1e867b0f1a2de8a48b7a25b5a7b8b145">CreateCollisionShape</a> ()</td></tr>
+<tr class="separator:a1e867b0f1a2de8a48b7a25b5a7b8b145"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a3467ec90a96ffc69574afdc90f6dce" id="r_a9a3467ec90a96ffc69574afdc90f6dce"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1PhysicsServer.html">PhysicsServer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a9a3467ec90a96ffc69574afdc90f6dce">Get</a> ()</td></tr>
 <tr class="separator:a9a3467ec90a96ffc69574afdc90f6dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bc74741100f657d430bf89205e2d477" id="r_a0bc74741100f657d430bf89205e2d477"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a0bc74741100f657d430bf89205e2d477">CatchError</a> (void *ptr, int errorCode)</td></tr>
-<tr class="separator:a0bc74741100f657d430bf89205e2d477"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
-Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:aa63b7ae15b9cfdc44f606a944e8c1e5e" id="r_aa63b7ae15b9cfdc44f606a944e8c1e5e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#aa63b7ae15b9cfdc44f606a944e8c1e5e">PrintErrorCode</a> (int errorCode)</td></tr>
-<tr class="separator:aa63b7ae15b9cfdc44f606a944e8c1e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ac3348f4f492ea181c37d94801d577b2a" id="r_ac3348f4f492ea181c37d94801d577b2a"><td class="memItemLeft" align="right" valign="top">physx::PxDefaultAllocator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#ac3348f4f492ea181c37d94801d577b2a">pxAllocatorCallback</a></td></tr>
+<tr class="separator:ac3348f4f492ea181c37d94801d577b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb9dfd513870aaacb368dc69c9e4f0cc" id="r_afb9dfd513870aaacb368dc69c9e4f0cc"><td class="memItemLeft" align="right" valign="top">physx::PxDefaultErrorCallback&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#afb9dfd513870aaacb368dc69c9e4f0cc">pxErrorCallback</a></td></tr>
+<tr class="separator:afb9dfd513870aaacb368dc69c9e4f0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8b3099a43fdbf72361f51a7297df3f5" id="r_aa8b3099a43fdbf72361f51a7297df3f5"><td class="memItemLeft" align="right" valign="top">physx::PxDefaultCpuDispatcher *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#aa8b3099a43fdbf72361f51a7297df3f5">pxDispatcher</a> = NULL</td></tr>
+<tr class="separator:aa8b3099a43fdbf72361f51a7297df3f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a20585028e064f3ebbf48dbe393fc9f" id="r_a6a20585028e064f3ebbf48dbe393fc9f"><td class="memItemLeft" align="right" valign="top">physx::PxTolerancesScale&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a6a20585028e064f3ebbf48dbe393fc9f">pxToleranceScale</a></td></tr>
+<tr class="separator:a6a20585028e064f3ebbf48dbe393fc9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59c6c319452c8b60e8d8f8cac3d8ba4f" id="r_a59c6c319452c8b60e8d8f8cac3d8ba4f"><td class="memItemLeft" align="right" valign="top">physx::PxFoundation *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a59c6c319452c8b60e8d8f8cac3d8ba4f">pxFoundation</a> = NULL</td></tr>
+<tr class="separator:a59c6c319452c8b60e8d8f8cac3d8ba4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae146838b7ebbc568c8a798463dda3eea" id="r_ae146838b7ebbc568c8a798463dda3eea"><td class="memItemLeft" align="right" valign="top">physx::PxPhysics *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#ae146838b7ebbc568c8a798463dda3eea">pxPhysics</a> = NULL</td></tr>
+<tr class="separator:ae146838b7ebbc568c8a798463dda3eea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b783765ca4d7ccebff4c266f47fe675" id="r_a1b783765ca4d7ccebff4c266f47fe675"><td class="memItemLeft" align="right" valign="top">physx::PxScene *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a1b783765ca4d7ccebff4c266f47fe675">pxScene</a> = NULL</td></tr>
+<tr class="separator:a1b783765ca4d7ccebff4c266f47fe675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8a11b5c48fcacba4084e526a631f06c" id="r_ad8a11b5c48fcacba4084e526a631f06c"><td class="memItemLeft" align="right" valign="top">physx::PxControllerManager *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#ad8a11b5c48fcacba4084e526a631f06c">pxControllerManager</a> = NULL</td></tr>
+<tr class="separator:ad8a11b5c48fcacba4084e526a631f06c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f29828a97dc4a1c8b0927032070b54f" id="r_a4f29828a97dc4a1c8b0927032070b54f"><td class="memItemLeft" align="right" valign="top">physx::PxMaterial *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#a4f29828a97dc4a1c8b0927032070b54f">pxMaterial</a> = NULL</td></tr>
+<tr class="separator:a4f29828a97dc4a1c8b0927032070b54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3868c5b747ccf43c36bbb4c5aa9a068" id="r_ab3868c5b747ccf43c36bbb4c5aa9a068"><td class="memItemLeft" align="right" valign="top">physx::PxPvd *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#ab3868c5b747ccf43c36bbb4c5aa9a068">pxPvd</a> = NULL</td></tr>
+<tr class="separator:ab3868c5b747ccf43c36bbb4c5aa9a068"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:aef9bac393fefe2d02a02288495b166dd" id="r_aef9bac393fefe2d02a02288495b166dd"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; PHYSICS_SERVER &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#aef9bac393fefe2d02a02288495b166dd">implServer</a></td></tr>
-<tr class="separator:aef9bac393fefe2d02a02288495b166dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ab2c9de37b8fa4615aaf456c2d76d3aa1" id="r_ab2c9de37b8fa4615aaf456c2d76d3aa1"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsServer.html#ab2c9de37b8fa4615aaf456c2d76d3aa1">CharacterBody</a></td></tr>
+<tr class="separator:ab2c9de37b8fa4615aaf456c2d76d3aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00028">28</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0bc74741100f657d430bf89205e2d477" name="a0bc74741100f657d430bf89205e2d477"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bc74741100f657d430bf89205e2d477">&#9670;&#160;</a></span>CatchError()</h2>
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00023">23</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a19bc7df2f8784d3a0eee6867ede9279c" name="a19bc7df2f8784d3a0eee6867ede9279c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19bc7df2f8784d3a0eee6867ede9279c">&#9670;&#160;</a></span>PhysicsServer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,31 +176,86 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int duin::PhysicsServer::CatchError </td>
+          <td class="memname">duin::PhysicsServer::PhysicsServer </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>ptr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>errorCode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00032">32</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00014">14</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a07b5b1e8c03a92bdecb479d79149e30c" name="a07b5b1e8c03a92bdecb479d79149e30c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07b5b1e8c03a92bdecb479d79149e30c">&#9670;&#160;</a></span>~PhysicsServer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">duin::PhysicsServer::~PhysicsServer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00019">19</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7207ac5cd5f6d3e3297578fe2c2f9f9a" name="a7207ac5cd5f6d3e3297578fe2c2f9f9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7207ac5cd5f6d3e3297578fe2c2f9f9a">&#9670;&#160;</a></span>Clean()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::PhysicsServer::Clean </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00079">79</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1e867b0f1a2de8a48b7a25b5a7b8b145" name="a1e867b0f1a2de8a48b7a25b5a7b8b145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e867b0f1a2de8a48b7a25b5a7b8b145">&#9670;&#160;</a></span>CreateCollisionShape()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> &gt; duin::PhysicsServer::CreateCollisionShape </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00098">98</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -215,12 +282,52 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00008">8</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0539ef81e30be42293ca094122ae4903" name="a0539ef81e30be42293ca094122ae4903"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0539ef81e30be42293ca094122ae4903">&#9670;&#160;</a></span>Initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::PhysicsServer::Initialize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00024">24</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
 
 </div>
 </div>
-<a id="aa63b7ae15b9cfdc44f606a944e8c1e5e" name="aa63b7ae15b9cfdc44f606a944e8c1e5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa63b7ae15b9cfdc44f606a944e8c1e5e">&#9670;&#160;</a></span>PrintErrorCode()</h2>
+<a id="af9c5bdf4e040c3eff5b28b7cdc53fabb" name="af9c5bdf4e040c3eff5b28b7cdc53fabb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9c5bdf4e040c3eff5b28b7cdc53fabb">&#9670;&#160;</a></span>StepPhysics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::PhysicsServer::StepPhysics </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>delta</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00092">92</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="ab2c9de37b8fa4615aaf456c2d76d3aa1" name="ab2c9de37b8fa4615aaf456c2d76d3aa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2c9de37b8fa4615aaf456c2d76d3aa1">&#9670;&#160;</a></span>CharacterBody</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,27 +336,23 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void duin::PhysicsServer::PrintErrorCode </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>errorCode</em></td><td>)</td>
-          <td></td>
+          <td class="memname">friend class <a class="el" href="classduin_1_1CharacterBody.html">CharacterBody</a></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsServer_8cpp_source.html#l00043">43</a> of file <a class="el" href="PhysicsServer_8cpp_source.html">PhysicsServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00035">35</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="aef9bac393fefe2d02a02288495b166dd" name="aef9bac393fefe2d02a02288495b166dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef9bac393fefe2d02a02288495b166dd">&#9670;&#160;</a></span>implServer</h2>
+<a id="ac3348f4f492ea181c37d94801d577b2a" name="ac3348f4f492ea181c37d94801d577b2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3348f4f492ea181c37d94801d577b2a">&#9670;&#160;</a></span>pxAllocatorCallback</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -258,18 +361,233 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; PHYSICS_SERVER &gt; duin::PhysicsServer::implServer</td>
+          <td class="memname">physx::PxDefaultAllocator duin::PhysicsServer::pxAllocatorCallback</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Singleton variable </p>
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00037">37</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="ad8a11b5c48fcacba4084e526a631f06c" name="ad8a11b5c48fcacba4084e526a631f06c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8a11b5c48fcacba4084e526a631f06c">&#9670;&#160;</a></span>pxControllerManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxControllerManager* duin::PhysicsServer::pxControllerManager = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00044">44</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="aa8b3099a43fdbf72361f51a7297df3f5" name="aa8b3099a43fdbf72361f51a7297df3f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8b3099a43fdbf72361f51a7297df3f5">&#9670;&#160;</a></span>pxDispatcher</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxDefaultCpuDispatcher* duin::PhysicsServer::pxDispatcher = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00039">39</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="afb9dfd513870aaacb368dc69c9e4f0cc" name="afb9dfd513870aaacb368dc69c9e4f0cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb9dfd513870aaacb368dc69c9e4f0cc">&#9670;&#160;</a></span>pxErrorCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxDefaultErrorCallback duin::PhysicsServer::pxErrorCallback</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00038">38</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="a59c6c319452c8b60e8d8f8cac3d8ba4f" name="a59c6c319452c8b60e8d8f8cac3d8ba4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59c6c319452c8b60e8d8f8cac3d8ba4f">&#9670;&#160;</a></span>pxFoundation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxFoundation* duin::PhysicsServer::pxFoundation = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00041">41</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="a4f29828a97dc4a1c8b0927032070b54f" name="a4f29828a97dc4a1c8b0927032070b54f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f29828a97dc4a1c8b0927032070b54f">&#9670;&#160;</a></span>pxMaterial</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxMaterial* duin::PhysicsServer::pxMaterial = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00045">45</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="ae146838b7ebbc568c8a798463dda3eea" name="ae146838b7ebbc568c8a798463dda3eea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae146838b7ebbc568c8a798463dda3eea">&#9670;&#160;</a></span>pxPhysics</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxPhysics* duin::PhysicsServer::pxPhysics = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00042">42</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="ab3868c5b747ccf43c36bbb4c5aa9a068" name="ab3868c5b747ccf43c36bbb4c5aa9a068"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3868c5b747ccf43c36bbb4c5aa9a068">&#9670;&#160;</a></span>pxPvd</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxPvd* duin::PhysicsServer::pxPvd = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00046">46</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="a1b783765ca4d7ccebff4c266f47fe675" name="a1b783765ca4d7ccebff4c266f47fe675"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b783765ca4d7ccebff4c266f47fe675">&#9670;&#160;</a></span>pxScene</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxScene* duin::PhysicsServer::pxScene = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00043">43</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
+
+</div>
+</div>
+<a id="a6a20585028e064f3ebbf48dbe393fc9f" name="a6a20585028e064f3ebbf48dbe393fc9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a20585028e064f3ebbf48dbe393fc9f">&#9670;&#160;</a></span>pxToleranceScale</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physx::PxTolerancesScale duin::PhysicsServer::pxToleranceScale</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="PhysicsServer_8h_source.html#l00040">40</a> of file <a class="el" href="PhysicsServer_8h_source.html">PhysicsServer.h</a>.</p>
 
 </div>
 </div>
