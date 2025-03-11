@@ -8,12 +8,32 @@ var hierarchy =
     [ "duin::ECSComponent::CharacterBodyComponent", "structduin_1_1ECSComponent_1_1CharacterBodyComponent.html", null ],
     [ "duin::CharacterBodyDesc", "structduin_1_1CharacterBodyDesc.html", null ],
     [ "duin::CollisionGeometry", "classduin_1_1CollisionGeometry.html", [
-      [ "duin::BoxGeometry", "classduin_1_1BoxGeometry.html", null ],
-      [ "duin::CapsuleGeometry", "classduin_1_1CapsuleGeometry.html", null ],
-      [ "duin::ConvexMeshGeometry", "classduin_1_1ConvexMeshGeometry.html", null ],
-      [ "duin::PlaneGeometry", "classduin_1_1PlaneGeometry.html", null ],
-      [ "duin::SphereGeometry", "classduin_1_1SphereGeometry.html", null ],
-      [ "duin::TriangleMeshGeometry", "classduin_1_1TriangleMeshGeometry.html", null ]
+      [ "duin::BoxGeometry", "classduin_1_1BoxGeometry.html", [
+        [ "duin::PhysXBoxGeometry", "classduin_1_1PhysXBoxGeometry.html", null ]
+      ] ],
+      [ "duin::CapsuleGeometry", "classduin_1_1CapsuleGeometry.html", [
+        [ "duin::PhysXCapsuleGeometry", "classduin_1_1PhysXCapsuleGeometry.html", null ]
+      ] ],
+      [ "duin::ConvexMeshGeometry", "classduin_1_1ConvexMeshGeometry.html", [
+        [ "duin::PhysXConvexMeshGeometry", "classduin_1_1PhysXConvexMeshGeometry.html", null ]
+      ] ],
+      [ "duin::PhysXCollisionGeometry", "classduin_1_1PhysXCollisionGeometry.html", [
+        [ "duin::PhysXBoxGeometry", "classduin_1_1PhysXBoxGeometry.html", null ],
+        [ "duin::PhysXCapsuleGeometry", "classduin_1_1PhysXCapsuleGeometry.html", null ],
+        [ "duin::PhysXConvexMeshGeometry", "classduin_1_1PhysXConvexMeshGeometry.html", null ],
+        [ "duin::PhysXPlaneGeometry", "classduin_1_1PhysXPlaneGeometry.html", null ],
+        [ "duin::PhysXSphereGeometry", "classduin_1_1PhysXSphereGeometry.html", null ],
+        [ "duin::PhysXTriangleMeshGeometry", "classduin_1_1PhysXTriangleMeshGeometry.html", null ]
+      ] ],
+      [ "duin::PlaneGeometry", "classduin_1_1PlaneGeometry.html", [
+        [ "duin::PhysXPlaneGeometry", "classduin_1_1PhysXPlaneGeometry.html", null ]
+      ] ],
+      [ "duin::SphereGeometry", "classduin_1_1SphereGeometry.html", [
+        [ "duin::PhysXSphereGeometry", "classduin_1_1PhysXSphereGeometry.html", null ]
+      ] ],
+      [ "duin::TriangleMeshGeometry", "classduin_1_1TriangleMeshGeometry.html", [
+        [ "duin::PhysXTriangleMeshGeometry", "classduin_1_1PhysXTriangleMeshGeometry.html", null ]
+      ] ]
     ] ],
     [ "duin::CollisionLayer", "structduin_1_1CollisionLayer.html", null ],
     [ "duin::CollisionObject", "classduin_1_1CollisionObject.html", [
