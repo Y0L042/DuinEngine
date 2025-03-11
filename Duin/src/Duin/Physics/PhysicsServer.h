@@ -25,7 +25,6 @@ namespace duin {
     class CollisionObject;
     class CollisionShape;
     class CharacterBody;
-    class PHYSICS_SERVER;
     class PhysicsServer
     {
         public:
@@ -42,8 +41,11 @@ namespace duin {
             virtual std::shared_ptr<CollisionShape> CreateCollisionShape() = 0;
 
        protected:
+            class PHYSICS_SERVER;
             static std::unique_ptr<PHYSICS_SERVER> implServer;
+
             static void PrintErrorCode(int errorCode);
     };
 }
 
+#undef PHYSICS_SERVER

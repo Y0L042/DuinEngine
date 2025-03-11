@@ -173,6 +173,7 @@ void StateGameLoop::State_Enter()
     // Create CubeGeometry
     duin::BoxGeometry boxGeometry(2, 2, 2);
     // Create CollisionShape(CubeGeometry)
+
     // Create PhysicsObject(CollisionShape)
 
     ecsManager.ActivateCameraEntity(debugCamera);

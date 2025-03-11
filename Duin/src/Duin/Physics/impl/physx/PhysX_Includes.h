@@ -7,3 +7,4 @@
 #include "./PhysX_StaticBody.h"
 #include "./PhysX_CharacterBody.h"
 #include "./PhysX_ControllerHitReport.h"
+#include "./PhysX_CollisionGeometry.h"

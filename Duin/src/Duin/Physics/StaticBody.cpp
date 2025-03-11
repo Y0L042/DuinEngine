@@ -25,5 +25,4 @@ namespace duin {
         std::shared_ptr<PHYSICS_STATIC> body= std::make_shared<PHYSICS_STATIC>(material);
         return body;
     }
-
 }
