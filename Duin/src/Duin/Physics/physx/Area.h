@@ -1,9 +1,9 @@
 #pragma once
 
-#include "./CollisionObject.h"
+#include "CollisionObject.h"
 
 namespace duin {
-    class PhysicsBody : public CollisionObject
+    class Area : public CollisionObject
     {
         public:
         private:

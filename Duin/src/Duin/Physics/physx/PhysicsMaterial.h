@@ -1,12 +1,17 @@
 #pragma once
 
 namespace duin {
-    struct PhysicsMaterial
+    class PhysicsMaterial
     {
         public:
             float staticFriction;
             float dynamicFriction;
             float restitutionCoeff;
+
+            PhysicsMaterial(float staticFriction,
+                            float dynamicFriction,
+                            float restitutionCoeff);
+
         private:
     };
 }

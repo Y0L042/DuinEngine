@@ -4,6 +4,11 @@
 #include "PhysicsServer.h"
 
 namespace duin {
+    void CollisionObject::SetCollisionShape()
+    {
+        // TODO
+    }
+
     const UUID CollisionObject::GetUUID()
     {
         return uuid;
@@ -29,7 +34,7 @@ namespace duin {
         collisionMask = bits;
     }
 
-    PhysicsServer& CollisionObject::GetServer()
+    PhysicsServer& CollisionObject::GetPhysicsServer()
     {
         return PhysicsServer::Get();
     }

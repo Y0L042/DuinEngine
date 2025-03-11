@@ -1,33 +1,27 @@
 #include "dnpch.h"
-#include "PhysX_PhysicsServer.h"
+#include "PhysicsServer.h"
 
-#include <iostream>
-
-#include "PhysX_CollisionShapes.h"
 #include "Duin/Core/Debug/DNLog.h"
+#include "CollisionShape.h"
 
 namespace duin {
-    PhysXPhysicsServer& PhysXPhysicsServer::GetPxServer()
+    PhysicsServer& PhysicsServer::Get()
     {
-        return *implServer.get();
+        static PhysicsServer server;
+        return server;
     }
 
-    PhysXPhysicsServer::PhysXPhysicsServer()
+    PhysicsServer::PhysicsServer()
     {
-        try {
-            Initialize();
-            DN_CORE_INFO("PhysX_PhysicsServer initialised.");
-        } catch (const std::runtime_error& e) {
-            DN_CORE_ERROR("Caught {0}", e.what());
-        };
+        Initialize();
     }
 
-    PhysXPhysicsServer::~PhysXPhysicsServer()
+    PhysicsServer::~PhysicsServer()
     {
         Clean();
     }
 
-    void PhysXPhysicsServer::Initialize()
+    void PhysicsServer::Initialize()
     {
         pxFoundation = PxCreateFoundation(PX_PHYSICS_VERSION,
             pxAllocatorCallback,
@@ -82,7 +76,7 @@ namespace duin {
             throw std::runtime_error("PxControllerManager creation failed!");
     }
 
-    void PhysXPhysicsServer::Clean()
+    void PhysicsServer::Clean()
     {
         PX_RELEASE(pxScene);
         PX_RELEASE(pxDispatcher);
@@ -95,26 +89,15 @@ namespace duin {
         PX_RELEASE(pxFoundation);
     }
 
-    void PhysXPhysicsServer::StepPhysics(double delta)
+    void PhysicsServer::StepPhysics(double delta)
     {
         pxScene->simulate((float)delta);
         pxScene->fetchResults(true);
     }
 
-
-    std::shared_ptr<CollisionShape> PhysXPhysicsServer::CreateCollisionShape()
+    std::shared_ptr<CollisionShape> PhysicsServer::CreateCollisionShape()
     {
-        std::shared_ptr<PhysXCollisionShape> shape = std::make_shared<PhysXCollisionShape>();
-        shapesMap[shape->GetUUID()] = shape;
+        std::shared_ptr<CollisionShape> shape = std::make_shared<CollisionShape>();
         return shape;
-    }
-
-    std::shared_ptr<PhysXCollisionShape> PhysXPhysicsServer::GetPhysXCollisionShape(UUID uuid)
-    {
-        if (shapesMap[uuid]) {
-            return shapesMap[uuid];
-        }
-
-        return nullptr;
     }
 }

@@ -2,14 +2,15 @@
 
 #include "Duin/Core/Utils/UUID.h"
 #include "CollisionMeta.h"
-#include "CollisionShapes.h"
+
+#include <memory>
 
 namespace duin {
     class PhysicsServer;
     class CollisionObject
     {
         public:
-            virtual void SetCollisionShape() = 0;
+            void SetCollisionShape();
 
             const UUID GetUUID();
 
@@ -18,7 +19,7 @@ namespace duin {
             void SetCollisionLayer(CollisionLayer bits);
             void SetCollisionMask(CollisionMask bits);
 
-            PhysicsServer& GetServer();
+            PhysicsServer& GetPhysicsServer();
 
         private:
             UUID uuid;

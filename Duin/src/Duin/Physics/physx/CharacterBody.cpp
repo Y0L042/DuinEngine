@@ -1,20 +1,18 @@
 #include "dnpch.h"
+#include "CharacterBody.h"
 
-#include "PhysX_CharacterBody.h"
-#include "Duin/Core/Maths/DuinMaths.h"
-
+#include "PhysicsServer.h"
 
 namespace duin {
-
-    PhysXCharacterBody::PhysXCharacterBody()
+    std::shared_ptr<CharacterBody> CharacterBody::Create(CharacterBodyDesc desc)
     {
-
+        return std::make_shared<CharacterBody>(desc);
     }
 
-    PhysXCharacterBody::PhysXCharacterBody(CharacterBodyDesc desc)
+    CharacterBody::CharacterBody(CharacterBodyDesc desc)
         : desc(desc) 
     {
-        PhysXPhysicsServer& server = GetPxServer();
+        PhysicsServer& server = PhysicsServer::Get();
         pxMaterial = server.pxPhysics->createMaterial(0.5f, 0.5f, 0.5f);
 
         physx::PxCapsuleControllerDesc pxDesc;
@@ -33,42 +31,37 @@ namespace duin {
         pxController->setFootPosition(pxDesc.position);
     }
 
-    PhysXCharacterBody::~PhysXCharacterBody()
+    CharacterBody::~CharacterBody()
     {
         // TODO clean physx objects
     }
 
-    void PhysXCharacterBody::SetCollisionShape()
-    {
-
-    }
-
-    Vector3 PhysXCharacterBody::GetPosition()
+    Vector3 CharacterBody::GetPosition()
     {
         return Vector3(pxController->getPosition());
     }
 
-    Vector3 PhysXCharacterBody::GetFootPosition()
+    Vector3 CharacterBody::GetFootPosition()
     {
         return Vector3(pxController->getFootPosition());
     }
 
-    Vector3 PhysXCharacterBody::GetCurrentVelocity()
+    Vector3 CharacterBody::GetCurrentVelocity()
     {
         return currentVelocity;
     }
 
-    int PhysXCharacterBody::IsOnFloor()
+    int CharacterBody::IsOnFloor()
     {
         return isOnFloor;
     }
 
-    int PhysXCharacterBody::IsOnFloorOnly()
+    int CharacterBody::IsOnFloorOnly()
     {
         return 0;
     }
 
-    void PhysXCharacterBody::Move(Vector3 displacement, double delta)
+    void CharacterBody::Move(Vector3 displacement, double delta)
     {
         double timeSinceLastMove = ::GetTime() - timeWhenLastMoved;
         timeSinceLastMove = delta;
@@ -92,19 +85,19 @@ namespace duin {
         timeWhenLastMoved = ::GetTime();
     }
 
-    void PhysXCharacterBody::OnShapeHit()
+    void CharacterBody::OnShapeHit()
     {
     }
 
-    void PhysXCharacterBody::OnCharacterHit()
+    void CharacterBody::OnCharacterHit()
     {
     }
 
-    void PhysXCharacterBody::OnObstacleHit()
+    void CharacterBody::OnObstacleHit()
     {
     }
 
-    int PhysXCharacterBody::OnFloorShapeCast(double delta)
+    int CharacterBody::OnFloorShapeCast(double delta)
     {
                 float maxSlopeAngleDegrees = 50.0f;
 

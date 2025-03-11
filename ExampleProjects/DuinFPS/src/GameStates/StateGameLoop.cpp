@@ -67,7 +67,7 @@ StateGameLoop::~StateGameLoop()
 void StateGameLoop::State_Enter()
 {
     duin::PhysicsServer& pserver = duin::PhysicsServer::Get();
-    std::shared_ptr<duin::StaticBody> floor = duin::StaticBody::Create();
+    //std::shared_ptr<duin::StaticBody> floor = duin::StaticBody::Create();
 
     // Load basic lighting shader
     shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
@@ -171,7 +171,7 @@ void StateGameLoop::State_Enter()
 
 
     // Create CubeGeometry
-    duin::BoxGeometry boxGeometry(2, 2, 2);
+    //duin::BoxGeometry boxGeometry(2, 2, 2);
     // Create CollisionShape(CubeGeometry)
 
     // Create PhysicsObject(CollisionShape)

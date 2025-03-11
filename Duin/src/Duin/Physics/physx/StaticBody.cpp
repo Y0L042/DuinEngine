@@ -1,5 +1,5 @@
 #include "dnpch.h"
-#include "PhysX_CollisionGeometry.h"
+#include "StaticBody.h"
 
 namespace duin {
 
