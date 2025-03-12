@@ -23,7 +23,8 @@ namespace duin {
 
     KinematicBody::~KinematicBody()
     {
-        // if (actor)
-        //     actor->release();
+        if (actor)
+            actor->release();
+        actor = nullptr;
     }
 }

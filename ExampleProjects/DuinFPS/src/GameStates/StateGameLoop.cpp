@@ -109,7 +109,7 @@ void StateGameLoop::State_Enter()
         .set<Mass>({ .value = 80.0f })
         .set<CanRunComponent>({ .speed = 10.0f })
         .set<CanSprintComponent>({ .speed = 17.5f })
-        .set<CanJumpComponent>({ .impulse = 925.0f })
+        .set<CanJumpComponent>({ .impulse = 625.0f })
         .set<CharacterBodyComponent >({ playerBody })
         .add<InputVelocities>()
         .add<InputForces>()
@@ -172,14 +172,14 @@ void StateGameLoop::State_Enter()
     duin::PlaneGeometry groundGeometry;
     duin::CollisionShape groundCollision(groundGeometry, groundMaterial);
     duin::Quaternion groundDir = duin::Vector3ToQuaternion({0.0f, 1.0f, 0.0f}) ;
-    duin::StaticBody ground({ {0.0f, 0.0f, 0.0f}, groundDir }, groundCollision);
+    static duin::StaticBody ground({ {0.0f, 0.0f, 0.0f}, groundDir }, groundCollision);
 
 
     duin::PhysicsMaterial material(0.4f, 0.4f, 0.5f);
     duin::BoxGeometry boxGeometry(2, 2, 2);
     duin::CollisionShape boxCollision(boxGeometry, material);
     duin::Quaternion boxDir = duin::Vector3ToQuaternion({1.0f, 1.0f, 0.0f}) ;
-    duin::KinematicBody box({ {0.0f, 2.0f, 0.0f}, boxDir }, boxCollision);
+    static duin::DynamicBody box({ {0.0f, 2.0f, 0.0f}, boxDir }, boxCollision);
 
     ecsManager.ActivateCameraEntity(debugCamera);
 
@@ -203,17 +203,17 @@ void StateGameLoop::State_Enter()
 
     playerSM.SwitchState<PlayerStateOnGround>();
 
-    int thread_id = -1;
-    int public_id = -1;
-
-    #pragma omp parallel shared(public_id) private(thread_id)
-    {
-        thread_id = omp_get_thread_num();
-        public_id = omp_get_thread_num() * 10;
-        printf("Hello from process: %d , %d\n", thread_id, public_id);
-    }
-
-    printf("thread & public id: %d , %d\n", thread_id, public_id);
+    // int thread_id = -1;
+    // int public_id = -1;
+    //
+    // #pragma omp parallel shared(public_id) private(thread_id)
+    // {
+    //     thread_id = omp_get_thread_num();
+    //     public_id = omp_get_thread_num() * 10;
+    //     printf("Hello from process: %d , %d\n", thread_id, public_id);
+    // }
+    //
+    // printf("thread & public id: %d , %d\n", thread_id, public_id);
 }
 
 void StateGameLoop::State_Exit()

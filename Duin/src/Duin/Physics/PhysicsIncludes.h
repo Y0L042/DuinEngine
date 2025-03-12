@@ -13,5 +13,6 @@
 #include "physx/PhysicsObject.h"
 #include "physx/StaticBody.h"
 #include "physx/KinematicBody.h"
+#include "physx/DynamicBody.h"
 #include "physx/CharacterBody.h"
 #endif

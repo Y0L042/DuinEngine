@@ -1,5 +1,5 @@
 #include "dnpch.h"
-#include "StaticBody.h"
+#include "DynamicBody.h"
 
 #include "PhysicsServer.h"
 
@@ -8,19 +8,19 @@
 #include <PxPhysicsAPI.h>
 
 namespace duin {
-    StaticBody::StaticBody(Transform3D transform, CollisionShape collisionShape)
+    DynamicBody::DynamicBody(Transform3D transform, CollisionShape collisionShape)
         : collisionShape(collisionShape)
     {
         PhysicsServer& server = PhysicsServer::Get();
         physx::PxPhysics *pxPhysics = server.pxPhysics;
 
-        actor = pxPhysics->createRigidStatic(transform.ToPhysX());
+        actor = pxPhysics->createRigidDynamic(transform.ToPhysX());
         physx::PxShape *shape = collisionShape.pxShape;
         actor->attachShape(*shape);
         server.pxScene->addActor(*actor);
     }
 
-    StaticBody::~StaticBody()
+    DynamicBody::~DynamicBody()
     {
         if (actor)
             actor->release();

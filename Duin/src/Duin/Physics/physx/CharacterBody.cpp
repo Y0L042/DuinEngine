@@ -33,7 +33,10 @@ namespace duin {
 
     CharacterBody::~CharacterBody()
     {
-        // TODO clean physx objects
+        if (pxController) {
+            pxController->release();
+        }
+        pxController = nullptr;
     }
 
     Vector3 CharacterBody::GetPosition()

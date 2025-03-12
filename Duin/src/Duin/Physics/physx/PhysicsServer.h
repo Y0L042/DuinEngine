@@ -33,6 +33,7 @@ namespace duin {
        protected:
             friend class StaticBody;
             friend class KinematicBody;
+            friend class DynamicBody;
             friend class CharacterBody;
             friend class CollisionShape;
             friend class PhysicsMaterial;
