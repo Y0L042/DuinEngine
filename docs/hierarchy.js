@@ -19,6 +19,7 @@ var hierarchy =
       [ "duin::Area", "classduin_1_1Area.html", null ],
       [ "duin::PhysicsObject", "classduin_1_1PhysicsObject.html", [
         [ "duin::CharacterBody", "classduin_1_1CharacterBody.html", null ],
+        [ "duin::KinematicBody", "classduin_1_1KinematicBody.html", null ],
         [ "duin::StaticBody", "classduin_1_1StaticBody.html", null ]
       ] ]
     ] ],

@@ -51,6 +51,7 @@ var annotated_dup =
       [ "GameStateMachine", "classduin_1_1GameStateMachine.html", null ],
       [ "JSONDocument", "classduin_1_1JSONDocument.html", null ],
       [ "JSONMember", "classduin_1_1JSONMember.html", null ],
+      [ "KinematicBody", "classduin_1_1KinematicBody.html", null ],
       [ "Log", "classduin_1_1Log.html", null ],
       [ "Matrix", "structduin_1_1Matrix.html", null ],
       [ "PhysicsMaterial", "classduin_1_1PhysicsMaterial.html", null ],

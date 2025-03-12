@@ -4,8 +4,10 @@
 <area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="175,29,239,21,240,26,176,34"/>
 <area shape="rect" id="Node000002" href="$classduin_1_1PhysicsObject.html" title=" " alt="" coords="209,55,359,80"/>
 <area shape="poly" id="edge8_Node000000_Node000002" title=" " alt="" coords="175,52,210,56,209,61,175,57"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1CharacterBody.html" title=" " alt="" coords="407,29,561,55"/>
-<area shape="poly" id="edge9_Node000002_Node000003" title=" " alt="" coords="372,54,406,49,407,54,372,59"/>
-<area shape="rect" id="Node000004" href="$classduin_1_1StaticBody.html" title=" " alt="" coords="420,79,548,104"/>
-<area shape="poly" id="edge10_Node000002_Node000004" title=" " alt="" coords="372,75,420,81,419,86,372,81"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1CharacterBody.html" title=" " alt="" coords="408,5,563,31"/>
+<area shape="poly" id="edge9_Node000002_Node000003" title=" " alt="" coords="349,49,432,28,433,33,350,54"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1KinematicBody.html" title=" " alt="" coords="407,55,564,80"/>
+<area shape="poly" id="edge10_Node000002_Node000004" title=" " alt="" coords="372,65,407,65,407,70,372,70"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1StaticBody.html" title=" " alt="" coords="421,104,549,129"/>
+<area shape="poly" id="edge11_Node000002_Node000005" title=" " alt="" coords="350,81,433,101,432,107,349,86"/>
 </map>
