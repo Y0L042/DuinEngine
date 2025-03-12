@@ -1,0 +1,7 @@
+<map id="duin::Transform3D" name="duin::Transform3D">
+<area shape="rect" id="Node000001" title=" " alt="" coords="53,93,195,119"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1Vector3.html" title=" " alt="" coords="5,5,112,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,42,87,68,111,91,107,95,83,71,67,45"/>
+<area shape="rect" id="Node000003" href="$structduin_1_1Vector4.html" title=" " alt="" coords="136,5,243,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,45,162,71,139,95,135,91,158,68,175,42"/>
+</map>

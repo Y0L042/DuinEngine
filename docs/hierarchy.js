@@ -62,6 +62,7 @@ var hierarchy =
     [ "duin::ECSTag::SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ],
     [ "SM_Machine", "structSM__Machine.html", null ],
     [ "SM_State", "structSM__State.html", null ],
+    [ "duin::Transform3D", "structduin_1_1Transform3D.html", null ],
     [ "duin::UUID", "classduin_1_1UUID.html", null ],
     [ "UUID", "structUUID.html", null ],
     [ "duin::Vector2", "structduin_1_1Vector2.html", null ],

@@ -60,6 +60,7 @@ var annotated_dup =
       [ "SceneManager", "classduin_1_1SceneManager.html", null ],
       [ "SphereGeometry", "classduin_1_1SphereGeometry.html", null ],
       [ "StaticBody", "classduin_1_1StaticBody.html", null ],
+      [ "Transform3D", "structduin_1_1Transform3D.html", null ],
       [ "TriangleMeshGeometry", "classduin_1_1TriangleMeshGeometry.html", null ],
       [ "UUID", "classduin_1_1UUID.html", null ],
       [ "Vector2", "structduin_1_1Vector2.html", null ],
