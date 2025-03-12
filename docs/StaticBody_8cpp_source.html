@@ -119,9 +119,28 @@ $(document).ready(function(){initNavTree('StaticBody_8cpp_source.html',''); init
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;StaticBody.h&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span>duin {</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;PhysicsServer.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>}</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;PxPhysicsAPI.h&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>duin {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    StaticBody::StaticBody(Vector3 position, CollisionShape collisionShape)</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        : collisionShape(collisionShape)</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        PhysicsServer&amp; server = PhysicsServer::Get();</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        physx::PxPhysics *pxPhysics = server.pxPhysics;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        actor = pxPhysics-&gt;createRigidStatic({ position.x, position.y, position.z });</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        physx::PxShape *shape = collisionShape.pxShape;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        actor-&gt;attachShape(*shape);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        server.pxScene-&gt;addActor(*actor);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    }</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    StaticBody::~StaticBody()</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="comment">// if (actor)</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="comment">//     actor-&gt;release();</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -7,6 +7,14 @@ var hierarchy =
     [ "duin::ECSTag::CameraIsActive", "structduin_1_1ECSTag_1_1CameraIsActive.html", null ],
     [ "duin::ECSComponent::CharacterBodyComponent", "structduin_1_1ECSComponent_1_1CharacterBodyComponent.html", null ],
     [ "duin::CharacterBodyDesc", "structduin_1_1CharacterBodyDesc.html", null ],
+    [ "duin::CollisionGeometry", "classduin_1_1CollisionGeometry.html", [
+      [ "duin::BoxGeometry", "classduin_1_1BoxGeometry.html", null ],
+      [ "duin::CapsuleGeometry", "classduin_1_1CapsuleGeometry.html", null ],
+      [ "duin::ConvexMeshGeometry", "classduin_1_1ConvexMeshGeometry.html", null ],
+      [ "duin::PlaneGeometry", "classduin_1_1PlaneGeometry.html", null ],
+      [ "duin::SphereGeometry", "classduin_1_1SphereGeometry.html", null ],
+      [ "duin::TriangleMeshGeometry", "classduin_1_1TriangleMeshGeometry.html", null ]
+    ] ],
     [ "duin::CollisionObject", "classduin_1_1CollisionObject.html", [
       [ "duin::Area", "classduin_1_1Area.html", null ],
       [ "duin::PhysicsObject", "classduin_1_1PhysicsObject.html", [

@@ -4,6 +4,8 @@ var dir_91f976af91c562f5ad98bb29780996e5 =
     [ "Area.h", "Area_8h_source.html", null ],
     [ "CharacterBody.cpp", "CharacterBody_8cpp_source.html", null ],
     [ "CharacterBody.h", "CharacterBody_8h_source.html", null ],
+    [ "CollisionGeometry.cpp", "CollisionGeometry_8cpp_source.html", null ],
+    [ "CollisionGeometry.h", "CollisionGeometry_8h_source.html", null ],
     [ "CollisionMeta.h", "CollisionMeta_8h_source.html", null ],
     [ "CollisionObject.cpp", "CollisionObject_8cpp_source.html", null ],
     [ "CollisionObject.h", "CollisionObject_8h_source.html", null ],
