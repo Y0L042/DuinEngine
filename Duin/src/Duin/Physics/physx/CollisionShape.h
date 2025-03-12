@@ -27,6 +27,7 @@ namespace duin {
 
         private:
             friend class StaticBody;
+            friend class KinematicBody;
 
             CollisionGeometryVariant geometryVariant;
             PhysicsMaterial physicsMaterial;
