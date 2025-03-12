@@ -171,7 +171,8 @@ void StateGameLoop::State_Enter()
     duin::PhysicsMaterial groundMaterial(0.4, 0.4, 0.5);
     duin::PlaneGeometry groundGeometry;
     duin::CollisionShape groundCollision(groundGeometry, groundMaterial);
-    duin::StaticBody ground({ 0.0f, 0.0f, 0.0f }, groundCollision);
+    duin::Quaternion groundDir = duin::Vector3GetQuaternionToVector({1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}) ;
+    duin::StaticBody ground({ {0.0f, 0.0f, 0.0f}, groundDir }, groundCollision);
 
 
     // Create PhysicsMaterial
@@ -181,7 +182,7 @@ void StateGameLoop::State_Enter()
     // Create CollisionShape(CubeGeometry)
     duin::CollisionShape boxCollision(boxGeometry, material);
     // Create PhysicsObject(CollisionShape)
-    duin::StaticBody box({ 0.0f, -15.0f, 0.0f }, boxCollision);
+    duin::StaticBody box({ {0.0f, -15.0f, 0.0f}, {0.0f, 0.0f, 0.707f, 0.707f} }, boxCollision);
 
     ecsManager.ActivateCameraEntity(debugCamera);
 

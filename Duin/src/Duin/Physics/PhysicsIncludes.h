@@ -5,6 +5,7 @@
 #include "physx/CollisionShape.h"
 #include "physx/CollisionGeometry.h"
 #include "physx/PhysicsMaterial.h"
+#include "physx/PhysicsStructs.h"
 
 #include "physx/PhysicsServer.h"
 #include "physx/CollisionObject.h"

@@ -3,15 +3,18 @@
 
 #include "PhysicsServer.h"
 
+#include "Duin/Core/Maths/DuinMaths.h"
+
 #include <PxPhysicsAPI.h>
 
 namespace duin {
-    StaticBody::StaticBody(Vector3 position, CollisionShape collisionShape)
+    StaticBody::StaticBody(Transform3D transform, CollisionShape collisionShape)
         : collisionShape(collisionShape)
     {
         PhysicsServer& server = PhysicsServer::Get();
         physx::PxPhysics *pxPhysics = server.pxPhysics;
-        actor = pxPhysics->createRigidStatic({ position.x, position.y, position.z });
+
+        actor = pxPhysics->createRigidStatic(transform.ToPhysX());
         physx::PxShape *shape = collisionShape.pxShape;
         actor->attachShape(*shape);
         server.pxScene->addActor(*actor);

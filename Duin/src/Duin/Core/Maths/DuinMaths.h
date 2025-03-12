@@ -1273,6 +1273,50 @@ DNMAPI Vector3 Vector3Transform(Vector3 v, Matrix mat)
     return result;
 }
 
+// Get Quaternion to rotate vecA to match vecB
+Quaternion QuaternionNormalizeF(Quaternion);
+DNMAPI Quaternion Vector3GetQuaternionToVector(Vector3 a, Vector3 b)
+{
+#if !defined(EPSILON)
+    #define EPSILON 0.000001f
+#endif
+    a = Vector3NormalizeF(a);
+    b = Vector3NormalizeF(b);
+
+    float dot = Vector3DotProduct(a, b);
+    // Vectors are equal
+    if (dot >= 1 - EPSILON) {
+        return { 0.0f, 0.0f, 0.0f, 1.0f };
+    }
+    
+    // Vectors are opposite
+    if (dot <= -1 + EPSILON) {
+        // Find an axis orthogonal to 'a'
+        Vector3 axis = Vector3CrossProduct(a, (fabsf(a.x) < 1e-6f) ? Vector3{1, 0, 0} : Vector3{0, 1, 0});
+        axis = Vector3Normalize(axis);
+        // 180 degree rotation: sin(angle/2) = 1, cos(angle/2) = 0
+        return { axis.x, axis.y, axis.z, 0 };
+    }
+
+    // Compute the rotation axis via cross product
+    Vector3 axis = Vector3CrossProduct(a, b);
+    
+    // Calculate the angle between the vectors
+    float angle = acosf(dot);
+
+    // Compute quaternion components
+    float sinHalfAngle = sinf(angle * 0.5f);
+    float cosHalfAngle = cosf(angle * 0.5f);
+
+    Quaternion q = { axis.x * sinHalfAngle,
+                     axis.y * sinHalfAngle,
+                     axis.z * sinHalfAngle,
+                     cosHalfAngle };
+
+    // Normalize the resulting quaternion to avoid precision issues
+    return QuaternionNormalizeF(q);
+}
+
 // Transform a vector by quaternion rotation
 DNMAPI Vector3 Vector3RotateByQuaternion(Vector3 v, Quaternion q)
 {
