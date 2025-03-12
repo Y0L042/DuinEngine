@@ -94,10 +94,4 @@ namespace duin {
         pxScene->simulate((float)delta);
         pxScene->fetchResults(true);
     }
-
-    std::shared_ptr<CollisionShape> PhysicsServer::CreateCollisionShape()
-    {
-        std::shared_ptr<CollisionShape> shape = std::make_shared<CollisionShape>();
-        return shape;
-    }
 }

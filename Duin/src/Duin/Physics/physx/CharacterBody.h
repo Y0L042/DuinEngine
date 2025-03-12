@@ -51,21 +51,13 @@ namespace duin {
             CharacterBody& operator=(const CharacterBody&) = delete;
 
         private:
-            Vector3 currentVelocity;
+            Vector3 currentVelocity = Vector3Zero();
             double onFloorGrace = 0.1;
-            double timeWhenLastMoved;
-            double timeSinceOnFloor;
-            int isOnFloor;
+            double timeWhenLastMoved = 0.0;
+            double timeSinceOnFloor = 0.0;
+            int isOnFloor = 0;
 
-            CharacterBodyDesc desc{
-                .height = 1.85f,
-                .radius = 0.35f,
-                .slopeLimit = std::cosf(physx::PxPi / 4.0),
-                .stepOffset = 0.5f,
-                .contactOffset = 0.1f,
-                .position = Vector3(0.0f, 1.85f / 2.0f, 0.0f),
-                .upDirection = Vector3(0.0f, 1.0f, 0.0f),
-            };
+            CharacterBodyDesc desc;
 
             // TODO
             // PhysXControllerHitReport pxControllerHitReport;

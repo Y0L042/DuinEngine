@@ -103,7 +103,6 @@ void StateGameLoop::State_Enter()
     };
     duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
     std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
-    player = ecsManager.world.entity();
     player = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::PhysicsCharacterBody)
         .set<Position3D, Local>({ playerPosition })
@@ -169,12 +168,20 @@ void StateGameLoop::State_Enter()
         .is_a(duin::ECSPrefab::Node3D)
         ;
 
+    duin::PhysicsMaterial groundMaterial(0.4, 0.4, 0.5);
+    duin::PlaneGeometry groundGeometry;
+    duin::CollisionShape groundCollision(groundGeometry, groundMaterial);
+    duin::StaticBody ground({ 0.0f, 0.0f, 0.0f }, groundCollision);
 
+
+    // Create PhysicsMaterial
+    duin::PhysicsMaterial material(0.4f, 0.4f, 0.5f);
     // Create CubeGeometry
-    //duin::BoxGeometry boxGeometry(2, 2, 2);
+    duin::BoxGeometry boxGeometry(30, 30, 30);
     // Create CollisionShape(CubeGeometry)
-
+    duin::CollisionShape boxCollision(boxGeometry, material);
     // Create PhysicsObject(CollisionShape)
+    duin::StaticBody box({ 0.0f, -15.0f, 0.0f }, boxCollision);
 
     ecsManager.ActivateCameraEntity(debugCamera);
 

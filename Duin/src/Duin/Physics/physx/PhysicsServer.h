@@ -29,10 +29,12 @@ namespace duin {
             void Clean();
 
             void StepPhysics(double delta);
-            std::shared_ptr<CollisionShape> CreateCollisionShape();
 
        protected:
+            friend class StaticBody;
             friend class CharacterBody;
+            friend class CollisionShape;
+            friend class PhysicsMaterial;
             
             physx::PxDefaultAllocator pxAllocatorCallback;
             physx::PxDefaultErrorCallback pxErrorCallback;

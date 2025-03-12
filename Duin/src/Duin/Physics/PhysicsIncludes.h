@@ -3,6 +3,7 @@
 #ifndef JOLT
 #include "physx/CollisionMeta.h"
 #include "physx/CollisionShape.h"
+#include "physx/CollisionGeometry.h"
 #include "physx/PhysicsMaterial.h"
 
 #include "physx/PhysicsServer.h"
