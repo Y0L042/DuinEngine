@@ -42,6 +42,7 @@ var annotated_dup =
       [ "CollisionShape", "classduin_1_1CollisionShape.html", null ],
       [ "ConvexMeshGeometry", "classduin_1_1ConvexMeshGeometry.html", null ],
       [ "DebugConsole", "classduin_1_1DebugConsole.html", null ],
+      [ "DynamicBody", "classduin_1_1DynamicBody.html", null ],
       [ "ECSManager", "classduin_1_1ECSManager.html", null ],
       [ "float16", "structduin_1_1float16.html", null ],
       [ "float3", "structduin_1_1float3.html", null ],
