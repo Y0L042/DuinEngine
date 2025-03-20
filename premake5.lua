@@ -54,7 +54,7 @@ workspace "Duin"
     {
         "Duin/bin/" .. outputdir .. "/Duin",  -- Duin's output directory
         "Duin/vendor/rlimgui/bin/Debug",
-        "Duin/vendor/flecs/build_vs2022/build/Debug",	
+        "Duin/vendor/flecs/build_vs2022/Debug",	
         "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
     }
     global_defines = 

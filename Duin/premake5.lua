@@ -1,5 +1,14 @@
+local projectRoot = path.getabsolute(".")
+package.path = package.path .. ";" .. projectRoot .. "/vendor/?.lua"
+
+newoption {
+    trigger     = "deps",
+    description = "Process dependencies (update or rebuild based on dependency-specific flags)"
+}
+
 SolutionRoot = ".."
 ProjectRoot = "."
+
 
 project "Duin"
     location ""
@@ -18,7 +27,6 @@ project "Duin"
         pchheader ""  -- Ensures .c files ignore PCH
     filter {} -- Clear the filter
 
-    include "vendor"
 
     -- files(global_files)
 	files 
@@ -55,7 +63,7 @@ project "Duin"
     libdirs 
     { 
 		ProjectRoot .. "/vendor/rlimgui/bin/Debug",
-		ProjectRoot .. "/vendor/flecs/build_vs2022/build/Debug",	
+		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
     }
     -- defines(global_defines)
@@ -87,6 +95,9 @@ project "Duin"
         "PhysXCharacterKinematic_static_64.lib",
     }
 
+    filter "action:vs*"
+        buildoptions { "/utf-8" }  -- Changed: Added /utf-8 flag for Unicode support
+
     -- Enable multi-processor compilation
     filter "action:vs*"
       flags { "MultiProcessorCompile" }
@@ -106,3 +117,10 @@ project "Duin"
     filter "configurations:Dist"
         defines "DN_DIST"
         optimize "On"
+
+    -- include "vendor"
+
+if _OPTIONS["deps"] then
+    local vendorDeps = require "dependencies"
+    vendorDeps.processAllDependencies()
+end

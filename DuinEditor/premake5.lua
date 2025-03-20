@@ -50,6 +50,9 @@ project "DuinEditor"
         buildoptions { "/openmp" }
         cppdialect "C++20"
 
+    filter "action:vs*"
+        buildoptions { "/utf-8" }  -- Changed: Added /utf-8 flag for Unicode support
+
     -- Enable multi-processor compilation
     filter "action:vs*"
         flags { "MultiProcessorCompile" }

@@ -18,6 +18,7 @@ Duin/vendor/*
 
 !vendor/premake5.lua
 !Duin/vendor/premake5.lua
+!Duin/vendor/dependencies.lua
 !premake5.lua.old
 
 # Binary files and build artifacts
