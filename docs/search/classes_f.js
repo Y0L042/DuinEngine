@@ -7,5 +7,6 @@ var searchData=
   ['sm_5fmachine_4',['SM_Machine',['../structSM__Machine.html',1,'']]],
   ['sm_5fstate_5',['SM_State',['../structSM__State.html',1,'']]],
   ['spheregeometry_6',['SphereGeometry',['../classduin_1_1SphereGeometry.html',1,'duin']]],
-  ['staticbody_7',['StaticBody',['../classduin_1_1StaticBody.html',1,'duin']]]
+  ['staticbody_7',['StaticBody',['../classduin_1_1StaticBody.html',1,'duin']]],
+  ['staticbodycomponent_8',['StaticBodyComponent',['../structduin_1_1ECSComponent_1_1StaticBodyComponent.html',1,'duin::ECSComponent']]]
 ];
