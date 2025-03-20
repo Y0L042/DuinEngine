@@ -8,6 +8,11 @@
 #include <PxPhysicsAPI.h>
 
 namespace duin {
+    std::shared_ptr<DynamicBody> DynamicBody::Create(Transform3D transform, CollisionShape collisionShape)
+    {
+        return std::make_shared<DynamicBody>(transform, collisionShape);
+    }
+
     DynamicBody::DynamicBody(Transform3D transform, CollisionShape collisionShape)
         : collisionShape(collisionShape)
     {
@@ -22,8 +27,14 @@ namespace duin {
 
     DynamicBody::~DynamicBody()
     {
-        if (actor)
-            actor->release();
-        actor = nullptr;
+        // TODO
+        //if (actor) {
+        //    actor->release();
+        //    actor = nullptr;
+        //}
+    }
+    Vector3 DynamicBody::GetPosition()
+    {
+        return Vector3(actor->getGlobalPose().p);
     }
 }

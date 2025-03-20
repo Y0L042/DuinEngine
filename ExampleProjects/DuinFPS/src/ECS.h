@@ -75,6 +75,12 @@ struct VelocityBob {
     float amplitude = 1.0f;
 };
 
+struct Movement3DInput {
+    float x, y, z;
+};
+
+struct DebugCameraTag {};
+
 struct OnGroundTag {};
 struct InAirTag {};
 
@@ -86,6 +92,8 @@ void ExecuteQueryComputePlayerInputVelocity(flecs::world& world);
 void ExecuteQueryGravity(flecs::world& world);
 void ExecuteQueryDebugCameraTarget(flecs::world& world);
 void ExecuteQueryVelocityBob(flecs::world& world);
+
+void ExecuteQueryMoveDebugCamera(flecs::world& world);
 
 void ExecuteQueryIdle(flecs::world& world);
 void ExecuteQueryRun(flecs::world& world);

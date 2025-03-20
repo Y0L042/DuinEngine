@@ -8,6 +8,11 @@
 #include <PxPhysicsAPI.h>
 
 namespace duin {
+    std::shared_ptr<StaticBody> StaticBody::Create(Transform3D transform, CollisionShape collisionShape)
+    {
+        return std::make_shared<StaticBody>(transform, collisionShape);
+    }
+
     StaticBody::StaticBody(Transform3D transform, CollisionShape collisionShape)
         : collisionShape(collisionShape)
     {
@@ -22,8 +27,13 @@ namespace duin {
 
     StaticBody::~StaticBody()
     {
-        if (actor)
+        if (actor) {
             actor->release();
-        actor = nullptr;
+            actor = nullptr;
+        }
+    }
+    Vector3 StaticBody::GetPosition()
+    {
+        return Vector3();
     }
 }

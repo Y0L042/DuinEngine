@@ -8,6 +8,11 @@
 #include <PxPhysicsAPI.h>
 
 namespace duin {
+    std::shared_ptr<KinematicBody> KinematicBody::Create(Transform3D transform, CollisionShape collisionShape)
+    {
+        return std::make_shared<KinematicBody>(transform, collisionShape);
+    }
+
     KinematicBody::KinematicBody(Transform3D transform, CollisionShape collisionShape)
         : collisionShape(collisionShape)
     {
@@ -23,8 +28,13 @@ namespace duin {
 
     KinematicBody::~KinematicBody()
     {
-        if (actor)
+        if (actor) {
             actor->release();
-        actor = nullptr;
+            actor = nullptr;
+        }
+    }
+    Vector3 KinematicBody::GetPosition()
+    {
+        return Vector3();
     }
 }

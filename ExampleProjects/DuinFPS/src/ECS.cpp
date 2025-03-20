@@ -14,10 +14,12 @@ void RegisterComponents(flecs::world& world)
     world.component<PlayerMovementInputVec3>();
     world.component<GravityComponent>();
     world.component<DebugCameraTarget>();
+    world.component<DebugCameraTag>();
     world.component<MouseInputVec2>();
     world.component<CameraPitchComponent>();
     world.component<CameraYawComponent>();
     world.component<InputVelocities>();
+    world.component<Movement3DInput>();
     world.component<InputForces>();
     world.component<InputVelocityDirection>();
     world.component<Mass>();
@@ -378,6 +380,35 @@ void ExecuteQueryVelocityBob(flecs::world& world)
             }
         }
     );
+    world.defer_end();
+}
+
+void ExecuteQueryMoveDebugCamera(flecs::world& world)
+{
+    static flecs::query q = world.query_builder<
+        Movement3DInput,
+        Position3D
+    >()
+        .term_at(1).second<Global>()
+        .with<DebugCameraTag>()
+        .build();
+
+    world.defer_begin();
+        q.each([](
+            flecs::entity e,
+            Movement3DInput& input,
+            Position3D& gPos
+            ) {
+               double delta = duin::GetPhysicsFrameTime();
+               duin::Vector3 inputV(input.x, input.y, input.z);
+               inputV = duin::Vector3Scale(inputV, 5.0f);
+               gPos.value = duin::Vector3Add(gPos.value, duin::Vector3Scale(inputV, (float)delta));
+               // e.remove<Movement3DInput>();
+               input.x = 0.0f;
+               input.y = 0.0f;
+               input.z = 0.0f;
+            }
+        );
     world.defer_end();
 }
 

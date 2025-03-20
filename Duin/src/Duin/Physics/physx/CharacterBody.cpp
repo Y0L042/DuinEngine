@@ -33,10 +33,11 @@ namespace duin {
 
     CharacterBody::~CharacterBody()
     {
-        if (pxController) {
-            pxController->release();
-        }
-        pxController = nullptr;
+        // TODO
+        //if (pxController) {
+        //    pxController->release();
+        //    pxController = nullptr;
+        //}
     }
 
     Vector3 CharacterBody::GetPosition()

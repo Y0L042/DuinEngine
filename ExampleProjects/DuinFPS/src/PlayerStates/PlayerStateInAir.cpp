@@ -21,7 +21,9 @@ PlayerStateInAir::PlayerStateInAir(duin::GameStateMachine& owner)
 
 void PlayerStateInAir::State_Enter()
 {
+    player.add<InAirTag>();
     player.add<CanGravity>();
+    debugWatchlist.Post("PlayerIsOnFloor: ", "%d", 0);
     inAirSM.SwitchState<PlayerStateInAirIdle>();
 }
 
@@ -64,5 +66,6 @@ void PlayerStateInAir::State_DrawUI()
 
 void PlayerStateInAir::State_Exit()
 {
+    player.remove<InAirTag>();
     inAirSM.FlushStack();
 }

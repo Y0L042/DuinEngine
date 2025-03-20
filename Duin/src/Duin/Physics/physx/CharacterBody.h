@@ -32,7 +32,8 @@ namespace duin {
             CharacterBody(CharacterBodyDesc desc);
             ~CharacterBody();
 
-            Vector3 GetPosition();
+            Vector3 GetPosition() override;
+
             Vector3 GetFootPosition();
             Vector3 GetCurrentVelocity();
             int IsOnFloor();

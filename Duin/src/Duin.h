@@ -1,5 +1,4 @@
-#ifndef DUIN_H
-#define DUIN_H
+#pragma once
 
 /* ---------- Core ----------- */
 #include "Duin/Core/Application.h"
@@ -9,16 +8,29 @@
 #include "Duin/Core/Utils/SerialisationManager.h"
 #include "Duin/Core/Utils/GameStateMachine.h"
 
+
+
+/* ---------- ECS ----------- */
 #include "Duin/ECS/ECSManager.h"
 
+
+
+/* ---------- Physics ----------- */
 #include "Duin/Physics/PhysicsIncludes.h"
 
-/* ---------- C ----------- */
+
+
+/* ---------- Scene ----------- */
+#include "Duin/Scene/SceneManager.h"
+#include "Duin/Scene/GameObject.h"
+
+
+
+/* ---------- C_Modules ----------- */
 #include "Duin/C_Modules/c_modules.h"
+
+
 
 /* ---------- Externals ----------- */
 // #include "Duin/dep_raygui.h"
-
 // #include <flecs.h>
-
-#endif /* DUIN_H */

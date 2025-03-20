@@ -46,6 +46,9 @@ namespace ECSComponent {
         world.component<ECSComponent::Velocity3D>();
 
         world.component<ECSComponent::CubeComponent>();
+        world.component<ECSComponent::StaticBodyComponent>();
+        world.component<ECSComponent::KinematicBodyComponent>();
+        world.component<ECSComponent::DynamicBodyComponent>();
         world.component<ECSComponent::CharacterBodyComponent>();
         world.component<ECSComponent::PhysicsStaticCubeComponent>();
         world.component<::Camera3D>();
@@ -60,7 +63,12 @@ namespace ECSPrefab {
     flecs::entity Node;
     flecs::entity Node2D;
     flecs::entity Node3D;
+
+    flecs::entity PhysicsStaticBody;
+    flecs::entity PhysicsKinematicBody;
+    flecs::entity PhysicsDynamicBody;
     flecs::entity PhysicsCharacterBody;
+
     flecs::entity Camera3D;
     flecs::entity Cube;
     flecs::entity DebugCapsule;
@@ -98,7 +106,26 @@ namespace ECSPrefab {
             .set<ECSComponent::Scale3D,     ECSTag::Global>({ 1.0f, 1.0f, 1.0f })
             ;
 
+        PhysicsStaticBody = world.prefab("StaticBody")
+            .is_a(ECSPrefab::Node3D)
+            .add<ECSTag::PxStatic>()
+            .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })
+            .set<ECSComponent::StaticBodyComponent>({ nullptr });
+            ;
 
+        PhysicsKinematicBody = world.prefab("KinematicBody")
+            .is_a(ECSPrefab::Node3D)
+            .add<ECSTag::PxKinematic>()
+            .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })
+            .set<ECSComponent::KinematicBodyComponent>({ nullptr });
+            ;
+
+        PhysicsDynamicBody = world.prefab("DynamicBody")
+            .is_a(ECSPrefab::Node3D)
+            .add<ECSTag::PxDynamic>()
+            .set<ECSComponent::Velocity3D>({ 0.0f, 0.0f, 0.0f })
+            .set<ECSComponent::DynamicBodyComponent>({ nullptr });
+            ;
 
         PhysicsCharacterBody = world.prefab("CharacterBody")
             .is_a(ECSPrefab::Node3D)
@@ -199,7 +226,10 @@ void ECSManager::PostUpdateQueryExecution(double delta)
 
 void ECSManager::PostPhysicsUpdateQueryExecution(double delta)
 {
+    /* Update physics-objects' positions first */
     ExecuteQueryUpdateCharacterBody3DPosition();
+    ExecuteQuerySyncDynamicBody3DPosition();
+
     //ExecuteQueryUpdatePosition3D();
     ExecuteQueryHierarchicalUpdatePosition3D();
 
@@ -389,6 +419,30 @@ void ECSManager::ExecuteQueryUpdateCharacterBody3DPosition()
         });
 }
 
+void ECSManager::ExecuteQuerySyncDynamicBody3DPosition()
+{
+    static flecs::query q = world.query_builder<
+        const ECSComponent::DynamicBodyComponent,
+        ECSComponent::Position3D,
+        ECSComponent::Position3D
+    >()
+    .term_at(1).second<ECSTag::Local>()
+    .term_at(2).second<ECSTag::Global>()
+    .cached()
+    .build();
+
+    q.each([](
+            const ECSComponent::DynamicBodyComponent& dynamicBodyComponent,
+            ECSComponent::Position3D& lPos,
+            ECSComponent::Position3D& gPos
+        ) {
+           Vector3 gPosOldValue = gPos.value;
+           gPos.value = dynamicBodyComponent.dynamicBody->GetPosition();
+           Vector3 gPosDelta = Vector3Subtract(gPos.value, gPosOldValue);
+           lPos.value = Vector3Add(lPos.value, gPosDelta);
+        });
+}
+
 void ECSManager::ExecuteQueryUpdateCameraPosition()
 {
     static flecs::query q = world.query_builder<
@@ -422,7 +476,7 @@ void ECSManager::ExecuteQueryControlCamera()
     q.each([](
             flecs::iter& it, 
             size_t index,
-            Camera3D& c, 
+            ::Camera3D& c, 
             const ECSComponent::Position3D& p, 
             const ECSComponent::Rotation3D& r
         ) {

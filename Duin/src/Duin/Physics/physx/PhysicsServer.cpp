@@ -4,6 +4,8 @@
 #include "Duin/Core/Debug/DNLog.h"
 #include "CollisionShape.h"
 
+#define DEBUG
+
 namespace duin {
     PhysicsServer& PhysicsServer::Get()
     {
@@ -26,7 +28,7 @@ namespace duin {
         pxFoundation = PxCreateFoundation(PX_PHYSICS_VERSION,
             pxAllocatorCallback,
             pxErrorCallback);
-
+        pxFoundation->setErrorLevel(physx::PxErrorCode::eDEBUG_INFO);
         if (pxFoundation == nullptr)
             throw std::runtime_error("PxFoundation creation failed!");
 
@@ -86,6 +88,8 @@ namespace duin {
             PX_RELEASE(pxPvd);
             PX_RELEASE(transport);
         }
+        //pxControllerManager->purgeControllers();
+        //PX_RELEASE(pxControllerManager);
         PX_RELEASE(pxFoundation);
     }
 

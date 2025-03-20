@@ -35,6 +35,7 @@ namespace duin {
             float width, height, depth;
 
             BoxGeometry(float width, float height, float depth);
+            BoxGeometry(Vector3 size);
 
         private:
             friend class CollisionShape;

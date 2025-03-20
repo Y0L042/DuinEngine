@@ -66,29 +66,7 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
-    duin::PhysicsServer& pserver = duin::PhysicsServer::Get();
-    //std::shared_ptr<duin::StaticBody> floor = duin::StaticBody::Create();
-
-    // Load basic lighting shader
-    shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
-                               TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
-    // Get some required shader locations
-    shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
-    // Ambient light level (some basic lighting)
-    int ambientLoc = GetShaderLocation(shader, "ambient");
-    float lighting[4] = { 0.9f, 0.9f, 0.9f, 1.0f };
-    SetShaderValue(shader, ambientLoc, lighting, SHADER_UNIFORM_VEC4);
-    CreateLight(LIGHT_POINT, { -2, 3, -2 }, Vector3Zero(), WHITE, shader);
-
     ecsManager.Initialize();
-
-    flecs::entity testEntity;
-    duin::JSONDocument testDef;
-    duin::ReadJSONFile("./data/testDef.json", testDef);
-    duin::JSONMember testECSData = testDef.GetMember("entity").GetMember("ecs_data");
-    if (testECSData.IsValid()) {
-        testEntity = ecsManager.CreateEntityFromJSON(testECSData);
-    };
 
     float playerHeight = 1.75f;
     duin::Vector3 playerPosition(0.0f, 0.01f, 5.0f);
@@ -120,7 +98,6 @@ void StateGameLoop::State_Enter()
         .add<GravityComponent>()
         .add<OnGroundTag>()
         ;
-    cameraRoot = ecsManager.world.entity();
     cameraRoot = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Node3D)
         .child_of(player)
@@ -128,7 +105,6 @@ void StateGameLoop::State_Enter()
         .add<MouseInputVec2>()
         .add<CameraPitchComponent>()
         ;
-    fpsCamera = ecsManager.world.entity();
     fpsCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
         .child_of(cameraRoot)
@@ -156,64 +132,41 @@ void StateGameLoop::State_Enter()
         .add<MouseInputVec2>()
         .add<CameraPitchComponent>()
         .add<CameraYawComponent>()
+        .add<DebugCameraTag>()
         ;
 
-    ecsManager.world.entity()
-        .is_a(duin::ECSPrefab::Cube)
-        .set<CubeComponent>({ 3.0f, 3.0f, 3.0f, GRAY})
-        .set<Position3D, Local>({{ 4.0f, 0.0f, 4.0f }})
-        ;
 
-    ecsManager.world.entity()
-        .is_a(duin::ECSPrefab::Node3D)
-        ;
-
-    duin::PhysicsMaterial groundMaterial(0.4, 0.4, 0.5);
+    duin::PhysicsMaterial groundMaterial(0.4f, 0.4f, 0.5f);
     duin::PlaneGeometry groundGeometry;
     duin::CollisionShape groundCollision(groundGeometry, groundMaterial);
     duin::Quaternion groundDir = duin::Vector3ToQuaternion({0.0f, 1.0f, 0.0f}) ;
     static duin::StaticBody ground({ {0.0f, 0.0f, 0.0f}, groundDir }, groundCollision);
 
-
+    duin::Vector3 boxPos(3.0f, 3.0f, 3.0f);
+    duin::Vector3 boxSize(2.0f, 2.0f, 2.0f);
     duin::PhysicsMaterial material(0.4f, 0.4f, 0.5f);
-    duin::BoxGeometry boxGeometry(2, 2, 2);
+    duin::BoxGeometry boxGeometry(boxSize);
     duin::CollisionShape boxCollision(boxGeometry, material);
-    duin::Quaternion boxDir = duin::Vector3ToQuaternion({1.0f, 1.0f, 0.0f}) ;
-    static duin::DynamicBody box({ {0.0f, 2.0f, 0.0f}, boxDir }, boxCollision);
+    duin::Quaternion boxDir = duin::Vector3ToQuaternion({0.0f, 1.0f, 0.0f}) ;
+    duin::Transform3D boxTX(boxPos, boxDir);
+    ecs_entity_t bouncyCube = ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::PhysicsDynamicBody)
+        .set<Position3D, Local>({boxPos})
+        .set<DynamicBodyComponent>({ duin::DynamicBody::Create(boxTX, boxCollision) })
+        ;
+    ecsManager.world.entity()
+        .is_a(duin::ECSPrefab::Cube)
+        .child_of(bouncyCube)
+        .set<CubeComponent>({boxSize.x, boxSize.y, boxSize.z, GRAY})
+        .set<Position3D, Local>({boxPos})
+        ;
 
     ecsManager.ActivateCameraEntity(debugCamera);
-
-    duin::Vector3 cubePos({ 10, 2, 10 });
-    duin::Vector3 cubeSize({ 1, 1, 1 });
-    // duin::PhysicsStaticCube3D cube(pxServer, cubePos, cubeSize);
-    ecsManager.world.entity()
-        .is_a(duin::ECSPrefab::Node3D)
-        .set<DebugCubeComponent>({
-                              .width = cubeSize.x,
-                              .height = cubeSize.y,
-                              .length = cubeSize.z,
-                              .color = ::RED
-                          })
-        .set<Position3D, Local>({ cubePos })
-        ;
 
     SetFPSCamera(1);
     ecsManager.ActivateCameraEntity(fpsCamera);
 
-
     playerSM.SwitchState<PlayerStateOnGround>();
-
-    // int thread_id = -1;
-    // int public_id = -1;
-    //
-    // #pragma omp parallel shared(public_id) private(thread_id)
-    // {
-    //     thread_id = omp_get_thread_num();
-    //     public_id = omp_get_thread_num() * 10;
-    //     printf("Hello from process: %d , %d\n", thread_id, public_id);
-    // }
-    //
-    // printf("thread & public id: %d , %d\n", thread_id, public_id);
 }
 
 void StateGameLoop::State_Exit()
@@ -227,6 +180,7 @@ void StateGameLoop::State_HandleInput()
     if (fpsCameraEnabled && !IsCursorHidden()) {
         SetFPSCamera(1);
     }
+
     if (IsKeyPressed(KEY_P)) {
         // If debugCamera is active, switch to fpsCamera,
         // else switch to debugCamera
@@ -239,6 +193,15 @@ void StateGameLoop::State_HandleInput()
             SetFPSCamera(0);
         }
     }
+
+    // If debugCamera enabled
+    if (!fpsCameraEnabled && IsKeyPressed(KEY_LEFT_CONTROL)) {
+        int x = IsKeyPressed(KEY_D) - IsKeyPressed(KEY_A);
+        int y = IsKeyPressed(KEY_Q) - IsKeyPressed(KEY_E);
+        int z = IsKeyPressed(KEY_W) - IsKeyPressed(KEY_S);
+        debugCamera.set<Movement3DInput>({ (float)x, (float)y, (float)z });
+    }
+
     static int debugShapesEnabled = 0;
     if (IsKeyPressed(KEY_F3)) {
         if (debugShapesEnabled) {
@@ -252,10 +215,7 @@ void StateGameLoop::State_HandleInput()
 
 
     playerSM.ExecuteHandleInput();
-
     duin::Vector2 mouseInput(GetMouseDelta());
-
-
     if (fpsCameraEnabled) {
         player.set<MouseInputVec2>({ { mouseInput } });
         cameraRoot.set<MouseInputVec2>({ { mouseInput } });
@@ -264,25 +224,25 @@ void StateGameLoop::State_HandleInput()
         debugCamera.set<MouseInputVec2>({ { mouseInput } });
     }
 
-    int isOnFloor = 0;
-    const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
-    if (cbc) {
-        isOnFloor = cbc->characterBody->IsOnFloor();
-        if (isOnFloor) {
-            player.add<OnGroundTag>();
-            player.remove<InAirTag>();
-            debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
-        }
-        else {
-            player.remove<OnGroundTag>();
-            player.add<InAirTag>();
-            debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
-        }
-    }
+    // int isOnFloor = 0;
+    // const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
+    // if (cbc) {
+    //     isOnFloor = cbc->characterBody->IsOnFloor();
+    //     if (isOnFloor) {
+    //         player.add<OnGroundTag>();
+    //         player.remove<InAirTag>();
+    //         debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
+    //     }
+    //     else {
+    //         player.remove<OnGroundTag>();
+    //         player.add<InAirTag>();
+    //         debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
+    //     }
+    // }
 
-    if (IsKeyPressed(KEY_SPACE) && isOnFloor) {
-        player.add<JumpTag>();
-    }
+    // if (IsKeyPressed(KEY_SPACE) && isOnFloor) {
+    //     player.add<JumpTag>();
+    // }
 }
 
 void StateGameLoop::State_Update(double delta)
@@ -313,6 +273,7 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
 
     ExecuteQueryGravity(ecsManager.world);
     ExecuteQueryDebugCameraTarget(ecsManager.world);
+    ExecuteQueryMoveDebugCamera(ecsManager.world);
     ExecuteQueryResolveInputForces(ecsManager.world);
     ExecuteQueryResolveInputVelocities(ecsManager.world);
 
@@ -338,11 +299,12 @@ void StateGameLoop::State_Draw()
 {
     playerSM.ExecuteDraw();
 
+    ::DrawCubeWires({0.0f, 0.0f, 0.0f}, 1.0f, 1.0f, 1.0f, RED);
     // DrawCube({0.0f, 0.0f, 0.0f}, 2.9f, 2.9f, 2.9f, BLUE);
-    BeginShaderMode(shader);
-        DrawCube({0.0f, 0.0f, 0.0f}, 3.0f, 3.0f, 3.0f, WHITE);
-        DrawModel(terrain, { 0.0f, 0.0f, 0.0f }, 1, WHITE);
-    EndShaderMode();
+    // BeginShaderMode(shader);
+    //     DrawCube({0.0f, 0.0f, 0.0f}, 3.0f, 3.0f, 3.0f, WHITE);
+    //     DrawModel(terrain, { 0.0f, 0.0f, 0.0f }, 1, WHITE);
+    // EndShaderMode();
 
 
     DrawGrid(1000, 10.0f);

@@ -191,6 +191,18 @@ namespace duin {
             std::shared_ptr<CharacterBody> characterBody;
         };
 
+        struct StaticBodyComponent {
+            std::shared_ptr<StaticBody> staticBody;
+        };
+
+        struct KinematicBodyComponent {
+            std::shared_ptr<KinematicBody> kinematicBody;
+        };
+
+        struct DynamicBodyComponent {
+            std::shared_ptr<DynamicBody> dynamicBody;
+        };
+
         struct PhysicsStaticCubeComponent {
             PhysicsStaticCubeComponent *cube;
         };
@@ -217,7 +229,12 @@ namespace duin {
         extern flecs::entity Node;
         extern flecs::entity Node2D;
         extern flecs::entity Node3D;
+
+        extern flecs::entity PhysicsStaticBody;
+        extern flecs::entity PhysicsKinematicBody;
+        extern flecs::entity PhysicsDynamicBody;
         extern flecs::entity PhysicsCharacterBody;
+
         extern flecs::entity Camera3D;
         extern flecs::entity Cube;
 
@@ -259,6 +276,7 @@ namespace duin {
         void ExecuteQueryUpdateRotation3D();
         void ExecuteQueryHierarchicalUpdateRotation3D();
         void ExecuteQueryUpdateCharacterBody3DPosition();
+        void ExecuteQuerySyncDynamicBody3DPosition();
         void ExecuteQueryUpdateCameraPosition();
         void ExecuteQueryControlCamera();
         void ExecuteQueryDrawCube();

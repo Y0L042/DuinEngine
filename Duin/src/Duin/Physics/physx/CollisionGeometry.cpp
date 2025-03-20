@@ -12,6 +12,16 @@ namespace duin {
         type = cBOX;
     }
 
+    BoxGeometry::BoxGeometry(Vector3 size)
+            : 
+                width(size.x), 
+                height(size.y), 
+                depth(size.z),
+                pxBoxGeometry(size.x/2.0f, size.y/2.0f, size.z/2.0f)
+    {
+        type = cBOX;
+    }
+
 
 
     SphereGeometry::SphereGeometry(float radius)

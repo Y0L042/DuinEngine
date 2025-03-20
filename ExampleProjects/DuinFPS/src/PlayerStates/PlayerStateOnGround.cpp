@@ -21,12 +21,18 @@ PlayerStateOnGround::PlayerStateOnGround(duin::GameStateMachine& owner)
 
 void PlayerStateOnGround::State_Enter()
 {
+    player.add<OnGroundTag>();
     player.remove<CanGravity>();
+    debugWatchlist.Post("PlayerIsOnFloor: ", "%d", 1);
     onGroundSM.SwitchState<PlayerStateOnGroundIdle>();
 }
 
 void PlayerStateOnGround::State_HandleInput()
 {
+    if (IsKeyPressed(KEY_SPACE)) {
+        player.add<JumpTag>();
+    }
+
     onGroundSM.ExecuteHandleInput();
 }
 
@@ -61,5 +67,6 @@ void PlayerStateOnGround::State_DrawUI()
 
 void PlayerStateOnGround::State_Exit()
 {
+    player.remove<OnGroundTag>();
     onGroundSM.FlushStack();
 }
