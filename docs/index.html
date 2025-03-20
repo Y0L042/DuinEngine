@@ -119,7 +119,26 @@ Features</h2>
 <li>PhysX physics</li>
 <li>raylib functionality</li>
 </ul>
-<p>chapter_physics</p>
+<p>Currently it is only available for Windows (x64). Sorry about that.</p>
+<h2><a class="anchor" id="autotoc_md1"></a>
+Generating Project Files</h2>
+<p>Currently the engine is super early in development. As such, a proper build system and project configuration has not been set up yet.</p>
+<h3><a class="anchor" id="autotoc_md2"></a>
+Requirements</h3>
+<ul>
+<li>Visual Studio 2022</li>
+<li>CMake (for dependencies)</li>
+<li>Python 3</li>
+<li>Git</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md3"></a>
+autotoc_md3</h2>
+<p>To build the dependencies, run:</p>
+<div class="fragment"><div class="line">vendor/bin/premake/premake5 vs2022 --deps</div>
+</div><!-- fragment --><p>Specific dependencies can be built with <code>--[DEP]</code></p>
+<p>To just generate the project files, run:</p>
+<div class="fragment"><div class="line">vendor/bin/premake/premake5 vs2022</div>
+</div><!-- fragment --><p>To create a new project, currently one has to add the project to the bottom of the root <code>premake5.lua</code>, and then use one of the <code>ExampleProject</code>s as a template for your own project. This will be fixed in the future.</p>
 <p>See <a class="el" href="md_docs_2TODO.html">ToDo</a> for planned features. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
