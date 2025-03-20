@@ -131,11 +131,9 @@ Requirements</h3>
 <li>Python 3</li>
 <li>Git</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3"></a>
-autotoc_md3</h2>
 <p>To build the dependencies, run:</p>
 <div class="fragment"><div class="line">vendor/bin/premake/premake5 vs2022 --deps</div>
-</div><!-- fragment --><p>Specific dependencies can be built with <code>--[DEP]</code></p>
+</div><!-- fragment --><p>Specific dependencies can be built with <code>--deps --[DEP]</code></p>
 <p>To just generate the project files, run:</p>
 <div class="fragment"><div class="line">vendor/bin/premake/premake5 vs2022</div>
 </div><!-- fragment --><p>To create a new project, currently one has to add the project to the bottom of the root <code>premake5.lua</code>, and then use one of the <code>ExampleProject</code>s as a template for your own project. This will be fixed in the future.</p>
