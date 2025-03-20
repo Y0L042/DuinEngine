@@ -23,15 +23,13 @@ system and project configuration has not been set up yet.
  - Python 3
  - Git
 
-##
-
 To build the dependencies, run:
 
 ```bash
 vendor/bin/premake/premake5 vs2022 --deps
 ```
 
-Specific dependencies can be built with ``--[DEP]``
+Specific dependencies can be built with ``--deps --[DEP]``
 
 To just generate the project files, run:
 
