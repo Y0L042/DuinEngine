@@ -118,9 +118,11 @@ $(document).ready(function(){initNavTree('classduin_1_1LookupVector.html',''); i
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac64d8aa6cbea33af79813152a25db5d7" id="r_ac64d8aa6cbea33af79813152a25db5d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#ac64d8aa6cbea33af79813152a25db5d7">Insert</a> (KEY key, VALUE value)</td></tr>
+<tr class="memdesc:ac64d8aa6cbea33af79813152a25db5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts Value into vector, and inserts Key:Index into hashmap.  <br /></td></tr>
 <tr class="separator:ac64d8aa6cbea33af79813152a25db5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46cdf790cbd0f62428d773b640e0129e" id="r_a46cdf790cbd0f62428d773b640e0129e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#a46cdf790cbd0f62428d773b640e0129e">Remove</a> (KEY)</td></tr>
-<tr class="separator:a46cdf790cbd0f62428d773b640e0129e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9ebdbf0b9eec2a89bc1ca4eaf3070bf" id="r_ae9ebdbf0b9eec2a89bc1ca4eaf3070bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#ae9ebdbf0b9eec2a89bc1ca4eaf3070bf">Remove</a> (KEY key)</td></tr>
+<tr class="memdesc:ae9ebdbf0b9eec2a89bc1ca4eaf3070bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes Value from vector, and Key:Index from hashmap.  <br /></td></tr>
+<tr class="separator:ae9ebdbf0b9eec2a89bc1ca4eaf3070bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff88cbc2f8825230df5fb5d7f2594b66" id="r_aff88cbc2f8825230df5fb5d7f2594b66"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#aff88cbc2f8825230df5fb5d7f2594b66">GetElementCount</a> ()</td></tr>
 <tr class="separator:aff88cbc2f8825230df5fb5d7f2594b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81a17a655a540734d31b02460b612915" id="r_a81a17a655a540734d31b02460b612915"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#a81a17a655a540734d31b02460b612915">Contains</a> (KEY key)</td></tr>
@@ -218,7 +220,7 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00038">38</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00054">54</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -247,7 +249,7 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00033">33</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00049">49</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -277,7 +279,7 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00043">43</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00059">59</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -317,12 +319,21 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00015">15</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p>Inserts Value into vector, and inserts Key:Index into hashmap. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00022">22</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
-<a id="a46cdf790cbd0f62428d773b640e0129e" name="a46cdf790cbd0f62428d773b640e0129e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46cdf790cbd0f62428d773b640e0129e">&#9670;&#160;</a></span>Remove()</h2>
+<a id="ae9ebdbf0b9eec2a89bc1ca4eaf3070bf" name="ae9ebdbf0b9eec2a89bc1ca4eaf3070bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9ebdbf0b9eec2a89bc1ca4eaf3070bf">&#9670;&#160;</a></span>Remove()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -336,7 +347,7 @@ template&lt;typename KEY , typename VALUE &gt; </div>
           <td class="memname">void <a class="el" href="classduin_1_1LookupVector.html">duin::LookupVector</a>&lt; KEY, VALUE &gt;::Remove </td>
           <td>(</td>
           <td class="paramtype">KEY&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -347,7 +358,15 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00027">27</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p>Removes Value from vector, and Key:Index from hashmap. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00037">37</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>

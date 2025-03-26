@@ -68,6 +68,8 @@ var hierarchy =
     [ "SM_Machine", "structSM__Machine.html", null ],
     [ "SM_State", "structSM__State.html", null ],
     [ "duin::ECSComponent::StaticBodyComponent", "structduin_1_1ECSComponent_1_1StaticBodyComponent.html", null ],
+    [ "duin::ECSComponent::Transform2D", "structduin_1_1ECSComponent_1_1Transform2D.html", null ],
+    [ "duin::ECSComponent::Transform3D", "structduin_1_1ECSComponent_1_1Transform3D.html", null ],
     [ "duin::Transform3D", "structduin_1_1Transform3D.html", null ],
     [ "duin::UUID", "classduin_1_1UUID.html", null ],
     [ "UUID", "structUUID.html", null ],

@@ -16,6 +16,8 @@ var annotated_dup =
         [ "Scale2D", "structduin_1_1ECSComponent_1_1Scale2D.html", null ],
         [ "Scale3D", "structduin_1_1ECSComponent_1_1Scale3D.html", null ],
         [ "StaticBodyComponent", "structduin_1_1ECSComponent_1_1StaticBodyComponent.html", null ],
+        [ "Transform2D", "structduin_1_1ECSComponent_1_1Transform2D.html", null ],
+        [ "Transform3D", "structduin_1_1ECSComponent_1_1Transform3D.html", null ],
         [ "Velocity2D", "structduin_1_1ECSComponent_1_1Velocity2D.html", null ],
         [ "Velocity3D", "structduin_1_1ECSComponent_1_1Velocity3D.html", null ]
       ] ],
@@ -57,7 +59,7 @@ var annotated_dup =
       [ "JSONMember", "classduin_1_1JSONMember.html", null ],
       [ "KinematicBody", "classduin_1_1KinematicBody.html", null ],
       [ "Log", "classduin_1_1Log.html", null ],
-      [ "LookupVector", "classduin_1_1LookupVector.html", null ],
+      [ "LookupVector", "classduin_1_1LookupVector.html", "classduin_1_1LookupVector" ],
       [ "Matrix", "structduin_1_1Matrix.html", null ],
       [ "PhysicsMaterial", "classduin_1_1PhysicsMaterial.html", null ],
       [ "PhysicsObject", "classduin_1_1PhysicsObject.html", null ],
