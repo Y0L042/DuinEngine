@@ -40,6 +40,8 @@ namespace ECSComponent {
         world.component<ECSComponent::Rotation2D>();
         world.component<ECSComponent::Scale2D>();
         world.component<ECSComponent::Velocity2D>();
+
+        world.component<ECSComponent::Transform3D>();
         world.component<ECSComponent::Position3D>();
         world.component<ECSComponent::Rotation3D>();
         world.component<ECSComponent::Scale3D>();
@@ -172,6 +174,49 @@ namespace ECSPrefab {
     }
 }
 
+namespace ECSObserver {
+        void RegisterObservers(flecs::world& world)
+        {
+            flecs::observer localObserver;
+            flecs::observer globalObserver;
+
+            // On .set<Position3D, Local>
+            localObserver = world.observer<flecs::pair<ECSComponent::Position3D, ECSTag::Local>>()
+                .event(flecs::OnSet)
+                .each(
+                      [globalObserver](
+                            flecs::iter& it, size_t i,
+                            ECSComponent::Position3D& lPos
+                        ) {
+                          // DN_CORE_INFO(".set<Position3D, Local>");
+                          if (globalObserver.is_valid()) {
+                              globalObserver.disable();
+                              // DN_CORE_INFO("syncinc global");
+                              Vector3 gPos = it.entity(i).get<ECSComponent::Position3D, ECSTag::Global>()->value;
+                              it.entity(i).set<ECSComponent::Position3D, ECSTag::Global>({{0.0f, 0.0f, 0.0f}});
+                              globalObserver.enable();
+                          }
+                      });
+
+            // On .set<Position3D, Global>
+            globalObserver = world.observer<flecs::pair<ECSComponent::Position3D, ECSTag::Global>>()
+                .event(flecs::OnSet)
+                .each(
+                      [localObserver](
+                            flecs::iter& it, size_t i,
+                            ECSComponent::Position3D& gPos
+                        ) {
+                          // DN_CORE_INFO(".set<Position3D, Global>");
+                          if (localObserver.is_valid()) {
+                              localObserver.disable();
+                              // DN_CORE_INFO("syncinc local");
+                              it.entity(i).set<ECSComponent::Position3D, ECSTag::Local>({{0.0f, 0.0f, 0.0f}});
+                              localObserver.enable();
+                          }
+                      });
+        }
+};
+
 
 /*----------------------------------------------------------------------------*/
 //  ECSManager Functions
@@ -184,6 +229,8 @@ void ECSManager::Initialize()
     DN_CORE_INFO("Components registered.");
     ECSPrefab::RegisterPrefabs(world);
     DN_CORE_INFO("Prefabs registered.");
+    ECSObserver::RegisterObservers(world);
+    DN_CORE_INFO("Observers registered.");
 
     QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
     QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { PostPhysicsUpdateQueryExecution(delta); }));
@@ -437,6 +484,7 @@ void ECSManager::ExecuteQuerySyncDynamicBody3DPosition()
             ECSComponent::Position3D& gPos
         ) {
            Vector3 gPosOldValue = gPos.value;
+           // DN_CORE_INFO("gPos {0}, {1}, {2}", gPosOldValue.x, gPosOldValue.y, gPosOldValue.z);
            gPos.value = dynamicBodyComponent.dynamicBody->GetPosition();
            Vector3 gPosDelta = Vector3Subtract(gPos.value, gPosOldValue);
            lPos.value = Vector3Add(lPos.value, gPosDelta);

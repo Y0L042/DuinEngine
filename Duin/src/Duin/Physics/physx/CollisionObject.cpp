@@ -22,7 +22,7 @@ namespace duin {
     CollisionMask CollisionObject::GetCollisionMask()
     {
         return collisionMask;
-    }
+    }  
 
     void CollisionObject::SetCollisionLayer(CollisionLayer bits)
     {

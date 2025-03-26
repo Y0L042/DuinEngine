@@ -1,8 +1,5 @@
 #pragma once
 
-#include <unordered_map>
-#include <memory>
-
 #include <PxPhysicsAPI.h>
 #include <PxPhysics.h>
 #include <characterkinematic/PxController.h>

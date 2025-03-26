@@ -27,6 +27,8 @@ flecs::entity player;
 flecs::entity cameraRoot;
 flecs::entity fpsCamera;
 flecs::entity debugCamera;
+flecs::entity bouncyCube;
+flecs::entity bouncyCubeRender;
 
 Shader shader;
 
@@ -142,26 +144,72 @@ void StateGameLoop::State_Enter()
     duin::Quaternion groundDir = duin::Vector3ToQuaternion({0.0f, 1.0f, 0.0f}) ;
     static duin::StaticBody ground({ {0.0f, 0.0f, 0.0f}, groundDir }, groundCollision);
 
-    duin::Vector3 boxPos(3.0f, 3.0f, 3.0f);
+    duin::Vector3 boxPos(3.0f, 30.0f, 3.0f);
     duin::Vector3 boxSize(2.0f, 2.0f, 2.0f);
     duin::PhysicsMaterial material(0.4f, 0.4f, 0.5f);
     duin::BoxGeometry boxGeometry(boxSize);
     duin::CollisionShape boxCollision(boxGeometry, material);
     duin::Quaternion boxDir = duin::Vector3ToQuaternion({0.0f, 1.0f, 0.0f}) ;
     duin::Transform3D boxTX(boxPos, boxDir);
-    ecs_entity_t bouncyCube = ecsManager.world.entity()
+    bouncyCube = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::PhysicsDynamicBody)
         .set<Position3D, Local>({boxPos})
         .set<DynamicBodyComponent>({ duin::DynamicBody::Create(boxTX, boxCollision) })
         ;
-    ecsManager.world.entity()
+    bouncyCubeRender = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Cube)
         .child_of(bouncyCube)
         .set<CubeComponent>({boxSize.x, boxSize.y, boxSize.z, GRAY})
-        .set<Position3D, Local>({boxPos})
+        // .set<Position3D, Local>({boxPos})
         ;
+    bouncyCubeRender.set<Position3D, Local>({boxPos});
+
+    Transform3D::SetGlobalPosition(bouncyCubeRender, {0.0f, 0.0f, 0.0f});
+
 
     ecsManager.ActivateCameraEntity(debugCamera);
+
+    Transform3D tx0({ 0.0f, 0.0f, 0.0f });
+    Transform3D tx1({ 1.0f, 1.0f, 1.0f });
+    Transform3D tx2({ 2.0f, 2.0f, 2.0f });
+    Transform3D tx3({ 3.0f, 3.0f, 3.0f });
+    Transform3D tx4({ 4.0f, 4.0f, 4.0f });
+    Transform3D tx5({ 5.0f, 5.0f, 5.0f });
+    Transform3D tx6({ 6.0f, 6.0f, 6.0f });
+
+    flecs::entity h0 = ecsManager.world.entity()
+        .emplace<Transform3D>(tx0)
+        ;
+    flecs::entity h1 = ecsManager.world.entity()
+        .child_of(h0)
+        .emplace<Transform3D>(tx1)
+        ;
+    flecs::entity h2 = ecsManager.world.entity()
+        .child_of(h1)
+        .emplace<Transform3D>(tx2)
+        ;
+    flecs::entity h3 = ecsManager.world.entity()
+        .child_of(h2)
+        .emplace<Transform3D>(tx3)
+        ;
+    flecs::entity h4 = ecsManager.world.entity()
+        .child_of(h3)
+        .emplace<Transform3D>(tx4)
+        ;
+    flecs::entity h5 = ecsManager.world.entity()
+        .child_of(h4)
+        .emplace<Transform3D>(tx5)
+        ;
+    flecs::entity h6 = ecsManager.world.entity()
+        .child_of(h5)
+        .emplace<Transform3D>(tx6)
+        ;
+
+    duin::Vector3 p = Transform3D::GetGlobalPosition(h6);
+    DN_INFO("h6 Global Position: {0}, {1}, {2}", p.x, p.y, p.z);
+    h3.set<Transform3D>({ Vector3Add(tx3.GetPosition(), {0.5f, 0.5f, 0.5f}) });
+    p = Transform3D::GetGlobalPosition(h6);
+    DN_INFO("h6 Global Position: {0}, {1}, {2}", p.x, p.y, p.z);
 
     SetFPSCamera(1);
     ecsManager.ActivateCameraEntity(fpsCamera);
@@ -259,6 +307,13 @@ void StateGameLoop::State_Update(double delta)
 
 void StateGameLoop::State_PhysicsUpdate(double delta)
 {    
+    const duin::ECSComponent::DynamicBodyComponent *dbc = bouncyCube.get<duin::ECSComponent::DynamicBodyComponent>();
+    if (dbc) {
+        std::shared_ptr<duin::DynamicBody> db = dbc->dynamicBody;
+        debugWatchlist.Post("BouncyCube Position: ", "{ %.2f, %.2f, %.2f }", db->GetPosition().x, db->GetPosition().y, db->GetPosition().z);
+        bouncyCubeRender.set<Position3D, Global>({db->GetPosition()});
+    }
+
     playerSM.ExecutePhysicsUpdate(delta);
 
     ExecuteQueryComputePlayerInputVelocity(ecsManager.world);
@@ -299,6 +354,7 @@ void StateGameLoop::State_Draw()
 {
     playerSM.ExecuteDraw();
 
+
     ::DrawCubeWires({0.0f, 0.0f, 0.0f}, 1.0f, 1.0f, 1.0f, RED);
     // DrawCube({0.0f, 0.0f, 0.0f}, 2.9f, 2.9f, 2.9f, BLUE);
     // BeginShaderMode(shader);
@@ -312,6 +368,7 @@ void StateGameLoop::State_Draw()
 
 void StateGameLoop::State_DrawUI()
 {
+
     playerSM.ExecuteDrawUI();
 
     //const duin::Vector3 playerVel = player.get<duin::ECSComponent::Velocity3D>()->value;
