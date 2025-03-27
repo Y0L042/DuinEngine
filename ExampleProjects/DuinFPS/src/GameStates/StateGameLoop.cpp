@@ -179,38 +179,48 @@ void StateGameLoop::State_Enter()
     Transform3D tx6({ 6.0f, 6.0f, 6.0f });
 
     flecs::entity h0 = ecsManager.world.entity()
-        .emplace<Transform3D>(tx0)
+        .set<Transform3D>({{ 0.0f, 0.0f, 0.0f }})
         ;
     flecs::entity h1 = ecsManager.world.entity()
         .child_of(h0)
-        .emplace<Transform3D>(tx1)
+        .set<Transform3D>({{ 1.0f, 1.0f, 1.0f }})
         ;
     flecs::entity h2 = ecsManager.world.entity()
         .child_of(h1)
-        .emplace<Transform3D>(tx2)
+        .set<Transform3D>({{ 2.0f, 2.0f, 2.0f }})
         ;
     flecs::entity h3 = ecsManager.world.entity()
         .child_of(h2)
-        .emplace<Transform3D>(tx3)
+        .set<Transform3D>({{ 3.0f, 3.0f, 3.0f }})
         ;
     flecs::entity h4 = ecsManager.world.entity()
         .child_of(h3)
-        .emplace<Transform3D>(tx4)
+        .set<Transform3D>({{ 4.0f, 4.0f, 4.0f }})
         ;
     flecs::entity h5 = ecsManager.world.entity()
         .child_of(h4)
-        .emplace<Transform3D>(tx5)
+        .set<Transform3D>({{ 5.0f, 5.0f, 5.0f }})
         ;
     flecs::entity h6 = ecsManager.world.entity()
         .child_of(h5)
-        .emplace<Transform3D>(tx6)
+        .set<Transform3D>({{ 6.0f, 6.0f, 6.0f }})
         ;
 
+    std::stringstream ss;
+    flecs::entity current = h6;
+    while (current.is_valid()) {
+        ss << current.id() << " ";
+        current = current.parent();
+    }
+    DN_INFO("{0}", ss.str());
+
+
     duin::Vector3 p = Transform3D::GetGlobalPosition(h6);
-    DN_INFO("h6 Global Position: {0}, {1}, {2}", p.x, p.y, p.z);
-    h3.set<Transform3D>({ Vector3Add(tx3.GetPosition(), {0.5f, 0.5f, 0.5f}) });
-    p = Transform3D::GetGlobalPosition(h6);
-    DN_INFO("h6 Global Position: {0}, {1}, {2}", p.x, p.y, p.z);
+    DN_INFO("h6 Global Position 1: {0}, {1}, {2}", p.x, p.y, p.z);
+    h3.set<Transform3D>({{3.5f, 3.5f, 3.5f}});
+    // p = Transform3D::GetGlobalPosition(h6);
+    p = h6.get<Transform3D>()->GetGlobalPosition();
+    DN_INFO("h6 Global Position 2: {0}, {1}, {2}", p.x, p.y, p.z);
 
     SetFPSCamera(1);
     ecsManager.ActivateCameraEntity(fpsCamera);
