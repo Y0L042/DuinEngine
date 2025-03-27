@@ -53,10 +53,13 @@ namespace ECSComponent {
         world.component<ECSComponent::DynamicBodyComponent>();
         world.component<ECSComponent::CharacterBodyComponent>();
         world.component<ECSComponent::PhysicsStaticCubeComponent>();
-        world.component<::Camera3D>();
 
         world.component<ECSComponent::DebugCapsuleComponent>();
         world.component<ECSComponent::DebugCubeComponent>();
+
+        // Raylib components
+        world.component<::Camera3D>();
+
     }
 }
 
@@ -99,13 +102,7 @@ namespace ECSPrefab {
 
         Node3D = world.prefab("Node3D")
             .is_a(ECSPrefab::Node)
-            .set<ECSComponent::Position3D,  ECSTag::Local>({ 0.0f, 0.0f, 0.0f })
-            .set<ECSComponent::Rotation3D,  ECSTag::Local>({ 0.0f, 0.0f, 0.0f, 1.0f })
-            .set<ECSComponent::Scale3D,     ECSTag::Local>({ 1.0f, 1.0f, 1.0f })
-
-            .set<ECSComponent::Position3D,  ECSTag::Global>({ 0.0f, 0.0f, 0.0f })
-            .set<ECSComponent::Rotation3D,  ECSTag::Global>({ 0.0f, 0.0f, 0.0f, 1.0f })
-            .set<ECSComponent::Scale3D,     ECSTag::Global>({ 1.0f, 1.0f, 1.0f })
+            .set<ECSComponent::Transform3D>({})
             ;
 
         PhysicsStaticBody = world.prefab("StaticBody")
@@ -177,6 +174,10 @@ namespace ECSPrefab {
 namespace ECSObserver {
         void RegisterObservers(flecs::world& world)
         {
+
+            ECSComponent::Transform3D::RegisterOnAddObserver(world);
+            ECSComponent::Transform3D::RegisterOnSetObserver(world);
+
             flecs::observer localObserver;
             flecs::observer globalObserver;
 
@@ -218,401 +219,322 @@ namespace ECSObserver {
 };
 
 
-/*----------------------------------------------------------------------------*/
-//  ECSManager Functions
-/*----------------------------------------------------------------------------*/
-void ECSManager::Initialize()
-{
-    ECSTag::RegisterTags(world);
-    DN_CORE_INFO("Tags registered.");
-    ECSComponent::RegisterComponents(world);
-    DN_CORE_INFO("Components registered.");
-    ECSPrefab::RegisterPrefabs(world);
-    DN_CORE_INFO("Prefabs registered.");
-    ECSObserver::RegisterObservers(world);
-    DN_CORE_INFO("Observers registered.");
+    /*----------------------------------------------------------------------------*/
+    //  ECSManager Functions
+    /*----------------------------------------------------------------------------*/
+    void ECSManager::Initialize()
+    {
+        ECSTag::RegisterTags(world);
+        DN_CORE_INFO("Tags registered.");
+        ECSComponent::RegisterComponents(world);
+        DN_CORE_INFO("Components registered.");
+        ECSPrefab::RegisterPrefabs(world);
+        DN_CORE_INFO("Prefabs registered.");
+        ECSObserver::RegisterObservers(world);
+        DN_CORE_INFO("Observers registered.");
 
-    QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
-    QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { PostPhysicsUpdateQueryExecution(delta); }));
-    QueuePostDrawCallback(std::function<void()>([this]() { PostDrawQueryExecution(); }));
-    QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
-}
-
-flecs::entity ECSManager::CreateEntityFromJSON(JSONMember& member)
-{
-    std::string ecsData = member.GetMemberDataAsString();
-    flecs::entity entity = world.entity();
-    entity.from_json(ecsData.c_str());
-    return flecs::entity();
-}
-
-void ECSManager::ActivateCameraEntity(flecs::entity entity)
-{
-    if (entity.has<::Camera3D>()) {
-        world.defer_begin();
-            world.each([](flecs::entity e, ECSTag::ActiveCamera) {
-                e.remove<ECSTag::ActiveCamera>();
-            });
-            entity.add<ECSTag::ActiveCamera>();
-        world.defer_end();
+        QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
+        QueuePostPhysicsUpdateCallback(std::function<void(double)>([this](double delta) { PostPhysicsUpdateQueryExecution(delta); }));
+        QueuePostDrawCallback(std::function<void()>([this]() { PostDrawQueryExecution(); }));
+        QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
     }
-}
 
-void ECSManager::SetGlobalPosition3D(flecs::entity entity, Vector3 newPos)
-{
-    Vector3 deltaPos = newPos - entity.get<ECSComponent::Position3D, ECSTag::Global>()->value;
-    Vector3 localPos = entity.get<ECSComponent::Position3D, ECSTag::Local>()->value;
-    entity.set<ECSComponent::Position3D, ECSTag::Local>({ { localPos + deltaPos } });
-    entity.set<ECSComponent::Position3D, ECSTag::Global>({ { newPos } });
-}
+    flecs::entity ECSManager::CreateEntityFromJSON(JSONMember& member)
+    {
+        std::string ecsData = member.GetMemberDataAsString();
+        flecs::entity entity = world.entity();
+        entity.from_json(ecsData.c_str());
+        return flecs::entity();
+    }
 
-void ECSManager::PostUpdateQueryExecution(double delta)
-{
-    
-}
-
-void ECSManager::PostPhysicsUpdateQueryExecution(double delta)
-{
-    /* Update physics-objects' positions first */
-    ExecuteQueryUpdateCharacterBody3DPosition();
-    ExecuteQuerySyncDynamicBody3DPosition();
-
-    //ExecuteQueryUpdatePosition3D();
-    ExecuteQueryHierarchicalUpdatePosition3D();
-
-    ExecuteQueryUpdateRotation3D();
-    ExecuteQueryHierarchicalUpdateRotation3D();
-
-
-    ExecuteQueryControlCamera();
-    ExecuteQuerySetCameraAsActive();
-}
-
-void ECSManager::PostDrawQueryExecution()
-{
-    ExecuteQueryDrawCube();
-    ExecuteQueryDrawDebugCapsule();
-    ExecuteQueryDrawDebugCube();
-}
-
-void ECSManager::PostDrawUIQueryExecution()
-{
-}
-
-void ECSManager::InitializeRemoteExplorer()
-{}
-
-void ECSManager::ExecuteQuerySetCameraAsActive()
-{
-    static flecs::query q = world.query_builder<
-        ::Camera3D
-    >()
-    .with<ECSTag::ActiveCamera>()
-    .build();
-
-    q.each([](
-            ::Camera3D& camera
-        ) {
-            SetActiveCamera3D(camera);
-        });
-}
-
-void ECSManager::ExecuteCharacterBody3DCreation(PhysicsServer& server)
-{
-    static flecs::query q = world.query_builder<
-        ECSComponent::CharacterBodyComponent,
-        const ECSComponent::Position3D
-    >()
-    .term_at(1).second<ECSTag::Global>()
-    .cached()
-    .build();
-     
-    q.each([&server](
-        ECSComponent::CharacterBodyComponent& cb,
-        const ECSComponent::Position3D& p
-    ) {
-    });
-}
-
-void ECSManager::ExecuteQueryUpdatePosition3D()
-{
-    static flecs::query q = world.query_builder<
-        ECSComponent::Position3D,
-        const ECSComponent::Velocity3D
-    >()
-    .term_at(0).second<ECSTag::Local>()
-    .cached()
-    .build();
-
-    q.each([](
-        ECSComponent::Position3D& p,
-        const ECSComponent::Velocity3D& v
-        ) {
-            duin::Vector3 vDelta = duin::Vector3Scale(v.value, GetPhysicsFrameTime());
-            p.value = duin::Vector3Add(p.value, vDelta);
-        });
-}
-
-void ECSManager::ExecuteQueryHierarchicalUpdatePosition3D()
-{
-    static flecs::query q = world.query_builder<
-        ECSComponent::Position3D,
-        const ECSComponent::Position3D, 
-        const ECSComponent::Position3D * 
-    >()
-    .term_at(0).second<ECSTag::Global>()
-    .term_at(1).second<ECSTag::Local>()
-    .term_at(2).second<ECSTag::Global>()
-    .term_at(2).parent().cascade()
-    .cached()
-    .build();
-
-    q.each([](
-           ECSComponent::Position3D& global_pos,
-           const ECSComponent::Position3D& local_pos, 
-           const ECSComponent::Position3D* parent_global_pos
-        ) {
-            global_pos.value = local_pos.value;
-            if (parent_global_pos) {
-                global_pos.value += parent_global_pos->value;
-            }
-        });
-}
-
-void ECSManager::ExecuteQueryUpdateRotation3D()
-{
-    static flecs::query q = world.query_builder<
-        ECSComponent::Rotation3D,
-        const ECSComponent::Rotation3D
-    >()
-        .term_at(0).second<ECSTag::Local>()
-        .cached()
-        .build();
-
-    q.each([](
-        ECSComponent::Rotation3D& p,
-        const ECSComponent::Rotation3D& v
-        ) {
-            // TODO
-        });
-}
-
-void ECSManager::ExecuteQueryHierarchicalUpdateRotation3D()
-{
-    static flecs::query q = world.query_builder<
-        ECSComponent::Rotation3D,
-        const ECSComponent::Rotation3D,
-        const ECSComponent::Rotation3D*
-    >()
-        .term_at(0).second<ECSTag::Global>()
-        .term_at(1).second<ECSTag::Local>()
-        .term_at(2).second<ECSTag::Global>()
-        .term_at(2).parent().cascade()
-        .cached()
-        .build();
-
-    q.each([](
-            ECSComponent::Rotation3D& global_rot,
-            const ECSComponent::Rotation3D& local_rot,
-            const ECSComponent::Rotation3D *parent_global_rot
-        ) {
-            global_rot.value = local_rot.value;
-            if (parent_global_rot) {
-                global_rot.value = QuaternionMultiply(parent_global_rot->value, local_rot.value);
-                global_rot.value = QuaternionNormalize(global_rot.value);
-            }
-        });
-}
-
-void ECSManager::ExecuteQueryUpdateCharacterBody3DPosition()
-{
-    static flecs::query q = world.query_builder<
-        ECSComponent::CharacterBodyComponent,
-        ECSComponent::Position3D,
-        const ECSComponent::Position3D,
-        ECSComponent::Velocity3D
-    >()
-        .term_at(1).second<ECSTag::Local>()
-        .term_at(2).second<ECSTag::Global>()
-        .with<ECSTag::PxKinematic>()
-        .cached()
-        .build();
-    q.each([](
-            flecs::entity e,
-            ECSComponent::CharacterBodyComponent& cb,
-            ECSComponent::Position3D& localPos,
-            const ECSComponent::Position3D& globalPos,
-            ECSComponent::Velocity3D& velocity
-        ) {
-            // Move CharacterBody3D and get physics-resolved global position
-            double delta = GetPhysicsFrameTime();
-            Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
-
-            Vector3 oldPos = cb.characterBody->GetFootPosition();
-            cb.characterBody->Move(vDelta, delta);
-            Vector3 newPos = cb.characterBody->GetFootPosition();
-
-            // add distance between current globalPos (old) and pxBody global pos (new) to localPos
-            localPos.value = Vector3Add(Vector3Subtract(newPos, globalPos.value), localPos.value);
-
-            velocity.value = cb.characterBody->GetCurrentVelocity();
-
-            // If autostep has happened, cap Y velocity
-            Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
-            static const float AUTOSTEP_FACTOR = 5.0f;
-            if (std::abs(distanceMoved.y) > std::abs(vDelta.y * AUTOSTEP_FACTOR)) {
-                velocity.value.y = vDelta.y;
-            } 
-        });
-}
-
-void ECSManager::ExecuteQuerySyncDynamicBody3DPosition()
-{
-    static flecs::query q = world.query_builder<
-        const ECSComponent::DynamicBodyComponent,
-        ECSComponent::Position3D,
-        ECSComponent::Position3D
-    >()
-    .term_at(1).second<ECSTag::Local>()
-    .term_at(2).second<ECSTag::Global>()
-    .cached()
-    .build();
-
-    q.each([](
-            const ECSComponent::DynamicBodyComponent& dynamicBodyComponent,
-            ECSComponent::Position3D& lPos,
-            ECSComponent::Position3D& gPos
-        ) {
-           Vector3 gPosOldValue = gPos.value;
-           // DN_CORE_INFO("gPos {0}, {1}, {2}", gPosOldValue.x, gPosOldValue.y, gPosOldValue.z);
-           gPos.value = dynamicBodyComponent.dynamicBody->GetPosition();
-           Vector3 gPosDelta = Vector3Subtract(gPos.value, gPosOldValue);
-           lPos.value = Vector3Add(lPos.value, gPosDelta);
-        });
-}
-
-void ECSManager::ExecuteQueryUpdateCameraPosition()
-{
-    static flecs::query q = world.query_builder<
-        ::Camera3D,
-        const ECSComponent::Position3D
-    >()
-    .term_at(1).second<ECSTag::Global>()
-    .cached()
-    .build();
-
-    q.each([](
-            ::Camera3D& camera,
-            const ECSComponent::Position3D& pos
-        ) {
-            camera.position = pos.value.ToRaylib();
-        });
-}
-
-void ECSManager::ExecuteQueryControlCamera()
-{
-    static flecs::query q = world.query_builder<
-        ::Camera3D, 
-        const ECSComponent::Position3D, 
-        const ECSComponent::Rotation3D
-    >()
-    .term_at(1).second<ECSTag::Global>()
-    .term_at(2).second<ECSTag::Global>()
-    .cached()
-    .build();
-
-    q.each([](
-            flecs::iter& it, 
-            size_t index,
-            ::Camera3D& c, 
-            const ECSComponent::Position3D& p, 
-            const ECSComponent::Rotation3D& r
-        ) {
-            c.position = p.value.ToRaylib();
-
-            // Define the default forward vector (0, 0, -1) in Raylib's coordinate system
-            Vector3 defaultForward = { 0.0f, 0.0f, -1.0f };
-
-            // Rotate the default forward vector by the Rotation3D quaternion to get the actual forward direction
-            Vector3 forward = Vector3RotateByQuaternion(defaultForward, r.value);
-
-            // Set the camera's target to position + forward direction
-            c.target = Vector3Add(p.value, forward).ToRaylib();
-
-            // Set the up vector to keep the camera upright (0, 1, 0)
-            c.up = { 0.0f, 1.0f, 0.0f };
+    void ECSManager::ActivateCameraEntity(flecs::entity entity)
+    {
+        if (entity.has<::Camera3D>()) {
+            world.defer_begin();
+                world.each([](flecs::entity e, ECSTag::ActiveCamera) {
+                    e.remove<ECSTag::ActiveCamera>();
+                });
+                entity.add<ECSTag::ActiveCamera>();
+            world.defer_end();
         }
-    );
-}
+    }
 
-void ECSManager::ExecuteQueryDrawCube()
-{
-    static flecs::query q = world.query_builder<
-        const ECSComponent::CubeComponent,
-        const ECSComponent::Position3D
-    >()
-    .term_at(1).second<ECSTag::Global>()
-    .cached()
-    .build();
+    void ECSManager::SetGlobalPosition3D(flecs::entity entity, Vector3 newPos)
+    {
+        Vector3 deltaPos = newPos - entity.get<ECSComponent::Position3D, ECSTag::Global>()->value;
+        Vector3 localPos = entity.get<ECSComponent::Position3D, ECSTag::Local>()->value;
+        entity.set<ECSComponent::Position3D, ECSTag::Local>({ { localPos + deltaPos } });
+        entity.set<ECSComponent::Position3D, ECSTag::Global>({ { newPos } });
+    }
 
-    q.each([](
-        const ECSComponent::CubeComponent& cube,
-        const ECSComponent::Position3D& pos
-        ) {
-           ::DrawCube(pos.value.ToRaylib(),
-                      cube.width,
-                      cube.height,
-                      cube.length,
-                      cube.color);
-        });
-}
+    void ECSManager::PostUpdateQueryExecution(double delta)
+    {
+        
+    }
 
-void ECSManager::ExecuteQueryDrawDebugCapsule()
-{
-    static flecs::query q = world.query_builder<
-        const ECSComponent::DebugCapsuleComponent,
-        const ECSComponent::Position3D
-    >()
-    .term_at(1).second<ECSTag::Global>()
-    .cached()
-    .build();
+    void ECSManager::PostPhysicsUpdateQueryExecution(double delta)
+    {
+        /* Update physics-objects' positions first */
+        ExecuteQueryCharacterBody3DUpdateTransform();
+        ExecuteQuerySyncDynamicBody3DTransform();
+        ExecuteQueryTransform3DHierarchicalUpdate();
 
-    q.each([](
-        const ECSComponent::DebugCapsuleComponent& capsule,
-        const ECSComponent::Position3D& pos
-        ) {
-            ::DrawCapsuleWires(pos.value.ToRaylib(),
-                Vector3Add(pos.value, { 0.0f, capsule.height, 0.0f }).ToRaylib(),
-                capsule.radius,
-                capsule.slices,
-                capsule.rings,
-                capsule.color
-            );
-        });
-}
+        ExecuteQueryControlCamera();
+        ExecuteQuerySetCameraAsActive();
+    }
 
-void ECSManager::ExecuteQueryDrawDebugCube()
-{
-    static flecs::query q = world.query_builder<
-        const ECSComponent::DebugCubeComponent,
-        const ECSComponent::Position3D
-    >()
-    .term_at(1).second<ECSTag::Global>()
-    .cached()
-    .build();
+    void ECSManager::PostDrawQueryExecution()
+    {
+        ExecuteQueryDrawCube();
+        ExecuteQueryDrawDebugCapsule();
+        ExecuteQueryDrawDebugCube();
+    }
 
-    q.each([](
-        const ECSComponent::DebugCubeComponent& cube,
-        const ECSComponent::Position3D& pos
-        ) {
-            ::DrawCubeWires(
-                Vector3Add(pos.value, { cube.width / 2.0f, cube.height / 2.0f, cube.length / 2.0f }).ToRaylib(),
-                cube.width,
-                cube.height,
-                cube.length,
-                cube.color
-            );
-        });
-}
+    void ECSManager::PostDrawUIQueryExecution()
+    {
+    }
+
+    void ECSManager::InitializeRemoteExplorer()
+    {}
+
+
+    /*----------------------------------------------------------------------  
+     * Transform Updates
+    ----------------------------------------------------------------------*/  
+    void ECSManager::ExecuteQueryCharacterBody3DUpdateTransform()
+    {
+        static flecs::query q = world.query_builder<
+            ECSComponent::CharacterBodyComponent,
+            ECSComponent::Transform3D,
+            ECSComponent::Velocity3D
+        >()
+            .with<ECSTag::PxKinematic>()
+            .cached()
+            .build();
+        q.each([](
+                flecs::entity e,
+                ECSComponent::CharacterBodyComponent& cb,
+                ECSComponent::Transform3D& tx,
+                ECSComponent::Velocity3D& velocity
+            ) {
+                // Move CharacterBody3D and get physics-resolved global position
+                double delta = GetPhysicsFrameTime();
+                Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
+
+                Vector3 oldPos = cb.characterBody->GetFootPosition();
+                cb.characterBody->Move(vDelta, delta);
+                Vector3 newPos = cb.characterBody->GetFootPosition();
+
+                // add distance between current globalPos (old) and pxBody global pos (new) to localPos
+                Vector3 globalDelta = Vector3Subtract(newPos, ECSComponent::Transform3D::GetGlobalPosition(e));
+                Vector3 newLocalPos = Vector3Add(globalDelta, tx.GetPosition()); 
+                tx.SetPosition(newLocalPos);
+
+                velocity.value = cb.characterBody->GetCurrentVelocity();
+
+                // If autostep has happened, cap Y velocity
+                Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
+                static const float AUTOSTEP_FACTOR = 5.0f;
+                if (std::abs(distanceMoved.y) > std::abs(vDelta.y * AUTOSTEP_FACTOR)) {
+                    velocity.value.y = vDelta.y;
+                } 
+            });
+    }
+
+    void ECSManager::ExecuteQuerySyncDynamicBody3DTransform()
+    {
+        static flecs::query q = world.query_builder<
+            const ECSComponent::DynamicBodyComponent,
+            ECSComponent::Transform3D
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+                flecs::entity e,
+                const ECSComponent::DynamicBodyComponent& dynamicBodyComponent,
+                ECSComponent::Transform3D& tx
+            ) {
+               Vector3 gPosOldValue = ECSComponent::Transform3D::GetGlobalPosition(e);
+               // DN_CORE_INFO("gPos {0}, {1}, {2}", gPosOldValue.x, gPosOldValue.y, gPosOldValue.z);
+               Vector3 newGPos = dynamicBodyComponent.dynamicBody->GetPosition();
+               ECSComponent::Transform3D::SetGlobalPosition(e, newGPos);
+               Vector3 gPosDelta = Vector3Subtract(newGPos, gPosOldValue);
+               Vector3 lPosValue = Vector3Add(tx.GetPosition(), gPosDelta);
+               tx.SetPosition(lPosValue);
+            });
+    }
+
+    void ECSManager::ExecuteQueryTransform3DHierarchicalUpdate()
+    {
+        static flecs::query q = world.query_builder<
+            ECSComponent::Transform3D,
+            const ECSComponent::Transform3D * 
+        >()
+        .term_at(1).parent().cascade()
+        .cached()
+        .build();
+
+        q.each([](
+               flecs::entity e,
+               ECSComponent::Transform3D& tx,
+               const ECSComponent::Transform3D *parent_tx
+            ) {
+                 // ECSComponent::Transform3D::SetGlobalPosition(e, tx.GetPosition());
+                //tx.SetGlobalPosition(tx.GetPosition());
+                if (parent_tx) {
+                    //Vector3 sum = Vector3Add(tx.GetPosition(), parent_tx->GetGlobalPosition());
+                    //tx.SetGlobalPosition(sum);
+                    // Vector3 sum = Vector3Add(ECSComponent::Transform3D::GetGlobalPosition(e), parent_tx->GetPosition());
+                    //ECSComponent::Transform3D::SetGlobalPosition(e, sum);
+
+                    tx.InvalidateCacheFlags();
+
+                    // Force a recalculation by accessing the global position:
+                    ECSComponent::Transform3D::GetGlobalPosition(e);
+                }
+            });
+    }
+
+    void ECSManager::ExecuteQueryUpdateCameraPosition()
+    {
+        static flecs::query q = world.query_builder<
+            ::Camera3D,
+            const ECSComponent::Transform3D
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+                flecs::entity e,
+                ::Camera3D& camera,
+                const ECSComponent::Transform3D& tx
+            ) {
+                Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
+                camera.position = gPos.ToRaylib();
+            });
+    }
+
+    void ECSManager::ExecuteQueryControlCamera()
+    {
+        static flecs::query q = world.query_builder<
+            ::Camera3D, 
+            const ECSComponent::Transform3D 
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+                flecs::entity e,
+                ::Camera3D& c, 
+                const ECSComponent::Transform3D& tx 
+            ) {
+                Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
+                Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e);
+
+                c.position = gPos.ToRaylib();
+
+                // Define the default forward vector (0, 0, -1) in Raylib's coordinate system
+                Vector3 defaultForward = { 0.0f, 0.0f, -1.0f };
+
+                // Rotate the default forward vector by the Rotation3D quaternion to get the actual forward direction
+                Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);
+
+                // Set the camera's target to position + forward direction
+                c.target = Vector3Add(gPos, forward).ToRaylib();
+
+                // Set the up vector to keep the camera upright (0, 1, 0)
+                c.up = { 0.0f, 1.0f, 0.0f };
+            }
+        );
+    }
+
+    void ECSManager::ExecuteQueryDrawCube()
+    {
+        static flecs::query q = world.query_builder<
+            const ECSComponent::CubeComponent,
+            const ECSComponent::Transform3D
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+            flecs::entity e,
+            const ECSComponent::CubeComponent& cube,
+            const ECSComponent::Transform3D& tx
+            ) {
+               Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
+               ::DrawCube(gPos.ToRaylib(),
+                          cube.width,
+                          cube.height,
+                          cube.length,
+                          cube.color);
+            });
+    }
+
+    void ECSManager::ExecuteQueryDrawDebugCapsule()
+    {
+        static flecs::query q = world.query_builder<
+            const ECSComponent::DebugCapsuleComponent,
+            const ECSComponent::Transform3D
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+            flecs::entity e,
+            const ECSComponent::DebugCapsuleComponent& capsule,
+            const ECSComponent::Transform3D& tx
+            ) {
+                Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
+                ::DrawCapsuleWires(gPos.ToRaylib(),
+                    Vector3Add(gPos, { 0.0f, capsule.height, 0.0f }).ToRaylib(),
+                    capsule.radius,
+                    capsule.slices,
+                    capsule.rings,
+                    capsule.color
+                );
+            });
+    }
+
+    void ECSManager::ExecuteQueryDrawDebugCube()
+    {
+        static flecs::query q = world.query_builder<
+            const ECSComponent::DebugCubeComponent,
+            const ECSComponent::Transform3D
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+            flecs::entity e,
+            const ECSComponent::DebugCubeComponent& cube,
+            const ECSComponent::Transform3D& tx
+            ) {
+                Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
+                ::DrawCubeWires(
+                    Vector3Add(gPos, { cube.width / 2.0f, cube.height / 2.0f, cube.length / 2.0f }).ToRaylib(),
+                    cube.width,
+                    cube.height,
+                    cube.length,
+                    cube.color
+                );
+            });
+    }
+
+    void ECSManager::ExecuteQuerySetCameraAsActive()
+    {
+        static flecs::query q = world.query_builder<
+            ::Camera3D
+        >()
+        .with<ECSTag::ActiveCamera>()
+        .build();
+
+        q.each([](
+                ::Camera3D& camera
+            ) {
+                SetActiveCamera3D(camera);
+            });
+    }
 
 }

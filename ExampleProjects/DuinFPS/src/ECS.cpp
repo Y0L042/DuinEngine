@@ -46,9 +46,10 @@ void ExecuteQueryComputePlayerInputVelocity(flecs::world& world)
     static flecs::query q = world.query_builder<
         PlayerMovementInputVec3,
         InputVelocityDirection,
-        const Rotation3D
+        const Transform3D
+        // const Rotation3D
     >()
-    .term_at(2).second<Global>()
+    // .term_at(2).second<Global>()
     .cached()
     .build();
      
@@ -56,9 +57,11 @@ void ExecuteQueryComputePlayerInputVelocity(flecs::world& world)
             flecs::entity e,
             PlayerMovementInputVec3& input,
             InputVelocityDirection& iDir,
-            const Rotation3D& r
+            const Transform3D& tx
+            // const Rotation3D& r
         ) {
-           duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r.value);
+           duin::Quaternion r = Transform3D::GetGlobalRotation(e);
+           duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r);
            iDir.value = duin::Vector3(alignedInput.x, 0.0f, alignedInput.z);
     });
 }
@@ -83,16 +86,18 @@ void ExecuteQueryDebugCameraTarget(flecs::world& world)
 void ExecuteQueryUpdatePlayerYaw(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
-        Rotation3D,  
+        // Rotation3D,  
+        Transform3D,
         CameraYawComponent,
         const MouseInputVec2
     >()
-    .term_at(0).second<Local>()
+    // .term_at(0).second<Local>()
     .cached()
     .build();
 
     q.each([](
-            Rotation3D& r, 
+            // Rotation3D& r, 
+            Transform3D& tx,
             CameraYawComponent& yaw,
             const MouseInputVec2& mouseDelta
         ) {
@@ -106,8 +111,8 @@ void ExecuteQueryUpdatePlayerYaw(flecs::world& world)
 
             duin::Quaternion yawQuat = duin::QuaternionFromAxisAngle(duin::Vector3{ 0.0f, 1.0f, 0.0f }, deltaYaw);
 
-            r.value = duin::QuaternionMultiply(r.value, yawQuat);
-            r.value = duin::QuaternionNormalize(r.value);
+            tx.SetRotation(duin::QuaternionMultiply(tx.GetRotation(), yawQuat));
+            tx.SetRotation(duin::QuaternionNormalize(tx.GetRotation()));
         }
     );
 }
@@ -115,16 +120,18 @@ void ExecuteQueryUpdatePlayerYaw(flecs::world& world)
 void ExecuteQueryUpdateCameraPitch(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
-        Rotation3D, 
+        // Rotation3D, 
+        Transform3D,
         CameraPitchComponent,
         const MouseInputVec2
     >()
-    .term_at(0).second<Local>()
+    // .term_at(0).second<Local>()
     .cached()
     .build();
 
     q.each([](
-            Rotation3D& r,
+            // Rotation3D& r,
+            Transform3D& tx,
             CameraPitchComponent& pitch,
             const MouseInputVec2& mouseDelta
         ) {
@@ -142,12 +149,12 @@ void ExecuteQueryUpdateCameraPitch(flecs::world& world)
             if (pitch.value < -maxPitch) pitch.value = minPitch;
 
             // Extract current yaw from the rotation quaternion
-            duin::Vector3 euler = duin::QuaternionToEuler(r.value);
+            duin::Vector3 euler = duin::QuaternionToEuler(tx.GetRotation());
             float currentYaw = euler.y;
 
             // Reconstruct the rotation quaternion with clamped pitch and existing yaw
-            r.value = duin::QuaternionFromEuler(pitch.value, currentYaw, 0.0f); // Assuming roll is zero
-            r.value = duin::QuaternionNormalize(r.value);
+            tx.SetRotation(duin::QuaternionFromEuler(pitch.value, currentYaw, 0.0f)); // Assuming roll is zero
+            tx.SetRotation(duin::QuaternionNormalize(tx.GetRotation()));
         }
     );
 }
@@ -354,10 +361,11 @@ void ExecuteQueryVelocityBob(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
         VelocityBob,
-        Position3D,
+        // Position3D,
+        Transform3D,
         const Velocity3D *
     >()
-        .term_at(1).second<Local>()
+        // .term_at(1).second<Local>()
         .term_at(2).parent().cascade()
         .with<OnGroundTag>()
         .cached()
@@ -367,7 +375,8 @@ void ExecuteQueryVelocityBob(flecs::world& world)
     q.each([](
             flecs::entity e,
             VelocityBob& bob,
-            Position3D& localPos,
+            // Position3D& localPos,
+            Transform3D& tx,
             const Velocity3D *velocity
         ){
             if (velocity) {
@@ -375,8 +384,8 @@ void ExecuteQueryVelocityBob(flecs::world& world)
                 float velocityMagnitude = duin::Vector3LengthF(hVelocity);
                 float bobEffectX = std::sin(GetTime() * bob.frequency / 2.0f) * (velocityMagnitude / 15000.0f) * bob.amplitude; 
                 float bobEffectY = std::sin(GetTime() * bob.frequency) * (velocityMagnitude / 10000.0f) * bob.amplitude; 
-                localPos.value.x = bobEffectX * duin::GetPhysicsFPS();
-                localPos.value.y = bobEffectY * duin::GetPhysicsFPS();
+                duin::Vector3 txPos = tx.GetPosition();
+                tx.SetPosition({ bobEffectX * duin::GetPhysicsFPS(), bobEffectY * duin::GetPhysicsFPS(), txPos.z });
             }
         }
     );
@@ -387,9 +396,10 @@ void ExecuteQueryMoveDebugCamera(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
         Movement3DInput,
-        Position3D
+        // Position3D
+        Transform3D
     >()
-        .term_at(1).second<Global>()
+        // .term_at(1).second<Global>()
         .with<DebugCameraTag>()
         .build();
 
@@ -397,12 +407,13 @@ void ExecuteQueryMoveDebugCamera(flecs::world& world)
         q.each([](
             flecs::entity e,
             Movement3DInput& input,
-            Position3D& gPos
+            // Position3D& gPos
+            Transform3D& tx
             ) {
                double delta = duin::GetPhysicsFrameTime();
                duin::Vector3 inputV(input.x, input.y, input.z);
                inputV = duin::Vector3Scale(inputV, 5.0f);
-               gPos.value = duin::Vector3Add(gPos.value, duin::Vector3Scale(inputV, (float)delta));
+               Transform3D::SetGlobalPosition(e, duin::Vector3Add(Transform3D::GetGlobalPosition(e), duin::Vector3Scale(inputV, (float)delta)));
                // e.remove<Movement3DInput>();
                input.x = 0.0f;
                input.y = 0.0f;

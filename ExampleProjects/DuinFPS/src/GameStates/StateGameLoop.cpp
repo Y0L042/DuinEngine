@@ -85,7 +85,7 @@ void StateGameLoop::State_Enter()
     std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
     player = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::PhysicsCharacterBody)
-        .set<Position3D, Local>({ playerPosition })
+        .set<Transform3D>({ playerPosition })
         .set<Mass>({ .value = 80.0f })
         .set<CanRunComponent>({ .speed = 10.0f })
         .set<CanSprintComponent>({ .speed = 17.5f })
@@ -103,20 +103,21 @@ void StateGameLoop::State_Enter()
     cameraRoot = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Node3D)
         .child_of(player)
-        .set<Position3D, Local>({{ 0.0f, playerHeight, 0.0f }})
+        .set<Transform3D>({{ 0.0f, playerHeight, 0.0f }})
         .add<MouseInputVec2>()
         .add<CameraPitchComponent>()
         ;
     fpsCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
         .child_of(cameraRoot)
+        .set<Transform3D>({{ 0.0f, 0.0f, 0.0f }})
         .set<::Camera3D>({
                 .target = { 0.0f, 0.0f, 0.0f },
                 .up = { 0.0f, 1.0f, 0.0f },
                 .fovy = 72.0f,
                 .projection = ::CAMERA_PERSPECTIVE
             })
-        .set<VelocityBob>({ 10.0f, 1.0f })
+        // .set<VelocityBob>({ 10.0f, 1.0f })
         .add<duin::ECSTag::ActiveCamera>()
         ;
 
@@ -124,7 +125,7 @@ void StateGameLoop::State_Enter()
 
     debugCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
-        .set<Position3D, Local>({ { 0.0f, 5.0f, 15.0f } })
+        .set<Transform3D>({ { 0.0f, 5.0f, 15.0f } })
         .set<::Camera3D>({
                  .target = { 0.0f, 0.0f, 0.0f },
                  .up = { 0.0f, 1.0f, 0.0f },
@@ -153,7 +154,7 @@ void StateGameLoop::State_Enter()
     duin::Transform3D boxTX(boxPos, boxDir);
     bouncyCube = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::PhysicsDynamicBody)
-        .set<Position3D, Local>({boxPos})
+        .set<Transform3D>({boxPos})
         .set<DynamicBodyComponent>({ duin::DynamicBody::Create(boxTX, boxCollision) })
         ;
     bouncyCubeRender = ecsManager.world.entity()
@@ -162,7 +163,7 @@ void StateGameLoop::State_Enter()
         .set<CubeComponent>({boxSize.x, boxSize.y, boxSize.z, GRAY})
         // .set<Position3D, Local>({boxPos})
         ;
-    bouncyCubeRender.set<Position3D, Local>({boxPos});
+    bouncyCubeRender.set<Transform3D>({boxPos});
 
     Transform3D::SetGlobalPosition(bouncyCubeRender, {0.0f, 0.0f, 0.0f});
 
@@ -312,6 +313,34 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
         std::shared_ptr<duin::DynamicBody> db = dbc->dynamicBody;
         debugWatchlist.Post("BouncyCube Position: ", "{ %.2f, %.2f, %.2f }", db->GetPosition().x, db->GetPosition().y, db->GetPosition().z);
         bouncyCubeRender.set<Position3D, Global>({db->GetPosition()});
+    }
+
+    const duin::ECSComponent::Transform3D *pTX = player.get<duin::ECSComponent::Transform3D>();
+    if (pTX) {
+        duin::Vector3 pos = pTX->GetPosition();
+        debugWatchlist.Post("Player Local Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+        pos = duin::ECSComponent::Transform3D::GetGlobalPosition(player);
+        debugWatchlist.Post("Player Global Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+    }
+    const duin::ECSComponent::Transform3D *crTX = cameraRoot.get<duin::ECSComponent::Transform3D>();
+    if (crTX) {
+        duin::Vector3 pos = crTX->GetPosition();
+        debugWatchlist.Post("CameraRoot Local Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+        pos = duin::ECSComponent::Transform3D::GetGlobalPosition(cameraRoot);
+        debugWatchlist.Post("CameraRoot Global Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+    }
+    const duin::ECSComponent::Transform3D *cTX = fpsCamera.get<duin::ECSComponent::Transform3D>();
+    if (cTX) {
+        duin::Vector3 pos = cTX->GetPosition();
+        debugWatchlist.Post("CameraNode Local Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+        pos = duin::ECSComponent::Transform3D::GetGlobalPosition(fpsCamera);
+        debugWatchlist.Post("CameraNode Global Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+    }
+
+    const ::Camera3D *pCam = fpsCamera.get<::Camera3D>();
+    if (pCam) {
+        duin::Vector3 pos(pCam->position);
+        debugWatchlist.Post("Player Camera Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
     }
 
     playerSM.ExecutePhysicsUpdate(delta);

@@ -172,65 +172,57 @@ namespace duin {
 
         struct Transform3D {
             public:
-                Transform3D(Vector3 position = Vector3Zero(), Vector3 scale = Vector3One(), Quaternion rotation = QuaternionIdentity()) 
-                    : position_(position), scale_(scale), rotation_(rotation)
-                {};
-
-                Transform3D(Vector3 position, Quaternion rotation)
-                    : position_(position), scale_(Vector3One()), rotation_(rotation)
-                {};
-
-                Transform3D(const Transform3D& tx)
-                    : position_(tx.GetPosition()), scale_(tx.GetScale()), rotation_(tx.GetRotation())
-                {};
-
-                void SetPosition(Vector3 position)
+                static void RegisterOnSetObserver(flecs::world& world)
                 {
-                    position_ = position;
-                    InvalidateCacheFlags();
-                }
-                
-                Vector3 GetPosition() const
-                {
-                    return position_;
+                    DN_CORE_INFO("Register Transform3D OnSet Observer.");
+                    static flecs::observer o = world.observer<Transform3D>()
+                        .event(flecs::OnSet)
+                        .observer_flags(EcsObserverYieldOnCreate)
+                        .each([](flecs::entity e, Transform3D& tx) {
+                              tx.SetEntity(e);
+                        });
                 }
 
-                void SetScale(Vector3 scale)
+                static void RegisterOnAddObserver(flecs::world& world)
                 {
-                    scale_ = scale;
-                    InvalidateCacheFlags();
-                }
-                
-                Vector3 GetScale() const
-                {
-                    return scale_;
-                }
-
-                void SetRotation(Quaternion rotation)
-                {
-                    rotation_ = rotation;
-                }
-                
-                Quaternion GetRotation() const
-                {
-                    return rotation_;
+                    DN_CORE_INFO("Register Transform3D OnAdd Observer.");
+                    static flecs::observer o = world.observer<Transform3D>()
+                        .event(flecs::OnAdd)
+                        .observer_flags(EcsObserverYieldOnCreate)
+                        .each([](flecs::entity e, Transform3D& tx) {
+                              tx.SetEntity(e);
+                        });
                 }
 
                 static void SetGlobalTransform(flecs::entity e, Transform3D tx)
                 {
                     // TODO
+                    // if (!e.is_valid() || !e.has<Transform3D>()) { 
+                    //     return; 
+                    // }
+                    // Transform3D *eTx = e.get_mut<Transform3D>();
+                    // if (eTx) {
+                    //     SetGlobalPosition(e, tx.GetPosition());
+                    //     SetGlobalScale(e, tx.GetScale());
+                    //     SetGlobalRotation(e, tx.GetRotation());
+                    // }
                 }
 
                 static Transform3D GetGlobalTransform(flecs::entity e)
                 {
                     // TODO
-                    return Transform3D();
+                    // if (!e.is_valid() || !e.has<Transform3D>()) { return Transform3D(); }
+                    // const Transform3D *tx = e.get<Transform3D>();
+                    // return (tx ? *tx : Transform3D());
                 }
 
 
                 static void SetGlobalPosition(flecs::entity e, Vector3 position)
                 {
-                    if (!e.is_valid() || !e.has<Transform3D>()) { return; }
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
                     flecs::entity parent = e.parent();
                     if (parent.is_valid() && parent.has<Transform3D>()) {
                         Vector3 parentGlobalPos   = GetGlobalPosition(parent);
@@ -248,7 +240,10 @@ namespace duin {
 
                 static Vector3 GetGlobalPosition(flecs::entity e)
                 {
-                    if (!e.is_valid() || !e.has<Transform3D>()) { return Vector3Zero(); }
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
+                        return Vector3Zero(); 
+                    }
                     Transform3D *tx = e.get_mut<Transform3D>();
                     if (!tx) { return Vector3Zero(); }
 
@@ -299,14 +294,268 @@ namespace duin {
 
                 static void SetGlobalRotation(flecs::entity e, Quaternion rotation)
                 {
-                    if (!e.is_valid() || !e.has<Transform3D>()) { return; }
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
+                    flecs::entity parent = e.parent();
+                    if (parent.is_valid() && parent.has<Transform3D>()) {
+                        // Global = ParentGlobal * Local  =>  Local = inverse(ParentGlobal) * Global
+                        Quaternion parentGlobalRot = GetGlobalRotation(parent);
+                        Quaternion invParentRot = QuaternionInvert(parentGlobalRot);
+                        Quaternion localRotation = QuaternionMultiply(invParentRot, rotation);
+                        e.get_mut<Transform3D>()->SetRotation(localRotation);
+                    } else {
+                        e.get_mut<Transform3D>()->SetRotation(rotation);
+                    }
                 }
 
                 static Quaternion GetGlobalRotation(flecs::entity e)
                 {
-                    if (!e.is_valid() || !e.has<Transform3D>()) { return QuaternionIdentity(); }
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
+                        return QuaternionIdentity();
+                    }
+                    Transform3D* tx = e.get_mut<Transform3D>();
+                    if (!tx) { return QuaternionIdentity(); }
+                    if (tx->globalRotationCacheDirtyFlag) {
+                        flecs::entity parent = e.parent();
+                        if (!parent.is_valid() || !parent.has<Transform3D>()) {
+                            // No parent: global rotation is the local rotation.
+                            tx->UpdateGlobalRotationCache(tx->GetRotation());
+                        } else {
+                            // Global = ParentGlobal * LocalRotation
+                            Quaternion parentGlobalRot = GetGlobalRotation(parent);
+                            Quaternion globalRot = QuaternionMultiply(parentGlobalRot, tx->GetRotation());
+                            tx->UpdateGlobalRotationCache(globalRot);
+                        }
+                    }
+                    return tx->globalRotationCache;
+                }
 
-                    return Quaternion();
+                Transform3D(Vector3 position = Vector3Zero(), Vector3 scale = Vector3One(), Quaternion rotation = QuaternionIdentity()) 
+                    : position_(position), scale_(scale), rotation_(rotation)
+                {};
+
+                Transform3D(Vector3 position, Quaternion rotation)
+                    : position_(position), scale_(Vector3One()), rotation_(rotation)
+                {};
+
+                Transform3D(Vector3 position, Quaternion rotation, flecs::entity e)
+                    : position_(position), scale_(Vector3One()), rotation_(rotation), entity_(e)
+                {};
+
+                Transform3D(Vector3 position, flecs::entity e)
+                    : position_(position), scale_(Vector3One()), rotation_(QuaternionIdentity()), entity_(e)
+                {};
+
+                Transform3D(flecs::entity e)
+                    : position_(Vector3Zero()), scale_(Vector3One()), rotation_(QuaternionIdentity()), entity_(e)
+                {}
+
+                Transform3D(const Transform3D& tx)
+                    : 
+                        position_(tx.GetPosition()), 
+                        scale_(tx.GetScale()), 
+                        rotation_(tx.GetRotation()),
+                        entity_(tx.GetEntity())
+                {};
+
+                void InvalidateCacheFlags()
+                {
+                    globalPositionCacheDirtyFlag = true;
+                    globalScaleCacheDirtyFlag = true;
+                    globalRotationCacheDirtyFlag = true;
+
+                    PropagateInvalidateCacheFlags();
+                }
+
+                void SetEntity(flecs::entity e)
+                {
+                    entity_ = e;
+                }
+
+                flecs::entity GetEntity() const
+                {
+                    return entity_;
+                }
+
+                void SetPosition(Vector3 position)
+                {
+                    position_ = position;
+                    InvalidateCacheFlags();
+                }
+                
+                Vector3 GetPosition() const
+                {
+                    return position_;
+                }
+
+                void SetScale(Vector3 scale)
+                {
+                    scale_ = scale;
+                    InvalidateCacheFlags();
+                }
+                
+                Vector3 GetScale() const
+                {
+                    return scale_;
+                }
+
+                void SetRotation(Quaternion rotation)
+                {
+                    rotation_ = rotation;
+                    InvalidateCacheFlags();
+                }
+                
+                Quaternion GetRotation() const
+                {
+                    return rotation_;
+                }
+
+                void SetGlobalTransform(Transform3D tx)
+                {
+                    // TODO
+                    // if (!entity_.is_valid() || !entity_.has<Transform3D>()) { return; }
+                    // Transform3D *eTx = entity_.get_mut<Transform3D>();
+                    // if (eTx) {
+                    //     SetGlobalPosition(entity_, tx.GetPosition());
+                    //     SetGlobalScale(entity_, tx.GetScale());
+                    //     SetGlobalRotation(entity_, tx.GetRotation());
+                    // }
+                }
+
+                Transform3D GetGlobalTransform() const
+                {
+                    // TODO
+                    // if (!entity_.is_valid() || !entity_.has<Transform3D>()) { return Transform3D(); }
+                    // const Transform3D *tx = entity_.get<Transform3D>();
+                    // return (tx ? *tx : Transform3D());
+                }
+
+                void SetGlobalPosition(Vector3 position)
+                {
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
+                    flecs::entity parent = entity_.parent();
+                    if (parent.is_valid() && parent.has<Transform3D>()) {
+                        Vector3 parentGlobalPos   = GetGlobalPosition(parent);
+                        Quaternion parentGlobalRot = GetGlobalRotation(parent);
+                        Vector3 parentGlobalScale = GetGlobalScale(parent);
+                        Vector3 offset = Vector3Subtract(position, parentGlobalPos);
+                        Quaternion invParentRot = QuaternionInvert(parentGlobalRot);
+                        Vector3 localPosUnscaled = Vector3RotateByQuaternion(offset, invParentRot);
+                        Vector3 localPos = Vector3Divide(localPosUnscaled, parentGlobalScale);
+                        SetPosition(localPos);
+                    } else {
+                        SetPosition(position);
+                    }
+                    UpdateGlobalPositionCache(position);
+                }
+
+                Vector3 GetGlobalPosition() const
+                {
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return Vector3Zero(); 
+                    }
+                    Transform3D *tx = entity_.get_mut<Transform3D>();
+                    if (!tx) { return Vector3Zero(); }
+
+                    if (tx->globalPositionCacheDirtyFlag) {
+                        if (!entity_.parent().is_valid() || !entity_.parent().has<Transform3D>()) {
+                            tx->UpdateGlobalPositionCache(tx->GetPosition());
+                        } else {
+                            Transform3D parentGlobal = GetGlobalTransform(entity_.parent());
+                            Vector3 scaledLocalPos = Vector3Multiply(tx->GetPosition(), parentGlobal.GetScale());
+                            Vector3 rotatedPos = Vector3RotateByQuaternion(scaledLocalPos, parentGlobal.GetRotation());
+                            Vector3 globalPos = Vector3Add(parentGlobal.GetPosition(), rotatedPos);
+                            tx->UpdateGlobalPositionCache(globalPos);
+                        }
+                    }
+
+                    return tx->globalPositionCache;
+                }
+
+                void SetGlobalScale(Vector3 scale) 
+                {
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
+                    flecs::entity parent = entity_.parent();
+                    if (parent.is_valid() && parent.has<Transform3D>()) {
+                        Vector3 parentGlobalScale = GetGlobalScale(parent);
+                        SetScale(Vector3Divide(scale, parentGlobalScale));
+                    } else {
+                        SetScale(scale);
+                    }
+                    UpdateGlobalScaleCache(scale);
+                }
+
+                Vector3 GetGlobalScale() const
+                {
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return Vector3Zero(); 
+                    }
+                    Transform3D* tx = entity_.get_mut<Transform3D>();
+                    if (!tx) { return Vector3One(); }
+                    if (tx->globalScaleCacheDirtyFlag) {
+                        if (!entity_.parent().is_valid() || !entity_.parent().has<Transform3D>()) {
+                            tx->UpdateGlobalScaleCache(tx->GetScale());
+                        } else {
+                            Vector3 parentGlobalScale = GetGlobalScale(entity_.parent());
+                            Vector3 globalScale = Vector3Multiply(parentGlobalScale, tx->GetScale());
+                            tx->UpdateGlobalScaleCache(globalScale);
+                        }
+                    }
+
+                    return tx->globalScaleCache;
+                }
+
+                void SetGlobalRotation(Quaternion rotation)
+                {
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
+                    flecs::entity parent = entity_.parent();
+                    if (parent.is_valid() && parent.has<Transform3D>()) {
+                        // Global = ParentGlobal * Local  =>  Local = inverse(ParentGlobal) * Global
+                        Quaternion parentGlobalRot = GetGlobalRotation(parent);
+                        Quaternion invParentRot = QuaternionInvert(parentGlobalRot);
+                        Quaternion localRotation = QuaternionMultiply(invParentRot, rotation);
+                        SetRotation(localRotation);
+                    } else {
+                        SetRotation(rotation);
+                    }
+                    UpdateGlobalRotationCache(rotation);
+                }
+
+                Quaternion GetGlobalRotation() const
+                {
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return QuaternionIdentity(); 
+                    }
+                    Transform3D* tx = entity_.get_mut<Transform3D>();
+                    if (!tx) { return QuaternionIdentity(); }
+                    if (tx->globalRotationCacheDirtyFlag) {
+                        flecs::entity parent = entity_.parent();
+                        if (!parent.is_valid() || !parent.has<Transform3D>()) {
+                            // No parent: global rotation is the local rotation.
+                            tx->UpdateGlobalRotationCache(tx->GetRotation());
+                        } else {
+                            // Global = ParentGlobal * LocalRotation
+                            Quaternion parentGlobalRot = GetGlobalRotation(parent);
+                            Quaternion globalRot = QuaternionMultiply(parentGlobalRot, tx->GetRotation());
+                            tx->UpdateGlobalRotationCache(globalRot);
+                        }
+                    }
+                    return tx->globalRotationCache;
                 }
 
             private:
@@ -319,22 +568,31 @@ namespace duin {
                 bool globalPositionCacheDirtyFlag = true;
                 bool globalScaleCacheDirtyFlag = true;
                 bool globalRotationCacheDirtyFlag = true;
-
-                void InvalidateCacheFlags()
-                {
-                    globalPositionCacheDirtyFlag = true;
-                    globalScaleCacheDirtyFlag = true;
-                    globalRotationCacheDirtyFlag = true;
-                }
+                flecs::entity entity_ = flecs::entity::null();
 
                 static void InvalidateCacheFlags(flecs::entity e)
                 {
-                    if (!e.is_valid() || !e.has<Transform3D>()) { return; }
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
                     Transform3D *tx = e.get_mut<Transform3D>();
                     if (!tx) { return; }
+
                     tx->InvalidateCacheFlags();
-                    e.children([](flecs::entity child) {
-                        if (!child.is_valid() || !child.has<Transform3D>()) { return; }
+                }
+
+                void PropagateInvalidateCacheFlags()
+                {
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
+                    entity_.children([](flecs::entity child) {
+                        if (!child.is_valid() || !child.has<Transform3D>()) { 
+                            DN_CORE_WARN("Child not valid, or does not have Transform3D!");
+                            return; 
+                        }
                         InvalidateCacheFlags(child);
                     });
                 }
@@ -493,9 +751,9 @@ namespace duin {
 
 
 
-    /*----------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------*/
     //  ECS Manager Class
-    /*----------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------*/
     class JSONMember;
     class ECSManager
     {
@@ -517,16 +775,17 @@ namespace duin {
         void PostDrawQueryExecution();
         void PostDrawUIQueryExecution();
 
+        /*----------------------------------------------------------------------  
+         * Transform Updates
+        ----------------------------------------------------------------------*/  
+        void ExecuteQueryTransform3DHierarchicalUpdate();
+        void ExecuteQueryCharacterBody3DUpdateTransform();
+        void ExecuteQuerySyncDynamicBody3DTransform();
 
-        void ExecuteCharacterBody3DCreation(PhysicsServer& server);
+
 
         void ExecuteQuerySetCameraAsActive();
-        void ExecuteQueryUpdatePosition3D();        
-        void ExecuteQueryHierarchicalUpdatePosition3D();
-        void ExecuteQueryUpdateRotation3D();
-        void ExecuteQueryHierarchicalUpdateRotation3D();
-        void ExecuteQueryUpdateCharacterBody3DPosition();
-        void ExecuteQuerySyncDynamicBody3DPosition();
+  
         void ExecuteQueryUpdateCameraPosition();
         void ExecuteQueryControlCamera();
         void ExecuteQueryDrawCube();
