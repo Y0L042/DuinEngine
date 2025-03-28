@@ -17,6 +17,8 @@ workspace "Duin"
 
     -- Include directories relative to the root folder (solution directory)
     IncludeDir = {}
+    IncludeDir["sdl"] = "Duin/vendor/sdl/include"
+    IncludeDir["bgfx"] = "Duin/vendor/bgfx/include"
     IncludeDir["spdlog"] = "Duin/vendor/spdlog/include"
     IncludeDir["rlimgui"] = "Duin/vendor/rlimgui"
     IncludeDir["raylib"] = "Duin/vendor/rlimgui/raylib-master/src"
@@ -38,6 +40,8 @@ workspace "Duin"
     }
     global_externalincludedirs = 
     {    
+        "%{IncludeDir.sdl}",
+        "%{IncludeDir.bgfx}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.raylib}",
         "%{IncludeDir.raygui}",
@@ -53,6 +57,8 @@ workspace "Duin"
     global_libdirs = 
     {
         "Duin/bin/" .. outputdir .. "/Duin",  -- Duin's output directory
+        "Duin/vendor/sdl/build/Debug",
+        "Duin/vendor/bgfx/.build/win64_vs2022/bin",
         "Duin/vendor/rlimgui/bin/Debug",
         "Duin/vendor/flecs/build_vs2022/Debug",	
         "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
@@ -67,6 +73,8 @@ workspace "Duin"
     }
     global_links = 
     {
+        "SDL3-static.lib",
+        "bgfxDebug.lib",
         "raylib.lib", 
         "rlImGui.lib",
         "flecs_static.lib",

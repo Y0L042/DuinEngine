@@ -109,6 +109,53 @@ end
 
 -- Dependency configuration table
 local dependencies = {
+    SDL3 = {
+        repo = "https://github.com/libsdl-org/SDL",
+        tag = "release-3.2.8",
+        folder = "sdl",
+        steps = function()
+            print("Dep SDL3.steps() START")
+            print("SDL3 downloaded.")
+            runCommand("cd sdl && cmake -S . -B build -DSDL_STATIC=ON")
+            runCommand("cd sdl && cmake --build build")
+            print("Dep SDL3.steps() END")
+        end
+    },
+
+    BX = {
+        repo = "https://github.com/bkaradzic/bx",
+        branch = "master",
+        folder = "bx",
+        steps = function()
+            print("Dep BX.steps() START")
+            print("BX downloaded.")
+            print("Dep BX.steps() END")
+        end
+    },
+    BIMG = {
+        repo = "https://github.com/bkaradzic/bimg",
+        branch = "master",
+        folder = "bimg",
+        steps = function()
+            print("Dep BIMG.steps() START")
+            print("BIMG downloaded.")
+            print("Dep BIMG.steps() END")
+        end
+    },
+    BGFX = {
+        repo = "https://github.com/bkaradzic/bgfx",
+        branch = "master",
+        commit = "93e6125",
+        folder = "bgfx",
+        steps = function()
+            print("Dep BGFX.steps() START")
+            print("BGFX downloaded.")
+            runCommand("cd bgfx && ..\\bx\\tools\\bin\\windows\\genie vs2022")
+            os.execute('cd bgfx\\.build\\projects\\vs2022 && msbuild "bgfx.sln" /p:Configuration=Debug /p:Platform=x64')
+            print("Dep BGFX.steps() END")
+        end
+    },
+
     PHYSX = {
         repo = "https://github.com/NVIDIA-Omniverse/PhysX",
         tag = "106.5-physx-5.5.1-cy",

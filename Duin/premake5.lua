@@ -45,6 +45,8 @@ project "Duin"
     -- externalincludedirs(global_externalincludedirs) 
     externalincludedirs 
     { 
+        SolutionRoot .. "/%{IncludeDir.sdl}",
+        SolutionRoot .. "/%{IncludeDir.bgfx}",
         SolutionRoot .. "/%{IncludeDir.spdlog}",
 		SolutionRoot .. "/%{IncludeDir.raylib}",
 		SolutionRoot .. "/%{IncludeDir.raygui}",
@@ -62,6 +64,8 @@ project "Duin"
     -- libdirs(global_libdirs) 
     libdirs 
     { 
+        ProjectRoot .. "/vendor/sdl/build/Debug",
+        ProjectRoot .. "/vendor/bgfx/.build/win64_vs2022/bin",
 		ProjectRoot .. "/vendor/rlimgui/bin/Debug",
 		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
@@ -81,6 +85,7 @@ project "Duin"
     -- links(global_links)
     links 
     { 
+        "bgfxDebug.lib",
 		"raylib.lib", 
 		"rlImGui.lib",
         "flecs_static.lib",
