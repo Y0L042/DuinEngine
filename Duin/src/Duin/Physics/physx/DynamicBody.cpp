@@ -37,4 +37,9 @@ namespace duin {
     {
         return Vector3(actor->getGlobalPose().p);
     }
+
+    Quaternion DynamicBody::GetRotation()
+    {
+        return Quaternion(actor->getGlobalPose().q);
+    }
 }

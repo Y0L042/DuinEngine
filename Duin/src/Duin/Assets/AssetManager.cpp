@@ -3,13 +3,17 @@
 
 namespace duin {
 
-AssetManager::AssetManager()
-{
-}
+    AssetManager::AssetManager()
+    {
+    }
 
-AssetManager::~AssetManager()
-{
-}
+    AssetManager::~AssetManager()
+    {
+    }
 
+    UUID AssetManager::GetUUID()
+    {
+        return uuid;
+    }
 }
 

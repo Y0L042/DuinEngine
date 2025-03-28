@@ -20,6 +20,7 @@ namespace duin {
             ~DynamicBody();
 
             Vector3 GetPosition() override;
+            Quaternion GetRotation();
 
         private:
             CollisionShape collisionShape;

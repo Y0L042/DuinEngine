@@ -103,14 +103,14 @@ void StateGameLoop::State_Enter()
     cameraRoot = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Node3D)
         .child_of(player)
-        .set<Transform3D>({{ 0.0f, playerHeight, 0.0f }})
+        .set<Transform3D>({ { 0.0f, playerHeight, 0.0f } })
         .add<MouseInputVec2>()
         .add<CameraPitchComponent>()
         ;
     fpsCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
         .child_of(cameraRoot)
-        .set<Transform3D>({{ 0.0f, 0.0f, 0.0f }})
+        .set<Transform3D>({ { 0.0f, 0.0f, 0.0f } })
         .set<::Camera3D>({
                 .target = { 0.0f, 0.0f, 0.0f },
                 .up = { 0.0f, 1.0f, 0.0f },
@@ -142,7 +142,7 @@ void StateGameLoop::State_Enter()
     duin::PhysicsMaterial groundMaterial(0.4f, 0.4f, 0.5f);
     duin::PlaneGeometry groundGeometry;
     duin::CollisionShape groundCollision(groundGeometry, groundMaterial);
-    duin::Quaternion groundDir = duin::Vector3ToQuaternion({0.0f, 1.0f, 0.0f}) ;
+    duin::Quaternion groundDir = duin::Vector3ToQuaternion({ 0.0f, 1.0f, 0.0f });
     static duin::StaticBody ground({ {0.0f, 0.0f, 0.0f}, groundDir }, groundCollision);
 
     duin::Vector3 boxPos(3.0f, 30.0f, 3.0f);
@@ -150,22 +150,17 @@ void StateGameLoop::State_Enter()
     duin::PhysicsMaterial material(0.4f, 0.4f, 0.5f);
     duin::BoxGeometry boxGeometry(boxSize);
     duin::CollisionShape boxCollision(boxGeometry, material);
-    duin::Quaternion boxDir = duin::Vector3ToQuaternion({0.0f, 1.0f, 0.0f}) ;
+    duin::Quaternion boxDir = duin::Vector3ToQuaternion({ 0.0f, 1.0f, 0.0f });
     duin::Transform3D boxTX(boxPos, boxDir);
     bouncyCube = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::PhysicsDynamicBody)
-        .set<Transform3D>({boxPos})
         .set<DynamicBodyComponent>({ duin::DynamicBody::Create(boxTX, boxCollision) })
         ;
     bouncyCubeRender = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Cube)
         .child_of(bouncyCube)
         .set<CubeComponent>({boxSize.x, boxSize.y, boxSize.z, GRAY})
-        // .set<Position3D, Local>({boxPos})
         ;
-    bouncyCubeRender.set<Transform3D>({boxPos});
-
-    Transform3D::SetGlobalPosition(bouncyCubeRender, {0.0f, 0.0f, 0.0f});
 
 
     ecsManager.ActivateCameraEntity(debugCamera);
@@ -322,7 +317,6 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
     if (dbc) {
         std::shared_ptr<duin::DynamicBody> db = dbc->dynamicBody;
         debugWatchlist.Post("BouncyCube Position: ", "{ %.2f, %.2f, %.2f }", db->GetPosition().x, db->GetPosition().y, db->GetPosition().z);
-        bouncyCubeRender.set<Position3D, Global>({db->GetPosition()});
     }
 
     const duin::ECSComponent::Transform3D *pTX = player.get<duin::ECSComponent::Transform3D>();

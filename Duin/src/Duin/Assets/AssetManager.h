@@ -1,23 +1,22 @@
-#ifndef ASSET_MANAGER_H
-#define ASSET_MANAGER_H
-
+#pragma once
 #include "Duin/Core/Utils/UUID.h"
 
 namespace duin {
 
-class UUID;
-class AssetManager
-{
-public:
-    UUID uuid;
+    class UUID;
+    class AssetManager
+    {
+        public:
+            AssetManager();
+            ~AssetManager();
 
-    AssetManager();
-    ~AssetManager();
+            UUID GetUUID();
 
-private:
+            // Generate and share meshes
 
-};
+        private:
+            UUID uuid;
+
+    };
 
 }
-
-#endif /* ASSET_MANAGER_H */

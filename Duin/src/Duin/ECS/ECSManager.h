@@ -196,15 +196,90 @@ namespace duin {
 
                 static void SetGlobalTransform(flecs::entity e, Transform3D tx)
                 { 
-                    // TODO 
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
+                    Transform3D *comp = e.get_mut<Transform3D>();
+                    if (!comp) { return; }
+
+                    flecs::entity parent = e.parent();
+                    if (parent.is_valid() && parent.has<Transform3D>()) {
+                        Transform3D parentGlobal = GetGlobalTransform(parent);
+
+                        // Compute local position.
+                        // globalPos = parentGlobal.position + rotate(parentGlobal.rotation, localPos * parentGlobal.scale)
+                        // Thus: localPos = inverse(parentGlobal.rotation) * (globalPos - parentGlobal.position) / parentGlobal.scale
+                        Vector3 offset = Vector3Subtract(tx.GetPosition(), parentGlobal.GetPosition());
+                        Quaternion invParentRot = QuaternionInvert(parentGlobal.GetRotation());
+                        Vector3 localPosUnscaled = Vector3RotateByQuaternion(offset, invParentRot);
+                        Vector3 localPos = Vector3Divide(localPosUnscaled, parentGlobal.GetScale());
+
+                        // Compute local scale.
+                        // Assuming scale is applied component-wise:
+                        Vector3 localScale = Vector3Divide(tx.GetScale(), parentGlobal.GetScale());
+
+                        // Compute local rotation.
+                        // globalRot = parentGlobal.rotation * localRot, so:
+                        Quaternion localRot = QuaternionMultiply(QuaternionInvert(parentGlobal.GetRotation()), tx.GetRotation());
+
+                        comp->SetPosition(localPos);
+                        comp->SetScale(localScale);
+                        comp->SetRotation(localRot);
+                    } else {
+                        // No parent: local transform equals desired global transform.
+                        comp->SetPosition(tx.GetPosition());
+                        comp->SetScale(tx.GetScale());
+                        comp->SetRotation(tx.GetRotation());
+                    }
+                    // Update caches immediately.
+                    comp->UpdateGlobalPositionCache(tx.GetPosition());
+                    comp->UpdateGlobalScaleCache(tx.GetScale());
+                    comp->UpdateGlobalRotationCache(tx.GetRotation());
                 }
 
                 static Transform3D GetGlobalTransform(flecs::entity e)
                 {
-                    // TODO 
-                    return Transform3D();
-                }
+                    if (!e.is_valid() || !e.has<Transform3D>()) { 
+                        return Transform3D(); 
+                    }
+                    Transform3D *tx = e.get_mut<Transform3D>();
+                    if (!tx) { 
+                        return Transform3D(); 
+                    }
 
+                    flecs::entity parent = e.parent();
+                    if (parent.is_valid() && parent.has<Transform3D>()) {
+                        // Get parent's global transform recursively.
+                        Transform3D parentGlobal = GetGlobalTransform(parent);
+
+                        // Compute global position:
+                        // globalPos = parentGlobal.position + rotate(parentGlobal.rotation, localPos * parentGlobal.scale)
+                        Vector3 scaledLocalPos = Vector3Multiply(tx->GetPosition(), parentGlobal.GetScale());
+                        Vector3 rotatedPos = Vector3RotateByQuaternion(scaledLocalPos, parentGlobal.GetRotation());
+                        Vector3 globalPos = Vector3Add(parentGlobal.GetPosition(), rotatedPos);
+
+                        // Compute global scale.
+                        Vector3 globalScale = Vector3Multiply(parentGlobal.GetScale(), tx->GetScale());
+
+                        // Compute global rotation.
+                        Quaternion globalRot = QuaternionMultiply(parentGlobal.GetRotation(), tx->GetRotation());
+
+                        // Update the caches.
+                        tx->UpdateGlobalPositionCache(globalPos);
+                        tx->UpdateGlobalScaleCache(globalScale);
+                        tx->UpdateGlobalRotationCache(globalRot);
+
+                        return Transform3D(globalPos, globalRot, e);
+                    } else {
+                        // No parent: global transform equals local transform.
+                        tx->UpdateGlobalPositionCache(tx->GetPosition());
+                        tx->UpdateGlobalScaleCache(tx->GetScale());
+                        tx->UpdateGlobalRotationCache(tx->GetRotation());
+
+                        return *tx;
+                    }
+                }
 
                 static void SetGlobalPosition(flecs::entity e, Vector3 position)
                 {
@@ -367,6 +442,31 @@ namespace duin {
                         entity_(tx.GetEntity())
                 {};
 
+                /* To/From raylib */
+                void FromRaylib(::Transform tx)
+                {
+                    SetPosition(Vector3(tx.translation));
+                    SetScale(Vector3(tx.scale));
+                    SetRotation(Quaternion(tx.rotation));
+                }
+
+                Transform3D(::Transform tx, flecs::entity e)
+                    :
+                        position_(tx.translation),
+                        scale_(tx.scale),
+                        rotation_(tx.rotation),
+                        entity_(e)
+                {}
+
+                ::Transform ToRaylib()
+                {
+                    return ::Transform(
+                                        position_.ToRaylib(),
+                                        rotation_.ToRaylib(),
+                                        scale_.ToRaylib()
+                                     );
+                }
+
                 void InvalidateCacheFlags()
                 {
                     globalPositionCacheDirtyFlag = true;
@@ -421,13 +521,20 @@ namespace duin {
 
                 void SetGlobalTransform(Transform3D tx)
                 { 
-                    // TODO 
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return; 
+                    }
+                    SetGlobalTransform(entity_, tx);
                 }
 
                 Transform3D GetGlobalTransform() const
                 { 
-                    // TODO 
-                    return Transform3D();
+                    if (!entity_.is_valid() || !entity_.has<Transform3D>()) { 
+                        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+                        return Transform3D(); 
+                    }
+                    GetGlobalTransform(entity_);
                 }
 
                 void SetGlobalPosition(Vector3 position)

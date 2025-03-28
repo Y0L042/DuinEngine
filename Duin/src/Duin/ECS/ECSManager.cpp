@@ -355,13 +355,10 @@ namespace ECSObserver {
                 const ECSComponent::DynamicBodyComponent& dynamicBodyComponent,
                 ECSComponent::Transform3D& tx
             ) {
-               Vector3 gPosOldValue = ECSComponent::Transform3D::GetGlobalPosition(e);
-               // DN_CORE_INFO("gPos {0}, {1}, {2}", gPosOldValue.x, gPosOldValue.y, gPosOldValue.z);
                Vector3 newGPos = dynamicBodyComponent.dynamicBody->GetPosition();
                ECSComponent::Transform3D::SetGlobalPosition(e, newGPos);
-               Vector3 gPosDelta = Vector3Subtract(newGPos, gPosOldValue);
-               Vector3 lPosValue = Vector3Add(tx.GetPosition(), gPosDelta);
-               tx.SetPosition(lPosValue);
+               Quaternion newGRot = dynamicBodyComponent.dynamicBody->GetRotation();
+               ECSComponent::Transform3D::SetGlobalRotation(e, newGRot);
             });
     }
 
