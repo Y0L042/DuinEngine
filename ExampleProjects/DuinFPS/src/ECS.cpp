@@ -6,7 +6,7 @@
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
-const Vector2 MOUSE_SENSITIVITY = { 0.001f, 0.001f };
+const duin::Vector2 MOUSE_SENSITIVITY = { 0.001f, 0.001f };
 
 
 void RegisterComponents(flecs::world& world)
@@ -68,19 +68,19 @@ void ExecuteQueryComputePlayerInputVelocity(flecs::world& world)
 
 void ExecuteQueryDebugCameraTarget(flecs::world& world)
 {
-    static flecs::query q = world.query_builder<
-        Camera3D,
-        const DebugCameraTarget
-    >()
-        .cached()
-        .build();
+    //static flecs::query q = world.query_builder<
+    //    Camera3D,
+    //    const DebugCameraTarget
+    //>()
+    //    .cached()
+    //    .build();
 
-    q.each([](
-            Camera3D& c,
-            const DebugCameraTarget& t
-        ) {
-            c.target = t.value.ToRaylib();
-        });
+    //q.each([](
+    //        Camera3D& c,
+    //        const DebugCameraTarget& t
+    //    ) {
+    //        c.target = t.value.ToRaylib();
+    //    });
 }
 
 void ExecuteQueryUpdatePlayerYaw(flecs::world& world)
@@ -379,14 +379,14 @@ void ExecuteQueryVelocityBob(flecs::world& world)
             Transform3D& tx,
             const Velocity3D *velocity
         ){
-            if (velocity) {
-                duin::Vector3 hVelocity(velocity->value.x, 0.0f, velocity->value.z);
-                float velocityMagnitude = duin::Vector3LengthF(hVelocity);
-                float bobEffectX = std::sin(GetTime() * bob.frequency / 2.0f) * (velocityMagnitude / 15000.0f) * bob.amplitude; 
-                float bobEffectY = std::sin(GetTime() * bob.frequency) * (velocityMagnitude / 10000.0f) * bob.amplitude; 
-                duin::Vector3 txPos = tx.GetPosition();
-                tx.SetPosition({ bobEffectX * duin::GetPhysicsFPS(), bobEffectY * duin::GetPhysicsFPS(), txPos.z });
-            }
+            //if (velocity) {
+            //    duin::Vector3 hVelocity(velocity->value.x, 0.0f, velocity->value.z);
+            //    float velocityMagnitude = duin::Vector3LengthF(hVelocity);
+            //    float bobEffectX = std::sin(GetTime() * bob.frequency / 2.0f) * (velocityMagnitude / 15000.0f) * bob.amplitude; 
+            //    float bobEffectY = std::sin(GetTime() * bob.frequency) * (velocityMagnitude / 10000.0f) * bob.amplitude; 
+            //    duin::Vector3 txPos = tx.GetPosition();
+            //    tx.SetPosition({ bobEffectX * duin::GetPhysicsFPS(), bobEffectY * duin::GetPhysicsFPS(), txPos.z });
+            //}
         }
     );
     world.defer_end();

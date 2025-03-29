@@ -5,7 +5,6 @@
 #include <functional>
 
 #include "Duin/Core/Core.h"
-#include <dep_raygui.h>
 
 
 
@@ -16,8 +15,8 @@ namespace duin
     void DebugResumeGame();
     int DebugIsGamePaused();
 
-    void SetActiveCamera3D(::Camera3D camera3d);
-    void SetBackgroundColor(::Color color);
+    // void SetActiveCamera3D(::Camera3D camera3d);
+    // void SetBackgroundColor(::Color color);
 
     void SetFramerate(int framerate);
     void DrawPhysicsFPS(float x, float y);
@@ -45,7 +44,7 @@ namespace duin
 
 
         void SetWindowStartupSize(int width, int height);
-		void SetBackgroundColor(::Color color);
+		// void SetBackgroundColor(::Color color);
 		void SetWindowName(const char *string);
 
 

@@ -24,9 +24,9 @@ void PlayerStateInAirIdle::State_Enter()
 
 void PlayerStateInAirIdle::State_HandleInput()
 {
-    if (IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-        owner.SwitchState<PlayerStateInAirStrafe>();
-    }
+    //if (IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
+    //    owner.SwitchState<PlayerStateInAirStrafe>();
+    //}
 }
 
 void PlayerStateInAirIdle::State_Update(double delta)

@@ -5,7 +5,7 @@
 #include "../Singletons.h"
 #include "../GameStates/StateGameLoop.h"
 
-extern InputVector2DKeys MOVEMENT_KEYS;
+//extern InputVector2DKeys MOVEMENT_KEYS;
 
 PlayerStateOnGroundIdle::PlayerStateOnGroundIdle(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -26,13 +26,13 @@ void PlayerStateOnGroundIdle::State_Enter()
 
 void PlayerStateOnGroundIdle::State_HandleInput()
 {
-    if (IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-        if (IsKeyPressed(KEY_LEFT_SHIFT)) {
-            owner.SwitchState<PlayerStateOnGroundSprint>();
-        } else {
-            owner.SwitchState<PlayerStateOnGroundRun>();
-        }
-    }
+    //if (IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
+    //    if (IsKeyPressed(KEY_LEFT_SHIFT)) {
+    //        owner.SwitchState<PlayerStateOnGroundSprint>();
+    //    } else {
+    //        owner.SwitchState<PlayerStateOnGroundRun>();
+    //    }
+    //}
 }
 
 void PlayerStateOnGroundIdle::State_Update(double delta)

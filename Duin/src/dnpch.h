@@ -17,7 +17,6 @@
 #include <sstream>
 #include <string>
 
-#include <dep_raygui.h>
 #include <flecs.h>
 
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE

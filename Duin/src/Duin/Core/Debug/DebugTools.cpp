@@ -2,8 +2,6 @@
 #include "DebugTools.h"
 
 #include <chrono>
-
-#include <raylib.h>
 #include "Duin/Core/Debug/DNLog.h" 
 
 
@@ -52,95 +50,95 @@ void DebugConsole::Log(const char* format, ...) {
 
 void DebugConsole::Draw(const char* title) 
 {
-    ImGuiWindowFlags windowFlags;
-    if(IsKeyPressed(KEY_O)) {
-        ToggleEditing();
-        DN_CORE_INFO("DebugConsoleEditing {}", enableEditing);
-    }
-    if (!enableEditing && enableSilent) {
-        ImGui::SetWindowFocus(NULL);
-        windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
-    } else {
-        windowFlags = ImGuiWindowFlags_MenuBar;
-    }
-    // Set semitransparent background for the entire console window
+    //ImGuiWindowFlags windowFlags;
+    //if(IsKeyPressed(KEY_O)) {
+    //    ToggleEditing();
+    //    DN_CORE_INFO("DebugConsoleEditing {}", enableEditing);
+    //}
+    //if (!enableEditing && enableSilent) {
+    //    ImGui::SetWindowFocus(NULL);
+    //    windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
+    //} else {
+    //    windowFlags = ImGuiWindowFlags_MenuBar;
+    //}
+    //// Set semitransparent background for the entire console window
 
-    float bgAlpha = 0.8f;
-    float linesAlpha = 0.875f;
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, bgAlpha));
-    // ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar);
+    //float bgAlpha = 0.8f;
+    //float linesAlpha = 0.875f;
+    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, bgAlpha));
+    //// ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar);
 
-    ImGui::Begin(title, nullptr, windowFlags);
+    //ImGui::Begin(title, nullptr, windowFlags);
 
-    // Title bar menu with dropdown for AutoScroll, Copy, and Clear
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Options")) {
+    //// Title bar menu with dropdown for AutoScroll, Copy, and Clear
+    //if (ImGui::BeginMenuBar()) {
+    //    if (ImGui::BeginMenu("Options")) {
 
-            // AutoScroll toggle
-            if (ImGui::MenuItem("AutoScroll", nullptr, scrollToBottom_)) {
-                scrollToBottom_ = !scrollToBottom_;
-            }
+    //        // AutoScroll toggle
+    //        if (ImGui::MenuItem("AutoScroll", nullptr, scrollToBottom_)) {
+    //            scrollToBottom_ = !scrollToBottom_;
+    //        }
 
-            // Copy to Clipboard
-            ImGui::Separator();
-            if (ImGui::MenuItem("Copy")) {
-                std::string clipboardContent;
-                for (const auto& message : logMessages_) {
-                    clipboardContent += message + "\n";
-                }
-                ImGui::SetClipboardText(clipboardContent.c_str());
-            }
+    //        // Copy to Clipboard
+    //        ImGui::Separator();
+    //        if (ImGui::MenuItem("Copy")) {
+    //            std::string clipboardContent;
+    //            for (const auto& message : logMessages_) {
+    //                clipboardContent += message + "\n";
+    //            }
+    //            ImGui::SetClipboardText(clipboardContent.c_str());
+    //        }
 
-            // Clear log
-            ImGui::Separator();
-            if (ImGui::MenuItem("Clear")) {
-                Clear();
-            }
+    //        // Clear log
+    //        ImGui::Separator();
+    //        if (ImGui::MenuItem("Clear")) {
+    //            Clear();
+    //        }
 
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-    }
+    //        ImGui::EndMenu();
+    //    }
+    //    ImGui::EndMenuBar();
+    //}
 
-    // Scroll region for messages
-    ImGui::Separator();
-    ImGui::BeginChild("ScrollRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+    //// Scroll region for messages
+    //ImGui::Separator();
+    //ImGui::BeginChild("ScrollRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
 
-    
-    // Define alternating background colors for rows
-    ImVec4 color1 = ImVec4(0.2f, 0.2f, 0.2f, linesAlpha); // Light gray
-    ImVec4 color2 = ImVec4(0.15f, 0.15f, 0.15f, linesAlpha); // Darker gray
-    bool alternateColor = false;
+    //
+    //// Define alternating background colors for rows
+    //ImVec4 color1 = ImVec4(0.2f, 0.2f, 0.2f, linesAlpha); // Light gray
+    //ImVec4 color2 = ImVec4(0.15f, 0.15f, 0.15f, linesAlpha); // Darker gray
+    //bool alternateColor = false;
 
-    // Display each log message with an alternating row background
-    for (const auto& message : logMessages_) {
-        // Calculate the position and size of each row
-        ImVec2 cursorPos = ImGui::GetCursorScreenPos();
-        ImVec2 textSize = ImGui::CalcTextSize(message.c_str());
-        ImVec2 rowSize = ImVec2(ImGui::GetContentRegionAvail().x, textSize.y + ImGui::GetStyle().ItemSpacing.y);
+    //// Display each log message with an alternating row background
+    //for (const auto& message : logMessages_) {
+    //    // Calculate the position and size of each row
+    //    ImVec2 cursorPos = ImGui::GetCursorScreenPos();
+    //    ImVec2 textSize = ImGui::CalcTextSize(message.c_str());
+    //    ImVec2 rowSize = ImVec2(ImGui::GetContentRegionAvail().x, textSize.y + ImGui::GetStyle().ItemSpacing.y);
 
-        // Draw a filled rectangle behind each row for the background color
-        ImGui::GetWindowDrawList()->AddRectFilled(cursorPos, ImVec2(cursorPos.x + rowSize.x, cursorPos.y + rowSize.y),
-                                                  ImGui::GetColorU32(alternateColor ? color2 : color1));
+    //    // Draw a filled rectangle behind each row for the background color
+    //    ImGui::GetWindowDrawList()->AddRectFilled(cursorPos, ImVec2(cursorPos.x + rowSize.x, cursorPos.y + rowSize.y),
+    //                                              ImGui::GetColorU32(alternateColor ? color2 : color1));
 
-        // Draw the text
-        ImGui::TextUnformatted(message.c_str());
+    //    // Draw the text
+    //    ImGui::TextUnformatted(message.c_str());
 
-        // Toggle background color for the next row
-        alternateColor = !alternateColor;
-    }
+    //    // Toggle background color for the next row
+    //    alternateColor = !alternateColor;
+    //}
    
 
-    // Scroll to bottom if new messages are added
-    if (scrollToBottom_ && newMessageAdded) {
-        ImGui::SetScrollHereY(1.0f);
-        newMessageAdded = false;
-    }
-    ImGui::EndChild();
+    //// Scroll to bottom if new messages are added
+    //if (scrollToBottom_ && newMessageAdded) {
+    //    ImGui::SetScrollHereY(1.0f);
+    //    newMessageAdded = false;
+    //}
+    //ImGui::EndChild();
 
-    ImGui::End();
-    ImGui::PopStyleColor();
+    //ImGui::End();
+    //ImGui::PopStyleColor();
 }
 
 void DebugConsole::ToggleEditing()
@@ -232,71 +230,71 @@ void DebugWatchlist::Post(const std::string description, const std::string forma
 
 void DebugWatchlist::Draw(const char *title)
 {
-    ImGuiWindowFlags windowFlags;
-    if(IsKeyPressed(KEY_O)) {
-        ToggleEditing();
-        DN_CORE_INFO("DebugWatchlistEditing {}", enableEditing);
-    }
-    if (!enableEditing && enableSilent) {
-        ImGui::SetWindowFocus(NULL);
-        windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
-    } else {
-        windowFlags = ImGuiWindowFlags_MenuBar;
-    }
+    //ImGuiWindowFlags windowFlags;
+    //if(IsKeyPressed(KEY_O)) {
+    //    ToggleEditing();
+    //    DN_CORE_INFO("DebugWatchlistEditing {}", enableEditing);
+    //}
+    //if (!enableEditing && enableSilent) {
+    //    ImGui::SetWindowFocus(NULL);
+    //    windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
+    //} else {
+    //    windowFlags = ImGuiWindowFlags_MenuBar;
+    //}
 
-    std::lock_guard<std::mutex> lock(mutex_); // Ensure thread safety
+    //std::lock_guard<std::mutex> lock(mutex_); // Ensure thread safety
 
-    // Begin a new ImGui window with the given title
-    float bgAlpha = 0.8f;
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, bgAlpha));
-    // if ( ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar)) {
+    //// Begin a new ImGui window with the given title
+    //float bgAlpha = 0.8f;
+    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, bgAlpha));
+    //// if ( ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar)) {
 
-    if (ImGui::Begin(title, nullptr, windowFlags)) {
+    //if (ImGui::Begin(title, nullptr, windowFlags)) {
 
-        // Title bar menu with dropdown for AutoScroll, Copy, and Clear
-        if (ImGui::BeginMenuBar()) {
-            if (ImGui::BeginMenu("Options")) {
+    //    // Title bar menu with dropdown for AutoScroll, Copy, and Clear
+    //    if (ImGui::BeginMenuBar()) {
+    //        if (ImGui::BeginMenu("Options")) {
 
-                // Clear log
-                if (ImGui::MenuItem("Clear")) {
-                    Clear();
-                }
-                ImGui::Separator();
+    //            // Clear log
+    //            if (ImGui::MenuItem("Clear")) {
+    //                Clear();
+    //            }
+    //            ImGui::Separator();
 
-                ImGui::EndMenu();
-            }
-            ImGui::EndMenuBar();
-        }
+    //            ImGui::EndMenu();
+    //        }
+    //        ImGui::EndMenuBar();
+    //    }
 
-        // Begin a two-column table for the description-value pairs
-        if (ImGui::BeginTable("WatchlistTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
-            ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_WidthStretch);
-            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
-            ImGui::TableHeadersRow();
+    //    // Begin a two-column table for the description-value pairs
+    //    if (ImGui::BeginTable("WatchlistTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+    //        ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_WidthStretch);
+    //        ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
+    //        ImGui::TableHeadersRow();
 
-            // Iterate over `order` to preserve insertion order
-            for (const auto& key : order) {
-                // Fetch the value from `watchlist`
-                const std::string& value = watchlist[key];
+    //        // Iterate over `order` to preserve insertion order
+    //        for (const auto& key : order) {
+    //            // Fetch the value from `watchlist`
+    //            const std::string& value = watchlist[key];
 
-                // Start a new row
-                ImGui::TableNextRow();
+    //            // Start a new row
+    //            ImGui::TableNextRow();
 
-                // First column: Description
-                ImGui::TableSetColumnIndex(0);
-                ImGui::TextUnformatted(key.c_str());
+    //            // First column: Description
+    //            ImGui::TableSetColumnIndex(0);
+    //            ImGui::TextUnformatted(key.c_str());
 
-                // Second column: Value
-                ImGui::TableSetColumnIndex(1);
-                ImGui::TextUnformatted(value.c_str());
-            }
+    //            // Second column: Value
+    //            ImGui::TableSetColumnIndex(1);
+    //            ImGui::TextUnformatted(value.c_str());
+    //        }
 
-            // End the table
-            ImGui::EndTable();
-        }
-        ImGui::End(); // End the ImGui window
-        ImGui::PopStyleColor();
-    }
+    //        // End the table
+    //        ImGui::EndTable();
+    //    }
+    //    ImGui::End(); // End the ImGui window
+    //    ImGui::PopStyleColor();
+    //}
 }
 
 void DebugWatchlist::ToggleEditing()

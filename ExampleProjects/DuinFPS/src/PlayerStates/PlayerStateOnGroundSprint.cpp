@@ -25,21 +25,21 @@ void PlayerStateOnGroundSprint::State_Enter()
 
 void PlayerStateOnGroundSprint::State_HandleInput()
 {
-    if (!IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-        owner.SwitchState<PlayerStateOnGroundIdle>();
-    }
+    //if (!IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
+    //    owner.SwitchState<PlayerStateOnGroundIdle>();
+    //}
 
-    duin::Vector2 input(GetInputVector2DStruct(MOVEMENT_KEYS));
-    player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
+    //duin::Vector2 input(GetInputVector2DStruct(MOVEMENT_KEYS));
+    //player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
 
-    if (!duin::Vector2Equals(input, duin::Vector2Zero())) {
-        if (!IsKeyDown(KEY_LEFT_SHIFT)) {
-            owner.SwitchState<PlayerStateOnGroundRun>();
-        }
-        else {
-            player.add<SprintTag>();
-        }
-    }
+    //if (!duin::Vector2Equals(input, duin::Vector2Zero())) {
+    //    if (!IsKeyDown(KEY_LEFT_SHIFT)) {
+    //        owner.SwitchState<PlayerStateOnGroundRun>();
+    //    }
+    //    else {
+    //        player.add<SprintTag>();
+    //    }
+    //}
 }
 
 void PlayerStateOnGroundSprint::State_Update(double delta)

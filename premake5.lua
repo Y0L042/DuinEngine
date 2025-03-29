@@ -43,11 +43,8 @@ workspace "Duin"
         "%{IncludeDir.sdl}",
         "%{IncludeDir.bgfx}",
         "%{IncludeDir.spdlog}",
-        "%{IncludeDir.raylib}",
-        "%{IncludeDir.raygui}",
         "%{IncludeDir.imgui}",
         "%{IncludeDir.imguifilex}",
-        "%{IncludeDir.rlimgui}",
         "%{IncludeDir.flecs}",
         "%{IncludeDir.fmt}",
         "%{IncludeDir.patches}",
@@ -59,7 +56,6 @@ workspace "Duin"
         "Duin/bin/" .. outputdir .. "/Duin",  -- Duin's output directory
         "Duin/vendor/sdl/build/Debug",
         "Duin/vendor/bgfx/.build/win64_vs2022/bin",
-        "Duin/vendor/rlimgui/bin/Debug",
         "Duin/vendor/flecs/build_vs2022/Debug",	
         "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
     }
@@ -68,17 +64,19 @@ workspace "Duin"
         "DN_PLATFORM_WINDOWS",
         "DN_BUILD_STATIC",
         "flecs_STATIC",
-        "IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
         "PX_PHYSX_STATIC_LIB",
     }
     global_links = 
     {
-        "SDL3-static.lib",
-        "bgfxDebug.lib",
-        "raylib.lib", 
-        "rlImGui.lib",
         "flecs_static.lib",
         "winmm.lib",
+        "legacy_stdio_definitions.lib",
+        "Setupapi.lib",
+        "Version.lib",
+        "Imm32.lib",
+        "Cfgmgr32.lib",
+        "SDL3-static.lib",
+        "bgfxDebug.lib",
         "Duin.lib",
         "PhysX_static_64.lib",
         "PhysXCooking_static_64.lib",

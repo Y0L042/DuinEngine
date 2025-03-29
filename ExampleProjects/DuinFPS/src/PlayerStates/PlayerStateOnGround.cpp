@@ -29,11 +29,11 @@ void PlayerStateOnGround::State_Enter()
 
 void PlayerStateOnGround::State_HandleInput()
 {
-    if (IsKeyPressed(KEY_SPACE)) {
-        player.add<JumpTag>();
-    }
+    //if (IsKeyPressed(KEY_SPACE)) {
+    //    player.add<JumpTag>();
+    //}
 
-    onGroundSM.ExecuteHandleInput();
+    //onGroundSM.ExecuteHandleInput();
 }
 
 void PlayerStateOnGround::State_Update(double delta)

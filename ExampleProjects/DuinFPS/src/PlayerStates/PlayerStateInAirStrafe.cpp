@@ -24,12 +24,12 @@ void PlayerStateInAirStrafe::State_Enter()
 
 void PlayerStateInAirStrafe::State_HandleInput()
 {
-    if (!IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-        owner.SwitchState<PlayerStateInAirIdle>();
-    }
+    //if (!IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
+    //    owner.SwitchState<PlayerStateInAirIdle>();
+    //}
 
-    duin::Vector2 input(GetInputVector2DStruct(MOVEMENT_KEYS));
-    player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
+    //duin::Vector2 input(GetInputVector2DStruct(MOVEMENT_KEYS));
+    //player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
 }
 
 void PlayerStateInAirStrafe::State_Update(double delta)

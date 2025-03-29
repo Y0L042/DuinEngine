@@ -54,10 +54,6 @@
 #ifndef DUIN_MATHS_H
 #define DUIN_MATHS_H
 
-// Raylib dependencies
-#include <raylib.h>
-#include <raymath.h>
-
 // PhysX dependencies
 #include <foundation/PxVec2.h>
 #include <foundation/PxVec3.h>
@@ -139,16 +135,8 @@ typedef struct Vector2 {
     Vector2(float x, float y) 
         : x(x), y(y) {}
 
-    explicit Vector2(const ::Vector2& raylibVec)
-        : x(raylibVec.x), y(raylibVec.y) {}
-
     explicit Vector2(const physx::PxVec2T<float>& physxVec)
         : x(physxVec.x), y(physxVec.y) {}
-
-    ::Vector2 ToRaylib() const
-    {
-        return ::Vector2(x, y);
-    }
 
     physx::PxVec2T<float> ToPhysX() const
     {
@@ -172,19 +160,11 @@ typedef struct Vector3 {
     Vector3(float x, float y, float z) 
         : x(x), y(y), z(z) {}
 
-    explicit Vector3(const ::Vector3& raylibVec)
-        : x(raylibVec.x), y(raylibVec.y), z(raylibVec.z) {}
-
     explicit Vector3(const physx::PxVec3T<float>& physxVec)
         : x(physxVec.x), y(physxVec.y), z(physxVec.z) {}
 
     explicit Vector3(const physx::PxVec3T<double>& physxVec)
         : x((float)physxVec.x), y((float)physxVec.y), z((float)physxVec.z) {}
-
-    ::Vector3 ToRaylib() const
-    {
-        return ::Vector3(x, y, z);
-    }
 
     physx::PxVec3T<float> ToPhysX() const
     {
@@ -219,19 +199,11 @@ typedef struct Vector4 {
     Vector4(float x, float y, float z, float w) 
         : x(x), y(y), z(z), w(w) {}
 
-    explicit Vector4(const ::Vector4& raylibVec)
-        : x(raylibVec.x), y(raylibVec.y), z(raylibVec.z), w(raylibVec.w) {}
-
     explicit Vector4(const physx::PxVec4T<float>& physxVec)
         : x(physxVec.x), y(physxVec.y), z(physxVec.z), w(physxVec.w) {}
 
     explicit Vector4(const physx::PxQuatT<float>& physxQuat)
         : x(physxQuat.x), y(physxQuat.y), z(physxQuat.z), w(physxQuat.w) {}
-
-    ::Vector4 ToRaylib() const
-    {
-        return ::Vector4(x, y, z, w);
-    }
 
     physx::PxVec4T<float> ToPhysX() const
     {
@@ -282,25 +254,11 @@ typedef struct Matrix {
           m2(row3.x), m6(row3.y), m10(row3.z), m14(row3.w),
           m3(row4.x), m7(row4.y), m11(row4.z), m15(row4.w) {}
 
-    explicit Matrix(const ::Matrix& raylibMat)
-        : m0(raylibMat.m0), m4(raylibMat.m4), m8(raylibMat.m8), m12(raylibMat.m12),
-          m1(raylibMat.m1), m5(raylibMat.m5), m9(raylibMat.m9), m13(raylibMat.m13),
-          m2(raylibMat.m2), m6(raylibMat.m6), m10(raylibMat.m10), m14(raylibMat.m14),
-          m3(raylibMat.m3), m7(raylibMat.m7), m11(raylibMat.m11), m15(raylibMat.m15) {}
-
     explicit Matrix(const physx::PxMat44T<float>& physxMat)
         : m0(physxMat.column0.x), m4(physxMat.column0.y), m8(physxMat.column0.z), m12(physxMat.column0.w),
           m1(physxMat.column1.x), m5(physxMat.column1.y), m9(physxMat.column1.z), m13(physxMat.column1.w),
           m2(physxMat.column2.x), m6(physxMat.column2.y), m10(physxMat.column2.z), m14(physxMat.column2.w),
           m3(physxMat.column3.x), m7(physxMat.column3.y), m11(physxMat.column3.z), m15(physxMat.column3.w) {}
-
-    ::Matrix ToRaylib() const
-    {
-        return ::Matrix{    m0, m4, m8, m12,
-                            m1, m5, m9, m13, 
-                            m2, m6, m10, m14,
-                            m3, m7, m11, m15 };
-    }
 
     physx::PxMat44T<float> ToPhysX() const
     {
@@ -320,19 +278,11 @@ typedef struct Matrix {
 typedef struct float3 {
     float v[3];
     
-    ::float3 ToRaylib()
-    {
-        return ::float3{ *v };
-    }
 } float3;
 
 typedef struct float16 {
     float v[16];
 
-    ::float16 ToRaylib()
-    {
-        return ::float16{ *v };
-    }
 } float16;
 
 #include <math.h>       // Required for: sinf(), cosf(), tan(), atan2f(), sqrtf(), floor(), fminf(), fmaxf(), fabsf()

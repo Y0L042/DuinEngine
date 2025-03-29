@@ -23,7 +23,7 @@ void Game::Initialize()
 
 void Game::Ready()
 {
-    SetWindowTitle("DuinFPS");
+    //SetWindowTitle("DuinFPS");
     gameSM.PushState<StateGameLoop>();
 }
 

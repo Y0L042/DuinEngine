@@ -5,16 +5,11 @@
 #include "../ECS.h"
 #include "../PlayerStates/PlayerStates.h"
 
-#define RLIGHTS_IMPLEMENTATION
-#include "../rlights.h"
-
 #include <flecs.h>
 
 #include <memory>
 #include <iostream>
 #include <omp.h>
-
-#define GLSL_VERSION            330
 
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
@@ -30,10 +25,7 @@ flecs::entity debugCamera;
 flecs::entity bouncyCube;
 flecs::entity bouncyCubeRender;
 
-Shader shader;
-
 static const char *TERRAIN_PATH = "./assets/.maps/testMap.glb";
-Model terrain;
 
 int fpsCameraEnabled = 1;
 static int test;
@@ -46,7 +38,7 @@ struct Test {
    const char* test = "Hello!\0";
 };
 
-InputVector2DKeys MOVEMENT_KEYS{ KEY_W, KEY_S, KEY_A, KEY_D };
+//InputVector2DKeys MOVEMENT_KEYS{ KEY_W, KEY_S, KEY_A, KEY_D };
 
 static void SetFPSCamera(int enable);
 
@@ -111,12 +103,12 @@ void StateGameLoop::State_Enter()
         .is_a(duin::ECSPrefab::Camera3D)
         .child_of(cameraRoot)
         .set<Transform3D>({ { 0.0f, 0.0f, 0.0f } })
-        .set<::Camera3D>({
-                .target = { 0.0f, 0.0f, 0.0f },
-                .up = { 0.0f, 1.0f, 0.0f },
-                .fovy = 72.0f,
-                .projection = ::CAMERA_PERSPECTIVE
-            })
+        //.set<::Camera3D>({
+        //        .target = { 0.0f, 0.0f, 0.0f },
+        //        .up = { 0.0f, 1.0f, 0.0f },
+        //        .fovy = 72.0f,
+        //        .projection = ::CAMERA_PERSPECTIVE
+        //    })
         // .set<VelocityBob>({ 10.0f, 1.0f })
         .add<duin::ECSTag::ActiveCamera>()
         ;
@@ -126,12 +118,12 @@ void StateGameLoop::State_Enter()
     debugCamera = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Camera3D)
         .set<Transform3D>({ { 0.0f, 5.0f, 15.0f } })
-        .set<::Camera3D>({
-                 .target = { 0.0f, 0.0f, 0.0f },
-                 .up = { 0.0f, 1.0f, 0.0f },
-                 .fovy = 72.0f,
-                 .projection = ::CAMERA_PERSPECTIVE
-            })
+        //.set<::Camera3D>({
+        //         .target = { 0.0f, 0.0f, 0.0f },
+        //         .up = { 0.0f, 1.0f, 0.0f },
+        //         .fovy = 72.0f,
+        //         .projection = ::CAMERA_PERSPECTIVE
+        //    })
         .add<MouseInputVec2>()
         .add<CameraPitchComponent>()
         .add<CameraYawComponent>()
@@ -159,7 +151,7 @@ void StateGameLoop::State_Enter()
     bouncyCubeRender = ecsManager.world.entity()
         .is_a(duin::ECSPrefab::Cube)
         .child_of(bouncyCube)
-        .set<CubeComponent>({boxSize.x, boxSize.y, boxSize.z, GRAY})
+        //.set<CubeComponent>({boxSize.x, boxSize.y, boxSize.z, GRAY})
         ;
 
 
@@ -231,52 +223,52 @@ void StateGameLoop::State_Exit()
 void StateGameLoop::State_HandleInput()
 {
     /* --- DEBUG --- */
-    if (fpsCameraEnabled && !IsCursorHidden()) {
-        SetFPSCamera(1);
-    }
+    //if (fpsCameraEnabled && !IsCursorHidden()) {
+    //    SetFPSCamera(1);
+    //}
 
-    if (IsKeyPressed(KEY_P)) {
-        // If debugCamera is active, switch to fpsCamera,
-        // else switch to debugCamera
-        if (debugCamera.has<ActiveCamera>()) {
-            ecsManager.ActivateCameraEntity(fpsCamera);
-            SetFPSCamera(1);
-        }
-        else {
-            ecsManager.ActivateCameraEntity(debugCamera);
-            SetFPSCamera(0);
-        }
-    }
+    //if (IsKeyPressed(KEY_P)) {
+    //    // If debugCamera is active, switch to fpsCamera,
+    //    // else switch to debugCamera
+    //    if (debugCamera.has<ActiveCamera>()) {
+    //        ecsManager.ActivateCameraEntity(fpsCamera);
+    //        SetFPSCamera(1);
+    //    }
+    //    else {
+    //        ecsManager.ActivateCameraEntity(debugCamera);
+    //        SetFPSCamera(0);
+    //    }
+    //}
 
     // If debugCamera enabled
-    if (!fpsCameraEnabled && IsKeyPressed(KEY_LEFT_CONTROL)) {
-        int x = IsKeyPressed(KEY_D) - IsKeyPressed(KEY_A);
-        int y = IsKeyPressed(KEY_Q) - IsKeyPressed(KEY_E);
-        int z = IsKeyPressed(KEY_W) - IsKeyPressed(KEY_S);
-        debugCamera.set<Movement3DInput>({ (float)x, (float)y, (float)z });
-    }
+    //if (!fpsCameraEnabled && IsKeyPressed(KEY_LEFT_CONTROL)) {
+    //    int x = IsKeyPressed(KEY_D) - IsKeyPressed(KEY_A);
+    //    int y = IsKeyPressed(KEY_Q) - IsKeyPressed(KEY_E);
+    //    int z = IsKeyPressed(KEY_W) - IsKeyPressed(KEY_S);
+    //    debugCamera.set<Movement3DInput>({ (float)x, (float)y, (float)z });
+    //}
 
-    static int debugShapesEnabled = 0;
-    if (IsKeyPressed(KEY_F3)) {
-        if (debugShapesEnabled) {
-            player.remove<DebugCapsuleComponent>();
-        } else {
-            player.set<DebugCapsuleComponent>({ 1.75f, 0.35f, 8, 16, ::GREEN });
-        }
-        debugShapesEnabled = !debugShapesEnabled;
-    }
+    //static int debugShapesEnabled = 0;
+    //if (IsKeyPressed(KEY_F3)) {
+    //    if (debugShapesEnabled) {
+    //        player.remove<DebugCapsuleComponent>();
+    //    } else {
+    //        player.set<DebugCapsuleComponent>({ 1.75f, 0.35f, 8, 16, ::GREEN });
+    //    }
+    //    debugShapesEnabled = !debugShapesEnabled;
+    //}
     /* --- DEBUG --- */
 
 
     playerSM.ExecuteHandleInput();
-    duin::Vector2 mouseInput(GetMouseDelta());
-    if (fpsCameraEnabled) {
-        player.set<MouseInputVec2>({ { mouseInput } });
-        cameraRoot.set<MouseInputVec2>({ { mouseInput } });
-    }
-    else {
-        debugCamera.set<MouseInputVec2>({ { mouseInput } });
-    }
+    //duin::Vector2 mouseInput(GetMouseDelta());
+    //if (fpsCameraEnabled) {
+    //    player.set<MouseInputVec2>({ { mouseInput } });
+    //    cameraRoot.set<MouseInputVec2>({ { mouseInput } });
+    //}
+    //else {
+    //    debugCamera.set<MouseInputVec2>({ { mouseInput } });
+    //}
 
     // int isOnFloor = 0;
     // const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
@@ -303,7 +295,7 @@ void StateGameLoop::State_Update(double delta)
 {
     playerSM.ExecuteUpdate(delta);
 
-    debugWatchlist.Post("FPS | Frametime", "%d | %.1f", GetFPS(), 1000 * GetFrameTime());
+    //debugWatchlist.Post("FPS | Frametime", "%d | %.1f", GetFPS(), 1000 * GetFrameTime());
 
     //const duin::Vector3 playerPosG = player.get<duin::ECSComponent::Position3D, duin::ECSTag::Global>()->value;
     //debugCamera.set<DebugCameraTarget>({ { playerPosG } });
@@ -341,11 +333,11 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
         debugWatchlist.Post("CameraNode Global Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
     }
 
-    const ::Camera3D *pCam = fpsCamera.get<::Camera3D>();
-    if (pCam) {
-        duin::Vector3 pos(pCam->position);
-        debugWatchlist.Post("Player Camera Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
-    }
+    //const ::Camera3D *pCam = fpsCamera.get<::Camera3D>();
+    //if (pCam) {
+    //    duin::Vector3 pos(pCam->position);
+    //    debugWatchlist.Post("Player Camera Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+    //}
 
     playerSM.ExecutePhysicsUpdate(delta);
 
@@ -388,7 +380,7 @@ void StateGameLoop::State_Draw()
     playerSM.ExecuteDraw();
 
 
-    ::DrawCubeWires({0.0f, 0.0f, 0.0f}, 1.0f, 1.0f, 1.0f, RED);
+    //::DrawCubeWires({0.0f, 0.0f, 0.0f}, 1.0f, 1.0f, 1.0f, RED);
     // DrawCube({0.0f, 0.0f, 0.0f}, 2.9f, 2.9f, 2.9f, BLUE);
     // BeginShaderMode(shader);
     //     DrawCube({0.0f, 0.0f, 0.0f}, 3.0f, 3.0f, 3.0f, WHITE);
@@ -396,7 +388,7 @@ void StateGameLoop::State_Draw()
     // EndShaderMode();
 
 
-    DrawGrid(1000, 10.0f);
+    //DrawGrid(1000, 10.0f);
 }
 
 void StateGameLoop::State_DrawUI()
@@ -421,10 +413,10 @@ void StateGameLoop::State_DrawUI()
 
 static void SetFPSCamera(int enable)
 {
-    fpsCameraEnabled = enable;
-    if (fpsCameraEnabled) {
-        DisableCursor();
-    } else {
-        DisableCursor();
-    }
+    //fpsCameraEnabled = enable;
+    //if (fpsCameraEnabled) {
+    //    DisableCursor();
+    //} else {
+    //    DisableCursor();
+    //}
 }

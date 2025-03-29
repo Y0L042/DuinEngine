@@ -48,13 +48,9 @@ project "Duin"
         SolutionRoot .. "/%{IncludeDir.sdl}",
         SolutionRoot .. "/%{IncludeDir.bgfx}",
         SolutionRoot .. "/%{IncludeDir.spdlog}",
-		SolutionRoot .. "/%{IncludeDir.raylib}",
-		SolutionRoot .. "/%{IncludeDir.raygui}",
 		SolutionRoot .. "/%{IncludeDir.imgui}",
 		SolutionRoot .. "/%{IncludeDir.imguibackends}",
-		SolutionRoot .. "/%{IncludeDir.glfw}",
 		SolutionRoot .. "/%{IncludeDir.imguifilex}",
-		SolutionRoot .. "/%{IncludeDir.rlimgui}",
 		SolutionRoot .. "/%{IncludeDir.flecs}",
 		SolutionRoot .. "/%{IncludeDir.fmt}",
 		SolutionRoot .. "/%{IncludeDir.patches}",
@@ -66,7 +62,6 @@ project "Duin"
     { 
         ProjectRoot .. "/vendor/sdl/build/Debug",
         ProjectRoot .. "/vendor/bgfx/.build/win64_vs2022/bin",
-		ProjectRoot .. "/vendor/rlimgui/bin/Debug",
 		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
     }
@@ -80,17 +75,19 @@ project "Duin"
         "PX_PHYSX_STATIC_LIB",
 
 		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
-		"SUPPORT_GIF_RECORDING",
     }
     -- links(global_links)
     links 
     { 
-        "bgfxDebug.lib",
-		"raylib.lib", 
-		"rlImGui.lib",
         "flecs_static.lib",
 		"winmm.lib",
-
+        "legacy_stdio_definitions.lib",
+        "Setupapi.lib",
+        "Version.lib",
+        "Imm32.lib",
+        "Cfgmgr32.lib",
+        "SDL3-static.lib",
+        "bgfxDebug.lib",
         "PhysX_static_64.lib",
         "PhysXCooking_static_64.lib",
         "PhysXCommon_static_64.lib",

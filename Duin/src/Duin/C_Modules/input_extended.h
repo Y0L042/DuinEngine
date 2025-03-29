@@ -1,9 +1,6 @@
 #ifndef INPUT_EXTENDED_H
 #define INPUT_EXTENDED_H
 
-#include <raylib.h>
-#include <raymath.h>
-
 typedef struct InputVector2DKeys {
     int up, down, left, right;
 } InputVector2DKeys;
@@ -12,10 +9,10 @@ typedef struct InputVector2DKeys {
 extern "C" {            // Prevents name mangling of functions
 #endif
 
-Vector2 GetInputVector2D(int up, int down, int left, int right);
-Vector2 GetInputVector2DStruct(InputVector2DKeys keys);
-int IsInputVector2DPressed(int up, int down, int left, int right);
-int IsInputVector2DPressedStruct(InputVector2DKeys keys);
+//Vector2 GetInputVector2D(int up, int down, int left, int right);
+//Vector2 GetInputVector2DStruct(InputVector2DKeys keys);
+//int IsInputVector2DPressed(int up, int down, int left, int right);
+//int IsInputVector2DPressedStruct(InputVector2DKeys keys);
 
 #if defined(__cplusplus)
 }

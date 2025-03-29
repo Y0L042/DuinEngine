@@ -442,31 +442,6 @@ namespace duin {
                         entity_(tx.GetEntity())
                 {};
 
-                /* To/From raylib */
-                void FromRaylib(::Transform tx)
-                {
-                    SetPosition(Vector3(tx.translation));
-                    SetScale(Vector3(tx.scale));
-                    SetRotation(Quaternion(tx.rotation));
-                }
-
-                Transform3D(::Transform tx, flecs::entity e)
-                    :
-                        position_(tx.translation),
-                        scale_(tx.scale),
-                        rotation_(tx.rotation),
-                        entity_(e)
-                {}
-
-                ::Transform ToRaylib()
-                {
-                    return ::Transform(
-                                        position_.ToRaylib(),
-                                        rotation_.ToRaylib(),
-                                        scale_.ToRaylib()
-                                     );
-                }
-
                 void InvalidateCacheFlags()
                 {
                     globalPositionCacheDirtyFlag = true;
@@ -721,7 +696,8 @@ namespace duin {
         /*------------------------------------------------------------------------*/
         struct CubeComponent {
             float width, height, length;
-            ::Color color;
+        // TODO REPLACE_RAYLIB
+            // ::Color color;
         };
 
         /*------------------------------------------------------------------------*/
@@ -752,12 +728,14 @@ namespace duin {
         struct DebugCapsuleComponent {
             float height, radius;
             int slices, rings;
-            ::Color color;
+        // TODO REPLACE_RAYLIB
+            // ::Color color;
         };
 
         struct DebugCubeComponent {
             float width, height, length;
-            ::Color color;
+        // TODO REPLACE_RAYLIB
+            // ::Color color;
         };
     };
 
@@ -801,7 +779,6 @@ namespace duin {
         flecs::entity CreateEntityFromJSON(JSONMember& member);
 
         void ActivateCameraEntity(flecs::entity entity);
-        void SetGlobalPosition3D(flecs::entity entity, Vector3 newPos);
 
         void PostUpdateQueryExecution(double delta);
         void PostPhysicsUpdateQueryExecution(double delta);
