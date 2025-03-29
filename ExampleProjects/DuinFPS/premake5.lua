@@ -41,7 +41,7 @@ project "DuinFPS"
         cppdialect "C++20"
 
     filter "action:vs*"
-        buildoptions { "/utf-8" }  -- Changed: Added /utf-8 flag for Unicode support
+        buildoptions { "/utf-8", '/Zc:__cplusplus', '/Zc:preprocessor' }  -- Changed: Added /utf-8 flag for Unicode support
 
     -- Enable multi-processor compilation
     filter "action:vs*"

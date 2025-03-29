@@ -13,7 +13,7 @@ namespace duin {
     void SceneManager::ExecuteReady()
     {}
 
-    void SceneManager::ExecuteHandleInput()
+    void SceneManager::ExecuteHandleInput(InputEvent event)
     {}
 
     void SceneManager::ExecuteUpdate(double delta)
@@ -34,7 +34,7 @@ namespace duin {
     void SceneManager::RegisterReady(UUID uuid, std::function<void()> callback)
 	{}
 
-    void SceneManager::RegisterHandleInput(UUID uuid, std::function<void()> callback)
+    void SceneManager::RegisterHandleInput(UUID uuid, std::function<void(InputEvent)> callback)
 	{}
 
     void SceneManager::RegisterUpdate(UUID uuid, std::function<void(double)> callback)

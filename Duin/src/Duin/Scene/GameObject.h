@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Duin/Core/Utils/UUID.h"
+#include "Duin/Core/Events/Event.h"
 
 namespace duin {
     class SceneManager;
@@ -11,7 +12,7 @@ namespace duin {
             virtual ~GameObject();
 
             virtual void Ready();
-            virtual void HandleInput();
+            virtual void HandleInput(InputEvent event);
             virtual void Update(double delta);
             virtual void PhysicsUpdate(double delta);
             virtual void Draw();

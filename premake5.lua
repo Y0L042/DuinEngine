@@ -19,6 +19,8 @@ workspace "Duin"
     IncludeDir = {}
     IncludeDir["sdl"] = "Duin/vendor/sdl/include"
     IncludeDir["bgfx"] = "Duin/vendor/bgfx/include"
+    IncludeDir["bx"] = "Duin/vendor/bx/include"
+    IncludeDir["bimg"] = "Duin/vendor/bimg/include"
     IncludeDir["spdlog"] = "Duin/vendor/spdlog/include"
     IncludeDir["rlimgui"] = "Duin/vendor/rlimgui"
     IncludeDir["raylib"] = "Duin/vendor/rlimgui/raylib-master/src"
@@ -42,6 +44,8 @@ workspace "Duin"
     {    
         "%{IncludeDir.sdl}",
         "%{IncludeDir.bgfx}",
+        "%{IncludeDir.bx}",
+        "%{IncludeDir.bimg}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.imgui}",
         "%{IncludeDir.imguifilex}",
@@ -76,6 +80,8 @@ workspace "Duin"
         "Imm32.lib",
         "Cfgmgr32.lib",
         "SDL3-static.lib",
+        "bxDebug.lib",
+        "bimgDebug.lib",
         "bgfxDebug.lib",
         "Duin.lib",
         "PhysX_static_64.lib",

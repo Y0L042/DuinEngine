@@ -27,7 +27,7 @@ void Game::Ready()
     gameSM.PushState<StateGameLoop>();
 }
 
-void Game::HandleInputs()
+void Game::HandleInputs(duin::InputEvent event)
 {
     gameSM.ExecuteHandleInput();
 }

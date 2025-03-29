@@ -5,6 +5,7 @@
 #include <functional>
 
 #include "Duin/Core/Core.h"
+#include "Duin/Core/Events/Event.h"
 
 
 
@@ -58,8 +59,9 @@ namespace duin
 
 		void EnginePreFrame();
 
-		void EngineHandleInputs();
-		virtual void HandleInputs();
+        /** Run as callback events */
+		void EngineHandleInputs(InputEvent event);
+		virtual void HandleInputs(InputEvent event);
 
 		void EngineUpdate(double delta);
 		virtual void Update(double delta);

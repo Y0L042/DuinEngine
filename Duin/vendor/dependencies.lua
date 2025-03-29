@@ -150,8 +150,9 @@ local dependencies = {
         steps = function()
             print("Dep BGFX.steps() START")
             print("BGFX downloaded.")
+            runCommand("cd bgfx && git submodule update --init --recursive")
             runCommand("cd bgfx && ..\\bx\\tools\\bin\\windows\\genie vs2022")
-            os.execute('cd bgfx\\.build\\projects\\vs2022 && msbuild "bgfx.sln" /p:Configuration=Debug /p:Platform=x64 /p:RuntimeLibrary=MultiThreadedDebug')
+            os.execute('cd bgfx\\.build\\projects\\vs2022 && msbuild "bgfx.sln" /p:Configuration=Debug /p:Platform=x64 /p:RuntimeLibrary=MultiThreadedDebug /p:CLCompileAdditionalOptions="/Zc:__cplusplus"')
             print("Dep BGFX.steps() END")
         end
     },

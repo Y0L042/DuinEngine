@@ -47,6 +47,8 @@ project "Duin"
     { 
         SolutionRoot .. "/%{IncludeDir.sdl}",
         SolutionRoot .. "/%{IncludeDir.bgfx}",
+        SolutionRoot .. "/%{IncludeDir.bx}",
+        SolutionRoot .. "/%{IncludeDir.bimg}",
         SolutionRoot .. "/%{IncludeDir.spdlog}",
 		SolutionRoot .. "/%{IncludeDir.imgui}",
 		SolutionRoot .. "/%{IncludeDir.imguibackends}",
@@ -87,6 +89,8 @@ project "Duin"
         "Imm32.lib",
         "Cfgmgr32.lib",
         "SDL3-static.lib",
+        "bxDebug.lib",
+        "bimgDebug.lib",
         "bgfxDebug.lib",
         "PhysX_static_64.lib",
         "PhysXCooking_static_64.lib",
@@ -98,7 +102,7 @@ project "Duin"
     }
 
     filter "action:vs*"
-        buildoptions { "/utf-8" }  -- Changed: Added /utf-8 flag for Unicode support
+        buildoptions { "/utf-8", '/Zc:__cplusplus', '/Zc:preprocessor' }  -- Changed: Added /utf-8 flag for Unicode support
 
     -- Enable multi-processor compilation
     filter "action:vs*"

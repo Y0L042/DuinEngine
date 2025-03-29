@@ -34,3 +34,6 @@
 #include <PxPhysics.h>
 #include <characterkinematic/PxController.h>
 #include <characterkinematic/PxControllerManager.h>
+
+#include <SDL3/SDL.h>
+#include <bgfx/bgfx.h>
