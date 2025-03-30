@@ -93,7 +93,25 @@ namespace duin {
         TARGET_RENDER_FRAMERATE = framerate;
     }
 
-    void DrawPhysicsFPS(float x, float y) {
+    void DrawFPS(bool enable)
+    {
+        static bool enable_ = false;
+        ImGui::Begin("Framerate", &enable_);
+
+
+            // Generate samples and plot them
+            // float samples[100];
+            // for (int n = 0; n < 100; n++)
+            //     samples[n] = sinf(n * 0.2f + ImGui::GetTime() * 1.5f);
+            // ImGui::PlotLines("Samples", samples, 100);
+
+            ImGui::Text("Physics FPS: %.1f", GetPhysicsFPS());
+            ImGui::Text("Render FPS:  %.1f", GetRenderFPS());
+        ImGui::End();
+    }
+
+    void DrawPhysicsFPS(float x, float y) 
+    {
         static constexpr size_t bufferSize = 60; // Buffer size (approx. 1 second at 60 FPS)
         static std::array<float, bufferSize> physicsFPSBuffer = {};
         static size_t bufferIndex = 0;
@@ -118,7 +136,8 @@ namespace duin {
         // ::DrawText(buffer, x, y, 30, ::GREEN);
     }
 
-    void DrawRenderFPS(float x, float y) {
+    void DrawRenderFPS(float x, float y) 
+    {
         static constexpr size_t bufferSize = 60; // Buffer size (approx. 1 second at 60 FPS)
         static std::array<float, bufferSize> renderFPSBuffer = {};
         static size_t bufferIndex = 0;
@@ -151,7 +170,7 @@ namespace duin {
 
     float GetPhysicsFrameTime()
     {
-        float frametime = physicsFrameTime;
+        float frametime = (float)physicsFrameTime;
         return frametime;
     }
 
@@ -168,7 +187,7 @@ namespace duin {
 
     float GetRenderFrameTime()
     {
-        float frametime = renderFrameTime;
+        float frametime = (float)renderFrameTime;
         return frametime;
     }
 
@@ -180,6 +199,27 @@ namespace duin {
     size_t GetRenderFrameCount()
     {
         return renderFrameCount;
+    }
+
+    double GetGameTime()
+    {
+        uint64_t ticksMS = ::SDL_GetTicks();
+        return ((double)ticksMS / 1000.0);
+    }
+
+    double GetGameTimeMilli()
+    {
+        return (double)::SDL_GetTicks();
+    }
+
+    double GetGameTimeNano()
+    {
+        return (double)::SDL_GetTicksNS();
+    }
+
+    void GameDelay(double milliSeconds)
+    {
+        ::SDL_Delay((uint32_t)milliSeconds);
     }
 
     void QueuePostUpdateCallback(std::function<void(double)> f)
@@ -266,6 +306,7 @@ namespace duin {
 
         DN_CORE_INFO("Set render FPS {}", TARGET_RENDER_FRAMERATE);
 
+        /* SDL Setup */
         if(!::SDL_Init(SDL_INIT_VIDEO)) {
             ::SDL_Log("SDL could not initialize! SDL error: %s\n", ::SDL_GetError());
         } else {
@@ -280,6 +321,8 @@ namespace duin {
         if (!hwnd) {
         DN_CORE_FATAL("SDL3 window handle not found!");
         }
+
+        /* BGFX Setup */
         bgfx::renderFrame();
         bgfx::Init bgfxInit;
         bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
@@ -291,54 +334,23 @@ namespace duin {
         bgfx::init(bgfxInit);
         bgfx::setViewClear(bgfxClearView, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
         bgfx::setViewRect(bgfxClearView, 0, 0, screenWidth, screenHeight);
+
+        /* IMGUI Setup */
         ImGui::CreateContext();
         ::ImGui_Implbgfx_Init(255);
         ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
-
-        // ::SetConfigFlags(
-        //           FLAG_MSAA_4X_HINT 
-        //         | FLAG_WINDOW_RESIZABLE 
-        //         | FLAG_WINDOW_HIGHDPI
-        //         // | FLAG_VSYNC_HINT 
-        // );
-        // ::InitWindow(screenWidth, screenHeight, windowName.c_str());
-        // ::rlImGuiSetup(true);
 
         EngineReady();
         Ready();
 
         while(!gameShouldQuit) {
-            bgfx::touch(bgfxClearView);
-            // Use debug font to print information about this example.
-            bgfx::dbgTextClear();
-            bgfx::dbgTextPrintf(0, 0, 0x0f, "Press F1 to toggle stats.");
-            bgfx::dbgTextPrintf(0, 1, 0x0f, "Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too.");
-            bgfx::dbgTextPrintf(80, 1, 0x0f, "\x1b[;0m    \x1b[;1m    \x1b[; 2m    \x1b[; 3m    \x1b[; 4m    \x1b[; 5m    \x1b[; 6m    \x1b[; 7m    \x1b[0m");
-            bgfx::dbgTextPrintf(80, 2, 0x0f, "\x1b[;8m    \x1b[;9m    \x1b[;10m    \x1b[;11m    \x1b[;12m    \x1b[;13m    \x1b[;14m    \x1b[;15m    \x1b[0m");
-            const bgfx::Stats* stats = bgfx::getStats();
-            bgfx::dbgTextPrintf(0, 2, 0x0f, "Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters.", stats->width, stats->height, stats->textWidth, stats->textHeight);
-            // Enable stats or debug text.
-            bgfx::setDebug(true ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT);
-            // Advance to next frame. Process submitted rendering primitives.
-
-            ::ImGui_Implbgfx_NewFrame();
-            ::ImGui_ImplSDL3_NewFrame();
-
-            ImGui::NewFrame();
-            
-            ImGui::ShowDemoWindow();
-
-            ImGui::Render();
-            ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
-
-            bgfx::frame();
 
             #ifdef DN_DEBUG
                 if (!debugIsGamePaused_) {
             #endif /* DN_DEBUG */
 
 
-            frameStartTime = ::SDL_GetTicks();
+            frameStartTime = (double)::SDL_GetTicks();
 
             EnginePreFrame();
 
@@ -348,68 +360,67 @@ namespace duin {
             Update(deltaTime);
             EnginePostUpdate(deltaTime);
 
-            // physicsCurrentTime = ::SDL_GetTicks();
-            // physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
-            // physicsAccumTime += physicsDeltaTime;
-            // double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
-            // while (physicsAccumTime >= physicsTimeStep) {
-            //     physicsPreviousTime = physicsCurrentTime;
-            //     physicsAccumTime -= physicsTimeStep;
-            //
-            //     physicsFrameTime = physicsTimeStep;
-            //     ++physicsFrameCount;
-            //
-            //     EnginePhysicsUpdate(physicsDeltaTime);
-            //     PhysicsUpdate(physicsDeltaTime); 
-            //     EnginePostPhysicsUpdate(physicsDeltaTime);
-            // } // End of Physics
+             physicsCurrentTime = (double)::SDL_GetTicks();
+             physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
+             physicsAccumTime += physicsDeltaTime;
+             double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
+             while (physicsAccumTime >= physicsTimeStep) {
+                 break;
+                 // TODO
+                 physicsPreviousTime = physicsCurrentTime;
+                 physicsAccumTime -= physicsTimeStep;
+            
+                 physicsFrameTime = physicsTimeStep;
+                 ++physicsFrameCount;
+            
+                 EnginePhysicsUpdate(physicsDeltaTime);
+                 PhysicsUpdate(physicsDeltaTime); 
+                 EnginePostPhysicsUpdate(physicsDeltaTime);
+             } // End of Physics
 
 
-            // ::BeginDrawing();
-            // ::rlImGuiBegin();
-
+            /* Frame Start */
             ++renderFrameCount;
-            // ::ClearBackground(::Color{ 
-            //         backgroundColor.r, 
-            //         backgroundColor.g, 
-            //         backgroundColor.b, 
-            //         backgroundColor.a });
+            bgfx::touch(bgfxClearView);
+            ::ImGui_Implbgfx_NewFrame();
+            ::ImGui_ImplSDL3_NewFrame();
+            ImGui::NewFrame();
 
-            // ImGui::DockSpaceOverViewport(0,  NULL, ImGuiDockNodeFlags_PassthruCentralNode);
 
-            // BeginMode3D(activeCamera3D);
             EngineDraw();
             Draw();
             EnginePostDraw();
-            // EndMode3D();
+
 
             EngineDrawUI();
             DrawUI();
             EnginePostDrawUI();
 
-            // ::rlImGuiEnd();
-            // ::EndDrawing();
-            // ::SwapScreenBuffer();
+            /* Frame Render */
+            ImGui::Render();
+            ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
+            bgfx::frame();
+
             EnginePostFrame();
 
-            frameEndTime = ::SDL_GetTicks();
+            frameEndTime = (double)::SDL_GetTicks();
             deltaDrawTime = frameEndTime - frameStartTime;
 
             /** Disable variable rendering for now */
-            // if (TARGET_RENDER_FRAMERATE > 0) {
-            //     double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
-            //     waitTime = targetFrameTime - deltaDrawTime;
-            //
-            //     // printf("Target FT:\t %.6f\n", targetFrameTime);
-            //     // printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
-            //     // printf("waittime:\t %.6f\n", waitTime);
-            //
-            //     if (waitTime > 0.0) {
-            //         ::SDL_Delay((float)waitTime);
-            //     }
-            // } 
+             if (TARGET_RENDER_FRAMERATE > 0) {
+                 double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
+                 waitTime = targetFrameTime - deltaDrawTime;
+            
+                 // printf("Target FT:\t %.6f\n", targetFrameTime);
+                 // printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
+                 // printf("waittime:\t %.6f\n", waitTime);
+            
+                 if (waitTime > 0.0) {
+                     ::SDL_Delay((float)waitTime);
+                 }
+             } 
 
-            deltaTime = ::SDL_GetTicks() - frameStartTime; 
+            deltaTime = (double)::SDL_GetTicks() - frameStartTime;
             renderFrameTime = deltaTime;
 
 
@@ -436,9 +447,6 @@ namespace duin {
         ::SDL_DestroyWindow(sdlWindow);
         sdlWindow = nullptr;
         ::SDL_Quit();
-
-        // ::rlImGuiShutdown();
-        // ::CloseWindow();
     }
 
 
@@ -449,6 +457,7 @@ namespace duin {
     {
         EventHandler::Get().RegisterInputEventListener([this](InputEvent e){ EngineHandleInputs(e); });
         EventHandler::Get().RegisterInputEventListener([this](InputEvent e){ HandleInputs(e); });
+
     }
 
     void Application::Initialize()
@@ -529,6 +538,7 @@ namespace duin {
 
     void Application::EngineDrawUI()
     {
+        DrawFPS(true);
     }
 
     void Application::DrawUI()

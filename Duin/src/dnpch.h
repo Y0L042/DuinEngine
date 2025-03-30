@@ -29,7 +29,9 @@
 #include <spdlog/logger.h>
 #include "Duin/Core/Debug/DNLog.h"
 
+#ifndef PX_PHYSX_STATIC_LIB
 #define PX_PHYSX_STATIC_LIB
+#endif
 #include <PxPhysicsAPI.h>
 #include <PxPhysics.h>
 #include <characterkinematic/PxController.h>

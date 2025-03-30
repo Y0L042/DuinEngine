@@ -20,6 +20,7 @@ namespace duin
     // void SetBackgroundColor(::Color color);
 
     void SetFramerate(int framerate);
+    void DrawFPS(bool enable);
     void DrawPhysicsFPS(float x, float y);
     void DrawRenderFPS(float x, float y);
 	float GetPhysicsFPS();
@@ -28,6 +29,10 @@ namespace duin
 	float GetRenderFrameTime();
 	size_t GetPhysicsFrameCount();
 	size_t GetRenderFrameCount();
+    double GetGameTime();
+    double GetGameTimeMilli();
+    double GetGameTimeNano();
+    void GameDelay(double milliSeconds);
 
 	void QueuePostUpdateCallback(std::function<void(double)>);
 	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
@@ -51,48 +56,49 @@ namespace duin
 
 		void Run();
 
-		void EngineInitialize();
 		virtual void Initialize();
+		virtual void Ready();
+        /** Run as callback events */
+		virtual void HandleInputs(InputEvent event);
+        /* ----------------------- */
+        virtual void Update(double delta);
+        virtual void PhysicsUpdate(double delta);
+        virtual void Draw();
+        virtual void DrawUI();
+        virtual void Debug();
+        virtual void Exit();
+
+    private:
+        std::string windowName = "Game";
+
+		void EngineInitialize();
 
 		void EngineReady();
-		virtual void Ready();
 
 		void EnginePreFrame();
 
-        /** Run as callback events */
 		void EngineHandleInputs(InputEvent event);
-		virtual void HandleInputs(InputEvent event);
 
-		void EngineUpdate(double delta);
-		virtual void Update(double delta);
+        void EngineUpdate(double delta);
         void EnginePostUpdate(double delta);
 
-		void EnginePhysicsUpdate(double delta);
-		virtual void PhysicsUpdate(double delta);
+        void EnginePhysicsUpdate(double delta);
         void EnginePostPhysicsUpdate(double delta);
 
-		void EngineDraw();
-		virtual void Draw();
+        void EngineDraw();
         void EnginePostDraw();
 
-		void EngineDrawUI();
-		virtual void DrawUI();
+        void EngineDrawUI();
         void EnginePostDrawUI();
-
-		void EngineDebug();
-		virtual void Debug();
-        void EnginePostDebug();
-
         void EnginePostFrame();
 
-		virtual void Exit();
-		void EngineExit();
+        void EngineDebug();
+        void EnginePostDebug();
 
-	private:
-		std::string windowName = "Game";
-	};
+        void EngineExit();
+    };
 
-	Application* CreateApplication();
+    Application* CreateApplication();
 
 }
 
