@@ -270,7 +270,18 @@ local dependencies = {
             end
             print("Dep FLECS.steps() END")
         end
-    }
+    },
+
+    IMGUI = {
+        repo = "https://github.com/ocornut/imgui",
+        branch = "docking",
+        folder = "imgui",
+        steps = function()
+            print("Dep IMGUI.steps() START")
+            print("Dep IMGUI.steps() END")
+    end
+}
+
 }
 
 

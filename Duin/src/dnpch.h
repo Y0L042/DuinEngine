@@ -35,5 +35,8 @@
 #include <characterkinematic/PxController.h>
 #include <characterkinematic/PxControllerManager.h>
 
+#ifndef BX_CONFIG_DEBUG
+#define BX_CONFIG_DEBUG 0
+#endif
+
 #include <SDL3/SDL.h>
-#include <bgfx/bgfx.h>

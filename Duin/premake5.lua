@@ -27,6 +27,12 @@ project "Duin"
         pchheader ""  -- Ensures .c files ignore PCH
     filter {} -- Clear the filter
 
+    -- Filter to apply settings only to .cpp files inside "ignoredir"
+    filter "files:**/external/**.cpp"  -- Added: match .cpp files in any "ignoredir" folder
+        flags { "NoPCH" }             -- Added: disable precompiled headers
+        pchheader ""                  -- Added: clear the precompiled header setting
+    filter {}                        -- Clear the filter
+
 
     -- files(global_files)
 	files 
@@ -46,9 +52,11 @@ project "Duin"
     externalincludedirs 
     { 
         SolutionRoot .. "/%{IncludeDir.sdl}",
-        SolutionRoot .. "/%{IncludeDir.bgfx}",
         SolutionRoot .. "/%{IncludeDir.bx}",
         SolutionRoot .. "/%{IncludeDir.bimg}",
+        SolutionRoot .. "/%{IncludeDir.bgfx}",
+        SolutionRoot .. "/%{IncludeDir.bgfx_examples}",
+        SolutionRoot .. "/%{IncludeDir.bgfx_3p}",
         SolutionRoot .. "/%{IncludeDir.spdlog}",
 		SolutionRoot .. "/%{IncludeDir.imgui}",
 		SolutionRoot .. "/%{IncludeDir.imguibackends}",
@@ -75,8 +83,8 @@ project "Duin"
         "DN_BUILD_STATIC",
 		"DN_PLATFORM_WINDOWS",
         "PX_PHYSX_STATIC_LIB",
-
-		"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
+        "BX_CONFIG_DEBUG=0",
+		--"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
     }
     -- links(global_links)
     links 

@@ -19,14 +19,16 @@ workspace "Duin"
     IncludeDir = {}
     IncludeDir["sdl"] = "Duin/vendor/sdl/include"
     IncludeDir["bgfx"] = "Duin/vendor/bgfx/include"
+    IncludeDir["bgfx_examples"] = "Duin/vendor/bgfx/examples/common"
+    IncludeDir["bgfx_3p"] = "Duin/vendor/bgfx/3rdparty"
     IncludeDir["bx"] = "Duin/vendor/bx/include"
     IncludeDir["bimg"] = "Duin/vendor/bimg/include"
     IncludeDir["spdlog"] = "Duin/vendor/spdlog/include"
     IncludeDir["rlimgui"] = "Duin/vendor/rlimgui"
     IncludeDir["raylib"] = "Duin/vendor/rlimgui/raylib-master/src"
     IncludeDir["raygui"] = "Duin/vendor/raygui/src"
-    IncludeDir["imgui"] = "Duin/vendor/rlimgui/imgui-docking"
-    IncludeDir["imguibackends"] = "Duin/vendor/rlimgui/imgui-docking/backends"
+    IncludeDir["imgui"] = "" --"Duin/vendor/imgui"
+    IncludeDir["imguibackends"] = "" --"Duin/vendor/imgui/backends"
     IncludeDir["glfw"] = "Duin/vendor/rlimgui/raylib-master/src/external/glfw/include"
     IncludeDir["flecs"] = "Duin/vendor/flecs/include"
     IncludeDir["fmt"] = "Duin/vendor/fmt/include"
@@ -43,9 +45,11 @@ workspace "Duin"
     global_externalincludedirs = 
     {    
         "%{IncludeDir.sdl}",
-        "%{IncludeDir.bgfx}",
         "%{IncludeDir.bx}",
         "%{IncludeDir.bimg}",
+        "%{IncludeDir.bgfx}",
+        "%{IncludeDir.bgfx_examples}",
+        "%{IncludeDir.bgfx_3p}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.imgui}",
         "%{IncludeDir.imguifilex}",
@@ -69,6 +73,7 @@ workspace "Duin"
         "DN_BUILD_STATIC",
         "flecs_STATIC",
         "PX_PHYSX_STATIC_LIB",
+        "BX_CONFIG_DEBUG=0",
     }
     global_links = 
     {
