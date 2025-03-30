@@ -325,7 +325,9 @@ namespace duin {
             ::ImGui_ImplSDL3_NewFrame();
 
             ImGui::NewFrame();
-            ImGui::ShowDemoWindow(); // your drawing here
+            
+            ImGui::ShowDemoWindow();
+
             ImGui::Render();
             ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
 
@@ -423,6 +425,10 @@ namespace duin {
         EngineExit();
         Exit();
 
+        ::ImGui_ImplSDL3_Shutdown();
+        ::ImGui_Implbgfx_Shutdown();
+
+        ImGui::DestroyContext();
         bgfx::shutdown();
 
         ::SDL_DestroySurface(sdlSurface);
@@ -466,7 +472,7 @@ namespace duin {
 
     void Application::EngineHandleInputs(InputEvent e)
     {
-        if (e.IsKeyDown(KEY_ESCAPE)) {
+        if (e.IsKeyDown(DN_KEY_ESCAPE)) {
             DN_CORE_INFO("Quiting... {}", e.sdlEvent.key.key);
             gameShouldQuit = true;
         }

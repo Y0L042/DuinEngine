@@ -17,4 +17,13 @@ namespace duin {
 
         return 0;
 	}
+
+    int InputEvent::IsMouseButtonPressed()
+    {
+        // TODO
+        float x, y = 0;
+        SDL_MouseButtonFlags result = ::SDL_GetRelativeMouseState(&x, &y);
+
+        return 1;
+    }
 }

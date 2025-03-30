@@ -2,6 +2,7 @@
 #include "EventHandler.h"
 
 #include <SDL3/SDL_events.h>
+#include "external/backends/imgui_impl_sdl3.h"
 
 #define EVENT_IS_KEYBOARD(event) (event >= 0x300 && event < 0x400)
 #define EVENT_IS_MOUSE(event) (event >= 0x400 && event < 0x600)
@@ -27,6 +28,7 @@ namespace duin {
                         event.SetSDLEvent(e);
                         CallInputEventListeners(event);
                     }
+                    ::ImGui_ImplSDL3_ProcessEvent(&e);
                 }
             }
 

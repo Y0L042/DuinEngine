@@ -15,9 +15,10 @@ namespace duin {
         protected:
             friend class EventHandler;
 
-
             void SetSDLEvent(::SDL_Event e);
     };
+
+
 
     class InputEvent : public Event
     {
@@ -26,6 +27,8 @@ namespace duin {
             ~InputEvent() = default;
 
             int IsKeyDown(DN_Keycode key);
+            int IsMouseButtonPressed();
+
 
         private:
 
