@@ -185,26 +185,26 @@ $(document).ready(function(){initNavTree('CharacterBody_8cpp_source.html',''); i
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">void</span> CharacterBody::Move(Vector3 displacement, <span class="keywordtype">double</span> delta)</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordtype">double</span> timeSinceLastMove = ::GetTime() - timeWhenLastMoved;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        timeSinceLastMove = delta;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="comment">//double timeSinceLastMove = ::GetTime() - timeWhenLastMoved;</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="comment">//timeSinceLastMove = delta;</span></div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        Vector3 oldPos = Vector3(pxController-&gt;getPosition());</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        physx::PxControllerCollisionFlags collisionFlags = pxController-&gt;move(</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            displacement.ToPhysX(),</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            0.00001f,</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            (<span class="keywordtype">float</span>)timeSinceLastMove,</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            pxFilters,</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            pxObstacles</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        );</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="comment">//Vector3 oldPos = Vector3(pxController-&gt;getPosition());</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="comment">//physx::PxControllerCollisionFlags collisionFlags = pxController-&gt;move(</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="comment">//    displacement.ToPhysX(),</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="comment">//    0.00001f,</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="comment">//    (float)timeSinceLastMove,</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="comment">//    pxFilters,</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="comment">//    pxObstacles</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="comment">//);</span></div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        Vector3 newPos = Vector3(pxController-&gt;getPosition());</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        currentVelocity = Vector3Scale(distanceMoved, 1.0f / timeSinceLastMove);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="comment">//Vector3 newPos = Vector3(pxController-&gt;getPosition());</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="comment">//Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="comment">//currentVelocity = Vector3Scale(distanceMoved, 1.0f / timeSinceLastMove);</span></div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        OnFloorShapeCast(timeSinceLastMove);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="comment">//OnFloorShapeCast(timeSinceLastMove);</span></div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        timeWhenLastMoved = ::GetTime();</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="comment">//timeWhenLastMoved = ::GetTime();</span></div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    }</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">void</span> CharacterBody::OnShapeHit()</div>

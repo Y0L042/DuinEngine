@@ -6,6 +6,7 @@ var dir_cd463a93d1524e455358c0c423bc7a1b =
     [ "LookupVector.h", "LookupVector_8h_source.html", null ],
     [ "SerialisationManager.cpp", "SerialisationManager_8cpp_source.html", null ],
     [ "SerialisationManager.h", "SerialisationManager_8h_source.html", null ],
+    [ "Timer.h", "Timer_8h_source.html", null ],
     [ "UUID.cpp", "UUID_8cpp_source.html", null ],
     [ "UUID.h", "UUID_8h_source.html", null ]
 ];

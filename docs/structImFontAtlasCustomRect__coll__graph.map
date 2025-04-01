@@ -1,0 +1,36 @@
+<map id="ImFontAtlasCustomRect" name="ImFontAtlasCustomRect">
+<area shape="rect" id="Node000001" title=" " alt="" coords="205,138,384,163"/>
+<area shape="rect" id="Node000010" href="$structImVector.html" title=" " alt="" coords="541,219,764,259"/>
+<area shape="poly" id="edge13_Node000010_Node000001" title=" " alt="" coords="361,164,571,216,570,221,360,169"/>
+<area shape="rect" id="Node000002" href="$structImVec2.html" title=" " alt="" coords="5,138,76,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,148,205,148,205,153,90,153"/>
+<area shape="rect" id="Node000008" href="$structImFontAtlas.html" title=" " alt="" coords="952,335,1052,361"/>
+<area shape="poly" id="edge9_Node000008_Node000002" title=" " alt="" coords="83,166,166,201,278,244,408,287,542,320,656,337,770,345,952,347,952,352,770,350,655,342,541,325,406,292,276,249,164,206,81,171"/>
+<area shape="rect" id="Node000012" href="$structImFontConfig.html" title=" " alt="" coords="1452,198,1560,223"/>
+<area shape="poly" id="edge16_Node000012_Node000002" title=" " alt="" coords="64,126,104,94,159,58,224,29,258,21,293,17,1287,17,1327,23,1363,39,1397,63,1426,91,1473,150,1500,196,1496,199,1468,153,1422,94,1393,67,1361,44,1325,28,1286,23,293,23,259,26,225,34,162,63,107,98,67,131"/>
+<area shape="rect" id="Node000003" href="$structImFont.html" title=" " alt="" coords="1252,211,1319,237"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1265,202,1248,184,1227,169,1193,156,1165,151,1099,149,898,140,700,138,522,142,384,148,384,143,522,137,700,133,899,134,1099,144,1166,146,1195,150,1229,164,1251,180,1269,199"/>
+<area shape="rect" id="Node000009" href="$structImVector.html" title=" " alt="" coords="1423,315,1589,341"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="1320,242,1344,255,1473,313,1471,318,1341,260,1317,246"/>
+<area shape="poly" id="edge17_Node000012_Node000003" title=" " alt="" coords="1333,216,1342,215,1452,209,1452,214,1343,220,1333,221"/>
+<area shape="rect" id="Node000004" href="$structImVector.html" title=" " alt="" coords="933,273,1071,298"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1085,281,1155,272,1227,255,1266,234,1268,239,1229,260,1156,278,1086,286"/>
+<area shape="rect" id="Node000005" href="$structImVector.html" title=" " alt="" coords="925,58,1079,83"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="1093,62,1127,64,1163,71,1198,82,1230,101,1253,126,1270,157,1285,210,1280,212,1265,159,1249,129,1226,105,1196,87,1162,76,1127,69,1092,67"/>
+<area shape="rect" id="Node000006" href="$structImVector.html" title=" " alt="" coords="905,159,1099,185"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="1113,182,1229,203,1252,210,1251,215,1227,208,1112,187"/>
+<area shape="rect" id="Node000007" href="$structImFontGlyph.html" title=" " alt="" coords="600,166,705,191"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="719,186,906,208,1102,218,1252,221,1251,227,1102,224,905,213,719,191"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="719,175,905,171,905,177,719,180"/>
+<area shape="poly" id="edge8_Node000003_Node000008" title=" " alt="" coords="1065,337,1158,321,1199,310,1227,298,1243,284,1257,268,1276,236,1280,238,1261,271,1247,288,1229,302,1200,315,1159,326,1066,342"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="1409,335,1052,349,1052,343,1408,329"/>
+<area shape="poly" id="edge12_Node000008_Node000010" title=" " alt="" coords="757,259,882,296,906,307,969,333,967,338,904,312,880,301,756,265"/>
+<area shape="rect" id="Node000011" href="$structImVector.html" title=" " alt="" coords="1673,375,1869,401"/>
+<area shape="poly" id="edge14_Node000008_Node000011" title=" " alt="" coords="1660,385,1052,353,1053,348,1660,380"/>
+<area shape="poly" id="edge20_Node000003_Node000012" title=" " alt="" coords="1446,229,1399,237,1371,239,1342,237,1319,234,1319,229,1343,232,1371,234,1398,232,1445,224"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="1539,229,1752,373,1749,377,1536,233"/>
+<area shape="rect" id="Node000013" href="$structImVec4.html" title=" " alt="" coords="617,285,688,310"/>
+<area shape="poly" id="edge18_Node000008_Node000013" title=" " alt="" coords="702,302,952,338,952,344,701,307"/>
+<area shape="rect" id="Node000014" href="$structImFontBuilderIO.html" title=" " alt="" coords="589,386,716,411"/>
+<area shape="poly" id="edge19_Node000008_Node000014" title=" " alt="" coords="729,394,803,389,881,379,962,358,963,363,882,384,804,394,730,399"/>
+</map>

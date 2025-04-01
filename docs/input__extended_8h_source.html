@@ -119,30 +119,27 @@ $(document).ready(function(){initNavTree('input__extended_8h_source.html',''); i
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef INPUT_EXTENDED_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define INPUT_EXTENDED_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;raylib.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;raymath.h&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="structInputVector2DKeys.html">    7</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structInputVector2DKeys.html">InputVector2DKeys</a> {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keywordtype">int</span> up, down, left, right;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>} <a class="code hl_struct" href="structInputVector2DKeys.html">InputVector2DKeys</a>;</div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="};">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="structInputVector2DKeys.html">    4</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structInputVector2DKeys.html">InputVector2DKeys</a> {</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <span class="keywordtype">int</span> up, down, left, right;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>} <a class="code hl_struct" href="structInputVector2DKeys.html">InputVector2DKeys</a>;</div>
 </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {            <span class="comment">// Prevents name mangling of functions</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>Vector2 GetInputVector2D(<span class="keywordtype">int</span> up, <span class="keywordtype">int</span> down, <span class="keywordtype">int</span> left, <span class="keywordtype">int</span> right);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>Vector2 GetInputVector2DStruct(<a class="code hl_struct" href="structInputVector2DKeys.html">InputVector2DKeys</a> keys);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">int</span> IsInputVector2DPressed(<span class="keywordtype">int</span> up, <span class="keywordtype">int</span> down, <span class="keywordtype">int</span> left, <span class="keywordtype">int</span> right);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">int</span> IsInputVector2DPressedStruct(<a class="code hl_struct" href="structInputVector2DKeys.html">InputVector2DKeys</a> keys);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif </span><span class="comment">/* INPUT_EXTENDED_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="astructInputVector2DKeys_html"><div class="ttname"><a href="structInputVector2DKeys.html">InputVector2DKeys</a></div><div class="ttdef"><b>Definition</b> <a href="input__extended_8h_source.html#l00007">input_extended.h:7</a></div></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {            <span class="comment">// Prevents name mangling of functions</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">//Vector2 GetInputVector2D(int up, int down, int left, int right);</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">//Vector2 GetInputVector2DStruct(InputVector2DKeys keys);</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">//int IsInputVector2DPressed(int up, int down, int left, int right);</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">//int IsInputVector2DPressedStruct(InputVector2DKeys keys);</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>}</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif </span><span class="comment">/* INPUT_EXTENDED_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="astructInputVector2DKeys_html"><div class="ttname"><a href="structInputVector2DKeys.html">InputVector2DKeys</a></div><div class="ttdef"><b>Definition</b> <a href="input__extended_8h_source.html#l00004">input_extended.h:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

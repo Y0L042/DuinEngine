@@ -1,0 +1,20 @@
+<map id="ImFontBuildSrcData" name="ImFontBuildSrcData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="596,219,747,245"/>
+<area shape="rect" id="Node000002" href="$structstbtt__fontinfo.html" title=" " alt="" coords="349,81,460,106"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="474,95,524,105,573,124,603,146,629,171,664,218,660,221,625,175,600,150,571,129,523,110,473,100"/>
+<area shape="rect" id="Node000003" href="$structstbtt____buf.html" title=" " alt="" coords="39,81,125,106"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="139,91,349,91,349,96,139,96"/>
+<area shape="rect" id="Node000004" href="$structstbtt__pack__range.html" title=" " alt="" coords="337,194,472,219"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="486,212,596,222,596,228,486,217"/>
+<area shape="rect" id="Node000005" href="$structstbtt__packedchar.html" title=" " alt="" coords="15,157,149,182"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="163,162,248,160,352,163,463,173,573,193,641,217,639,222,571,199,462,178,351,168,248,165,163,167"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="162,176,337,196,336,202,162,181"/>
+<area shape="rect" id="Node000006" href="$structstbrp__rect.html" title=" " alt="" coords="361,243,448,269"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="462,254,572,249,616,242,617,247,572,255,462,260"/>
+<area shape="rect" id="Node000007" href="$structImBitVector.html" title=" " alt="" coords="355,293,454,318"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="467,296,518,288,571,275,611,259,646,242,648,247,613,264,573,280,520,293,468,302"/>
+<area shape="rect" id="Node000008" href="$structImVector.html" title=" " alt="" coords="5,293,159,318"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="172,303,355,303,355,308,172,308"/>
+<area shape="rect" id="Node000009" href="$structImVector.html" title=" " alt="" coords="341,342,468,367"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="481,342,526,330,571,312,597,296,621,278,657,243,661,247,624,282,600,301,573,317,528,335,482,347"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="ExampleAppLog" name="ExampleAppLog">
+<area shape="rect" id="Node000001" title=" " alt="" coords="186,299,313,324"/>
+<area shape="rect" id="Node000002" href="$structImGuiTextBuffer.html" title=" " alt="" coords="33,211,159,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,241,230,296,227,301,127,245"/>
+<area shape="rect" id="Node000003" href="$structImVector.html" title=" " alt="" coords="5,115,144,141"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,153,96,210,91,211,78,154"/>
+<area shape="rect" id="Node000004" href="$structImGuiTextFilter.html" title=" " alt="" coords="189,211,310,236"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="252,250,252,298,247,298,247,250"/>
+<area shape="rect" id="Node000005" href="$structImVector.html" title=" " alt="" coords="168,108,363,148"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="262,162,254,211,249,210,257,161"/>
+<area shape="rect" id="Node000006" href="$structImGuiTextFilter_1_1ImGuiTextRange.html" title=" " alt="" coords="168,5,363,45"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="268,59,268,108,263,108,263,59"/>
+<area shape="rect" id="Node000007" href="$structImVector.html" title=" " alt="" coords="334,211,461,236"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="367,245,271,301,268,296,364,241"/>
+</map>

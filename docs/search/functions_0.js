@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['insert_0',['Insert',['../classduin_1_1LookupVector.html#ac64d8aa6cbea33af79813152a25db5d7',1,'duin::LookupVector']]]
+  ['enginehandleinputs_0',['EngineHandleInputs',['../classduin_1_1Application.html#a2d9cae7e86ade8e8915c200f33ad6395',1,'duin::Application']]]
 ];

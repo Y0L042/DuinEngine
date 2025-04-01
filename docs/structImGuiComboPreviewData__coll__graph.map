@@ -1,0 +1,8 @@
+<map id="ImGuiComboPreviewData" name="ImGuiComboPreviewData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,215,196,240"/>
+<area shape="rect" id="Node000002" href="$structImRect.html" title=" " alt="" coords="227,117,295,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="231,152,121,217,119,212,228,147"/>
+<area shape="rect" id="Node000003" href="$structImVec2.html" title=" " alt="" coords="19,5,89,31"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="50,44,42,95,43,123,49,151,67,186,90,213,86,216,63,189,43,153,38,124,37,94,45,43"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,35,240,115,238,120,87,40"/>
+</map>
