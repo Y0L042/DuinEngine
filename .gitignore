@@ -81,3 +81,4 @@ nuget.config
 /DuinEditor/DuinEditor.vcxproj
 /Duin/Duin.vcxproj.filters
 /Duin/Duin.vcxproj
+/stash_changes.diff

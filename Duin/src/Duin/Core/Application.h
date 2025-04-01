@@ -28,6 +28,11 @@ namespace duin
 	float GetRenderFrameTime();
 	size_t GetPhysicsFrameCount();
 	size_t GetRenderFrameCount();
+    double GetTicks();
+    double GetTicksMilli();
+    double GetTicksNano();
+    void DelayProcess(float seconds);
+    void DelayProcessMilli(float milliseconds);
 
 	void QueuePostUpdateCallback(std::function<void(double)>);
 	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);

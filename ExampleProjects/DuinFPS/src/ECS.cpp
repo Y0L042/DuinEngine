@@ -225,7 +225,7 @@ void ExecuteQueryIdle(flecs::world& world)
             duin::Vector3 targetVel = duin::Vector3Zero();
 
             float smoothFactor = 20.75f;
-            float alpha = 1.0f - std::expf(-smoothFactor * delta);
+            float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
 
             float outputVelX = targetVel.x - velocity.value.x;
             float outputVelZ = targetVel.z - velocity.value.z;
@@ -289,7 +289,7 @@ void ExecuteQueryRun(flecs::world& world)
                duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, targetSpeed);
 
                float smoothFactor = 10.75f;
-               float alpha = 1.0f - std::expf(-smoothFactor * delta);
+               float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
 
                float outputVelX = targetVel.x - velocity.value.x;
                float outputVelZ = targetVel.z - velocity.value.z;
@@ -340,7 +340,7 @@ void ExecuteQuerySprint(flecs::world& world)
                 if (duin::Vector3LengthSqr(velocity.value) < (runSpeed.speed * runSpeed.speed)) {
                     smoothFactor = 10.75f;
                 }
-                float alpha = 1.0f - std::expf(-smoothFactor * delta);
+                float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
 
                 float outputVelX = targetVel.x - velocity.value.x;
                 float outputVelZ = targetVel.z - velocity.value.z;
