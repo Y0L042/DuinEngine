@@ -1,0 +1,7 @@
+<map id="duin::RenderShape" name="duin::RenderShape">
+<area shape="rect" id="Node000001" title=" " alt="" coords="57,93,201,119"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title=" " alt="" coords="5,5,97,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,39,120,91,116,95,69,43"/>
+<area shape="rect" id="Node000003" href="$structduin_1_1RenderGeometry.html" title=" " alt="" coords="121,5,291,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,43,141,95,137,91,184,39"/>
+</map>

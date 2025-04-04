@@ -13,5 +13,6 @@ var dir_805a0af995e93a362739e98abd740eb2 =
     [ "imstb_rectpack.h", "imstb__rectpack_8h_source.html", null ],
     [ "imstb_textedit.h", "imstb__textedit_8h_source.html", null ],
     [ "imstb_truetype.h", "imstb__truetype_8h_source.html", null ],
+    [ "renderdoc_app.h", "renderdoc__app_8h_source.html", null ],
     [ "vs_ocornut_imgui.bin.h", "vs__ocornut__imgui_8bin_8h_source.html", null ]
 ];

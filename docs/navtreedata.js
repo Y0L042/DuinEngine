@@ -46,7 +46,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"structImGuiPtrOrIndex.html"
+"structImGuiMetricsConfig.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
