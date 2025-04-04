@@ -2,7 +2,9 @@
 #include "Application.h"
 
 #include "Duin/Core/Events/EventHandler.h"
-#include <Duin/Core/Events/Keys.h>
+#include "Duin/Core/Events/Keys.h"
+
+#include "Duin/Render/Renderer.h"
 
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -12,6 +14,7 @@
 #define BX_CONFIG_DEBUG 0
 #endif
 #include <bx/bx.h>
+#include <bx/math.h>
 
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
@@ -20,6 +23,8 @@
 #include "external/backends/imgui_impl_sdl3.h"
 
 
+#include "Duin/Render/RenderShape.h"
+#include "Duin/Render/Shader.h"
 
 #include <filesystem>
 
@@ -37,8 +42,8 @@ static double renderFrameTime = 0.0;
 static int TARGET_RENDER_FRAMERATE = 60;
 static int TARGET_PHYSICS_FRAMERATE = 60;
 
-static int screenWidth = 1280;
-static int screenHeight = 720;
+static int WINDOW_WIDTH = 1280;
+static int WINDOW_HEIGHT = 720;
 
 // Color backgroundColor = WHITE;
 // ::Camera3D activeCamera3D;
@@ -205,6 +210,16 @@ namespace duin {
         ::SDL_Delay((uint32_t)milliseconds);
     }
 
+    int GetWindowWidth()
+    {
+        return WINDOW_WIDTH;
+    }
+
+    int GetWindowHeight()
+    {
+        return WINDOW_HEIGHT;
+    }
+
     void QueuePostUpdateCallback(std::function<void(double)> f)
     {
         postUpdateCallbacks.push_back(f);
@@ -251,8 +266,8 @@ namespace duin {
 
     void Application::SetWindowStartupSize(int width, int height)
     {
-        screenWidth = width;
-        screenHeight = height;
+        WINDOW_WIDTH = width;
+        WINDOW_HEIGHT = height;
     }
 
     // void Application::SetBackgroundColor(::Color color)
@@ -292,7 +307,7 @@ namespace duin {
         if(!::SDL_Init(SDL_INIT_VIDEO)) {
             ::SDL_Log("SDL could not initialize! SDL error: %s\n", ::SDL_GetError());
         } else {
-            sdlWindow = ::SDL_CreateWindow("SDL3 Tutorial: Hello SDL3", screenWidth, screenHeight, 0);
+            sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, 0);
             if(sdlWindow == nullptr) {
                 ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
             } else {
@@ -306,20 +321,38 @@ namespace duin {
         bgfx::renderFrame();
         bgfx::Init bgfxInit;
         bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
-        bgfxInit.resolution.width = screenWidth;
-        bgfxInit.resolution.height = screenHeight;
+        bgfxInit.resolution.width = WINDOW_WIDTH;
+        bgfxInit.resolution.height = WINDOW_HEIGHT;
         bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
         bgfxInit.platformData.nwh = hwnd;
-        const bgfx::ViewId bgfxClearView = 0;
+        const bgfx::ViewId MAIN_DISPLAY = 0;
         bgfx::init(bgfxInit);
-        bgfx::setViewClear(bgfxClearView, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
-        bgfx::setViewRect(bgfxClearView, 0, 0, screenWidth, screenHeight);
+        bgfx::setViewClear(MAIN_DISPLAY, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
+        bgfx::setViewRect(MAIN_DISPLAY, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         ImGui::CreateContext();
         ::ImGui_Implbgfx_Init(255);
         ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
 
         EngineReady();
         Ready();
+
+        /* Testing drawing cube */
+        // BoxRenderShape cube;
+        // bgfx::VertexLayout pcvDecl;
+        // pcvDecl.begin()
+        //     .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
+        //     .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
+        // .end();
+        //
+        // bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(bgfx::makeRef(cube.vertices, sizeof(cube.vertices)), pcvDecl);
+        // bgfx::IndexBufferHandle ibh = bgfx::createIndexBuffer(bgfx::makeRef(cube.triList, sizeof(cube.triList)));
+        // bgfx::ShaderHandle vsh = LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
+        // bgfx::ShaderHandle fsh = LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
+        // bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh, true);
+        // vbh = bgfx::createVertexBuffer(bgfx::makeRef(cube.vertices, sizeof(cube.vertices)), pcvDecl);
+        // ibh = bgfx::createIndexBuffer(bgfx::makeRef(cube.triList, sizeof(cube.triList)));
+        // bgfx::ProgramHandle program2 = bgfx::createProgram(vsh, fsh, true);
+        /* Testing drawing cube */
 
         while(!gameShouldQuit) {
 
@@ -355,11 +388,46 @@ namespace duin {
             } // End of Physics
 
 
+            Renderer::Get().EmptyStack();
             ++renderFrameCount;
-            bgfx::touch(bgfxClearView);
+            bgfx::touch(MAIN_DISPLAY);
             ::ImGui_Implbgfx_NewFrame();
             ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
+
+
+        /* Testing drawing cube */
+
+            // static int counter = 0;
+            // counter++;
+            // const bx::Vec3 at = {0.0f, 0.0f,  0.0f};
+            // const bx::Vec3 eye = {0.0f, 0.0f, -5.0f};
+            // float view[16];
+            // bx::mtxLookAt(view, eye, at);
+            // float proj[16];
+            // bx::mtxProj(proj, 60.0f, float(WINDOW_WIDTH) / float(WINDOW_HEIGHT), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
+            // bgfx::setViewTransform(0, view, proj);
+            //
+            // float mtx[16];
+            // bx::mtxRotateXY(mtx, counter * 0.01f, counter * 0.01f);
+            // bgfx::setTransform(mtx);        
+            //
+            // bgfx::setVertexBuffer(0, vbh);
+            // bgfx::setIndexBuffer(ibh);
+            //
+            // bgfx::submit(0, program);
+            //
+            // float mtx2[16];
+            // bx::mtxRotateXY(mtx, counter * 0.02f, counter * 0.02f);
+            // bgfx::setTransform(mtx);        
+            //
+            // bgfx::setVertexBuffer(0, vbh);
+            // bgfx::setIndexBuffer(ibh);
+            //
+            // bgfx::submit(0, program);
+            // bgfx::submit(0, program2);
+        /* Testing drawing cube */
+
 
             EngineDraw();
             Draw();
@@ -368,6 +436,8 @@ namespace duin {
             EngineDrawUI();
             DrawUI();
             EnginePostDrawUI();
+
+            Renderer::Get().RenderPipeline();
 
             ImGui::Render();
             ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());

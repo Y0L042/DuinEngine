@@ -213,6 +213,7 @@ void StateGameLoop::State_Enter()
     ecsManager.ActivateCameraEntity(fpsCamera);
 
     playerSM.SwitchState<PlayerStateOnGround>();
+
 }
 
 void StateGameLoop::State_Exit()
@@ -377,6 +378,10 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
 
 void StateGameLoop::State_Draw()
 {
+
+    static duin::BoxRenderShape box;
+    duin::Renderer::Get().QueueShapeRender(box);
+
     playerSM.ExecuteDraw();
 
 

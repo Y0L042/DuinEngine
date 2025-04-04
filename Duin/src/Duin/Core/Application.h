@@ -33,6 +33,8 @@ namespace duin
     double GetTicksNano();
     void DelayProcess(float seconds);
     void DelayProcessMilli(float milliseconds);
+    int GetWindowWidth();
+    int GetWindowHeight();
 
 	void QueuePostUpdateCallback(std::function<void(double)>);
 	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
