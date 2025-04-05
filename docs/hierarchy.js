@@ -4,7 +4,7 @@ var hierarchy =
     [ "duin::ECSTag::ActiveExternalRef", "structduin_1_1ECSTag_1_1ActiveExternalRef.html", null ],
     [ "duin::Application", "classduin_1_1Application.html", null ],
     [ "duin::AssetManager", "classduin_1_1AssetManager.html", null ],
-    [ "duin::Renderer::BgfxShapeHandle", "structduin_1_1Renderer_1_1BgfxShapeHandle.html", null ],
+    [ "duin::Renderer::BGFXBufferHandle", "structduin_1_1Renderer_1_1BGFXBufferHandle.html", null ],
     [ "duin::ECSTag::CameraIsActive", "structduin_1_1ECSTag_1_1CameraIsActive.html", null ],
     [ "duin::ECSComponent::CharacterBodyComponent", "structduin_1_1ECSComponent_1_1CharacterBodyComponent.html", null ],
     [ "duin::CharacterBodyDesc", "structduin_1_1CharacterBodyDesc.html", null ],

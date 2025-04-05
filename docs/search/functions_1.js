@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getreversecolorint_0',['GetReverseColorInt',['../structduin_1_1Color.html#a021993e88f31fb8221bd3c82e162863f',1,'duin::Color']]]
+  ['enginehandleinputs_0',['EngineHandleInputs',['../classduin_1_1Application.html#a2d9cae7e86ade8e8915c200f33ad6395',1,'duin::Application']]]
 ];

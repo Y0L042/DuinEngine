@@ -124,58 +124,73 @@ $(document).ready(function(){initNavTree('Renderer_8h_source.html',''); initResi
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;Duin/Core/Utils/UUID.h&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>duin {</div>
-<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="structduin_1_1ShaderProgram.html">   11</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1ShaderProgram.html">ShaderProgram</a> {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        bgfx::ShaderHandle vsh;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        bgfx::ShaderHandle fsh;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        bgfx::ProgramHandle program;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        uint8_t isValid = 0;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <a class="code hl_struct" href="structduin_1_1ShaderProgram.html">ShaderProgram</a>() {}</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <a class="code hl_struct" href="structduin_1_1ShaderProgram.html">ShaderProgram</a>(bgfx::ShaderHandle vsh, bgfx::ShaderHandle fsh, bgfx::ProgramHandle program)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            : vsh(vsh), fsh(fsh), program(program), isValid(1) </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        {}</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    };</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;RenderGeometry.h&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span>duin {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">void</span> DrawBox(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(), Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structduin_1_1ShaderProgram.html">   14</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1ShaderProgram.html">ShaderProgram</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        bgfx::ShaderHandle vsh;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        bgfx::ShaderHandle fsh;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        bgfx::ProgramHandle program;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        uint8_t isValid = 0;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <a class="code hl_struct" href="structduin_1_1ShaderProgram.html">ShaderProgram</a>() : vsh(BGFX_INVALID_HANDLE), fsh(BGFX_INVALID_HANDLE), program(BGFX_INVALID_HANDLE), isValid(0) {}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_struct" href="structduin_1_1ShaderProgram.html">ShaderProgram</a>(bgfx::ShaderHandle vsh, bgfx::ShaderHandle fsh, bgfx::ProgramHandle program)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            : vsh(vsh), fsh(fsh), program(program), isValid(1) </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        {}</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    };</div>
 </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classduin_1_1Renderer.html">   24</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1Renderer.html">Renderer</a></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structduin_1_1Renderer_1_1BgfxShapeHandle.html">   27</a></span>            <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1Renderer_1_1BgfxShapeHandle.html">BgfxShapeHandle</a> {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                bgfx::VertexBufferHandle vbh;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                bgfx::IndexBufferHandle ibh;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> shaderProgramUUID;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            };</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1PosColorVertex.html">PosColorVertex</a>;</div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="};">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classduin_1_1Renderer.html">   28</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1Renderer.html">Renderer</a></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structduin_1_1Renderer_1_1BGFXBufferHandle.html">   31</a></span>            <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1Renderer_1_1BGFXBufferHandle.html">BGFXBufferHandle</a> {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                <a class="code hl_struct" href="structduin_1_1Renderer_1_1BGFXBufferHandle.html">BGFXBufferHandle</a>() : vbh(BGFX_INVALID_HANDLE), ibh(BGFX_INVALID_HANDLE) {}</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                <a class="code hl_struct" href="structduin_1_1Renderer_1_1BGFXBufferHandle.html">BGFXBufferHandle</a>(bgfx::VertexBufferHandle vbh, bgfx::IndexBufferHandle ibh)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                    : vbh(vbh), ibh(ibh) {}</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            };</div>
 </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Renderer.html">Renderer</a>&amp; Get();</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <a class="code hl_class" href="classduin_1_1Renderer.html">Renderer</a>();</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <a class="code hl_class" href="classduin_1_1Renderer.html">~Renderer</a>();</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            <span class="keywordtype">void</span> Init();</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keywordtype">void</span> QueueShapeRender(<a class="code hl_class" href="classduin_1_1BoxRenderShape.html">BoxRenderShape</a>&amp; shape);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keywordtype">void</span> EmptyStack();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordtype">void</span> RenderPipeline();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> defaultShaderProgramUUID;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            std::vector&lt;BgfxShapeHandle&gt; renderStack;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            bgfx::VertexLayout pcvDecl;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            std::unordered_map&lt;UUID, ShaderProgram&gt; shaderProgramMap;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Renderer.html">Renderer</a>&amp; Get();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <a class="code hl_class" href="classduin_1_1Renderer.html">Renderer</a>();</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <a class="code hl_class" href="classduin_1_1Renderer.html">~Renderer</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keywordtype">void</span> Init();</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keywordtype">void</span> QueueRender(RenderGeometryType::Type type, <a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> position, <a class="code hl_struct" href="structduin_1_1Vector4.html">Quaternion</a> rotation, <a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> size);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordtype">void</span> EmptyStack();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordtype">void</span> RenderPipeline();</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <a class="code hl_struct" href="structduin_1_1Renderer_1_1BGFXBufferHandle.html">BGFXBufferHandle</a> GetGeometryBufferHandle(RenderGeometryType::Type type);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> DEFAULT_SHADERPROGRAM_UUID;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            bgfx::VertexLayout pcvDecl;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            std::vector&lt;BGFXBufferHandle&gt; bgfxBufferList;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            std::unordered_map&lt;UUID, ShaderProgram&gt; shaderProgramMap;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="keywordtype">void</span> CreateGeometryBuffers();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    };</div>
 </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
-<div class="ttc" id="aclassduin_1_1BoxRenderShape_html"><div class="ttname"><a href="classduin_1_1BoxRenderShape.html">duin::BoxRenderShape</a></div><div class="ttdef"><b>Definition</b> <a href="RenderShape_8h_source.html#l00059">RenderShape.h:60</a></div></div>
-<div class="ttc" id="aclassduin_1_1Renderer_html"><div class="ttname"><a href="classduin_1_1Renderer.html">duin::Renderer</a></div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00024">Renderer.h:25</a></div></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
+<div class="ttc" id="aclassduin_1_1Renderer_html"><div class="ttname"><a href="classduin_1_1Renderer.html">duin::Renderer</a></div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00028">Renderer.h:29</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00008">UUID.h:9</a></div></div>
-<div class="ttc" id="astructduin_1_1Renderer_1_1BgfxShapeHandle_html"><div class="ttname"><a href="structduin_1_1Renderer_1_1BgfxShapeHandle.html">duin::Renderer::BgfxShapeHandle</a></div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00027">Renderer.h:27</a></div></div>
-<div class="ttc" id="astructduin_1_1ShaderProgram_html"><div class="ttname"><a href="structduin_1_1ShaderProgram.html">duin::ShaderProgram</a></div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00011">Renderer.h:11</a></div></div>
+<div class="ttc" id="astructduin_1_1PosColorVertex_html"><div class="ttname"><a href="structduin_1_1PosColorVertex.html">duin::PosColorVertex</a></div><div class="ttdef"><b>Definition</b> <a href="RenderGeometry_8h_source.html#l00025">RenderGeometry.h:25</a></div></div>
+<div class="ttc" id="astructduin_1_1Renderer_1_1BGFXBufferHandle_html"><div class="ttname"><a href="structduin_1_1Renderer_1_1BGFXBufferHandle.html">duin::Renderer::BGFXBufferHandle</a></div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00031">Renderer.h:31</a></div></div>
+<div class="ttc" id="astructduin_1_1ShaderProgram_html"><div class="ttname"><a href="structduin_1_1ShaderProgram.html">duin::ShaderProgram</a></div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00014">Renderer.h:14</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00152">DuinMaths.h:152</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector4_html"><div class="ttname"><a href="structduin_1_1Vector4.html">duin::Vector4</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00190">DuinMaths.h:190</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -114,9 +114,20 @@ $(document).ready(function(){initNavTree('classduin_1_1LookupVector.html',''); i
   <div class="headertitle"><div class="title">duin::LookupVector&lt; KEY, VALUE &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="classduin_1_1LookupVector.html" title="LookupVector class. An unordered_map &amp; vector pair that allows for quick lookup, and quick iteration.">LookupVector</a> class. An unordered_map &amp; vector pair that allows for quick lookup, and quick iteration.  
+ <a href="classduin_1_1LookupVector.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ace49bd52a2a6f28522a4400abadd0024" id="r_ace49bd52a2a6f28522a4400abadd0024"><td class="memItemLeft" align="right" valign="top">std::vector&lt; VALUE &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#ace49bd52a2a6f28522a4400abadd0024">Vector</a> ()</td></tr>
+<tr class="memdesc:ace49bd52a2a6f28522a4400abadd0024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to vector of values.  <br /></td></tr>
+<tr class="separator:ace49bd52a2a6f28522a4400abadd0024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae91b8658393f025a86ff60428cb9f5d6" id="r_ae91b8658393f025a86ff60428cb9f5d6"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; KEY, size_t &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#ae91b8658393f025a86ff60428cb9f5d6">Map</a> ()</td></tr>
+<tr class="memdesc:ae91b8658393f025a86ff60428cb9f5d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference of map of keys:indices.  <br /></td></tr>
+<tr class="separator:ae91b8658393f025a86ff60428cb9f5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac64d8aa6cbea33af79813152a25db5d7" id="r_ac64d8aa6cbea33af79813152a25db5d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#ac64d8aa6cbea33af79813152a25db5d7">Insert</a> (KEY key, VALUE value)</td></tr>
 <tr class="memdesc:ac64d8aa6cbea33af79813152a25db5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts Value into vector, and inserts Key:Index into hashmap.  <br /></td></tr>
 <tr class="separator:ac64d8aa6cbea33af79813152a25db5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,16 +135,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae9ebdbf0b9eec2a89bc1ca4eaf3070bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes Value from vector, and Key:Index from hashmap.  <br /></td></tr>
 <tr class="separator:ae9ebdbf0b9eec2a89bc1ca4eaf3070bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff88cbc2f8825230df5fb5d7f2594b66" id="r_aff88cbc2f8825230df5fb5d7f2594b66"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#aff88cbc2f8825230df5fb5d7f2594b66">GetElementCount</a> ()</td></tr>
+<tr class="memdesc:aff88cbc2f8825230df5fb5d7f2594b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get count of elements.  <br /></td></tr>
 <tr class="separator:aff88cbc2f8825230df5fb5d7f2594b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81a17a655a540734d31b02460b612915" id="r_a81a17a655a540734d31b02460b612915"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#a81a17a655a540734d31b02460b612915">Contains</a> (KEY key)</td></tr>
+<tr class="memdesc:a81a17a655a540734d31b02460b612915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if map contains key.  <br /></td></tr>
 <tr class="separator:a81a17a655a540734d31b02460b612915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb3e47bc4e73a8e647595b95f72b551f" id="r_aeb3e47bc4e73a8e647595b95f72b551f"><td class="memItemLeft" align="right" valign="top">VALUE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1LookupVector.html#aeb3e47bc4e73a8e647595b95f72b551f">GetValue</a> (KEY key)</td></tr>
+<tr class="memdesc:aeb3e47bc4e73a8e647595b95f72b551f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to value for key. Returns nullptr if key is not found.  <br /></td></tr>
 <tr class="separator:aeb3e47bc4e73a8e647595b95f72b551f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename KEY, typename VALUE&gt;<br />
-class duin::LookupVector&lt; KEY, VALUE &gt;</div>
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00009">9</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+class duin::LookupVector&lt; KEY, VALUE &gt;</div><p><a class="el" href="classduin_1_1LookupVector.html" title="LookupVector class. An unordered_map &amp; vector pair that allows for quick lookup, and quick iteration.">LookupVector</a> class. An unordered_map &amp; vector pair that allows for quick lookup, and quick iteration. </p>
+<p>NOT stable! Use KEY as the handle for an element. </p>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00016">16</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af9a1797c80d0dfbd4c88bd93bd059cfa" name="af9a1797c80d0dfbd4c88bd93bd059cfa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9a1797c80d0dfbd4c88bd93bd059cfa">&#9670;&#160;</a></span>LookupVector()</h2>
@@ -160,7 +176,7 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00012">12</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00019">19</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -189,7 +205,7 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00013">13</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00024">24</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -220,7 +236,16 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00054">54</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p>Returns if map contains key. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if map has key, 0 if map does not have key </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00096">96</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -249,7 +274,10 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00049">49</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p>Get count of elements. </p>
+<dl class="section return"><dt>Returns</dt><dd>Count </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00085">85</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -279,7 +307,16 @@ template&lt;typename KEY , typename VALUE &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00059">59</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p>Returns pointer to value for key. Returns nullptr if key is not found. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to value/nullptr </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00108">108</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -328,7 +365,39 @@ template&lt;typename KEY , typename VALUE &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00022">22</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00053">53</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+
+</div>
+</div>
+<a id="ae91b8658393f025a86ff60428cb9f5d6" name="ae91b8658393f025a86ff60428cb9f5d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae91b8658393f025a86ff60428cb9f5d6">&#9670;&#160;</a></span>Map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename KEY , typename VALUE &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt; KEY, size_t &gt; &amp; <a class="el" href="classduin_1_1LookupVector.html">duin::LookupVector</a>&lt; KEY, VALUE &gt;::Map </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns reference of map of keys:indices. </p>
+<dl class="section return"><dt>Returns</dt><dd>Map </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00041">41</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +435,39 @@ template&lt;typename KEY , typename VALUE &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00037">37</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00068">68</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
+
+</div>
+</div>
+<a id="ace49bd52a2a6f28522a4400abadd0024" name="ace49bd52a2a6f28522a4400abadd0024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace49bd52a2a6f28522a4400abadd0024">&#9670;&#160;</a></span>Vector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename KEY , typename VALUE &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; VALUE &gt; &amp; <a class="el" href="classduin_1_1LookupVector.html">duin::LookupVector</a>&lt; KEY, VALUE &gt;::Vector </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns reference to vector of values. </p>
+<dl class="section return"><dt>Returns</dt><dd>Vector of values </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="LookupVector_8h_source.html#l00031">31</a> of file <a class="el" href="LookupVector_8h_source.html">LookupVector.h</a>.</p>
 
 </div>
 </div>
