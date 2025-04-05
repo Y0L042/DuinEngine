@@ -5,12 +5,43 @@
 #include <algorithm>
 
 namespace duin {
+    /**
+     * @brief LookupVector class. An unordered_map & vector pair that allows for
+     * quick lookup, and quick iteration. 
+     *
+     * NOT stable! Use KEY as the handle for an element.
+     *
+     */
     template <typename KEY, typename VALUE>
     class LookupVector 
     {
         public:
-            LookupVector() {}
+            LookupVector() 
+            {
+
+            }
+
             ~LookupVector() {}
+
+            /**
+             * @brief Returns reference to vector of values.
+             *
+             * @return Vector of values
+             */
+            std::vector<VALUE>& Vector()
+            {
+                return valueVec;
+            }
+
+            /**
+             * @brief Returns reference of map of keys:indices
+             *
+             * @return Map
+             */
+            std::unordered_map<KEY, size_t>& Map()
+            {
+                return lookupMap;
+            }
 
             /**
              * @brief Inserts Value into vector, and inserts Key:Index into
@@ -46,16 +77,34 @@ namespace duin {
                 lookupMap.erase(key);
             }
 
+            /**
+             * @brief Get count of elements.
+             *
+             * @return Count
+             */
             int GetElementCount()
             {
                 return valueVec.size();
             }
 
+            /**
+             * @brief Returns if map contains key.
+             *
+             * @param key 
+             * @return 1 if map has key, 0 if map does not have key
+             */
             int Contains(KEY key)
             {
                 return lookupMap.has(key);
             }
 
+            /**
+             * @brief Returns pointer to value for key. Returns nullptr if key
+             * is not found.
+             *
+             * @param key 
+             * @return Pointer to value/nullptr
+             */
             VALUE *GetValue(KEY key)
             {
                 VALUE *value = nullptr;
@@ -69,8 +118,7 @@ namespace duin {
             }
 
         private:
-            std::unordered_map<KEY, VALUE> lookupMap;
+            std::unordered_map<KEY, size_t> lookupMap;
             std::vector<VALUE> valueVec;
-            //Empty index stack for gaps
     };
 }

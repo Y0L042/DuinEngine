@@ -4,6 +4,9 @@
 #include "../Singletons.h"
 #include "../ECS.h"
 
+#include <Duin/ECS/ECSModule.h>
+#include <Duin/Core/Debug/DebugModule.h>
+
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 

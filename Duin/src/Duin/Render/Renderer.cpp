@@ -8,6 +8,12 @@
 #include "Duin/Core/Application.h"
 
 namespace duin {
+    void DrawBox(Vector3 position, Quaternion rotation, Vector3 size)
+    {
+
+        Renderer::Get().QueueRender(RenderGeometryType::BOX, position, rotation, size);
+    }
+
     Renderer& Renderer::Get()
     {
         static Renderer renderer;
@@ -34,35 +40,38 @@ namespace duin {
         bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh, true); 
         ShaderProgram shaderProgram(vsh, fsh, program);
         shaderProgramMap[shaderProgram.uuid] = shaderProgram;
-        defaultShaderProgramUUID = shaderProgram.uuid;
+        DEFAULT_SHADERPROGRAM_UUID = shaderProgram.uuid;
+
+        CreateGeometryBuffers();
 
         DN_CORE_INFO("Renderer initialised.");
     }
 
-    void Renderer::QueueShapeRender(BoxRenderShape& shape)
+    void Renderer::QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size)
     {
-        BgfxShapeHandle handle_;
-        renderStack.push_back(handle_);
-        BgfxShapeHandle& handle = renderStack.back();
+        Vector3 eulerRotation = QuaternionToEuler(rotation);
 
-        switch (shape.GetType()) {
-            case RenderShapeType::BOX:
-                DN_CORE_INFO("BOX added to render queue.");
-                handle.vbh = bgfx::createVertexBuffer(bgfx::makeRef(shape.vertices, sizeof(shape.vertices)), pcvDecl);
-                handle.ibh = bgfx::createIndexBuffer(bgfx::makeRef(shape.triList, sizeof(shape.triList)));
-                break;
-            default: 
-                DN_CORE_WARN("NONE added to render queue!");
-                break;
-        }
+        bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
+        bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
+        bgfx::ProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
 
+        Renderer::BGFXBufferHandle buffers = Renderer::Get().GetGeometryBufferHandle(type);
+        vbh = buffers.vbh;
+        ibh = buffers.ibh;
+
+
+        float mtx[16];
+        bx::mtxSRT(mtx, 
+                   size.x, size.y, size.z,
+                   eulerRotation.x, eulerRotation.y, eulerRotation.z, 
+                   position.x, position.y, position.z);
+        bgfx::setTransform(mtx);
+        bgfx::setVertexBuffer(0, vbh);
+        bgfx::setIndexBuffer(ibh);
+        bgfx::submit(0, program);
     }
 
-    void Renderer::EmptyStack()
-    {
-        renderStack.clear();
-        DN_CORE_INFO("Clear render stack.");
-    }
+    void Renderer::EmptyStack() {}
 
     void Renderer::RenderPipeline()
     {
@@ -87,19 +96,33 @@ namespace duin {
         bx::mtxRotateXY(mtx, counter * 0.01f * mult, counter * 0.01f * mult);
         bgfx::setTransform(mtx);        
 
-		for (BgfxShapeHandle& handle : renderStack) {
-            ShaderProgram& shaderProgram = shaderProgramMap[defaultShaderProgramUUID];
-            if (shaderProgram.isValid) {
-                DN_CORE_INFO("Shape submitted for rendering.");
-                bgfx::setVertexBuffer(0, handle.vbh);
-                bgfx::setIndexBuffer(handle.ibh);
+    }
 
-                bgfx::submit(0, shaderProgram.program);
-
-                mult++;
-            } else {
-                DN_CORE_WARN("Shape's ShaderProgram invalid, not submitted!");
-            }
+    Renderer::BGFXBufferHandle Renderer::GetGeometryBufferHandle(RenderGeometryType::Type type)
+    {
+        switch (type) {
+            case RenderGeometryType::BOX:
+                return bgfxBufferList[RenderGeometryType::BOX];
+                break;
+            default:
+                break;
         }
+    }
+
+    void Renderer::CreateGeometryBuffers()
+    {
+        bgfxBufferList.resize(RenderGeometryType::Count);
+
+        bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
+        bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
+
+
+        vbh = bgfx::createVertexBuffer(bgfx::makeRef(
+                                                     BoxRenderGeometry::GetIdentityVertices(),
+                                                     BoxRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+        ibh = bgfx::createIndexBuffer(bgfx::makeRef(
+                                                     BoxRenderGeometry::GetIdentityTriList(),
+                                                     BoxRenderGeometry::TriSize() * sizeof(uint16_t)));
+        bgfxBufferList[RenderGeometryType::BOX] = Renderer::BGFXBufferHandle(vbh, ibh);
     }
 }

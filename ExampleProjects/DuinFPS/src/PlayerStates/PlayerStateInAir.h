@@ -1,6 +1,6 @@
 #pragma once
 
-#include <duin.h>
+#include <Duin/Core/Utils/UtilsModule.h>
 
 class PlayerStateInAir : public duin::GameState
 {

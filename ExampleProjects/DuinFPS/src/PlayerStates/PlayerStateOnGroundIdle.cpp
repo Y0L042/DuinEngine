@@ -5,6 +5,10 @@
 #include "../Singletons.h"
 #include "../GameStates/StateGameLoop.h"
 
+#include <Duin/ECS/ECSModule.h>
+#include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Maths/MathsModule.h>
+
 //extern InputVector2DKeys MOVEMENT_KEYS;
 
 PlayerStateOnGroundIdle::PlayerStateOnGroundIdle(duin::GameStateMachine& owner)

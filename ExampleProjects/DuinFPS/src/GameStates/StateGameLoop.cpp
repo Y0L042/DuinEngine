@@ -378,9 +378,10 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
 
 void StateGameLoop::State_Draw()
 {
+    size_t ticks = duin::GetRenderFrameCount();
+    duin::DrawBox({sinf(ticks/50.0f), sinf(ticks/100.0f), sinf(ticks/200.0f)}, duin::QuaternionFromEuler(2.1f, 0.0f, ticks / 100.0f), {0.25f, 0.25f, 0.25f});
+    duin::DrawBox({ cosf(ticks / 50.0f), cosf(ticks / 100.0f), cosf(ticks / 200.0f) }, duin::QuaternionFromEuler(2.1f, 0.0f, ticks / 100.0f), {0.5f, 0.5f, 0.5f});
 
-    static duin::BoxRenderShape box;
-    duin::Renderer::Get().QueueShapeRender(box);
 
     playerSM.ExecuteDraw();
 

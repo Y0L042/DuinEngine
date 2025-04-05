@@ -3,6 +3,7 @@
 
 #include <rapidjson/document.h>
 #include <flecs.h>
+#include <string>
 
 namespace duin {
 

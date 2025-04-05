@@ -4,6 +4,11 @@
 #include "../Singletons.h"
 #include "../ECS.h"
 
+#include <Duin/ECS/ECSModule.h>
+#include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Maths/MathsModule.h>
+#include <Duin/Physics/PhysicsModule.h>
+
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 

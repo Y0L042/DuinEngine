@@ -6,6 +6,10 @@
 #include "../Singletons.h"
 #include "../GameStates/StateGameLoop.h"
 
+#include <Duin/ECS/ECSModule.h>
+#include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Maths/MathsModule.h>
+
 PlayerStateOnGroundRun::PlayerStateOnGroundRun(duin::GameStateMachine& owner)
 	: GameState(owner)
 {
