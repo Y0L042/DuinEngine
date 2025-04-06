@@ -1,10 +1,20 @@
 var searchData=
 [
-  ['debugcapsulecomponent_0',['DebugCapsuleComponent',['../structduin_1_1ECSComponent_1_1DebugCapsuleComponent.html',1,'duin::ECSComponent']]],
-  ['debugconsole_1',['DebugConsole',['../classduin_1_1DebugConsole.html',1,'duin']]],
-  ['debugcubecomponent_2',['DebugCubeComponent',['../structduin_1_1ECSComponent_1_1DebugCubeComponent.html',1,'duin::ECSComponent']]],
-  ['deleteexternalref_3',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
-  ['diskrendergeometry_4',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
-  ['dynamicbody_5',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
-  ['dynamicbodycomponent_6',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]]
+  ['ddvertex_0',['DdVertex',['../structDdVertex.html',1,'']]],
+  ['debugcapsulecomponent_1',['DebugCapsuleComponent',['../structduin_1_1ECSComponent_1_1DebugCapsuleComponent.html',1,'duin::ECSComponent']]],
+  ['debugconsole_2',['DebugConsole',['../classduin_1_1DebugConsole.html',1,'duin']]],
+  ['debugcubecomponent_3',['DebugCubeComponent',['../structduin_1_1ECSComponent_1_1DebugCubeComponent.html',1,'duin::ECSComponent']]],
+  ['debugdrawencoder_4',['DebugDrawEncoder',['../structDebugDrawEncoder.html',1,'']]],
+  ['debugdrawencoderimpl_5',['DebugDrawEncoderImpl',['../structDebugDrawEncoderImpl.html',1,'']]],
+  ['debugdrawencoderscopepush_6',['DebugDrawEncoderScopePush',['../classDebugDrawEncoderScopePush.html',1,'']]],
+  ['debugdrawshared_7',['DebugDrawShared',['../structDebugDrawShared.html',1,'']]],
+  ['debugmesh_8',['DebugMesh',['../structDebugMesh.html',1,'']]],
+  ['debugmeshvertex_9',['DebugMeshVertex',['../structDebugMeshVertex.html',1,'']]],
+  ['debugshapevertex_10',['DebugShapeVertex',['../structDebugShapeVertex.html',1,'']]],
+  ['debuguvvertex_11',['DebugUvVertex',['../structDebugUvVertex.html',1,'']]],
+  ['debugvertex_12',['DebugVertex',['../structDebugVertex.html',1,'']]],
+  ['deleteexternalref_13',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
+  ['diskrendergeometry_14',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
+  ['dynamicbody_15',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
+  ['dynamicbodycomponent_16',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]]
 ];
