@@ -129,6 +129,15 @@ typedef struct Vector2 {
     float x;
     float y;
 
+    static const Vector2 ZERO;
+    static const Vector2 ONE;
+    static const Vector2 X;
+    static const Vector2 Y;
+    static const Vector2 UP;
+    static const Vector2 DOWN;
+    static const Vector2 RIGHT;
+    static const Vector2 LEFT;
+
     Vector2()
         : x(0.0f), y(0.0f) {}
 
@@ -153,6 +162,18 @@ typedef struct Vector3 {
     float x;
     float y;
     float z;
+
+    static const Vector3 ZERO;
+    static const Vector3 ONE;
+    static const Vector3 X;
+    static const Vector3 Y;
+    static const Vector3 Z;
+    static const Vector3 UP;
+    static const Vector3 DOWN;
+    static const Vector3 LEFT;
+    static const Vector3 RIGHT;
+    static const Vector3 TOWARD;
+    static const Vector3 AWAY;
 
     Vector3()
         : x(0.0f), y(0.0f), z(0.0f) {}

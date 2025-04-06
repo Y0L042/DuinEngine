@@ -8,4 +8,5 @@
 #include "Renderer.h"
 #include "RenderGeometry.h"
 #include "RenderShape.h"
-#incldue "Shader.h"
+#include "Shader.h"
+#include "Camera.h"

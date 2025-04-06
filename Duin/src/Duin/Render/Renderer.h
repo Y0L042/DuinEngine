@@ -9,7 +9,14 @@
 #include "RenderGeometry.h"
 
 namespace duin {
-    void DrawBox(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(), Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+    void DrawBox(Vector3 position = Vector3(), 
+                 Quaternion rotation = QuaternionIdentity(), 
+                 Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+    void DrawSquare(Vector3 position = Vector3(), 
+                 Quaternion rotation = QuaternionIdentity(), 
+                 Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+    void DrawGrid();
+    void DrawPlane(Vector3 size);
 
     struct ShaderProgram {
         UUID uuid;
@@ -45,9 +52,14 @@ namespace duin {
             ~Renderer();
 
             void Init();
+            void QueueRender(RenderGeometryType::Type type);
             void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size);
+            // TODO add function to allow for custom geometry
+            // void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size);
             void EmptyStack();
             void RenderPipeline();
+            void StartDebugDraw();
+            void EndDebugDraw();
 
             BGFXBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type);
 

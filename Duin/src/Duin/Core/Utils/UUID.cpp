@@ -8,6 +8,8 @@ namespace duin {
 	static std::mt19937_64 engine(randomDevice());
 	static std::uniform_int_distribution<uint64_t> uniformDistribution;
 
+    const UUID UUID::INVALID = 0;
+
 	UUID::UUID()
 		: uuid(uniformDistribution(engine))
 	{

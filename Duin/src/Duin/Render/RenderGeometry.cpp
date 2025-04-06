@@ -66,6 +66,28 @@ namespace duin {
 		: RenderGeometry(RenderGeometryType::PLANE)
 	{}
 
+    PosColorVertex* PlaneRenderGeometry::GetIdentityVertices()
+    {
+        static PosColorVertex vertices[VERT_SIZE] = {
+            { -1.0f,  0.0f,  -1.0f, 0xff000000 },
+            {  1.0f,  0.0f,  -1.0f, 0xff0000ff },
+            { -1.0f, 0.0f,  1.0f, 0xff00ff00 },
+            {  1.0f, 0.0f,  1.0f, 0xff00ffff }
+        };
+
+        return vertices;
+    }
+
+    uint16_t* PlaneRenderGeometry::GetIdentityTriList()
+    {
+        static uint16_t triList[TRI_SIZE] = {
+            0, 1, 2,  // Triangle 1
+            1, 3, 2  // Triangle 2
+        };
+
+        return triList;
+    }
+
 	ConeRenderGeometry::ConeRenderGeometry()
 		: RenderGeometry(RenderGeometryType::CONE)
 	{}

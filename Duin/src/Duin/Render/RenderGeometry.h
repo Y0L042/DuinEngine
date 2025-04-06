@@ -80,6 +80,14 @@ namespace duin {
 
     struct PlaneRenderGeometry : public RenderGeometry {
         PlaneRenderGeometry();
+
+        static const int VERT_SIZE = 4;
+        static const int TRI_SIZE = 6;
+
+        static PosColorVertex* GetIdentityVertices();
+        static uint16_t* GetIdentityTriList();
+        static size_t VertSize() { return VERT_SIZE; }
+        static size_t TriSize() { return TRI_SIZE; }
     };
 
     struct ConeRenderGeometry : public RenderGeometry {

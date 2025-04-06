@@ -5,31 +5,33 @@
 
 namespace duin {
 
-class UUID
-{
-public:
-    UUID();
-    UUID(uint64_t uuid);
-    ~UUID();
-
-    bool operator==(const UUID& uuid) const
+    class UUID
     {
-        return this->uuid == uuid.uuid;
-    }
+        public:
+            static const UUID INVALID;
 
-    bool operator!=(const UUID& uuid) const
-    {
-        return this->uuid != uuid.uuid;
-    }
+            UUID();
+            UUID(uint64_t uuid);
+            ~UUID();
 
-    operator uint64_t() const
-    {
-        return uuid;
-    }
+            bool operator==(const UUID& uuid) const
+            {
+                return this->uuid == uuid.uuid;
+            }
 
-private:
-    uint64_t uuid;
-};
+            bool operator!=(const UUID& uuid) const
+            {
+                return this->uuid != uuid.uuid;
+            }
+
+            operator uint64_t() const
+            {
+                return uuid;
+            }
+
+        private:
+            uint64_t uuid;
+    };
 
 }
 
