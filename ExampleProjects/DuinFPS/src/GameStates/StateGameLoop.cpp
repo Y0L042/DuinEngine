@@ -25,6 +25,9 @@ flecs::entity debugCamera;
 flecs::entity bouncyCube;
 flecs::entity bouncyCubeRender;
 
+duin::Camera3D *camera;
+
+
 static const char *TERRAIN_PATH = "./assets/.maps/testMap.glb";
 
 int fpsCameraEnabled = 1;
@@ -60,6 +63,10 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
+    camera = duin::Camera3D::Create();
+    camera->SetPosition({0.0f, 10.0f, -35.0f});
+
+
     ecsManager.Initialize();
 
     float playerHeight = 1.75f;
@@ -103,13 +110,14 @@ void StateGameLoop::State_Enter()
         .is_a(duin::ECSPrefab::Camera3D)
         .child_of(cameraRoot)
         .set<Transform3D>({ { 0.0f, 0.0f, 0.0f } })
-        //.set<::Camera3D>({
-        //        .target = { 0.0f, 0.0f, 0.0f },
-        //        .up = { 0.0f, 1.0f, 0.0f },
-        //        .fovy = 72.0f,
-        //        .projection = ::CAMERA_PERSPECTIVE
-        //    })
-        // .set<VelocityBob>({ 10.0f, 1.0f })
+        .set<duin::Camera>(duin::Camera{
+		       duin::UUID(),
+               { 0.0f, 0.0f, 0.0f },
+               { 0.0f, 0.0f, 0.0f },
+               { 0.0f, 1.0f, 0.0f },
+               72.0f
+           })
+        .set<VelocityBob>({ 10.0f, 1.0f })
         .add<duin::ECSTag::ActiveCamera>()
         ;
 

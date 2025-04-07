@@ -83,3 +83,4 @@ nuget.config
 /Duin/Duin.vcxproj
 /stash_changes.diff
 *.rdc
+/ExampleProjects/DuinFPS/imgui.ini

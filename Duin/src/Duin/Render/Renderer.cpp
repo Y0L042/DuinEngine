@@ -2,6 +2,8 @@
 #include "Renderer.h"
 
 #include "Shader.h"
+#include "Camera.h"
+
 #include <bx/math.h>
 #include <debugdraw/debugdraw.h>
 
@@ -122,24 +124,15 @@ namespace duin {
 
     void Renderer::RenderPipeline()
     {
-        int screenWidth = GetWindowWidth();
-		int screenHeight = GetWindowHeight();
-
-        static int counter = 0;
-        counter++;
-        const bx::Vec3 at = {0.0f, 0.0f,  0.0f};
-        const bx::Vec3 eye = {0.0f, 0.0f, -5.0f};
-        float view[16];
-        bx::mtxLookAt(view, eye, at);
-        float proj[16];
-        bx::mtxProj(proj, 60.0f, float(screenWidth) / float(screenHeight), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
-        bgfx::setViewTransform(0, view, proj);
-
-        float mult = 1.0f;
-        float mtx[16];
-        bx::mtxRotateXY(mtx, counter * 0.01f * mult, counter * 0.01f * mult);
-        bgfx::setTransform(mtx);        
-
+        // Camera3D& activeCamera = Camera3D::GetActiveCamera3D();
+        // if (activeCamera.IsValid()) {
+        //     activeCamera.SetBGFXView();
+        // }
+        //
+        Camera *activeCamera = GetActiveCamera();
+        if (activeCamera && activeCamera->IsValid()) {
+            GetBGFXMatrix(activeCamera);
+        }
     }
 
     void Renderer::StartDebugDraw()

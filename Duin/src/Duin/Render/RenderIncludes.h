@@ -5,3 +5,4 @@
 #include "RenderGeometry.h"
 #include "RenderShape.h"
 #include "Shader.h"
+#include "Camera.h"

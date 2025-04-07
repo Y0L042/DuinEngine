@@ -7,6 +7,7 @@
 #include "Duin/Core/Debug/DNLog.h"
 #include "Duin/Core/Utils/UUID.h"
 #include "Duin/Physics/PhysicsIncludes.h"
+#include "Duin/Render/Camera.h"
 
 namespace duin {
 

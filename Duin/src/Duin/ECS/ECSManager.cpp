@@ -59,7 +59,7 @@ namespace ECSComponent {
 
         // Raylib components
         // TODO REPLACE_RAYLIB
-        // world.component<::Camera3D>();
+        world.component<Camera>();
 
     }
 }
@@ -138,14 +138,14 @@ namespace ECSPrefab {
 
         Camera3D = world.prefab("Camera3D")
             .is_a(ECSPrefab::Node3D)
-            // TODO REPLACE_RAYLIB
-            // .set<::Camera3D>({
-            //                      .position = { 0.0f, 0.0f, 0.0f },
-            //                      .target = { 0.0f, 0.0f, 0.0f },
-            //                      .up = { 0.0f, 1.0f, 0.0f },
-            //                      .fovy = 72.0f,
-            //                      .projection = ::CAMERA_PERSPECTIVE
-            //                  })
+            .set<Camera>(Camera{
+                             /* .uuid =  */UUID(),
+                             /* .position =  */{ 0.0f, 0.0f, 0.0f },
+                             /* .target =  */{ 0.0f, 0.0f, 0.0f },
+                             /* .up =  */{ 0.0f, 1.0f, 0.0f },
+                             /* .fovy =  */72.0f
+                             // .projection = ::CAMERA_PERSPECTIVE
+                         })
             ;
 
         Cube = world.prefab("Cube")
@@ -178,7 +178,6 @@ namespace ECSPrefab {
 namespace ECSObserver {
         void RegisterObservers(flecs::world& world)
         {
-
             ECSComponent::Transform3D::RegisterOnAddObserver(world);
             ECSComponent::Transform3D::RegisterOnSetObserver(world);
 
@@ -253,15 +252,14 @@ namespace ECSObserver {
 
     void ECSManager::ActivateCameraEntity(flecs::entity entity)
     {
-        // TODO REPLACE_RAYLIB
-        // if (entity.has<::Camera3D>()) {
-        //     world.defer_begin();
-        //         world.each([](flecs::entity e, ECSTag::ActiveCamera) {
-        //             e.remove<ECSTag::ActiveCamera>();
-        //         });
-        //         entity.add<ECSTag::ActiveCamera>();
-        //     world.defer_end();
-        // }
+        if (entity.has<Camera>()) {
+            world.defer_begin();
+                world.each([](flecs::entity e, ECSTag::ActiveCamera) {
+                    e.remove<ECSTag::ActiveCamera>();
+                });
+                entity.add<ECSTag::ActiveCamera>();
+            world.defer_end();
+        }
     }
 
     void ECSManager::PostUpdateQueryExecution(double delta)
@@ -392,57 +390,55 @@ namespace ECSObserver {
 
     void ECSManager::ExecuteQueryUpdateCameraPosition()
     {
-        // TODO REPLACE_RAYLIB
-        // static flecs::query q = world.query_builder<
-        //     ::Camera3D,
-        //     const ECSComponent::Transform3D
-        // >()
-        // .cached()
-        // .build();
-        //
-        // q.each([](
-        //         flecs::entity e,
-        //         ::Camera3D& camera,
-        //         const ECSComponent::Transform3D& tx
-        //     ) {
-        //         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
-        //         camera.position = gPos.ToRaylib();
-        //     });
+        static flecs::query q = world.query_builder<
+            Camera,
+            const ECSComponent::Transform3D
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+                flecs::entity e,
+                Camera& camera,
+                const ECSComponent::Transform3D& tx
+            ) {
+                Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
+                camera.position = gPos;
+            });
     }
 
     void ECSManager::ExecuteQueryControlCamera()
     {
-        // TODO REPLACE_RAYLIB
-        // static flecs::query q = world.query_builder<
-        //     ::Camera3D, 
-        //     const ECSComponent::Transform3D 
-        // >()
-        // .cached()
-        // .build();
-        //
-        // q.each([](
-        //         flecs::entity e,
-        //         ::Camera3D& c, 
-        //         const ECSComponent::Transform3D& tx 
-        //     ) {
-        //         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
-        //         Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e);
-        //
-        //         c.position = gPos.ToRaylib();
-        //
-        //         // Define the default forward vector (0, 0, -1) in Raylib's coordinate system
-        //         Vector3 defaultForward = { 0.0f, 0.0f, -1.0f };
-        //
-        //         // Rotate the default forward vector by the Rotation3D quaternion to get the actual forward direction
-        //         Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);
-        //
-        //         // Set the camera's target to position + forward direction
-        //         c.target = Vector3Add(gPos, forward).ToRaylib();
-        //
-        //         // Set the up vector to keep the camera upright (0, 1, 0)
-        //         c.up = { 0.0f, 1.0f, 0.0f };
-        //     }
-        // );
+        static flecs::query q = world.query_builder<
+            Camera, 
+            const ECSComponent::Transform3D 
+        >()
+        .cached()
+        .build();
+
+        q.each([](
+                flecs::entity e,
+                Camera& c, 
+                const ECSComponent::Transform3D& tx 
+            ) {
+                Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
+                Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e);
+
+                c.position = gPos;
+
+                // Define the default forward vector (0, 0, -1) in Raylib's coordinate system
+                Vector3 defaultForward = { 0.0f, 0.0f, -1.0f };
+
+                // Rotate the default forward vector by the Rotation3D quaternion to get the actual forward direction
+                Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);
+
+                // Set the camera's target to position + forward direction
+                c.target = Vector3Add(gPos, forward);
+
+                // Set the up vector to keep the camera upright (0, 1, 0)
+                c.up = { 0.0f, 1.0f, 0.0f };
+            }
+        );
     }
 
     void ECSManager::ExecuteQueryDrawCube()
@@ -524,18 +520,17 @@ namespace ECSObserver {
 
     void ECSManager::ExecuteQuerySetCameraAsActive()
     {
-        // TODO REPLACE_RAYLIB
-        // static flecs::query q = world.query_builder<
-        //     ::Camera3D
-        // >()
-        // .with<ECSTag::ActiveCamera>()
-        // .build();
-        //
-        // q.each([](
-        //         ::Camera3D& camera
-        //     ) {
-        //         SetActiveCamera3D(camera);
-        //     });
+        static flecs::query q = world.query_builder<
+            Camera
+        >()
+        .with<ECSTag::ActiveCamera>()
+        .build();
+
+        q.each([](
+                Camera& camera
+            ) {
+                SetActiveCamera(&camera);
+            });
     }
 
 }
