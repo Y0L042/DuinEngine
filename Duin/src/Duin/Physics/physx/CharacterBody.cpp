@@ -2,6 +2,7 @@
 #include "CharacterBody.h"
 
 #include "PhysicsServer.h"
+#include "Duin/Core/Application.h"
 
 namespace duin {
     std::shared_ptr<CharacterBody> CharacterBody::Create(CharacterBodyDesc desc)
@@ -67,26 +68,26 @@ namespace duin {
 
     void CharacterBody::Move(Vector3 displacement, double delta)
     {
-        //double timeSinceLastMove = ::GetTime() - timeWhenLastMoved;
-        //timeSinceLastMove = delta;
+        double timeSinceLastMove = GetTicksMilli() - timeWhenLastMoved;
+        timeSinceLastMove = delta;
 
-        //Vector3 oldPos = Vector3(pxController->getPosition());
-        //physx::PxControllerCollisionFlags collisionFlags = pxController->move(
-        //    displacement.ToPhysX(),
-        //    0.00001f,
-        //    (float)timeSinceLastMove,
-        //    pxFilters,
-        //    pxObstacles
-        //);
+        Vector3 oldPos = Vector3(pxController->getPosition());
+        physx::PxControllerCollisionFlags collisionFlags = pxController->move(
+            displacement.ToPhysX(),
+            0.00001f,
+            (float)timeSinceLastMove,
+            pxFilters,
+            pxObstacles
+        );
 
-        //Vector3 newPos = Vector3(pxController->getPosition());
-        //Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
-        //
-        //currentVelocity = Vector3Scale(distanceMoved, 1.0f / timeSinceLastMove);
+        Vector3 newPos = Vector3(pxController->getPosition());
+        Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
+        
+        currentVelocity = Vector3Scale(distanceMoved, 1.0f / timeSinceLastMove);
 
-        //OnFloorShapeCast(timeSinceLastMove);
+        OnFloorShapeCast(timeSinceLastMove);
 
-        //timeWhenLastMoved = ::GetTime();
+        timeWhenLastMoved = GetTicksMilli();
     }
 
     void CharacterBody::OnShapeHit()

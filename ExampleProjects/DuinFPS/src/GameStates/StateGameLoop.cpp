@@ -63,14 +63,10 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
-    camera = duin::Camera3D::Create();
-    camera->SetPosition({0.0f, 10.0f, -35.0f});
-
-
     ecsManager.Initialize();
 
     float playerHeight = 1.75f;
-    duin::Vector3 playerPosition(0.0f, 0.01f, 5.0f);
+    duin::Vector3 playerPosition(0.0f, 500.0f, 5.0f);
     duin::CharacterBodyDesc playerDesc = {
         .height = playerHeight,
         .radius = 0.3f,
@@ -97,6 +93,7 @@ void StateGameLoop::State_Enter()
         .add<MouseInputVec2>()
         .add<CameraYawComponent>()
         .add<GravityComponent>()
+        .add<CanGravity>()
         .add<OnGroundTag>()
         ;
     cameraRoot = ecsManager.world.entity()
@@ -279,21 +276,6 @@ void StateGameLoop::State_HandleInput()
     //    debugCamera.set<MouseInputVec2>({ { mouseInput } });
     //}
 
-    // int isOnFloor = 0;
-    // const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
-    // if (cbc) {
-    //     isOnFloor = cbc->characterBody->IsOnFloor();
-    //     if (isOnFloor) {
-    //         player.add<OnGroundTag>();
-    //         player.remove<InAirTag>();
-    //         debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
-    //     }
-    //     else {
-    //         player.remove<OnGroundTag>();
-    //         player.add<InAirTag>();
-    //         debugWatchlist.Post("PlayerIsOnFloor: ", "%d", isOnFloor);
-    //     }
-    // }
 
     // if (IsKeyPressed(KEY_SPACE) && isOnFloor) {
     //     player.add<JumpTag>();
@@ -341,6 +323,8 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
         pos = duin::ECSComponent::Transform3D::GetGlobalPosition(fpsCamera);
         debugWatchlist.Post("CameraNode Global Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
     }
+
+
 
     //const ::Camera3D *pCam = fpsCamera.get<::Camera3D>();
     //if (pCam) {

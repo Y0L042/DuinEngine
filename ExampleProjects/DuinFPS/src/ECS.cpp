@@ -47,9 +47,7 @@ void ExecuteQueryComputePlayerInputVelocity(flecs::world& world)
         PlayerMovementInputVec3,
         InputVelocityDirection,
         const Transform3D
-        // const Rotation3D
     >()
-    // .term_at(2).second<Global>()
     .cached()
     .build();
      
@@ -58,7 +56,6 @@ void ExecuteQueryComputePlayerInputVelocity(flecs::world& world)
             PlayerMovementInputVec3& input,
             InputVelocityDirection& iDir,
             const Transform3D& tx
-            // const Rotation3D& r
         ) {
            duin::Quaternion r = Transform3D::GetGlobalRotation(e);
            duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r);
@@ -86,17 +83,14 @@ void ExecuteQueryDebugCameraTarget(flecs::world& world)
 void ExecuteQueryUpdatePlayerYaw(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
-        // Rotation3D,  
         Transform3D,
         CameraYawComponent,
         const MouseInputVec2
     >()
-    // .term_at(0).second<Local>()
     .cached()
     .build();
 
     q.each([](
-            // Rotation3D& r, 
             Transform3D& tx,
             CameraYawComponent& yaw,
             const MouseInputVec2& mouseDelta
@@ -168,7 +162,7 @@ void ExecuteQueryGravity(flecs::world& world)
         const Mass
     >()
         .with<CanGravity>()
-        .cached()
+        // .cached()
         .build();
 
     q.each([](
@@ -210,7 +204,6 @@ void ExecuteQueryIdle(flecs::world& world)
         const Velocity3D
     >()
         .with<IdleTag>()
-        // .with<OnGroundTag>()
         .build();
 
     world.defer_begin();
@@ -244,7 +237,6 @@ void ExecuteQueryIdle(flecs::world& world)
             outputVel = duin::Vector3Scale(outputVel, alpha);
 
             inputVels.vec.push_back(outputVel);
-            //e.remove<OnGroundIdleTag>();
         }
     );
     world.defer_end();
@@ -259,7 +251,6 @@ void ExecuteQueryRun(flecs::world& world)
         const Velocity3D
     >()
         .with<RunTag>()
-        // .with<OnGroundTag>()
         .build();
     
     world.defer_begin();
@@ -303,7 +294,6 @@ void ExecuteQueryRun(flecs::world& world)
                outputVel = duin::Vector3Scale(outputVel, alpha);
 
                inputVels.vec.push_back(outputVel);
-               /*e.remove<RunTag>();*/
             }
         );
     world.defer_end();
@@ -351,7 +341,6 @@ void ExecuteQuerySprint(flecs::world& world)
                 outputVel = duin::Vector3Scale(outputVel, alpha);
 
                 inputVels.vec.push_back(outputVel);
-                /*e.remove<SprintTag>();*/
             }
         );
     world.defer_end();

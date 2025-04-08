@@ -54,6 +54,7 @@ void PlayerStateInAir::State_PhysicsUpdate(double delta)
         return;
     }
 
+
     inAirSM.ExecutePhysicsUpdate(delta);
 }
 
