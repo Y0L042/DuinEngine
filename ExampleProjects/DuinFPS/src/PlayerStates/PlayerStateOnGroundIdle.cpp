@@ -8,6 +8,7 @@
 #include <Duin/ECS/ECSModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Maths/MathsModule.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 //extern InputVector2DKeys MOVEMENT_KEYS;
 
@@ -30,13 +31,15 @@ void PlayerStateOnGroundIdle::State_Enter()
 
 void PlayerStateOnGroundIdle::State_HandleInput()
 {
-    //if (IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-    //    if (IsKeyPressed(KEY_LEFT_SHIFT)) {
-    //        owner.SwitchState<PlayerStateOnGroundSprint>();
-    //    } else {
-    //        owner.SwitchState<PlayerStateOnGroundRun>();
-    //    }
-    //}
+    DN_CORE_INFO("Handling input");
+    if (duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
+        DN_CORE_INFO("vector pressed");
+       // if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT)) {
+       //     owner.SwitchState<PlayerStateOnGroundSprint>();
+       // } else {
+           owner.SwitchState<PlayerStateOnGroundRun>();
+       // }
+    }
 }
 
 void PlayerStateOnGroundIdle::State_Update(double delta)

@@ -9,6 +9,7 @@
 #include <Duin/ECS/ECSModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Maths/MathsModule.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 PlayerStateOnGroundRun::PlayerStateOnGroundRun(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -29,21 +30,21 @@ void PlayerStateOnGroundRun::State_Enter()
 
 void PlayerStateOnGroundRun::State_HandleInput()
 {
-    //if (!IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-    //    owner.SwitchState<PlayerStateOnGroundIdle>();
-    //}
+    if (!duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
+        owner.SwitchState<PlayerStateOnGroundIdle>();
+    }
 
-    //duin::Vector2 input(GetInputVector2DStruct(MOVEMENT_KEYS));
-    //player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
+    duin::Vector2 input = duin::Input::GetInputVector(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D);
+    player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
 
-    //if (!duin::Vector2Equals(input, duin::Vector2Zero())) {
-    //    if (IsKeyPressed(KEY_LEFT_SHIFT) || IsKeyDown(KEY_LEFT_SHIFT)) {
-    //        owner.SwitchState<PlayerStateOnGroundSprint>();
-    //    }
-    //    else {
-    //        player.add<RunTag>();
-    //    }
-    //}
+    if (!duin::Vector2Equals(input, duin::Vector2Zero())) {
+        if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT) || duin::Input::IsKeyDown(DN_KEY_MOD_LSHIFT)) {
+            owner.SwitchState<PlayerStateOnGroundSprint>();
+        }
+        else {
+            player.add<RunTag>();
+        }
+    }
 }
 
 void PlayerStateOnGroundRun::State_Update(double delta)

@@ -7,6 +7,7 @@
 
 #include <Duin/ECS/ECSModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 PlayerStateInAirIdle::PlayerStateInAirIdle(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -27,9 +28,9 @@ void PlayerStateInAirIdle::State_Enter()
 
 void PlayerStateInAirIdle::State_HandleInput()
 {
-    //if (IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-    //    owner.SwitchState<PlayerStateInAirStrafe>();
-    //}
+    if (duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
+       owner.SwitchState<PlayerStateInAirStrafe>();
+    }
 }
 
 void PlayerStateInAirIdle::State_Update(double delta)

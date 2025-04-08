@@ -8,6 +8,7 @@
 #include <Duin/ECS/ECSModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Maths/MathsModule.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 PlayerStateInAirStrafe::PlayerStateInAirStrafe(duin::GameStateMachine& owner)
 	: GameState(owner)
@@ -28,12 +29,12 @@ void PlayerStateInAirStrafe::State_Enter()
 
 void PlayerStateInAirStrafe::State_HandleInput()
 {
-    //if (!IsInputVector2DPressedStruct(MOVEMENT_KEYS)) {
-    //    owner.SwitchState<PlayerStateInAirIdle>();
-    //}
+    if (!duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
+        owner.SwitchState<PlayerStateInAirIdle>();
+    }
 
-    //duin::Vector2 input(GetInputVector2DStruct(MOVEMENT_KEYS));
-    //player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
+    duin::Vector2 input = duin::Input::GetInputVector(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D);
+    player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
 }
 
 void PlayerStateInAirStrafe::State_Update(double delta)

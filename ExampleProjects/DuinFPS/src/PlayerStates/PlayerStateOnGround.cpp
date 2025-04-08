@@ -8,6 +8,7 @@
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Maths/MathsModule.h>
 #include <Duin/Physics/PhysicsModule.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
@@ -34,11 +35,11 @@ void PlayerStateOnGround::State_Enter()
 
 void PlayerStateOnGround::State_HandleInput()
 {
-    //if (IsKeyPressed(KEY_SPACE)) {
-    //    player.add<JumpTag>();
-    //}
+    if (duin::Input::IsKeyPressed(DN_KEY_SPACE)) {
+       player.add<JumpTag>();
+    }
 
-    //onGroundSM.ExecuteHandleInput();
+    onGroundSM.ExecuteHandleInput();
 }
 
 void PlayerStateOnGround::State_Update(double delta)

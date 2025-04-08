@@ -336,24 +336,6 @@ namespace duin {
         EngineReady();
         Ready();
 
-        /* Testing drawing cube */
-        // BoxRenderShape cube;
-        // bgfx::VertexLayout pcvDecl;
-        // pcvDecl.begin()
-        //     .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
-        //     .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
-        // .end();
-        //
-        // bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(bgfx::makeRef(cube.vertices, sizeof(cube.vertices)), pcvDecl);
-        // bgfx::IndexBufferHandle ibh = bgfx::createIndexBuffer(bgfx::makeRef(cube.triList, sizeof(cube.triList)));
-        // bgfx::ShaderHandle vsh = LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
-        // bgfx::ShaderHandle fsh = LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
-        // bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh, true);
-        // vbh = bgfx::createVertexBuffer(bgfx::makeRef(cube.vertices, sizeof(cube.vertices)), pcvDecl);
-        // ibh = bgfx::createIndexBuffer(bgfx::makeRef(cube.triList, sizeof(cube.triList)));
-        // bgfx::ProgramHandle program2 = bgfx::createProgram(vsh, fsh, true);
-        /* Testing drawing cube */
-
         while(!gameShouldQuit) {
 
             #ifdef DN_DEBUG
@@ -382,6 +364,7 @@ namespace duin {
                 physicsFrameTime = physicsTimeStep;
                 ++physicsFrameCount;
 
+
                 EnginePhysicsUpdate(physicsDeltaTime);
                 PhysicsUpdate(physicsDeltaTime); 
                 EnginePostPhysicsUpdate(physicsDeltaTime);
@@ -394,40 +377,6 @@ namespace duin {
             ::ImGui_Implbgfx_NewFrame();
             ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
-
-
-        /* Testing drawing cube */
-
-            // static int counter = 0;
-            // counter++;
-            // const bx::Vec3 at = {0.0f, 0.0f,  0.0f};
-            // const bx::Vec3 eye = {0.0f, 0.0f, -5.0f};
-            // float view[16];
-            // bx::mtxLookAt(view, eye, at);
-            // float proj[16];
-            // bx::mtxProj(proj, 60.0f, float(WINDOW_WIDTH) / float(WINDOW_HEIGHT), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
-            // bgfx::setViewTransform(0, view, proj);
-            //
-            // float mtx[16];
-            // bx::mtxRotateXY(mtx, counter * 0.01f, counter * 0.01f);
-            // bgfx::setTransform(mtx);        
-            //
-            // bgfx::setVertexBuffer(0, vbh);
-            // bgfx::setIndexBuffer(ibh);
-            //
-            // bgfx::submit(0, program);
-            //
-            // float mtx2[16];
-            // bx::mtxRotateXY(mtx, counter * 0.02f, counter * 0.02f);
-            // bgfx::setTransform(mtx);        
-            //
-            // bgfx::setVertexBuffer(0, vbh);
-            // bgfx::setIndexBuffer(ibh);
-            //
-            // bgfx::submit(0, program);
-            // bgfx::submit(0, program2);
-        /* Testing drawing cube */
-
 
             EngineDraw();
             Draw();
