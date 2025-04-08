@@ -35,6 +35,9 @@ var annotated_dup =
         [ "PxStatic", "structduin_1_1ECSTag_1_1PxStatic.html", null ],
         [ "SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ]
       ] ],
+      [ "Input", null, [
+        [ "KeyInputEvent", "structduin_1_1Input_1_1KeyInputEvent.html", null ]
+      ] ],
       [ "Application", "classduin_1_1Application.html", "classduin_1_1Application" ],
       [ "Area", "classduin_1_1Area.html", null ],
       [ "AssetManager", "classduin_1_1AssetManager.html", null ],
