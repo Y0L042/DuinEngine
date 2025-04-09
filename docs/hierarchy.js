@@ -296,7 +296,6 @@ var hierarchy =
     [ "InputVector2DKeys", "structInputVector2DKeys.html", null ],
     [ "duin::JSONDocument", "classduin_1_1JSONDocument.html", null ],
     [ "duin::JSONMember", "classduin_1_1JSONMember.html", null ],
-    [ "duin::Input::KeyInputEvent", "structduin_1_1Input_1_1KeyInputEvent.html", null ],
     [ "duin::ECSComponent::KinematicBodyComponent", "structduin_1_1ECSComponent_1_1KinematicBodyComponent.html", null ],
     [ "duin::ECSTag::Local", "structduin_1_1ECSTag_1_1Local.html", null ],
     [ "duin::Log", "classduin_1_1Log.html", null ],
