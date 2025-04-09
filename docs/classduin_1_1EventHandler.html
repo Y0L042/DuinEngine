@@ -118,8 +118,6 @@ $(document).ready(function(){initNavTree('classduin_1_1EventHandler.html',''); i
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8eb589c3aff37f467e0694fcf86f4ab7" id="r_a8eb589c3aff37f467e0694fcf86f4ab7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1EventHandler.html#a8eb589c3aff37f467e0694fcf86f4ab7">PollEvents</a> ()</td></tr>
-<tr class="separator:a8eb589c3aff37f467e0694fcf86f4ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1348487de0b67a9920193b5f0b80026a" id="r_a1348487de0b67a9920193b5f0b80026a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1EventHandler.html#a1348487de0b67a9920193b5f0b80026a">RegisterInputEventListener</a> (std::function&lt; void(<a class="el" href="classduin_1_1InputEvent.html">InputEvent</a>)&gt; listener)</td></tr>
 <tr class="separator:a1348487de0b67a9920193b5f0b80026a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -127,6 +125,8 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:abc7346c66f5d6e910082e1a2e8a8b652" id="r_abc7346c66f5d6e910082e1a2e8a8b652"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1EventHandler.html">EventHandler</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652">Get</a> ()</td></tr>
 <tr class="separator:abc7346c66f5d6e910082e1a2e8a8b652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab235871edc1d4f7a97cda10af81cd95c" id="r_ab235871edc1d4f7a97cda10af81cd95c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1EventHandler.html#ab235871edc1d4f7a97cda10af81cd95c">GetPolledEvent</a> (::SDL_Event e)</td></tr>
+<tr class="separator:ab235871edc1d4f7a97cda10af81cd95c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -198,19 +198,28 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8eb589c3aff37f467e0694fcf86f4ab7" name="a8eb589c3aff37f467e0694fcf86f4ab7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8eb589c3aff37f467e0694fcf86f4ab7">&#9670;&#160;</a></span>PollEvents()</h2>
+<a id="ab235871edc1d4f7a97cda10af81cd95c" name="ab235871edc1d4f7a97cda10af81cd95c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab235871edc1d4f7a97cda10af81cd95c">&#9670;&#160;</a></span>GetPolledEvent()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void duin::EventHandler::PollEvents </td>
+          <td class="memname">void duin::EventHandler::GetPolledEvent </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">::SDL_Event&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00024">24</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
@@ -233,7 +242,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00043">43</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00034">34</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
 
 </div>
 </div>
