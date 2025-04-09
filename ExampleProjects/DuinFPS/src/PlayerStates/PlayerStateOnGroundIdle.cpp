@@ -31,15 +31,6 @@ void PlayerStateOnGroundIdle::State_Enter()
 
 void PlayerStateOnGroundIdle::State_HandleInput()
 {
-    DN_CORE_INFO("Handling input");
-    if (duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
-        DN_CORE_INFO("vector pressed");
-       // if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT)) {
-       //     owner.SwitchState<PlayerStateOnGroundSprint>();
-       // } else {
-           owner.SwitchState<PlayerStateOnGroundRun>();
-       // }
-    }
 }
 
 void PlayerStateOnGroundIdle::State_Update(double delta)
@@ -48,6 +39,13 @@ void PlayerStateOnGroundIdle::State_Update(double delta)
 
 void PlayerStateOnGroundIdle::State_PhysicsUpdate(double delta)
 {
+    if (duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
+       // if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT)) {
+       //     owner.SwitchState<PlayerStateOnGroundSprint>();
+       // } else {
+           owner.SwitchState<PlayerStateOnGroundRun>();
+       // }
+    }
 }
 
 void PlayerStateOnGroundIdle::State_Draw()

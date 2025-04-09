@@ -10,11 +10,12 @@ namespace duin {
     {
         public:
             static EventHandler& Get();
+            static void GetPolledEvent(::SDL_Event e);
 
             EventHandler();
             ~EventHandler();
 
-            void PollEvents();
+
             void RegisterInputEventListener(std::function<void(InputEvent)> listener);
 
         private:

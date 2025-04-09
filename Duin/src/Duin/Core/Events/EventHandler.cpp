@@ -21,23 +21,14 @@ namespace duin {
             EventHandler::EventHandler() {}
             EventHandler::~EventHandler() {}
 
-            void EventHandler::PollEvents()
+            void EventHandler::GetPolledEvent(::SDL_Event e)
             {
-                Input::ClearCurrentKeyState();
-
-                ::SDL_Event e;
-                ::SDL_zero(e);
-                while (::SDL_PollEvent(&e)) {
-                    Input::EngineInput_GetEvent(e);
-                    // if (EVENT_IS_KEYBOARD(e.type) || EVENT_IS_MOUSE(e.type)) {
-                        // InputEvent event;
-                        // event.SetSDLEvent(e);
-                        // CallInputEventListeners(event);
-                    // }
-                    ::ImGui_ImplSDL3_ProcessEvent(&e);
+                EventHandler& instance = Get();
+                if (EVENT_IS_KEYBOARD(e.type) || EVENT_IS_MOUSE(e.type)) {
+                    InputEvent event;
+                    event.SetSDLEvent(e);
+                    instance.CallInputEventListeners(event);
                 }
-
-                Input::CacheCurrentKeyState();
             }
 
             void EventHandler::RegisterInputEventListener(std::function<void(InputEvent)> listener)

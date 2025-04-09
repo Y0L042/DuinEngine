@@ -3,6 +3,7 @@
 
 #include "Duin/Core/Events/EventHandler.h"
 #include "Duin/Core/Events/Keys.h"
+#include "Duin/Core/Events/EngineInput.h"
 
 #include "Duin/Render/Renderer.h"
 
@@ -347,7 +348,14 @@ namespace duin {
 
             EnginePreFrame();
 
-            EventHandler::Get().PollEvents();
+            ::SDL_Event e;
+            ::SDL_zero(e);
+            while (::SDL_PollEvent(&e)) {
+                Input::ProcessSDLKeyboardEvent(e);
+                EventHandler::GetPolledEvent(e);
+                ::ImGui_ImplSDL3_ProcessEvent(&e);
+            }
+            Input::CacheCurrentKeyState();
 
             EngineUpdate(deltaTime);
             Update(deltaTime);

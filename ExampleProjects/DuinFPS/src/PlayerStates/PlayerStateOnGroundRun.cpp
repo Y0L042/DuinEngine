@@ -30,6 +30,14 @@ void PlayerStateOnGroundRun::State_Enter()
 
 void PlayerStateOnGroundRun::State_HandleInput()
 {
+}
+
+void PlayerStateOnGroundRun::State_Update(double delta)
+{
+}
+
+void PlayerStateOnGroundRun::State_PhysicsUpdate(double delta)
+{
     if (!duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
         owner.SwitchState<PlayerStateOnGroundIdle>();
     }
@@ -45,15 +53,6 @@ void PlayerStateOnGroundRun::State_HandleInput()
             player.add<RunTag>();
         }
     }
-}
-
-void PlayerStateOnGroundRun::State_Update(double delta)
-{
-}
-
-void PlayerStateOnGroundRun::State_PhysicsUpdate(double delta)
-{
-
 }
 
 void PlayerStateOnGroundRun::State_Draw()

@@ -4,6 +4,7 @@
 
 namespace duin::Input {
     void EngineInput_GetEvent(::SDL_Event e);
+    void ProcessSDLKeyboardEvent(::SDL_Event e);
     void CacheCurrentKeyState();
     void ClearCurrentKeyState();
 }
