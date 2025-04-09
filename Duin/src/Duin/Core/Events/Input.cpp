@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Duin/Core/Maths/DuinMaths.h" // for inputvector
 #include "Duin/Core/Debug/DNLog.h"
+#include "Duin/Core/Application.h"
 
 #include <deque>
 
@@ -25,18 +26,12 @@ namespace duin::Input {
     };
 
     static const int MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;
-    KeyState previousKeyState[MAX_KEYS]; 
-    KeyState currentKeyState[MAX_KEYS]; 
+    static KeyState previousKeyState[MAX_KEYS]; 
+    static KeyState currentKeyState[MAX_KEYS]; 
 
-    struct KeyInputEvent {
-        DN_Keycode keyCode;
-        DN_Keymod keyMod;
-        KeyState keyState;
-        KeyEvent keyEvent;
-        ::SDL_Event sdlEvent;
-    };
-    std::deque<KeyInputEvent> inputBuffer;
-
+    static Vector2 previousMouseLocalPos;
+    static Vector2 currentMouseLocalPos;
+    static Vector2 mouseFrameDelta;
 
     void CacheCurrentKeyState()
     {
@@ -46,7 +41,6 @@ namespace duin::Input {
     void ClearCurrentKeyState()
     {
         memset(currentKeyState, 0, sizeof(currentKeyState));
-        inputBuffer.clear();
     }
 
     void ProcessSDLKeyboardEvent(::SDL_Event e)
@@ -108,7 +102,109 @@ namespace duin::Input {
          
     DN_Keycode GetKeyPressed()
 	{
+        // TODO
 		return 0;
 	}
                  
+
+    void ProcessSDLMouseEvent(::SDL_Event e)
+    {
+        previousMouseLocalPos = currentMouseLocalPos;
+
+        if (e.type == SDL_EVENT_MOUSE_MOTION) {
+            float x, y = 0;
+            ::SDL_GetMouseState(&x, &y);
+            currentMouseLocalPos = Vector2(x, y);
+        }
+        if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+
+        }
+    }
+
+    static Vector2 currentFramePos;
+    static Vector2 previousFramePos;
+    void UpdateMouseFrameDelta()
+    {
+        previousFramePos = currentFramePos;
+        currentFramePos = currentMouseLocalPos;
+        mouseFrameDelta = Vector2Subtract(previousFramePos, currentFramePos);
+		mouseFrameDelta.y = -mouseFrameDelta.y; // Invert Y axis
+    }
+
+    void CaptureMouse(int enable)
+    {
+        ::SDL_SetWindowRelativeMouseMode(GetSDLWindow(), enable);
+    }
+
+    int IsMouseButtonPressed(int button)
+    {
+        return 0;
+    }
+
+    int IsMouseButtonDown(int button)
+	{
+        return 0;
+	}
+                     
+    int IsMouseButtonReleased(int button)
+	{
+        return 0;
+	}
+                 
+    int IsMouseButtonUp(int button)
+	{
+        return 0;
+	}
+                       
+    Vector2 GetMouseGlobalPosition(void)
+	{
+        float x, y = 0;
+        ::SDL_GetGlobalMouseState(&x, &y);
+
+        return Vector2(x, y);
+	}
+
+    Vector2 GetMousePosition(void)
+	{
+        float x, y = 0;
+        ::SDL_GetMouseState(&x, &y);
+
+        return Vector2(x, y);
+	}
+                        
+    Vector2 GetMouseDelta(void)
+	{
+        return mouseFrameDelta;
+	}
+                           
+    void SetMousePosition(int x, int y)
+	{
+	
+	}
+                   
+    void SetMouseOffset(int offsetX, int offsetY)
+	{
+	
+	}
+         
+    void SetMouseScale(float scaleX, float scaleY)
+	{
+	
+	}
+        
+    float GetMouseWheelMove(void)
+	{
+        return 0.0f;
+	}
+                         
+    Vector2 GetMouseWheelMoveV(void)
+	{
+        return Vector2();
+	}
+                      
+    void SetMouseCursor(int cursor)
+	{
+	
+	}
+                       
 }

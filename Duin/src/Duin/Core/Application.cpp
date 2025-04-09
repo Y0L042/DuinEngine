@@ -221,6 +221,11 @@ namespace duin {
         return WINDOW_HEIGHT;
     }
 
+    SDL_Window* GetSDLWindow()
+    {
+        return sdlWindow;
+    }
+
     void QueuePostUpdateCallback(std::function<void(double)> f)
     {
         postUpdateCallbacks.push_back(f);
@@ -351,11 +356,13 @@ namespace duin {
             ::SDL_Event e;
             ::SDL_zero(e);
             while (::SDL_PollEvent(&e)) {
+                Input::ProcessSDLMouseEvent(e);
                 Input::ProcessSDLKeyboardEvent(e);
                 EventHandler::GetPolledEvent(e);
                 ::ImGui_ImplSDL3_ProcessEvent(&e);
             }
             Input::CacheCurrentKeyState();
+            Input::UpdateMouseFrameDelta();
 
             EngineUpdate(deltaTime);
             Update(deltaTime);

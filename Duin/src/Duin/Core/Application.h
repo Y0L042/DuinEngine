@@ -36,6 +36,8 @@ namespace duin
     int GetWindowWidth();
     int GetWindowHeight();
 
+	SDL_Window* GetSDLWindow();
+
 	void QueuePostUpdateCallback(std::function<void(double)>);
 	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
 	void QueuePostDrawCallback(std::function<void()>);

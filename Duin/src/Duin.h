@@ -9,6 +9,7 @@
 #include "Duin/Core/Utils/GameStateMachine.h"
 #include "Duin/Core/Events/EventHandler.h"
 #include "Duin/Core/Events/Event.h"
+#include "Duin/Core/Events/Input.h"
 #include "Duin/Core/Events/Keys.h"
 
 

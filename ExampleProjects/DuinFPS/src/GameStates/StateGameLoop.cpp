@@ -63,6 +63,8 @@ StateGameLoop::~StateGameLoop()
 
 void StateGameLoop::State_Enter()
 {
+	duin::Input::CaptureMouse(1);
+
     ecsManager.Initialize();
 
     float playerHeight = 1.75f;
@@ -266,24 +268,18 @@ void StateGameLoop::State_HandleInput()
     /* --- DEBUG --- */
 
 
-    playerSM.ExecuteHandleInput();
-    //duin::Vector2 mouseInput(GetMouseDelta());
-    //if (fpsCameraEnabled) {
-    //    player.set<MouseInputVec2>({ { mouseInput } });
-    //    cameraRoot.set<MouseInputVec2>({ { mouseInput } });
-    //}
-    //else {
-    //    debugCamera.set<MouseInputVec2>({ { mouseInput } });
-    //}
 
 
     // if (IsKeyPressed(KEY_SPACE) && isOnFloor) {
     //     player.add<JumpTag>();
     // }
+
+    playerSM.ExecuteHandleInput();
 }
 
 void StateGameLoop::State_Update(double delta)
 {
+
     playerSM.ExecuteUpdate(delta);
 
     //debugWatchlist.Post("FPS | Frametime", "%d | %.1f", GetFPS(), 1000 * GetFrameTime());
@@ -296,6 +292,14 @@ void StateGameLoop::State_Update(double delta)
 
 void StateGameLoop::State_PhysicsUpdate(double delta)
 {    
+    duin::Vector2 mouseInput(duin::Input::GetMouseDelta());
+    if (fpsCameraEnabled) {
+       player.set<MouseInputVec2>({ { mouseInput } });
+       cameraRoot.set<MouseInputVec2>({ { mouseInput } });
+    }
+    else {
+       debugCamera.set<MouseInputVec2>({ { mouseInput } });
+    }
     const duin::ECSComponent::DynamicBodyComponent *dbc = bouncyCube.get<duin::ECSComponent::DynamicBodyComponent>();
     if (dbc) {
         std::shared_ptr<duin::DynamicBody> db = dbc->dynamicBody;
