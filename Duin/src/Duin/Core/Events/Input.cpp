@@ -52,11 +52,13 @@ namespace duin::Input {
 
     KeyInputEvent ProcessSDLKeyboardEvent(::SDL_Event e)
     {
+        // Set current key state
         ::SDL_Scancode code = e.key.scancode;
         KeyState state = e.key.down ? KeyState::DOWN : KeyState::UP;
         currentKeyState[code] = state;
-        KeyState previousState = previousKeyState[code];
 
+        // Create KeyEvent
+        KeyState previousState = previousKeyState[code];
         KeyEvent keyEvent;
         if (e.key.repeat) {
             keyEvent = KeyEvent::PRESSED_REPEATED;
@@ -90,41 +92,29 @@ namespace duin::Input {
     {
         if (EVENT_IS_KEYBOARD(e.type)) {
             KeyInputEvent inputEvent = ProcessSDLKeyboardEvent(e);
-            inputBuffer.push_back(inputEvent);
+            // inputBuffer.push_back(inputEvent);
         }
     }
 
     int IsKeyPressed(DN_Keycode code)
     {
-        for (KeyInputEvent& event : inputBuffer) {
-            if ((code == event.keyCode) && (event.keyEvent == KeyEvent::PRESSED)) { 
-                return 1; 
-            }
-        }
-
-        return 0;
+        // Review modstate param
+        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
+        return (currentKeyState[scanCode] && !previousKeyState[scanCode]);
     }
 
     int IsKeyPressedAgain(DN_Keycode code)
 	{
-        for (KeyInputEvent& event : inputBuffer) {
-            if ((code == event.keyCode) && (event.keyEvent == KeyEvent::PRESSED_REPEATED)) { 
-                return 1; 
-            }
-        }
+        // TODO
 
         return 0;
 	}
 
     int IsKeyReleased(DN_Keycode code)
 	{
-        for (KeyInputEvent& event : inputBuffer) {
-            if ((code == event.keyCode) && (event.keyEvent == KeyEvent::RELEASED)) { 
-                return 1; 
-            }
-        }
-
-        return 0;
+        // Review modstate param
+        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
+        return (!currentKeyState[scanCode] && previousKeyState[scanCode]);
 	}
      
     int IsKeyDown(DN_Keycode code)
@@ -148,7 +138,7 @@ namespace duin::Input {
 
     Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
     {
-        return Vector2(IsKeyDown(up) - IsKeyDown(down), -IsKeyDown(left) + IsKeyDown(right));
+        return Vector2(-IsKeyDown(left) + IsKeyDown(right), IsKeyDown(up) - IsKeyDown(down));
     }
                
          

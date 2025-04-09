@@ -29,11 +29,11 @@ namespace duin {
                 ::SDL_zero(e);
                 while (::SDL_PollEvent(&e)) {
                     Input::EngineInput_GetEvent(e);
-                    if (EVENT_IS_KEYBOARD(e.type) || EVENT_IS_MOUSE(e.type)) {
-                        InputEvent event;
-                        event.SetSDLEvent(e);
-                        CallInputEventListeners(event);
-                    }
+                    // if (EVENT_IS_KEYBOARD(e.type) || EVENT_IS_MOUSE(e.type)) {
+                        // InputEvent event;
+                        // event.SetSDLEvent(e);
+                        // CallInputEventListeners(event);
+                    // }
                     ::ImGui_ImplSDL3_ProcessEvent(&e);
                 }
 
