@@ -42,7 +42,6 @@ var annotated_dup =
       [ "BoxRenderGeometry", "structduin_1_1BoxRenderGeometry.html", null ],
       [ "BoxRenderShape", "classduin_1_1BoxRenderShape.html", null ],
       [ "Camera", "structduin_1_1Camera.html", null ],
-      [ "Camera3D", "classduin_1_1Camera3D.html", null ],
       [ "CapsuleGeometry", "classduin_1_1CapsuleGeometry.html", null ],
       [ "CapsuleRenderGeometry", "structduin_1_1CapsuleRenderGeometry.html", null ],
       [ "CharacterBody", "classduin_1_1CharacterBody.html", null ],

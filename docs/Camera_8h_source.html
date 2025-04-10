@@ -157,52 +157,10 @@ $(document).ready(function(){initNavTree('Camera_8h_source.html',''); initResiza
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">void</span> CameraRoll(<a class="code hl_struct" href="structduin_1_1Camera.html">Camera</a> *camera, <span class="keywordtype">float</span> angle);</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">void</span> GetBGFXMatrix(<a class="code hl_struct" href="structduin_1_1Camera.html">Camera</a> *camera);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="foldopen" id="foldopen00042" data-start="{" data-end="};">
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classduin_1_1Camera3D.html">   42</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1Camera3D.html">Camera3D</a> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Camera3D.html">Camera3D</a>* Create();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Camera3D.html">Camera3D</a>&amp; GetActiveCamera3D();</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keyword">static</span> <span class="keywordtype">void</span> SetActiveCamera3D(<a class="code hl_class" href="classduin_1_1Camera3D.html">Camera3D</a>* camera);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keyword">static</span> <span class="keywordtype">void</span> SetActiveCamera3D(<a class="code hl_class" href="classduin_1_1Camera3D.html">Camera3D</a>&amp; camera);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keyword">static</span> <span class="keywordtype">void</span> SetActiveCamera3D(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <a class="code hl_class" href="classduin_1_1Camera3D.html">Camera3D</a>();</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <a class="code hl_class" href="classduin_1_1Camera3D.html">Camera3D</a>(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <a class="code hl_class" href="classduin_1_1Camera3D.html">~Camera3D</a>();</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> GetUUID();</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordtype">int</span> IsValid();</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> GetPosition();</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <span class="keywordtype">void</span> SetPosition(<a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> newPosition);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <a class="code hl_struct" href="structduin_1_1Vector4.html">Quaternion</a> GetRotation();</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="keywordtype">void</span> SetRotation(<a class="code hl_struct" href="structduin_1_1Vector4.html">Quaternion</a> newRotation);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordtype">void</span> LookAt(<a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> target);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keywordtype">void</span> Delete();</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordtype">void</span> SetBGFXView();</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keyword">static</span> std::unordered_map&lt;UUID, Camera3D&gt; cameraMap;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            <span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> activeCamera3DUUID;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> position;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <a class="code hl_struct" href="structduin_1_1Vector4.html">Quaternion</a> rotation;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> cameraUp;<span class="comment">// = Vector3::UP;</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    };</div>
-</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
-<div class="ttc" id="aclassduin_1_1Camera3D_html"><div class="ttname"><a href="classduin_1_1Camera3D.html">duin::Camera3D</a></div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00042">Camera.h:43</a></div></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00008">UUID.h:9</a></div></div>
 <div class="ttc" id="astructduin_1_1Camera_html"><div class="ttname"><a href="structduin_1_1Camera.html">duin::Camera</a></div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00009">Camera.h:9</a></div></div>
 <div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00161">DuinMaths.h:161</a></div></div>
-<div class="ttc" id="astructduin_1_1Vector4_html"><div class="ttname"><a href="structduin_1_1Vector4.html">duin::Vector4</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00211">DuinMaths.h:211</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

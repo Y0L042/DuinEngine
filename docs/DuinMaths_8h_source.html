@@ -3304,489 +3304,491 @@ $(document).ready(function(){initNavTree('DuinMaths_8h_source.html',''); initRes
 <div class="line"><a id="l03174" name="l03174"></a><span class="lineno"> 3174</span> </div>
 <div class="line"><a id="l03175" name="l03175"></a><span class="lineno"> 3175</span>    <span class="keywordtype">float</span> x0 = cosf(pitch*0.5f);</div>
 <div class="line"><a id="l03176" name="l03176"></a><span class="lineno"> 3176</span>    <span class="keywordtype">float</span> x1 = sinf(pitch*0.5f);</div>
-<div class="line"><a id="l03177" name="l03177"></a><span class="lineno"> 3177</span>    <span class="keywordtype">float</span> y0 = cosf(yaw*0.5f);</div>
-<div class="line"><a id="l03178" name="l03178"></a><span class="lineno"> 3178</span>    <span class="keywordtype">float</span> y1 = sinf(yaw*0.5f);</div>
-<div class="line"><a id="l03179" name="l03179"></a><span class="lineno"> 3179</span>    <span class="keywordtype">float</span> z0 = cosf(roll*0.5f);</div>
-<div class="line"><a id="l03180" name="l03180"></a><span class="lineno"> 3180</span>    <span class="keywordtype">float</span> z1 = sinf(roll*0.5f);</div>
-<div class="line"><a id="l03181" name="l03181"></a><span class="lineno"> 3181</span> </div>
-<div class="line"><a id="l03182" name="l03182"></a><span class="lineno"> 3182</span>    result.x = x1*y0*z0 - x0*y1*z1;</div>
-<div class="line"><a id="l03183" name="l03183"></a><span class="lineno"> 3183</span>    result.y = x0*y1*z0 + x1*y0*z1;</div>
-<div class="line"><a id="l03184" name="l03184"></a><span class="lineno"> 3184</span>    result.z = x0*y0*z1 - x1*y1*z0;</div>
-<div class="line"><a id="l03185" name="l03185"></a><span class="lineno"> 3185</span>    result.w = x0*y0*z0 + x1*y1*z1;</div>
-<div class="line"><a id="l03186" name="l03186"></a><span class="lineno"> 3186</span> </div>
-<div class="line"><a id="l03187" name="l03187"></a><span class="lineno"> 3187</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l03188" name="l03188"></a><span class="lineno"> 3188</span>}</div>
-<div class="line"><a id="l03189" name="l03189"></a><span class="lineno"> 3189</span> </div>
-<div class="line"><a id="l03190" name="l03190"></a><span class="lineno"> 3190</span><span class="comment">// Get the Euler angles equivalent to quaternion (roll, pitch, yaw)</span></div>
-<div class="line"><a id="l03191" name="l03191"></a><span class="lineno"> 3191</span><span class="comment">// NOTE: Angles are returned in a Vector3 struct in radians</span></div>
-<div class="line"><a id="l03192" name="l03192"></a><span class="lineno"> 3192</span>DNMAPI Vector3 QuaternionToEuler(Quaternion q)</div>
-<div class="line"><a id="l03193" name="l03193"></a><span class="lineno"> 3193</span>{</div>
-<div class="line"><a id="l03194" name="l03194"></a><span class="lineno"> 3194</span>    Vector3 result;</div>
-<div class="line"><a id="l03195" name="l03195"></a><span class="lineno"> 3195</span> </div>
-<div class="line"><a id="l03196" name="l03196"></a><span class="lineno"> 3196</span>    <span class="comment">// Roll (x-axis rotation)</span></div>
-<div class="line"><a id="l03197" name="l03197"></a><span class="lineno"> 3197</span>    <span class="keywordtype">float</span> x0 = 2.0f*(q.w*q.x + q.y*q.z);</div>
-<div class="line"><a id="l03198" name="l03198"></a><span class="lineno"> 3198</span>    <span class="keywordtype">float</span> x1 = 1.0f - 2.0f*(q.x*q.x + q.y*q.y);</div>
-<div class="line"><a id="l03199" name="l03199"></a><span class="lineno"> 3199</span>    result.x = atan2f(x0, x1);</div>
-<div class="line"><a id="l03200" name="l03200"></a><span class="lineno"> 3200</span> </div>
-<div class="line"><a id="l03201" name="l03201"></a><span class="lineno"> 3201</span>    <span class="comment">// Pitch (y-axis rotation)</span></div>
-<div class="line"><a id="l03202" name="l03202"></a><span class="lineno"> 3202</span>    <span class="keywordtype">float</span> y0 = 2.0f*(q.w*q.y - q.z*q.x);</div>
-<div class="line"><a id="l03203" name="l03203"></a><span class="lineno"> 3203</span>    y0 = y0 &gt; 1.0f ? 1.0f : y0;</div>
-<div class="line"><a id="l03204" name="l03204"></a><span class="lineno"> 3204</span>    y0 = y0 &lt; -1.0f ? -1.0f : y0;</div>
-<div class="line"><a id="l03205" name="l03205"></a><span class="lineno"> 3205</span>    result.y = asinf(y0);</div>
-<div class="line"><a id="l03206" name="l03206"></a><span class="lineno"> 3206</span> </div>
-<div class="line"><a id="l03207" name="l03207"></a><span class="lineno"> 3207</span>    <span class="comment">// Yaw (z-axis rotation)</span></div>
-<div class="line"><a id="l03208" name="l03208"></a><span class="lineno"> 3208</span>    <span class="keywordtype">float</span> z0 = 2.0f*(q.w*q.z + q.x*q.y);</div>
-<div class="line"><a id="l03209" name="l03209"></a><span class="lineno"> 3209</span>    <span class="keywordtype">float</span> z1 = 1.0f - 2.0f*(q.y*q.y + q.z*q.z);</div>
-<div class="line"><a id="l03210" name="l03210"></a><span class="lineno"> 3210</span>    result.z = atan2f(z0, z1);</div>
-<div class="line"><a id="l03211" name="l03211"></a><span class="lineno"> 3211</span> </div>
-<div class="line"><a id="l03212" name="l03212"></a><span class="lineno"> 3212</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l03213" name="l03213"></a><span class="lineno"> 3213</span>}</div>
-<div class="line"><a id="l03214" name="l03214"></a><span class="lineno"> 3214</span> </div>
-<div class="line"><a id="l03215" name="l03215"></a><span class="lineno"> 3215</span><span class="comment">// Transform a quaternion given a transformation matrix</span></div>
-<div class="line"><a id="l03216" name="l03216"></a><span class="lineno"> 3216</span>DNMAPI Quaternion QuaternionTransform(Quaternion q, Matrix mat)</div>
-<div class="line"><a id="l03217" name="l03217"></a><span class="lineno"> 3217</span>{</div>
-<div class="line"><a id="l03218" name="l03218"></a><span class="lineno"> 3218</span>    Quaternion result;</div>
-<div class="line"><a id="l03219" name="l03219"></a><span class="lineno"> 3219</span> </div>
-<div class="line"><a id="l03220" name="l03220"></a><span class="lineno"> 3220</span>    result.x = mat.m0*q.x + mat.m4*q.y + mat.m8*q.z + mat.m12*q.w;</div>
-<div class="line"><a id="l03221" name="l03221"></a><span class="lineno"> 3221</span>    result.y = mat.m1*q.x + mat.m5*q.y + mat.m9*q.z + mat.m13*q.w;</div>
-<div class="line"><a id="l03222" name="l03222"></a><span class="lineno"> 3222</span>    result.z = mat.m2*q.x + mat.m6*q.y + mat.m10*q.z + mat.m14*q.w;</div>
-<div class="line"><a id="l03223" name="l03223"></a><span class="lineno"> 3223</span>    result.w = mat.m3*q.x + mat.m7*q.y + mat.m11*q.z + mat.m15*q.w;</div>
-<div class="line"><a id="l03224" name="l03224"></a><span class="lineno"> 3224</span> </div>
-<div class="line"><a id="l03225" name="l03225"></a><span class="lineno"> 3225</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l03226" name="l03226"></a><span class="lineno"> 3226</span>}</div>
-<div class="line"><a id="l03227" name="l03227"></a><span class="lineno"> 3227</span> </div>
-<div class="line"><a id="l03228" name="l03228"></a><span class="lineno"> 3228</span><span class="comment">// Check whether two given quaternions are almost equal</span></div>
-<div class="line"><a id="l03229" name="l03229"></a><span class="lineno"> 3229</span>DNMAPI <span class="keywordtype">int</span> QuaternionEquals(Quaternion p, Quaternion q)</div>
-<div class="line"><a id="l03230" name="l03230"></a><span class="lineno"> 3230</span>{</div>
-<div class="line"><a id="l03231" name="l03231"></a><span class="lineno"> 3231</span><span class="preprocessor">#if !defined(EPSILON)</span></div>
-<div class="line"><a id="l03232" name="l03232"></a><span class="lineno"> 3232</span><span class="preprocessor">    #define EPSILON 0.000001f</span></div>
-<div class="line"><a id="l03233" name="l03233"></a><span class="lineno"> 3233</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l03234" name="l03234"></a><span class="lineno"> 3234</span> </div>
-<div class="line"><a id="l03235" name="l03235"></a><span class="lineno"> 3235</span>    <span class="keywordtype">int</span> result = (((fabsf(p.x - q.x)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))))) &amp;&amp;</div>
-<div class="line"><a id="l03236" name="l03236"></a><span class="lineno"> 3236</span>                  ((fabsf(p.y - q.y)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))))) &amp;&amp;</div>
-<div class="line"><a id="l03237" name="l03237"></a><span class="lineno"> 3237</span>                  ((fabsf(p.z - q.z)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))))) &amp;&amp;</div>
-<div class="line"><a id="l03238" name="l03238"></a><span class="lineno"> 3238</span>                  ((fabsf(p.w - q.w)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)))))) ||</div>
-<div class="line"><a id="l03239" name="l03239"></a><span class="lineno"> 3239</span>                 (((fabsf(p.x + q.x)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))))) &amp;&amp;</div>
-<div class="line"><a id="l03240" name="l03240"></a><span class="lineno"> 3240</span>                  ((fabsf(p.y + q.y)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))))) &amp;&amp;</div>
-<div class="line"><a id="l03241" name="l03241"></a><span class="lineno"> 3241</span>                  ((fabsf(p.z + q.z)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))))) &amp;&amp;</div>
-<div class="line"><a id="l03242" name="l03242"></a><span class="lineno"> 3242</span>                  ((fabsf(p.w + q.w)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w))))));</div>
-<div class="line"><a id="l03243" name="l03243"></a><span class="lineno"> 3243</span> </div>
-<div class="line"><a id="l03244" name="l03244"></a><span class="lineno"> 3244</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l03245" name="l03245"></a><span class="lineno"> 3245</span>}</div>
-<div class="line"><a id="l03246" name="l03246"></a><span class="lineno"> 3246</span> </div>
-<div class="line"><a id="l03247" name="l03247"></a><span class="lineno"> 3247</span><span class="comment">// Decompose a transformation matrix into its rotational, translational and scaling components</span></div>
-<div class="line"><a id="l03248" name="l03248"></a><span class="lineno"> 3248</span>DNMAPI <span class="keywordtype">void</span> MatrixDecompose(Matrix mat, Vector3 *translation, Quaternion *rotation, Vector3 *scale)</div>
-<div class="line"><a id="l03249" name="l03249"></a><span class="lineno"> 3249</span>{</div>
-<div class="line"><a id="l03250" name="l03250"></a><span class="lineno"> 3250</span>    <span class="comment">// Extract translation.</span></div>
-<div class="line"><a id="l03251" name="l03251"></a><span class="lineno"> 3251</span>    translation-&gt;x = mat.m12;</div>
-<div class="line"><a id="l03252" name="l03252"></a><span class="lineno"> 3252</span>    translation-&gt;y = mat.m13;</div>
-<div class="line"><a id="l03253" name="l03253"></a><span class="lineno"> 3253</span>    translation-&gt;z = mat.m14;</div>
-<div class="line"><a id="l03254" name="l03254"></a><span class="lineno"> 3254</span> </div>
-<div class="line"><a id="l03255" name="l03255"></a><span class="lineno"> 3255</span>    <span class="comment">// Extract upper-left for determinant computation</span></div>
-<div class="line"><a id="l03256" name="l03256"></a><span class="lineno"> 3256</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> a = mat.m0;</div>
-<div class="line"><a id="l03257" name="l03257"></a><span class="lineno"> 3257</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> b = mat.m4;</div>
-<div class="line"><a id="l03258" name="l03258"></a><span class="lineno"> 3258</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> c = mat.m8;</div>
-<div class="line"><a id="l03259" name="l03259"></a><span class="lineno"> 3259</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> d = mat.m1;</div>
-<div class="line"><a id="l03260" name="l03260"></a><span class="lineno"> 3260</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> e = mat.m5;</div>
-<div class="line"><a id="l03261" name="l03261"></a><span class="lineno"> 3261</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> f = mat.m9;</div>
-<div class="line"><a id="l03262" name="l03262"></a><span class="lineno"> 3262</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> g = mat.m2;</div>
-<div class="line"><a id="l03263" name="l03263"></a><span class="lineno"> 3263</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> h = mat.m6;</div>
-<div class="line"><a id="l03264" name="l03264"></a><span class="lineno"> 3264</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> i = mat.m10;</div>
-<div class="line"><a id="l03265" name="l03265"></a><span class="lineno"> 3265</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> A = e*i - f*h;</div>
-<div class="line"><a id="l03266" name="l03266"></a><span class="lineno"> 3266</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> B = f*g - d*i;</div>
-<div class="line"><a id="l03267" name="l03267"></a><span class="lineno"> 3267</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> C = d*h - e*g;</div>
-<div class="line"><a id="l03268" name="l03268"></a><span class="lineno"> 3268</span> </div>
-<div class="line"><a id="l03269" name="l03269"></a><span class="lineno"> 3269</span>    <span class="comment">// Extract scale</span></div>
-<div class="line"><a id="l03270" name="l03270"></a><span class="lineno"> 3270</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> det = a*A + b*B + c*C;</div>
-<div class="line"><a id="l03271" name="l03271"></a><span class="lineno"> 3271</span>    Vector3 abc = { a, b, c };</div>
-<div class="line"><a id="l03272" name="l03272"></a><span class="lineno"> 3272</span>    Vector3 def = { d, e, f };</div>
-<div class="line"><a id="l03273" name="l03273"></a><span class="lineno"> 3273</span>    Vector3 ghi = { g, h, i };</div>
-<div class="line"><a id="l03274" name="l03274"></a><span class="lineno"> 3274</span> </div>
-<div class="line"><a id="l03275" name="l03275"></a><span class="lineno"> 3275</span>    <span class="keywordtype">float</span> scalex = Vector3Length(abc);</div>
-<div class="line"><a id="l03276" name="l03276"></a><span class="lineno"> 3276</span>    <span class="keywordtype">float</span> scaley = Vector3Length(def);</div>
-<div class="line"><a id="l03277" name="l03277"></a><span class="lineno"> 3277</span>    <span class="keywordtype">float</span> scalez = Vector3Length(ghi);</div>
-<div class="line"><a id="l03278" name="l03278"></a><span class="lineno"> 3278</span>    Vector3 s = { scalex, scaley, scalez };</div>
-<div class="line"><a id="l03279" name="l03279"></a><span class="lineno"> 3279</span> </div>
-<div class="line"><a id="l03280" name="l03280"></a><span class="lineno"> 3280</span>    <span class="keywordflow">if</span> (det &lt; 0) s = Vector3Negate(s);</div>
+<div class="line"><a id="l03177" name="l03177"></a><span class="lineno"> 3177</span> </div>
+<div class="line"><a id="l03178" name="l03178"></a><span class="lineno"> 3178</span>    <span class="keywordtype">float</span> y0 = cosf(yaw*0.5f);</div>
+<div class="line"><a id="l03179" name="l03179"></a><span class="lineno"> 3179</span>    <span class="keywordtype">float</span> y1 = sinf(yaw*0.5f);</div>
+<div class="line"><a id="l03180" name="l03180"></a><span class="lineno"> 3180</span> </div>
+<div class="line"><a id="l03181" name="l03181"></a><span class="lineno"> 3181</span>    <span class="keywordtype">float</span> z0 = cosf(roll*0.5f);</div>
+<div class="line"><a id="l03182" name="l03182"></a><span class="lineno"> 3182</span>    <span class="keywordtype">float</span> z1 = sinf(roll*0.5f);</div>
+<div class="line"><a id="l03183" name="l03183"></a><span class="lineno"> 3183</span> </div>
+<div class="line"><a id="l03184" name="l03184"></a><span class="lineno"> 3184</span>    result.x = x1*y0*z0 - x0*y1*z1;</div>
+<div class="line"><a id="l03185" name="l03185"></a><span class="lineno"> 3185</span>    result.y = x0*y1*z0 + x1*y0*z1;</div>
+<div class="line"><a id="l03186" name="l03186"></a><span class="lineno"> 3186</span>    result.z = x0*y0*z1 - x1*y1*z0;</div>
+<div class="line"><a id="l03187" name="l03187"></a><span class="lineno"> 3187</span>    result.w = x0*y0*z0 + x1*y1*z1;</div>
+<div class="line"><a id="l03188" name="l03188"></a><span class="lineno"> 3188</span> </div>
+<div class="line"><a id="l03189" name="l03189"></a><span class="lineno"> 3189</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l03190" name="l03190"></a><span class="lineno"> 3190</span>}</div>
+<div class="line"><a id="l03191" name="l03191"></a><span class="lineno"> 3191</span> </div>
+<div class="line"><a id="l03192" name="l03192"></a><span class="lineno"> 3192</span><span class="comment">// Get the Euler angles equivalent to quaternion (roll, pitch, yaw)</span></div>
+<div class="line"><a id="l03193" name="l03193"></a><span class="lineno"> 3193</span><span class="comment">// NOTE: Angles are returned in a Vector3 struct in radians</span></div>
+<div class="line"><a id="l03194" name="l03194"></a><span class="lineno"> 3194</span>DNMAPI Vector3 QuaternionToEuler(Quaternion q)</div>
+<div class="line"><a id="l03195" name="l03195"></a><span class="lineno"> 3195</span>{</div>
+<div class="line"><a id="l03196" name="l03196"></a><span class="lineno"> 3196</span>    Vector3 result;</div>
+<div class="line"><a id="l03197" name="l03197"></a><span class="lineno"> 3197</span> </div>
+<div class="line"><a id="l03198" name="l03198"></a><span class="lineno"> 3198</span>    <span class="comment">// Pitch (x-axis rotation)</span></div>
+<div class="line"><a id="l03199" name="l03199"></a><span class="lineno"> 3199</span>    <span class="keywordtype">float</span> x0 = 2.0f*(q.w*q.y - q.z*q.x);</div>
+<div class="line"><a id="l03200" name="l03200"></a><span class="lineno"> 3200</span>    x0 = x0 &gt; 1.0f ? 1.0f : x0;</div>
+<div class="line"><a id="l03201" name="l03201"></a><span class="lineno"> 3201</span>    x0 = x0 &lt; -1.0f ? -1.0f : x0;</div>
+<div class="line"><a id="l03202" name="l03202"></a><span class="lineno"> 3202</span>    result.x = asinf(x0);</div>
+<div class="line"><a id="l03203" name="l03203"></a><span class="lineno"> 3203</span> </div>
+<div class="line"><a id="l03204" name="l03204"></a><span class="lineno"> 3204</span>    <span class="comment">// Yaw (y-axis rotation)</span></div>
+<div class="line"><a id="l03205" name="l03205"></a><span class="lineno"> 3205</span>    <span class="keywordtype">float</span> y0 = 2.0f*(q.w*q.z + q.x*q.y);</div>
+<div class="line"><a id="l03206" name="l03206"></a><span class="lineno"> 3206</span>    <span class="keywordtype">float</span> y1 = 1.0f - 2.0f*(q.y*q.y + q.z*q.z);</div>
+<div class="line"><a id="l03207" name="l03207"></a><span class="lineno"> 3207</span>    result.y = atan2f(y0, y1);</div>
+<div class="line"><a id="l03208" name="l03208"></a><span class="lineno"> 3208</span> </div>
+<div class="line"><a id="l03209" name="l03209"></a><span class="lineno"> 3209</span>    <span class="comment">// Roll (z-axis rotation)</span></div>
+<div class="line"><a id="l03210" name="l03210"></a><span class="lineno"> 3210</span>    <span class="keywordtype">float</span> z0 = 2.0f * (q.w * q.x + q.y * q.z);</div>
+<div class="line"><a id="l03211" name="l03211"></a><span class="lineno"> 3211</span>    <span class="keywordtype">float</span> z1 = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);</div>
+<div class="line"><a id="l03212" name="l03212"></a><span class="lineno"> 3212</span>    result.z = atan2f(z0, z1);</div>
+<div class="line"><a id="l03213" name="l03213"></a><span class="lineno"> 3213</span> </div>
+<div class="line"><a id="l03214" name="l03214"></a><span class="lineno"> 3214</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l03215" name="l03215"></a><span class="lineno"> 3215</span>}</div>
+<div class="line"><a id="l03216" name="l03216"></a><span class="lineno"> 3216</span> </div>
+<div class="line"><a id="l03217" name="l03217"></a><span class="lineno"> 3217</span><span class="comment">// Transform a quaternion given a transformation matrix</span></div>
+<div class="line"><a id="l03218" name="l03218"></a><span class="lineno"> 3218</span>DNMAPI Quaternion QuaternionTransform(Quaternion q, Matrix mat)</div>
+<div class="line"><a id="l03219" name="l03219"></a><span class="lineno"> 3219</span>{</div>
+<div class="line"><a id="l03220" name="l03220"></a><span class="lineno"> 3220</span>    Quaternion result;</div>
+<div class="line"><a id="l03221" name="l03221"></a><span class="lineno"> 3221</span> </div>
+<div class="line"><a id="l03222" name="l03222"></a><span class="lineno"> 3222</span>    result.x = mat.m0*q.x + mat.m4*q.y + mat.m8*q.z + mat.m12*q.w;</div>
+<div class="line"><a id="l03223" name="l03223"></a><span class="lineno"> 3223</span>    result.y = mat.m1*q.x + mat.m5*q.y + mat.m9*q.z + mat.m13*q.w;</div>
+<div class="line"><a id="l03224" name="l03224"></a><span class="lineno"> 3224</span>    result.z = mat.m2*q.x + mat.m6*q.y + mat.m10*q.z + mat.m14*q.w;</div>
+<div class="line"><a id="l03225" name="l03225"></a><span class="lineno"> 3225</span>    result.w = mat.m3*q.x + mat.m7*q.y + mat.m11*q.z + mat.m15*q.w;</div>
+<div class="line"><a id="l03226" name="l03226"></a><span class="lineno"> 3226</span> </div>
+<div class="line"><a id="l03227" name="l03227"></a><span class="lineno"> 3227</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l03228" name="l03228"></a><span class="lineno"> 3228</span>}</div>
+<div class="line"><a id="l03229" name="l03229"></a><span class="lineno"> 3229</span> </div>
+<div class="line"><a id="l03230" name="l03230"></a><span class="lineno"> 3230</span><span class="comment">// Check whether two given quaternions are almost equal</span></div>
+<div class="line"><a id="l03231" name="l03231"></a><span class="lineno"> 3231</span>DNMAPI <span class="keywordtype">int</span> QuaternionEquals(Quaternion p, Quaternion q)</div>
+<div class="line"><a id="l03232" name="l03232"></a><span class="lineno"> 3232</span>{</div>
+<div class="line"><a id="l03233" name="l03233"></a><span class="lineno"> 3233</span><span class="preprocessor">#if !defined(EPSILON)</span></div>
+<div class="line"><a id="l03234" name="l03234"></a><span class="lineno"> 3234</span><span class="preprocessor">    #define EPSILON 0.000001f</span></div>
+<div class="line"><a id="l03235" name="l03235"></a><span class="lineno"> 3235</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l03236" name="l03236"></a><span class="lineno"> 3236</span> </div>
+<div class="line"><a id="l03237" name="l03237"></a><span class="lineno"> 3237</span>    <span class="keywordtype">int</span> result = (((fabsf(p.x - q.x)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))))) &amp;&amp;</div>
+<div class="line"><a id="l03238" name="l03238"></a><span class="lineno"> 3238</span>                  ((fabsf(p.y - q.y)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))))) &amp;&amp;</div>
+<div class="line"><a id="l03239" name="l03239"></a><span class="lineno"> 3239</span>                  ((fabsf(p.z - q.z)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))))) &amp;&amp;</div>
+<div class="line"><a id="l03240" name="l03240"></a><span class="lineno"> 3240</span>                  ((fabsf(p.w - q.w)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w)))))) ||</div>
+<div class="line"><a id="l03241" name="l03241"></a><span class="lineno"> 3241</span>                 (((fabsf(p.x + q.x)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.x), fabsf(q.x))))) &amp;&amp;</div>
+<div class="line"><a id="l03242" name="l03242"></a><span class="lineno"> 3242</span>                  ((fabsf(p.y + q.y)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.y), fabsf(q.y))))) &amp;&amp;</div>
+<div class="line"><a id="l03243" name="l03243"></a><span class="lineno"> 3243</span>                  ((fabsf(p.z + q.z)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.z), fabsf(q.z))))) &amp;&amp;</div>
+<div class="line"><a id="l03244" name="l03244"></a><span class="lineno"> 3244</span>                  ((fabsf(p.w + q.w)) &lt;= (EPSILON*fmaxf(1.0f, fmaxf(fabsf(p.w), fabsf(q.w))))));</div>
+<div class="line"><a id="l03245" name="l03245"></a><span class="lineno"> 3245</span> </div>
+<div class="line"><a id="l03246" name="l03246"></a><span class="lineno"> 3246</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l03247" name="l03247"></a><span class="lineno"> 3247</span>}</div>
+<div class="line"><a id="l03248" name="l03248"></a><span class="lineno"> 3248</span> </div>
+<div class="line"><a id="l03249" name="l03249"></a><span class="lineno"> 3249</span><span class="comment">// Decompose a transformation matrix into its rotational, translational and scaling components</span></div>
+<div class="line"><a id="l03250" name="l03250"></a><span class="lineno"> 3250</span>DNMAPI <span class="keywordtype">void</span> MatrixDecompose(Matrix mat, Vector3 *translation, Quaternion *rotation, Vector3 *scale)</div>
+<div class="line"><a id="l03251" name="l03251"></a><span class="lineno"> 3251</span>{</div>
+<div class="line"><a id="l03252" name="l03252"></a><span class="lineno"> 3252</span>    <span class="comment">// Extract translation.</span></div>
+<div class="line"><a id="l03253" name="l03253"></a><span class="lineno"> 3253</span>    translation-&gt;x = mat.m12;</div>
+<div class="line"><a id="l03254" name="l03254"></a><span class="lineno"> 3254</span>    translation-&gt;y = mat.m13;</div>
+<div class="line"><a id="l03255" name="l03255"></a><span class="lineno"> 3255</span>    translation-&gt;z = mat.m14;</div>
+<div class="line"><a id="l03256" name="l03256"></a><span class="lineno"> 3256</span> </div>
+<div class="line"><a id="l03257" name="l03257"></a><span class="lineno"> 3257</span>    <span class="comment">// Extract upper-left for determinant computation</span></div>
+<div class="line"><a id="l03258" name="l03258"></a><span class="lineno"> 3258</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> a = mat.m0;</div>
+<div class="line"><a id="l03259" name="l03259"></a><span class="lineno"> 3259</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> b = mat.m4;</div>
+<div class="line"><a id="l03260" name="l03260"></a><span class="lineno"> 3260</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> c = mat.m8;</div>
+<div class="line"><a id="l03261" name="l03261"></a><span class="lineno"> 3261</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> d = mat.m1;</div>
+<div class="line"><a id="l03262" name="l03262"></a><span class="lineno"> 3262</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> e = mat.m5;</div>
+<div class="line"><a id="l03263" name="l03263"></a><span class="lineno"> 3263</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> f = mat.m9;</div>
+<div class="line"><a id="l03264" name="l03264"></a><span class="lineno"> 3264</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> g = mat.m2;</div>
+<div class="line"><a id="l03265" name="l03265"></a><span class="lineno"> 3265</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> h = mat.m6;</div>
+<div class="line"><a id="l03266" name="l03266"></a><span class="lineno"> 3266</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> i = mat.m10;</div>
+<div class="line"><a id="l03267" name="l03267"></a><span class="lineno"> 3267</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> A = e*i - f*h;</div>
+<div class="line"><a id="l03268" name="l03268"></a><span class="lineno"> 3268</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> B = f*g - d*i;</div>
+<div class="line"><a id="l03269" name="l03269"></a><span class="lineno"> 3269</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> C = d*h - e*g;</div>
+<div class="line"><a id="l03270" name="l03270"></a><span class="lineno"> 3270</span> </div>
+<div class="line"><a id="l03271" name="l03271"></a><span class="lineno"> 3271</span>    <span class="comment">// Extract scale</span></div>
+<div class="line"><a id="l03272" name="l03272"></a><span class="lineno"> 3272</span>    <span class="keyword">const</span> <span class="keywordtype">float</span> det = a*A + b*B + c*C;</div>
+<div class="line"><a id="l03273" name="l03273"></a><span class="lineno"> 3273</span>    Vector3 abc = { a, b, c };</div>
+<div class="line"><a id="l03274" name="l03274"></a><span class="lineno"> 3274</span>    Vector3 def = { d, e, f };</div>
+<div class="line"><a id="l03275" name="l03275"></a><span class="lineno"> 3275</span>    Vector3 ghi = { g, h, i };</div>
+<div class="line"><a id="l03276" name="l03276"></a><span class="lineno"> 3276</span> </div>
+<div class="line"><a id="l03277" name="l03277"></a><span class="lineno"> 3277</span>    <span class="keywordtype">float</span> scalex = Vector3Length(abc);</div>
+<div class="line"><a id="l03278" name="l03278"></a><span class="lineno"> 3278</span>    <span class="keywordtype">float</span> scaley = Vector3Length(def);</div>
+<div class="line"><a id="l03279" name="l03279"></a><span class="lineno"> 3279</span>    <span class="keywordtype">float</span> scalez = Vector3Length(ghi);</div>
+<div class="line"><a id="l03280" name="l03280"></a><span class="lineno"> 3280</span>    Vector3 s = { scalex, scaley, scalez };</div>
 <div class="line"><a id="l03281" name="l03281"></a><span class="lineno"> 3281</span> </div>
-<div class="line"><a id="l03282" name="l03282"></a><span class="lineno"> 3282</span>    *scale = s;</div>
+<div class="line"><a id="l03282" name="l03282"></a><span class="lineno"> 3282</span>    <span class="keywordflow">if</span> (det &lt; 0) s = Vector3Negate(s);</div>
 <div class="line"><a id="l03283" name="l03283"></a><span class="lineno"> 3283</span> </div>
-<div class="line"><a id="l03284" name="l03284"></a><span class="lineno"> 3284</span>    <span class="comment">// Remove scale from the matrix if it is not close to zero</span></div>
-<div class="line"><a id="l03285" name="l03285"></a><span class="lineno"> 3285</span>    Matrix clone = mat;</div>
-<div class="line"><a id="l03286" name="l03286"></a><span class="lineno"> 3286</span>    <span class="keywordflow">if</span> (!FloatEquals(det, 0))</div>
-<div class="line"><a id="l03287" name="l03287"></a><span class="lineno"> 3287</span>    {</div>
-<div class="line"><a id="l03288" name="l03288"></a><span class="lineno"> 3288</span>        clone.m0 /= s.x;</div>
-<div class="line"><a id="l03289" name="l03289"></a><span class="lineno"> 3289</span>        clone.m4 /= s.x;</div>
-<div class="line"><a id="l03290" name="l03290"></a><span class="lineno"> 3290</span>        clone.m8 /= s.x;</div>
-<div class="line"><a id="l03291" name="l03291"></a><span class="lineno"> 3291</span>        clone.m1 /= s.y;</div>
-<div class="line"><a id="l03292" name="l03292"></a><span class="lineno"> 3292</span>        clone.m5 /= s.y;</div>
-<div class="line"><a id="l03293" name="l03293"></a><span class="lineno"> 3293</span>        clone.m9 /= s.y;</div>
-<div class="line"><a id="l03294" name="l03294"></a><span class="lineno"> 3294</span>        clone.m2 /= s.z;</div>
-<div class="line"><a id="l03295" name="l03295"></a><span class="lineno"> 3295</span>        clone.m6 /= s.z;</div>
-<div class="line"><a id="l03296" name="l03296"></a><span class="lineno"> 3296</span>        clone.m10 /= s.z;</div>
-<div class="line"><a id="l03297" name="l03297"></a><span class="lineno"> 3297</span> </div>
-<div class="line"><a id="l03298" name="l03298"></a><span class="lineno"> 3298</span>        <span class="comment">// Extract rotation</span></div>
-<div class="line"><a id="l03299" name="l03299"></a><span class="lineno"> 3299</span>        *rotation = QuaternionFromMatrix(clone);</div>
-<div class="line"><a id="l03300" name="l03300"></a><span class="lineno"> 3300</span>    }</div>
-<div class="line"><a id="l03301" name="l03301"></a><span class="lineno"> 3301</span>    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l03302" name="l03302"></a><span class="lineno"> 3302</span>    {</div>
-<div class="line"><a id="l03303" name="l03303"></a><span class="lineno"> 3303</span>        <span class="comment">// Set to identity if close to zero</span></div>
-<div class="line"><a id="l03304" name="l03304"></a><span class="lineno"> 3304</span>        *rotation = QuaternionIdentity();</div>
-<div class="line"><a id="l03305" name="l03305"></a><span class="lineno"> 3305</span>    }</div>
-<div class="line"><a id="l03306" name="l03306"></a><span class="lineno"> 3306</span>}</div>
-<div class="line"><a id="l03307" name="l03307"></a><span class="lineno"> 3307</span> </div>
-<div class="line"><a id="l03308" name="l03308"></a><span class="lineno"> 3308</span><span class="preprocessor">#if defined(__cplusplus) &amp;&amp; !defined(RAYMATH_DISABLE_CPP_OPERATORS)</span></div>
+<div class="line"><a id="l03284" name="l03284"></a><span class="lineno"> 3284</span>    *scale = s;</div>
+<div class="line"><a id="l03285" name="l03285"></a><span class="lineno"> 3285</span> </div>
+<div class="line"><a id="l03286" name="l03286"></a><span class="lineno"> 3286</span>    <span class="comment">// Remove scale from the matrix if it is not close to zero</span></div>
+<div class="line"><a id="l03287" name="l03287"></a><span class="lineno"> 3287</span>    Matrix clone = mat;</div>
+<div class="line"><a id="l03288" name="l03288"></a><span class="lineno"> 3288</span>    <span class="keywordflow">if</span> (!FloatEquals(det, 0))</div>
+<div class="line"><a id="l03289" name="l03289"></a><span class="lineno"> 3289</span>    {</div>
+<div class="line"><a id="l03290" name="l03290"></a><span class="lineno"> 3290</span>        clone.m0 /= s.x;</div>
+<div class="line"><a id="l03291" name="l03291"></a><span class="lineno"> 3291</span>        clone.m4 /= s.x;</div>
+<div class="line"><a id="l03292" name="l03292"></a><span class="lineno"> 3292</span>        clone.m8 /= s.x;</div>
+<div class="line"><a id="l03293" name="l03293"></a><span class="lineno"> 3293</span>        clone.m1 /= s.y;</div>
+<div class="line"><a id="l03294" name="l03294"></a><span class="lineno"> 3294</span>        clone.m5 /= s.y;</div>
+<div class="line"><a id="l03295" name="l03295"></a><span class="lineno"> 3295</span>        clone.m9 /= s.y;</div>
+<div class="line"><a id="l03296" name="l03296"></a><span class="lineno"> 3296</span>        clone.m2 /= s.z;</div>
+<div class="line"><a id="l03297" name="l03297"></a><span class="lineno"> 3297</span>        clone.m6 /= s.z;</div>
+<div class="line"><a id="l03298" name="l03298"></a><span class="lineno"> 3298</span>        clone.m10 /= s.z;</div>
+<div class="line"><a id="l03299" name="l03299"></a><span class="lineno"> 3299</span> </div>
+<div class="line"><a id="l03300" name="l03300"></a><span class="lineno"> 3300</span>        <span class="comment">// Extract rotation</span></div>
+<div class="line"><a id="l03301" name="l03301"></a><span class="lineno"> 3301</span>        *rotation = QuaternionFromMatrix(clone);</div>
+<div class="line"><a id="l03302" name="l03302"></a><span class="lineno"> 3302</span>    }</div>
+<div class="line"><a id="l03303" name="l03303"></a><span class="lineno"> 3303</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l03304" name="l03304"></a><span class="lineno"> 3304</span>    {</div>
+<div class="line"><a id="l03305" name="l03305"></a><span class="lineno"> 3305</span>        <span class="comment">// Set to identity if close to zero</span></div>
+<div class="line"><a id="l03306" name="l03306"></a><span class="lineno"> 3306</span>        *rotation = QuaternionIdentity();</div>
+<div class="line"><a id="l03307" name="l03307"></a><span class="lineno"> 3307</span>    }</div>
+<div class="line"><a id="l03308" name="l03308"></a><span class="lineno"> 3308</span>}</div>
 <div class="line"><a id="l03309" name="l03309"></a><span class="lineno"> 3309</span> </div>
-<div class="line"><a id="l03310" name="l03310"></a><span class="lineno"> 3310</span><span class="comment">// Optional C++ math operators</span></div>
-<div class="line"><a id="l03311" name="l03311"></a><span class="lineno"> 3311</span><span class="comment">//-------------------------------------------------------------------------------</span></div>
-<div class="line"><a id="l03312" name="l03312"></a><span class="lineno"> 3312</span> </div>
-<div class="line"><a id="l03313" name="l03313"></a><span class="lineno"> 3313</span><span class="comment">// Vector2 operators</span></div>
-<div class="line"><a id="l03314" name="l03314"></a><span class="lineno"> 3314</span><span class="keyword">static</span> Vector2 Vector2Zeros = { 0, 0 };</div>
-<div class="line"><a id="l03315" name="l03315"></a><span class="lineno"> 3315</span><span class="keyword">static</span> Vector2 Vector2Ones = { 1, 1 };</div>
-<div class="line"><a id="l03316" name="l03316"></a><span class="lineno"> 3316</span><span class="keyword">static</span> Vector2 Vector2UnitX = { 1, 0 };</div>
-<div class="line"><a id="l03317" name="l03317"></a><span class="lineno"> 3317</span><span class="keyword">static</span> Vector2 Vector2UnitY = { 0, 1 };</div>
-<div class="line"><a id="l03318" name="l03318"></a><span class="lineno"> 3318</span> </div>
-<div class="line"><a id="l03319" name="l03319"></a><span class="lineno"> 3319</span><span class="keyword">inline</span> Vector2 operator + (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03320" name="l03320"></a><span class="lineno"> 3320</span>{</div>
-<div class="line"><a id="l03321" name="l03321"></a><span class="lineno"> 3321</span>    <span class="keywordflow">return</span> Vector2Add(lhs, rhs);</div>
-<div class="line"><a id="l03322" name="l03322"></a><span class="lineno"> 3322</span>}</div>
-<div class="line"><a id="l03323" name="l03323"></a><span class="lineno"> 3323</span> </div>
-<div class="line"><a id="l03324" name="l03324"></a><span class="lineno"> 3324</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator += (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03325" name="l03325"></a><span class="lineno"> 3325</span>{</div>
-<div class="line"><a id="l03326" name="l03326"></a><span class="lineno"> 3326</span>    lhs = Vector2Add(lhs, rhs);</div>
-<div class="line"><a id="l03327" name="l03327"></a><span class="lineno"> 3327</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03328" name="l03328"></a><span class="lineno"> 3328</span>}</div>
-<div class="line"><a id="l03329" name="l03329"></a><span class="lineno"> 3329</span> </div>
-<div class="line"><a id="l03330" name="l03330"></a><span class="lineno"> 3330</span><span class="keyword">inline</span> Vector2 operator - (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03331" name="l03331"></a><span class="lineno"> 3331</span>{</div>
-<div class="line"><a id="l03332" name="l03332"></a><span class="lineno"> 3332</span>    <span class="keywordflow">return</span> Vector2Subtract(lhs, rhs);</div>
-<div class="line"><a id="l03333" name="l03333"></a><span class="lineno"> 3333</span>}</div>
-<div class="line"><a id="l03334" name="l03334"></a><span class="lineno"> 3334</span> </div>
-<div class="line"><a id="l03335" name="l03335"></a><span class="lineno"> 3335</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator -= (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03336" name="l03336"></a><span class="lineno"> 3336</span>{</div>
-<div class="line"><a id="l03337" name="l03337"></a><span class="lineno"> 3337</span>    lhs = Vector2Subtract(lhs, rhs);</div>
-<div class="line"><a id="l03338" name="l03338"></a><span class="lineno"> 3338</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03339" name="l03339"></a><span class="lineno"> 3339</span>}</div>
-<div class="line"><a id="l03340" name="l03340"></a><span class="lineno"> 3340</span> </div>
-<div class="line"><a id="l03341" name="l03341"></a><span class="lineno"> 3341</span><span class="keyword">inline</span> Vector2 operator * (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03342" name="l03342"></a><span class="lineno"> 3342</span>{</div>
-<div class="line"><a id="l03343" name="l03343"></a><span class="lineno"> 3343</span>    <span class="keywordflow">return</span> Vector2Scale(lhs, rhs);</div>
-<div class="line"><a id="l03344" name="l03344"></a><span class="lineno"> 3344</span>}</div>
-<div class="line"><a id="l03345" name="l03345"></a><span class="lineno"> 3345</span> </div>
-<div class="line"><a id="l03346" name="l03346"></a><span class="lineno"> 3346</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator *= (Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03347" name="l03347"></a><span class="lineno"> 3347</span>{</div>
-<div class="line"><a id="l03348" name="l03348"></a><span class="lineno"> 3348</span>    lhs = Vector2Scale(lhs, rhs);</div>
-<div class="line"><a id="l03349" name="l03349"></a><span class="lineno"> 3349</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03350" name="l03350"></a><span class="lineno"> 3350</span>}</div>
-<div class="line"><a id="l03351" name="l03351"></a><span class="lineno"> 3351</span> </div>
-<div class="line"><a id="l03352" name="l03352"></a><span class="lineno"> 3352</span><span class="keyword">inline</span> Vector2 operator * (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03353" name="l03353"></a><span class="lineno"> 3353</span>{</div>
-<div class="line"><a id="l03354" name="l03354"></a><span class="lineno"> 3354</span>    <span class="keywordflow">return</span> Vector2Multiply(lhs, rhs);</div>
-<div class="line"><a id="l03355" name="l03355"></a><span class="lineno"> 3355</span>}</div>
-<div class="line"><a id="l03356" name="l03356"></a><span class="lineno"> 3356</span> </div>
-<div class="line"><a id="l03357" name="l03357"></a><span class="lineno"> 3357</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator *= (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03358" name="l03358"></a><span class="lineno"> 3358</span>{</div>
-<div class="line"><a id="l03359" name="l03359"></a><span class="lineno"> 3359</span>    lhs = Vector2Multiply(lhs, rhs);</div>
-<div class="line"><a id="l03360" name="l03360"></a><span class="lineno"> 3360</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03361" name="l03361"></a><span class="lineno"> 3361</span>}</div>
-<div class="line"><a id="l03362" name="l03362"></a><span class="lineno"> 3362</span> </div>
-<div class="line"><a id="l03363" name="l03363"></a><span class="lineno"> 3363</span><span class="keyword">inline</span> Vector2 operator * (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03364" name="l03364"></a><span class="lineno"> 3364</span>{</div>
-<div class="line"><a id="l03365" name="l03365"></a><span class="lineno"> 3365</span>    <span class="keywordflow">return</span> Vector2Transform(lhs, rhs);</div>
-<div class="line"><a id="l03366" name="l03366"></a><span class="lineno"> 3366</span>}</div>
-<div class="line"><a id="l03367" name="l03367"></a><span class="lineno"> 3367</span> </div>
-<div class="line"><a id="l03368" name="l03368"></a><span class="lineno"> 3368</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator -= (Vector2&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03369" name="l03369"></a><span class="lineno"> 3369</span>{</div>
-<div class="line"><a id="l03370" name="l03370"></a><span class="lineno"> 3370</span>    lhs = Vector2Transform(lhs, rhs);</div>
-<div class="line"><a id="l03371" name="l03371"></a><span class="lineno"> 3371</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03372" name="l03372"></a><span class="lineno"> 3372</span>}</div>
-<div class="line"><a id="l03373" name="l03373"></a><span class="lineno"> 3373</span> </div>
-<div class="line"><a id="l03374" name="l03374"></a><span class="lineno"> 3374</span><span class="keyword">inline</span> Vector2 operator / (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03375" name="l03375"></a><span class="lineno"> 3375</span>{</div>
-<div class="line"><a id="l03376" name="l03376"></a><span class="lineno"> 3376</span>    <span class="keywordflow">return</span> Vector2Scale(lhs, 1.0f / rhs);</div>
-<div class="line"><a id="l03377" name="l03377"></a><span class="lineno"> 3377</span>}</div>
-<div class="line"><a id="l03378" name="l03378"></a><span class="lineno"> 3378</span> </div>
-<div class="line"><a id="l03379" name="l03379"></a><span class="lineno"> 3379</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator /= (Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03380" name="l03380"></a><span class="lineno"> 3380</span>{</div>
-<div class="line"><a id="l03381" name="l03381"></a><span class="lineno"> 3381</span>    lhs = Vector2Scale(lhs, rhs);</div>
-<div class="line"><a id="l03382" name="l03382"></a><span class="lineno"> 3382</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03383" name="l03383"></a><span class="lineno"> 3383</span>}</div>
-<div class="line"><a id="l03384" name="l03384"></a><span class="lineno"> 3384</span> </div>
-<div class="line"><a id="l03385" name="l03385"></a><span class="lineno"> 3385</span><span class="keyword">inline</span> Vector2 operator / (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03386" name="l03386"></a><span class="lineno"> 3386</span>{</div>
-<div class="line"><a id="l03387" name="l03387"></a><span class="lineno"> 3387</span>    <span class="keywordflow">return</span> Vector2Divide(lhs, rhs);</div>
-<div class="line"><a id="l03388" name="l03388"></a><span class="lineno"> 3388</span>}</div>
-<div class="line"><a id="l03389" name="l03389"></a><span class="lineno"> 3389</span> </div>
-<div class="line"><a id="l03390" name="l03390"></a><span class="lineno"> 3390</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator /= (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03391" name="l03391"></a><span class="lineno"> 3391</span>{</div>
-<div class="line"><a id="l03392" name="l03392"></a><span class="lineno"> 3392</span>    lhs = Vector2Divide(lhs, rhs);</div>
-<div class="line"><a id="l03393" name="l03393"></a><span class="lineno"> 3393</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03394" name="l03394"></a><span class="lineno"> 3394</span>}</div>
-<div class="line"><a id="l03395" name="l03395"></a><span class="lineno"> 3395</span> </div>
-<div class="line"><a id="l03396" name="l03396"></a><span class="lineno"> 3396</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03397" name="l03397"></a><span class="lineno"> 3397</span>{</div>
-<div class="line"><a id="l03398" name="l03398"></a><span class="lineno"> 3398</span>    <span class="keywordflow">return</span> FloatEquals(lhs.x, rhs.x) &amp;&amp; FloatEquals(lhs.y, rhs.y);</div>
-<div class="line"><a id="l03399" name="l03399"></a><span class="lineno"> 3399</span>}</div>
-<div class="line"><a id="l03400" name="l03400"></a><span class="lineno"> 3400</span> </div>
-<div class="line"><a id="l03401" name="l03401"></a><span class="lineno"> 3401</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
-<div class="line"><a id="l03402" name="l03402"></a><span class="lineno"> 3402</span>{</div>
-<div class="line"><a id="l03403" name="l03403"></a><span class="lineno"> 3403</span>    <span class="keywordflow">return</span> !FloatEquals(lhs.x, rhs.x) || !FloatEquals(lhs.y, rhs.y);</div>
-<div class="line"><a id="l03404" name="l03404"></a><span class="lineno"> 3404</span>}</div>
-<div class="line"><a id="l03405" name="l03405"></a><span class="lineno"> 3405</span> </div>
-<div class="line"><a id="l03406" name="l03406"></a><span class="lineno"> 3406</span><span class="comment">// Vector3 operators</span></div>
-<div class="line"><a id="l03407" name="l03407"></a><span class="lineno"> 3407</span><span class="keyword">static</span> Vector3 Vector3Zeros = { 0, 0, 0 };</div>
-<div class="line"><a id="l03408" name="l03408"></a><span class="lineno"> 3408</span><span class="keyword">static</span> Vector3 Vector3Ones = { 1, 1, 1 };</div>
-<div class="line"><a id="l03409" name="l03409"></a><span class="lineno"> 3409</span><span class="keyword">static</span> Vector3 Vector3UnitX = { 1, 0, 0 };</div>
-<div class="line"><a id="l03410" name="l03410"></a><span class="lineno"> 3410</span><span class="keyword">static</span> Vector3 Vector3UnitY = { 0, 1, 0 };</div>
-<div class="line"><a id="l03411" name="l03411"></a><span class="lineno"> 3411</span><span class="keyword">static</span> Vector3 Vector3UnitZ = { 0, 0, 1 };</div>
-<div class="line"><a id="l03412" name="l03412"></a><span class="lineno"> 3412</span> </div>
-<div class="line"><a id="l03413" name="l03413"></a><span class="lineno"> 3413</span><span class="keyword">inline</span> Vector3 operator + (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03414" name="l03414"></a><span class="lineno"> 3414</span>{</div>
-<div class="line"><a id="l03415" name="l03415"></a><span class="lineno"> 3415</span>    <span class="keywordflow">return</span> Vector3Add(lhs, rhs);</div>
-<div class="line"><a id="l03416" name="l03416"></a><span class="lineno"> 3416</span>}</div>
-<div class="line"><a id="l03417" name="l03417"></a><span class="lineno"> 3417</span> </div>
-<div class="line"><a id="l03418" name="l03418"></a><span class="lineno"> 3418</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator += (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03419" name="l03419"></a><span class="lineno"> 3419</span>{</div>
-<div class="line"><a id="l03420" name="l03420"></a><span class="lineno"> 3420</span>    lhs = Vector3Add(lhs, rhs);</div>
-<div class="line"><a id="l03421" name="l03421"></a><span class="lineno"> 3421</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03422" name="l03422"></a><span class="lineno"> 3422</span>}</div>
-<div class="line"><a id="l03423" name="l03423"></a><span class="lineno"> 3423</span> </div>
-<div class="line"><a id="l03424" name="l03424"></a><span class="lineno"> 3424</span><span class="keyword">inline</span> Vector3 operator - (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03425" name="l03425"></a><span class="lineno"> 3425</span>{</div>
-<div class="line"><a id="l03426" name="l03426"></a><span class="lineno"> 3426</span>    <span class="keywordflow">return</span> Vector3Subtract(lhs, rhs);</div>
-<div class="line"><a id="l03427" name="l03427"></a><span class="lineno"> 3427</span>}</div>
-<div class="line"><a id="l03428" name="l03428"></a><span class="lineno"> 3428</span> </div>
-<div class="line"><a id="l03429" name="l03429"></a><span class="lineno"> 3429</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator -= (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03430" name="l03430"></a><span class="lineno"> 3430</span>{</div>
-<div class="line"><a id="l03431" name="l03431"></a><span class="lineno"> 3431</span>    lhs = Vector3Subtract(lhs, rhs);</div>
-<div class="line"><a id="l03432" name="l03432"></a><span class="lineno"> 3432</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03433" name="l03433"></a><span class="lineno"> 3433</span>}</div>
-<div class="line"><a id="l03434" name="l03434"></a><span class="lineno"> 3434</span> </div>
-<div class="line"><a id="l03435" name="l03435"></a><span class="lineno"> 3435</span><span class="keyword">inline</span> Vector3 operator * (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03436" name="l03436"></a><span class="lineno"> 3436</span>{</div>
-<div class="line"><a id="l03437" name="l03437"></a><span class="lineno"> 3437</span>    <span class="keywordflow">return</span> Vector3Scale(lhs, rhs);</div>
-<div class="line"><a id="l03438" name="l03438"></a><span class="lineno"> 3438</span>}</div>
-<div class="line"><a id="l03439" name="l03439"></a><span class="lineno"> 3439</span> </div>
-<div class="line"><a id="l03440" name="l03440"></a><span class="lineno"> 3440</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator *= (Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03441" name="l03441"></a><span class="lineno"> 3441</span>{</div>
-<div class="line"><a id="l03442" name="l03442"></a><span class="lineno"> 3442</span>    lhs = Vector3Scale(lhs, rhs);</div>
-<div class="line"><a id="l03443" name="l03443"></a><span class="lineno"> 3443</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03444" name="l03444"></a><span class="lineno"> 3444</span>}</div>
-<div class="line"><a id="l03445" name="l03445"></a><span class="lineno"> 3445</span> </div>
-<div class="line"><a id="l03446" name="l03446"></a><span class="lineno"> 3446</span><span class="keyword">inline</span> Vector3 operator * (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03447" name="l03447"></a><span class="lineno"> 3447</span>{</div>
-<div class="line"><a id="l03448" name="l03448"></a><span class="lineno"> 3448</span>    <span class="keywordflow">return</span> Vector3Multiply(lhs, rhs);</div>
-<div class="line"><a id="l03449" name="l03449"></a><span class="lineno"> 3449</span>}</div>
-<div class="line"><a id="l03450" name="l03450"></a><span class="lineno"> 3450</span> </div>
-<div class="line"><a id="l03451" name="l03451"></a><span class="lineno"> 3451</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator *= (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03452" name="l03452"></a><span class="lineno"> 3452</span>{</div>
-<div class="line"><a id="l03453" name="l03453"></a><span class="lineno"> 3453</span>    lhs = Vector3Multiply(lhs, rhs);</div>
-<div class="line"><a id="l03454" name="l03454"></a><span class="lineno"> 3454</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03455" name="l03455"></a><span class="lineno"> 3455</span>}</div>
-<div class="line"><a id="l03456" name="l03456"></a><span class="lineno"> 3456</span> </div>
-<div class="line"><a id="l03457" name="l03457"></a><span class="lineno"> 3457</span><span class="keyword">inline</span> Vector3 operator * (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03458" name="l03458"></a><span class="lineno"> 3458</span>{</div>
-<div class="line"><a id="l03459" name="l03459"></a><span class="lineno"> 3459</span>    <span class="keywordflow">return</span> Vector3Transform(lhs, rhs);</div>
-<div class="line"><a id="l03460" name="l03460"></a><span class="lineno"> 3460</span>}</div>
-<div class="line"><a id="l03461" name="l03461"></a><span class="lineno"> 3461</span> </div>
-<div class="line"><a id="l03462" name="l03462"></a><span class="lineno"> 3462</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator -= (Vector3&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03463" name="l03463"></a><span class="lineno"> 3463</span>{</div>
-<div class="line"><a id="l03464" name="l03464"></a><span class="lineno"> 3464</span>    lhs = Vector3Transform(lhs, rhs);</div>
-<div class="line"><a id="l03465" name="l03465"></a><span class="lineno"> 3465</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03466" name="l03466"></a><span class="lineno"> 3466</span>}</div>
-<div class="line"><a id="l03467" name="l03467"></a><span class="lineno"> 3467</span> </div>
-<div class="line"><a id="l03468" name="l03468"></a><span class="lineno"> 3468</span><span class="keyword">inline</span> Vector3 operator / (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03469" name="l03469"></a><span class="lineno"> 3469</span>{</div>
-<div class="line"><a id="l03470" name="l03470"></a><span class="lineno"> 3470</span>    <span class="keywordflow">return</span> Vector3Scale(lhs, 1.0f / rhs);</div>
-<div class="line"><a id="l03471" name="l03471"></a><span class="lineno"> 3471</span>}</div>
-<div class="line"><a id="l03472" name="l03472"></a><span class="lineno"> 3472</span> </div>
-<div class="line"><a id="l03473" name="l03473"></a><span class="lineno"> 3473</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator /= (Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03474" name="l03474"></a><span class="lineno"> 3474</span>{</div>
-<div class="line"><a id="l03475" name="l03475"></a><span class="lineno"> 3475</span>    lhs = Vector3Scale(lhs, rhs);</div>
-<div class="line"><a id="l03476" name="l03476"></a><span class="lineno"> 3476</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03477" name="l03477"></a><span class="lineno"> 3477</span>}</div>
-<div class="line"><a id="l03478" name="l03478"></a><span class="lineno"> 3478</span> </div>
-<div class="line"><a id="l03479" name="l03479"></a><span class="lineno"> 3479</span><span class="keyword">inline</span> Vector3 operator / (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03480" name="l03480"></a><span class="lineno"> 3480</span>{</div>
-<div class="line"><a id="l03481" name="l03481"></a><span class="lineno"> 3481</span>    <span class="keywordflow">return</span> Vector3Divide(lhs, rhs);</div>
-<div class="line"><a id="l03482" name="l03482"></a><span class="lineno"> 3482</span>}</div>
-<div class="line"><a id="l03483" name="l03483"></a><span class="lineno"> 3483</span> </div>
-<div class="line"><a id="l03484" name="l03484"></a><span class="lineno"> 3484</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator /= (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03485" name="l03485"></a><span class="lineno"> 3485</span>{</div>
-<div class="line"><a id="l03486" name="l03486"></a><span class="lineno"> 3486</span>    lhs = Vector3Divide(lhs, rhs);</div>
-<div class="line"><a id="l03487" name="l03487"></a><span class="lineno"> 3487</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03488" name="l03488"></a><span class="lineno"> 3488</span>}</div>
-<div class="line"><a id="l03489" name="l03489"></a><span class="lineno"> 3489</span> </div>
-<div class="line"><a id="l03490" name="l03490"></a><span class="lineno"> 3490</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03491" name="l03491"></a><span class="lineno"> 3491</span>{</div>
-<div class="line"><a id="l03492" name="l03492"></a><span class="lineno"> 3492</span>    <span class="keywordflow">return</span> FloatEquals(lhs.x, rhs.x) &amp;&amp; FloatEquals(lhs.y, rhs.y) &amp;&amp; FloatEquals(lhs.z, rhs.z);</div>
-<div class="line"><a id="l03493" name="l03493"></a><span class="lineno"> 3493</span>}</div>
-<div class="line"><a id="l03494" name="l03494"></a><span class="lineno"> 3494</span> </div>
-<div class="line"><a id="l03495" name="l03495"></a><span class="lineno"> 3495</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
-<div class="line"><a id="l03496" name="l03496"></a><span class="lineno"> 3496</span>{</div>
-<div class="line"><a id="l03497" name="l03497"></a><span class="lineno"> 3497</span>    <span class="keywordflow">return</span> !FloatEquals(lhs.x, rhs.x) || !FloatEquals(lhs.y, rhs.y) || !FloatEquals(lhs.z, rhs.z);</div>
-<div class="line"><a id="l03498" name="l03498"></a><span class="lineno"> 3498</span>}</div>
-<div class="line"><a id="l03499" name="l03499"></a><span class="lineno"> 3499</span> </div>
-<div class="line"><a id="l03500" name="l03500"></a><span class="lineno"> 3500</span><span class="comment">// Vector4 operators</span></div>
-<div class="line"><a id="l03501" name="l03501"></a><span class="lineno"> 3501</span><span class="keyword">static</span> Vector4 Vector4Zeros = { 0, 0, 0, 0 };</div>
-<div class="line"><a id="l03502" name="l03502"></a><span class="lineno"> 3502</span><span class="keyword">static</span> Vector4 Vector4Ones = { 1, 1, 1, 1 };</div>
-<div class="line"><a id="l03503" name="l03503"></a><span class="lineno"> 3503</span><span class="keyword">static</span> Vector4 Vector4UnitX = { 1, 0, 0, 0 };</div>
-<div class="line"><a id="l03504" name="l03504"></a><span class="lineno"> 3504</span><span class="keyword">static</span> Vector4 Vector4UnitY = { 0, 1, 0, 0 };</div>
-<div class="line"><a id="l03505" name="l03505"></a><span class="lineno"> 3505</span><span class="keyword">static</span> Vector4 Vector4UnitZ = { 0, 0, 1, 0 };</div>
-<div class="line"><a id="l03506" name="l03506"></a><span class="lineno"> 3506</span><span class="keyword">static</span> Vector4 Vector4UnitW = { 0, 0, 0, 1 };</div>
-<div class="line"><a id="l03507" name="l03507"></a><span class="lineno"> 3507</span> </div>
-<div class="line"><a id="l03508" name="l03508"></a><span class="lineno"> 3508</span><span class="keyword">inline</span> Vector4 operator + (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03509" name="l03509"></a><span class="lineno"> 3509</span>{</div>
-<div class="line"><a id="l03510" name="l03510"></a><span class="lineno"> 3510</span>    <span class="keywordflow">return</span> Vector4Add(lhs, rhs);</div>
-<div class="line"><a id="l03511" name="l03511"></a><span class="lineno"> 3511</span>}</div>
-<div class="line"><a id="l03512" name="l03512"></a><span class="lineno"> 3512</span> </div>
-<div class="line"><a id="l03513" name="l03513"></a><span class="lineno"> 3513</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator += (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03514" name="l03514"></a><span class="lineno"> 3514</span>{</div>
-<div class="line"><a id="l03515" name="l03515"></a><span class="lineno"> 3515</span>    lhs = Vector4Add(lhs, rhs);</div>
-<div class="line"><a id="l03516" name="l03516"></a><span class="lineno"> 3516</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03517" name="l03517"></a><span class="lineno"> 3517</span>}</div>
-<div class="line"><a id="l03518" name="l03518"></a><span class="lineno"> 3518</span> </div>
-<div class="line"><a id="l03519" name="l03519"></a><span class="lineno"> 3519</span><span class="keyword">inline</span> Vector4 operator - (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03520" name="l03520"></a><span class="lineno"> 3520</span>{</div>
-<div class="line"><a id="l03521" name="l03521"></a><span class="lineno"> 3521</span>    <span class="keywordflow">return</span> Vector4Subtract(lhs, rhs);</div>
-<div class="line"><a id="l03522" name="l03522"></a><span class="lineno"> 3522</span>}</div>
-<div class="line"><a id="l03523" name="l03523"></a><span class="lineno"> 3523</span> </div>
-<div class="line"><a id="l03524" name="l03524"></a><span class="lineno"> 3524</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator -= (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03525" name="l03525"></a><span class="lineno"> 3525</span>{</div>
-<div class="line"><a id="l03526" name="l03526"></a><span class="lineno"> 3526</span>    lhs = Vector4Subtract(lhs, rhs);</div>
-<div class="line"><a id="l03527" name="l03527"></a><span class="lineno"> 3527</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03528" name="l03528"></a><span class="lineno"> 3528</span>}</div>
-<div class="line"><a id="l03529" name="l03529"></a><span class="lineno"> 3529</span> </div>
-<div class="line"><a id="l03530" name="l03530"></a><span class="lineno"> 3530</span><span class="keyword">inline</span> Vector4 operator * (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03531" name="l03531"></a><span class="lineno"> 3531</span>{</div>
-<div class="line"><a id="l03532" name="l03532"></a><span class="lineno"> 3532</span>    <span class="keywordflow">return</span> Vector4Scale(lhs, rhs);</div>
-<div class="line"><a id="l03533" name="l03533"></a><span class="lineno"> 3533</span>}</div>
-<div class="line"><a id="l03534" name="l03534"></a><span class="lineno"> 3534</span> </div>
-<div class="line"><a id="l03535" name="l03535"></a><span class="lineno"> 3535</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator *= (Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03536" name="l03536"></a><span class="lineno"> 3536</span>{</div>
-<div class="line"><a id="l03537" name="l03537"></a><span class="lineno"> 3537</span>    lhs = Vector4Scale(lhs, rhs);</div>
-<div class="line"><a id="l03538" name="l03538"></a><span class="lineno"> 3538</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03539" name="l03539"></a><span class="lineno"> 3539</span>}</div>
-<div class="line"><a id="l03540" name="l03540"></a><span class="lineno"> 3540</span> </div>
-<div class="line"><a id="l03541" name="l03541"></a><span class="lineno"> 3541</span><span class="keyword">inline</span> Vector4 operator * (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03542" name="l03542"></a><span class="lineno"> 3542</span>{</div>
-<div class="line"><a id="l03543" name="l03543"></a><span class="lineno"> 3543</span>    <span class="keywordflow">return</span> Vector4Multiply(lhs, rhs);</div>
-<div class="line"><a id="l03544" name="l03544"></a><span class="lineno"> 3544</span>}</div>
-<div class="line"><a id="l03545" name="l03545"></a><span class="lineno"> 3545</span> </div>
-<div class="line"><a id="l03546" name="l03546"></a><span class="lineno"> 3546</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator *= (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03547" name="l03547"></a><span class="lineno"> 3547</span>{</div>
-<div class="line"><a id="l03548" name="l03548"></a><span class="lineno"> 3548</span>    lhs = Vector4Multiply(lhs, rhs);</div>
-<div class="line"><a id="l03549" name="l03549"></a><span class="lineno"> 3549</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03550" name="l03550"></a><span class="lineno"> 3550</span>}</div>
-<div class="line"><a id="l03551" name="l03551"></a><span class="lineno"> 3551</span> </div>
-<div class="line"><a id="l03552" name="l03552"></a><span class="lineno"> 3552</span><span class="keyword">inline</span> Vector4 operator / (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03553" name="l03553"></a><span class="lineno"> 3553</span>{</div>
-<div class="line"><a id="l03554" name="l03554"></a><span class="lineno"> 3554</span>    <span class="keywordflow">return</span> Vector4Scale(lhs, 1.0f / rhs);</div>
-<div class="line"><a id="l03555" name="l03555"></a><span class="lineno"> 3555</span>}</div>
-<div class="line"><a id="l03556" name="l03556"></a><span class="lineno"> 3556</span> </div>
-<div class="line"><a id="l03557" name="l03557"></a><span class="lineno"> 3557</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator /= (Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03558" name="l03558"></a><span class="lineno"> 3558</span>{</div>
-<div class="line"><a id="l03559" name="l03559"></a><span class="lineno"> 3559</span>    lhs = Vector4Scale(lhs, rhs);</div>
-<div class="line"><a id="l03560" name="l03560"></a><span class="lineno"> 3560</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03561" name="l03561"></a><span class="lineno"> 3561</span>}</div>
-<div class="line"><a id="l03562" name="l03562"></a><span class="lineno"> 3562</span> </div>
-<div class="line"><a id="l03563" name="l03563"></a><span class="lineno"> 3563</span><span class="keyword">inline</span> Vector4 operator / (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03564" name="l03564"></a><span class="lineno"> 3564</span>{</div>
-<div class="line"><a id="l03565" name="l03565"></a><span class="lineno"> 3565</span>    <span class="keywordflow">return</span> Vector4Divide(lhs, rhs);</div>
-<div class="line"><a id="l03566" name="l03566"></a><span class="lineno"> 3566</span>}</div>
-<div class="line"><a id="l03567" name="l03567"></a><span class="lineno"> 3567</span> </div>
-<div class="line"><a id="l03568" name="l03568"></a><span class="lineno"> 3568</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator /= (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03569" name="l03569"></a><span class="lineno"> 3569</span>{</div>
-<div class="line"><a id="l03570" name="l03570"></a><span class="lineno"> 3570</span>    lhs = Vector4Divide(lhs, rhs);</div>
-<div class="line"><a id="l03571" name="l03571"></a><span class="lineno"> 3571</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03572" name="l03572"></a><span class="lineno"> 3572</span>}</div>
-<div class="line"><a id="l03573" name="l03573"></a><span class="lineno"> 3573</span> </div>
-<div class="line"><a id="l03574" name="l03574"></a><span class="lineno"> 3574</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03575" name="l03575"></a><span class="lineno"> 3575</span>{</div>
-<div class="line"><a id="l03576" name="l03576"></a><span class="lineno"> 3576</span>    <span class="keywordflow">return</span> FloatEquals(lhs.x, rhs.x) &amp;&amp; FloatEquals(lhs.y, rhs.y) &amp;&amp; FloatEquals(lhs.z, rhs.z) &amp;&amp; FloatEquals(lhs.w, rhs.w);</div>
-<div class="line"><a id="l03577" name="l03577"></a><span class="lineno"> 3577</span>}</div>
-<div class="line"><a id="l03578" name="l03578"></a><span class="lineno"> 3578</span> </div>
-<div class="line"><a id="l03579" name="l03579"></a><span class="lineno"> 3579</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
-<div class="line"><a id="l03580" name="l03580"></a><span class="lineno"> 3580</span>{</div>
-<div class="line"><a id="l03581" name="l03581"></a><span class="lineno"> 3581</span>    <span class="keywordflow">return</span> !FloatEquals(lhs.x, rhs.x) || !FloatEquals(lhs.y, rhs.y) || !FloatEquals(lhs.z, rhs.z) || !FloatEquals(lhs.w, rhs.w);</div>
-<div class="line"><a id="l03582" name="l03582"></a><span class="lineno"> 3582</span>}</div>
-<div class="line"><a id="l03583" name="l03583"></a><span class="lineno"> 3583</span> </div>
-<div class="line"><a id="l03584" name="l03584"></a><span class="lineno"> 3584</span><span class="comment">// Quaternion operators</span></div>
-<div class="line"><a id="l03585" name="l03585"></a><span class="lineno"> 3585</span><span class="keyword">static</span> Quaternion QuaternionZeros = { 0, 0, 0, 0 };</div>
-<div class="line"><a id="l03586" name="l03586"></a><span class="lineno"> 3586</span><span class="keyword">static</span> Quaternion QuaternionOnes = { 1, 1, 1, 1 };</div>
-<div class="line"><a id="l03587" name="l03587"></a><span class="lineno"> 3587</span><span class="keyword">static</span> Quaternion QuaternionUnitX = { 0, 0, 0, 1 };</div>
-<div class="line"><a id="l03588" name="l03588"></a><span class="lineno"> 3588</span> </div>
-<div class="line"><a id="l03589" name="l03589"></a><span class="lineno"> 3589</span><span class="keyword">inline</span> Quaternion operator + (<span class="keyword">const</span> Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03590" name="l03590"></a><span class="lineno"> 3590</span>{</div>
-<div class="line"><a id="l03591" name="l03591"></a><span class="lineno"> 3591</span>    <span class="keywordflow">return</span> QuaternionAddValue(lhs, rhs);</div>
-<div class="line"><a id="l03592" name="l03592"></a><span class="lineno"> 3592</span>}</div>
-<div class="line"><a id="l03593" name="l03593"></a><span class="lineno"> 3593</span> </div>
-<div class="line"><a id="l03594" name="l03594"></a><span class="lineno"> 3594</span><span class="keyword">inline</span> <span class="keyword">const</span> Quaternion&amp; operator += (Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03595" name="l03595"></a><span class="lineno"> 3595</span>{</div>
-<div class="line"><a id="l03596" name="l03596"></a><span class="lineno"> 3596</span>    lhs = QuaternionAddValue(lhs, rhs);</div>
-<div class="line"><a id="l03597" name="l03597"></a><span class="lineno"> 3597</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03598" name="l03598"></a><span class="lineno"> 3598</span>}</div>
-<div class="line"><a id="l03599" name="l03599"></a><span class="lineno"> 3599</span> </div>
-<div class="line"><a id="l03600" name="l03600"></a><span class="lineno"> 3600</span><span class="keyword">inline</span> Quaternion operator - (<span class="keyword">const</span> Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03601" name="l03601"></a><span class="lineno"> 3601</span>{</div>
-<div class="line"><a id="l03602" name="l03602"></a><span class="lineno"> 3602</span>    <span class="keywordflow">return</span> QuaternionSubtractValue(lhs, rhs);</div>
-<div class="line"><a id="l03603" name="l03603"></a><span class="lineno"> 3603</span>}</div>
-<div class="line"><a id="l03604" name="l03604"></a><span class="lineno"> 3604</span> </div>
-<div class="line"><a id="l03605" name="l03605"></a><span class="lineno"> 3605</span><span class="keyword">inline</span> <span class="keyword">const</span> Quaternion&amp; operator -= (Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
-<div class="line"><a id="l03606" name="l03606"></a><span class="lineno"> 3606</span>{</div>
-<div class="line"><a id="l03607" name="l03607"></a><span class="lineno"> 3607</span>    lhs = QuaternionSubtractValue(lhs, rhs);</div>
-<div class="line"><a id="l03608" name="l03608"></a><span class="lineno"> 3608</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03609" name="l03609"></a><span class="lineno"> 3609</span>}</div>
-<div class="line"><a id="l03610" name="l03610"></a><span class="lineno"> 3610</span> </div>
-<div class="line"><a id="l03611" name="l03611"></a><span class="lineno"> 3611</span><span class="keyword">inline</span> Quaternion operator * (<span class="keyword">const</span> Quaternion&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03612" name="l03612"></a><span class="lineno"> 3612</span>{</div>
-<div class="line"><a id="l03613" name="l03613"></a><span class="lineno"> 3613</span>    <span class="keywordflow">return</span> QuaternionTransform(lhs, rhs);</div>
-<div class="line"><a id="l03614" name="l03614"></a><span class="lineno"> 3614</span>}</div>
-<div class="line"><a id="l03615" name="l03615"></a><span class="lineno"> 3615</span> </div>
-<div class="line"><a id="l03616" name="l03616"></a><span class="lineno"> 3616</span><span class="keyword">inline</span> <span class="keyword">const</span> Quaternion&amp; operator *= (Quaternion&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03617" name="l03617"></a><span class="lineno"> 3617</span>{</div>
-<div class="line"><a id="l03618" name="l03618"></a><span class="lineno"> 3618</span>    lhs = QuaternionTransform(lhs, rhs);</div>
-<div class="line"><a id="l03619" name="l03619"></a><span class="lineno"> 3619</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03620" name="l03620"></a><span class="lineno"> 3620</span>}</div>
-<div class="line"><a id="l03621" name="l03621"></a><span class="lineno"> 3621</span> </div>
-<div class="line"><a id="l03622" name="l03622"></a><span class="lineno"> 3622</span><span class="comment">// Matrix operators</span></div>
-<div class="line"><a id="l03623" name="l03623"></a><span class="lineno"> 3623</span><span class="keyword">inline</span> Matrix operator + (<span class="keyword">const</span> Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03624" name="l03624"></a><span class="lineno"> 3624</span>{</div>
-<div class="line"><a id="l03625" name="l03625"></a><span class="lineno"> 3625</span>    <span class="keywordflow">return</span> MatrixAdd(lhs, rhs);</div>
-<div class="line"><a id="l03626" name="l03626"></a><span class="lineno"> 3626</span>}</div>
-<div class="line"><a id="l03627" name="l03627"></a><span class="lineno"> 3627</span> </div>
-<div class="line"><a id="l03628" name="l03628"></a><span class="lineno"> 3628</span><span class="keyword">inline</span> <span class="keyword">const</span> Matrix&amp; operator += (Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03629" name="l03629"></a><span class="lineno"> 3629</span>{</div>
-<div class="line"><a id="l03630" name="l03630"></a><span class="lineno"> 3630</span>    lhs = MatrixAdd(lhs, rhs);</div>
-<div class="line"><a id="l03631" name="l03631"></a><span class="lineno"> 3631</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03632" name="l03632"></a><span class="lineno"> 3632</span>}</div>
-<div class="line"><a id="l03633" name="l03633"></a><span class="lineno"> 3633</span> </div>
-<div class="line"><a id="l03634" name="l03634"></a><span class="lineno"> 3634</span><span class="keyword">inline</span> Matrix operator - (<span class="keyword">const</span> Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03635" name="l03635"></a><span class="lineno"> 3635</span>{</div>
-<div class="line"><a id="l03636" name="l03636"></a><span class="lineno"> 3636</span>    <span class="keywordflow">return</span> MatrixSubtract(lhs, rhs);</div>
-<div class="line"><a id="l03637" name="l03637"></a><span class="lineno"> 3637</span>}</div>
-<div class="line"><a id="l03638" name="l03638"></a><span class="lineno"> 3638</span> </div>
-<div class="line"><a id="l03639" name="l03639"></a><span class="lineno"> 3639</span><span class="keyword">inline</span> <span class="keyword">const</span> Matrix&amp; operator -= (Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03640" name="l03640"></a><span class="lineno"> 3640</span>{</div>
-<div class="line"><a id="l03641" name="l03641"></a><span class="lineno"> 3641</span>    lhs = MatrixSubtract(lhs, rhs);</div>
-<div class="line"><a id="l03642" name="l03642"></a><span class="lineno"> 3642</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03643" name="l03643"></a><span class="lineno"> 3643</span>}</div>
-<div class="line"><a id="l03644" name="l03644"></a><span class="lineno"> 3644</span> </div>
-<div class="line"><a id="l03645" name="l03645"></a><span class="lineno"> 3645</span><span class="keyword">inline</span> Matrix operator * (<span class="keyword">const</span> Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03646" name="l03646"></a><span class="lineno"> 3646</span>{</div>
-<div class="line"><a id="l03647" name="l03647"></a><span class="lineno"> 3647</span>    <span class="keywordflow">return</span> MatrixMultiply(lhs, rhs);</div>
-<div class="line"><a id="l03648" name="l03648"></a><span class="lineno"> 3648</span>}</div>
-<div class="line"><a id="l03649" name="l03649"></a><span class="lineno"> 3649</span> </div>
-<div class="line"><a id="l03650" name="l03650"></a><span class="lineno"> 3650</span><span class="keyword">inline</span> <span class="keyword">const</span> Matrix&amp; operator *= (Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
-<div class="line"><a id="l03651" name="l03651"></a><span class="lineno"> 3651</span>{</div>
-<div class="line"><a id="l03652" name="l03652"></a><span class="lineno"> 3652</span>    lhs = MatrixMultiply(lhs, rhs);</div>
-<div class="line"><a id="l03653" name="l03653"></a><span class="lineno"> 3653</span>    <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a id="l03654" name="l03654"></a><span class="lineno"> 3654</span>}</div>
-<div class="line"><a id="l03655" name="l03655"></a><span class="lineno"> 3655</span><span class="comment">//-------------------------------------------------------------------------------</span></div>
-<div class="line"><a id="l03656" name="l03656"></a><span class="lineno"> 3656</span><span class="preprocessor">#endif  </span><span class="comment">// C++ operators</span></div>
-<div class="line"><a id="l03657" name="l03657"></a><span class="lineno"> 3657</span> </div>
-<div class="line"><a id="l03658" name="l03658"></a><span class="lineno"> 3658</span>}</div>
-<div class="line"><a id="l03659" name="l03659"></a><span class="lineno"> 3659</span><span class="preprocessor">#endif </span><span class="comment">/* DUIN_MATHS_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l03310" name="l03310"></a><span class="lineno"> 3310</span><span class="preprocessor">#if defined(__cplusplus) &amp;&amp; !defined(RAYMATH_DISABLE_CPP_OPERATORS)</span></div>
+<div class="line"><a id="l03311" name="l03311"></a><span class="lineno"> 3311</span> </div>
+<div class="line"><a id="l03312" name="l03312"></a><span class="lineno"> 3312</span><span class="comment">// Optional C++ math operators</span></div>
+<div class="line"><a id="l03313" name="l03313"></a><span class="lineno"> 3313</span><span class="comment">//-------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l03314" name="l03314"></a><span class="lineno"> 3314</span> </div>
+<div class="line"><a id="l03315" name="l03315"></a><span class="lineno"> 3315</span><span class="comment">// Vector2 operators</span></div>
+<div class="line"><a id="l03316" name="l03316"></a><span class="lineno"> 3316</span><span class="keyword">static</span> Vector2 Vector2Zeros = { 0, 0 };</div>
+<div class="line"><a id="l03317" name="l03317"></a><span class="lineno"> 3317</span><span class="keyword">static</span> Vector2 Vector2Ones = { 1, 1 };</div>
+<div class="line"><a id="l03318" name="l03318"></a><span class="lineno"> 3318</span><span class="keyword">static</span> Vector2 Vector2UnitX = { 1, 0 };</div>
+<div class="line"><a id="l03319" name="l03319"></a><span class="lineno"> 3319</span><span class="keyword">static</span> Vector2 Vector2UnitY = { 0, 1 };</div>
+<div class="line"><a id="l03320" name="l03320"></a><span class="lineno"> 3320</span> </div>
+<div class="line"><a id="l03321" name="l03321"></a><span class="lineno"> 3321</span><span class="keyword">inline</span> Vector2 operator + (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03322" name="l03322"></a><span class="lineno"> 3322</span>{</div>
+<div class="line"><a id="l03323" name="l03323"></a><span class="lineno"> 3323</span>    <span class="keywordflow">return</span> Vector2Add(lhs, rhs);</div>
+<div class="line"><a id="l03324" name="l03324"></a><span class="lineno"> 3324</span>}</div>
+<div class="line"><a id="l03325" name="l03325"></a><span class="lineno"> 3325</span> </div>
+<div class="line"><a id="l03326" name="l03326"></a><span class="lineno"> 3326</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator += (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03327" name="l03327"></a><span class="lineno"> 3327</span>{</div>
+<div class="line"><a id="l03328" name="l03328"></a><span class="lineno"> 3328</span>    lhs = Vector2Add(lhs, rhs);</div>
+<div class="line"><a id="l03329" name="l03329"></a><span class="lineno"> 3329</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03330" name="l03330"></a><span class="lineno"> 3330</span>}</div>
+<div class="line"><a id="l03331" name="l03331"></a><span class="lineno"> 3331</span> </div>
+<div class="line"><a id="l03332" name="l03332"></a><span class="lineno"> 3332</span><span class="keyword">inline</span> Vector2 operator - (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03333" name="l03333"></a><span class="lineno"> 3333</span>{</div>
+<div class="line"><a id="l03334" name="l03334"></a><span class="lineno"> 3334</span>    <span class="keywordflow">return</span> Vector2Subtract(lhs, rhs);</div>
+<div class="line"><a id="l03335" name="l03335"></a><span class="lineno"> 3335</span>}</div>
+<div class="line"><a id="l03336" name="l03336"></a><span class="lineno"> 3336</span> </div>
+<div class="line"><a id="l03337" name="l03337"></a><span class="lineno"> 3337</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator -= (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03338" name="l03338"></a><span class="lineno"> 3338</span>{</div>
+<div class="line"><a id="l03339" name="l03339"></a><span class="lineno"> 3339</span>    lhs = Vector2Subtract(lhs, rhs);</div>
+<div class="line"><a id="l03340" name="l03340"></a><span class="lineno"> 3340</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03341" name="l03341"></a><span class="lineno"> 3341</span>}</div>
+<div class="line"><a id="l03342" name="l03342"></a><span class="lineno"> 3342</span> </div>
+<div class="line"><a id="l03343" name="l03343"></a><span class="lineno"> 3343</span><span class="keyword">inline</span> Vector2 operator * (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03344" name="l03344"></a><span class="lineno"> 3344</span>{</div>
+<div class="line"><a id="l03345" name="l03345"></a><span class="lineno"> 3345</span>    <span class="keywordflow">return</span> Vector2Scale(lhs, rhs);</div>
+<div class="line"><a id="l03346" name="l03346"></a><span class="lineno"> 3346</span>}</div>
+<div class="line"><a id="l03347" name="l03347"></a><span class="lineno"> 3347</span> </div>
+<div class="line"><a id="l03348" name="l03348"></a><span class="lineno"> 3348</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator *= (Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03349" name="l03349"></a><span class="lineno"> 3349</span>{</div>
+<div class="line"><a id="l03350" name="l03350"></a><span class="lineno"> 3350</span>    lhs = Vector2Scale(lhs, rhs);</div>
+<div class="line"><a id="l03351" name="l03351"></a><span class="lineno"> 3351</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03352" name="l03352"></a><span class="lineno"> 3352</span>}</div>
+<div class="line"><a id="l03353" name="l03353"></a><span class="lineno"> 3353</span> </div>
+<div class="line"><a id="l03354" name="l03354"></a><span class="lineno"> 3354</span><span class="keyword">inline</span> Vector2 operator * (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03355" name="l03355"></a><span class="lineno"> 3355</span>{</div>
+<div class="line"><a id="l03356" name="l03356"></a><span class="lineno"> 3356</span>    <span class="keywordflow">return</span> Vector2Multiply(lhs, rhs);</div>
+<div class="line"><a id="l03357" name="l03357"></a><span class="lineno"> 3357</span>}</div>
+<div class="line"><a id="l03358" name="l03358"></a><span class="lineno"> 3358</span> </div>
+<div class="line"><a id="l03359" name="l03359"></a><span class="lineno"> 3359</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator *= (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03360" name="l03360"></a><span class="lineno"> 3360</span>{</div>
+<div class="line"><a id="l03361" name="l03361"></a><span class="lineno"> 3361</span>    lhs = Vector2Multiply(lhs, rhs);</div>
+<div class="line"><a id="l03362" name="l03362"></a><span class="lineno"> 3362</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03363" name="l03363"></a><span class="lineno"> 3363</span>}</div>
+<div class="line"><a id="l03364" name="l03364"></a><span class="lineno"> 3364</span> </div>
+<div class="line"><a id="l03365" name="l03365"></a><span class="lineno"> 3365</span><span class="keyword">inline</span> Vector2 operator * (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03366" name="l03366"></a><span class="lineno"> 3366</span>{</div>
+<div class="line"><a id="l03367" name="l03367"></a><span class="lineno"> 3367</span>    <span class="keywordflow">return</span> Vector2Transform(lhs, rhs);</div>
+<div class="line"><a id="l03368" name="l03368"></a><span class="lineno"> 3368</span>}</div>
+<div class="line"><a id="l03369" name="l03369"></a><span class="lineno"> 3369</span> </div>
+<div class="line"><a id="l03370" name="l03370"></a><span class="lineno"> 3370</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator -= (Vector2&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03371" name="l03371"></a><span class="lineno"> 3371</span>{</div>
+<div class="line"><a id="l03372" name="l03372"></a><span class="lineno"> 3372</span>    lhs = Vector2Transform(lhs, rhs);</div>
+<div class="line"><a id="l03373" name="l03373"></a><span class="lineno"> 3373</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03374" name="l03374"></a><span class="lineno"> 3374</span>}</div>
+<div class="line"><a id="l03375" name="l03375"></a><span class="lineno"> 3375</span> </div>
+<div class="line"><a id="l03376" name="l03376"></a><span class="lineno"> 3376</span><span class="keyword">inline</span> Vector2 operator / (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03377" name="l03377"></a><span class="lineno"> 3377</span>{</div>
+<div class="line"><a id="l03378" name="l03378"></a><span class="lineno"> 3378</span>    <span class="keywordflow">return</span> Vector2Scale(lhs, 1.0f / rhs);</div>
+<div class="line"><a id="l03379" name="l03379"></a><span class="lineno"> 3379</span>}</div>
+<div class="line"><a id="l03380" name="l03380"></a><span class="lineno"> 3380</span> </div>
+<div class="line"><a id="l03381" name="l03381"></a><span class="lineno"> 3381</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator /= (Vector2&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03382" name="l03382"></a><span class="lineno"> 3382</span>{</div>
+<div class="line"><a id="l03383" name="l03383"></a><span class="lineno"> 3383</span>    lhs = Vector2Scale(lhs, rhs);</div>
+<div class="line"><a id="l03384" name="l03384"></a><span class="lineno"> 3384</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03385" name="l03385"></a><span class="lineno"> 3385</span>}</div>
+<div class="line"><a id="l03386" name="l03386"></a><span class="lineno"> 3386</span> </div>
+<div class="line"><a id="l03387" name="l03387"></a><span class="lineno"> 3387</span><span class="keyword">inline</span> Vector2 operator / (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03388" name="l03388"></a><span class="lineno"> 3388</span>{</div>
+<div class="line"><a id="l03389" name="l03389"></a><span class="lineno"> 3389</span>    <span class="keywordflow">return</span> Vector2Divide(lhs, rhs);</div>
+<div class="line"><a id="l03390" name="l03390"></a><span class="lineno"> 3390</span>}</div>
+<div class="line"><a id="l03391" name="l03391"></a><span class="lineno"> 3391</span> </div>
+<div class="line"><a id="l03392" name="l03392"></a><span class="lineno"> 3392</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector2&amp; operator /= (Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03393" name="l03393"></a><span class="lineno"> 3393</span>{</div>
+<div class="line"><a id="l03394" name="l03394"></a><span class="lineno"> 3394</span>    lhs = Vector2Divide(lhs, rhs);</div>
+<div class="line"><a id="l03395" name="l03395"></a><span class="lineno"> 3395</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03396" name="l03396"></a><span class="lineno"> 3396</span>}</div>
+<div class="line"><a id="l03397" name="l03397"></a><span class="lineno"> 3397</span> </div>
+<div class="line"><a id="l03398" name="l03398"></a><span class="lineno"> 3398</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03399" name="l03399"></a><span class="lineno"> 3399</span>{</div>
+<div class="line"><a id="l03400" name="l03400"></a><span class="lineno"> 3400</span>    <span class="keywordflow">return</span> FloatEquals(lhs.x, rhs.x) &amp;&amp; FloatEquals(lhs.y, rhs.y);</div>
+<div class="line"><a id="l03401" name="l03401"></a><span class="lineno"> 3401</span>}</div>
+<div class="line"><a id="l03402" name="l03402"></a><span class="lineno"> 3402</span> </div>
+<div class="line"><a id="l03403" name="l03403"></a><span class="lineno"> 3403</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> Vector2&amp; lhs, <span class="keyword">const</span> Vector2&amp; rhs)</div>
+<div class="line"><a id="l03404" name="l03404"></a><span class="lineno"> 3404</span>{</div>
+<div class="line"><a id="l03405" name="l03405"></a><span class="lineno"> 3405</span>    <span class="keywordflow">return</span> !FloatEquals(lhs.x, rhs.x) || !FloatEquals(lhs.y, rhs.y);</div>
+<div class="line"><a id="l03406" name="l03406"></a><span class="lineno"> 3406</span>}</div>
+<div class="line"><a id="l03407" name="l03407"></a><span class="lineno"> 3407</span> </div>
+<div class="line"><a id="l03408" name="l03408"></a><span class="lineno"> 3408</span><span class="comment">// Vector3 operators</span></div>
+<div class="line"><a id="l03409" name="l03409"></a><span class="lineno"> 3409</span><span class="keyword">static</span> Vector3 Vector3Zeros = { 0, 0, 0 };</div>
+<div class="line"><a id="l03410" name="l03410"></a><span class="lineno"> 3410</span><span class="keyword">static</span> Vector3 Vector3Ones = { 1, 1, 1 };</div>
+<div class="line"><a id="l03411" name="l03411"></a><span class="lineno"> 3411</span><span class="keyword">static</span> Vector3 Vector3UnitX = { 1, 0, 0 };</div>
+<div class="line"><a id="l03412" name="l03412"></a><span class="lineno"> 3412</span><span class="keyword">static</span> Vector3 Vector3UnitY = { 0, 1, 0 };</div>
+<div class="line"><a id="l03413" name="l03413"></a><span class="lineno"> 3413</span><span class="keyword">static</span> Vector3 Vector3UnitZ = { 0, 0, 1 };</div>
+<div class="line"><a id="l03414" name="l03414"></a><span class="lineno"> 3414</span> </div>
+<div class="line"><a id="l03415" name="l03415"></a><span class="lineno"> 3415</span><span class="keyword">inline</span> Vector3 operator + (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03416" name="l03416"></a><span class="lineno"> 3416</span>{</div>
+<div class="line"><a id="l03417" name="l03417"></a><span class="lineno"> 3417</span>    <span class="keywordflow">return</span> Vector3Add(lhs, rhs);</div>
+<div class="line"><a id="l03418" name="l03418"></a><span class="lineno"> 3418</span>}</div>
+<div class="line"><a id="l03419" name="l03419"></a><span class="lineno"> 3419</span> </div>
+<div class="line"><a id="l03420" name="l03420"></a><span class="lineno"> 3420</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator += (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03421" name="l03421"></a><span class="lineno"> 3421</span>{</div>
+<div class="line"><a id="l03422" name="l03422"></a><span class="lineno"> 3422</span>    lhs = Vector3Add(lhs, rhs);</div>
+<div class="line"><a id="l03423" name="l03423"></a><span class="lineno"> 3423</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03424" name="l03424"></a><span class="lineno"> 3424</span>}</div>
+<div class="line"><a id="l03425" name="l03425"></a><span class="lineno"> 3425</span> </div>
+<div class="line"><a id="l03426" name="l03426"></a><span class="lineno"> 3426</span><span class="keyword">inline</span> Vector3 operator - (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03427" name="l03427"></a><span class="lineno"> 3427</span>{</div>
+<div class="line"><a id="l03428" name="l03428"></a><span class="lineno"> 3428</span>    <span class="keywordflow">return</span> Vector3Subtract(lhs, rhs);</div>
+<div class="line"><a id="l03429" name="l03429"></a><span class="lineno"> 3429</span>}</div>
+<div class="line"><a id="l03430" name="l03430"></a><span class="lineno"> 3430</span> </div>
+<div class="line"><a id="l03431" name="l03431"></a><span class="lineno"> 3431</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator -= (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03432" name="l03432"></a><span class="lineno"> 3432</span>{</div>
+<div class="line"><a id="l03433" name="l03433"></a><span class="lineno"> 3433</span>    lhs = Vector3Subtract(lhs, rhs);</div>
+<div class="line"><a id="l03434" name="l03434"></a><span class="lineno"> 3434</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03435" name="l03435"></a><span class="lineno"> 3435</span>}</div>
+<div class="line"><a id="l03436" name="l03436"></a><span class="lineno"> 3436</span> </div>
+<div class="line"><a id="l03437" name="l03437"></a><span class="lineno"> 3437</span><span class="keyword">inline</span> Vector3 operator * (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03438" name="l03438"></a><span class="lineno"> 3438</span>{</div>
+<div class="line"><a id="l03439" name="l03439"></a><span class="lineno"> 3439</span>    <span class="keywordflow">return</span> Vector3Scale(lhs, rhs);</div>
+<div class="line"><a id="l03440" name="l03440"></a><span class="lineno"> 3440</span>}</div>
+<div class="line"><a id="l03441" name="l03441"></a><span class="lineno"> 3441</span> </div>
+<div class="line"><a id="l03442" name="l03442"></a><span class="lineno"> 3442</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator *= (Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03443" name="l03443"></a><span class="lineno"> 3443</span>{</div>
+<div class="line"><a id="l03444" name="l03444"></a><span class="lineno"> 3444</span>    lhs = Vector3Scale(lhs, rhs);</div>
+<div class="line"><a id="l03445" name="l03445"></a><span class="lineno"> 3445</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03446" name="l03446"></a><span class="lineno"> 3446</span>}</div>
+<div class="line"><a id="l03447" name="l03447"></a><span class="lineno"> 3447</span> </div>
+<div class="line"><a id="l03448" name="l03448"></a><span class="lineno"> 3448</span><span class="keyword">inline</span> Vector3 operator * (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03449" name="l03449"></a><span class="lineno"> 3449</span>{</div>
+<div class="line"><a id="l03450" name="l03450"></a><span class="lineno"> 3450</span>    <span class="keywordflow">return</span> Vector3Multiply(lhs, rhs);</div>
+<div class="line"><a id="l03451" name="l03451"></a><span class="lineno"> 3451</span>}</div>
+<div class="line"><a id="l03452" name="l03452"></a><span class="lineno"> 3452</span> </div>
+<div class="line"><a id="l03453" name="l03453"></a><span class="lineno"> 3453</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator *= (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03454" name="l03454"></a><span class="lineno"> 3454</span>{</div>
+<div class="line"><a id="l03455" name="l03455"></a><span class="lineno"> 3455</span>    lhs = Vector3Multiply(lhs, rhs);</div>
+<div class="line"><a id="l03456" name="l03456"></a><span class="lineno"> 3456</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03457" name="l03457"></a><span class="lineno"> 3457</span>}</div>
+<div class="line"><a id="l03458" name="l03458"></a><span class="lineno"> 3458</span> </div>
+<div class="line"><a id="l03459" name="l03459"></a><span class="lineno"> 3459</span><span class="keyword">inline</span> Vector3 operator * (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03460" name="l03460"></a><span class="lineno"> 3460</span>{</div>
+<div class="line"><a id="l03461" name="l03461"></a><span class="lineno"> 3461</span>    <span class="keywordflow">return</span> Vector3Transform(lhs, rhs);</div>
+<div class="line"><a id="l03462" name="l03462"></a><span class="lineno"> 3462</span>}</div>
+<div class="line"><a id="l03463" name="l03463"></a><span class="lineno"> 3463</span> </div>
+<div class="line"><a id="l03464" name="l03464"></a><span class="lineno"> 3464</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator -= (Vector3&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03465" name="l03465"></a><span class="lineno"> 3465</span>{</div>
+<div class="line"><a id="l03466" name="l03466"></a><span class="lineno"> 3466</span>    lhs = Vector3Transform(lhs, rhs);</div>
+<div class="line"><a id="l03467" name="l03467"></a><span class="lineno"> 3467</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03468" name="l03468"></a><span class="lineno"> 3468</span>}</div>
+<div class="line"><a id="l03469" name="l03469"></a><span class="lineno"> 3469</span> </div>
+<div class="line"><a id="l03470" name="l03470"></a><span class="lineno"> 3470</span><span class="keyword">inline</span> Vector3 operator / (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03471" name="l03471"></a><span class="lineno"> 3471</span>{</div>
+<div class="line"><a id="l03472" name="l03472"></a><span class="lineno"> 3472</span>    <span class="keywordflow">return</span> Vector3Scale(lhs, 1.0f / rhs);</div>
+<div class="line"><a id="l03473" name="l03473"></a><span class="lineno"> 3473</span>}</div>
+<div class="line"><a id="l03474" name="l03474"></a><span class="lineno"> 3474</span> </div>
+<div class="line"><a id="l03475" name="l03475"></a><span class="lineno"> 3475</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator /= (Vector3&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03476" name="l03476"></a><span class="lineno"> 3476</span>{</div>
+<div class="line"><a id="l03477" name="l03477"></a><span class="lineno"> 3477</span>    lhs = Vector3Scale(lhs, rhs);</div>
+<div class="line"><a id="l03478" name="l03478"></a><span class="lineno"> 3478</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03479" name="l03479"></a><span class="lineno"> 3479</span>}</div>
+<div class="line"><a id="l03480" name="l03480"></a><span class="lineno"> 3480</span> </div>
+<div class="line"><a id="l03481" name="l03481"></a><span class="lineno"> 3481</span><span class="keyword">inline</span> Vector3 operator / (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03482" name="l03482"></a><span class="lineno"> 3482</span>{</div>
+<div class="line"><a id="l03483" name="l03483"></a><span class="lineno"> 3483</span>    <span class="keywordflow">return</span> Vector3Divide(lhs, rhs);</div>
+<div class="line"><a id="l03484" name="l03484"></a><span class="lineno"> 3484</span>}</div>
+<div class="line"><a id="l03485" name="l03485"></a><span class="lineno"> 3485</span> </div>
+<div class="line"><a id="l03486" name="l03486"></a><span class="lineno"> 3486</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector3&amp; operator /= (Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03487" name="l03487"></a><span class="lineno"> 3487</span>{</div>
+<div class="line"><a id="l03488" name="l03488"></a><span class="lineno"> 3488</span>    lhs = Vector3Divide(lhs, rhs);</div>
+<div class="line"><a id="l03489" name="l03489"></a><span class="lineno"> 3489</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03490" name="l03490"></a><span class="lineno"> 3490</span>}</div>
+<div class="line"><a id="l03491" name="l03491"></a><span class="lineno"> 3491</span> </div>
+<div class="line"><a id="l03492" name="l03492"></a><span class="lineno"> 3492</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03493" name="l03493"></a><span class="lineno"> 3493</span>{</div>
+<div class="line"><a id="l03494" name="l03494"></a><span class="lineno"> 3494</span>    <span class="keywordflow">return</span> FloatEquals(lhs.x, rhs.x) &amp;&amp; FloatEquals(lhs.y, rhs.y) &amp;&amp; FloatEquals(lhs.z, rhs.z);</div>
+<div class="line"><a id="l03495" name="l03495"></a><span class="lineno"> 3495</span>}</div>
+<div class="line"><a id="l03496" name="l03496"></a><span class="lineno"> 3496</span> </div>
+<div class="line"><a id="l03497" name="l03497"></a><span class="lineno"> 3497</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> Vector3&amp; lhs, <span class="keyword">const</span> Vector3&amp; rhs)</div>
+<div class="line"><a id="l03498" name="l03498"></a><span class="lineno"> 3498</span>{</div>
+<div class="line"><a id="l03499" name="l03499"></a><span class="lineno"> 3499</span>    <span class="keywordflow">return</span> !FloatEquals(lhs.x, rhs.x) || !FloatEquals(lhs.y, rhs.y) || !FloatEquals(lhs.z, rhs.z);</div>
+<div class="line"><a id="l03500" name="l03500"></a><span class="lineno"> 3500</span>}</div>
+<div class="line"><a id="l03501" name="l03501"></a><span class="lineno"> 3501</span> </div>
+<div class="line"><a id="l03502" name="l03502"></a><span class="lineno"> 3502</span><span class="comment">// Vector4 operators</span></div>
+<div class="line"><a id="l03503" name="l03503"></a><span class="lineno"> 3503</span><span class="keyword">static</span> Vector4 Vector4Zeros = { 0, 0, 0, 0 };</div>
+<div class="line"><a id="l03504" name="l03504"></a><span class="lineno"> 3504</span><span class="keyword">static</span> Vector4 Vector4Ones = { 1, 1, 1, 1 };</div>
+<div class="line"><a id="l03505" name="l03505"></a><span class="lineno"> 3505</span><span class="keyword">static</span> Vector4 Vector4UnitX = { 1, 0, 0, 0 };</div>
+<div class="line"><a id="l03506" name="l03506"></a><span class="lineno"> 3506</span><span class="keyword">static</span> Vector4 Vector4UnitY = { 0, 1, 0, 0 };</div>
+<div class="line"><a id="l03507" name="l03507"></a><span class="lineno"> 3507</span><span class="keyword">static</span> Vector4 Vector4UnitZ = { 0, 0, 1, 0 };</div>
+<div class="line"><a id="l03508" name="l03508"></a><span class="lineno"> 3508</span><span class="keyword">static</span> Vector4 Vector4UnitW = { 0, 0, 0, 1 };</div>
+<div class="line"><a id="l03509" name="l03509"></a><span class="lineno"> 3509</span> </div>
+<div class="line"><a id="l03510" name="l03510"></a><span class="lineno"> 3510</span><span class="keyword">inline</span> Vector4 operator + (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03511" name="l03511"></a><span class="lineno"> 3511</span>{</div>
+<div class="line"><a id="l03512" name="l03512"></a><span class="lineno"> 3512</span>    <span class="keywordflow">return</span> Vector4Add(lhs, rhs);</div>
+<div class="line"><a id="l03513" name="l03513"></a><span class="lineno"> 3513</span>}</div>
+<div class="line"><a id="l03514" name="l03514"></a><span class="lineno"> 3514</span> </div>
+<div class="line"><a id="l03515" name="l03515"></a><span class="lineno"> 3515</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator += (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03516" name="l03516"></a><span class="lineno"> 3516</span>{</div>
+<div class="line"><a id="l03517" name="l03517"></a><span class="lineno"> 3517</span>    lhs = Vector4Add(lhs, rhs);</div>
+<div class="line"><a id="l03518" name="l03518"></a><span class="lineno"> 3518</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03519" name="l03519"></a><span class="lineno"> 3519</span>}</div>
+<div class="line"><a id="l03520" name="l03520"></a><span class="lineno"> 3520</span> </div>
+<div class="line"><a id="l03521" name="l03521"></a><span class="lineno"> 3521</span><span class="keyword">inline</span> Vector4 operator - (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03522" name="l03522"></a><span class="lineno"> 3522</span>{</div>
+<div class="line"><a id="l03523" name="l03523"></a><span class="lineno"> 3523</span>    <span class="keywordflow">return</span> Vector4Subtract(lhs, rhs);</div>
+<div class="line"><a id="l03524" name="l03524"></a><span class="lineno"> 3524</span>}</div>
+<div class="line"><a id="l03525" name="l03525"></a><span class="lineno"> 3525</span> </div>
+<div class="line"><a id="l03526" name="l03526"></a><span class="lineno"> 3526</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator -= (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03527" name="l03527"></a><span class="lineno"> 3527</span>{</div>
+<div class="line"><a id="l03528" name="l03528"></a><span class="lineno"> 3528</span>    lhs = Vector4Subtract(lhs, rhs);</div>
+<div class="line"><a id="l03529" name="l03529"></a><span class="lineno"> 3529</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03530" name="l03530"></a><span class="lineno"> 3530</span>}</div>
+<div class="line"><a id="l03531" name="l03531"></a><span class="lineno"> 3531</span> </div>
+<div class="line"><a id="l03532" name="l03532"></a><span class="lineno"> 3532</span><span class="keyword">inline</span> Vector4 operator * (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03533" name="l03533"></a><span class="lineno"> 3533</span>{</div>
+<div class="line"><a id="l03534" name="l03534"></a><span class="lineno"> 3534</span>    <span class="keywordflow">return</span> Vector4Scale(lhs, rhs);</div>
+<div class="line"><a id="l03535" name="l03535"></a><span class="lineno"> 3535</span>}</div>
+<div class="line"><a id="l03536" name="l03536"></a><span class="lineno"> 3536</span> </div>
+<div class="line"><a id="l03537" name="l03537"></a><span class="lineno"> 3537</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator *= (Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03538" name="l03538"></a><span class="lineno"> 3538</span>{</div>
+<div class="line"><a id="l03539" name="l03539"></a><span class="lineno"> 3539</span>    lhs = Vector4Scale(lhs, rhs);</div>
+<div class="line"><a id="l03540" name="l03540"></a><span class="lineno"> 3540</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03541" name="l03541"></a><span class="lineno"> 3541</span>}</div>
+<div class="line"><a id="l03542" name="l03542"></a><span class="lineno"> 3542</span> </div>
+<div class="line"><a id="l03543" name="l03543"></a><span class="lineno"> 3543</span><span class="keyword">inline</span> Vector4 operator * (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03544" name="l03544"></a><span class="lineno"> 3544</span>{</div>
+<div class="line"><a id="l03545" name="l03545"></a><span class="lineno"> 3545</span>    <span class="keywordflow">return</span> Vector4Multiply(lhs, rhs);</div>
+<div class="line"><a id="l03546" name="l03546"></a><span class="lineno"> 3546</span>}</div>
+<div class="line"><a id="l03547" name="l03547"></a><span class="lineno"> 3547</span> </div>
+<div class="line"><a id="l03548" name="l03548"></a><span class="lineno"> 3548</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator *= (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03549" name="l03549"></a><span class="lineno"> 3549</span>{</div>
+<div class="line"><a id="l03550" name="l03550"></a><span class="lineno"> 3550</span>    lhs = Vector4Multiply(lhs, rhs);</div>
+<div class="line"><a id="l03551" name="l03551"></a><span class="lineno"> 3551</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03552" name="l03552"></a><span class="lineno"> 3552</span>}</div>
+<div class="line"><a id="l03553" name="l03553"></a><span class="lineno"> 3553</span> </div>
+<div class="line"><a id="l03554" name="l03554"></a><span class="lineno"> 3554</span><span class="keyword">inline</span> Vector4 operator / (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03555" name="l03555"></a><span class="lineno"> 3555</span>{</div>
+<div class="line"><a id="l03556" name="l03556"></a><span class="lineno"> 3556</span>    <span class="keywordflow">return</span> Vector4Scale(lhs, 1.0f / rhs);</div>
+<div class="line"><a id="l03557" name="l03557"></a><span class="lineno"> 3557</span>}</div>
+<div class="line"><a id="l03558" name="l03558"></a><span class="lineno"> 3558</span> </div>
+<div class="line"><a id="l03559" name="l03559"></a><span class="lineno"> 3559</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator /= (Vector4&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03560" name="l03560"></a><span class="lineno"> 3560</span>{</div>
+<div class="line"><a id="l03561" name="l03561"></a><span class="lineno"> 3561</span>    lhs = Vector4Scale(lhs, rhs);</div>
+<div class="line"><a id="l03562" name="l03562"></a><span class="lineno"> 3562</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03563" name="l03563"></a><span class="lineno"> 3563</span>}</div>
+<div class="line"><a id="l03564" name="l03564"></a><span class="lineno"> 3564</span> </div>
+<div class="line"><a id="l03565" name="l03565"></a><span class="lineno"> 3565</span><span class="keyword">inline</span> Vector4 operator / (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03566" name="l03566"></a><span class="lineno"> 3566</span>{</div>
+<div class="line"><a id="l03567" name="l03567"></a><span class="lineno"> 3567</span>    <span class="keywordflow">return</span> Vector4Divide(lhs, rhs);</div>
+<div class="line"><a id="l03568" name="l03568"></a><span class="lineno"> 3568</span>}</div>
+<div class="line"><a id="l03569" name="l03569"></a><span class="lineno"> 3569</span> </div>
+<div class="line"><a id="l03570" name="l03570"></a><span class="lineno"> 3570</span><span class="keyword">inline</span> <span class="keyword">const</span> Vector4&amp; operator /= (Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03571" name="l03571"></a><span class="lineno"> 3571</span>{</div>
+<div class="line"><a id="l03572" name="l03572"></a><span class="lineno"> 3572</span>    lhs = Vector4Divide(lhs, rhs);</div>
+<div class="line"><a id="l03573" name="l03573"></a><span class="lineno"> 3573</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03574" name="l03574"></a><span class="lineno"> 3574</span>}</div>
+<div class="line"><a id="l03575" name="l03575"></a><span class="lineno"> 3575</span> </div>
+<div class="line"><a id="l03576" name="l03576"></a><span class="lineno"> 3576</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03577" name="l03577"></a><span class="lineno"> 3577</span>{</div>
+<div class="line"><a id="l03578" name="l03578"></a><span class="lineno"> 3578</span>    <span class="keywordflow">return</span> FloatEquals(lhs.x, rhs.x) &amp;&amp; FloatEquals(lhs.y, rhs.y) &amp;&amp; FloatEquals(lhs.z, rhs.z) &amp;&amp; FloatEquals(lhs.w, rhs.w);</div>
+<div class="line"><a id="l03579" name="l03579"></a><span class="lineno"> 3579</span>}</div>
+<div class="line"><a id="l03580" name="l03580"></a><span class="lineno"> 3580</span> </div>
+<div class="line"><a id="l03581" name="l03581"></a><span class="lineno"> 3581</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> Vector4&amp; lhs, <span class="keyword">const</span> Vector4&amp; rhs)</div>
+<div class="line"><a id="l03582" name="l03582"></a><span class="lineno"> 3582</span>{</div>
+<div class="line"><a id="l03583" name="l03583"></a><span class="lineno"> 3583</span>    <span class="keywordflow">return</span> !FloatEquals(lhs.x, rhs.x) || !FloatEquals(lhs.y, rhs.y) || !FloatEquals(lhs.z, rhs.z) || !FloatEquals(lhs.w, rhs.w);</div>
+<div class="line"><a id="l03584" name="l03584"></a><span class="lineno"> 3584</span>}</div>
+<div class="line"><a id="l03585" name="l03585"></a><span class="lineno"> 3585</span> </div>
+<div class="line"><a id="l03586" name="l03586"></a><span class="lineno"> 3586</span><span class="comment">// Quaternion operators</span></div>
+<div class="line"><a id="l03587" name="l03587"></a><span class="lineno"> 3587</span><span class="keyword">static</span> Quaternion QuaternionZeros = { 0, 0, 0, 0 };</div>
+<div class="line"><a id="l03588" name="l03588"></a><span class="lineno"> 3588</span><span class="keyword">static</span> Quaternion QuaternionOnes = { 1, 1, 1, 1 };</div>
+<div class="line"><a id="l03589" name="l03589"></a><span class="lineno"> 3589</span><span class="keyword">static</span> Quaternion QuaternionUnitX = { 0, 0, 0, 1 };</div>
+<div class="line"><a id="l03590" name="l03590"></a><span class="lineno"> 3590</span> </div>
+<div class="line"><a id="l03591" name="l03591"></a><span class="lineno"> 3591</span><span class="keyword">inline</span> Quaternion operator + (<span class="keyword">const</span> Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03592" name="l03592"></a><span class="lineno"> 3592</span>{</div>
+<div class="line"><a id="l03593" name="l03593"></a><span class="lineno"> 3593</span>    <span class="keywordflow">return</span> QuaternionAddValue(lhs, rhs);</div>
+<div class="line"><a id="l03594" name="l03594"></a><span class="lineno"> 3594</span>}</div>
+<div class="line"><a id="l03595" name="l03595"></a><span class="lineno"> 3595</span> </div>
+<div class="line"><a id="l03596" name="l03596"></a><span class="lineno"> 3596</span><span class="keyword">inline</span> <span class="keyword">const</span> Quaternion&amp; operator += (Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03597" name="l03597"></a><span class="lineno"> 3597</span>{</div>
+<div class="line"><a id="l03598" name="l03598"></a><span class="lineno"> 3598</span>    lhs = QuaternionAddValue(lhs, rhs);</div>
+<div class="line"><a id="l03599" name="l03599"></a><span class="lineno"> 3599</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03600" name="l03600"></a><span class="lineno"> 3600</span>}</div>
+<div class="line"><a id="l03601" name="l03601"></a><span class="lineno"> 3601</span> </div>
+<div class="line"><a id="l03602" name="l03602"></a><span class="lineno"> 3602</span><span class="keyword">inline</span> Quaternion operator - (<span class="keyword">const</span> Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03603" name="l03603"></a><span class="lineno"> 3603</span>{</div>
+<div class="line"><a id="l03604" name="l03604"></a><span class="lineno"> 3604</span>    <span class="keywordflow">return</span> QuaternionSubtractValue(lhs, rhs);</div>
+<div class="line"><a id="l03605" name="l03605"></a><span class="lineno"> 3605</span>}</div>
+<div class="line"><a id="l03606" name="l03606"></a><span class="lineno"> 3606</span> </div>
+<div class="line"><a id="l03607" name="l03607"></a><span class="lineno"> 3607</span><span class="keyword">inline</span> <span class="keyword">const</span> Quaternion&amp; operator -= (Quaternion&amp; lhs, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; rhs)</div>
+<div class="line"><a id="l03608" name="l03608"></a><span class="lineno"> 3608</span>{</div>
+<div class="line"><a id="l03609" name="l03609"></a><span class="lineno"> 3609</span>    lhs = QuaternionSubtractValue(lhs, rhs);</div>
+<div class="line"><a id="l03610" name="l03610"></a><span class="lineno"> 3610</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03611" name="l03611"></a><span class="lineno"> 3611</span>}</div>
+<div class="line"><a id="l03612" name="l03612"></a><span class="lineno"> 3612</span> </div>
+<div class="line"><a id="l03613" name="l03613"></a><span class="lineno"> 3613</span><span class="keyword">inline</span> Quaternion operator * (<span class="keyword">const</span> Quaternion&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03614" name="l03614"></a><span class="lineno"> 3614</span>{</div>
+<div class="line"><a id="l03615" name="l03615"></a><span class="lineno"> 3615</span>    <span class="keywordflow">return</span> QuaternionTransform(lhs, rhs);</div>
+<div class="line"><a id="l03616" name="l03616"></a><span class="lineno"> 3616</span>}</div>
+<div class="line"><a id="l03617" name="l03617"></a><span class="lineno"> 3617</span> </div>
+<div class="line"><a id="l03618" name="l03618"></a><span class="lineno"> 3618</span><span class="keyword">inline</span> <span class="keyword">const</span> Quaternion&amp; operator *= (Quaternion&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03619" name="l03619"></a><span class="lineno"> 3619</span>{</div>
+<div class="line"><a id="l03620" name="l03620"></a><span class="lineno"> 3620</span>    lhs = QuaternionTransform(lhs, rhs);</div>
+<div class="line"><a id="l03621" name="l03621"></a><span class="lineno"> 3621</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03622" name="l03622"></a><span class="lineno"> 3622</span>}</div>
+<div class="line"><a id="l03623" name="l03623"></a><span class="lineno"> 3623</span> </div>
+<div class="line"><a id="l03624" name="l03624"></a><span class="lineno"> 3624</span><span class="comment">// Matrix operators</span></div>
+<div class="line"><a id="l03625" name="l03625"></a><span class="lineno"> 3625</span><span class="keyword">inline</span> Matrix operator + (<span class="keyword">const</span> Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03626" name="l03626"></a><span class="lineno"> 3626</span>{</div>
+<div class="line"><a id="l03627" name="l03627"></a><span class="lineno"> 3627</span>    <span class="keywordflow">return</span> MatrixAdd(lhs, rhs);</div>
+<div class="line"><a id="l03628" name="l03628"></a><span class="lineno"> 3628</span>}</div>
+<div class="line"><a id="l03629" name="l03629"></a><span class="lineno"> 3629</span> </div>
+<div class="line"><a id="l03630" name="l03630"></a><span class="lineno"> 3630</span><span class="keyword">inline</span> <span class="keyword">const</span> Matrix&amp; operator += (Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03631" name="l03631"></a><span class="lineno"> 3631</span>{</div>
+<div class="line"><a id="l03632" name="l03632"></a><span class="lineno"> 3632</span>    lhs = MatrixAdd(lhs, rhs);</div>
+<div class="line"><a id="l03633" name="l03633"></a><span class="lineno"> 3633</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03634" name="l03634"></a><span class="lineno"> 3634</span>}</div>
+<div class="line"><a id="l03635" name="l03635"></a><span class="lineno"> 3635</span> </div>
+<div class="line"><a id="l03636" name="l03636"></a><span class="lineno"> 3636</span><span class="keyword">inline</span> Matrix operator - (<span class="keyword">const</span> Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03637" name="l03637"></a><span class="lineno"> 3637</span>{</div>
+<div class="line"><a id="l03638" name="l03638"></a><span class="lineno"> 3638</span>    <span class="keywordflow">return</span> MatrixSubtract(lhs, rhs);</div>
+<div class="line"><a id="l03639" name="l03639"></a><span class="lineno"> 3639</span>}</div>
+<div class="line"><a id="l03640" name="l03640"></a><span class="lineno"> 3640</span> </div>
+<div class="line"><a id="l03641" name="l03641"></a><span class="lineno"> 3641</span><span class="keyword">inline</span> <span class="keyword">const</span> Matrix&amp; operator -= (Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03642" name="l03642"></a><span class="lineno"> 3642</span>{</div>
+<div class="line"><a id="l03643" name="l03643"></a><span class="lineno"> 3643</span>    lhs = MatrixSubtract(lhs, rhs);</div>
+<div class="line"><a id="l03644" name="l03644"></a><span class="lineno"> 3644</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03645" name="l03645"></a><span class="lineno"> 3645</span>}</div>
+<div class="line"><a id="l03646" name="l03646"></a><span class="lineno"> 3646</span> </div>
+<div class="line"><a id="l03647" name="l03647"></a><span class="lineno"> 3647</span><span class="keyword">inline</span> Matrix operator * (<span class="keyword">const</span> Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03648" name="l03648"></a><span class="lineno"> 3648</span>{</div>
+<div class="line"><a id="l03649" name="l03649"></a><span class="lineno"> 3649</span>    <span class="keywordflow">return</span> MatrixMultiply(lhs, rhs);</div>
+<div class="line"><a id="l03650" name="l03650"></a><span class="lineno"> 3650</span>}</div>
+<div class="line"><a id="l03651" name="l03651"></a><span class="lineno"> 3651</span> </div>
+<div class="line"><a id="l03652" name="l03652"></a><span class="lineno"> 3652</span><span class="keyword">inline</span> <span class="keyword">const</span> Matrix&amp; operator *= (Matrix&amp; lhs, <span class="keyword">const</span> Matrix&amp; rhs)</div>
+<div class="line"><a id="l03653" name="l03653"></a><span class="lineno"> 3653</span>{</div>
+<div class="line"><a id="l03654" name="l03654"></a><span class="lineno"> 3654</span>    lhs = MatrixMultiply(lhs, rhs);</div>
+<div class="line"><a id="l03655" name="l03655"></a><span class="lineno"> 3655</span>    <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a id="l03656" name="l03656"></a><span class="lineno"> 3656</span>}</div>
+<div class="line"><a id="l03657" name="l03657"></a><span class="lineno"> 3657</span><span class="comment">//-------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l03658" name="l03658"></a><span class="lineno"> 3658</span><span class="preprocessor">#endif  </span><span class="comment">// C++ operators</span></div>
+<div class="line"><a id="l03659" name="l03659"></a><span class="lineno"> 3659</span> </div>
+<div class="line"><a id="l03660" name="l03660"></a><span class="lineno"> 3660</span>}</div>
+<div class="line"><a id="l03661" name="l03661"></a><span class="lineno"> 3661</span><span class="preprocessor">#endif </span><span class="comment">/* DUIN_MATHS_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="astructduin_1_1Matrix_html"><div class="ttname"><a href="structduin_1_1Matrix.html">duin::Matrix</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00251">DuinMaths.h:251</a></div></div>
 <div class="ttc" id="astructduin_1_1Vector2_html"><div class="ttname"><a href="structduin_1_1Vector2.html">duin::Vector2</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00128">DuinMaths.h:128</a></div></div>
 <div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00161">DuinMaths.h:161</a></div></div>
