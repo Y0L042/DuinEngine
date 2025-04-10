@@ -37,42 +37,4 @@ namespace duin {
     void CameraRoll(Camera *camera, float angle);
 
     void GetBGFXMatrix(Camera *camera);
-
-
-    class Camera3D 
-    {
-        public:
-            static Camera3D* Create();
-            static Camera3D& GetActiveCamera3D();
-            static void SetActiveCamera3D(Camera3D* camera);
-            static void SetActiveCamera3D(Camera3D& camera);
-            static void SetActiveCamera3D(UUID uuid);
-
-            Camera3D();
-            Camera3D(UUID uuid);
-            ~Camera3D();
-
-            UUID GetUUID();
-            int IsValid();
-            Vector3 GetPosition();
-            void SetPosition(Vector3 newPosition);
-            Quaternion GetRotation();
-            void SetRotation(Quaternion newRotation);
-
-            void LookAt(Vector3 target);
-
-            void Delete();
-
-            void SetBGFXView();
-
-        private:
-            static std::unordered_map<UUID, Camera3D> cameraMap;
-            static UUID activeCamera3DUUID;
-
-            UUID uuid;
-            Vector3 position;
-            Quaternion rotation;
-            Vector3 cameraUp;// = Vector3::UP;
-
-    };
 }

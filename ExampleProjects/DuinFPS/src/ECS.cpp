@@ -104,8 +104,13 @@ void ExecuteQueryUpdatePlayerYaw(flecs::world& world)
             if (yaw.value < -2.0f * PI) yaw.value += 2.0f * PI;
 
             duin::Quaternion yawQuat = duin::QuaternionFromAxisAngle(duin::Vector3{ 0.0f, 1.0f, 0.0f }, deltaYaw);
+            debugWatchlist.Post("Current Yaw: ", " % .2f", yaw.value);
+            debugWatchlist.Post("Delta Yaw: ", " % .2f", deltaYaw);
 
-            tx.SetRotation(duin::QuaternionMultiply(tx.GetRotation(), yawQuat));
+
+            //duin::Quaternion yawQuat = duin::QuaternionFromAxisAngle(duin::Vector3{ 0.0f, 1.0f, 0.0f }, yaw.value);
+
+            tx.SetRotation(duin::QuaternionMultiply(yawQuat, tx.GetRotation()));
             tx.SetRotation(duin::QuaternionNormalize(tx.GetRotation()));
         }
     );
@@ -145,6 +150,7 @@ void ExecuteQueryUpdateCameraPitch(flecs::world& world)
             // Extract current yaw from the rotation quaternion
             duin::Vector3 euler = duin::QuaternionToEuler(tx.GetRotation());
             float currentYaw = euler.y;
+			debugConsole.LogEx(duin::LogLevel::Info, "Current Yaw: %.2f", currentYaw);
 
             // Reconstruct the rotation quaternion with clamped pitch and existing yaw
             tx.SetRotation(duin::QuaternionFromEuler(pitch.value, currentYaw, 0.0f)); // Assuming roll is zero

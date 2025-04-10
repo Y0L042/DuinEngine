@@ -3174,8 +3174,10 @@ DNMAPI Quaternion QuaternionFromEuler(float pitch, float yaw, float roll)
 
     float x0 = cosf(pitch*0.5f);
     float x1 = sinf(pitch*0.5f);
+
     float y0 = cosf(yaw*0.5f);
     float y1 = sinf(yaw*0.5f);
+
     float z0 = cosf(roll*0.5f);
     float z1 = sinf(roll*0.5f);
 
@@ -3193,20 +3195,20 @@ DNMAPI Vector3 QuaternionToEuler(Quaternion q)
 {
     Vector3 result;
 
-    // Roll (x-axis rotation)
-    float x0 = 2.0f*(q.w*q.x + q.y*q.z);
-    float x1 = 1.0f - 2.0f*(q.x*q.x + q.y*q.y);
-    result.x = atan2f(x0, x1);
+    // Pitch (x-axis rotation)
+    float x0 = 2.0f*(q.w*q.y - q.z*q.x);
+    x0 = x0 > 1.0f ? 1.0f : x0;
+    x0 = x0 < -1.0f ? -1.0f : x0;
+    result.x = asinf(x0);
 
-    // Pitch (y-axis rotation)
-    float y0 = 2.0f*(q.w*q.y - q.z*q.x);
-    y0 = y0 > 1.0f ? 1.0f : y0;
-    y0 = y0 < -1.0f ? -1.0f : y0;
-    result.y = asinf(y0);
+    // Yaw (y-axis rotation)
+    float y0 = 2.0f*(q.w*q.z + q.x*q.y);
+    float y1 = 1.0f - 2.0f*(q.y*q.y + q.z*q.z);
+    result.y = atan2f(y0, y1);
 
-    // Yaw (z-axis rotation)
-    float z0 = 2.0f*(q.w*q.z + q.x*q.y);
-    float z1 = 1.0f - 2.0f*(q.y*q.y + q.z*q.z);
+    // Roll (z-axis rotation)
+    float z0 = 2.0f * (q.w * q.x + q.y * q.z);
+    float z1 = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);
     result.z = atan2f(z0, z1);
 
     return result;

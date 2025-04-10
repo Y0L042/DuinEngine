@@ -121,14 +121,11 @@ namespace duin::Input {
         }
     }
 
-    static Vector2 currentFramePos;
-    static Vector2 previousFramePos;
     void UpdateMouseFrameDelta()
     {
-        previousFramePos = currentFramePos;
-        currentFramePos = currentMouseLocalPos;
-        mouseFrameDelta = Vector2Subtract(previousFramePos, currentFramePos);
-		mouseFrameDelta.y = -mouseFrameDelta.y; // Invert Y axis
+        float x, y = 0;
+        ::SDL_GetRelativeMouseState(&x, &y);
+		mouseFrameDelta = Vector2(-x, y); // Invert x-axis
     }
 
     void CaptureMouse(int enable)

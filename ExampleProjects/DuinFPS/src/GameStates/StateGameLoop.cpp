@@ -25,8 +25,6 @@ flecs::entity debugCamera;
 flecs::entity bouncyCube;
 flecs::entity bouncyCubeRender;
 
-duin::Camera3D *camera;
-
 
 static const char *TERRAIN_PATH = "./assets/.maps/testMap.glb";
 
@@ -68,7 +66,7 @@ void StateGameLoop::State_Enter()
     ecsManager.Initialize();
 
     float playerHeight = 1.75f;
-    duin::Vector3 playerPosition(0.0f, 500.0f, 5.0f);
+    duin::Vector3 playerPosition(0.0f, 50.0f, 5.0f);
     duin::CharacterBodyDesc playerDesc = {
         .height = playerHeight,
         .radius = 0.3f,
@@ -300,6 +298,9 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
     else {
        debugCamera.set<MouseInputVec2>({ { mouseInput } });
     }
+
+
+
     const duin::ECSComponent::DynamicBodyComponent *dbc = bouncyCube.get<duin::ECSComponent::DynamicBodyComponent>();
     if (dbc) {
         std::shared_ptr<duin::DynamicBody> db = dbc->dynamicBody;
@@ -326,6 +327,11 @@ void StateGameLoop::State_PhysicsUpdate(double delta)
         debugWatchlist.Post("CameraNode Local Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
         pos = duin::ECSComponent::Transform3D::GetGlobalPosition(fpsCamera);
         debugWatchlist.Post("CameraNode Global Position: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
+    }
+    const duin::Camera* cCAM = fpsCamera.get<duin::Camera>();
+    if (cCAM) {
+        duin::Vector3 pos = cCAM->target;
+        debugWatchlist.Post("Camera Target: ", "{ %.2f, %.2f, %.2f }", pos.x, pos.y, pos.z);
     }
 
 

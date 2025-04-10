@@ -797,7 +797,6 @@ namespace duin {
 
         void ExecuteQuerySetCameraAsActive();
   
-        void ExecuteQueryUpdateCameraPosition();
         void ExecuteQueryControlCamera();
         void ExecuteQueryDrawCube();
         void ExecuteQueryDrawDebugCapsule();

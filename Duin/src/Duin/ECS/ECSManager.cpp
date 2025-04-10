@@ -57,8 +57,6 @@ namespace ECSComponent {
         world.component<ECSComponent::DebugCapsuleComponent>();
         world.component<ECSComponent::DebugCubeComponent>();
 
-        // Raylib components
-        // TODO REPLACE_RAYLIB
         world.component<Camera>();
 
     }
@@ -388,25 +386,6 @@ namespace ECSObserver {
             });
     }
 
-    void ECSManager::ExecuteQueryUpdateCameraPosition()
-    {
-        static flecs::query q = world.query_builder<
-            Camera,
-            const ECSComponent::Transform3D
-        >()
-        .cached()
-        .build();
-
-        q.each([](
-                flecs::entity e,
-                Camera& camera,
-                const ECSComponent::Transform3D& tx
-            ) {
-                Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
-                camera.position = gPos;
-            });
-    }
-
     void ECSManager::ExecuteQueryControlCamera()
     {
         static flecs::query q = world.query_builder<
@@ -424,18 +403,12 @@ namespace ECSObserver {
                 Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
                 Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e);
 
-                c.position = gPos;
-
-                // Define the default forward vector (0, 0, -1) in Raylib's coordinate system
+                // Rotate the default forward by gRot to get the new target position of the camera
                 Vector3 defaultForward = { 0.0f, 0.0f, -1.0f };
-
-                // Rotate the default forward vector by the Rotation3D quaternion to get the actual forward direction
                 Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);
 
-                // Set the camera's target to position + forward direction
+                c.position = gPos;
                 c.target = Vector3Add(gPos, forward);
-
-                // Set the up vector to keep the camera upright (0, 1, 0)
                 c.up = { 0.0f, 1.0f, 0.0f };
             }
         );
