@@ -41,7 +41,7 @@ namespace duin {
 
             virtual void Init();
             virtual void Ready();
-            virtual void HandleInput(InputEvent event);
+            virtual void OnEvent(Event e);
             virtual void Update(double delta);
             virtual void PhysicsUpdate(double delta);
             virtual void Draw();
@@ -55,11 +55,13 @@ namespace duin {
         protected:
             friend class SceneManager;
             friend class Application;
+            friend class StateMachine;
+            friend class State;
 
             
             // Runs children's functions first
             void ObjectReady();
-            void ObjectHandleInput(InputEvent event);
+            void ObjectOnEvent(Event event);
             void ObjectUpdate(double delta);
             void ObjectPhysicsUpdate(double delta);
             void ObjectDraw();

@@ -31,12 +31,12 @@ namespace duin {
                 }
             }
 
-            void EventHandler::RegisterInputEventListener(std::function<void(InputEvent)> listener)
+            void EventHandler::RegisterInputEventListener(std::function<void(Event)> listener)
             {
                 inputEventListeners.push_back(listener);
             }
 
-            void EventHandler::CallInputEventListeners(InputEvent event)
+            void EventHandler::CallInputEventListeners(Event event)
             {
                 for (auto& listener : inputEventListeners) {
                     listener(event);

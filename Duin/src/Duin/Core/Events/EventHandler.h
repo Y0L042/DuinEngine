@@ -16,11 +16,11 @@ namespace duin {
             ~EventHandler();
 
 
-            void RegisterInputEventListener(std::function<void(InputEvent)> listener);
+            void RegisterInputEventListener(std::function<void(Event)> listener);
 
         private:
-            std::vector<std::function<void(InputEvent)>> inputEventListeners;
+            std::vector<std::function<void(Event)>> inputEventListeners;
 
-            void CallInputEventListeners(InputEvent event);
+            void CallInputEventListeners(Event event);
     };
 }
