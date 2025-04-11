@@ -3,6 +3,10 @@
 
 #include <iostream>
 
+#include <Duin/Core/Application.h>
+#include <Duin/Core/Debug/DebugModule.h>
+
+
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
@@ -150,7 +154,6 @@ void ExecuteQueryUpdateCameraPitch(flecs::world& world)
             // Extract current yaw from the rotation quaternion
             duin::Vector3 euler = duin::QuaternionToEuler(tx.GetRotation());
             float currentYaw = euler.y;
-			debugConsole.LogEx(duin::LogLevel::Info, "Current Yaw: %.2f", currentYaw);
 
             // Reconstruct the rotation quaternion with clamped pitch and existing yaw
             tx.SetRotation(duin::QuaternionFromEuler(pitch.value, currentYaw, 0.0f)); // Assuming roll is zero

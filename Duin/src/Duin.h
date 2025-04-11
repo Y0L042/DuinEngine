@@ -6,7 +6,7 @@
 #include "Duin/Core/Debug/DebugTools.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Utils/SerialisationManager.h"
-#include "Duin/Core/Utils/GameStateMachine.h"
+#include "Duin/Core/Utils/StateMachine.h"
 #include "Duin/Core/Events/EventHandler.h"
 #include "Duin/Core/Events/Event.h"
 #include "Duin/Core/Events/Input.h"
