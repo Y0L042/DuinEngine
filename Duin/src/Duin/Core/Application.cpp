@@ -4,6 +4,7 @@
 #include "Duin/Core/Events/EventHandler.h"
 #include "Duin/Core/Events/Keys.h"
 #include "Duin/Core/Events/EngineInput.h"
+#include "Duin/Core/Events/Input.h"
 
 #include "Duin/Render/Renderer.h"
 
@@ -56,10 +57,9 @@ static SDL_Renderer *sdlRenderer = NULL;
 
 
 namespace duin {
-    std::shared_ptr<GameObject> rootGameObject = std::make_shared<GameObject>();
 
     static std::vector<std::function<void(void)>> postReadyCallbacks;
-    static std::vector<std::function<void(::SDL_Event)>> postInputCallbacks;
+    static std::vector<std::function<void(Event)>> postInputCallbacks;
     static std::vector<std::function<void(double)>> postUpdateCallbacks;
     static std::vector<std::function<void(double)>> postPhysicsUpdateCallbacks;
     static std::vector<std::function<void(void)>> postDrawCallbacks;
@@ -236,7 +236,7 @@ namespace duin {
         postReadyCallbacks.push_back(f);
     }
 
-    void QueuePostInputCallback(std::function<void(::SDL_Event)> f)
+    void QueuePostInputCallback(std::function<void(Event)> f)
     {
         postInputCallbacks.push_back(f);
     }
@@ -276,9 +276,9 @@ namespace duin {
         postDebugCallbacks.push_back(f);
     }
 
-
     Application::Application()
     {
+        rootGameObject = std::make_shared<GameObject>();
     }
 
     Application::~Application()
@@ -476,8 +476,8 @@ namespace duin {
 
     void Application::EngineInitialize()
     {
-        EventHandler::Get().RegisterInputEventListener([this](InputEvent e){ EngineHandleInputs(e); });
-        EventHandler::Get().RegisterInputEventListener([this](InputEvent e){ HandleInputs(e); });
+        EventHandler::Get().RegisterInputEventListener([this](Event e){ EngineOnEvent(e); });
+        EventHandler::Get().RegisterInputEventListener([this](Event e){ OnEvent(e); });
     }
 
     void Application::Initialize()
@@ -507,17 +507,17 @@ namespace duin {
         }
     }
 
-    void Application::EngineHandleInputs(InputEvent e)
+    void Application::EngineOnEvent(Event e)
     {
-        if (e.IsKeyDown(DN_KEY_ESCAPE)) {
+        if (Input::IsKeyDown(DN_KEY_ESCAPE)) {
             DN_CORE_INFO("Quiting... {}", e.sdlEvent.key.key);
             gameShouldQuit = true;
         }
 
-        rootGameObject->ObjectHandleInput(e);
+        rootGameObject->ObjectOnEvent(e);
     }
 
-    void Application::HandleInputs(InputEvent e)
+    void Application::OnEvent(Event e)
     {
     }
 

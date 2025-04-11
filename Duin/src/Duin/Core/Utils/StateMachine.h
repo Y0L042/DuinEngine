@@ -6,6 +6,7 @@
 #include <functional>
 
 #include "Duin/Core/Utils/UUID.h"
+#include "Duin/Scene/GameObject.h"
 
 
 
@@ -14,16 +15,32 @@ namespace duin {
     class State
     {
         public:
-            std::function<void()> Enter;
-            std::function<void()> HandleInput;
-            std::function<void(double)> Update;
-            std::function<void(double)> PhysicsUpdate;
-            std::function<void()> Draw;
-            std::function<void()> DrawUI;
-            std::function<void()> Exit;
-
             State(StateMachine& owner);
             virtual ~State() = default;
+
+            void StateEnter();
+            void StateOnEvent(Event e);
+            void StateUpdate(double delta);
+            void StatePhysicsUpdate(double delta);
+            void StateDraw();
+            void StateDrawUI();
+            void StateExit();
+
+            virtual void Enter() {};
+			virtual void OnEvent(Event e) {};
+			virtual void Update(double delta) {};
+			virtual void PhysicsUpdate(double delta) {};
+			virtual void Draw() {};
+			virtual void DrawUI() {};
+			virtual void Exit() {};
+
+            template<typename T, typename... Args>
+            std::shared_ptr<T> CreateChild(Args... args)
+            {
+                return stateGameObject->CreateChild<T>(std::forward<Args>(args)...);
+            }
+            void AddChild(std::shared_ptr<GameObject> child);
+            void RemoveChild(std::shared_ptr<GameObject> child);
 
             UUID GetUUID();
             StateMachine& GetOwner();
@@ -44,6 +61,7 @@ namespace duin {
             UUID uuid;
             std::string stateName;
             StateMachine& owner;
+            std::shared_ptr<GameObject> stateGameObject;
     };
 
 
@@ -60,18 +78,14 @@ namespace duin {
             {
                 static_assert(std::is_base_of<State, T>::value, "T must derive from State");
                 if (!stateStack.empty()) {
-                    if (stateStack.top()->Exit) {
-                        stateStack.top()->Exit();
-                    }
+                    stateStack.top()->StateExit();
                     if (!stateStack.empty()) {
                         stateStack.pop();
                     }
                 }
                 auto newState = std::make_unique<T>(*this);
                 stateStack.emplace(std::move(newState));
-                if (stateStack.top()->Enter) {
-                    stateStack.top()->Enter();
-                }
+                stateStack.top()->StateEnter();
             }
 
             template<typename T>
@@ -79,18 +93,14 @@ namespace duin {
             {
                 static_assert(std::is_base_of<State, T>::value, "T must derive from State");
                 while (!stateStack.empty()) {
-                    if (stateStack.top()->Exit) {
-                        stateStack.top()->Exit();
-                    }
+                    stateStack.top()->StateExit();
                     if (!stateStack.empty()) {
                         stateStack.pop();
                     }
                 }
                 auto newState = std::make_unique<T>(*this);
                 stateStack.emplace(std::move(newState));
-                if (stateStack.top()->Enter) {
-                    stateStack.top()->Enter();
-                }
+                stateStack.top()->StateEnter();
             }
 
             template<typename T>
@@ -99,9 +109,7 @@ namespace duin {
                 static_assert(std::is_base_of<State, T>::value, "T must derive from State");
                 auto newState = std::make_unique<T>(*this);
                 stateStack.emplace(std::move(newState));
-                if (stateStack.top()->Enter) {
-                    stateStack.top()->Enter();
-                }
+                stateStack.top()->StateEnter();
             }
 
             UUID GetUUID();
@@ -109,7 +117,7 @@ namespace duin {
             void PopState();
             void FlushStack();
             
-            void ExecuteHandleInput();
+            void ExecuteOnEvent(Event e);
             void ExecuteUpdate(double delta);
             void ExecutePhysicsUpdate(double delta);
             void ExecuteDraw();

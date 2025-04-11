@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 #include "SceneManager.h"
+#include "Duin/Core/Utils/StateMachine.h"
 
 namespace duin {
     GameObject::GameObject()
@@ -76,7 +77,7 @@ namespace duin {
     {
     }
 
-    void GameObject::HandleInput(InputEvent event)
+    void GameObject::OnEvent(Event event)
     {
     }
 
@@ -118,12 +119,12 @@ namespace duin {
         Ready();
 	}
 
-    void GameObject::ObjectHandleInput(InputEvent event)
+    void GameObject::ObjectOnEvent(Event event)
 	{
         for (auto& child : children) {
-            if (child) child->ObjectHandleInput(event);
+            if (child) child->ObjectOnEvent(event);
         }
-        HandleInput(event);
+        OnEvent(event);
 	}
 
     void GameObject::ObjectUpdate(double delta)

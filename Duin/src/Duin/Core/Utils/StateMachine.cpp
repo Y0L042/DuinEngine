@@ -7,7 +7,60 @@ namespace duin {
 
     State::State(StateMachine& owner)
         : owner(owner)
-    {}
+    {
+        stateGameObject = std::make_shared<GameObject>();
+    }
+
+    void State::StateEnter()
+    {
+        Enter();
+        stateGameObject->ObjectReady();
+    }
+
+    void State::StateOnEvent(Event e)
+    {
+        stateGameObject->ObjectOnEvent(e);
+        OnEvent(e);
+    }
+
+    void State::StateUpdate(double delta)
+    {
+        stateGameObject->ObjectUpdate(delta);
+        Update(delta);
+    }
+
+    void State::StatePhysicsUpdate(double delta)
+    {
+		stateGameObject->ObjectPhysicsUpdate(delta);
+        PhysicsUpdate(delta);
+    }
+
+    void State::StateDraw()
+    {
+		stateGameObject->ObjectDraw();
+        Draw();
+    }
+
+    void State::StateDrawUI()
+    {
+		stateGameObject->ObjectDrawUI();
+        DrawUI();
+    }
+
+    void State::StateExit()
+    {
+        Exit();
+    }
+
+    void State::AddChild(std::shared_ptr<GameObject> child)
+    {
+        stateGameObject->AddChild(child);
+    }
+
+    void State::RemoveChild(std::shared_ptr<GameObject> child)
+    {
+        stateGameObject->RemoveChild(child);
+    }
 
     UUID State::GetUUID()
     {
@@ -43,9 +96,7 @@ namespace duin {
         if (!VALIDATE_SM_STACK) { return; } 
 
         if (stateStack.empty()) { return; }
-        if (stateStack.top()->Exit) {
-            stateStack.top()->Exit();
-        }
+        stateStack.top()->StateExit();
         stateStack.pop();
     }
 
@@ -58,14 +109,12 @@ namespace duin {
         }
     }
 
-    void StateMachine::ExecuteHandleInput()
+    void StateMachine::ExecuteOnEvent(Event e)
     {
         if (!VALIDATE_SM_STACK) { return; } 
 
         if (stateStack.empty()) { return; }
-        if (stateStack.top()->HandleInput) {
-            stateStack.top()->HandleInput();
-        }
+        stateStack.top()->StateOnEvent(e);
     }
 
     void StateMachine::ExecuteUpdate(double delta)
@@ -73,9 +122,7 @@ namespace duin {
         if (!VALIDATE_SM_STACK) { return; } 
 
         if (stateStack.empty()) { return; }
-        if (stateStack.top()->Update) {
-            stateStack.top()->Update(delta);
-        }
+        stateStack.top()->StateUpdate(delta);
     }
 
     void StateMachine::ExecutePhysicsUpdate(double delta)
@@ -83,9 +130,7 @@ namespace duin {
         if (!VALIDATE_SM_STACK) { return; } 
 
         if (stateStack.empty()) { return; }
-        if (stateStack.top()->PhysicsUpdate) {
-            stateStack.top()->PhysicsUpdate(delta);
-        }
+        stateStack.top()->StatePhysicsUpdate(delta);
     }
 
     void StateMachine::ExecuteDraw()
@@ -93,9 +138,7 @@ namespace duin {
         if (!VALIDATE_SM_STACK) { return; } 
 
         if (stateStack.empty()) { return; }
-        if (stateStack.top()->Draw) {
-            stateStack.top()->Draw();
-        }
+        stateStack.top()->StateDraw();
     }
 
     void StateMachine::ExecuteDrawUI()
@@ -103,9 +146,7 @@ namespace duin {
         if (!VALIDATE_SM_STACK) { return; } 
 
         if (stateStack.empty()) { return; }
-        if (stateStack.top()->DrawUI) {
-            stateStack.top()->DrawUI();
-        }
+        stateStack.top()->StateDrawUI();
     }
 
 }

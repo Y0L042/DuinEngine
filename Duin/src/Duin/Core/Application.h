@@ -73,8 +73,8 @@ namespace duin
 		void EnginePreFrame();
 
         /** Run as callback events */
-		void EngineHandleInputs(InputEvent event);
-		virtual void HandleInputs(InputEvent event);
+		void EngineOnEvent(Event event);
+		virtual void OnEvent(Event event);
 
 		void EngineUpdate(double delta);
 		virtual void Update(double delta);
@@ -101,11 +101,17 @@ namespace duin
 		virtual void Exit();
 		void EngineExit();
 
+		template<typename T, typename... Args>
+		std::shared_ptr<T> CreateChild(Args... args)
+		{
+			return rootGameObject->CreateChild<T>(std::forward<Args>(args)...);
+		}
         void AddChild(std::shared_ptr<GameObject> child);
         void RemoveChild(std::shared_ptr<GameObject> child);
 
 	private:
 		std::string windowName = "Game";
+		std::shared_ptr<GameObject> rootGameObject;
 	};
 
 	Application* CreateApplication();

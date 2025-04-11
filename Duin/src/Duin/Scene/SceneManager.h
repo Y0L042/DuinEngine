@@ -14,7 +14,7 @@ namespace duin {
             ~SceneManager() = default;
 
             void ExecuteReady();
-            void ExecuteHandleInput(InputEvent event);
+            void ExecuteOnEvent(InputEvent event);
             void ExecuteUpdate(double delta);
             void ExecutePhysicsUpdate(double delta);
             void ExecuteDraw();
@@ -22,7 +22,7 @@ namespace duin {
             void ExecuteDebug();
 
             void RegisterReady(UUID uuid, std::function<void()> callback);
-            void RegisterHandleInput(UUID uuid, std::function<void(InputEvent)> callback);
+            void RegisterOnEvent(UUID uuid, std::function<void(InputEvent)> callback);
             void RegisterUpdate(UUID uuid, std::function<void(double)> callback);
             void RegisterPhysicsUpdate(UUID uuid, std::function<void(double)> callback);
             void RegisterDraw(UUID uuid, std::function<void()> callback);
