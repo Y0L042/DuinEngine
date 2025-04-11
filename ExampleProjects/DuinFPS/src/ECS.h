@@ -1,6 +1,8 @@
 #pragma once
 
-#include <Duin.h>
+#include <Duin/Core/Maths/MathsModule.h>
+#include <Duin/ECS/ECSModule.h>
+#include <Duin/Core/Debug/DebugModule.h>
 
 #include <vector>
 

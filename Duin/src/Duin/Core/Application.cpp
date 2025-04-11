@@ -7,6 +7,7 @@
 
 #include "Duin/Render/Renderer.h"
 
+
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -53,8 +54,12 @@ static SDL_Window *sdlWindow = NULL;
 static SDL_Surface* sdlSurface = NULL;
 static SDL_Renderer *sdlRenderer = NULL;
 
-namespace duin {
 
+namespace duin {
+    std::shared_ptr<GameObject> rootGameObject = std::make_shared<GameObject>();
+
+    static std::vector<std::function<void(void)>> postReadyCallbacks;
+    static std::vector<std::function<void(::SDL_Event)>> postInputCallbacks;
     static std::vector<std::function<void(double)>> postUpdateCallbacks;
     static std::vector<std::function<void(double)>> postPhysicsUpdateCallbacks;
     static std::vector<std::function<void(void)>> postDrawCallbacks;
@@ -226,6 +231,16 @@ namespace duin {
         return sdlWindow;
     }
 
+    void QueuePostReadyCallback(std::function<void(void)> f)
+    {
+        postReadyCallbacks.push_back(f);
+    }
+
+    void QueuePostInputCallback(std::function<void(::SDL_Event)> f)
+    {
+        postInputCallbacks.push_back(f);
+    }
+
     void QueuePostUpdateCallback(std::function<void(double)> f)
     {
         postUpdateCallbacks.push_back(f);
@@ -341,6 +356,7 @@ namespace duin {
 
         EngineReady();
         Ready();
+        EnginePostReady();
 
         while(!gameShouldQuit) {
 
@@ -476,6 +492,14 @@ namespace duin {
     {
     }
 
+    void Application::EnginePostReady()
+    {
+        rootGameObject->ObjectReady();
+        for (auto& callback : postReadyCallbacks) {
+            callback();
+        }
+    }
+
     void Application::EnginePreFrame()
     {
         for (auto& callback : preFrameCallbacks) {
@@ -489,6 +513,8 @@ namespace duin {
             DN_CORE_INFO("Quiting... {}", e.sdlEvent.key.key);
             gameShouldQuit = true;
         }
+
+        rootGameObject->ObjectHandleInput(e);
     }
 
     void Application::HandleInputs(InputEvent e)
@@ -505,6 +531,7 @@ namespace duin {
 
     void Application::EnginePostUpdate(double delta)
     {
+        rootGameObject->ObjectUpdate(delta);
         for (auto& callback : postUpdateCallbacks) {
             callback(delta);
         }
@@ -520,6 +547,7 @@ namespace duin {
 
     void Application::EnginePostPhysicsUpdate(double delta)
     {
+        rootGameObject->ObjectPhysicsUpdate(delta);
         for (auto& callback : postPhysicsUpdateCallbacks) {
             callback(delta);
         }
@@ -535,6 +563,7 @@ namespace duin {
 
     void Application::EnginePostDraw()
     {
+        rootGameObject->ObjectDraw();
         for (auto& callback : postDrawCallbacks) {
             callback();
         }
@@ -550,6 +579,7 @@ namespace duin {
 
     void Application::EnginePostDrawUI()
     {
+        rootGameObject->ObjectDrawUI();
         for (auto& callback : postDrawUICallbacks) {
             callback();
         }
@@ -574,6 +604,7 @@ namespace duin {
 
     void Application::EnginePostDebug()
     {
+        rootGameObject->ObjectDebug();
         for (auto& callback : postDebugCallbacks) {
             callback();
         }
@@ -592,6 +623,16 @@ namespace duin {
 
     void Application::Exit()
     {
+    }
+
+    void Application::AddChild(std::shared_ptr<GameObject> child)
+    {
+        rootGameObject->AddChild(child);
+    }
+
+    void Application::RemoveChild(std::shared_ptr<GameObject> child)
+    {
+        rootGameObject->RemoveChild(child);
     }
 
 }

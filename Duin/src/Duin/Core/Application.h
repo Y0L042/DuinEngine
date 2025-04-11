@@ -6,6 +6,7 @@
 
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Events/Event.h"
+#include "Duin/Scene/GameObject.h"
 
 
 
@@ -38,6 +39,8 @@ namespace duin
 
 	SDL_Window* GetSDLWindow();
 
+    void QueuePostReadyCallback(std::function<void(void)> f);
+    void QueuePostInputCallback(std::function<void(::SDL_Event)> f);
 	void QueuePostUpdateCallback(std::function<void(double)>);
 	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
 	void QueuePostDrawCallback(std::function<void()>);
@@ -65,6 +68,7 @@ namespace duin
 
 		void EngineReady();
 		virtual void Ready();
+        void EnginePostReady();
 
 		void EnginePreFrame();
 
@@ -96,6 +100,9 @@ namespace duin
 
 		virtual void Exit();
 		void EngineExit();
+
+        void AddChild(std::shared_ptr<GameObject> child);
+        void RemoveChild(std::shared_ptr<GameObject> child);
 
 	private:
 		std::string windowName = "Game";
