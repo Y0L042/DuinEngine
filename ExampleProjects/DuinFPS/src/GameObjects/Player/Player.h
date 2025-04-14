@@ -12,10 +12,15 @@ class Player : public duin::GameObject
 {
     public:
         void Ready() override;
+        void OnEvent(duin::Event e) override;
         void PhysicsUpdate(double delta) override;
+        void DrawUI() override;
 
     private:
-        flecs::entity player;
-        flecs::entity cameraRoot;
-        flecs::entity playerCamera;
+
 };
+
+extern flecs::entity player;
+extern flecs::entity cameraRoot;
+extern flecs::entity playerCamera;
+extern duin::StateMachine playerStateMachine;

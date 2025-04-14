@@ -20,7 +20,7 @@ namespace duin {
     class CollisionShape
     {
         public:
-            CollisionShape(CollisionGeometryVariant geometryVariant, PhysicsMaterial physicsMaterial);
+            CollisionShape(CollisionGeometryVariant geometryVariant, PhysicsMaterial physicsMaterial = PhysicsMaterial());
             ~CollisionShape();
 
             CollisionGeometryVariant& GetGeometryVariant();

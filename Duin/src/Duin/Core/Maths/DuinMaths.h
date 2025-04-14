@@ -214,6 +214,19 @@ typedef struct Vector4 {
     float z;
     float w;
 
+    static const Vector4 IDENTITY_QUAT;
+    static const Vector4 ZERO;
+    static const Vector4 ONE;
+    static const Vector4 X;
+    static const Vector4 Y;
+    static const Vector4 Z;
+    static const Vector4 UP;
+    static const Vector4 DOWN;
+    static const Vector4 LEFT;
+    static const Vector4 RIGHT;
+    static const Vector4 TOWARD;
+    static const Vector4 AWAY;
+
     Vector4()
         : x(0.0f), y(0.0f), z(0.0f), w(1.0f) {}
 
@@ -3187,6 +3200,10 @@ DNMAPI Quaternion QuaternionFromEuler(float pitch, float yaw, float roll)
     result.w = x0*y0*z0 + x1*y1*z1;
 
     return result;
+}
+DNMAPI Quaternion QuaternionFromEulerV(Vector3 v)
+{
+	return QuaternionFromEuler(v.x, v.y, v.z);
 }
 
 // Get the Euler angles equivalent to quaternion (roll, pitch, yaw)
