@@ -10,9 +10,9 @@ namespace duin {
             float dynamicFriction;
             float restitutionCoeff;
 
-            PhysicsMaterial(float staticFriction,
-                            float dynamicFriction,
-                            float restitutionCoeff);
+            PhysicsMaterial(float staticFriction = 1.0f,
+                            float dynamicFriction = 1.0f,
+                            float restitutionCoeff = 1.0f);
 
             physx::PxMaterial *pxMaterial = nullptr;
         private:

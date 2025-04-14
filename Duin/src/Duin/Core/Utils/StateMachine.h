@@ -6,63 +6,16 @@
 #include <functional>
 
 #include "Duin/Core/Utils/UUID.h"
+#include "Duin/Core/Events/Event.h"
 #include "Duin/Scene/GameObject.h"
 
 
 
 namespace duin {
+    class GameObject;
     class StateMachine;
-    class State
-    {
-        public:
-            State(StateMachine& owner);
-            virtual ~State() = default;
+    class State;
 
-            void StateEnter();
-            void StateOnEvent(Event e);
-            void StateUpdate(double delta);
-            void StatePhysicsUpdate(double delta);
-            void StateDraw();
-            void StateDrawUI();
-            void StateExit();
-
-            virtual void Enter() {};
-			virtual void OnEvent(Event e) {};
-			virtual void Update(double delta) {};
-			virtual void PhysicsUpdate(double delta) {};
-			virtual void Draw() {};
-			virtual void DrawUI() {};
-			virtual void Exit() {};
-
-            template<typename T, typename... Args>
-            std::shared_ptr<T> CreateChild(Args... args)
-            {
-                return stateGameObject->CreateChild<T>(std::forward<Args>(args)...);
-            }
-            void AddChild(std::shared_ptr<GameObject> child);
-            void RemoveChild(std::shared_ptr<GameObject> child);
-
-            UUID GetUUID();
-            StateMachine& GetOwner();
-
-            const std::string GetName();
-
-            bool operator==(const State &state) const
-            {
-                return this->uuid == state.uuid;
-            }
-
-            bool operator!=(const State &state) const
-            {
-                return this->uuid != state.uuid;
-            }
-
-        protected:
-            UUID uuid;
-            std::string stateName;
-            StateMachine& owner;
-            std::shared_ptr<GameObject> stateGameObject;
-    };
 
 
 
@@ -129,6 +82,79 @@ namespace duin {
 
     };
 
+    class State
+    {
+    public:
+        State(StateMachine& owner);
+        virtual ~State() = default;
 
+        void StateEnter();
+        void StateOnEvent(Event e);
+        void StateUpdate(double delta);
+        void StatePhysicsUpdate(double delta);
+        void StateDraw();
+        void StateDrawUI();
+        void StateExit();
+
+        virtual void Enter() {};
+        virtual void OnEvent(Event e) {};
+        virtual void Update(double delta) {};
+        virtual void PhysicsUpdate(double delta) {};
+        virtual void Draw() {};
+        virtual void DrawUI() {};
+        virtual void Exit() {};
+
+
+        template<typename T>
+        void SwitchState()
+        {
+            owner.template SwitchState<T>();
+        }
+
+        template<typename T>
+        void FlushAndSwitchState()
+        {
+            owner.template FlushAndSwitchState<T>();
+        }
+
+        template<typename T>
+        void PushState()
+        {
+            owner.template PushState<T>();
+        }
+
+        void PopState();
+        void FlushStack();
+
+
+        template<typename T, typename... Args>
+        std::shared_ptr<T> CreateChild(Args... args)
+        {
+            return stateGameObject->template CreateChild<T>(std::forward<Args>(args)...);
+        }
+        void AddChild(std::shared_ptr<GameObject> child);
+        void RemoveChild(std::shared_ptr<GameObject> child);
+
+        UUID GetUUID();
+        StateMachine& GetOwner();
+
+        const std::string GetName();
+
+        bool operator==(const State& state) const
+        {
+            return this->uuid == state.uuid;
+        }
+
+        bool operator!=(const State& state) const
+        {
+            return this->uuid != state.uuid;
+        }
+
+    protected:
+        UUID uuid;
+        std::string stateName;
+        StateMachine& owner;
+        std::shared_ptr<GameObject> stateGameObject;
+    };
 
 }

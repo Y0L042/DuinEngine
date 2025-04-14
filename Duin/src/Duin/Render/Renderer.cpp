@@ -37,8 +37,7 @@ namespace duin {
     void DrawPlane(Vector3 size)
     {
         Vector3 position = Vector3Zero();
-        // Quaternion rotation( 0.0f, 0.0f, 0.3007058f, 0.953717f );// = QuaternionIdentity();
-        Quaternion rotation = QuaternionFromEuler(0.4f, 0.4f, 0.4f);
+         Quaternion rotation = QuaternionIdentity();
         Renderer::Get().QueueRender(RenderGeometryType::PLANE, position, rotation, size);
     }
 

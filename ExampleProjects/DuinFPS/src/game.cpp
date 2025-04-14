@@ -49,6 +49,8 @@ void Game::Draw()
 void Game::DrawUI()
 {
     mainStateMachine.ExecuteDrawUI();
+
+	debugWatchlist.Draw("Watchlist");
     debugConsole.Draw("Console");
 }
 

@@ -52,6 +52,16 @@ namespace duin {
         Exit();
     }
 
+    void State::PopState()
+    {
+		owner.PopState();
+    }
+
+    void State::FlushStack()
+    {
+        owner.FlushStack();
+    }
+
     void State::AddChild(std::shared_ptr<GameObject> child)
     {
         stateGameObject->AddChild(child);
