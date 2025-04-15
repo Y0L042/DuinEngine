@@ -15,8 +15,10 @@ namespace duin {
     {
         public:
             static std::shared_ptr<KinematicBody> Create(Transform3D transform, CollisionShape collisionShape);
+            static std::shared_ptr<KinematicBody> Create(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material);
 
             KinematicBody(Transform3D transform, CollisionShape collisionShape);
+            KinematicBody(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material);
             ~KinematicBody();
 
             Vector3 GetPosition() override;

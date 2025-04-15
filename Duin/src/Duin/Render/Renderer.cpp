@@ -20,6 +20,11 @@ namespace duin {
         Renderer::Get().QueueRender(RenderGeometryType::BOX, position, rotation, size);
     }
 
+    void DrawSphere(Vector3 position, Quaternion rotation, Vector3 size)
+    {
+        Renderer::Get().QueueRender(RenderGeometryType::SPHERE, position, rotation, size);
+    }
+
     void DrawSquare(Vector3 position, 
                  Quaternion rotation, 
                  Vector3 size)
@@ -32,6 +37,13 @@ namespace duin {
         Renderer::Get().StartDebugDraw();
         dde.drawGrid(Axis::Y, {0.0f, 0.0f, 0.0f}, 20, 1.0f);
 		Renderer::Get().EndDebugDraw();
+    }
+
+    void DrawDebugSphere(Vector3 pos, float radius)
+    {
+        Renderer::Get().StartDebugDraw();
+        dde.drawOrb(pos.x, pos.y, pos.z, radius);
+        Renderer::Get().EndDebugDraw();
     }
 
     void DrawPlane(Vector3 size)
@@ -155,7 +167,11 @@ namespace duin {
             case RenderGeometryType::PLANE:
                 return bgfxBufferList[RenderGeometryType::PLANE];
                 break;
+            case RenderGeometryType::SPHERE:
+                return bgfxBufferList[RenderGeometryType::SPHERE];
+                break;
             default:
+                DN_CORE_FATAL("Invalid render geometry handle!");
                 break;
         }
     }
@@ -183,6 +199,15 @@ namespace duin {
             PlaneRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
         ibh = bgfx::createIndexBuffer(bgfx::makeRef(PlaneRenderGeometry::GetIdentityTriList(),
             PlaneRenderGeometry::TriSize() * sizeof(uint16_t)));
+        bgfxBufferList[RenderGeometryType::PLANE] = Renderer::BGFXBufferHandle(vbh, ibh);
+
+        /* Create SPHERE Buffers */
+        vbh = BGFX_INVALID_HANDLE;
+        ibh = BGFX_INVALID_HANDLE;
+        vbh = bgfx::createVertexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityVertices(),
+            SphereRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+        ibh = bgfx::createIndexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityTriList(),
+            SphereRenderGeometry::TriSize() * sizeof(uint16_t)));
         bgfxBufferList[RenderGeometryType::PLANE] = Renderer::BGFXBufferHandle(vbh, ibh);
     }
 }

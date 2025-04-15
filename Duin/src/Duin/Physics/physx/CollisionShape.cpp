@@ -21,10 +21,17 @@ namespace duin {
                 }
             case cSPHERE:
                 {
+                    SphereGeometry* g = std::get_if<cSPHERE>(&geometryVariant);
+                    if (g) {
+                        physx::PxSphereGeometry* pxGeometry = &g->pxSphereGeometry;
+                        physx::PxMaterial* pxMaterial = physicsMaterial.pxMaterial;
+                        pxShape = server.pxPhysics->createShape(*pxGeometry, *pxMaterial);
+                    }                    
                     break;
                 }
             case cCAPSULE:
                 {
+                    DN_CORE_FATAL("CAPSULE not implemented!");
                     break;
                 }
             case cPLANE:

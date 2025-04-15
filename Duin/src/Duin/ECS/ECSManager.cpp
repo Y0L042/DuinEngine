@@ -314,16 +314,16 @@ namespace ECSObserver {
                 double delta = GetPhysicsFrameTime();
                 Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
 
-                Vector3 oldPos = cb.characterBody->GetFootPosition();
-                cb.characterBody->Move(vDelta, delta);
-                Vector3 newPos = cb.characterBody->GetFootPosition();
+                Vector3 oldPos = cb.body->GetFootPosition();
+                cb.body->Move(vDelta, delta);
+                Vector3 newPos = cb.body->GetFootPosition();
 
                 // add distance between current globalPos (old) and pxBody global pos (new) to localPos
                 Vector3 globalDelta = Vector3Subtract(newPos, ECSComponent::Transform3D::GetGlobalPosition(e));
                 Vector3 newLocalPos = Vector3Add(globalDelta, tx.GetPosition()); 
                 tx.SetPosition(newLocalPos);
 
-                velocity.value = cb.characterBody->GetCurrentVelocity();
+                velocity.value = cb.body->GetCurrentVelocity();
 
                 // If autostep has happened, cap Y velocity
                 Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
@@ -348,9 +348,9 @@ namespace ECSObserver {
                 const ECSComponent::DynamicBodyComponent& dynamicBodyComponent,
                 ECSComponent::Transform3D& tx
             ) {
-               Vector3 newGPos = dynamicBodyComponent.dynamicBody->GetPosition();
+               Vector3 newGPos = dynamicBodyComponent.body->GetPosition();
                ECSComponent::Transform3D::SetGlobalPosition(e, newGPos);
-               Quaternion newGRot = dynamicBodyComponent.dynamicBody->GetRotation();
+               Quaternion newGRot = dynamicBodyComponent.body->GetRotation();
                ECSComponent::Transform3D::SetGlobalRotation(e, newGRot);
             });
     }

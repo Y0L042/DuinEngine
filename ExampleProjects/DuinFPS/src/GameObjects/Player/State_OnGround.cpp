@@ -39,7 +39,7 @@ void State_OnGround::PhysicsUpdate(double delta)
 {
     const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
     if (cbc) {
-        int isOnFloor = cbc->characterBody->IsOnFloor();
+        int isOnFloor = cbc->body->IsOnFloor();
         if (!isOnFloor) {
            SwitchState<State_InAir>();
            return;

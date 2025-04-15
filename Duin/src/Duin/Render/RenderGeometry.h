@@ -68,6 +68,13 @@ namespace duin {
         SphereRenderGeometry();
 		SphereRenderGeometry(float radius);
 
+        static const int VERT_SIZE = 8;
+        static const int TRI_SIZE = 36;
+
+        static PosColorVertex* GetIdentityVertices();
+        static uint16_t* GetIdentityTriList();
+        static size_t VertSize() { return VERT_SIZE; }
+        static size_t TriSize() { return TRI_SIZE; }
     };
 
     struct CapsuleRenderGeometry : public RenderGeometry {
