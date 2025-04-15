@@ -1,11 +1,11 @@
 #pragma once
 
 #include <Duin/Scene/SceneModule.h>
+#include <Duin/ECS/ECSModule.h>
 
 #include "Singletons.h"
 #include "GameObjects/Player/Player.h"
 
-#include <Duin/ECS/ECSModule.h>
 
 
 class Player : public duin::GameObject

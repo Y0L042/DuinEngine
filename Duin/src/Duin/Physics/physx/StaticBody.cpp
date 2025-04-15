@@ -13,8 +13,24 @@ namespace duin {
         return std::make_shared<StaticBody>(transform, collisionShape);
     }
 
+    std::shared_ptr<StaticBody> StaticBody::Create(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material)
+    {
+        return std::make_shared<StaticBody>(transform, geometry, material);
+    }
+
     StaticBody::StaticBody(Transform3D transform, CollisionShape collisionShape)
         : collisionShape(collisionShape)
+    {
+        PhysicsServer& server = PhysicsServer::Get();
+        physx::PxPhysics *pxPhysics = server.pxPhysics;
+
+        actor = pxPhysics->createRigidStatic(transform.ToPhysX());
+        physx::PxShape *shape = collisionShape.pxShape;
+        actor->attachShape(*shape);
+        server.pxScene->addActor(*actor);
+    }
+    StaticBody::StaticBody(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material)
+        : collisionShape(CollisionShape(geometry, material))
     {
         PhysicsServer& server = PhysicsServer::Get();
         physx::PxPhysics *pxPhysics = server.pxPhysics;

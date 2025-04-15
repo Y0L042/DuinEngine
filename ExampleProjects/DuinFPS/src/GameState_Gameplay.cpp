@@ -2,6 +2,7 @@
 
 #include "Singletons.h"
 #include "GameObjects/Player/Player.h"
+#include "GameObjects/BeachBall/BeachBall.h"
 #include "ECS.h"
 
 #include <Duin.h>
@@ -18,15 +19,15 @@ void GameState_Gameplay::Enter()
 
 	playerObj = CreateChild<Player>();
 
-    duin::PhysicsMaterial groundMaterial(0.4f, 0.4f, 0.5f);
-    duin::PlaneGeometry groundGeometry;
-    duin::CollisionShape groundCollision(groundGeometry, groundMaterial);
-    duin::Quaternion groundDir = duin::Vector3ToQuaternion({ 0.0f, 1.0f, 0.0f });
-    static duin::StaticBody ground({ {0.0f, 0.0f, 0.0f}, groundDir }, groundCollision);
+    duin::Quaternion groundDir = duin::Vector3ToQuaternion(duin::Vector3::UP);
+    duin::Vector3 groundPos = duin::Vector3::UP;
 
-    //duin::PlaneGeometry plane;
-    //duin::CollisionShape ground(plane, duin::PhysicsMaterial());
-    //static std::shared_ptr<duin::StaticBody> groundPlane = duin::StaticBody::Create(duin::Transform3D{duin::Vector3(), duin::Quaternion::Y }, ground);
+    static duin::StaticBody ground({groundPos, groundDir} /* Tx3D */,  
+                                   duin::PlaneGeometry(), 
+                                   duin::PhysicsMaterial(0.4f, 0.4f, 0.5f));
+
+    static std::shared_ptr<BeachBall> ball = CreateChild<BeachBall>();
+
 }
 
 void GameState_Gameplay::OnEvent(duin::Event e)

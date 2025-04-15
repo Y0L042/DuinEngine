@@ -6,6 +6,8 @@
 #include "Singletons.h"
 #include "GameStates.h"
 
+#define DEBUG
+
 duin::Application* duin::CreateApplication() { return new Game(); }
 
 duin::DebugConsole debugConsole;

@@ -37,7 +37,7 @@ void State_InAir::PhysicsUpdate(double delta)
 
     const CharacterBodyComponent *bodyComponent = player.get<CharacterBodyComponent>();
     if (bodyComponent) {
-        isOnFloor = bodyComponent->characterBody->IsOnFloor();
+        isOnFloor = bodyComponent->body->IsOnFloor();
     }
     
     if (isOnFloor) {

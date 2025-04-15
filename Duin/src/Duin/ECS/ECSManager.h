@@ -705,19 +705,44 @@ namespace duin {
         //  3D Physics Components
         /*------------------------------------------------------------------------*/
         struct CharacterBodyComponent {
-            std::shared_ptr<CharacterBody> characterBody;
+            std::shared_ptr<CharacterBody> body;
+
+            CharacterBodyComponent()
+                : body(nullptr) {}
+
+            CharacterBodyComponent(std::shared_ptr<CharacterBody> cb)
+                : body(cb) {}
         };
 
         struct StaticBodyComponent {
-            std::shared_ptr<StaticBody> staticBody;
+            std::shared_ptr<StaticBody> body;
+
+            StaticBodyComponent()
+                : body(nullptr) {}
+
+            StaticBodyComponent(std::shared_ptr<StaticBody> sb)
+                : body(sb) {}
+
         };
 
         struct KinematicBodyComponent {
-            std::shared_ptr<KinematicBody> kinematicBody;
+            std::shared_ptr<KinematicBody> body;
+
+            KinematicBodyComponent()
+                : body(nullptr) {}
+
+            KinematicBodyComponent(std::shared_ptr<KinematicBody> kb)
+                : body(kb) {}
         };
 
         struct DynamicBodyComponent {
-            std::shared_ptr<DynamicBody> dynamicBody;
+            std::shared_ptr<DynamicBody> body;
+
+            DynamicBodyComponent()
+                : body(nullptr) {}
+
+            DynamicBodyComponent(std::shared_ptr<DynamicBody> db)
+                : body(db) {}
         };
 
         struct PhysicsStaticCubeComponent {

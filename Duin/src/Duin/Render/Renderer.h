@@ -12,11 +12,17 @@ namespace duin {
     void DrawBox(Vector3 position = Vector3(), 
                  Quaternion rotation = QuaternionIdentity(), 
                  Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+    void DrawSphere(Vector3 position = Vector3(), 
+                 Quaternion rotation = QuaternionIdentity(), 
+                 Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
     void DrawSquare(Vector3 position = Vector3(), 
                  Quaternion rotation = QuaternionIdentity(), 
                  Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
     void DrawGrid();
     void DrawPlane(Vector3 size);
+
+    void DrawDebugSphere(Vector3 position, float radius);
+
 
     struct ShaderProgram {
         UUID uuid;

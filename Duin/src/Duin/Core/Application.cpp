@@ -5,7 +5,7 @@
 #include "Duin/Core/Events/Keys.h"
 #include "Duin/Core/Events/EngineInput.h"
 #include "Duin/Core/Events/Input.h"
-
+#include "Duin/Physics/PhysicsModule.h"
 #include "Duin/Render/Renderer.h"
 
 
@@ -551,6 +551,8 @@ namespace duin {
         for (auto& callback : postPhysicsUpdateCallbacks) {
             callback(delta);
         }
+
+        PhysicsServer::Get().StepPhysics(delta);
     }
 
     void Application::EngineDraw()

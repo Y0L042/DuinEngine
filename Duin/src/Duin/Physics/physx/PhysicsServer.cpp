@@ -32,7 +32,6 @@ namespace duin {
         if (pxFoundation == nullptr)
             throw std::runtime_error("PxFoundation creation failed!");
 
-#ifdef DEBUG
         pxPvd = physx::PxCreatePvd(*pxFoundation);
         if (pxPvd == nullptr)
             throw std::runtime_error("PxPvd creation failed!");
@@ -40,7 +39,6 @@ namespace duin {
         if (transport == nullptr)
             throw std::runtime_error("PxPvd transport creation failed!");
         pxPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
-#endif
 
         pxPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true, pxPvd);
         if (pxPhysics == nullptr)
