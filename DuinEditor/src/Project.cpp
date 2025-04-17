@@ -1,5 +1,5 @@
 #include "Project.h"
-#include <Duin.h>
+#include <Duin/Core/Debug/DebugModule.h>
 
 #include <string>
 

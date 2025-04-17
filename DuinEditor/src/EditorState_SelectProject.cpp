@@ -1,13 +1,17 @@
-#include "StateStartupMenu.h"
-#include "../Singletons.h"
-#include "../FileManager.h"
-#include "States.h"
+#include "EditorState_SelectProject.h"
+
+#include <Duin/Core/Utils/UtilsModule.h>
+#include <Duin/Core/Debug/DebugModule.h>
+#include <external/imgui.h>
 
 #include <nfd.h>
 #include <iostream>
 #include <vector>
 #include <string>
 
+#include "Singletons.h"
+#include "FileManager.h"
+#include "States.h"
 
 #define MAX_DIR_LEN 512
 
@@ -17,27 +21,7 @@ const char *PROJECT_FILE_NAME = "duin.project\0";
 static std::vector<std::string> recentProjectDirsVec;
 static int selectedProjectIndex = -1;
 
-
-
-
-StateStartupMenu::StateStartupMenu(duin::GameStateMachine& owner)
-    : GameState(owner)
-{
-    Enter = [this]() { State_Enter(); };
-    Exit = [this]() { State_Exit(); };
-    HandleInput = [this]() { State_HandleInput(); };
-    Update = [this](double delta) { State_Update(delta); };
-    PhysicsUpdate = [this](double delta) { State_PhysicsUpdate(delta); };
-    Draw = [this]() { State_Draw(); };
-    DrawUI = [this]() { State_DrawUI(); };
-}
-
-StateStartupMenu::~StateStartupMenu()
-{}
-
-
-
-void StateStartupMenu::State_Enter()
+void EditorState_SelectProject::Enter()
 {
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING STARTUPMENU");
     NFD_Init();
@@ -45,29 +29,33 @@ void StateStartupMenu::State_Enter()
     InitProjectList();
 }
 
-void StateStartupMenu::State_Exit()
+void EditorState_SelectProject::OnEvent(duin::Event e)
 {
-    NFD_Quit();
 }
 
-void StateStartupMenu::State_HandleInput()
-{}
+void EditorState_SelectProject::Update(double delta)
+{
+}
 
-void StateStartupMenu::State_Update(double delta)
-{}
+void EditorState_SelectProject::PhysicsUpdate(double delta)
+{
+}
 
-void StateStartupMenu::State_PhysicsUpdate(double delta)
-{}
+void EditorState_SelectProject::Draw()
+{
+}
 
-void StateStartupMenu::State_Draw()
-{}
-
-void StateStartupMenu::State_DrawUI()
+void EditorState_SelectProject::DrawUI()
 {
     DrawGUI();
 }
 
-void StateStartupMenu::InitProjectList()
+void EditorState_SelectProject::Exit()
+{
+    NFD_Quit();
+}
+
+void EditorState_SelectProject::InitProjectList()
 {
     debugConsole.LogEx(duin::LogLevel::Info, 
                      "Initialising Project List.\n");
@@ -111,7 +99,7 @@ void StateStartupMenu::InitProjectList()
     }
 }
 
-void StateStartupMenu::LoadSelectedProject()
+void EditorState_SelectProject::LoadSelectedProject()
 {
     if (selectedProjectIndex == -1) { return; }
 
@@ -133,7 +121,7 @@ void StateStartupMenu::LoadSelectedProject()
                 SetActiveProject(entry.path().string());
                 fileManager.rootPath = projectPath.string();
 
-                owner.SwitchState<StateLevelEditor>();
+                SwitchState<EditorState_GameEditor>();
                 break;
             }
         }
@@ -150,7 +138,7 @@ void StateStartupMenu::LoadSelectedProject()
     }
 }
 
-void StateStartupMenu::DrawGUI()
+void EditorState_SelectProject::DrawGUI()
 {
     ImGui::Begin("Menu");
     ImGui::BeginChild("Projects", {0, 0}, 0, 0);
@@ -179,10 +167,10 @@ void StateStartupMenu::DrawGUI()
     ImGui::End();
 }
 
-void StateStartupMenu::LoadEditorCFG()
+void EditorState_SelectProject::LoadEditorCFG()
 {}
 
-void StateStartupMenu::ImportProject()
+void EditorState_SelectProject::ImportProject()
 {
     std::string importedProjPath;
     nfdchar_t *outPath;
@@ -206,4 +194,3 @@ void StateStartupMenu::ImportProject()
         return;
     }
 }
-

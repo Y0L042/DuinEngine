@@ -53,6 +53,9 @@ project "DuinEditor"
     filter "action:vs*"
         buildoptions { "/utf-8" }  -- Changed: Added /utf-8 flag for Unicode support
 
+    filter "action:vs*"
+        buildoptions { "/utf-8", '/Zc:__cplusplus', '/Zc:preprocessor' }  -- Changed: Added /utf-8 flag for Unicode support
+
     -- Enable multi-processor compilation
     filter "action:vs*"
         flags { "MultiProcessorCompile" }
