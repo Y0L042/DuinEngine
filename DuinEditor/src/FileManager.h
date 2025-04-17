@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Duin.h>
-
 #include <vector>
 #include <string>
 #include <filesystem>
@@ -11,7 +9,7 @@ namespace fs = std::filesystem;
 typedef enum ArcheType {
     P_DIRECTORY,
     P_FILE
-};
+} ArcheType;
 
 typedef enum FileType {
     IMAGE_EXT,
@@ -23,49 +21,43 @@ typedef enum FileType {
 
 
 
-
-
-
 class FSNode 
 {
-public:
-    ArcheType type;
-    std::string path;
+    public:
+        ArcheType type;
+        std::string path;
 
-    FileType fileType;
-    std::string name;
-    std::string fileExtension;
+        FileType fileType;
+        std::string name;
+        std::string fileExtension;
 
-    std::vector<FSNode *> subNodes;
+        std::vector<FSNode *> subNodes;
 
-    FSNode() = default;
-    FSNode(std::string path);
+        FSNode() = default;
+        FSNode(std::string path);
 
-    void Traverse();
-    void IdentifyFile();
+        void Traverse();
+        void SetFileType();
 
-private:
+    private:
 };
-
-
 
 
 
 class FileManager 
 {
-public:
-    fs::path rootPath;
+    public:
+        fs::path rootPath;
 
-    FileManager() = default;
-    FileManager(std::string rootPath);
+        FileManager() = default;
+        FileManager(std::string rootPath);
 
-    void BuildFileSystemTree();
-    void DrawGUI();
-    void DrawNode(FSNode* node, const std::string& nodeLabel);
+        void BuildFileSystemTree();
+        void DrawGUI();
+        void DrawNode(FSNode* node, const std::string& nodeLabel);
 
-    void PrintTree();
+        void PrintTree();
 
-private:
-    FSNode rootNode;
+    private:
+        FSNode rootNode;
 };
-

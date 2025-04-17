@@ -1,5 +1,10 @@
 #include "FileManager.h"
 
+#include <Duin/Core/Utils/UtilsModule.h>
+#include <Duin/Core/Debug/DebugModule.h>
+#include <SDL3/SDL.h>
+#include <external/imgui.h>
+
 #include <memory>
 #include <string>
 #include <array>
@@ -81,7 +86,7 @@ FSNode::FSNode(std::string path)
         name = fs::path(path).filename().string();
     } else {
         type = ArcheType::P_FILE;
-        IdentifyFile();
+        SetFileType();
     }
 }
 
@@ -100,10 +105,10 @@ void FSNode::Traverse()
     }
 }
 
-void FSNode::IdentifyFile()
+void FSNode::SetFileType()
 {
-    name = std::string(::GetFileName(path.c_str()));
-    fileExtension = std::string(::GetFileExtension(name.c_str()));
+    name = std::string(duin::GetFileName(path));
+    fileExtension = std::string(duin::GetFileExtension(name));
     for (const FileExtension& type : AllExtensions) {
         if (fileExtension.compare(type.extension) == 0) {
             fileType = type.type;

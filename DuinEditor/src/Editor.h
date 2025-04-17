@@ -3,11 +3,11 @@
 #include <Duin/Core/Application.h>
 #include <Duin/Core/Events/EventsModule.h>
 
-class Game : public duin::Application
+class Editor : public duin::Application
 {
     public:
-        Game() {}
-        ~Game() {}
+        Editor() {}
+        ~Editor() {}
 
         void Initialize() override;
         void Ready() override;
