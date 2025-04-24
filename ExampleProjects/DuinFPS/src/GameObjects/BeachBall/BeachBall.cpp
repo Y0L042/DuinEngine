@@ -31,6 +31,7 @@ void BeachBall::PhysicsUpdate(double delta)
 void BeachBall::Draw()
 {
     duin::DrawDebugSphere(body->GetPosition(), radius);
+	//duin::DrawBox(body->GetPosition(), body->GetRotation(), { radius, radius, radius });
 }
 
 void BeachBall::DrawUI()

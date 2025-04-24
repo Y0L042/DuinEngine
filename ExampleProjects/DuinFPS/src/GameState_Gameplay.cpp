@@ -61,6 +61,7 @@ void GameState_Gameplay::PhysicsUpdate(double delta)
 void GameState_Gameplay::Draw()
 {
     //duin::DrawPlane({20.0f, 0.0f, 20.0f});
+	//duin::DrawBox({ 0.0f, -20.0f, 0.0f }, duin::QuaternionIdentity(), {40.0f, 40.0f, 40.0f});
     duin::DrawGrid();
 }
 

@@ -55,8 +55,7 @@ void Editor::DrawUI()
 {
     mainStateMachine.ExecuteDrawUI();
 
-	debugWatchlist.Draw("Watchlist");
-    debugConsole.Draw("Console");
+
 }
 
 void Editor::Debug()

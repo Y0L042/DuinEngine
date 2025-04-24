@@ -8,6 +8,8 @@
 flecs::entity player;
 flecs::entity cameraRoot;
 flecs::entity playerCamera;
+
+flecs::ref<duin::Camera> cameraRef;
 duin::StateMachine playerStateMachine;
 
 void Player::Ready()
@@ -67,7 +69,10 @@ void Player::Ready()
         .add<duin::ECSTag::ActiveCamera>()
         ;
 
-        playerStateMachine.SwitchState<State_OnGround>();
+	//cameraRef = flecs::ref<duin::Camera>(ecs.world, playerCamera);
+	//duin::Camera* cam = cameraRef.get();
+
+    playerStateMachine.SwitchState<State_OnGround>();
 }
 void Player::OnEvent(duin::Event e)
 {

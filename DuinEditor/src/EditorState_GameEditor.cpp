@@ -31,6 +31,8 @@ void EditorState_GameEditor::Draw()
 
 void EditorState_GameEditor::DrawUI()
 {
+    debugWatchlist.Draw("Watchlist");
+    debugConsole.Draw("Console");
 }
 
 void EditorState_GameEditor::Exit()

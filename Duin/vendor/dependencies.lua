@@ -243,6 +243,19 @@ local dependencies = {
         end
     },
 
+    TOML11 = {
+        repo = "https://github.com/ToruNiina/toml11",
+        tag = "v4.4.0",
+        folder = "toml11",
+        steps = function()
+            print("Dep TOML11.steps() START")
+            print("TOML11 downloaded.")
+            runCommand('cd toml11 && cmake -B ./build/ -DTOML11_PRECOMPILE=ON -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDebug')
+            runCommand("cd toml11 && cmake --build build --config Debug")
+            print("Dep TOML11.steps() END")
+        end
+    },
+
     SPDLOG = {
         repo = "https://github.com/gabime/spdlog",
         tag = "v1.15.0",

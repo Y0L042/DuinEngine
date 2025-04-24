@@ -12,6 +12,7 @@ class Project
 
         Project() = default;
         Project(std::string projectDir);
+
     private:
 
 };

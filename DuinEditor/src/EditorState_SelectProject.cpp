@@ -15,8 +15,8 @@
 
 #define MAX_DIR_LEN 512
 
-const char *EDITOR_CFG_PATH = "./data/editor_cfg.json\0";
-const char *PROJECT_FILE_NAME = "duin.project\0";
+const std::string EDITOR_CFG_PATH = "data/editor_cfg.toml";
+const std::string PROJECT_FILE_NAME = "duin.project";
 
 static std::vector<std::string> recentProjectDirsVec;
 static int selectedProjectIndex = -1;
@@ -57,45 +57,28 @@ void EditorState_SelectProject::Exit()
 
 void EditorState_SelectProject::InitProjectList()
 {
-    debugConsole.LogEx(duin::LogLevel::Info, 
-                     "Initialising Project List.\n");
+    debugConsole.LogEx(duin::LogLevel::Info, "Initialising Project List.\n");
 
     // Read editor config
-    duin::JSONDocument doc;
-    if (ReadJSONFile(EDITOR_CFG_PATH, doc)) {
-            debugConsole.LogEx(duin::LogLevel::Warn, 
-                             "EditorConfig empty. Select project root.\n");
+    duin::TOMLValue file;
+    if (file.Load(EDITOR_CFG_PATH) == duin::TOMLValue::INVALID) {
+        debugConsole.LogEx(duin::LogLevel::Warn, "EditorConfig empty. Select project root.\n");
         return;
     }
 
     // Ensure "EditorConfig" exists and is an object
-    if (!doc.HasMember("EditorConfig") || !doc.GetDocument()["EditorConfig"].IsObject()) {
-            debugConsole.LogEx(duin::LogLevel::Warn, 
-                             "EditorConfig not found. Select project root.\n");
+    if (!file.Contains("EditorConfig")) {
+        debugConsole.LogEx(duin::LogLevel::Warn, "EditorConfig not found. Select project root.\n");
         return;
     }
-    const rapidjson::Value& editorConfig = doc.GetDocument()["EditorConfig"];
     debugConsole.LogEx(duin::LogLevel::Info, 
                      "EditorConfig loaded.\n");
 
     // Read "RecentProjectDirs"
-    if (editorConfig.HasMember("RecentProjectDirs") && editorConfig["RecentProjectDirs"].IsArray()) {
-        const rapidjson::Value& recentDirs = editorConfig["RecentProjectDirs"];
-
-        debugConsole.LogEx(duin::LogLevel::Info, 
-                         "RecentProjectDirs:");
-
-        for (rapidjson::SizeType i = 0; i < recentDirs.Size(); ++i) {
-            if (recentDirs[i].IsString()) {
-                recentProjectDirsVec.push_back(recentDirs[i].GetString());
-
-                debugConsole.LogEx(duin::LogLevel::Info, 
-                                 "%s", recentDirs[i].GetString());
-            }
-        }
-    } else {
-        debugConsole.LogEx(duin::LogLevel::Error, 
-                         "RecentProjectDirs is missing or not an array.");
+    recentProjectDirsVec = duin::TOMLValue::Get<std::vector<std::string>>(file.At("EditorConfig").At("RecentProjectDirs"));
+    debugConsole.LogEx(duin::LogLevel::Info, "RecentProjectDirs:");
+    for (int i = 0; i < recentProjectDirsVec.size(); ++i) {
+        debugConsole.LogEx(duin::LogLevel::Info, "%s", recentProjectDirsVec[i].c_str());
     }
 }
 
@@ -165,6 +148,9 @@ void EditorState_SelectProject::DrawGUI()
     ImGui::BeginChild("Menu", {0, 0}, 0, 0);
     ImGui::EndChild();
     ImGui::End();
+
+    debugWatchlist.Draw("Watchlist");
+    debugConsole.Draw("Console");
 }
 
 void EditorState_SelectProject::LoadEditorCFG()

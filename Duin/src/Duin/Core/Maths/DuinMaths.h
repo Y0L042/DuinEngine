@@ -64,9 +64,6 @@
 #include <xmmintrin.h>
 
 #define DUINMATHS_STATIC_INLINE
-// #if defined(RAYMATH_IMPLEMENTATION) && defined(RAYMATH_STATIC_INLINE)
-//     #error "Specifying both RAYMATH_IMPLEMENTATION and RAYMATH_STATIC_INLINE is contradictory"
-// #endif
 
 // Function specifiers definition
 #if defined(DUINMATHS_IMPLEMENTATION)
@@ -287,6 +284,8 @@ typedef struct Matrix {
           m1(row2.x), m5(row2.y), m9(row2.z), m13(row2.w),
           m2(row3.x), m6(row3.y), m10(row3.z), m14(row3.w),
           m3(row4.x), m7(row4.y), m11(row4.z), m15(row4.w) {}
+
+
 
     explicit Matrix(const physx::PxMat44T<float>& physxMat)
         : m0(physxMat.column0.x), m4(physxMat.column0.y), m8(physxMat.column0.z), m12(physxMat.column0.w),
