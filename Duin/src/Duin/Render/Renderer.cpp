@@ -10,74 +10,44 @@
 
 #include "Duin/Core/Debug/DNLog.h"
 #include "Duin/Core/Application.h"
+#include "Duin/Core/Maths/MathsModule.h"
 
 namespace duin {
-    DebugDrawEncoder dde;
-	bgfx::Encoder *encoder = nullptr;
+    struct BGFXBufferHandle {
+        UUID uuid;
+        bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
+        bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
 
-    void DrawBox(Vector3 position, Quaternion rotation, Vector3 size)
+        BGFXBufferHandle() : vbh(BGFX_INVALID_HANDLE), ibh(BGFX_INVALID_HANDLE) {}
+        BGFXBufferHandle(bgfx::VertexBufferHandle vbh, bgfx::IndexBufferHandle ibh)
+            : vbh(vbh), ibh(ibh) {}
+    };
+
+    static UUID DEFAULT_SHADERPROGRAM_UUID;
+    static bgfx::VertexLayout pcvDecl;
+    static std::vector<BGFXBufferHandle> bgfxBufferList;
+    static std::unordered_map<UUID, ShaderProgram> shaderProgramMap;
+    static DebugDrawEncoder dde;
+    static DebugDrawState debugDrawState;
+	static bgfx::Encoder *encoder = nullptr;
+    static RenderState globalRenderState;
+    static std::vector<RenderState> globalRenderStateStack;
+
+    static void CreateGeometryBuffers();
+    static BGFXBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type);
+
+    void InitRenderer()
     {
-        Renderer::Get().QueueRender(RenderGeometryType::BOX, position, rotation, size);
-    }
-
-    void DrawSphere(Vector3 position, Quaternion rotation, Vector3 size)
-    {
-        Renderer::Get().QueueRender(RenderGeometryType::SPHERE, position, rotation, size);
-    }
-
-    void DrawSquare(Vector3 position, 
-                 Quaternion rotation, 
-                 Vector3 size)
-    {
-        Renderer::Get().QueueRender(RenderGeometryType::PLANE, position, rotation, size);
-    }
-
-    void DrawGrid()
-    {
-        Renderer::Get().StartDebugDraw();
-        dde.drawGrid(Axis::Y, {0.0f, 0.0f, 0.0f}, 20, 1.0f);
-		Renderer::Get().EndDebugDraw();
-    }
-
-    void DrawDebugSphere(Vector3 pos, float radius)
-    {
-        Renderer::Get().StartDebugDraw();
-        dde.drawOrb(pos.x, pos.y, pos.z, radius);
-        Renderer::Get().EndDebugDraw();
-    }
-
-    void DrawPlane(Vector3 size)
-    {
-        Vector3 position = Vector3Zero();
-         Quaternion rotation = QuaternionIdentity();
-        Renderer::Get().QueueRender(RenderGeometryType::PLANE, position, rotation, size);
-    }
-
-    Renderer& Renderer::Get()
-    {
-        static Renderer renderer;
-        return renderer;
-    }
-
-    Renderer::Renderer() 
-    {
-        Init();
-    }
-
-    Renderer:: ~Renderer() {}
-
-
-    void Renderer::Init()
-    {
-        
-        ddInit();
         pcvDecl.begin()
             .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
             .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
         .end();
 
+        // Load default shaders
         bgfx::ShaderHandle vsh = LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
         bgfx::ShaderHandle fsh = LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
+
+        // Create default shaderprogram
         bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh, true); 
         ShaderProgram shaderProgram(vsh, fsh, program);
         shaderProgramMap[shaderProgram.uuid] = shaderProgram;
@@ -85,33 +55,160 @@ namespace duin {
 
         CreateGeometryBuffers();
 
+        ddInit();
+        // Set reasonable default sizes (adjust based on your needs)
+        // const uint32_t defaultVertexCount = 1 << 15;  // 32k vertices
+        // const uint32_t defaultIndexCount = 1 << 16;   // 64k indices
+        // ddAlloc(defaultVertexCount, defaultIndexCount);
+
         DN_CORE_INFO("Renderer initialised.");
     }
 
-    void Renderer::QueueRender(RenderGeometryType::Type type)
+    void BeginDraw3D(Camera& camera)
     {
+        DN_CORE_INFO("BeginDraw3D");
+
+        globalRenderStateStack.clear();
+
+        const uint16_t viewID = 0;
+
+
+        // Get camera matrices
+        Matrix viewMtx = GetCameraViewMatrix(&camera);
+        Matrix projMtx = GetCameraProjectionMatrix(&camera);
+
+        // Set view transform
+        static float view[16];
+        static float proj[16];
+        MatrixAsArray(viewMtx, view);
+        MatrixAsArray(projMtx, proj);
+        bgfx::setViewTransform(viewID, view, proj);
+        bgfx::setViewRect(viewID, 0, 0,
+            (uint16_t)GetWindowWidth() ,
+            (uint16_t)GetWindowHeight());
+        bgfx::setViewClear(viewID,
+                           BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
+                           0x303030ff,
+                           1.0f,
+                           0);
+
+        // Set new 3D rendering state
+        globalRenderState.in3DMode = true;
+        globalRenderState.inTextureMode = false;
+        globalRenderState.camera = &camera;
+        globalRenderState.viewMatrix = viewMtx;
+        globalRenderState.projectionMatrix = projMtx;
+
+        // Push current state to stack
+        globalRenderStateStack.push_back(globalRenderState);
+
+        encoder = bgfx::begin(false);
+        BeginDebugDraw();
+    }
+
+    void EndDraw3D()
+    {
+        DN_CORE_INFO("EndDraw3D");
+
+        if (!globalRenderStateStack.empty()) {
+            // Restore previous state
+            globalRenderState = globalRenderStateStack.back();
+            globalRenderStateStack.pop_back();
+
+            // If returning to another 3D mode, update matrices
+            if (globalRenderState.in3DMode && globalRenderState.camera) {
+                static float view[16];
+                static float proj[16];
+                MatrixAsArray(globalRenderState.viewMatrix, view);
+                MatrixAsArray(globalRenderState.projectionMatrix, proj);
+                bgfx::setViewTransform(0, view, proj);
+            }
+        } else {
+            // Reset to default state
+            globalRenderState = RenderState();
+        }
+        EndDebugDraw();
+        bgfx::end(encoder);
+    }
+
+    void BeginTextureMode(RenderTexture& target)
+    {
+        // Push current state to stack
+        globalRenderStateStack.push_back(globalRenderState);
+
+        // Set new texture rendering state
+        globalRenderState.inTextureMode = true;
+        globalRenderState.in3DMode = false;
+        globalRenderState.target = &target;
+        globalRenderState.viewID = target.viewID;
+
+        // Set view to render to texture
+        bgfx::setViewFrameBuffer(target.viewID, target.frameBuffer);
+        bgfx::setViewRect(target.viewID, 0, 0, target.width, target.height);
+
+        // Clear render texture
+        bgfx::setViewClear(target.viewID,
+                           BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
+                           0x00000000,
+                           1.0f, 0);
+    }
+
+    void EndTextureMode()
+    {
+        if (!globalRenderStateStack.empty()) {
+            // Restore previous state
+            globalRenderState = globalRenderStateStack.back();
+            globalRenderStateStack.pop_back();
+        } else {
+            // Reset to default state
+            globalRenderState = RenderState();
+        }
+    }
+
+    void BeginDebugDraw()
+    {
+        dde.begin(0, true, encoder);
+        DN_CORE_TRACE("Debug draw started");
+    }
+
+    void EndDebugDraw()
+    {
+        dde.end();
+        DN_CORE_TRACE("Debug draw ended");
+    }
+
+    void QueueRender(RenderGeometryType::Type type)
+    {
+        DN_CORE_INFO("Shape queued for rendering");
+
         bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
         bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
         bgfx::ProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
 
-        Renderer::BGFXBufferHandle buffers = Renderer::Get().GetGeometryBufferHandle(type);
+        BGFXBufferHandle buffers = GetGeometryBufferHandle(type);
         vbh = buffers.vbh;
         ibh = buffers.ibh;
 
-        bgfx::setVertexBuffer(0, vbh);
-        bgfx::setIndexBuffer(ibh);
-        bgfx::submit(0, program);
+        // bgfx::setVertexBuffer(0, vbh);
+        // bgfx::setIndexBuffer(ibh);
+        // bgfx::submit(0, program);
+
+        encoder->setVertexBuffer(0, vbh);
+        encoder->setIndexBuffer(ibh);
+        encoder->submit(0, program);
     }
 
-    void Renderer::QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size)
+    void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size)
     {
+        DN_CORE_INFO("Shape queued for rendering");
+
         Vector3 eulerRotation = QuaternionToEuler(rotation);
 
         bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
         bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
         bgfx::ProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
 
-        Renderer::BGFXBufferHandle buffers = Renderer::Get().GetGeometryBufferHandle(type);
+        BGFXBufferHandle buffers = GetGeometryBufferHandle(type);
         vbh = buffers.vbh;
         ibh = buffers.ibh;
         if (!(bgfx::isValid(vbh) && bgfx::isValid(ibh))) {
@@ -125,40 +222,131 @@ namespace duin {
                    size.x, size.y, size.z,
                    eulerRotation.x, eulerRotation.y, eulerRotation.z, 
                    position.x, position.y, position.z);
-        bgfx::setTransform(mtx);
-        bgfx::setVertexBuffer(0, vbh);
-        bgfx::setIndexBuffer(ibh);
-        bgfx::submit(0, program);
+
+        // bgfx::setTransform(mtx);
+        // bgfx::setVertexBuffer(0, vbh);
+        // bgfx::setIndexBuffer(ibh);
+        // bgfx::submit(0, program);
+
+        encoder->setTransform(mtx);
+        encoder->setVertexBuffer(0, vbh);
+        encoder->setIndexBuffer(ibh);
+        encoder->submit(0, program);
     }
 
-    void Renderer::EmptyStack() {}
-
-    void Renderer::RenderPipeline()
+    void ExecuteRenderPipeline()
     {
-        // Camera3D& activeCamera = Camera3D::GetActiveCamera3D();
-        // if (activeCamera.IsValid()) {
-        //     activeCamera.SetBGFXView();
+        // Camera *activeCamera = GetActiveCamera();
+        // if (activeCamera && activeCamera->IsValid()) {
+        //     GetBGFXMatrix(activeCamera);
         // }
-        //
-        Camera *activeCamera = GetActiveCamera();
-        if (activeCamera && activeCamera->IsValid()) {
-            GetBGFXMatrix(activeCamera);
+
+        if (globalRenderState.in3DMode && globalRenderState.camera) {
+            globalRenderState.viewMatrix = GetCameraViewMatrix(globalRenderState.camera);
+            globalRenderState.projectionMatrix = GetCameraProjectionMatrix(globalRenderState.camera);
+
+            static float view[16];
+            static float proj[16];
+            MatrixAsArray(globalRenderState.viewMatrix, view);
+            MatrixAsArray(globalRenderState.projectionMatrix, proj);
+            bgfx::setViewTransform(0, view, proj);
         }
+
+        bgfx::frame();
     }
 
-    void Renderer::StartDebugDraw()
+    void EmptyRenderStack() 
     {
-        encoder = bgfx::begin();
-        dde.begin(0, true, encoder);
+        globalRenderStateStack.clear();
+        globalRenderState = RenderState();
+        DN_CORE_INFO("Cleared render stack.");
     }
 
-    void Renderer::EndDebugDraw()
+    void DestroyRenderTexture(RenderTexture& texture)
     {
-        dde.end();
-		bgfx::end(encoder);
+        texture.Destroy();
     }
 
-    Renderer::BGFXBufferHandle Renderer::GetGeometryBufferHandle(RenderGeometryType::Type type)
+    void DrawBox(Vector3 position, Quaternion rotation, Vector3 size)
+    {
+        QueueRender(RenderGeometryType::BOX, position, rotation, size);
+    }
+
+    void DrawSphere(Vector3 position, Quaternion rotation, Vector3 size)
+    {
+        QueueRender(RenderGeometryType::SPHERE, position, rotation, size);
+    }
+
+    void DrawSquare(Vector3 position, 
+                 Quaternion rotation, 
+                 Vector3 size)
+    {
+        QueueRender(RenderGeometryType::PLANE, position, rotation, size);
+    }
+
+    void DrawGrid()
+    {
+        dde.drawGrid(
+            Axis::Y,
+            { 0.0f, 0.0f, 0.0f },
+            20,
+            1.0f
+        );
+    }
+
+    void DrawDebugSphere(Vector3 pos, float radius)
+    {
+        dde.drawOrb(
+            pos.x,
+            pos.y,
+            pos.z,
+            radius
+        );
+    }
+
+    void DrawPlane(Vector3 size)
+    {
+        Vector3 position = Vector3Zero();
+        Quaternion rotation = QuaternionIdentity();
+        QueueRender(RenderGeometryType::PLANE, position, rotation, size);
+    }
+
+    static void CreateGeometryBuffers()
+    {
+        bgfxBufferList.resize(RenderGeometryType::Count);
+
+        bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
+        bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
+
+        /* Create BOX Buffers */
+        vbh = BGFX_INVALID_HANDLE;
+        ibh = BGFX_INVALID_HANDLE;
+        vbh = bgfx::createVertexBuffer(bgfx::makeRef(BoxRenderGeometry::GetIdentityVertices(),
+                                                     BoxRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+        ibh = bgfx::createIndexBuffer(bgfx::makeRef(BoxRenderGeometry::GetIdentityTriList(),
+                                                    BoxRenderGeometry::TriSize() * sizeof(uint16_t)));
+        bgfxBufferList[RenderGeometryType::BOX] = BGFXBufferHandle(vbh, ibh);
+
+		/* Create PLANE Buffers */
+        vbh = BGFX_INVALID_HANDLE;
+        ibh = BGFX_INVALID_HANDLE;
+        vbh = bgfx::createVertexBuffer(bgfx::makeRef(PlaneRenderGeometry::GetIdentityVertices(),
+            PlaneRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+        ibh = bgfx::createIndexBuffer(bgfx::makeRef(PlaneRenderGeometry::GetIdentityTriList(),
+            PlaneRenderGeometry::TriSize() * sizeof(uint16_t)));
+        bgfxBufferList[RenderGeometryType::PLANE] = BGFXBufferHandle(vbh, ibh);
+
+        /* Create SPHERE Buffers */
+        vbh = BGFX_INVALID_HANDLE;
+        ibh = BGFX_INVALID_HANDLE;
+        vbh = bgfx::createVertexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityVertices(),
+            SphereRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+        ibh = bgfx::createIndexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityTriList(),
+            SphereRenderGeometry::TriSize() * sizeof(uint16_t)));
+        bgfxBufferList[RenderGeometryType::SPHERE] = BGFXBufferHandle(vbh, ibh);
+    }
+
+    static BGFXBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type)
     {
         switch (type) {
             case RenderGeometryType::BOX:
@@ -174,40 +362,5 @@ namespace duin {
                 DN_CORE_FATAL("Invalid render geometry handle!");
                 break;
         }
-    }
-
-    void Renderer::CreateGeometryBuffers()
-    {
-        bgfxBufferList.resize(RenderGeometryType::Count);
-
-        bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
-        bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
-
-        /* Create BOX Buffers */
-        vbh = BGFX_INVALID_HANDLE;
-        ibh = BGFX_INVALID_HANDLE;
-        vbh = bgfx::createVertexBuffer(bgfx::makeRef(BoxRenderGeometry::GetIdentityVertices(),
-                                                     BoxRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
-        ibh = bgfx::createIndexBuffer(bgfx::makeRef(BoxRenderGeometry::GetIdentityTriList(),
-                                                    BoxRenderGeometry::TriSize() * sizeof(uint16_t)));
-        bgfxBufferList[RenderGeometryType::BOX] = Renderer::BGFXBufferHandle(vbh, ibh);
-
-		/* Create PLANE Buffers */
-        vbh = BGFX_INVALID_HANDLE;
-        ibh = BGFX_INVALID_HANDLE;
-        vbh = bgfx::createVertexBuffer(bgfx::makeRef(PlaneRenderGeometry::GetIdentityVertices(),
-            PlaneRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
-        ibh = bgfx::createIndexBuffer(bgfx::makeRef(PlaneRenderGeometry::GetIdentityTriList(),
-            PlaneRenderGeometry::TriSize() * sizeof(uint16_t)));
-        bgfxBufferList[RenderGeometryType::PLANE] = Renderer::BGFXBufferHandle(vbh, ibh);
-
-        /* Create SPHERE Buffers */
-        vbh = BGFX_INVALID_HANDLE;
-        ibh = BGFX_INVALID_HANDLE;
-        vbh = bgfx::createVertexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityVertices(),
-            SphereRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
-        ibh = bgfx::createIndexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityTriList(),
-            SphereRenderGeometry::TriSize() * sizeof(uint16_t)));
-        bgfxBufferList[RenderGeometryType::PLANE] = Renderer::BGFXBufferHandle(vbh, ibh);
     }
 }

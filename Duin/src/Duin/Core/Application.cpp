@@ -55,6 +55,9 @@ static SDL_Window *sdlWindow = NULL;
 static SDL_Surface* sdlSurface = NULL;
 static SDL_Renderer *sdlRenderer = NULL;
 
+const bgfx::ViewId MAIN_DISPLAY = 0;
+
+
 
 namespace duin {
 
@@ -346,13 +349,15 @@ namespace duin {
         bgfxInit.resolution.height = WINDOW_HEIGHT;
         bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
         bgfxInit.platformData.nwh = hwnd;
-        const bgfx::ViewId MAIN_DISPLAY = 0;
         bgfx::init(bgfxInit);
         bgfx::setViewClear(MAIN_DISPLAY, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
         bgfx::setViewRect(MAIN_DISPLAY, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         ImGui::CreateContext();
         ::ImGui_Implbgfx_Init(255);
         ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
+        ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+        InitRenderer();
 
         EngineReady();
         Ready();
@@ -402,26 +407,29 @@ namespace duin {
             } // End of Physics
 
 
-            Renderer::Get().EmptyStack();
             ++renderFrameCount;
             bgfx::touch(MAIN_DISPLAY);
             ::ImGui_Implbgfx_NewFrame();
             ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
+            const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+            ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
 
-            EngineDraw();
-            Draw();
-            EnginePostDraw();
+            BeginDraw3D(*GetActiveCamera());
 
-            EngineDrawUI();
-            DrawUI();
-            EnginePostDrawUI();
+                EngineDraw();
+                Draw();
+                EnginePostDraw();
 
-            Renderer::Get().RenderPipeline();
+                EngineDrawUI();
+                DrawUI();
+                EnginePostDrawUI();
+
+            EndDraw3D();
 
             ImGui::Render();
             ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
-            bgfx::frame();
+            ExecuteRenderPipeline();
 
             EnginePostFrame();
 

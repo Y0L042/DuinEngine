@@ -65,6 +65,7 @@ project "Duin"
 		SolutionRoot .. "/%{IncludeDir.fmt}",
 		SolutionRoot .. "/%{IncludeDir.patches}",
         SolutionRoot .. "/%{IncludeDir.rapidjson}",
+        SolutionRoot .. "/%{IncludeDir.toml11}",
 		SolutionRoot .. "/%{IncludeDir.physx}",
     }
     -- libdirs(global_libdirs) 
@@ -74,6 +75,7 @@ project "Duin"
         ProjectRoot .. "/vendor/bgfx/.build/win64_vs2022/bin",
 		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
+        ProjectRoot .. "/vendor/toml11/build/src/Debug",
     }
     -- defines(global_defines)
     defines 
@@ -97,6 +99,7 @@ project "Duin"
         "Imm32.lib",
         "Cfgmgr32.lib",
         "SDL3-static.lib",
+        "toml11.lib",
         "bxDebug.lib",
         "bimgDebug.lib",
         "bgfxDebug.lib",
