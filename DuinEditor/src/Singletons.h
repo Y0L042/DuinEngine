@@ -3,8 +3,8 @@
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Utils/UtilsModule.h>
 
-#include "FileManager.h"
 #include "Project.h"
+#include "gui/FileManager.h"
 
 extern FileManager fileManager;
 extern duin::DebugConsole debugConsole;

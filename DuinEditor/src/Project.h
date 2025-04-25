@@ -4,6 +4,7 @@
 #include <filesystem>
 namespace fs = std::filesystem;
 
+
 class Project
 {
     public:
@@ -12,6 +13,8 @@ class Project
 
         Project() = default;
         Project(std::string projectDir);
+
+        std::string GetPathAsString();
 
     private:
 

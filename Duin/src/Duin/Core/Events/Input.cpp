@@ -48,7 +48,12 @@ namespace duin::Input {
         if (!EVENT_IS_KEYBOARD(e.type)) { return; }
         // Set current key state
         ::SDL_Scancode code = e.key.scancode;
-        KeyState state;
+        if (code > 511 || code < 0) {
+            DN_CORE_WARN("Keyboard event out of bounds {}!", (int)code);
+            return;
+        }
+
+        KeyState state = KeyState::UP;
         if (e.type == SDL_EVENT_KEY_DOWN) { state = KeyState::DOWN; }
         if (e.type == SDL_EVENT_KEY_UP) { state = KeyState::UP; }
         currentKeyState[code] = state;

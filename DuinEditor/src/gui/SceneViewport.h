@@ -1,5 +1,4 @@
 #pragma once
-#include <Duin.h>
 
 // RenderTexture2D& GetViewportRenderTexture();
 float GetSceneViewportX();
@@ -10,4 +9,4 @@ float ScaleToSceneViewportX(float width);
 float ScaleToSceneViewportY(float height);
 void InitializeSceneViewport();
 void DrawSceneViewport();
-void DrawToSceneViewport(std::function<void(void)>);
+// void DrawToSceneViewport(std::function<void(void)>);

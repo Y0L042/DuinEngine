@@ -9,8 +9,9 @@
 #include <vector>
 #include <string>
 
+#include "Project.h"
 #include "Singletons.h"
-#include "FileManager.h"
+#include "gui/FileManager.h"
 #include "States.h"
 
 #define MAX_DIR_LEN 512
@@ -88,11 +89,12 @@ void EditorState_SelectProject::LoadSelectedProject()
 
     const char *selectedProjectDir = recentProjectDirsVec[selectedProjectIndex].c_str();
     fs::path projectPath = selectedProjectDir;
+    // If project dir exist
     if (fs::exists(projectPath) && fs::is_directory(projectPath)) {
         int fileFound = 0;
-        // Search for the file in the directory
+        // Search for the duin.project file in the directory
         for (const auto& entry : fs::directory_iterator(projectPath)) {
-            if (entry.is_regular_file() && entry.path().filename() == PROJECT_FILE_NAME) {
+            if (entry.is_regular_file() && !entry.path().filename().string().compare(PROJECT_FILE_NAME)) {
                 fileFound = true;
 
                 // Log the full path of the found file
@@ -101,7 +103,11 @@ void EditorState_SelectProject::LoadSelectedProject()
                                  projectPath.string().c_str(), 
                                  entry.path().string().c_str());
 
-                SetActiveProject(entry.path().string());
+                Project activeProject;
+                activeProject.projectDir = entry.path(); 
+                DN_INFO("Project loaded: {0}", activeProject.projectDir.string());
+                SetActiveProject(activeProject);
+
                 fileManager.rootPath = projectPath.string();
 
                 SwitchState<EditorState_GameEditor>();

@@ -10,4 +10,9 @@ Project::Project(std::string projectDir)
     } else {
         DN_WARN("Project directory {} is invalid!", projectDir);
     }
-};
+}
+std::string Project::GetPathAsString()
+{
+    return std::string(projectDir.string());
+}
+;

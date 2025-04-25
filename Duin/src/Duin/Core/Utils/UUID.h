@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <cstdint>
+#include <string>
 
 namespace duin {
 
@@ -14,23 +15,28 @@ namespace duin {
             UUID(uint64_t uuid);
             ~UUID();
 
+            static std::string ToStringDec(UUID uuid);
+            static std::string ToStringHex(UUID uuid);
+            static UUID FromStringDec(const std::string& string);
+            static UUID FromStringHex(const std::string& string);
+
             bool operator==(const UUID& uuid) const
             {
-                return this->uuid == uuid.uuid;
+                return this->uuid_ == uuid.uuid_;
             }
 
             bool operator!=(const UUID& uuid) const
             {
-                return this->uuid != uuid.uuid;
+                return this->uuid_ != uuid.uuid_;
             }
 
             operator uint64_t() const
             {
-                return uuid;
+                return uuid_;
             }
 
         private:
-            uint64_t uuid;
+            uint64_t uuid_;
     };
 
 }

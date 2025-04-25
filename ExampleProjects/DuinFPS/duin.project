@@ -1,1 +1,6 @@
 ProjectTitle = "DuinFPS"
+EditorTabs = [
+  {Title = "Editor", ID = 1},
+  {Title = "Animator", ID = 2},
+]
+
