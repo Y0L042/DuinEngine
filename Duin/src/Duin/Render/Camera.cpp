@@ -38,7 +38,7 @@ namespace duin {
             static Camera defaultCamera;
             defaultCamera = DEFAULT_CAMERA;
 
-			DN_CORE_WARN("No active camera set, using default camera.");
+			//DN_CORE_WARN("No active camera set, using default camera.");
 
             return &defaultCamera;
         }

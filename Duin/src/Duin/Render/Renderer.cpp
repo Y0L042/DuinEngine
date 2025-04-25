@@ -66,7 +66,7 @@ namespace duin {
 
     void BeginDraw3D(Camera& camera)
     {
-        DN_CORE_INFO("BeginDraw3D");
+        //DN_CORE_INFO("BeginDraw3D");
 
         globalRenderStateStack.clear();
 
@@ -108,7 +108,7 @@ namespace duin {
 
     void EndDraw3D()
     {
-        DN_CORE_INFO("EndDraw3D");
+        //DN_CORE_INFO("EndDraw3D");
 
         if (!globalRenderStateStack.empty()) {
             // Restore previous state
@@ -168,18 +168,18 @@ namespace duin {
     void BeginDebugDraw()
     {
         dde.begin(0, true, encoder);
-        DN_CORE_TRACE("Debug draw started");
+        //DN_CORE_TRACE("Debug draw started");
     }
 
     void EndDebugDraw()
     {
         dde.end();
-        DN_CORE_TRACE("Debug draw ended");
+        //DN_CORE_TRACE("Debug draw ended");
     }
 
     void QueueRender(RenderGeometryType::Type type)
     {
-        DN_CORE_INFO("Shape queued for rendering");
+        //DN_CORE_INFO("Shape queued for rendering");
 
         bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
         bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
