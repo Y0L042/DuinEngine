@@ -28,4 +28,10 @@ private:
     std::vector<Tab> tabs;
     int selectedTab = 0;
     ImGuiID dockspaceID;
+
+    void DrawMainTabBrowser();
+    void DrawTabBar();
+    void DrawTabContentArea();
+    void DrawRenameTabPopup();
+    bool DrawConfirmDeleteTabPopup();
 };

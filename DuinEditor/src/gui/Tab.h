@@ -15,6 +15,7 @@ class Tab
         std::string title;
         bool open = true;
         bool renaming = false;
+        bool flag_requestDelete = false;
 
         Tab() = default;
         Tab(duin::TOMLValue value);
