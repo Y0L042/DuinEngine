@@ -7,6 +7,16 @@
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Utils/TOMLFile.h>
 
+static const char RENAME_POPUP[] = "RENAME_POPUP";
+static bool requestRenamePopupFlag = false;
+static int renamingTabIndex = -1; // Currently renaming tab (-1 means none)
+static char renamingBuffer[256] = {}; // Buffer for renaming
+static ImVec2 popupPos;
+
+static const char CONFIRM_TAB_DELETE[] = "CONFIRM_TAB_DELETE";
+static bool requestDeleteTabFlag = false;
+static int requestDeleteIndex = -1;
+
 TabBrowser::TabBrowser()
 {}
 
@@ -59,75 +69,198 @@ void TabBrowser::CloseTab(int index)
     SaveTabs();
 }
 
+//bool test = true;
 void TabBrowser::Render()
 {
-    // Begin a dockable window
-    if (ImGui::Begin("TabBrowser", nullptr, ImGuiWindowFlags_NoCollapse)) {
-        // Tab bar at the top
-        if (ImGui::BeginTabBar("MainTabBar", 
-                               ImGuiTabBarFlags_AutoSelectNewTabs 
-                               | ImGuiTabBarFlags_Reorderable 
-                               | ImGuiTabBarFlags_FittingPolicyScroll)) {
+	//if (ImGui::Begin("TestWindow")) {
+	//	ImGui::Text("Test");
+ //       if (test) {
+ //           DN_INFO("Opening popup");
+ //           ImGui::OpenPopup("TestPopup");
+ //           test = false;
+ //       }
+ //       if (ImGui::BeginPopup("TestPopup")) {
+ //           ImGui::Text("TestPopup");
+ //           DN_INFO("Showing test popup");
+ //           ImGui::EndPopup();
+ //       }
+	//	ImGui::End();
+	//}
+
+
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
+
+    DrawMainTabBrowser();
+}
+
+void TabBrowser::DrawMainTabBrowser()
+{
+    ImGuiWindowFlags windowFlags =
+        ImGuiWindowFlags_NoCollapse |
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoBringToFrontOnFocus |
+        ImGuiWindowFlags_NoNavFocus |
+        ImGuiWindowFlags_NoDocking 
+        ;
+
+    if (ImGui::Begin("TabBrowserMainWindow", nullptr, windowFlags)) {
+        DrawTabBar();
+        DrawTabContentArea();
+        DrawRenameTabPopup();
+        DrawConfirmDeleteTabPopup();
+
+        ImGui::End();
+    } 
+
+
+}
+
+void TabBrowser::DrawTabBar()
+{
+    if (ImGui::BeginChild("TabBarChild")) {
+
+        /* Draw tab bar */
+        ImGuiWindowFlags tabBarFlags = ImGuiTabBarFlags_AutoSelectNewTabs | 
+                                       ImGuiTabBarFlags_Reorderable | 
+                                       ImGuiTabBarFlags_FittingPolicyScroll |
+                                       ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
+
+        if (ImGui::BeginTabBar("MainTabBar", tabBarFlags)) {
             // Render each tab
-            for (size_t i = 0; i < tabs.size(); ++i) {
+            for (int i = 0; i < tabs.size(); ++i) {
                 Tab& tab = tabs[i];
                 ImGuiTabItemFlags flags = 0;
 
-                // Rename tab
-                if (tab.renaming) {
-                    char buffer[256];
-                    strncpy(buffer, tab.title.c_str(), sizeof(buffer));
-                    if (ImGui::InputText("##RenameTab", buffer, sizeof(buffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
-                        tab.title = buffer;
-                        tab.renaming = false;
-                        SaveTabs();
-                    }
-
-                    if (!ImGui::IsItemActive() && ImGui::IsMouseClicked(0)) {
-                        tab.renaming = false;
-                    }
-
-                    flags |= ImGuiTabItemFlags_NoPushId;
-                }
-
-                if (ImGui::BeginTabItem(tab.title.c_str(), &tab.open, flags)) {
+                /* Draw tab item */
+                bool tabOpen = tab.open;
+                if (ImGui::BeginTabItem(tab.title.c_str(), &tabOpen, flags)) {
                     selectedTab = i;
 
-                    // Check for double-click to start renaming
+                    /* DOUBLE CLICK ON TAB EVENT */
                     if (ImGui::IsMouseDoubleClicked(0) && ImGui::IsItemHovered()) {
-                        tab.renaming = true;
+                        DN_INFO("Attempting to rename tab: {}", tab.title.c_str());
+						requestRenamePopupFlag = true;
+                        renamingTabIndex = i;
+                        strncpy(renamingBuffer, tab.title.c_str(), sizeof(renamingBuffer));
+                        popupPos = { 0, 0 };//ImGui::GetIO().MousePos;
                     }
-
                     ImGui::EndTabItem();
                 }
 
-                // Handle tab closing
-                if (!tab.open) {
-                    CloseTab(i);
-                    if (i > 0) i--;
+                if (!tabOpen) {
+                    requestDeleteIndex = i;
+                    requestDeleteTabFlag = true;
+                    tab.flag_requestDelete = true;
+                    if (!tab.open) {
+                        CloseTab(i);
+                        if (i > 0) i--;
+                    }
                 }
             }
 
             // Add a "+" button to create new tabs
-            if (ImGui::TabItemButton("+", ImGuiTabItemFlags_Trailing | ImGuiTabItemFlags_NoTooltip))
-            {
+            if (ImGui::TabItemButton("+", ImGuiTabItemFlags_Trailing | ImGuiTabItemFlags_NoTooltip)) {
                 AddTab("New Tab");
             }
-
             ImGui::EndTabBar();
         }
+        ImGui::EndChild();
+    }
+}
+
+void TabBrowser::DrawTabContentArea()
+{
+    /* Create the main content area below the tab bar */
+    ImGui::BeginChild("ContentArea", ImVec2(0, 0), false, 0);
 
         // Render the content of the selected tab
-        if (!tabs.empty() && selectedTab >= 0 && selectedTab < tabs.size())
-        {
-            ImGui::BeginChild("TabContent");
+        if (!tabs.empty() && selectedTab >= 0 && selectedTab < tabs.size()) {
             ImGui::Text("This is tab: %s", tabs[selectedTab].title.c_str());
-            ImGui::Text("You can put your tab-specific content here.");
-            ImGui::EndChild();
+            ImGui::Text("Dock other panels here by setting their parent to this window.");
         }
-    }
-    ImGui::End(); // End the dockable window
+
+        // Create dockspace for the content area
+        ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode |
+                                            ImGuiDockNodeFlags_NoDockingInCentralNode;
+        dockspaceID = ImGui::GetID("ContentDockspace");
+        ImGui::DockSpace(dockspaceID, ImVec2(0, 0), dockspaceFlags);
+
+    ImGui::EndChild();
 }
+
+void TabBrowser::DrawRenameTabPopup()
+{
+    // Check if we need to open the popup this frame
+    if (requestRenamePopupFlag) {
+        requestRenamePopupFlag = false;
+		DN_INFO("Opening rename tab popup at index: {}", renamingTabIndex);
+        ImGui::OpenPopup(RENAME_POPUP);
+        ImGui::SetNextWindowFocus();
+    }
+
+    if (ImGui::BeginPopup(RENAME_POPUP)) {
+        ImGui::SetNextItemWidth(150.0f);
+
+        ImGuiInputTextFlags inputFlags = ImGuiInputTextFlags_EnterReturnsTrue | 
+                                         ImGuiInputTextFlags_AutoSelectAll;
+
+        if (ImGui::InputText("##RenameTab", renamingBuffer, sizeof(renamingBuffer), inputFlags)) {
+            if (renamingTabIndex >= 0 && renamingTabIndex < (int)tabs.size()) {
+                tabs[renamingTabIndex].title = renamingBuffer;
+                SaveTabs();
+            }
+            renamingTabIndex = -1;
+            ImGui::CloseCurrentPopup();
+        }
+
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsMouseClicked(1)) {
+            renamingTabIndex = -1;
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+    } else if (renamingTabIndex >= 0) {
+		DN_WARN("Popup closed without renaming tab");
+        renamingTabIndex = -1;
+    }
+}
+
+bool TabBrowser::DrawConfirmDeleteTabPopup()
+{
+    bool actionDelete = false;
+    ImGuiWindowFlags deletePopupFlags = ImGuiWindowFlags_AlwaysAutoResize;
+    if (requestDeleteTabFlag && requestDeleteIndex >= 0) {
+        requestDeleteTabFlag = false;
+        DN_INFO("Requestiong tab delete");
+        ImGui::OpenPopup(CONFIRM_TAB_DELETE);
+        ImGui::SetNextWindowFocus();
+    }
+    if (ImGui::BeginPopupModal(CONFIRM_TAB_DELETE)) {
+        DN_INFO("Popup tab delete");
+        if (ImGui::Button("Delete") && requestDeleteIndex >= 0) {
+            tabs[requestDeleteIndex].open = false;
+            requestDeleteIndex = -1;
+            actionDelete = true;
+            ImGui::CloseCurrentPopup();
+        } else
+        if (ImGui::Button("Cancel") && requestDeleteIndex >= 0) {
+            tabs[requestDeleteIndex].flag_requestDelete = false;
+            actionDelete =  false;
+            ImGui::CloseCurrentPopup();
+        }   
+        ImGui::EndPopup();
+    }
+    else {
+
+    }
+
+    return actionDelete;
+}
+
 
 void TabBrowser::SaveTabs()
 {

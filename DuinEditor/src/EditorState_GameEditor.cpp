@@ -10,7 +10,6 @@
 #include "gui/ViewportPanel.h"
 
 TabBrowser tabBrowser;
-ViewportPanel viewportPanelTest("Test");
 
 
 void EditorState_GameEditor::Enter()
@@ -38,11 +37,7 @@ void EditorState_GameEditor::Draw()
 
 void EditorState_GameEditor::DrawUI()
 {
-    debugWatchlist.Draw("Watchlist");
-    debugConsole.Draw("Console");
-
     tabBrowser.Render();
-    viewportPanelTest.Draw();
 }
 
 void EditorState_GameEditor::Exit()

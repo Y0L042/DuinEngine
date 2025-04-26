@@ -1,6 +1,5 @@
 ProjectTitle = "DuinFPS"
 EditorTabs = [
-  {Title = "Editor", ID = 1},
-  {Title = "Animator", ID = 2},
+  {Title = "Editor", ID = 1, PanelManager = "0x56D8AEFDDB5D47D9"},
 ]
 
