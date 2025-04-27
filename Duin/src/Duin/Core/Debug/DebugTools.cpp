@@ -295,9 +295,9 @@ void DebugWatchlist::Draw(const char *title)
             // End the table
             ImGui::EndTable();
         }
-        ImGui::End(); // End the ImGui window
-        ImGui::PopStyleColor();
     }
+    ImGui::End(); // End the ImGui window
+    ImGui::PopStyleColor();
 }
 
 void DebugWatchlist::ToggleEditing()

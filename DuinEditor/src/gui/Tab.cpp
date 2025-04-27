@@ -58,9 +58,8 @@ void Tab::DrawWorkspace()
             ImGuiDockNodeFlags_NoDockingInCentralNode;
         ImGuiID dockspaceID = ImGui::GetID("ContentDockspace");
         ImGui::DockSpace(dockspaceID, ImVec2(0, 0), dockspaceFlags);
-
-        ImGui::EndChild();
     }
+    ImGui::EndChild();
 }
 
 void Tab::DrawMenu()

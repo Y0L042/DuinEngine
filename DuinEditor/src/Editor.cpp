@@ -22,11 +22,16 @@ Project activeProject;
 void Editor::Initialize()
 {
     duin::SetFramerate(244);
+
     SetWindowStartupSize(1600, 900);
+
 }
 
 void Editor::Ready()
 {
+    duin::SetWindowResizable(true);
+    duin::MaximizeWindow();
+
 	debugConsole.Log("Editor is ready!");
     mainStateMachine.SwitchState<EditorState_SelectProject>();
 }
