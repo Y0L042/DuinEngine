@@ -121,7 +121,8 @@ void TabBrowser::DrawMainTabBrowser()
 
 void TabBrowser::DrawTabBar()
 {
-    if (ImGui::BeginChild("TabBarChild")) {
+    ImGuiWindowFlags tabBarFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
+    if (ImGui::BeginChild("TabBarChild", ImVec2(0, 25), 0, tabBarFlags)) {
 
         /* Draw tab bar */
         ImGuiWindowFlags tabBarFlags = ImGuiTabBarFlags_AutoSelectNewTabs | 
@@ -178,22 +179,10 @@ void TabBrowser::DrawTabBar()
 
 void TabBrowser::DrawTabContentArea()
 {
-    /* Create the main content area below the tab bar */
-    ImGui::BeginChild("ContentArea", ImVec2(0, 0), false, 0);
-
-        // Render the content of the selected tab
-        if (!tabs.empty() && selectedTab >= 0 && selectedTab < tabs.size()) {
-            ImGui::Text("This is tab: %s", tabs[selectedTab].title.c_str());
-            ImGui::Text("Dock other panels here by setting their parent to this window.");
-        }
-
-        // Create dockspace for the content area
-        ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode |
-                                            ImGuiDockNodeFlags_NoDockingInCentralNode;
-        dockspaceID = ImGui::GetID("ContentDockspace");
-        ImGui::DockSpace(dockspaceID, ImVec2(0, 0), dockspaceFlags);
-
-    ImGui::EndChild();
+    if (selectedTab >= 0 && selectedTab < tabs.size()) {
+        Tab& tab = tabs[selectedTab];
+        tab.DrawWorkspace();
+    }
 }
 
 void TabBrowser::DrawRenameTabPopup()
