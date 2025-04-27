@@ -35,3 +35,21 @@ void Tab::Deserialise(duin::TOMLValue value)
     uuid = duin::UUID::FromStringHex(value.At(guitag::TAB_UUID).AsString());
     panelManager = PanelManager(value);
 }
+
+void Tab::DrawWorkspace()
+{
+    /* Create the main content area below the tab bar */
+    ImGui::BeginChild("ContentArea", ImVec2(0, 0), false, 0);
+
+    ImGui::Text("This is tab: %s", title.c_str());
+    ImGui::Text("Dock other panels here by setting their parent to this window.");
+
+
+    // Create dockspace for the content area
+    ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode |
+        ImGuiDockNodeFlags_NoDockingInCentralNode;
+    ImGuiID dockspaceID = ImGui::GetID("ContentDockspace");
+    ImGui::DockSpace(dockspaceID, ImVec2(0, 0), dockspaceFlags);
+
+    ImGui::EndChild();
+}

@@ -36,6 +36,8 @@ class Tab
         duin::TOMLValue Serialise();
         void Deserialise(duin::TOMLValue value);
 
+        void DrawWorkspace();
+
     private:
         duin::UUID uuid;
         PanelManager panelManager;
