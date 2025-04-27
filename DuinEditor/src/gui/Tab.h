@@ -11,7 +11,6 @@
 class Tab
 {
     public:
-        int id;
         std::string title;
         bool open = true;
         bool renaming = false;

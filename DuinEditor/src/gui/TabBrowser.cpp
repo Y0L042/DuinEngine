@@ -33,14 +33,13 @@ void TabBrowser::AddTab(const std::string& title)
 {    
     static int counter = 1;
     Tab newTab;
-    newTab.id = counter++;
 
     bool contains = false;
     for (Tab& tab : tabs) {
         contains = contains || !title.compare(tab.title);
     }
     if (contains) {
-        newTab.title = title + "_" + std::to_string(counter);
+        newTab.title = title + "_" + std::to_string(++counter);
     } else {
         newTab.title = title;
     }
@@ -136,25 +135,29 @@ void TabBrowser::DrawTabBar()
                 ImGuiTabItemFlags flags = 0;
 
                 /* Draw tab item */
+                bool deleteTab = !tab.open;
                 bool tabOpen = tab.open;
                 if (ImGui::BeginTabItem(tab.title.c_str(), &tabOpen, flags)) {
                     selectedTab = i;
 
                     /* DOUBLE CLICK ON TAB EVENT */
                     if (ImGui::IsMouseDoubleClicked(0) && ImGui::IsItemHovered()) {
-                        DN_INFO("Attempting to rename tab: {}", tab.title.c_str());
+                        //DN_INFO("Attempting to rename tab: {}", tab.title.c_str());
 						requestRenamePopupFlag = true;
                         renamingTabIndex = i;
                         strncpy(renamingBuffer, tab.title.c_str(), sizeof(renamingBuffer));
-                        popupPos = { 0, 0 };//ImGui::GetIO().MousePos;
+                        popupPos = { 0, 0 }
                     }
                     ImGui::EndTabItem();
                 }
 
-                if (!tabOpen) {
+                if (!tabOpen && !deleteTab) {
                     requestDeleteIndex = i;
                     requestDeleteTabFlag = true;
                     tab.flag_requestDelete = true;
+                }
+
+                if (deleteTab) {
                     if (!tab.open) {
                         CloseTab(i);
                         if (i > 0) i--;
@@ -197,7 +200,7 @@ void TabBrowser::DrawRenameTabPopup()
     // Check if we need to open the popup this frame
     if (requestRenamePopupFlag) {
         requestRenamePopupFlag = false;
-		DN_INFO("Opening rename tab popup at index: {}", renamingTabIndex);
+		//DN_INFO("Opening rename tab popup at index: {}", renamingTabIndex);
         ImGui::OpenPopup(RENAME_POPUP);
         ImGui::SetNextWindowFocus();
     }
@@ -233,29 +236,36 @@ bool TabBrowser::DrawConfirmDeleteTabPopup()
 {
     bool actionDelete = false;
     ImGuiWindowFlags deletePopupFlags = ImGuiWindowFlags_AlwaysAutoResize;
-    if (requestDeleteTabFlag && requestDeleteIndex >= 0) {
+    if (requestDeleteTabFlag) {
         requestDeleteTabFlag = false;
-        DN_INFO("Requestiong tab delete");
+        //DN_INFO("Requestiong tab delete");
         ImGui::OpenPopup(CONFIRM_TAB_DELETE);
         ImGui::SetNextWindowFocus();
     }
-    if (ImGui::BeginPopupModal(CONFIRM_TAB_DELETE)) {
-        DN_INFO("Popup tab delete");
-        if (ImGui::Button("Delete") && requestDeleteIndex >= 0) {
+    if (ImGui::BeginPopup(CONFIRM_TAB_DELETE)) {
+        //DN_INFO("Popup tab delete");
+        // Delete tab
+        if (ImGui::Button("Delete") && (requestDeleteIndex >= 0 && requestDeleteIndex < (int)tabs.size())) {
+            tabs[requestDeleteIndex].flag_requestDelete = false;
             tabs[requestDeleteIndex].open = false;
-            requestDeleteIndex = -1;
             actionDelete = true;
+            requestDeleteIndex = -1;
+            requestDeleteTabFlag = false;
             ImGui::CloseCurrentPopup();
         } else
-        if (ImGui::Button("Cancel") && requestDeleteIndex >= 0) {
+        // Keep tab open
+        if (ImGui::Button("Cancel") && (requestDeleteIndex >= 0 && requestDeleteIndex < (int)tabs.size())) {
             tabs[requestDeleteIndex].flag_requestDelete = false;
+            tabs[requestDeleteIndex].open = true;
             actionDelete =  false;
+            requestDeleteIndex = -1;
+            requestDeleteTabFlag = false;
             ImGui::CloseCurrentPopup();
         }   
         ImGui::EndPopup();
     }
-    else {
-
+    else if (requestDeleteIndex >= 0) {
+        requestDeleteIndex = -1;
     }
 
     return actionDelete;

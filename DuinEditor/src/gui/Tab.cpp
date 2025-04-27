@@ -20,8 +20,8 @@ duin::TOMLValue Tab::Serialise()
 {
     duin::TOMLValue value({
             { guitag::TAB_TITLE, title },
-            { guitag::TAB_ID, id },
-            { guitag::TAB_PANELMANAGER, GetPanelManagerID()}
+            { guitag::TAB_UUID, duin::UUID::ToStringHex(uuid)},
+            { guitag::TAB_PANELMANAGER_UUID, GetPanelManagerID()}
         });
     
     panelManager.Serialise();
@@ -32,6 +32,6 @@ duin::TOMLValue Tab::Serialise()
 void Tab::Deserialise(duin::TOMLValue value)
 {
     title = value.At(guitag::TAB_TITLE).AsString();
-    id = value.At(guitag::TAB_ID).AsInteger();
+    uuid = value.At(guitag::TAB_UUID).AsInteger();
     panelManager = PanelManager(value);
 }
