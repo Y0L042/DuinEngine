@@ -5,10 +5,10 @@
 #include <string>
 
 class PanelManager;
-class ViewportPanel : public Panel
+class DefaultPanel : public Panel
 {
     public:
-        ViewportPanel(const std::string& name, PanelManager *panelManager);
+        DefaultPanel(const std::string& name, PanelManager *panelManager);
 
         void DrawContent() override;
     private:

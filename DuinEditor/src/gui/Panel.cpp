@@ -1,34 +1,29 @@
 #include "Panel.h"
+#include "PanelManager.h"
 
-Panel::Panel()
-    : uuid(duin::UUID())
+Panel::Panel(const std::string& name, PanelManager *panelManager)
+    : uuid(duin::UUID()), panelManager(panelManager), m_windowName(name) 
 {
-    m_windowName = duin::UUID::ToStringHex(uuid);
     m_windowFlags = ImGuiWindowFlags_MenuBar | 
-                    ImGuiWindowFlags_NoCollapse |
-                    ImGuiWindowFlags_NoBringToFrontOnFocus;
+                    ImGuiWindowFlags_NoCollapse;
+
+    AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(uuid); });
 }
 
-Panel::Panel(const std::string& name)
-    : uuid(duin::UUID()), m_windowName(name) 
+duin::UUID Panel::GetUUID()
 {
-    m_windowFlags = ImGuiWindowFlags_MenuBar | 
-                    ImGuiWindowFlags_NoCollapse |
-                    ImGuiWindowFlags_NoBringToFrontOnFocus;
+    return uuid;
 }
 
 void Panel::Draw() 
 {
-    // Begin the window
-    ImGui::Begin(m_windowName.c_str(), &m_isOpen, m_windowFlags);
+    ImGui::Begin(m_windowName.c_str(), nullptr, m_windowFlags);
 
-    // Draw menu bar if we have any menus
     if (!m_menuItems.empty() && ImGui::BeginMenuBar()) {
-        SetupMenuBar();
-        ImGui::EndMenuBar();
+       SetupMenuBar();
+       ImGui::EndMenuBar();
     }
 
-    // Draw the window content
     DrawContent();
 
     ImGui::End();
@@ -71,7 +66,15 @@ void Panel::AddSeparator(const std::string& menuName)
     m_menuSeparators[menuName].push_back(m_menuItems[menuName].size());
 }
 
-duin::UUID Panel::GetUUID()
+void Panel::DrawMenu()
 {
-    return uuid;
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("Choose Panel Type")) {
+            if (ImGui::MenuItem("")) {
+                // TODO
+            }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
 }

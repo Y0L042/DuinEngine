@@ -30,7 +30,6 @@ void Editor::Initialize()
 void Editor::Ready()
 {
     duin::SetWindowResizable(true);
-    duin::MaximizeWindow();
 
 	debugConsole.Log("Editor is ready!");
     mainStateMachine.SwitchState<EditorState_SelectProject>();

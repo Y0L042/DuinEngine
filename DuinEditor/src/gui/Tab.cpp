@@ -1,6 +1,9 @@
 #include "Tab.h"
 #include "GuiMeta.h"
 
+#include "DefaultPanel.h"
+#include "ViewportPanel.h"
+
 Tab::Tab(duin::TOMLValue value)
 {
     Deserialise(value);
@@ -49,25 +52,32 @@ void Tab::DrawWorkspace()
 
         DrawMenu();
 
-        ImGui::Text("This is tab: %s", title.c_str());
-        ImGui::Text("Dock other panels here by setting their parent to this window.");
+        // ImGui::Text("This is tab: %s", title.c_str());
+        // ImGui::Text("Dock other panels here by setting their parent to this window.");
 
 
         // Create dockspace for the content area
-        ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode |
-            ImGuiDockNodeFlags_NoDockingInCentralNode;
+        ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
         ImGuiID dockspaceID = ImGui::GetID("ContentDockspace");
         ImGui::DockSpace(dockspaceID, ImVec2(0, 0), dockspaceFlags);
+
+        panelManager.DrawPanels();
     }
     ImGui::EndChild();
 }
 
 void Tab::DrawMenu()
 {
+    static int counter = 0;
     if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Panels")) {
-            if (ImGui::MenuItem("Add Panel")) {
-                // TODO
+        if (ImGui::BeginMenu("Add Panel")) {
+            if (ImGui::MenuItem("Add Default Panel")) {
+                const std::string panelName = "Default_Panel_" + std::to_string(++counter);
+                panelManager.CreatePanel<DefaultPanel>(panelName, &panelManager);
+            }
+            if (ImGui::MenuItem("Add Viewport Panel")) {
+                const std::string panelName = "Viewport_Panel_" + std::to_string(++counter);
+                panelManager.CreatePanel<ViewportPanel>(panelName, &panelManager);
             }
             ImGui::EndMenu();
         }
