@@ -41,4 +41,6 @@ class Tab
     private:
         duin::UUID uuid;
         PanelManager panelManager;
+
+        void DrawMenu();
 };
