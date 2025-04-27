@@ -2,6 +2,7 @@
 
 #include <Duin/Core/Utils/UtilsModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Application.h>
 #include <external/imgui.h>
 
 #include <nfd.h>
@@ -109,6 +110,7 @@ void EditorState_SelectProject::LoadSelectedProject()
                 SetActiveProject(activeProject);
 
                 fileManager.rootPath = projectPath.string();
+                duin::SetImGuiINIPath(projectPath.string() + "/imgui.ini"); // Set per-project imgui ini
 
                 SwitchState<EditorState_GameEditor>();
                 break;

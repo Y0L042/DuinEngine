@@ -42,6 +42,7 @@ namespace duin
 	void MinimizeWindow();
 	void SetPauseOnMinimized(bool enable);
 	void SetAllowDockingInMain(bool enable);
+	void SetImGuiINIPath(const std::string& newPath);
 
 	SDL_Window* GetSDLWindow();
 
