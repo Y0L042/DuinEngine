@@ -37,6 +37,11 @@ namespace duin
     int GetWindowWidth();
     int GetWindowHeight();
 
+	void SetWindowResizable(bool enable);
+	void MaximizeWindow();
+	void MinimizeWindow();
+	void SetPauseOnMinimized(bool enable);
+
 	SDL_Window* GetSDLWindow();
 
     void QueuePostReadyCallback(std::function<void(void)> f);

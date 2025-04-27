@@ -48,12 +48,16 @@ static int TARGET_PHYSICS_FRAMERATE = 60;
 static int WINDOW_WIDTH = 1280;
 static int WINDOW_HEIGHT = 720;
 
+static bool PAUSE_ON_MINIMIZE = false;
+
 // Color backgroundColor = WHITE;
 // ::Camera3D activeCamera3D;
 
 static SDL_Window *sdlWindow = NULL;
 static SDL_Surface* sdlSurface = NULL;
 static SDL_Renderer *sdlRenderer = NULL;
+
+static SDL_WindowFlags sdlWindowFlags = 0;
 
 const bgfx::ViewId MAIN_DISPLAY = 0;
 
@@ -229,6 +233,29 @@ namespace duin {
         return WINDOW_HEIGHT;
     }
 
+    void SetWindowResizable(bool enable)
+    {
+        SDL_SetWindowResizable(sdlWindow, enable);
+        sdlWindowFlags |= (SDL_WINDOW_RESIZABLE & enable);
+    }
+
+    void MaximizeWindow()
+    {
+        SDL_MaximizeWindow(sdlWindow);
+    }
+
+    void MinimizeWindow()
+    {
+        SDL_MinimizeWindow(sdlWindow);
+    }
+
+    void SetPauseOnMinimized(bool enable)
+    {
+        PAUSE_ON_MINIMIZE = enable;
+    }
+
+
+
     SDL_Window* GetSDLWindow()
     {
         return sdlWindow;
@@ -331,7 +358,7 @@ namespace duin {
         if(!::SDL_Init(SDL_INIT_VIDEO)) {
             ::SDL_Log("SDL could not initialize! SDL error: %s\n", ::SDL_GetError());
         } else {
-            sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+            sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
             if(sdlWindow == nullptr) {
                 ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
             } else {
@@ -344,7 +371,7 @@ namespace duin {
         }
         bgfx::renderFrame();
         bgfx::Init bgfxInit;
-        bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
+        bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer
         bgfxInit.resolution.width = WINDOW_WIDTH;
         bgfxInit.resolution.height = WINDOW_HEIGHT;
         bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
@@ -369,6 +396,11 @@ namespace duin {
                 if (!debugIsGamePaused_) {
             #endif /* DN_DEBUG */
 
+            /* Do not run game when minimized */
+            if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(sdlWindow) && SDL_WINDOW_MINIMIZED) {
+                DelayProcessMilli(100);
+                continue;
+            }
 
             frameStartTime = GetTicks();
 
@@ -406,9 +438,28 @@ namespace duin {
                 EnginePostPhysicsUpdate(physicsDeltaTime);
             } // End of Physics
 
+            /* Skip rendering when minimized */
+            if (SDL_GetWindowFlags(sdlWindow) && e.type == SDL_WINDOW_MINIMIZED) {
+                ImGui::Render();
+                DelayProcessMilli(100);
+                continue;
+            }
+
+            
+            // Update render rect on window resizing
+            int displayWidth, displayHeight;
+            ::SDL_GetWindowSize(sdlWindow, &displayWidth, &displayHeight);
+            /* Skip rendering if window size is 0 */
+            if (!(displayWidth && displayHeight)) {
+                DelayProcessMilli(100);
+                continue;
+            }
+
+            bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
+            bgfx::setViewRect(MAIN_DISPLAY, 0, 0, bgfx::BackbufferRatio::Equal);
+            bgfx::touch(MAIN_DISPLAY);
 
             ++renderFrameCount;
-            bgfx::touch(MAIN_DISPLAY);
             ::ImGui_Implbgfx_NewFrame();
             ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();

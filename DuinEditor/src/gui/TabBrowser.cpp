@@ -113,10 +113,8 @@ void TabBrowser::DrawMainTabBrowser()
         DrawRenameTabPopup();
         DrawConfirmDeleteTabPopup();
 
-        ImGui::End();
     } 
-
-
+    ImGui::End();
 }
 
 void TabBrowser::DrawTabBar()
@@ -173,8 +171,8 @@ void TabBrowser::DrawTabBar()
             }
             ImGui::EndTabBar();
         }
-        ImGui::EndChild();
     }
+    ImGui::EndChild();
 }
 
 void TabBrowser::DrawTabContentArea()
