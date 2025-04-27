@@ -1,5 +1,7 @@
 ProjectTitle = "DuinFPS"
 EditorTabs = [
-  {Title = "Editor", ID = 1, PanelManager = "0x56D8AEFDDB5D47D9"},
+  {Title = "Editor", UUID = "0xCFE8A14FAD415327", PanelManagerUUID = "0x653035A4D615BA1C"},
+  {Title = "AssetManager", UUID = "0xDBA7DE0D59647C71", PanelManagerUUID = "0xA6E01F5E09DE8958"},
+  {Title = "LevelBuilder", UUID = "0x6D08E2BE9A66E1E1", PanelManagerUUID = "0x3E18B22FAA1AEEF2"},
 ]
 
