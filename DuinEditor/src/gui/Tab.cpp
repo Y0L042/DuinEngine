@@ -39,17 +39,41 @@ void Tab::Deserialise(duin::TOMLValue value)
 void Tab::DrawWorkspace()
 {
     /* Create the main content area below the tab bar */
-    ImGui::BeginChild("ContentArea", ImVec2(0, 0), false, 0);
+    ImGuiWindowFlags workspaceFlags = ImGuiWindowFlags_NoScrollbar | 
+                                      ImGuiWindowFlags_NoScrollWithMouse |
+                                      ImGuiWindowFlags_NoMove |
+                                      ImGuiWindowFlags_MenuBar;
+    ImVec2 availableSize = ImGui::GetContentRegionAvail();
 
-    ImGui::Text("This is tab: %s", title.c_str());
-    ImGui::Text("Dock other panels here by setting their parent to this window.");
+    if (ImGui::BeginChild("ContentArea", ImVec2(0, 0), 0, workspaceFlags)) {
+
+        DrawMenu();
+
+        ImGui::Text("This is tab: %s", title.c_str());
+        ImGui::Text("Dock other panels here by setting their parent to this window.");
 
 
-    // Create dockspace for the content area
-    ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode |
-        ImGuiDockNodeFlags_NoDockingInCentralNode;
-    ImGuiID dockspaceID = ImGui::GetID("ContentDockspace");
-    ImGui::DockSpace(dockspaceID, ImVec2(0, 0), dockspaceFlags);
+        // Create dockspace for the content area
+        ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode |
+            ImGuiDockNodeFlags_NoDockingInCentralNode;
+        ImGuiID dockspaceID = ImGui::GetID("ContentDockspace");
+        ImGui::DockSpace(dockspaceID, ImVec2(0, 0), dockspaceFlags);
 
-    ImGui::EndChild();
+        ImGui::EndChild();
+    }
 }
+
+void Tab::DrawMenu()
+{
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("Panels")) {
+            if (ImGui::MenuItem("Add Panel")) {
+                // TODO
+            }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+}
+
+
