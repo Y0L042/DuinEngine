@@ -48,6 +48,9 @@ static int TARGET_PHYSICS_FRAMERATE = 60;
 static int WINDOW_WIDTH = 1280;
 static int WINDOW_HEIGHT = 720;
 
+static bool USE_CUSTOM_IMGUI_INI_PATH = false;
+static std::string IMGUI_INI_PATH = "./";
+
 static bool PAUSE_ON_MINIMIZE = false;
 static bool ALLOW_DOCKING_IN_MAIN = false;
 
@@ -260,6 +263,15 @@ namespace duin {
         ALLOW_DOCKING_IN_MAIN = enable;
     }
 
+    void SetImGuiINIPath(const std::string& newPath)
+    {
+        DN_CORE_INFO("Custom ImGui INI path set: {}", newPath.c_str());
+        USE_CUSTOM_IMGUI_INI_PATH = true;
+        IMGUI_INI_PATH = newPath;
+        ImGui::GetIO().IniFilename = NULL;
+        ImGui::LoadIniSettingsFromDisk(IMGUI_INI_PATH.c_str());
+    }
+
 
 
     SDL_Window* GetSDLWindow()
@@ -411,6 +423,11 @@ namespace duin {
             frameStartTime = GetTicks();
 
             EnginePreFrame();
+
+            /* If custom ImGui path is set, manually save to memory/disk */
+            if (USE_CUSTOM_IMGUI_INI_PATH && ImGui::GetIO().WantSaveIniSettings) {
+                ImGui::SaveIniSettingsToDisk(IMGUI_INI_PATH.c_str());
+            }
 
             ::SDL_Event e;
             ::SDL_zero(e);

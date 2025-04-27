@@ -39,12 +39,6 @@ void PanelManager::RemovePanel(const duin::UUID uuid)
     }
 }
 
-//void PanelManager::RemovePanel(std::shared_ptr<Panel> panel)
-//{
-//
-//    RemovePanel(panel->GetUUID());
-//}
-
 void PanelManager::DrawPanels()
 {
     for (const auto & [ uuid, panelPtr ] : panels) {
