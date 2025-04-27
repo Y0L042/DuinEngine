@@ -105,8 +105,9 @@ void TabBrowser::DrawMainTabBrowser()
         ImGuiWindowFlags_NoNavFocus |
         ImGuiWindowFlags_NoDocking 
         ;
+    const std::string tabBrowserName = "Active Project: " + GetActiveProject().projectTitle;
 
-    if (ImGui::Begin("TabBrowserMainWindow", nullptr, windowFlags)) {
+    if (ImGui::Begin(tabBrowserName.c_str(), nullptr, windowFlags)) {
         DrawTabBar();
         DrawTabContentArea();
         DrawRenameTabPopup();
@@ -146,7 +147,7 @@ void TabBrowser::DrawTabBar()
 						requestRenamePopupFlag = true;
                         renamingTabIndex = i;
                         strncpy(renamingBuffer, tab.title.c_str(), sizeof(renamingBuffer));
-                        popupPos = { 0, 0 }
+                        popupPos = { 0, 0 };
                     }
                     ImGui::EndTabItem();
                 }

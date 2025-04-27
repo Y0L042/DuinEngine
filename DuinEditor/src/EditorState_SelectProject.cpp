@@ -103,7 +103,7 @@ void EditorState_SelectProject::LoadSelectedProject()
                                  projectPath.string().c_str(), 
                                  entry.path().string().c_str());
 
-                Project activeProject;
+                Project activeProject(entry.path());
                 activeProject.projectDir = entry.path(); 
                 DN_INFO("Project loaded: {0}", activeProject.projectDir.string());
                 SetActiveProject(activeProject);
@@ -148,6 +148,11 @@ void EditorState_SelectProject::DrawGUI()
             debugConsole.LogEx(duin::LogLevel::Info, 
                              "Project[%d] {%s} selected", i, recentProjectDirsVec[i].c_str());
         }
+        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
+            LoadSelectedProject();
+            break;
+        }
+        
     }
     ImGui::EndChild();
 
