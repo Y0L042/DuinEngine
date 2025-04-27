@@ -41,6 +41,7 @@ namespace duin
 	void MaximizeWindow();
 	void MinimizeWindow();
 	void SetPauseOnMinimized(bool enable);
+	void SetAllowDockingInMain(bool enable);
 
 	SDL_Window* GetSDLWindow();
 

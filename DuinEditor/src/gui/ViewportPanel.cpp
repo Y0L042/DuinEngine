@@ -1,9 +1,10 @@
 #include "ViewportPanel.h"
+#include "PanelManager.h"
 
-ViewportPanel::ViewportPanel(const std::string& name)
-    : Panel(name)
+ViewportPanel::ViewportPanel(const std::string& name, PanelManager *panelManager)
+    : Panel(name, panelManager)
 {
-
+    type = Panel::VIEWPORT;
 }
 
 void ViewportPanel::DrawContent()

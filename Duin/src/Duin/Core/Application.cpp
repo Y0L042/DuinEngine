@@ -49,6 +49,7 @@ static int WINDOW_WIDTH = 1280;
 static int WINDOW_HEIGHT = 720;
 
 static bool PAUSE_ON_MINIMIZE = false;
+static bool ALLOW_DOCKING_IN_MAIN = false;
 
 // Color backgroundColor = WHITE;
 // ::Camera3D activeCamera3D;
@@ -252,6 +253,11 @@ namespace duin {
     void SetPauseOnMinimized(bool enable)
     {
         PAUSE_ON_MINIMIZE = enable;
+    }
+
+    void SetAllowDockingInMain(bool enable)
+    {
+        ALLOW_DOCKING_IN_MAIN = enable;
     }
 
 
@@ -463,8 +469,11 @@ namespace duin {
             ::ImGui_Implbgfx_NewFrame();
             ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
-            const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
-            ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
+
+            if (ALLOW_DOCKING_IN_MAIN) {
+                const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+                ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
+            }
 
             BeginDraw3D(*GetActiveCamera());
 

@@ -6,16 +6,25 @@
 
 #include <Duin/Core/Utils/UUID.h>
 
+
+class PanelManager;
 class Panel
 {
     public:
+        enum PanelType {
+            INVALID = 0,
+            DEFAULT,
+            VIEWPORT
+        };
+
+        bool queuedForDeletion = false;
+
         struct MenuItem {
             std::string label;
             std::function<void()> callback;
         };
 
-        Panel();
-        Panel(const std::string& name);
+        Panel(const std::string& name, PanelManager *panelManager);
         virtual ~Panel() = default;
 
         void Draw();
@@ -32,6 +41,8 @@ class Panel
 
     protected:
         duin::UUID uuid;
+        PanelType type = PanelType::INVALID;
+        PanelManager *panelManager;
 
     private:
         std::string m_windowName;
@@ -41,4 +52,6 @@ class Panel
         // Menu storage
         std::unordered_map<std::string, std::vector<MenuItem>> m_menuItems;
         std::unordered_map<std::string, std::vector<size_t>> m_menuSeparators;
+
+        void DrawMenu();
 };
