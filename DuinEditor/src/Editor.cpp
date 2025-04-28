@@ -6,6 +6,8 @@
 #include "Singletons.h"
 #include "Project.h"
 #include "States.h"
+#include "gui/GuiMeta.h"
+
 
 #define DEBUG
 
@@ -18,13 +20,21 @@ duin::StateMachine mainStateMachine;
 
 FileManager fileManager;
 Project activeProject;
+duin::TOMLValue projectTOML;
+
+Editor* Editor::instance = nullptr;
+
+Editor& Editor::Get()
+{
+    return *instance;
+}
 
 void Editor::Initialize()
 {
+    Editor::instance = this;
+
     duin::SetFramerate(244);
-
     SetWindowStartupSize(1600, 900);
-
 }
 
 void Editor::Ready()
@@ -64,6 +74,29 @@ void Editor::DrawUI()
 
 void Editor::Debug()
 {
+}
+
+void Editor::SaveTOMLConfig(duin::TOMLValue tomlValue)
+{
+    std::ofstream ofs(activeProject.GetPathAsString());
+    if (!ofs) {
+        DN_FATAL("Unable to save tabs!");
+    }
+    toml::value& projectValue = projectTOML.GetValue();
+    toml::value& value = tomlValue.GetValue();
+    projectValue["TabBrowserConfigs"] = value;
+
+    ofs << projectValue;  // This writes the TOML data to the file
+    ofs.close();
+}
+
+duin::TOMLValue Editor::LoadTOMLConfig()
+{
+    Project& project = GetActiveProject();
+    toml::value& projectValue = projectTOML.GetValue();
+    projectValue = toml::parse(project.GetPathAsString());
+
+    return projectTOML;
 }
 
 Project& GetActiveProject()

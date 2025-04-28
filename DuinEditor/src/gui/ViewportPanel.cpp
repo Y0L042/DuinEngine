@@ -7,6 +7,17 @@ ViewportPanel::ViewportPanel(const std::string& name, PanelManager *panelManager
     type = Panel::VIEWPORT;
 }
 
+ViewportPanel::ViewportPanel(duin::TOMLValue value)
+    : Panel(value)
+{
+    Deserialise(value);
+}
+
+void ViewportPanel::Deserialise(duin::TOMLValue value)
+{
+    DN_INFO("DOTO");
+}
+
 void ViewportPanel::DrawContent()
 {
     ImGui::Text("This is my custom window content!");

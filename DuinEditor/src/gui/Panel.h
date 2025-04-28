@@ -5,9 +5,13 @@
 #include <external/imgui.h>
 
 #include <Duin/Core/Utils/UUID.h>
+#include <Duin/Core/Utils/TOMLFile.h>
+
 
 
 class PanelManager;
+void DrawPanelMenu(PanelManager *panelManager);
+
 class Panel
 {
     public:
@@ -17,6 +21,7 @@ class Panel
             VIEWPORT
         };
 
+        PanelType type = PanelType::INVALID;
         bool queuedForDeletion = false;
 
         struct MenuItem {
@@ -24,28 +29,33 @@ class Panel
             std::function<void()> callback;
         };
 
+        Panel() = default;
         Panel(const std::string& name, PanelManager *panelManager);
+        Panel(const std::string& name, duin::UUID uuid, PanelManager* panelManager);
+        Panel(duin::TOMLValue value);
         virtual ~Panel() = default;
 
-        void Draw();
 
         virtual void SetupMenuBar();    // Can be overridden to customize menu
         virtual void DrawContent() = 0; // Pure virtual - must be implemented by derived classes
-        virtual void Save() {} // Save to game config
-        virtual void Load() {} // Load from game config
+
+        virtual duin::TOMLValue Serialise(); // Serialise panel to toml value
+        virtual void Deserialise(duin::TOMLValue value); // Deserialise panel from toml value
 
         void AddMenuItem(const std::string& menuName, const std::string& itemName, std::function<void()> callback);
         void AddSeparator(const std::string& menuName);
-
         duin::UUID GetUUID();
+        std::string CreateUniquePanelName();
+        std::pair<std::string, std::string> SplitPanelName(const std::string& panelName);
+        void Draw();
 
     protected:
         duin::UUID uuid;
-        PanelType type = PanelType::INVALID;
         PanelManager *panelManager;
 
     private:
-        std::string m_windowName;
+        std::string panelName;
+        std::string uniqueWindowName;
         bool m_isOpen;
         ImGuiWindowFlags m_windowFlags;
 

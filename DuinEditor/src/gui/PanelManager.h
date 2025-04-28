@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PanelFactory.h"
 #include "Panel.h"
 #include "DefaultPanel.h"
 #include "ViewportPanel.h"
@@ -10,6 +11,9 @@
 #include <unordered_map>
 #include <memory>
 
+// Forward declaration to avoid including Singletons to avoid including TabBrowser that includes Tab that leads to circular inclusion
+// TODO fix this
+void SaveProjectConfig();
 
 class PanelManager
 {
@@ -19,41 +23,21 @@ class PanelManager
         PanelManager(duin::TOMLValue value);
 
         void Init();
-        void SavePanels();
-        void LoadPanels();
 
-        duin::TOMLValue Serialise();
-        void Deserialise(duin::TOMLValue value);
-
-		template<typename T, typename... Args>
-        std::shared_ptr<T> CreatePanel(Args... args)
-        {
-            static_assert(std::is_base_of<Panel, T>::value, "T must derive from Panel");
-            std::shared_ptr<T> panel = std::make_shared<T>(std::forward<Args>(args)...);
-            if (!panels[panel->GetUUID()]) {
-                panels[panel->GetUUID()] = panel;
-            }
-
-            return panel;
-        }
+        duin::TOMLValue Serialise(); // Serialise panels to toml value
+        void Deserialise(duin::TOMLValue value); // Deserialise panels from toml value
 
         template<typename... Args>
         void CreatePanel(Panel::PanelType type, Args... args)
         {
-            switch (type) {
-                case Panel::INVALID:
-                    break;
-                case Panel::DEFAULT:
-                    CreatePanel<DefaultPanel>(std::forward<Args>(args)...);
-                    break;
-                case Panel::VIEWPORT:
-                    CreatePanel<ViewportPanel>(std::forward<Args>(args)...);
-                    break;
+            std::shared_ptr<Panel> panel = PanelFactory::CreatePanel(type, std::forward<Args>(args)...);
+            if (!panels[panel->GetUUID()]) {
+                panels[panel->GetUUID()] = panel;
             }
+            SaveProjectConfig();
         }
 
         void RemovePanel(const duin::UUID uuid);
-        //void RemovePanel(std::shared_ptr<Panel> panel);
 
         void DrawPanels();
 

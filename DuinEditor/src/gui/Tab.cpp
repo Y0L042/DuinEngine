@@ -21,22 +21,34 @@ duin::UUID Tab::GetUUID()
 
 duin::TOMLValue Tab::Serialise()
 {
-    duin::TOMLValue value({
+    toml::table tabTable{
             { guitag::TAB_TITLE, title },
             { guitag::TAB_UUID, duin::UUID::ToStringHex(uuid)},
-            { guitag::TAB_PANELMANAGER_UUID, GetPanelManagerID()}
-        });
-    
-    panelManager.Serialise();
+            { guitag::TAB_PANELMANAGER_UUID, GetPanelManagerID()},
+            { guitag::PANELMANAGER_UUID, panelManager.Serialise().GetValue().as_table()}
+    };
+    toml::value value(tabTable);
+    duin::TOMLValue tomlValue(value);
 
-    return value;
+    return tomlValue;
 }
 
-void Tab::Deserialise(duin::TOMLValue value)
+void Tab::Deserialise(duin::TOMLValue tomlValue)
 {
-    title = value.At(guitag::TAB_TITLE).AsString();
-    uuid = duin::UUID::FromStringHex(value.At(guitag::TAB_UUID).AsString());
-    panelManager = PanelManager(value);
+    toml::value& value = tomlValue.GetValue();
+
+    if (!value.contains(guitag::TAB_TITLE)) return;
+    title = value.at(guitag::TAB_TITLE).as_string();
+    if (title.empty()) DN_WARN("Tab title empty when deserialising!");
+
+    if (!value.contains(guitag::TAB_UUID)) return;
+    uuid = duin::UUID::FromStringHex(value[guitag::TAB_UUID].as_string());
+    if (uuid == duin::UUID::INVALID) DN_WARN("Tab uuid empty when deserialising!");
+
+    if (!value.contains(guitag::PANELMANAGER_UUID)) return;
+    duin::TOMLValue panelManagerValue(value.at(guitag::PANELMANAGER_UUID));
+
+    panelManager = PanelManager(panelManagerValue);
 }
 
 void Tab::DrawWorkspace()
@@ -68,21 +80,7 @@ void Tab::DrawWorkspace()
 
 void Tab::DrawMenu()
 {
-    static int counter = 0;
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Add Panel")) {
-            if (ImGui::MenuItem("Add Default Panel")) {
-                const std::string panelName = "Default_Panel_" + std::to_string(++counter);
-                panelManager.CreatePanel<DefaultPanel>(panelName, &panelManager);
-            }
-            if (ImGui::MenuItem("Add Viewport Panel")) {
-                const std::string panelName = "Viewport_Panel_" + std::to_string(++counter);
-                panelManager.CreatePanel<ViewportPanel>(panelName, &panelManager);
-            }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-    }
+    DrawPanelMenu(&panelManager);
 }
 
 
