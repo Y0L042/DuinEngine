@@ -22,7 +22,15 @@ TabBrowser::TabBrowser()
 
 void TabBrowser::Init()
 {
-    LoadTabs();
+    if (tabs.empty()) {
+        DN_WARN("No tabs found, adding tab!");
+        AddTab("Editor");
+    }
+}
+
+void TabBrowser::Init(duin::TOMLValue value)
+{
+    Deserialise(value);
     if (tabs.empty()) {
         DN_WARN("No tabs found, adding tab!");
         AddTab("Editor");
@@ -45,7 +53,7 @@ void TabBrowser::AddTab(const std::string& title)
     }
     CreateTab(newTab);
 
-    SaveTabs();
+    SaveProjectConfig();
 }
 
 void TabBrowser::CreateTab(Tab newTab)
@@ -65,28 +73,11 @@ void TabBrowser::CloseTab(int index)
         AddTab("New Tab");
     }
 
-    SaveTabs();
+    SaveProjectConfig();
 }
 
-//bool test = true;
 void TabBrowser::Render()
 {
-	//if (ImGui::Begin("TestWindow")) {
-	//	ImGui::Text("Test");
- //       if (test) {
- //           DN_INFO("Opening popup");
- //           ImGui::OpenPopup("TestPopup");
- //           test = false;
- //       }
- //       if (ImGui::BeginPopup("TestPopup")) {
- //           ImGui::Text("TestPopup");
- //           DN_INFO("Showing test popup");
- //           ImGui::EndPopup();
- //       }
-	//	ImGui::End();
-	//}
-
-
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);
     ImGui::SetNextWindowSize(viewport->Size);
@@ -202,7 +193,7 @@ void TabBrowser::DrawRenameTabPopup()
         if (ImGui::InputText("##RenameTab", renamingBuffer, sizeof(renamingBuffer), inputFlags)) {
             if (renamingTabIndex >= 0 && renamingTabIndex < (int)tabs.size()) {
                 tabs[renamingTabIndex].title = renamingBuffer;
-                SaveTabs();
+                SaveProjectConfig();
             }
             renamingTabIndex = -1;
             ImGui::CloseCurrentPopup();
@@ -260,44 +251,37 @@ bool TabBrowser::DrawConfirmDeleteTabPopup()
 }
 
 
-void TabBrowser::SaveTabs()
+duin::TOMLValue TabBrowser::Serialise()
 {
-    DN_INFO("Saving tabs...");
-    Project& project = GetActiveProject();
-    toml::value file = toml::parse(project.GetPathAsString());
-    file[guitag::TABS_KEY] = toml::array{};
-    auto& tabsArray = file[guitag::TABS_KEY].as_array();
+    duin::TOMLValue tomlValue;
+    toml::value& value = tomlValue.GetValue();
+    value[guitag::TABS_KEY] = toml::array{};
+    auto& tabsArray = value[guitag::TABS_KEY].as_array();
     tabsArray.clear();
 
     for (Tab& tab : tabs) {
         tabsArray.push_back(tab.Serialise().GetValue());
     }
 
-    file.at(guitag::TABS_KEY).as_array_fmt().fmt = toml::array_format::multiline;
-    file.at(guitag::TABS_KEY).as_array_fmt().indent_type = toml::indent_char::space;
-    file.at(guitag::TABS_KEY).as_array_fmt().body_indent = 2;
-
-    std::ofstream ofs(project.GetPathAsString());
-    if (!ofs) {
-        DN_FATAL("Unable to save tabs!");
-    }
+    //file.at(guitag::TABS_KEY).as_array_fmt().fmt = toml::array_format::multiline;
+    //file.at(guitag::TABS_KEY).as_array_fmt().indent_type = toml::indent_char::space;
+    //file.at(guitag::TABS_KEY).as_array_fmt().body_indent = 2;
     
-    ofs << file;  // This writes the TOML data to the file
-    ofs.close();
+    return tomlValue;
 }
 
-void TabBrowser::LoadTabs()
+void TabBrowser::Deserialise(duin::TOMLValue tomlValue)
 {
-    DN_INFO("Loading tabs...");
-    Project& project = GetActiveProject();
-    toml::value file = toml::parse(project.GetPathAsString());
-    auto& tabsArray = file[guitag::TABS_KEY].as_array();
-    tabs.clear();
+    toml::value& file = tomlValue.GetValue();
+    if (file.contains(guitag::TABS_KEY)) {
+        auto& tabsArray = file[guitag::TABS_KEY].as_array();
+        tabs.clear();
 
-    for (auto& item : tabsArray) {
-        duin::TOMLValue value(item);
-        Tab tab(value);
-        tabs.push_back(tab);
+        for (auto& item : tabsArray) {
+            duin::TOMLValue value(item);
+            Tab tab(value);
+            tabs.push_back(tab);
+        }
     }
 }
 

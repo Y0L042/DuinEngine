@@ -74,7 +74,7 @@ namespace duin {
 
 	    private:
 		    toml::value value;
-            Error output = VALID;
+            Error output = INVALID;
             std::string path = "";
     };
 }

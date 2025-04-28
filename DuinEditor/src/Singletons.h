@@ -17,3 +17,4 @@ extern duin::StateMachine mainStateMachine;
 
 void SetActiveProject(Project project);
 Project& GetActiveProject();
+

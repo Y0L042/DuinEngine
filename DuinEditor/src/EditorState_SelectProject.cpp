@@ -23,6 +23,7 @@ const std::string PROJECT_FILE_NAME = "duin.project";
 static std::vector<std::string> recentProjectDirsVec;
 static int selectedProjectIndex = -1;
 
+
 void EditorState_SelectProject::Enter()
 {
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING STARTUPMENU");
