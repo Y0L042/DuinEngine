@@ -16,6 +16,8 @@ namespace duin {
                 DataIterator();
                 ~DataIterator() = default;
 
+                DataValue GetValue();
+
                 DataValue operator*() const;
                 DataIterator& operator++();
                 bool operator==(const DataIterator other);
@@ -35,6 +37,8 @@ namespace duin {
                 public:
                     ConstDataIterator();
                     ~ConstDataIterator() = default;
+
+                    const DataValue GetValue();
 
                     DataValue operator*() const;
                     ConstDataIterator& operator++();
