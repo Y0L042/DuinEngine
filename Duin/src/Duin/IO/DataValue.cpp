@@ -295,6 +295,16 @@ namespace duin {
         : isValid(true), document_(document), it_(it)
     {}
 
+    DataValue DataValue::DataIterator::GetValue()
+    {
+        if (isValid) {
+            DataValue value(document_, it_);
+            return value;
+        }
+        DN_CORE_WARN("DataIterator not valid!");
+        return DataValue();
+    }
+
     DataValue DataValue::DataIterator::operator*() const
     {
         if (isValid && document_) {
@@ -351,6 +361,16 @@ namespace duin {
     DataValue::ConstDataIterator::ConstDataIterator(std::shared_ptr<rapidjson::Document> document, const rapidjson::Value::ConstValueIterator it)
         : isValid(true), document_(document), it_(it)
     {}
+
+    const DataValue DataValue::ConstDataIterator::GetValue()
+    {
+        if (isValid) {
+            const DataValue value(document_, it_);
+            return value;
+        }
+        DN_CORE_WARN("ConstDataIterator not valid!");
+        return DataValue();
+    }
 
     DataValue DataValue::ConstDataIterator::operator*() const
     {
