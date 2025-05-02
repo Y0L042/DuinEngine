@@ -7,13 +7,13 @@ ViewportPanel::ViewportPanel(const std::string& name, PanelManager *panelManager
     type = Panel::VIEWPORT;
 }
 
-ViewportPanel::ViewportPanel(duin::TOMLValue value)
+ViewportPanel::ViewportPanel(duin::DataValue value)
     : Panel(value)
 {
     Deserialise(value);
 }
 
-void ViewportPanel::Deserialise(duin::TOMLValue value)
+void ViewportPanel::Deserialise(duin::DataValue value)
 {
     DN_INFO("DOTO");
 }

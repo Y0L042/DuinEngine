@@ -6,54 +6,46 @@ PanelManager::PanelManager(std::string uuidHexString)
     : uuid(duin::UUID::FromStringHex(uuidHexString))
 {}
 
-PanelManager::PanelManager(duin::TOMLValue value)
+PanelManager::PanelManager(duin::DataValue data)
 {
-    Deserialise(value);
+    Deserialise(data);
 }
 
 void PanelManager::Init()
 {
 }
 
-duin::TOMLValue PanelManager::Serialise()
+duin::DataValue PanelManager::Serialise()
 {
-    duin::TOMLValue tomlValue;
-    toml::value& value = tomlValue.GetValue();
-    value[guitag::PANELMANAGER_UUID] = duin::UUID::ToStringHex(uuid);
-    value[guitag::PANELS_ARRAY_KEY] = toml::array{};
-    auto& panelsArray = value[guitag::PANELS_ARRAY_KEY].as_array();
-    panelsArray.clear();
-    
+    duin::DataValue data;
+    data.AddMember(guitag::PANELMANAGER_UUID, duin::UUID::ToStringHex(uuid));
+
+    duin::DataValue panelsArray;
+    panelsArray.SetArray();
+
+    int i = 0;
     for (const auto & [ uuid, panelPtr ] : panels) {
         if (panelPtr->type != Panel::INVALID)
         {
-            panelsArray.push_back(panelPtr->Serialise().GetValue());
+            panelsArray[i] = panelPtr->Serialise();
         }
+        ++i;
     }
+    data.AddMember(guitag::PANELS_ARRAY_KEY, panelsArray);
 
-    //value.at(guitag::PANELS_ARRAY_KEY).as_array_fmt().fmt = toml::array_format::multiline;
-    //value.at(guitag::PANELS_ARRAY_KEY).as_array_fmt().indent_type = toml::indent_char::space;
-    //value.at(guitag::PANELS_ARRAY_KEY).as_array_fmt().body_indent = 2;
-
-    return tomlValue;
+    return data;
 }
 
-void PanelManager::Deserialise(duin::TOMLValue tomlValue)
+void PanelManager::Deserialise(duin::DataValue data)
 {
-    DN_INFO("Deserialising PanelManager");
-    toml::value& value = tomlValue.GetValue();
-    if (value.contains(guitag::PANELS_ARRAY_KEY)) {
-        auto& panelsArray = value[guitag::PANELS_ARRAY_KEY].as_array();
+    if (data.HasMember(guitag::PANELS_ARRAY_KEY) && data[guitag::PANELS_ARRAY_KEY].IsArray()) {
+        duin::DataValue panelsArray = data[guitag::PANELS_ARRAY_KEY];
         panels.clear();
-
-        for (auto& item : panelsArray) {
-            duin::TOMLValue itemToml(item);
-            toml::value& itemValue = itemToml.GetValue();
-            if (itemValue.contains(guitag::PANEL_TYPE)) {
-                const char *typeStr = itemValue[guitag::PANEL_TYPE].as_string().c_str();
-                Panel::PanelType type = (Panel::PanelType)atoi(typeStr);
-                CreatePanel(type, itemToml);
-            }
+        for (int i = 0; i < panelsArray.Capacity(); ++i) {
+            if (!panelsArray[i].HasMember(guitag::PANEL_TYPE)) continue;
+            std::string typeStr = panelsArray[i][guitag::PANEL_TYPE].GetString();
+            Panel::PanelType type = (Panel::PanelType)atoi(typeStr.c_str());
+            CreatePanel(type, panelsArray[i]);
         }
     }
 }

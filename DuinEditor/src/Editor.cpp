@@ -20,7 +20,7 @@ duin::StateMachine mainStateMachine;
 
 FileManager fileManager;
 Project activeProject;
-duin::TOMLValue projectTOML;
+duin::DataValue projectData;
 
 Editor* Editor::instance = nullptr;
 
@@ -76,27 +76,22 @@ void Editor::Debug()
 {
 }
 
-void Editor::SaveTOMLConfig(duin::TOMLValue tomlValue)
+void Editor::SaveProjectEditorConfig(duin::DataValue tomlValue)
 {
     std::ofstream ofs(activeProject.GetPathAsString());
     if (!ofs) {
         DN_FATAL("Unable to save tabs!");
     }
-    toml::value& projectValue = projectTOML.GetValue();
-    toml::value& value = tomlValue.GetValue();
-    projectValue["TabBrowserConfigs"] = value;
-
-    ofs << projectValue;  // This writes the TOML data to the file
+    ofs << duin::DataValue::Write(projectData);
     ofs.close();
 }
 
-duin::TOMLValue Editor::LoadTOMLConfig()
+duin::DataValue Editor::LoadProjectEditorConfig()
 {
     Project& project = GetActiveProject();
-    toml::value& projectValue = projectTOML.GetValue();
-    projectValue = toml::parse(project.GetPathAsString());
+    projectData = duin::DataValue::Parse(project.GetPathAsString());
 
-    return projectTOML;
+    return projectData;
 }
 
 Project& GetActiveProject()

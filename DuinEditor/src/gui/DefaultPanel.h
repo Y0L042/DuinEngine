@@ -2,7 +2,7 @@
 
 #include "Panel.h"
 
-#include <Duin/Core/Utils/TOMLFile.h>
+#include <Duin/IO/IOModule.h>
 
 #include <string>
 
@@ -11,9 +11,9 @@ class DefaultPanel : public Panel
 {
     public:
         DefaultPanel(const std::string& name, PanelManager *panelManager);
-        DefaultPanel(duin::TOMLValue value);
+        DefaultPanel(duin::DataValue value);
 
-        void Deserialise(duin::TOMLValue value) override;
+        void Deserialise(duin::DataValue value) override;
 
         void DrawContent() override;
     private:

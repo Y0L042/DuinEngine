@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Duin/Core/Debug/DebugModule.h>
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/document.h>
 #include <string>
@@ -41,7 +42,7 @@ namespace duin {
                     const DataValue GetValue();
 
                     DataValue operator*() const;
-                    ConstDataIterator& operator++();
+                    ConstDataIterator operator++();
                     bool operator==(const ConstDataIterator other);
                     bool operator!=(const ConstDataIterator other);
 
@@ -58,6 +59,7 @@ namespace duin {
 
             // TODO change this so that it only parses json string no loading
             static DataValue Parse(const std::string& data);
+            static std::string Write(const DataValue& value);
             /* TODO
             static void WriteToFile(const std::string& filePath);
             static void WriteToFile(const std::string& filePath);
@@ -68,16 +70,19 @@ namespace duin {
             DataValue(int x);
             DataValue(const std::string& text);
             DataValue(double x);
-            DataValue(const DataValue& other);
 
             ~DataValue() = default;
 
-            rapidjson::Value& GetRJSONValue() { return *readValue_; }
+            rapidjson::Value& GetRJSONValue() { return *jvalue_; }
+
+            DataValue Clone() const;
 
             bool IsReadValid() const;
             bool HasMember(const std::string& member) const;
+            DataValue& AddMember(const std::string& key, DataValue dv);
 
             bool IsNull() const;
+            bool IsObject() const;
             bool IsString() const;
             std::string GetString() const;
             bool IsBool() const;
@@ -96,27 +101,75 @@ namespace duin {
             ConstDataIterator End();
             ConstDataIterator FindMember(const std::string& member) const;
 
-            void SetObject();
-            void SetInt(int x);
-            void SetString(const std::string& text);
-            void SetDouble(double x);
-            void SetBool(bool b);
-            void SetArray();
+
+            DataValue SetObject();
+            DataValue SetInt(int x);
+            DataValue SetString(const std::string& text);
+            DataValue SetDouble(double x);
+            DataValue SetBool(bool b);
+            DataValue SetArray();
+
+            template <typename T>
+            DataValue& AddMember(const std::string& key, T val) // Add Key:Value member to object
+            {
+                if (!jvalue_->IsObject()) {
+                    DN_CORE_WARN("DataValue not an Object, cannot add member!");
+                    return *this;
+                }
+
+                rapidjson::Value name(key.c_str(), 
+                                      static_cast<rapidjson::SizeType>(key.size()),
+                                      jdoc_->GetAllocator());
+
+                rapidjson::Value v;
+                if constexpr (std::is_same_v<T, std::string>) {
+                    v.SetString(val.c_str(),
+                        static_cast<rapidjson::SizeType>(val.size()),
+                        jdoc_->GetAllocator());
+                }
+                else {
+                    v.Set(val);
+                }
+
+                jvalue_->AddMember(std::move(name),
+                                   std::move(v),
+                                   jdoc_->GetAllocator());
+
+                return *this;
+            }
+
+            template <typename T>
+            DataValue PushBack(T val)
+            {
+                if (jvalue_->IsArray()) {
+                    rapidjson::Document::AllocatorType& alloc = jdoc_->GetAllocator();
+                    rapidjson::Value v;
+                    v.Set(val);
+                    jvalue_->PushBack(std::move(v), alloc);
+                    return *this;
+                }
+                DN_CORE_WARN("DataValue is not an array!");
+                return DataValue();
+            }
+
+            DataValue& PushBack(DataValue dv);
 
 
-            const DataValue operator[](const std::string& member);
-            const DataValue operator[](int idx); // Array access
-            const DataValue operator*() const;
+            DataValue operator[](const std::string& member);
+            DataValue operator[](int idx); // Array access
+            const DataValue& operator*() const;
             bool operator==(const DataValue& other);
             bool operator!=(const DataValue& other);
-            void operator=(DataValue& other);
+
+            // For range-based looping
+            DataIterator      begin()       { return DataIterator(jdoc_, jvalue_->Begin()); }      
+            DataIterator      end()         { return DataIterator(jdoc_, jvalue_->End()); }        
+            ConstDataIterator begin() const { return ConstDataIterator(jdoc_, jvalue_->Begin()); } 
+            ConstDataIterator end()   const { return ConstDataIterator(jdoc_, jvalue_->End()); }   
 
         private:
-            std::shared_ptr<rapidjson::Document> readDocument_;
-            rapidjson::Value *readValue_; // This value is read, not meant for setting
-                                      // It is ultimately owned by readDocument_
-
-            rapidjson::Value modValue_;
+            std::shared_ptr<rapidjson::Document> jdoc_;
+            rapidjson::Value *jvalue_;
 
             DataValue(std::shared_ptr<rapidjson::Document> document, rapidjson::Value *value = nullptr);
             DataValue(std::shared_ptr<rapidjson::Document> document, const rapidjson::Value* value);

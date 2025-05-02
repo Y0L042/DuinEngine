@@ -43,7 +43,7 @@ Panel::Panel(const std::string& name, duin::UUID uuid, PanelManager* panelManage
     AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(this->uuid); });
 }
 
-Panel::Panel(duin::TOMLValue value)
+Panel::Panel(duin::DataValue value)
 {
     Deserialise(value);
     m_windowFlags = ImGuiWindowFlags_MenuBar |
@@ -55,36 +55,30 @@ duin::UUID Panel::GetUUID()
     return uuid;
 }
 
-duin::TOMLValue Panel::Serialise()
+duin::DataValue Panel::Serialise()
 {
-    duin::TOMLValue tomlValue{ toml::table{} };  // New: initialize as table :contentReference[oaicite:1]{index=1}
-    auto & value = tomlValue.GetValue().as_table();  // Changed: work with the table directly
-    
-    value[guitag::PANEL_TYPE] = std::to_string(type).c_str();
-    value[guitag::PANEL_UUID] = duin::UUID::ToStringHex(uuid);
-    value[guitag::PANEL_NAME] = panelName;
-    value[guitag::PANEL_WINDOW_NAME] = uniqueWindowName;
-        
-    return tomlValue;
+    duin::DataValue data;
+    data.AddMember(guitag::PANEL_TYPE, std::to_string(type).c_str());
+    data.AddMember(guitag::PANEL_UUID, duin::UUID::ToStringHex(uuid));
+    data.AddMember(guitag::PANEL_NAME, panelName);
+    data.AddMember(guitag::PANEL_WINDOW_NAME, uniqueWindowName);
 
+    return data;
 }
 
-void Panel::Deserialise(duin::TOMLValue tomlValue)
+void Panel::Deserialise(duin::DataValue data)
 {
-    toml::value& value = tomlValue.GetValue();
+    if (!data.HasMember(guitag::PANEL_TYPE)) return;
+    std::string typeStr = data[guitag::PANEL_TYPE].GetString();
+    type = (Panel::PanelType)atoi(typeStr.c_str());
 
-    if (!value.contains(guitag::PANEL_TYPE)) return;
-    const char* typeStr = value[guitag::PANEL_TYPE].as_string().c_str();
-    type = (Panel::PanelType)atoi(typeStr);
+    if (!data.HasMember(guitag::PANEL_NAME)) return;
+    panelName = data[guitag::PANEL_NAME].GetString();
 
-    if (!value.contains(guitag::PANEL_NAME)) return;
-    panelName = value[guitag::PANEL_NAME].as_string();
-
-    if (!value.contains(guitag::PANEL_UUID)) return;
-    uuid = duin::UUID::FromStringHex(value[guitag::PANEL_UUID].as_string());
+    if (!data.HasMember(guitag::PANEL_UUID)) return;
+    uuid = duin::UUID::FromStringHex(data[guitag::PANEL_UUID].GetString());
 
     uniqueWindowName = CreateUniquePanelName();
-    DN_INFO("Deserialising panel TODO");
 }
 
 std::string Panel::CreateUniquePanelName()

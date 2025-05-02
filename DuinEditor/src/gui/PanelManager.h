@@ -6,7 +6,7 @@
 #include "ViewportPanel.h"
 
 #include <Duin/Core/Utils/UUID.h>
-#include <Duin/Core/Utils/TOMLFile.h>
+#include <Duin/IO/IOModule.h>
 
 #include <unordered_map>
 #include <memory>
@@ -20,12 +20,12 @@ class PanelManager
     public:
         PanelManager() = default;
         PanelManager(std::string uuidHexString);
-        PanelManager(duin::TOMLValue value);
+        PanelManager(duin::DataValue value);
 
         void Init();
 
-        duin::TOMLValue Serialise(); // Serialise panels to toml value
-        void Deserialise(duin::TOMLValue value); // Deserialise panels from toml value
+        duin::DataValue Serialise(); // Serialise panels to toml value
+        void Deserialise(duin::DataValue value); // Deserialise panels from toml value
 
         template<typename... Args>
         void CreatePanel(Panel::PanelType type, Args... args)

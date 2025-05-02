@@ -7,13 +7,13 @@ DefaultPanel::DefaultPanel(const std::string& name, PanelManager *panelManager)
     type = Panel::DEFAULT;
 }
 
-DefaultPanel::DefaultPanel(duin::TOMLValue value)
+DefaultPanel::DefaultPanel(duin::DataValue value)
     : Panel(value)
 {
     Deserialise(value);
 }
 
-void DefaultPanel::Deserialise(duin::TOMLValue value)
+void DefaultPanel::Deserialise(duin::DataValue value)
 {
     DN_INFO("TODO");
 }

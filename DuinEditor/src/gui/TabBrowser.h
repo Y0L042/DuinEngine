@@ -3,7 +3,7 @@
 #include "Tab.h"
 
 #include <Duin/Core/Utils/UUID.h>
-#include <Duin/Core/Utils/TOMLFile.h>
+#include <Duin/IO/IOModule.h>
 
 #include <vector>
 #include <string>
@@ -15,14 +15,14 @@ public:
     TabBrowser();
 
     void Init();
-    void Init(duin::TOMLValue value);
+    void Init(duin::DataValue value);
 
     void AddTab(const std::string& title); // Creates and saves
     void CreateTab(Tab tab); // Only creates
     void CloseTab(int index);
     void Render();
-    duin::TOMLValue Serialise();
-    void Deserialise(duin::TOMLValue value);
+    duin::DataValue Serialise();
+    void Deserialise(duin::DataValue data);
 
     duin::UUID GetUUID();
 

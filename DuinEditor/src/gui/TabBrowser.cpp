@@ -5,7 +5,6 @@
 #include "GuiMeta.h"
 
 #include <Duin/Core/Debug/DebugModule.h>
-#include <Duin/Core/Utils/TOMLFile.h>
 
 static const char RENAME_POPUP[] = "RENAME_POPUP";
 static bool requestRenamePopupFlag = false;
@@ -28,7 +27,7 @@ void TabBrowser::Init()
     }
 }
 
-void TabBrowser::Init(duin::TOMLValue value)
+void TabBrowser::Init(duin::DataValue value)
 {
     Deserialise(value);
     if (tabs.empty()) {
@@ -251,35 +250,26 @@ bool TabBrowser::DrawConfirmDeleteTabPopup()
 }
 
 
-duin::TOMLValue TabBrowser::Serialise()
+duin::DataValue TabBrowser::Serialise()
 {
-    duin::TOMLValue tomlValue;
-    toml::value& value = tomlValue.GetValue();
-    value[guitag::TABS_KEY] = toml::array{};
-    auto& tabsArray = value[guitag::TABS_KEY].as_array();
-    tabsArray.clear();
+    duin::DataValue value;
+    duin::DataValue tabsArray = value[guitag::TABS_KEY].SetArray();
+    // Clear tabsArray before writing?
+    // for (Tab& tab : tabs) {
+    //     tabsArray.PushBack(tab.Serialise());
+    // }
 
-    for (Tab& tab : tabs) {
-        tabsArray.push_back(tab.Serialise().GetValue());
-    }
-
-    //file.at(guitag::TABS_KEY).as_array_fmt().fmt = toml::array_format::multiline;
-    //file.at(guitag::TABS_KEY).as_array_fmt().indent_type = toml::indent_char::space;
-    //file.at(guitag::TABS_KEY).as_array_fmt().body_indent = 2;
-    
-    return tomlValue;
+    return value;
 }
 
-void TabBrowser::Deserialise(duin::TOMLValue tomlValue)
+void TabBrowser::Deserialise(duin::DataValue data)
 {
-    toml::value& file = tomlValue.GetValue();
-    if (file.contains(guitag::TABS_KEY)) {
-        auto& tabsArray = file[guitag::TABS_KEY].as_array();
+    if (data.HasMember(guitag::TABS_KEY) && data[guitag::TABS_KEY].IsArray()) {
+        duin::DataValue tabsArray = data[guitag::TABS_KEY];
         tabs.clear();
 
-        for (auto& item : tabsArray) {
-            duin::TOMLValue value(item);
-            Tab tab(value);
+        for (auto item : tabsArray) {
+            Tab tab(item);
             tabs.push_back(tab);
         }
     }
