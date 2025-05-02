@@ -5,7 +5,7 @@
 #include <external/imgui.h>
 
 #include <Duin/Core/Utils/UUID.h>
-#include <Duin/Core/Utils/TOMLFile.h>
+#include <Duin/IO/IOModule.h>
 
 
 
@@ -32,15 +32,15 @@ class Panel
         Panel() = default;
         Panel(const std::string& name, PanelManager *panelManager);
         Panel(const std::string& name, duin::UUID uuid, PanelManager* panelManager);
-        Panel(duin::TOMLValue value);
+        Panel(duin::DataValue value);
         virtual ~Panel() = default;
 
 
         virtual void SetupMenuBar();    // Can be overridden to customize menu
         virtual void DrawContent() = 0; // Pure virtual - must be implemented by derived classes
 
-        virtual duin::TOMLValue Serialise(); // Serialise panel to toml value
-        virtual void Deserialise(duin::TOMLValue value); // Deserialise panel from toml value
+        virtual duin::DataValue Serialise(); // Serialise panel to toml value
+        virtual void Deserialise(duin::DataValue value); // Deserialise panel from toml value
 
         void AddMenuItem(const std::string& menuName, const std::string& itemName, std::function<void()> callback);
         void AddSeparator(const std::string& menuName);

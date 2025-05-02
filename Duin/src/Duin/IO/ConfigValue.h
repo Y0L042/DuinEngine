@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Duin/Core/Debug/DebugModule.h"
 #include <toml.hpp>
 #include <string>
 
@@ -7,16 +8,16 @@ namespace duin {
     class ConfigValue
     {
         public:
-            static ConfigValue Parse(const std::string* data);
+            static ConfigValue Parse(const std::string& data);
+            static std::string Format(const ConfigValue& value);
 
             ConfigValue();
-            ConfigValue(const std::string& path);
+
             ~ConfigValue() = default;
 
             toml::value& GetTOMLValue();
 
-
-            bool IsValid() const;
+            bool IsEmpty() const;
 
 			bool Contains(const std::string& key);
             ConfigValue At(const std::string& key);
@@ -69,7 +70,6 @@ namespace duin {
 
 	    private:
 		    toml::value modValue_;
-            bool isValid;
 
             ConfigValue(const toml::value& value);
             ConfigValue(std::initializer_list<std::pair<const std::string, toml::basic_value<toml::type_config>>> init);

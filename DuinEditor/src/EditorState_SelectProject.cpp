@@ -1,6 +1,6 @@
 #include "EditorState_SelectProject.h"
 
-#include <Duin/Core/Utils/UtilsModule.h>
+#include <Duin/IO/IOModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Application.h>
 #include <external/imgui.h>
@@ -63,8 +63,9 @@ void EditorState_SelectProject::InitProjectList()
     debugConsole.LogEx(duin::LogLevel::Info, "Initialising Project List.\n");
 
     // Read editor config
-    duin::TOMLValue file;
-    if (file.Load(EDITOR_CFG_PATH) == duin::TOMLValue::INVALID) {
+
+    duin::ConfigValue file = duin::ConfigValue::Parse(EDITOR_CFG_PATH);
+    if (file.IsEmpty()) {
         debugConsole.LogEx(duin::LogLevel::Warn, "EditorConfig empty. Select project root.\n");
         return;
     }
@@ -78,7 +79,7 @@ void EditorState_SelectProject::InitProjectList()
                      "EditorConfig loaded.\n");
 
     // Read "RecentProjectDirs"
-    recentProjectDirsVec = duin::TOMLValue::Get<std::vector<std::string>>(file.At("EditorConfig").At("RecentProjectDirs"));
+    recentProjectDirsVec = duin::ConfigValue::Get<std::vector<std::string>>(file.At("EditorConfig").At("RecentProjectDirs"));
     debugConsole.LogEx(duin::LogLevel::Info, "RecentProjectDirs:");
     for (int i = 0; i < recentProjectDirsVec.size(); ++i) {
         debugConsole.LogEx(duin::LogLevel::Info, "%s", recentProjectDirsVec[i].c_str());

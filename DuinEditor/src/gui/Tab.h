@@ -3,7 +3,7 @@
 #include "PanelManager.h"
 
 #include <Duin/Core/Utils/UUID.h>
-#include <Duin/Core/Utils/TOMLFile.h>
+#include <Duin/IO/IOModule.h>
 
 #include <string>
 
@@ -17,7 +17,7 @@ class Tab
         bool flag_requestDelete = false;
 
         Tab() = default;
-        Tab(duin::TOMLValue value);
+        Tab(duin::DataValue value);
 
         std::string GetPanelManagerID();
 
@@ -33,8 +33,8 @@ class Tab
 
         duin::UUID GetUUID();
 
-        duin::TOMLValue Serialise(); // Serialise tab to toml value
-        void Deserialise(duin::TOMLValue value); // Deserialise tab from toml value
+        duin::DataValue Serialise(); // Serialise tab to toml value
+        void Deserialise(duin::DataValue value); // Deserialise tab from toml value
 
         void DrawWorkspace();
 

@@ -1,66 +1,111 @@
 #include "dnpch.h"
 #include "DataValue.h"
 #include <Duin/Core/Debug/DNLog.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
+#include <sstream>
+#include <fstream>
 
 namespace duin {
     /* DATAVALUE */
+    DataValue DataValue::Parse(const std::string& filePath)
+    {
+        DN_CORE_INFO("Attempting to parse {} into DataValue...", filePath);
+        DataValue dv;
+
+        std::ifstream ifs(filePath);
+        if (!ifs) {
+            DN_CORE_FATAL("Cannot open {}!", filePath);
+        }
+        std::stringstream buffer;
+        buffer << ifs.rdbuf();
+        std::string content = buffer.str();
+        DN_CORE_INFO("Content:\n{}", content);
+
+        dv.jdoc_ =  std::make_shared<rapidjson::Document>();
+        dv.jdoc_->Parse(content.c_str());
+        dv.jvalue_ = dv.jdoc_.get();
+
+        if (dv.jvalue_->IsObject()) {
+            DN_CORE_INFO("Document parsed into DataValue.");
+        } else {
+            DN_CORE_WARN("Document parsing failed, DataValue not an Object!");
+        }
+        return dv;
+    }
+
+    std::string DataValue::Write(const DataValue& value)
+    {
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+        rapidjson::Document& d = *value.jdoc_;
+        d.Accept(writer);
+        std::string out = buffer.GetString();
+
+        return out;
+    }
+
     DataValue::DataValue()
-        : readDocument_(nullptr), readValue_(nullptr)
-    {}
+    {
+        jdoc_ = std::make_shared<rapidjson::Document>();
+        jdoc_->SetObject();
+        jvalue_ = jdoc_.get();
+    }
 
     DataValue::DataValue(bool b)
-        : modValue_(b)
-    {}
+        : DataValue()
+    {
+        jvalue_->SetBool(b);
+    }
 
     DataValue::DataValue(int x)
-        : modValue_(x)
-    {}
+        : DataValue()
+    {
+        jvalue_->SetInt(x);
+    }
 
     DataValue::DataValue(const std::string& text)
+        : DataValue()
     {
-        modValue_.SetString(text.c_str(), text.size());
+        jvalue_->SetString(text.c_str(), text.size());
     }
 
     DataValue::DataValue(double x)
-    {}
-
-    DataValue::DataValue(const DataValue & other)
+        : DataValue()
     {
-        other;
+        jvalue_->SetDouble(x);
     }
 
     DataValue::DataValue(std::shared_ptr<rapidjson::Document> document, rapidjson::Value *value)
-        : readDocument_(document), readValue_(value)
+        : jdoc_(document), jvalue_(value)
     {
         // If no subvalue is passed, use document as value
-        if (readValue_ == nullptr) {
-            readValue_ = readDocument_.get();
+        if (jvalue_ == nullptr) {
+            jvalue_ = jdoc_.get();
         }
     }
 
     DataValue::DataValue(std::shared_ptr<rapidjson::Document> document, const rapidjson::Value* value)
-        : readDocument_(document), readValue_(const_cast<rapidjson::Value*>(value)) // Cast const to non-const
+        : jdoc_(document), jvalue_(const_cast<rapidjson::Value*>(value)) // Cast const to non-const
     {
         // If no subvalue is passed, use document as value
-        if (readValue_ == nullptr) {
-            readValue_ = readDocument_.get();
+        if (jvalue_ == nullptr) {
+            jvalue_ = jdoc_.get();
             DN_CORE_ERROR("Cannot create DataValue with const nullptr rapidjson::Value!");
         }
     }
 
-    DataValue DataValue::Parse(const std::string& filePath)
+    DataValue DataValue::Clone() const
     {
-        std::shared_ptr<rapidjson::Document> document = std::make_shared<rapidjson::Document>();
-        document->Parse(filePath.c_str());
+        auto newDoc = std::make_shared<rapidjson::Document>();
+        newDoc->CopyFrom(*jvalue_, newDoc->GetAllocator()); 
 
-        DataValue dataValue(document);
-        
-        return dataValue;
+        return DataValue(newDoc, newDoc.get());
     }
 
     bool DataValue::IsReadValid() const
     {
-        if (readDocument_ && readValue_) {
+        if (jdoc_ && jvalue_) {
             return true;
         } else {
             return false;
@@ -71,8 +116,12 @@ namespace duin {
 
     bool DataValue::HasMember(const std::string& member) const
     {
-        if (readValue_) {
-            if (readValue_->HasMember(member.c_str())) {
+        if (jvalue_) {
+            if (!jvalue_->IsObject()) {
+                DN_CORE_WARN("DataValue is not an Object! Cannot search for key.");
+                return false;
+            } else
+            if (jvalue_->HasMember(member.c_str())) {
                 return true;
             } else {
                 return false;
@@ -82,10 +131,40 @@ namespace duin {
         return false;
     }
 
+    DataValue& DataValue::AddMember(const std::string& key, DataValue dv)
+    {
+        if (!jvalue_->IsObject()) {
+            DN_CORE_WARN("DataValue not an Object, cannot add nested member!");
+            return *this;
+        }
+
+        rapidjson::Value name(
+            key.c_str(),
+            static_cast<rapidjson::SizeType>(key.size()),
+            jdoc_->GetAllocator());
+
+        rapidjson::Value nodeCopy;
+        nodeCopy.CopyFrom(dv.GetRJSONValue(), jdoc_->GetAllocator());
+
+        jvalue_->AddMember(std::move(name), std::move(nodeCopy), jdoc_->GetAllocator());
+
+        return *this;
+    }
+
     bool DataValue::IsNull() const
     {
-        if (readValue_) {
-            bool v = readValue_->IsNull();
+        if (jvalue_) {
+            bool v = jvalue_->IsNull();
+            return v;
+        }
+        DN_CORE_WARN("DataValue is empty!");
+        return false;
+    }
+
+    bool DataValue::IsObject() const
+    {
+        if (jvalue_) {
+            bool v = jvalue_->IsObject();
             return v;
         }
         DN_CORE_WARN("DataValue is empty!");
@@ -94,8 +173,8 @@ namespace duin {
 
     bool DataValue::IsString() const
     {
-        if (readValue_) {
-            bool v = readValue_->IsString();
+        if (jvalue_) {
+            bool v = jvalue_->IsString();
             return v;
         }
         DN_CORE_WARN("DataValue is empty!");
@@ -104,9 +183,9 @@ namespace duin {
 
     std::string DataValue::GetString() const
     {
-        if (readValue_) {
-            if (readValue_->IsString()) {
-                std::string s = readValue_->GetString();
+        if (jvalue_) {
+            if (jvalue_->IsString()) {
+                std::string s = jvalue_->GetString();
                 return s;
             } else {
                 DN_CORE_WARN("DataValue not string!");
@@ -119,8 +198,8 @@ namespace duin {
 
     bool DataValue::IsBool() const
     {
-        if (readValue_) {
-            bool v = readValue_->IsBool();
+        if (jvalue_) {
+            bool v = jvalue_->IsBool();
             return v;
         }
         DN_CORE_WARN("DataValue is empty!");
@@ -129,9 +208,9 @@ namespace duin {
 
     bool DataValue::GetBool() const
     {
-        if (readValue_) {
-            if (readValue_->IsBool()) {
-                bool v = readValue_->GetBool();
+        if (jvalue_) {
+            if (jvalue_->IsBool()) {
+                bool v = jvalue_->GetBool();
                 return v;
             } else {
                 DN_CORE_WARN("DataValue not boolean!");
@@ -143,8 +222,8 @@ namespace duin {
 
     bool DataValue::IsNumber() const
     {
-        if (readValue_) {
-            bool v = readValue_->IsNumber();
+        if (jvalue_) {
+            bool v = jvalue_->IsNumber();
             return v;
         }
         DN_CORE_WARN("DataValue is empty!");
@@ -153,8 +232,8 @@ namespace duin {
 
     bool DataValue::IsInt() const
     {
-        if (readValue_) {
-            bool v = readValue_->IsInt();
+        if (jvalue_) {
+            bool v = jvalue_->IsInt();
             return v;
         }
         DN_CORE_WARN("DataValue is empty!");
@@ -163,9 +242,9 @@ namespace duin {
 
     int DataValue::GetInt() const
     {
-        if (readValue_) {
-            if (readValue_->IsInt()) {
-                int v = readValue_->GetInt();
+        if (jvalue_) {
+            if (jvalue_->IsInt()) {
+                int v = jvalue_->GetInt();
                 return v;
             } else {
                 DN_CORE_WARN("DataValue not integer!");
@@ -177,8 +256,8 @@ namespace duin {
 
     bool DataValue::IsDouble() const
     {
-        if (readValue_) {
-            bool v = readValue_->IsDouble();
+        if (jvalue_) {
+            bool v = jvalue_->IsDouble();
             return v;
         }
         DN_CORE_WARN("DataValue is empty!");
@@ -187,9 +266,9 @@ namespace duin {
 
     double DataValue::GetDouble() const
     {
-        if (readValue_) {
-            if (readValue_->IsDouble()) {
-                double v = readValue_->GetDouble();
+        if (jvalue_) {
+            if (jvalue_->IsDouble()) {
+                double v = jvalue_->GetDouble();
                 return v;
             } else {
                 DN_CORE_WARN("DataValue not double!");
@@ -201,8 +280,8 @@ namespace duin {
 
     bool DataValue::IsArray() const
     {
-        if (readValue_) {
-            bool v = readValue_->IsArray();
+        if (jvalue_) {
+            bool v = jvalue_->IsArray();
             return v;
         }
         DN_CORE_WARN("DataValue is empty!");
@@ -211,9 +290,9 @@ namespace duin {
 
     bool DataValue::Empty() const
     {
-        if (readValue_) {
-            if (readValue_->IsArray()) {
-                bool v = readValue_->Empty();
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                bool v = jvalue_->Empty();
                 return v;
             } else {
                 DN_CORE_WARN("DataValue not array!");
@@ -225,9 +304,9 @@ namespace duin {
 
     size_t DataValue::Capacity() const
     {
-        if (readValue_) {
-            if (readValue_->IsArray()) {
-                rapidjson::SizeType v = readValue_->Capacity();
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                rapidjson::SizeType v = jvalue_->Capacity();
                 size_t size = (size_t)v;
                 return size_t();
             } else {
@@ -240,10 +319,10 @@ namespace duin {
 
     DataValue::ConstDataIterator DataValue::Begin()
     {
-        if (readValue_) {
-            if (readValue_->IsArray()) {
-                rapidjson::Value::ConstValueIterator it = readValue_->Begin();
-                return ConstDataIterator(readDocument_, it);
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                rapidjson::Value::ConstValueIterator it = jvalue_->Begin();
+                return ConstDataIterator(jdoc_, it);
             } else {
                 DN_CORE_WARN("DataValue not array!");
             }
@@ -254,10 +333,10 @@ namespace duin {
 
     DataValue::ConstDataIterator DataValue::End()
     {
-        if (readValue_) {
-            if (readValue_->IsArray()) {
-                rapidjson::Value::ConstValueIterator it = readValue_->End();
-                return ConstDataIterator(readDocument_, it);
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                rapidjson::Value::ConstValueIterator it = jvalue_->End();
+                return ConstDataIterator(jdoc_, it);
             } else {
                 DN_CORE_WARN("DataValue not array!");
             }
@@ -271,53 +350,72 @@ namespace duin {
         return ConstDataIterator();
     }
 
-    void DataValue::SetObject()
+    DataValue DataValue::SetObject()
     {
-        modValue_.SetObject();
+        jvalue_->SetObject();
+        return *this;
     }
 
-    void DataValue::SetInt(int x)
+    DataValue DataValue::SetInt(int x)
     {
-        modValue_.SetInt(x);
+        jvalue_->SetInt(x);
+        return *this;
     }
 
-    void DataValue::SetString(const std::string& text)
+    DataValue DataValue::SetString(const std::string& text)
     {
-        modValue_.SetString(text.c_str(), text.size());
+        jvalue_->SetString(text.c_str(), text.size());
+        return *this;
     }
 
-    void DataValue::SetDouble(double x)
+    DataValue DataValue::SetDouble(double x)
     {
-        modValue_.SetDouble(x);
+        jvalue_->SetDouble(x);
+        return *this;
     }
 
-    void DataValue::SetBool(bool b)
+    DataValue DataValue::SetBool(bool b)
     {
-        modValue_.SetBool(b);
+        jvalue_->SetBool(b);
+        return *this;
     }
 
-    void DataValue::SetArray()
+    DataValue DataValue::SetArray()
     {
-        modValue_.SetArray();
+        jvalue_->SetArray();
+        return *this;
     }
 
-    const DataValue DataValue::operator[](const std::string& member)
+    DataValue& DataValue::PushBack(DataValue dv)
+    {
+        if (!jvalue_->IsArray()) {
+            DN_CORE_WARN("DataValue is not an array!");
+            return *this;
+        }
+        auto& alloc = jdoc_->GetAllocator();
+        rapidjson::Value node;
+        node.CopyFrom(dv.GetRJSONValue(), alloc);            
+        jvalue_->PushBack(std::move(node), alloc);          
+        return *this;
+    }
+
+    DataValue DataValue::operator[](const std::string& member)
     {
         if (IsReadValid()) {
-            rapidjson::Value& value(*readDocument_);
-            return DataValue(readDocument_, &value);
+            rapidjson::Value& value(*jdoc_);
+            return DataValue(jdoc_, &value);
         }
         DN_CORE_WARN("DataValue is empty!");
         return DataValue();
     }
 
-    const DataValue DataValue::operator[](int idx)
+    DataValue DataValue::operator[](int idx)
     {
         if (IsReadValid()) {
-            if (readValue_->IsArray()) {
+            if (jvalue_->IsArray()) {
                 rapidjson::SizeType rjIdx = static_cast<rapidjson::SizeType>(idx);
-                rapidjson::Value& value = readValue_[rjIdx];
-                return DataValue(readDocument_, &value);
+                rapidjson::Value& value = jvalue_[rjIdx];
+                return DataValue(jdoc_, &value);
             } else {
                 DN_CORE_WARN("DataValue not array, cannot dereference!");
                 return DataValue();
@@ -327,20 +425,20 @@ namespace duin {
         return DataValue();
     }
 
-    const DataValue DataValue::operator*() const
+    const DataValue& DataValue::operator*() const
     {
-        if (readDocument_ && readValue_) {
+        if (jdoc_ && jvalue_) {
             return *this;
         }
         DN_CORE_WARN("ConstDataIterator invalid, cannot dereference!");
-        return DataValue();
+        return *this;
     }
 
     bool DataValue::operator==(const DataValue& other)
     {
         if (IsReadValid()) {
             if (other.IsReadValid()) {
-                return readValue_ == other.readValue_;
+                return jvalue_ == other.jvalue_;
             }
             DN_CORE_WARN("Second DataValue invalid, cannot test equality!");
             return false;
@@ -353,7 +451,7 @@ namespace duin {
     {
         if (IsReadValid()) {
             if (other.IsReadValid()) {
-                return readValue_ != other.readValue_;
+                return jvalue_ != other.jvalue_;
             }
             DN_CORE_WARN("Second DataValue invalid, cannot test inequality!");
             return false;
@@ -461,7 +559,7 @@ namespace duin {
         return DataValue();
     }
 
-    DataValue::ConstDataIterator& DataValue::ConstDataIterator::operator++()
+    DataValue::ConstDataIterator DataValue::ConstDataIterator::operator++()
     {
         if (isReadValid && readDocument_) {
             ++it_;
@@ -495,16 +593,5 @@ namespace duin {
         }
         DN_CORE_WARN("First ConstDataIterator invalid, cannot test equality!");
         return false;
-    }
-
-    void DataValue::DataValue::operator=(DataValue& other)
-    {
-        readDocument_ = other.readDocument_;
-        readValue_ = other.readValue_; 
-
-        modValue_ = other.modValue_; // Moves other.modValue_
-
-        other.readDocument_ = nullptr;
-        other.readValue_ = nullptr;
     }
 }

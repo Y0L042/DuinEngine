@@ -2,7 +2,7 @@
 
 #include <Duin/Core/Application.h>
 #include <Duin/Core/Events/EventsModule.h>
-#include <Duin/Core/Utils/TOMLFile.h>
+#include <Duin/IO/IOModule.h>
 
 
 class Editor : public duin::Application
@@ -22,8 +22,8 @@ class Editor : public duin::Application
         void DrawUI() override;
         void Debug() override;
 
-        static void SaveTOMLConfig(duin::TOMLValue value);
-        static duin::TOMLValue LoadTOMLConfig();
+        static void SaveProjectEditorConfig(duin::DataValue value);
+        static duin::DataValue LoadProjectEditorConfig();
 
 private:
     static Editor* instance;
