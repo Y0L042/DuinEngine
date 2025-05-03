@@ -58,7 +58,8 @@ duin::UUID Panel::GetUUID()
 duin::DataValue Panel::Serialise()
 {
     duin::DataValue data;
-    data.AddMember(guitag::PANEL_TYPE, std::to_string(type).c_str());
+    const char c = '0' + static_cast<int>(type);
+    data.AddMember(guitag::PANEL_TYPE, c);
     data.AddMember(guitag::PANEL_UUID, duin::UUID::ToStringHex(uuid));
     data.AddMember(guitag::PANEL_NAME, panelName);
     data.AddMember(guitag::PANEL_WINDOW_NAME, uniqueWindowName);
@@ -70,7 +71,7 @@ void Panel::Deserialise(duin::DataValue data)
 {
     if (!data.HasMember(guitag::PANEL_TYPE)) return;
     std::string typeStr = data[guitag::PANEL_TYPE].GetString();
-    type = (Panel::PanelType)atoi(typeStr.c_str());
+    type = (Panel::PanelType)std::stoi(typeStr.c_str());
 
     if (!data.HasMember(guitag::PANEL_NAME)) return;
     panelName = data[guitag::PANEL_NAME].GetString();

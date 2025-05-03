@@ -21,8 +21,8 @@ TabBrowser::TabBrowser()
 
 void TabBrowser::Init()
 {
+    DN_WARN("Initialising with no tab data, adding tab!");
     if (tabs.empty()) {
-        DN_WARN("No tabs found, adding tab!");
         AddTab("Editor");
     }
 }
@@ -33,6 +33,7 @@ void TabBrowser::Init(duin::DataValue value)
     if (tabs.empty()) {
         DN_WARN("No tabs found, adding tab!");
         AddTab("Editor");
+        DN_WARN("Tab added.");
     }
 }
 
@@ -50,9 +51,12 @@ void TabBrowser::AddTab(const std::string& title)
     } else {
         newTab.title = title;
     }
+    DN_INFO("Creating tab");
     CreateTab(newTab);
-
+    DN_INFO("Created tab");
+    DN_INFO("Saving project");
     SaveProjectConfig();
+    DN_INFO("Saved project");
 }
 
 void TabBrowser::CreateTab(Tab newTab)
@@ -213,14 +217,14 @@ void TabBrowser::DrawRenameTabPopup()
 bool TabBrowser::DrawConfirmDeleteTabPopup()
 {
     bool actionDelete = false;
-    ImGuiWindowFlags deletePopupFlags = ImGuiWindowFlags_AlwaysAutoResize;
+    ImGuiWindowFlags deletePopupFlags = 0;
     if (requestDeleteTabFlag) {
         requestDeleteTabFlag = false;
         //DN_INFO("Requestiong tab delete");
         ImGui::OpenPopup(CONFIRM_TAB_DELETE);
         ImGui::SetNextWindowFocus();
     }
-    if (ImGui::BeginPopup(CONFIRM_TAB_DELETE)) {
+    if (ImGui::BeginPopupModal(CONFIRM_TAB_DELETE)) {
         //DN_INFO("Popup tab delete");
         // Delete tab
         if (ImGui::Button("Delete") && (requestDeleteIndex >= 0 && requestDeleteIndex < (int)tabs.size())) {
@@ -252,26 +256,39 @@ bool TabBrowser::DrawConfirmDeleteTabPopup()
 
 duin::DataValue TabBrowser::Serialise()
 {
+    duin::DataValue tabsArray;
+    tabsArray.SetArray();
+
+    for (Tab& tab : tabs) {
+        DN_INFO("Saving tab into tabsArray");
+        tabsArray.PushBack(tab.Serialise());
+    }
+
     duin::DataValue value;
-    duin::DataValue tabsArray = value[guitag::TABS_KEY].SetArray();
-    // Clear tabsArray before writing?
-    // for (Tab& tab : tabs) {
-    //     tabsArray.PushBack(tab.Serialise());
-    // }
+    value.AddMember(guitag::TABS_KEY, tabsArray);
 
     return value;
 }
 
 void TabBrowser::Deserialise(duin::DataValue data)
 {
-    if (data.HasMember(guitag::TABS_KEY) && data[guitag::TABS_KEY].IsArray()) {
-        duin::DataValue tabsArray = data[guitag::TABS_KEY];
-        tabs.clear();
+    if (!(data.HasMember(guitag::TABS_KEY) && data[guitag::TABS_KEY].IsArray())) {
+        DN_WARN("TabBrowser passed empty tabs array!");
+        return;
+    }
 
-        for (auto item : tabsArray) {
-            Tab tab(item);
-            tabs.push_back(tab);
-        }
+    duin::DataValue tabsArray = data[guitag::TABS_KEY];
+    DN_INFO("TabBrowser data: \n{}\n", data.Write());
+    if (!tabsArray.IsArray()) {
+        DN_WARN("Tabs array is empty!");
+        return;
+    }
+
+    tabs.clear();
+    for (auto item : tabsArray) {
+        DN_INFO("Tab item: \n{}\n", duin::DataValue::Write(item));
+        Tab tab(item);
+        tabs.push_back(tab);
     }
 }
 

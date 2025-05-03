@@ -76,13 +76,16 @@ void Editor::Debug()
 {
 }
 
-void Editor::SaveProjectEditorConfig(duin::DataValue tomlValue)
+void Editor::SaveProjectEditorConfig(duin::DataValue value)
 {
     std::ofstream ofs(activeProject.GetPathAsString());
     if (!ofs) {
         DN_FATAL("Unable to save tabs!");
     }
-    ofs << duin::DataValue::Write(projectData);
+
+    projectData.AddMember(guitag::EDITOR_CONFIG, value);
+
+    ofs << duin::DataValue::Write(projectData, true);
     ofs.close();
 }
 

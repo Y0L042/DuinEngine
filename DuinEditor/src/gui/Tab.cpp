@@ -25,8 +25,9 @@ duin::DataValue Tab::Serialise()
     duin::DataValue value;
     value.AddMember(guitag::TAB_TITLE, title);
     value.AddMember(guitag::TAB_UUID, duin::UUID::ToStringHex(uuid));
-    value.AddMember(guitag::TAB_PANELMANAGER_UUID, GetPanelManagerID());
-    value.AddMember(guitag::PANELMANAGER_UUID, panelManager.Serialise());
+    value.AddMember(guitag::TAB_PANELMANAGER, panelManager.Serialise());
+
+    DN_INFO("Tab: \n{}\n", value.Write());
 
     return value;
 }
@@ -41,8 +42,11 @@ void Tab::Deserialise(duin::DataValue data)
     uuid = duin::UUID::FromStringHex(data[guitag::TAB_UUID].GetString());
     if (uuid == duin::UUID::INVALID) DN_ERROR("Tab uuid invalid when deserialising!");
 
-    if (!data.HasMember(guitag::PANELMANAGER_UUID)) return;
-    duin::DataValue panelManagerValue(data[guitag::PANELMANAGER_UUID]);
+    if (!data.HasMember(guitag::TAB_PANELMANAGER)) {
+        DN_WARN("Tab has no PanelManager!");
+        return;
+    }
+    duin::DataValue panelManagerValue = data[guitag::TAB_PANELMANAGER];
 
     panelManager = PanelManager(panelManagerValue);
 }

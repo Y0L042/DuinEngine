@@ -3,6 +3,7 @@
 #include <Duin/Core/Debug/DNLog.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
+#include <rapidjson/prettywriter.h>
 #include <sstream>
 #include <fstream>
 
@@ -34,15 +35,32 @@ namespace duin {
         return dv;
     }
 
-    std::string DataValue::Write(const DataValue& value)
+    std::string DataValue::Write(const DataValue& value, bool prettyWrite)
     {
         rapidjson::StringBuffer buffer;
-        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-        rapidjson::Document& d = *value.jdoc_;
-        d.Accept(writer);
-        std::string out = buffer.GetString();
 
-        return out;
+        if (prettyWrite) {
+            rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+            writer.SetIndent('\t', 1);
+
+            // rapidjson::Document& d = *value.jdoc_;
+            // d.Accept(writer);
+            value.jvalue_->Accept(writer);
+            std::string out = buffer.GetString();
+
+            return out;
+        } else {
+            rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+
+            // rapidjson::Document& d = *value.jdoc_;
+            // d.Accept(writer);
+            value.jvalue_->Accept(writer);
+            std::string out = buffer.GetString();
+
+            return out;
+        }
+
+
     }
 
     DataValue::DataValue()
@@ -95,6 +113,11 @@ namespace duin {
         }
     }
 
+    std::string DataValue::Write() const
+    {
+        return DataValue::Write(*this);
+    }
+
     DataValue DataValue::Clone() const
     {
         auto newDoc = std::make_shared<rapidjson::Document>();
@@ -131,11 +154,15 @@ namespace duin {
         return false;
     }
 
-    DataValue& DataValue::AddMember(const std::string& key, DataValue dv)
+    DataValue& DataValue::AddMember(const std::string& key, DataValue dv, bool allowDuplicates)
     {
         if (!jvalue_->IsObject()) {
             DN_CORE_WARN("DataValue not an Object, cannot add nested member!");
             return *this;
+        }
+
+        if (!allowDuplicates) {
+            RemoveMember(key.c_str());
         }
 
         rapidjson::Value name(
@@ -147,6 +174,15 @@ namespace duin {
         nodeCopy.CopyFrom(dv.GetRJSONValue(), jdoc_->GetAllocator());
 
         jvalue_->AddMember(std::move(name), std::move(nodeCopy), jdoc_->GetAllocator());
+
+        return *this;
+    }
+
+    DataValue& DataValue::RemoveMember(const std::string& keyStr)
+    {
+        if (jvalue_ && jvalue_->IsObject() && jvalue_->HasMember(keyStr.c_str())) {
+            jvalue_->RemoveMember(keyStr.c_str());
+        }
 
         return *this;
     }
@@ -395,14 +431,23 @@ namespace duin {
         auto& alloc = jdoc_->GetAllocator();
         rapidjson::Value node;
         node.CopyFrom(dv.GetRJSONValue(), alloc);            
-        jvalue_->PushBack(std::move(node), alloc);          
+        jvalue_->PushBack(std::move(node), alloc); 
+        //jvalue_->PushBack(*dv.jvalue_, alloc);
         return *this;
     }
 
     DataValue DataValue::operator[](const std::string& member)
     {
         if (IsReadValid()) {
-            rapidjson::Value& value(*jdoc_);
+            if (!jvalue_->IsObject()) {
+                DN_CORE_WARN("DataValue is not an Object!");
+                return DataValue();
+            }
+            if (!jvalue_->HasMember(member.c_str())) {
+                DN_CORE_WARN("DataValue does not contain member {}!", member);
+                return DataValue();
+            }
+            rapidjson::Value& value = (*jvalue_)[member.c_str()];
             return DataValue(jdoc_, &value);
         }
         DN_CORE_WARN("DataValue is empty!");

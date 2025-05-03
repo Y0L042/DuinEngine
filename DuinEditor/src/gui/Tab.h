@@ -33,8 +33,8 @@ class Tab
 
         duin::UUID GetUUID();
 
-        duin::DataValue Serialise(); // Serialise tab to toml value
-        void Deserialise(duin::DataValue value); // Deserialise tab from toml value
+        duin::DataValue Serialise();
+        void Deserialise(duin::DataValue value);
 
         void DrawWorkspace();
 

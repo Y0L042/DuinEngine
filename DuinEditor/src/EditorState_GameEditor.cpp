@@ -8,6 +8,7 @@
 #include "States.h"
 #include "gui/TabBrowser.h"
 #include "gui/ViewportPanel.h"
+#include "gui/GuiMeta.h"
 #include "Editor.h"
 
 TabBrowser tabBrowser;
@@ -24,8 +25,8 @@ void EditorState_GameEditor::Enter()
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING GameEditor");
 
     duin::DataValue data = Editor::LoadProjectEditorConfig();
-    if (data.HasMember("TabBrowserConfigs")) {
-        duin::DataValue tabBrowserData = data["TabBrowserConfigs"];
+    if (data.HasMember(guitag::EDITOR_CONFIG)) {
+        duin::DataValue tabBrowserData = data[guitag::EDITOR_CONFIG];
         tabBrowser.Init(tabBrowserData);
     }
     else {
