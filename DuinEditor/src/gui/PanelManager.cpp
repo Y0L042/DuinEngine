@@ -25,9 +25,8 @@ duin::DataValue PanelManager::Serialise()
 
     int i = 0;
     for (const auto & [ uuid, panelPtr ] : panels) {
-        if (panelPtr->type != Panel::INVALID)
-        {
-            panelsArray[i] = panelPtr->Serialise();
+        if (panelPtr->type != Panel::INVALID) {
+            panelsArray.PushBack(panelPtr->Serialise());
         }
         ++i;
     }
@@ -38,15 +37,22 @@ duin::DataValue PanelManager::Serialise()
 
 void PanelManager::Deserialise(duin::DataValue data)
 {
-    if (data.HasMember(guitag::PANELS_ARRAY_KEY) && data[guitag::PANELS_ARRAY_KEY].IsArray()) {
-        duin::DataValue panelsArray = data[guitag::PANELS_ARRAY_KEY];
-        panels.clear();
-        for (int i = 0; i < panelsArray.Capacity(); ++i) {
-            if (!panelsArray[i].HasMember(guitag::PANEL_TYPE)) continue;
-            std::string typeStr = panelsArray[i][guitag::PANEL_TYPE].GetString();
-            Panel::PanelType type = (Panel::PanelType)atoi(typeStr.c_str());
-            CreatePanel(type, panelsArray[i]);
-        }
+    if (!data.HasMember(guitag::PANELS_ARRAY_KEY)) {
+        DN_WARN("No panels array found in data: \n{}\n", data.Write());
+        return;
+    }
+    if (!data[guitag::PANELS_ARRAY_KEY].IsArray()) {
+        DN_WARN("Data not an array! \n{}\n", data.Write());
+        return;
+    }
+
+    duin::DataValue panelsArray = data[guitag::PANELS_ARRAY_KEY];
+    panels.clear();
+    for (auto item : panelsArray) {
+        if (!item.HasMember(guitag::PANEL_TYPE)) continue;
+        std::string typeStr = item[guitag::PANEL_TYPE].GetString();
+        Panel::PanelType type = (Panel::PanelType)std::stoi(typeStr.c_str());
+        CreatePanel(type, item);
     }
 }
 
@@ -55,7 +61,6 @@ void PanelManager::RemovePanel(const duin::UUID uuid)
     if (panels[uuid]) {
         panels[uuid]->queuedForDeletion = true;
     }
-    SaveProjectConfig();
 }
 
 void PanelManager::DrawPanels()
@@ -74,12 +79,15 @@ duin::UUID PanelManager::GetUUID()
 
 void PanelManager::ErasePanels()
 {
+    bool erased = false;
     for (auto it = panels.begin(); it != panels.end(); ) {
         if (it->second->queuedForDeletion) {
             it = panels.erase(it);
+            erased = true;
         }
         else {
             it++;
         }
     }
+    if (erased) SaveProjectConfig();
 }

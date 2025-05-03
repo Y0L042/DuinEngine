@@ -59,7 +59,7 @@ namespace duin {
 
             // TODO change this so that it only parses json string no loading
             static DataValue Parse(const std::string& data);
-            static std::string Write(const DataValue& value);
+            static std::string Write(const DataValue& value, bool prettyWrite = false);
             /* TODO
             static void WriteToFile(const std::string& filePath);
             static void WriteToFile(const std::string& filePath);
@@ -75,11 +75,13 @@ namespace duin {
 
             rapidjson::Value& GetRJSONValue() { return *jvalue_; }
 
+            std::string Write() const;
             DataValue Clone() const;
 
             bool IsReadValid() const;
             bool HasMember(const std::string& member) const;
-            DataValue& AddMember(const std::string& key, DataValue dv);
+            DataValue& AddMember(const std::string& key, DataValue dv, bool allowDuplicates = false);
+            DataValue& RemoveMember(const std::string& key);
 
             bool IsNull() const;
             bool IsObject() const;
@@ -110,11 +112,15 @@ namespace duin {
             DataValue SetArray();
 
             template <typename T>
-            DataValue& AddMember(const std::string& key, T val) // Add Key:Value member to object
+            DataValue& AddMember(const std::string& key, T val, bool allowDuplicates = false) // Add Key:Value member to object
             {
                 if (!jvalue_->IsObject()) {
                     DN_CORE_WARN("DataValue not an Object, cannot add member!");
                     return *this;
+                }
+
+                if (!allowDuplicates) {
+                    RemoveMember(key.c_str());
                 }
 
                 rapidjson::Value name(key.c_str(), 
@@ -126,6 +132,13 @@ namespace duin {
                     v.SetString(val.c_str(),
                         static_cast<rapidjson::SizeType>(val.size()),
                         jdoc_->GetAllocator());
+                }
+                else if constexpr (std::is_same_v<T, char>) {
+                    char buf[2] = { val, '\0' };
+                    v.SetString(buf,
+                        static_cast<rapidjson::SizeType>(sizeof(char)),
+                        jdoc_->GetAllocator());
+
                 }
                 else {
                     v.Set(val);

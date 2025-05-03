@@ -1,1 +1,67 @@
-{"ProjectTitle":"DuinFPS"}
+{
+	"ProjectTitle": "DuinFPS",
+	"EditorConfig": {
+		"Array_Of_Tabs": [
+			{
+				"Tab_Title": "Editor",
+				"Tab_UUID": "0x1188DA824A5D4A34",
+				"Tab_PanelManager_UUID": {
+					"PanelManager_UUID": "0x3D4752A0815CCC89",
+					"Array_Of_Panels": [
+						{
+							"Panel_Type": "1",
+							"Panel_UUID": "0x87862CE45E80E610",
+							"Panel_Name": "Default_Panel_1",
+							"Panel_Window_Name": "Default_Panel_1_0x87862CE45E80E610"
+						},
+						{
+							"Panel_Type": "1",
+							"Panel_UUID": "0x1F80207BF3C83846",
+							"Panel_Name": "Default_Panel_1",
+							"Panel_Window_Name": "Default_Panel_1_0x1F80207BF3C83846"
+						},
+						{
+							"Panel_Type": "1",
+							"Panel_UUID": "0x442D60EC14E2CA7A",
+							"Panel_Name": "Default_Panel_2",
+							"Panel_Window_Name": "Default_Panel_2_0x442D60EC14E2CA7A"
+						},
+						{
+							"Panel_Type": "2",
+							"Panel_UUID": "0x70B5545B13BD6D38",
+							"Panel_Name": "Viewport_Panel_3",
+							"Panel_Window_Name": "Viewport_Panel_3_0x70B5545B13BD6D38"
+						},
+						{
+							"Panel_Type": "1",
+							"Panel_UUID": "0xCB04D3F6EB5657C6",
+							"Panel_Name": "Default_Panel_4",
+							"Panel_Window_Name": "Default_Panel_4_0xCB04D3F6EB5657C6"
+						}
+					]
+				}
+			},
+			{
+				"Tab_Title": "Level",
+				"Tab_UUID": "0xCB54CBEB6AD945A9",
+				"Tab_PanelManager_UUID": {
+					"PanelManager_UUID": "0x3E4E9494CFEDC5C",
+					"Array_Of_Panels": [
+						{
+							"Panel_Type": "2",
+							"Panel_UUID": "0x2489E5596CC9EF98",
+							"Panel_Name": "Viewport_Panel_5",
+							"Panel_Window_Name": "Viewport_Panel_5_0x2489E5596CC9EF98"
+						},
+						{
+							"Panel_Type": "1",
+							"Panel_UUID": "0x67B0DC45FF33A35F",
+							"Panel_Name": "Default_Panel_6",
+							"Panel_Window_Name": "Default_Panel_6_0x67B0DC45FF33A35F"
+						}
+					]
+				}
+			}
+		]
+	}
+}
