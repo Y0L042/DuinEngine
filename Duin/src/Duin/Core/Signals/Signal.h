@@ -14,6 +14,7 @@ namespace duin {
             bool Connect(std::function<void(types...)> callback)
             {
                 listeners.push_back(callback);
+                return true;
             }
 
             bool Disconnect(std::function<void(types...)>);
@@ -21,7 +22,7 @@ namespace duin {
             void Emit(types... args)
             {
                 for (auto& listener : listeners) {
-                    listener(&args...);
+                    listener(std::forward<types>(args)...);
                 }
             }
 

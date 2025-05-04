@@ -1,5 +1,6 @@
 #include "Editor.h"
 
+#include <DuinMeta.h>
 #include <Duin.h>
 #include <Duin/EntryPoint.h>
 
@@ -7,6 +8,10 @@
 #include "Project.h"
 #include "States.h"
 #include "gui/GuiMeta.h"
+#include "EditorMeta.h"
+
+int PROJECT_EDITOR_VERSION;
+int PROJECT_ENGINE_VERSION;
 
 
 #define DEBUG
@@ -83,7 +88,11 @@ void Editor::SaveProjectEditorConfig(duin::DataValue value)
         DN_FATAL("Unable to save tabs!");
     }
 
-    projectData.AddMember(guitag::EDITOR_CONFIG, value);
+    if (value.IsReadValid() && !value.IsNull()) {
+        projectData.AddMember(guitag::EDITORVERSION, EDITOR_VERSION);
+        projectData.AddMember(guitag::ENGINEVERSION, ENGINE_VERSION);
+        projectData.AddMember(guitag::EDITOR_CONFIG, value);
+    }
 
     ofs << duin::DataValue::Write(projectData, true);
     ofs.close();
@@ -93,6 +102,14 @@ duin::DataValue Editor::LoadProjectEditorConfig()
 {
     Project& project = GetActiveProject();
     projectData = duin::DataValue::Parse(project.GetPathAsString());
+    
+    if (projectData.HasMember(guitag::EDITORVERSION)) {
+        PROJECT_EDITOR_VERSION = projectData[guitag::EDITORVERSION].GetInt();
+    } else { PROJECT_EDITOR_VERSION = -1; }
+
+    if (projectData.HasMember(guitag::ENGINEVERSION)) {
+        PROJECT_EDITOR_VERSION = projectData[guitag::ENGINEVERSION].GetInt();
+    } else { PROJECT_ENGINE_VERSION = -1; }
 
     return projectData;
 }

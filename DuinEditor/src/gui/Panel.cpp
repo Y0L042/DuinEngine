@@ -48,6 +48,8 @@ Panel::Panel(duin::DataValue value)
     Deserialise(value);
     m_windowFlags = ImGuiWindowFlags_MenuBar |
         ImGuiWindowFlags_NoCollapse;
+
+    AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(this->uuid); });
 }
 
 duin::UUID Panel::GetUUID()
@@ -103,6 +105,7 @@ void Panel::Draw()
 
     if (!m_menuItems.empty() && ImGui::BeginMenuBar()) {
        SetupMenuBar();
+       barHeight = ImGui::GetFrameHeight();
        ImGui::EndMenuBar();
     }
 
@@ -115,6 +118,7 @@ void Panel::SetupMenuBar()
 {
     for (auto& [menuName, items] : m_menuItems) {
         if (ImGui::BeginMenu(menuName.c_str())) {
+
             size_t separatorIndex = 0;
             size_t nextSeparator = m_menuSeparators.count(menuName) && !m_menuSeparators[menuName].empty() 
                 ? m_menuSeparators[menuName][0] 

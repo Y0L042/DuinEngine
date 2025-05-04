@@ -39,8 +39,8 @@ class Panel
         virtual void SetupMenuBar();    // Can be overridden to customize menu
         virtual void DrawContent() = 0; // Pure virtual - must be implemented by derived classes
 
-        virtual duin::DataValue Serialise(); // Serialise panel to toml value
-        virtual void Deserialise(duin::DataValue value); // Deserialise panel from toml value
+        virtual duin::DataValue Serialise(); // Serialise panel
+        virtual void Deserialise(duin::DataValue value); // Deserialise panel
 
         void AddMenuItem(const std::string& menuName, const std::string& itemName, std::function<void()> callback);
         void AddSeparator(const std::string& menuName);
@@ -52,6 +52,8 @@ class Panel
     protected:
         duin::UUID uuid;
         PanelManager *panelManager;
+
+        float barHeight = 0.0f;
 
     private:
         std::string panelName;

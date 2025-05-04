@@ -7,6 +7,9 @@
 #include "gui/FileManager.h"
 #include "gui/TabBrowser.h"
 
+extern int PROJECT_EDITOR_VERSION;
+extern int PROJECT_ENGINE_VERSION;
+
 extern FileManager fileManager;
 extern TabBrowser tabBrowser;
 

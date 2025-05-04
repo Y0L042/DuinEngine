@@ -12,12 +12,29 @@
 #include "Editor.h"
 
 TabBrowser tabBrowser;
-
+bool isGameEditorValid = false;
+duin::Signal<double> onPhysicsUpdateSignal;
+duin::Signal<duin::Event> onEventSignal;
+duin::Signal<> onDrawSignal;
+duin::Signal<> onDrawUISignal;
 
 void SaveProjectConfig()
 {
     duin::DataValue dataValue = tabBrowser.Serialise();
     Editor::SaveProjectEditorConfig(dataValue);
+}
+
+
+EditorState_GameEditor::EditorState_GameEditor(duin::StateMachine& owner)
+    : State(owner)
+{
+    stateName = "EditorState_SelectProject";
+    isGameEditorValid = true;
+}
+
+EditorState_GameEditor::~EditorState_GameEditor() 
+{
+    isGameEditorValid = false;
 }
 
 void EditorState_GameEditor::Enter()
@@ -36,6 +53,7 @@ void EditorState_GameEditor::Enter()
 
 void EditorState_GameEditor::OnEvent(duin::Event e)
 {
+    onEventSignal.Emit(e);
 }
 
 void EditorState_GameEditor::Update(double delta)
@@ -44,14 +62,17 @@ void EditorState_GameEditor::Update(double delta)
 
 void EditorState_GameEditor::PhysicsUpdate(double delta)
 {
+    onPhysicsUpdateSignal.Emit(delta);
 }
 
 void EditorState_GameEditor::Draw()
 {
+    onDrawSignal.Emit();
 }
 
 void EditorState_GameEditor::DrawUI()
 {
+    onDrawUISignal.Emit();
     tabBrowser.Render();
 }
 
