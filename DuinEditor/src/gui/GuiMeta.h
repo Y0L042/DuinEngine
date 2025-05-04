@@ -2,8 +2,8 @@
 
 namespace guitag {
 
-    extern const char EDITOR_VERSION[];
-    extern const char ENGINE_VERSION[];
+    extern const char EDITORVERSION[];
+    extern const char ENGINEVERSION[];
 
     extern const char PROJECT_TITLE[];
     extern const char EDITOR_CONFIG[];

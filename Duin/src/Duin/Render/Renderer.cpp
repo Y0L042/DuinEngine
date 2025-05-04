@@ -6,6 +6,7 @@
 
 #include <bx/math.h>
 #include <debugdraw/debugdraw.h>
+#include <external/imgui.h>
 
 
 #include "Duin/Core/Debug/DNLog.h"
@@ -143,14 +144,17 @@ namespace duin {
         globalRenderState.viewID = target.viewID;
 
         // Set view to render to texture
-        bgfx::setViewFrameBuffer(target.viewID, target.frameBuffer);
-        bgfx::setViewRect(target.viewID, 0, 0, target.width, target.height);
-
-        // Clear render texture
-        bgfx::setViewClear(target.viewID,
-                           BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
-                           0x00000000,
-                           1.0f, 0);
+        if (!target.IsValid()) {
+            DN_CORE_FATAL("RenderTexture invalid!");
+        }
+        else {
+            bgfx::setViewFrameBuffer(target.viewID, target.frameBuffer);
+            bgfx::setViewRect(target.viewID, 0, 0, target.width, target.height);        // Clear render texture
+            bgfx::setViewClear(target.viewID,
+                BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
+                0x00000000,
+                1.0f, 0);
+        }
     }
 
     void EndTextureMode()
@@ -260,6 +264,23 @@ namespace duin {
         globalRenderStateStack.clear();
         globalRenderState = RenderState();
         DN_CORE_INFO("Cleared render stack.");
+    }
+
+    void ClearBackground(Color color, int win)
+    {
+        bgfx::setViewClear(win, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, color.PackedABGR(), 1.0f, 0);
+
+        bgfx::touch(win);
+    }
+
+    unsigned int DrawIMGUITexture(RenderTexture& renderTexture, Vector2 targetSize)
+    {
+        ::ImTextureID img = (::ImTextureID)(uintptr_t)renderTexture.texture.idx;
+        ::ImVec2 size{ targetSize.x, targetSize.y };
+        // uv0 = {0,1}, uv1 = {1,0} flips the image right-side up
+        ImGui::Image(img, size, ::ImVec2{0,1}, ::ImVec2{1,0});
+
+        return 0;
     }
 
     void DestroyRenderTexture(RenderTexture& texture)

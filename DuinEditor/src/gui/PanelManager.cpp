@@ -58,7 +58,7 @@ void PanelManager::Deserialise(duin::DataValue data)
 
 void PanelManager::RemovePanel(const duin::UUID uuid)
 {
-    if (panels[uuid]) {
+    if (panels.contains(uuid)) {
         panels[uuid]->queuedForDeletion = true;
     }
 }

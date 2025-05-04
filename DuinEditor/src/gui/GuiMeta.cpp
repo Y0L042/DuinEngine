@@ -1,6 +1,9 @@
 #include "GuiMeta.h"
 namespace guitag {
 
+    const char EDITORVERSION[] = "EDITOR_VERSION";
+    const char ENGINEVERSION[] = "ENGINE_VERSION";
+
     const char PROJECT_TITLE[] = "ProjectTitle";
     const char EDITOR_CONFIG[] = "EditorConfig";
 
