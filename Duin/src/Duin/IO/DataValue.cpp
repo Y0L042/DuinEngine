@@ -85,7 +85,7 @@ namespace duin {
     DataValue::DataValue(const std::string& text)
         : DataValue()
     {
-        jvalue_->SetString(text.c_str(), text.size());
+        jvalue_->SetString(text.c_str(), static_cast<rapidjson::SizeType>(text.size()));
     }
 
     DataValue::DataValue(double x)
@@ -400,7 +400,7 @@ namespace duin {
 
     DataValue DataValue::SetString(const std::string& text)
     {
-        jvalue_->SetString(text.c_str(), text.size());
+        jvalue_->SetString(text.c_str(), static_cast<rapidjson::SizeType>(text.size()));
         return *this;
     }
 

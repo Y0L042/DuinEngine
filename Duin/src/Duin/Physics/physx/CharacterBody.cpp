@@ -83,7 +83,7 @@ namespace duin {
         Vector3 newPos = Vector3(pxController->getPosition());
         Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
         
-        currentVelocity = Vector3Scale(distanceMoved, 1.0f / timeSinceLastMove);
+        currentVelocity = Vector3Scale(distanceMoved, (float)(1.0 / timeSinceLastMove));
 
         OnFloorShapeCast(timeSinceLastMove);
 

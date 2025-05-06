@@ -56,6 +56,8 @@ namespace duin
 	void QueuePostFrameCallback(std::function<void()>);
 	void QueuePostDebugCallback(std::function<void()>);
 
+    void QueueExitCallback(std::function<void()>);
+
 	class DAPI Application
 	{
 	public:

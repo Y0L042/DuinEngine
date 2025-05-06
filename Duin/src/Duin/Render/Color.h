@@ -73,7 +73,8 @@ namespace duin {
 
     // Common CSS-style colors you can tweak or expand:
     inline const Color BLACK   { 0,   0,   0   };
-    inline const Color WHITE   { 255, 255, 255 };
+    inline const Color WHITE   { 225, 225, 225 };
+    inline const Color GRAY   { 0.5f, 0.5f, 0.5f };
     inline const Color RED     { 255, 0,   0   };
     inline const Color GREEN   { 0,   255, 0   };
     inline const Color BLUE    { 0,   0,   255 };

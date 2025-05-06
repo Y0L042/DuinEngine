@@ -24,6 +24,7 @@ namespace duin {
             : vbh(vbh), ibh(ibh) {}
     };
 
+    static bool RENDER_CONTEXT_AVAILABLE = false; // Gets modified when imgui/bgfx is created, and destroyed
     static UUID DEFAULT_SHADERPROGRAM_UUID;
     static bgfx::VertexLayout pcvDecl;
     static std::vector<BGFXBufferHandle> bgfxBufferList;
@@ -57,22 +58,31 @@ namespace duin {
         CreateGeometryBuffers();
 
         ddInit();
-        // Set reasonable default sizes (adjust based on your needs)
-        // const uint32_t defaultVertexCount = 1 << 15;  // 32k vertices
-        // const uint32_t defaultIndexCount = 1 << 16;   // 64k indices
-        // ddAlloc(defaultVertexCount, defaultIndexCount);
 
         DN_CORE_INFO("Renderer initialised.");
+    }
+
+    void CleanRenderer()
+    {
+        // TODO
+        // Clean bgfx buffers
+    }
+
+    bool IsRenderContextAvailable()
+    {
+        return RENDER_CONTEXT_AVAILABLE;
+    }
+
+    void SetRenderContextAvailable(bool available)
+    {
+        RENDER_CONTEXT_AVAILABLE = available;
     }
 
     void BeginDraw3D(Camera& camera)
     {
         //DN_CORE_INFO("BeginDraw3D");
-
         globalRenderStateStack.clear();
-
-        const uint16_t viewID = 0;
-
+        const bgfx::ViewId viewID = 0;
 
         // Get camera matrices
         Matrix viewMtx = GetCameraViewMatrix(&camera);
@@ -110,7 +120,6 @@ namespace duin {
     void EndDraw3D()
     {
         //DN_CORE_INFO("EndDraw3D");
-
         if (!globalRenderStateStack.empty()) {
             // Restore previous state
             globalRenderState = globalRenderStateStack.back();
@@ -151,9 +160,9 @@ namespace duin {
             bgfx::setViewFrameBuffer(target.viewID, target.frameBuffer);
             bgfx::setViewRect(target.viewID, 0, 0, target.width, target.height);        // Clear render texture
             bgfx::setViewClear(target.viewID,
-                BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
-                0x00000000,
-                1.0f, 0);
+                               BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
+                               0x00000000,
+                               1.0f, 0);
         }
     }
 
@@ -269,7 +278,6 @@ namespace duin {
     void ClearBackground(Color color, int win)
     {
         bgfx::setViewClear(win, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, color.PackedABGR(), 1.0f, 0);
-
         bgfx::touch(win);
     }
 
@@ -279,6 +287,7 @@ namespace duin {
         ::ImVec2 size{ targetSize.x, targetSize.y };
         // uv0 = {0,1}, uv1 = {1,0} flips the image right-side up
         ImGui::Image(img, size, ::ImVec2{0,1}, ::ImVec2{1,0});
+        // ImGui::Image(img, size, ::ImVec2{0,0}, ::ImVec2{1,1});
 
         return 0;
     }
@@ -305,12 +314,12 @@ namespace duin {
         QueueRender(RenderGeometryType::PLANE, position, rotation, size);
     }
 
-    void DrawGrid()
+    void DrawGrid(float size)
     {
         dde.drawGrid(
             Axis::Y,
             { 0.0f, 0.0f, 0.0f },
-            20,
+            static_cast<uint32_t>(size),
             1.0f
         );
     }
@@ -343,27 +352,27 @@ namespace duin {
         vbh = BGFX_INVALID_HANDLE;
         ibh = BGFX_INVALID_HANDLE;
         vbh = bgfx::createVertexBuffer(bgfx::makeRef(BoxRenderGeometry::GetIdentityVertices(),
-                                                     BoxRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+            static_cast<uint32_t>(BoxRenderGeometry::VertSize()) * sizeof(PosColorVertex)), pcvDecl);
         ibh = bgfx::createIndexBuffer(bgfx::makeRef(BoxRenderGeometry::GetIdentityTriList(),
-                                                    BoxRenderGeometry::TriSize() * sizeof(uint16_t)));
+            static_cast<uint32_t>(BoxRenderGeometry::TriSize()) * sizeof(uint16_t)));
         bgfxBufferList[RenderGeometryType::BOX] = BGFXBufferHandle(vbh, ibh);
 
 		/* Create PLANE Buffers */
         vbh = BGFX_INVALID_HANDLE;
         ibh = BGFX_INVALID_HANDLE;
         vbh = bgfx::createVertexBuffer(bgfx::makeRef(PlaneRenderGeometry::GetIdentityVertices(),
-            PlaneRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+            static_cast<uint32_t>(PlaneRenderGeometry::VertSize()) * sizeof(PosColorVertex)), pcvDecl);
         ibh = bgfx::createIndexBuffer(bgfx::makeRef(PlaneRenderGeometry::GetIdentityTriList(),
-            PlaneRenderGeometry::TriSize() * sizeof(uint16_t)));
+            static_cast<uint32_t>(PlaneRenderGeometry::TriSize()) * sizeof(uint16_t)));
         bgfxBufferList[RenderGeometryType::PLANE] = BGFXBufferHandle(vbh, ibh);
 
         /* Create SPHERE Buffers */
         vbh = BGFX_INVALID_HANDLE;
         ibh = BGFX_INVALID_HANDLE;
         vbh = bgfx::createVertexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityVertices(),
-            SphereRenderGeometry::VertSize() * sizeof(PosColorVertex)), pcvDecl);
+            static_cast<uint32_t>(SphereRenderGeometry::VertSize()) * sizeof(PosColorVertex)), pcvDecl);
         ibh = bgfx::createIndexBuffer(bgfx::makeRef(SphereRenderGeometry::GetIdentityTriList(),
-            SphereRenderGeometry::TriSize() * sizeof(uint16_t)));
+            static_cast<uint32_t>(SphereRenderGeometry::TriSize()) * sizeof(uint16_t)));
         bgfxBufferList[RenderGeometryType::SPHERE] = BGFXBufferHandle(vbh, ibh);
     }
 

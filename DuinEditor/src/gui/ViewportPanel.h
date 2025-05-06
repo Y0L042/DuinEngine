@@ -2,6 +2,7 @@
 
 #include "Panel.h"
 #include "../EditorState_GameEditor.h"
+#include "../GameObjects/EditorCamera.h"
 
 #include <Duin/IO/IOModule.h>
 #include <Duin/Render/RenderModule.h>
@@ -28,8 +29,10 @@ class ViewportPanel : public Panel
         void RenderUI();
 
     private:
+        duin::RenderTexture target;
+        EditorCamera mainCamera;
+
         void ConnectToGameEditorSignals();
         void CreateRenderTexture();
-
-        duin::RenderTexture target;
+        void MoveMainCamera();
 };

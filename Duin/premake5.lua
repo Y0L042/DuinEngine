@@ -15,6 +15,11 @@ project "Duin"
     kind "StaticLib"
     language "C++"
 
+    externalanglebrackets "On" 
+    linkoptions { "-IGNORE:4006" }
+    externalwarnings    "Off"
+
+
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -30,6 +35,7 @@ project "Duin"
     -- Filter to apply settings only to .cpp files inside "ignoredir"
     filter "files:**/external/**.cpp"  -- Added: match .cpp files in any "ignoredir" folder
         flags { "NoPCH" }             -- Added: disable precompiled headers
+        warnings      "Off"                 -- Added: turn off all warnings for these files
         pchheader ""                  -- Added: clear the precompiled header setting
     filter {}                        -- Clear the filter
 
@@ -113,11 +119,14 @@ project "Duin"
     }
 
     filter "action:vs*"
-        buildoptions { "/utf-8", '/Zc:__cplusplus', '/Zc:preprocessor' }  -- Changed: Added /utf-8 flag for Unicode support
-
-    -- Enable multi-processor compilation
-    filter "action:vs*"
-      flags { "MultiProcessorCompile" }
+        buildoptions { 
+            "/utf-8", 
+            '/Zc:__cplusplus', 
+            '/Zc:preprocessor' ,
+        }  -- Changed: Added /utf-8 flag for Unicode support
+        flags { "MultiProcessorCompile" }
+    filter {}
+      
 
     filter "system:windows"
         buildoptions { "/openmp" }

@@ -1,15 +1,22 @@
 {
 	"ProjectTitle": "DuinFPS",
-	"ENGINE_VERSION": 0,
 	"EDITOR_VERSION": 0,
+	"ENGINE_VERSION": 0,
 	"EditorConfig": {
 		"Array_Of_Tabs": [
 			{
 				"Tab_Title": "Editor",
-				"Tab_UUID": "0x7726A35BFE920F09",
+				"Tab_UUID": "0xE9816A4C77C7BF92",
 				"Tab_PanelManager_UUID": {
-					"PanelManager_UUID": "0xA44F1369006A2399",
-					"Array_Of_Panels": []
+					"PanelManager_UUID": "0x9B0BACBFDF471023",
+					"Array_Of_Panels": [
+						{
+							"Panel_Type": "2",
+							"Panel_UUID": "0x50880981B6881950",
+							"Panel_Name": "Viewport_Panel_1",
+							"Panel_Window_Name": "Viewport_Panel_1_0x50880981B6881950"
+						}
+					]
 				}
 			}
 		]

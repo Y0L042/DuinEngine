@@ -78,6 +78,7 @@ namespace duin {
     static std::vector<std::function<void(void)>> preFrameCallbacks;
     static std::vector<std::function<void(void)>> postFrameCallbacks;
     static std::vector<std::function<void(void)>> postDebugCallbacks;
+    static std::vector<std::function<void(void)>> exitCallbacks;
 
     std::string GetRootDirectory()
     {
@@ -240,7 +241,7 @@ namespace duin {
     void SetWindowResizable(bool enable)
     {
         SDL_SetWindowResizable(sdlWindow, enable);
-        sdlWindowFlags |= (SDL_WINDOW_RESIZABLE & enable);
+        sdlWindowFlags |= (SDL_WINDOW_RESIZABLE && enable);
     }
 
     void MaximizeWindow()
@@ -324,6 +325,11 @@ namespace duin {
         postDebugCallbacks.push_back(f);
     }
 
+    void QueueExitCallback(std::function<void()> f)
+    {
+        exitCallbacks.push_back(f);
+    }
+
     Application::Application()
     {
         rootGameObject = std::make_shared<GameObject>();
@@ -403,6 +409,7 @@ namespace duin {
         ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
         InitRenderer();
+        SetRenderContextAvailable(true);
 
         EngineReady();
         Ready();
@@ -542,16 +549,21 @@ namespace duin {
         EngineExit();
         Exit();
 
+        DN_CORE_INFO("Shutting down Rendering dependencies...");
+        SetRenderContextAvailable(false);
+
         ::ImGui_ImplSDL3_Shutdown();
         ::ImGui_Implbgfx_Shutdown();
 
         ImGui::DestroyContext();
         bgfx::shutdown();
+        DN_CORE_INFO("ImGui context destroyed, bgfx shut down...");
 
         ::SDL_DestroySurface(sdlSurface);
         sdlSurface = nullptr;
         ::SDL_DestroyWindow(sdlWindow);
         sdlWindow = nullptr;
+        DN_CORE_INFO("Quitting...");
         ::SDL_Quit();
     }
 
@@ -595,7 +607,7 @@ namespace duin {
     void Application::EngineOnEvent(Event e)
     {
         if (Input::IsKeyDown(DN_KEY_ESCAPE)) {
-            DN_CORE_INFO("Quiting... {}", e.sdlEvent.key.key);
+            DN_CORE_INFO("Quit event called... {}", e.sdlEvent.key.key);
             gameShouldQuit = true;
         }
 
@@ -706,6 +718,9 @@ namespace duin {
 
     void Application::EngineExit()
     {
+        for (auto& callback : exitCallbacks) {
+            callback();
+        }
     }
 
     void Application::Exit()

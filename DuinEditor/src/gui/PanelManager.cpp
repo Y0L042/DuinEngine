@@ -1,6 +1,8 @@
 #include "PanelManager.h"
 #include "GuiMeta.h"
 
+#include <Duin/Core/Application.h>
+
 
 PanelManager::PanelManager(std::string uuidHexString)
     : uuid(duin::UUID::FromStringHex(uuidHexString))

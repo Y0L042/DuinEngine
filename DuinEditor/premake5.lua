@@ -6,6 +6,10 @@ project "DuinEditor"
     kind "ConsoleApp"
     language "C++"
 
+    externalanglebrackets "On"
+    linkoptions { "-IGNORE:4006" }
+    externalwarnings    "Off"
+
     dependson { "Duin" }
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -35,7 +39,7 @@ project "DuinEditor"
     libdirs(prependRoot(SolutionRoot, global_libdirs))
 	libdirs
 	{
-        "./vendor/nativefiledialog-extended/build/src/Release",
+        "./vendor/nativefiledialog-extended/build/src/Debug",
 	}
 
     defines(global_defines)
@@ -51,14 +55,13 @@ project "DuinEditor"
         cppdialect "C++20"
 
     filter "action:vs*"
-        buildoptions { "/utf-8" }  -- Changed: Added /utf-8 flag for Unicode support
-
-    filter "action:vs*"
-        buildoptions { "/utf-8", '/Zc:__cplusplus', '/Zc:preprocessor' }  -- Changed: Added /utf-8 flag for Unicode support
-
-    -- Enable multi-processor compilation
-    filter "action:vs*"
+        buildoptions { 
+            "/utf-8", 
+            '/Zc:__cplusplus', 
+            '/Zc:preprocessor' ,
+        }  -- Changed: Added /utf-8 flag for Unicode support
         flags { "MultiProcessorCompile" }
+    filter {}
 
     filter "configurations:Debug"
         defines "DN_DEBUG"

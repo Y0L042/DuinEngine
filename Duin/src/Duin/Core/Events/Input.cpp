@@ -101,7 +101,7 @@ namespace duin::Input {
 
     Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
     {
-        return Vector2NormalizeF(Vector2(IsKeyDown(left) - IsKeyDown(right), IsKeyDown(down) - IsKeyDown(up)));
+        return Vector2NormalizeF(Vector2((float)(IsKeyDown(left) - IsKeyDown(right)), (float)(IsKeyDown(down) - IsKeyDown(up))));
     }
                
          
@@ -145,17 +145,29 @@ namespace duin::Input {
 
     int IsMouseButtonDown(int button)
 	{
+        ::SDL_MouseButtonFlags flags = ::SDL_GetMouseState(NULL, NULL);
+        if (flags == button) {
+            return 1;
+        }
+
         return 0;
 	}
                      
     int IsMouseButtonReleased(int button)
 	{
+        ::SDL_MouseButtonFlags flags = ::SDL_GetMouseState(NULL, NULL);
+
         return 0;
 	}
                  
     int IsMouseButtonUp(int button)
 	{
-        return 0;
+        ::SDL_MouseButtonFlags flags = ::SDL_GetMouseState(NULL, NULL);
+        if (flags == button) {
+            return 0;
+        }
+
+        return 1;
 	}
                        
     Vector2 GetMouseGlobalPosition(void)
