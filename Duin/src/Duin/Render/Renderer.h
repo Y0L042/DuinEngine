@@ -20,6 +20,11 @@ namespace duin {
 	struct ShaderProgram;
     struct DebugDrawState;
 
+    void InitRenderer();
+    void CleanRenderer();
+    bool IsRenderContextAvailable();
+    void SetRenderContextAvailable(bool available);
+
     struct DebugDrawState {
         bool isActive = false;
         DebugDrawEncoder encoder;
@@ -39,20 +44,25 @@ namespace duin {
     };
 
     struct RenderTexture {
-        int width, height;
+        uint16_t width, height; // or int
         UUID textureUUID;
-        size_t viewID = 0;
+        bgfx::ViewId viewID = 0;
         bgfx::TextureHandle texture;
         bgfx::FrameBufferHandle frameBuffer;
 
-
         RenderTexture() = default;
-        RenderTexture(float width, float height, UUID viewID)
-			: width(width), height(height), viewID(viewID), texture(BGFX_INVALID_HANDLE), frameBuffer(BGFX_INVALID_HANDLE)
+        RenderTexture(int width_, int height_, UUID textureUUID_)
+            : 
+            width(static_cast<uint16_t>(width_)), 
+            height(static_cast<uint16_t>(height_)), 
+            textureUUID(textureUUID_),
+            texture(BGFX_INVALID_HANDLE), 
+            frameBuffer(BGFX_INVALID_HANDLE)
         {
+            // Create uninitialized texture
             texture = bgfx::createTexture2D(
-                std::max(width, 0.1f),
-                std::max(height, 0.1f),
+                static_cast<uint16_t>(std::max(width, (uint16_t)1)),
+                static_cast<uint16_t>(std::max(height, (uint16_t)1)),
                 false, // mipmaps
                 1, // num layers
                 bgfx::TextureFormat::RGBA8,
@@ -73,18 +83,15 @@ namespace duin {
 
         void Destroy()
         {
-            if (bgfx::isValid(frameBuffer) && frameBuffer.idx != bgfx::kInvalidHandle)
-            {
-                bgfx::destroy(frameBuffer);
-                frameBuffer = BGFX_INVALID_HANDLE;
+            if (!IsRenderContextAvailable()) {
+                return;
             }
-                
-            if (bgfx::isValid(texture) && texture.idx != bgfx::kInvalidHandle)
-            {
-                bgfx::destroy(texture);
-                texture = BGFX_INVALID_HANDLE;
-            }
-            bgfx::touch(0);
+
+            bgfx::destroy(texture);
+            texture = BGFX_INVALID_HANDLE;
+
+            bgfx::destroy(frameBuffer);
+            frameBuffer = BGFX_INVALID_HANDLE;
         }
     };
 
@@ -101,7 +108,6 @@ namespace duin {
         {}
     };
 
-    void InitRenderer();
 
     void BeginDraw3D(Camera& camera);
     void EndDraw3D();
@@ -128,7 +134,7 @@ namespace duin {
     void DrawSquare(Vector3 position = Vector3(), 
                  Quaternion rotation = QuaternionIdentity(), 
                  Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
-    void DrawGrid();
+    void DrawGrid(float size = 50);
     void DrawPlane(Vector3 size);
     void DrawDebugSphere(Vector3 position, float radius);
 

@@ -17,6 +17,15 @@
 #include <sstream>
 #include <string>
 
+/* External Libraries */
+
+#include <SDL3/SDL.h>
+#include <bgfx/bgfx.h>
+#include <external/imgui.h>
+
+#include <rapidjson/rapidjson.h>
+#include <toml.hpp>
+
 #include <flecs.h>
 
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
@@ -29,7 +38,9 @@
 #include <spdlog/logger.h>
 #include "Duin/Core/Debug/DNLog.h"
 
+#ifndef PX_PHYSX_STATIC_LIB
 #define PX_PHYSX_STATIC_LIB
+#endif
 #include <PxPhysicsAPI.h>
 #include <PxPhysics.h>
 #include <characterkinematic/PxController.h>

@@ -6,6 +6,10 @@ project "DuinFPS"
     kind "ConsoleApp"
     language "C++"
 
+    externalanglebrackets "On"
+    linkoptions { "-IGNORE:4006" }
+    externalwarnings    "Off"
+
     dependson { "Duin" }
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -39,13 +43,15 @@ project "DuinFPS"
     filter "system:windows"
         buildoptions { "/openmp" }
         cppdialect "C++20"
-
+    
     filter "action:vs*"
-        buildoptions { "/utf-8", '/Zc:__cplusplus', '/Zc:preprocessor' }  -- Changed: Added /utf-8 flag for Unicode support
-
-    -- Enable multi-processor compilation
-    filter "action:vs*"
+        buildoptions { 
+            "/utf-8", 
+            '/Zc:__cplusplus', 
+            '/Zc:preprocessor' ,
+        }  -- Changed: Added /utf-8 flag for Unicode support
         flags { "MultiProcessorCompile" }
+    filter {}
 
     filter "configurations:Debug"
         defines "DN_DEBUG"

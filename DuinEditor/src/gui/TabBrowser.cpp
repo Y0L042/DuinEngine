@@ -5,6 +5,7 @@
 #include "GuiMeta.h"
 
 #include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Application.h>
 
 static const char RENAME_POPUP[] = "RENAME_POPUP";
 static bool requestRenamePopupFlag = false;
@@ -25,6 +26,8 @@ void TabBrowser::Init()
     if (tabs.empty()) {
         AddTab("Editor");
     }
+
+    duin::QueueExitCallback([]() { SaveProjectConfig(); });
 }
 
 void TabBrowser::Init(duin::DataValue value)

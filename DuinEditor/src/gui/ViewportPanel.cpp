@@ -3,6 +3,7 @@
 #include "../EditorState_GameEditor.h"
 
 #include <Duin/Core/Application.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 float windowX = 0.0f;
 float windowY = 0.0f;
@@ -23,9 +24,9 @@ ViewportPanel::ViewportPanel(duin::DataValue value)
 
 ViewportPanel::~ViewportPanel()
 {
-    // if (target.IsValid()) {
-    //     target.Destroy();
-    // }
+    if (target.IsValid()) {
+        target.Destroy();
+    }
 }
 
 void ViewportPanel::Init()
@@ -34,6 +35,8 @@ void ViewportPanel::Init()
     CreateRenderTexture();
 
     duin::ClearBackground(duin::PINK);
+
+    mainCamera.Enable(true);
 }
 
 void ViewportPanel::Deserialise(duin::DataValue value)
@@ -75,7 +78,9 @@ void ViewportPanel::OnEvent(duin::Event e)
 {}
 
 void ViewportPanel::SimulatePhysics(double delta)
-{}
+{
+    MoveMainCamera();
+}
 
 void ViewportPanel::Render()
 {
@@ -84,9 +89,9 @@ void ViewportPanel::Render()
     int newH = int(avail.y);
 
     duin::BeginTextureMode(target);
-    duin::ClearBackground(duin::PINK);
+    duin::ClearBackground(duin::GRAY);
 
-    duin::DrawBox();
+    duin::DrawGrid(100.0f);
 
     duin::EndTextureMode();
 }
@@ -108,4 +113,24 @@ void ViewportPanel::ConnectToGameEditorSignals()
 void ViewportPanel::CreateRenderTexture()
 {
     target = duin::RenderTexture(duin::GetWindowWidth(), duin::GetWindowHeight(), 0);
+}
+
+void ViewportPanel::MoveMainCamera()
+{
+    const float sensitivityX = 10.0f;
+    const float sensitivityY = 10.0f;
+
+    // if (duin::Input::IsMouseButtonDown(DN_BUTTON_MIDDLE)) {
+    if (duin::Input::IsMouseButtonDown(DN_BUTTON_RIGHT)) {
+        duin::Input::CaptureMouse(true);
+        float mouseXDelta = duin::Input::GetMouseDelta().x;
+        float angleXDelta = mouseXDelta * sensitivityX;
+        mainCamera.Yaw(angleXDelta, true);
+
+        float mouseYDelta = duin::Input::GetMouseDelta().y;
+        float angleYDelta = mouseYDelta * sensitivityY;
+        mainCamera.Pitch(angleYDelta, true);
+    } else {
+        duin::Input::CaptureMouse(false);
+    }
 }

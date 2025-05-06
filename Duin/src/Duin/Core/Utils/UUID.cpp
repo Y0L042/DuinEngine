@@ -43,9 +43,9 @@ namespace duin {
         uint64_t value = 0;
         try {
             value = std::stoull(string, nullptr, 10);
-        } catch (const std::invalid_argument& e) {
+        } catch (const std::invalid_argument e) {
             DN_CORE_FATAL("Invalid UUID {}!", string);
-        } catch (const std::out_of_range& e) {
+        } catch (const std::out_of_range e) {
             DN_CORE_FATAL("UUID too large {}!", string);
         }
 

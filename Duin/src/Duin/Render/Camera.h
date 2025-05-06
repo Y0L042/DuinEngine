@@ -38,8 +38,8 @@ namespace duin {
     void CameraMoveToTarget(Camera *camera, float delta);
 
     // Camera rotation
-    void CameraYaw(Camera *camera, float angle, bool rotateAroundTarget);
-    void CameraPitch(Camera *camera, float angle, bool lockView, bool rotateAroundTarget, bool rotateUp);
+    void CameraYaw(Camera *camera, float angle, bool rotateAroundTarget = false);
+    void CameraPitch(Camera *camera, float angle, bool lockView = false, bool rotateAroundTarget = false, bool rotateUp = false);
     void CameraRoll(Camera *camera, float angle);
 
     Matrix GetCameraViewMatrix(Camera *camera);
