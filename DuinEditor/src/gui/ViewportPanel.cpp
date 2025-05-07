@@ -5,8 +5,7 @@
 #include <Duin/Core/Application.h>
 #include <Duin/Core/Events/EventsModule.h>
 
-float windowX = 0.0f;
-float windowY = 0.0f;
+
 
 ViewportPanel::ViewportPanel(const std::string& name, PanelManager *panelManager)
     : Panel(name, panelManager)
@@ -27,6 +26,7 @@ ViewportPanel::~ViewportPanel()
     if (target.IsValid()) {
         target.Destroy();
     }
+    DisconnectFromGameEditorSignals();
 }
 
 void ViewportPanel::Init()
@@ -88,6 +88,7 @@ void ViewportPanel::Render()
     int newW = int(avail.x);
     int newH = int(avail.y);
 
+
     duin::BeginTextureMode(target);
     duin::ClearBackground(duin::GRAY);
 
@@ -103,11 +104,19 @@ void ViewportPanel::RenderUI()
 void ViewportPanel::ConnectToGameEditorSignals()
 {
     if (isGameEditorValid) {
-        onEventSignal.Connect([this](duin::Event e) { OnEvent(e); });
-        onPhysicsUpdateSignal.Connect([this](double delta) { SimulatePhysics(delta); });
-        onDrawSignal.Connect([this]() { Render(); });
-        onDrawUISignal.Connect([this]() { RenderUI(); });
+        eventSignalTag = onEventSignal.Connect([this](duin::Event e) { OnEvent(e); });
+        physicsSignalTag = onPhysicsUpdateSignal.Connect([this](double delta) { SimulatePhysics(delta); });
+        drawSignalTag = onDrawSignal.Connect([this]() { Render(); });
+        drawuiSignalTag = onDrawUISignal.Connect([this]() { RenderUI(); });
     }
+}
+
+void ViewportPanel::DisconnectFromGameEditorSignals()
+{
+    onEventSignal.Disconnect(eventSignalTag);
+    onPhysicsUpdateSignal.Disconnect(physicsSignalTag);
+    onDrawSignal.Disconnect(drawSignalTag);
+    onDrawUISignal.Disconnect(drawuiSignalTag);
 }
 
 void ViewportPanel::CreateRenderTexture()

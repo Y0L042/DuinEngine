@@ -4,6 +4,10 @@
 #include <Duin/Core/Events/EventsModule.h>
 #include <Duin/IO/IOModule.h>
 
+namespace duin {
+    class Event;
+    class DataValue;
+}
 
 class Editor : public duin::Application
 {

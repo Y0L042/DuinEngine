@@ -32,7 +32,16 @@ class ViewportPanel : public Panel
         duin::RenderTexture target;
         EditorCamera mainCamera;
 
+        float windowX = 0.0f;
+        float windowY = 0.0f;
+
+        duin::UUID eventSignalTag;
+        duin::UUID physicsSignalTag;
+        duin::UUID drawSignalTag;
+        duin::UUID drawuiSignalTag;
+
         void ConnectToGameEditorSignals();
+        void DisconnectFromGameEditorSignals();
         void CreateRenderTexture();
         void MoveMainCamera();
 };

@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <functional>
 #include <chrono>
+#include <variant>
 
 #include <cstdint>
 #include <any>
@@ -20,7 +21,12 @@
 /* External Libraries */
 
 #include <SDL3/SDL.h>
+
+#ifndef BGFX_NOPIC
+#define BGFX_NOPIC
+#endif
 #include <bgfx/bgfx.h>
+
 #include <external/imgui.h>
 
 #include <rapidjson/rapidjson.h>

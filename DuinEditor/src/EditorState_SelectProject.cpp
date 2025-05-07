@@ -15,7 +15,7 @@
 #include "gui/FileManager.h"
 #include "States.h"
 
-#define MAX_DIR_LEN 512
+#define MAX_DIR_LEN 1024
 
 const std::string EDITOR_CFG_PATH = "data/editor_cfg.toml";
 const std::string PROJECT_FILE_NAME = "duin.project";

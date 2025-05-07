@@ -47,6 +47,7 @@ void EditorState_GameEditor::Enter()
         tabBrowser.Init(tabBrowserData);
     }
     else {
+        DN_WARN("Project has no EDITOR_CONFIG, creating new one...");
         tabBrowser.Init();
     }
 }

@@ -1,7 +1,7 @@
 #include "Editor.h"
+#include "ExternalDependencies.h"
 
 #include <DuinMeta.h>
-#include <Duin.h>
 #include <Duin/EntryPoint.h>
 
 #include "Singletons.h"
@@ -9,6 +9,8 @@
 #include "States.h"
 #include "gui/GuiMeta.h"
 #include "EditorMeta.h"
+
+
 
 int PROJECT_EDITOR_VERSION;
 int PROJECT_ENGINE_VERSION;

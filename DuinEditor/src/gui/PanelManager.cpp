@@ -67,11 +67,11 @@ void PanelManager::RemovePanel(const duin::UUID uuid)
 
 void PanelManager::DrawPanels()
 {
+    ErasePanels();
+
     for (const auto & [ uuid, panelPtr ] : panels) {
         panelPtr->Draw();
     }
-
-    ErasePanels();
 }
 
 duin::UUID PanelManager::GetUUID()
