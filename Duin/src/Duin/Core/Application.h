@@ -1,7 +1,7 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#pragma once
 
 #include <string>
+#include <memory>
 #include <functional>
 
 #include "Duin/Core/Core.h"
@@ -9,9 +9,7 @@
 #include "Duin/Scene/GameObject.h"
 
 
-
-namespace duin
-{
+namespace duin {
     std::string GetRootDirectory();
     void DebugPauseGame();
     void DebugResumeGame();
@@ -44,7 +42,7 @@ namespace duin
 	void SetAllowDockingInMain(bool enable);
 	void SetImGuiINIPath(const std::string& newPath);
 
-	SDL_Window* GetSDLWindow();
+	::SDL_Window* GetSDLWindow();
 
     void QueuePostReadyCallback(std::function<void(void)> f);
     void QueuePostInputCallback(std::function<void(::SDL_Event)> f);
@@ -127,4 +125,3 @@ namespace duin
 
 }
 
-#endif /* APPLICATION_H */

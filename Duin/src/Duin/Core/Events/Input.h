@@ -1,9 +1,12 @@
 #pragma once
 
-#include "Keys.h"
-#include "Duin/Core/Maths/DuinMaths.h" // for inputvector
-
 // TODO add raylib license
+
+#include "Keys.h"
+
+namespace duin {
+    struct Vector2;
+}
 
 namespace duin::Input {
     /* KEYBOARD */

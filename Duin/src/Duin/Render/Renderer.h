@@ -78,6 +78,7 @@ namespace duin {
         {
             bool valid = bgfx::isValid(texture) && bgfx::isValid(frameBuffer);
             valid = valid && ((width > 0) && (height > 0));
+
             return valid;
         }
 
@@ -86,6 +87,10 @@ namespace duin {
             if (!IsRenderContextAvailable()) {
                 return;
             }
+
+            textureUUID = UUID::INVALID;
+            width = 0;
+            height = 0;
 
             bgfx::destroy(texture);
             texture = BGFX_INVALID_HANDLE;
