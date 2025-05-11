@@ -59,6 +59,7 @@ typedef Uint32 DN_MouseButtonFlags;
 #define DN_BUTTON_RIGHT    3
 #define DN_BUTTON_X1       4
 #define DN_BUTTON_X2       5
+#define DN_MOUSE_BUTTON_CNT   5 
 
 typedef Uint32 DN_Keycode;
 

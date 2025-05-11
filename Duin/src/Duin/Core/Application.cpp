@@ -445,6 +445,7 @@ namespace duin {
                 ::ImGui_ImplSDL3_ProcessEvent(&e);
             }
             Input::CacheCurrentKeyState();
+            Input::CacheCurrentMouseKeyState();
             Input::UpdateMouseFrameDelta();
 
             EngineUpdate(deltaTime);

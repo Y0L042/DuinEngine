@@ -25,10 +25,10 @@ namespace duin::Input {
     /* MOUSE */
 	void CaptureMouse(int enable);                               // Capture mouse (lock mouse cursor in window)
 
-    int IsMouseButtonPressed(int button);                  // Check if a mouse button has been pressed once
-    int IsMouseButtonDown(int button);                     // Check if a mouse button is being pressed
-    int IsMouseButtonReleased(int button);                 // Check if a mouse button has been released once
-    int IsMouseButtonUp(int button);                       // Check if a mouse button is NOT being pressed
+    int IsMouseButtonPressed(DN_MouseButtonFlags button);                  // Check if a mouse button has been pressed once
+    int IsMouseButtonDown(DN_MouseButtonFlags button);                     // Check if a mouse button is being pressed
+    int IsMouseButtonReleased(DN_MouseButtonFlags button);                 // Check if a mouse button has been released once
+    int IsMouseButtonUp(DN_MouseButtonFlags button);                       // Check if a mouse button is NOT being pressed
     Vector2 GetMouseGlobalPosition(void);                         // Get mouse position XY relative to system window 
     Vector2 GetMousePosition(void);                         // Get mouse position XY relative to game window
     Vector2 GetMouseDelta(void);                            // Get mouse delta between frames
