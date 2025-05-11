@@ -29,18 +29,34 @@ namespace duin::Input {
     static KeyState previousKeyState[MAX_KEYS]; 
     static KeyState currentKeyState[MAX_KEYS]; 
 
+    static const int MAX_MOUSE_KEYS = DN_MOUSE_BUTTON_CNT;
+    static KeyState previousMouseKeyState[MAX_MOUSE_KEYS];
+    static KeyState currentMouseKeyState[MAX_MOUSE_KEYS];
+
     static Vector2 previousMouseLocalPos;
     static Vector2 currentMouseLocalPos;
     static Vector2 mouseFrameDelta;
 
     void CacheCurrentKeyState()
     {
+        // Called in Application.cpp run
         memcpy(previousKeyState, currentKeyState, sizeof(previousKeyState));
     }
 
     void ClearCurrentKeyState()
     {
         memset(currentKeyState, 0, sizeof(currentKeyState));
+    }
+
+    void CacheCurrentMouseKeyState()
+    {
+        // Called in Application.cpp run
+        memcpy(previousMouseKeyState, currentMouseKeyState, sizeof(previousMouseKeyState));
+    }
+
+    void ClearCurrentMouseKeyState()
+    {
+        memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
     }
 
     void ProcessSDLKeyboardEvent(::SDL_Event e)
@@ -110,7 +126,6 @@ namespace duin::Input {
         // TODO
 		return 0;
 	}
-                 
 
     void ProcessSDLMouseEvent(::SDL_Event e)
     {
@@ -121,8 +136,17 @@ namespace duin::Input {
             ::SDL_GetMouseState(&x, &y);
             currentMouseLocalPos = Vector2(x, y);
         }
-        if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
 
+        KeyState state = KeyState::UP;
+        if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+            state = KeyState::DOWN;
+            DN_MouseButtonFlags btnIdx = e.button.button - 1;
+            currentMouseKeyState[btnIdx] = state;
+        }
+        if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {
+            state = KeyState::UP;
+            DN_MouseButtonFlags btnIdx = e.button.button - 1;
+            currentMouseKeyState[btnIdx] = state;
         }
     }
 
@@ -138,36 +162,24 @@ namespace duin::Input {
         ::SDL_SetWindowRelativeMouseMode(GetSDLWindow(), enable);
     }
 
-    int IsMouseButtonPressed(int button)
+    int IsMouseButtonPressed(DN_MouseButtonFlags button)
     {
-        return 0;
+        return (currentMouseKeyState[button-1] && !previousMouseKeyState[button-1]);
     }
 
-    int IsMouseButtonDown(int button)
+    int IsMouseButtonDown(DN_MouseButtonFlags button)
 	{
-        ::SDL_MouseButtonFlags flags = ::SDL_GetMouseState(NULL, NULL);
-        if (flags == button) {
-            return 1;
-        }
-
-        return 0;
+        return currentMouseKeyState[button-1];
 	}
                      
-    int IsMouseButtonReleased(int button)
+    int IsMouseButtonReleased(DN_MouseButtonFlags button)
 	{
-        ::SDL_MouseButtonFlags flags = ::SDL_GetMouseState(NULL, NULL);
-
-        return 0;
+        return (!currentMouseKeyState[button-1] && previousMouseKeyState[button-1]);
 	}
                  
-    int IsMouseButtonUp(int button)
+    int IsMouseButtonUp(DN_MouseButtonFlags button)
 	{
-        ::SDL_MouseButtonFlags flags = ::SDL_GetMouseState(NULL, NULL);
-        if (flags == button) {
-            return 0;
-        }
-
-        return 1;
+        return !currentMouseKeyState[button-1];
 	}
                        
     Vector2 GetMouseGlobalPosition(void)
