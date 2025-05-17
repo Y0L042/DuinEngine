@@ -1,4 +1,4 @@
-#include "TabBrowser.h"
+#include "EditorWindow.h"
 
 #include "../Project.h"
 #include "../Singletons.h"
@@ -17,57 +17,54 @@ static const char CONFIRM_TAB_DELETE[] = "CONFIRM_TAB_DELETE";
 static bool requestDeleteTabFlag = false;
 static int requestDeleteIndex = -1;
 
-TabBrowser::TabBrowser()
+EditorWindow::EditorWindow()
 {}
 
-void TabBrowser::Init()
+void EditorWindow::Init()
 {
     DN_WARN("Initialising with no tab data, adding tab!");
     if (tabs.empty()) {
-        AddTab("Editor");
+        CreateTab("Editor");
     }
-
-    duin::QueueExitCallback([]() { SaveProjectConfig(); });
 }
 
-void TabBrowser::Init(duin::DataValue value)
+void EditorWindow::Init(duin::DataValue value)
 {
     Deserialise(value);
     if (tabs.empty()) {
         DN_WARN("No tabs found, adding tab!");
-        AddTab("Editor");
+        CreateTab("Editor");
         DN_WARN("Tab added.");
     }
 }
 
-void TabBrowser::AddTab(const std::string& title)
+void EditorWindow::CreateTab(const std::string& title)
 {    
     static int counter = 1;
-    Tab newTab;
-
     bool contains = false;
-    for (Tab& tab : tabs) {
-        contains = contains || !title.compare(tab.title);
+    std::string newTitle;
+    for (auto& tab : tabs) {
+        contains = contains || !title.compare(tab->title);
     }
     if (contains) {
-        newTab.title = title + "_" + std::to_string(++counter);
+        newTitle = title + "_" + std::to_string(++counter);
     } else {
-        newTab.title = title;
+        newTitle = title;
     }
-    DN_INFO("Creating tab");
-    CreateTab(newTab);
-    DN_INFO("Created tab");
-    DN_INFO("Saving project");
-    SaveProjectConfig();
-    DN_INFO("Saved project");
+    AddTab(newTitle);
 }
 
-void TabBrowser::CreateTab(Tab newTab)
+void EditorWindow::AddTab(const std::string& title)
 {
-    tabs.push_back(newTab);
+    tabs.emplace_back(Tab::Create(this, title));
 }
 
-void TabBrowser::CloseTab(int index) 
+void EditorWindow::AddTab(duin::DataValue data)
+{
+    tabs.emplace_back(Tab::Create(this, data));
+}
+
+void EditorWindow::CloseTab(int index) 
 {
     if (index < 0 || index >= tabs.size()) return;
     
@@ -76,13 +73,11 @@ void TabBrowser::CloseTab(int index)
         selectedTab = tabs.size() - 1;
     }
     if (tabs.empty()) {
-        AddTab("New Tab");
+        CreateTab("New Tab");
     }
-
-    SaveProjectConfig();
 }
 
-void TabBrowser::Render()
+void EditorWindow::Render()
 {
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);
@@ -92,7 +87,7 @@ void TabBrowser::Render()
     DrawMainTabBrowser();
 }
 
-void TabBrowser::DrawMainTabBrowser()
+void EditorWindow::DrawMainTabBrowser()
 {
     ImGuiWindowFlags windowFlags =
         ImGuiWindowFlags_NoCollapse |
@@ -100,11 +95,13 @@ void TabBrowser::DrawMainTabBrowser()
         ImGuiWindowFlags_NoMove |
         ImGuiWindowFlags_NoBringToFrontOnFocus |
         ImGuiWindowFlags_NoNavFocus |
-        ImGuiWindowFlags_NoDocking 
+        ImGuiWindowFlags_NoDocking |
+        ImGuiWindowFlags_MenuBar
         ;
     const std::string tabBrowserName = "Active Project: " + GetActiveProject().projectTitle;
 
     if (ImGui::Begin(tabBrowserName.c_str(), nullptr, windowFlags)) {
+        DrawMenu();
         DrawTabBar();
         DrawTabContentArea();
         DrawRenameTabPopup();
@@ -114,7 +111,7 @@ void TabBrowser::DrawMainTabBrowser()
     ImGui::End();
 }
 
-void TabBrowser::DrawTabBar()
+void EditorWindow::DrawTabBar()
 {
     ImGuiWindowFlags tabBarFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
     if (ImGui::BeginChild("TabBarChild", ImVec2(0, 25), 0, tabBarFlags)) {
@@ -128,13 +125,13 @@ void TabBrowser::DrawTabBar()
         if (ImGui::BeginTabBar("MainTabBar", tabBarFlags)) {
             // Render each tab
             for (int i = 0; i < tabs.size(); ++i) {
-                Tab& tab = tabs[i];
+                auto& tab = tabs[i];
                 ImGuiTabItemFlags flags = 0;
 
                 /* Draw tab item */
-                bool deleteTab = !tab.open;
-                bool tabOpen = tab.open;
-                if (ImGui::BeginTabItem(tab.title.c_str(), &tabOpen, flags)) {
+                bool deleteTab = !tab->open;
+                bool tabOpen = tab->open;
+                if (ImGui::BeginTabItem(tab->title.c_str(), &tabOpen, flags)) {
                     selectedTab = i;
 
                     /* DOUBLE CLICK ON TAB EVENT */
@@ -142,7 +139,7 @@ void TabBrowser::DrawTabBar()
                         //DN_INFO("Attempting to rename tab: {}", tab.title.c_str());
 						requestRenamePopupFlag = true;
                         renamingTabIndex = i;
-                        strncpy(renamingBuffer, tab.title.c_str(), sizeof(renamingBuffer));
+                        strncpy(renamingBuffer, tab->title.c_str(), sizeof(renamingBuffer));
                         popupPos = { 0, 0 };
                     }
                     ImGui::EndTabItem();
@@ -151,20 +148,22 @@ void TabBrowser::DrawTabBar()
                 if (!tabOpen && !deleteTab) {
                     requestDeleteIndex = i;
                     requestDeleteTabFlag = true;
-                    tab.flag_requestDelete = true;
+                    tab->flag_requestDelete = true;
                 }
 
                 if (deleteTab) {
-                    if (!tab.open) {
+                    if (!tab->open) {
                         CloseTab(i);
                         if (i > 0) i--;
                     }
                 }
+
+                tab->SetFocussed(i == selectedTab);
             }
 
             // Add a "+" button to create new tabs
             if (ImGui::TabItemButton("+", ImGuiTabItemFlags_Trailing | ImGuiTabItemFlags_NoTooltip)) {
-                AddTab("New Tab");
+                CreateTab("New Tab");
             }
             ImGui::EndTabBar();
         }
@@ -172,15 +171,15 @@ void TabBrowser::DrawTabBar()
     ImGui::EndChild();
 }
 
-void TabBrowser::DrawTabContentArea()
+void EditorWindow::DrawTabContentArea()
 {
     if (selectedTab >= 0 && selectedTab < tabs.size()) {
-        Tab& tab = tabs[selectedTab];
-        tab.DrawWorkspace();
+        auto& tab = tabs[selectedTab];
+        tab->DrawWorkspace();
     }
 }
 
-void TabBrowser::DrawRenameTabPopup()
+void EditorWindow::DrawRenameTabPopup()
 {
     // Check if we need to open the popup this frame
     if (requestRenamePopupFlag) {
@@ -198,8 +197,7 @@ void TabBrowser::DrawRenameTabPopup()
 
         if (ImGui::InputText("##RenameTab", renamingBuffer, sizeof(renamingBuffer), inputFlags)) {
             if (renamingTabIndex >= 0 && renamingTabIndex < (int)tabs.size()) {
-                tabs[renamingTabIndex].title = renamingBuffer;
-                SaveProjectConfig();
+                tabs[renamingTabIndex]->title = renamingBuffer;
             }
             renamingTabIndex = -1;
             ImGui::CloseCurrentPopup();
@@ -217,7 +215,7 @@ void TabBrowser::DrawRenameTabPopup()
     }
 }
 
-bool TabBrowser::DrawConfirmDeleteTabPopup()
+bool EditorWindow::DrawConfirmDeleteTabPopup()
 {
     bool actionDelete = false;
     ImGuiWindowFlags deletePopupFlags = 0;
@@ -231,8 +229,8 @@ bool TabBrowser::DrawConfirmDeleteTabPopup()
         //DN_INFO("Popup tab delete");
         // Delete tab
         if (ImGui::Button("Delete") && (requestDeleteIndex >= 0 && requestDeleteIndex < (int)tabs.size())) {
-            tabs[requestDeleteIndex].flag_requestDelete = false;
-            tabs[requestDeleteIndex].open = false;
+            tabs[requestDeleteIndex]->flag_requestDelete = false;
+            tabs[requestDeleteIndex]->open = false;
             actionDelete = true;
             requestDeleteIndex = -1;
             requestDeleteTabFlag = false;
@@ -240,8 +238,8 @@ bool TabBrowser::DrawConfirmDeleteTabPopup()
         } else
         // Keep tab open
         if (ImGui::Button("Cancel") && (requestDeleteIndex >= 0 && requestDeleteIndex < (int)tabs.size())) {
-            tabs[requestDeleteIndex].flag_requestDelete = false;
-            tabs[requestDeleteIndex].open = true;
+            tabs[requestDeleteIndex]->flag_requestDelete = false;
+            tabs[requestDeleteIndex]->open = true;
             actionDelete =  false;
             requestDeleteIndex = -1;
             requestDeleteTabFlag = false;
@@ -257,14 +255,14 @@ bool TabBrowser::DrawConfirmDeleteTabPopup()
 }
 
 
-duin::DataValue TabBrowser::Serialise()
+duin::DataValue EditorWindow::Serialise()
 {
     duin::DataValue tabsArray;
     tabsArray.SetArray();
 
-    for (Tab& tab : tabs) {
+    for (auto& tab : tabs) {
         DN_INFO("Saving tab into tabsArray");
-        tabsArray.PushBack(tab.Serialise());
+        tabsArray.PushBack(tab->Serialise());
     }
 
     duin::DataValue value;
@@ -273,15 +271,15 @@ duin::DataValue TabBrowser::Serialise()
     return value;
 }
 
-void TabBrowser::Deserialise(duin::DataValue data)
+void EditorWindow::Deserialise(duin::DataValue data)
 {
     if (!(data.HasMember(guitag::TABS_KEY) && data[guitag::TABS_KEY].IsArray())) {
-        DN_WARN("TabBrowser passed empty tabs array!");
+        DN_WARN("EditorWindow passed empty tabs array!");
         return;
     }
 
     duin::DataValue tabsArray = data[guitag::TABS_KEY];
-    DN_INFO("TabBrowser data: \n{}\n", data.Write());
+    DN_INFO("EditorWindow data: \n{}\n", data.Write());
     if (!tabsArray.IsArray()) {
         DN_WARN("Tabs array is empty!");
         return;
@@ -290,12 +288,38 @@ void TabBrowser::Deserialise(duin::DataValue data)
     tabs.clear();
     for (auto item : tabsArray) {
         DN_INFO("Tab item: \n{}\n", duin::DataValue::Write(item));
-        Tab tab(item);
-        tabs.push_back(tab);
+        AddTab(item);
     }
 }
 
-duin::UUID TabBrowser::GetUUID()
+duin::UUID EditorWindow::GetUUID()
 {
     return uuid;
+}
+
+extern void SaveProjectConfig();
+void EditorWindow::DrawMenu()
+{
+    if (ImGui::BeginMenuBar()) {
+        // FILE
+        if (ImGui::BeginMenu("File")) {
+            if (ImGui::MenuItem("TODO")) {
+            }
+            if (ImGui::MenuItem("TODO2")) {
+            }
+            ImGui::EndMenu();
+        }
+
+        // EDITOR
+        if (ImGui::BeginMenu("Editor")) {
+            if (ImGui::MenuItem("Save Layout")) {
+                SaveProjectConfig();
+            }
+            if (ImGui::MenuItem("TODO2")) {
+            }
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
+    }
 }

@@ -22,6 +22,7 @@ class ViewportPanel : public Panel
 
         void Deserialise(duin::DataValue value) override;
         void DrawContent() override;
+        void OnPanelEvent(PanelEvent e) override;
 
         void OnEvent(duin::Event e);
         void SimulatePhysics(double delta);

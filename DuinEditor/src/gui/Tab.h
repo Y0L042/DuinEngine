@@ -1,13 +1,15 @@
 #pragma once
 
 #include "PanelManager.h"
+#include "TabBlackboard.h"
 
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/IO/IOModule.h>
+#include <Duin/Core/Signals/SignalsModule.h>
 
 #include <string>
 
-
+class EditorWindow;
 class Tab
 {
     public:
@@ -15,32 +17,49 @@ class Tab
         bool open = true;
         bool renaming = false;
         bool flag_requestDelete = false;
+        bool isFocussed = false;
+        bool prevIsFocussed = false;
+        EditorWindow* owner = nullptr;
+        duin::Signal<bool> onFocusChange;
+        std::shared_ptr<TabBlackboard> blackboard;
 
-        Tab() = default;
+        static std::shared_ptr<Tab> Create(EditorWindow *owner);
+        static std::shared_ptr<Tab>  Create(EditorWindow *owner, duin::DataValue value);
+        static std::shared_ptr<Tab>  Create(EditorWindow* owner, const std::string& title);
+
+        Tab() {};
         Tab(duin::DataValue value);
 
         std::string GetPanelManagerID();
+        void SetFocussed(bool status);
+        void SetOwner(EditorWindow* owner);
+        std::shared_ptr<PanelManager> CreatePanelManager();
+        std::shared_ptr<PanelManager> CreatePanelManager(duin::DataValue value);
 
-        bool operator==(Tab& o)
-        {
-            return !this->title.compare(o.title);
-        }
+        void ProcessBlackboard();
 
-        bool operator!=(Tab& o)
-        {
-            return this->title.compare(o.title);
-        }
+
+        //bool operator==(Tab& o)
+        //{
+        //    return !this->title.compare(o.title);
+        //}
+
+        //bool operator!=(Tab& o)
+        //{
+        //    return this->title.compare(o.title);
+        //}
 
         duin::UUID GetUUID();
 
         duin::DataValue Serialise();
-        void Deserialise(duin::DataValue value);
+        duin::DataValue Deserialise(duin::DataValue value);
 
         void DrawWorkspace();
 
     private:
         duin::UUID uuid;
-        PanelManager panelManager;
+        std::shared_ptr<PanelManager> panelManager = nullptr;
+
 
         void DrawMenu();
 };
