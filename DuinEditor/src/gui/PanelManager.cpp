@@ -3,7 +3,6 @@
 
 #include <Duin/Core/Application.h>
 
-
 PanelManager::PanelManager(std::string uuidHexString)
     : uuid(duin::UUID::FromStringHex(uuidHexString))
 {}
@@ -15,6 +14,12 @@ PanelManager::PanelManager(duin::DataValue data)
 
 void PanelManager::Init()
 {
+
+}
+
+void PanelManager::SetBlackboard(std::shared_ptr<TabBlackboard> b)
+{
+    blackboard = b;
 }
 
 duin::DataValue PanelManager::Serialise()
@@ -91,5 +96,4 @@ void PanelManager::ErasePanels()
             it++;
         }
     }
-    if (erased) SaveProjectConfig();
 }

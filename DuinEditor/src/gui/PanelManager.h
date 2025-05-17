@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PanelFactory.h"
+#include "TabBlackboard.h"
 #include "Panel.h"
 #include "DefaultPanel.h"
 #include "ViewportPanel.h"
@@ -11,18 +12,22 @@
 #include <unordered_map>
 #include <memory>
 
-// Forward declaration to avoid including Singletons to avoid including TabBrowser that includes Tab that leads to circular inclusion
+// Forward declaration to avoid including Singletons to avoid including EditorWindow that includes Tab that leads to circular inclusion
 // TODO fix this
-void SaveProjectConfig();
-
+class Tab;
 class PanelManager
 {
     public:
+        Tab* owner = nullptr;
+        std::shared_ptr<TabBlackboard> blackboard = nullptr;
+
         PanelManager() = default;
         PanelManager(std::string uuidHexString);
         PanelManager(duin::DataValue value);
 
         void Init();
+
+        void SetBlackboard(std::shared_ptr<TabBlackboard> b);
 
         duin::DataValue Serialise(); // Serialise panels to toml value
         void Deserialise(duin::DataValue value); // Deserialise panels from toml value
@@ -33,8 +38,9 @@ class PanelManager
             std::shared_ptr<Panel> panel = PanelFactory::CreatePanel(type, std::forward<Args>(args)...);
             if (!panels[panel->GetUUID()]) {
                 panels[panel->GetUUID()] = panel;
+                if (panel->panelManager == nullptr) panel->panelManager = this;
             }
-            SaveProjectConfig();
+            panel->SetBlackboard(blackboard);
         }
 
         void RemovePanel(const duin::UUID uuid);

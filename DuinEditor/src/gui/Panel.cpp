@@ -1,6 +1,9 @@
 #include "Panel.h"
 #include "PanelManager.h"
 #include "GuiMeta.h"
+#include "Tab.h"
+
+#include <Duin/Core/Debug/DebugModule.h>
 
 void DrawPanelMenu(PanelManager *panelManager)
 {
@@ -29,7 +32,6 @@ Panel::Panel(const std::string& name, PanelManager *panelManager)
     uniqueWindowName = CreateUniquePanelName();
     m_windowFlags = ImGuiWindowFlags_MenuBar | 
                     ImGuiWindowFlags_NoCollapse;
-
     AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(uuid); });
 }
 
@@ -50,6 +52,19 @@ Panel::Panel(duin::DataValue value)
         ImGuiWindowFlags_NoCollapse;
 
     AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(this->uuid); });
+}
+
+void Panel::SetBlackboard(std::shared_ptr<TabBlackboard> b)
+{
+    DNASSERT((b != nullptr), "Blackboard cannot be NULL!");
+    blackboard = b;
+    if (blackboard->onFocusChange) {
+        DN_INFO("Panel connected to blackboard signal");
+        blackboard->onFocusChange->Connect([this](bool isFocussed) { isTabOpen = isFocussed; });
+    }
+    else {
+        DN_WARN("Panel could not connect to blackboard signal");
+    }
 }
 
 duin::UUID Panel::GetUUID()
@@ -102,7 +117,11 @@ std::pair<std::string, std::string> Panel::SplitPanelName(const std::string& pan
 void Panel::Draw() 
 {
     ImGui::Begin(uniqueWindowName.c_str(), nullptr, m_windowFlags);
-
+    prevIsHovered = isHovered;
+    prevIsFocussed = isFocussed;
+    prevIsTabOpen = isTabOpen;
+    isHovered = ImGui::IsWindowHovered();
+    isFocussed = ImGui::IsWindowFocused();
     if (!m_menuItems.empty() && ImGui::BeginMenuBar()) {
        SetupMenuBar();
        barHeight = ImGui::GetFrameHeight();
@@ -112,6 +131,26 @@ void Panel::Draw()
     DrawContent();
 
     ImGui::End();
+}
+
+void Panel::RunOnPanelEvent()
+{
+    PanelEvent e;
+    if (ownerTab && (isTabOpen != prevIsTabOpen)) {
+        e.type |= PanelEvent::Type::TAB_FOCUSSED;
+        e.isTabFocussed = isTabOpen;
+    }
+    if (prevIsHovered != isHovered) {
+        e.type |= PanelEvent::Type::IS_HOVERED;
+        e.isHovered = isHovered;
+    }
+    if (prevIsFocussed != isFocussed) {
+        e.type |= PanelEvent::Type::IS_FOCUSSED;
+        e.isFocussed = isFocussed;
+    }
+    if (e.type != PanelEvent::Type::NONE) {
+        OnPanelEvent(e);
+    }
 }
 
 void Panel::SetupMenuBar() 
