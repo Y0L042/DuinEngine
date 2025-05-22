@@ -17,13 +17,13 @@ namespace duin::Input {
         UP = 0,
         DOWN = 1
     };
-    enum KeyEvent {
-        PRESSED,
-        PRESSED_REPEATED,
-        HELD,
-        RELEASED,
-        IDLE
-    };
+    //enum KeyEvent {
+    //    PRESSED,
+    //    PRESSED_REPEATED,
+    //    HELD,
+    //    RELEASED,
+    //    IDLE
+    //};
 
     static const int MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;
     static KeyState previousKeyState[MAX_KEYS]; 
