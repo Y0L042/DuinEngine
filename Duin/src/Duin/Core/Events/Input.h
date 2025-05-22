@@ -9,6 +9,14 @@ namespace duin {
 }
 
 namespace duin::Input {
+    enum KeyEvent {
+        PRESSED,
+        PRESSED_REPEATED,
+        HELD,
+        RELEASED,
+        IDLE
+    };
+
     /* KEYBOARD */
     int IsKeyPressed(DN_Keycode code);          // Down and up, not held
     int IsKeyPressedAgain(DN_Keycode code);     // Pressed more than once in short period
