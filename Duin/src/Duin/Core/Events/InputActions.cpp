@@ -74,18 +74,6 @@ void duin::RemoveInputAction(const std::string& actionName)
     inputActionMap.erase(actionName);
 }
 
-std::string duin::SerialiseInputActions()
-{
-    // TODO
-
-	return std::string();
-}
-
-void duin::DeserialiseInputActions(const std::string& actionNames)
-{
-    // TODO
-}
-
 bool duin::IsInputActionTriggered(const std::string& actionName)
 {
     if (inputActionMap.find(actionName) == inputActionMap.end()) {

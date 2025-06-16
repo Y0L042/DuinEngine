@@ -65,8 +65,5 @@ namespace duin {
                                   const InputBinding& binding);
     void RemoveInputAction(const std::string& actionName);
 
-    std::string SerialiseInputActions();
-    void DeserialiseInputActions(const std::string& actionNames);
-
     bool IsInputActionTriggered(const std::string& actionName);
 }

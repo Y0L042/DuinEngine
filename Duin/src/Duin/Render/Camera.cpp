@@ -15,11 +15,10 @@
 
 namespace duin {
     Camera* activeCamera = new Camera(UUID::INVALID);
-    bool rotateAroundTarget = false;
 
     Camera DEFAULT_CAMERA = {
         UUID(),
-        {0.0f, 2.0f, -5.0f}, // Position
+        {0.0f, 0.0f, -1.0f}, // Position
         {0.0f, 0.0f, 0.0f},  // Target
         {0.0f, 1.0f, 0.0f},  // Up
         60.0f // FOVY
@@ -103,60 +102,58 @@ namespace duin {
         }
     }
 
-
     // Camera rotation
     void CameraYaw(Camera* camera, float angle, bool rotateAroundTarget)
     {
         if (camera == nullptr || !camera->IsValid()) { return; }
         Vector3 forward = GetCameraForward(camera);
-        Vector3 up = GetCameraUp(camera);
-
-        Matrix rotation = MatrixRotate(up, angle);
         
         if (rotateAroundTarget) {
             Vector3 offset = Vector3Subtract(camera->position, camera->target);
-            offset = Vector3Transform(offset, rotation);
-            camera->position = Vector3Add(camera->target, offset);
-        } else {
-
-            // Normal Operation
-            forward = Vector3Transform(forward, rotation);
-            camera->target = Vector3Add(camera->position, forward);
-        }
-        
-        camera->up = Vector3Transform(camera->up, rotation);
-    }
-
-    void CameraPitch(Camera* camera, float angle, bool lockView, bool rotateAroundTarget, bool rotateUp)
-    {
-        if (camera == nullptr || !camera->IsValid()) { return; }
-        Vector3 forward = GetCameraForward(camera);
-        Vector3 right = GetCameraRight(camera);
-        
-        Matrix rotation = MatrixRotate(right, angle);
-        
-        if (rotateAroundTarget) {
-            Vector3 offset = Vector3Subtract(camera->position, camera->target);
-            offset = Vector3Transform(offset, rotation);
-            camera->position = Vector3Add(camera->target, offset);
+            Vector3 rotOffset = Vector3RotateByAxisAngle(offset, Vector3::UP, angle);
+            camera->position = Vector3Add(camera->target, rotOffset);
+            camera->up = Vector3::UP;
         } else {
             // Normal Operation
+            Vector3 up = GetCameraUp(camera);
+            Matrix rotation = MatrixRotate(up, angle);
             forward = Vector3Transform(forward, rotation);
             camera->target = Vector3Add(camera->position, forward);
-        }
-        
-        if (rotateUp) {
             camera->up = Vector3Transform(camera->up, rotation);
         }
         
-        // Prevent camera flipping
-        if (!lockView) {
-            float dot = Vector3DotProduct(forward, camera->up);
-            if (fabsf(dot) > 0.99f) {
-                angle = (dot > 0) ? -0.1f : 0.1f;
-                rotation = MatrixRotate(right, angle);
-                forward = Vector3Transform(forward, rotation);
-                camera->target = Vector3Add(camera->position, forward);
+    }
+
+    void CameraPitch(Camera* camera, 
+                     float angle, 
+                     bool lockView, 
+                     bool rotateAroundTarget, 
+                     bool rotateUp)
+    {
+        if (camera == nullptr || !camera->IsValid()) { return; }
+
+        Vector3 forward = GetCameraForward(camera);
+        
+        if (rotateAroundTarget) {
+            camera->up = Vector3::UP;
+            Vector3 right = GetCameraRight(camera);
+            Matrix rotation = MatrixRotate(right, angle);
+            Vector3 offset = Vector3Subtract(camera->position, camera->target);
+            Vector3 rotOffset = Vector3Transform(offset, rotation);
+            camera->position = Vector3Add(camera->target, rotOffset);
+
+            if (rotateUp) {
+                camera->up = Vector3Transform(camera->up, rotation);
+            }
+        } else {
+            // Normal Operation
+            Vector3 right = GetCameraRight(camera);
+            Matrix rotation = MatrixRotate(right, angle);
+            forward = Vector3Transform(forward, rotation);
+            camera->target = Vector3Add(camera->position, forward);
+
+            if (rotateUp) {
+                camera->up = Vector3Transform(camera->up, rotation);
             }
         }
     }

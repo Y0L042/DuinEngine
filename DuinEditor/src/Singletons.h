@@ -5,13 +5,13 @@
 
 #include "Project.h"
 #include "gui/FileManager.h"
-#include "gui/TabBrowser.h"
+#include "gui/EditorWindow.h"
 
 extern int PROJECT_EDITOR_VERSION;
 extern int PROJECT_ENGINE_VERSION;
 
 extern FileManager fileManager;
-extern TabBrowser tabBrowser;
+extern EditorWindow tabBrowser;
 
 extern duin::DebugConsole debugConsole;
 extern duin::DebugWatchlist debugWatchlist;

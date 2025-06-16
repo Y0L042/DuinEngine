@@ -2,16 +2,17 @@
 
 #include <Duin/Core/Utils/UtilsModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Events/EventsModule.h>
 #include <external/imgui.h>
 
 #include "Singletons.h"
 #include "States.h"
-#include "gui/TabBrowser.h"
+#include "gui/EditorWindow.h"
 #include "gui/ViewportPanel.h"
 #include "gui/GuiMeta.h"
 #include "Editor.h"
 
-TabBrowser tabBrowser;
+EditorWindow tabBrowser;
 bool isGameEditorValid = false;
 duin::Signal<double> onPhysicsUpdateSignal;
 duin::Signal<duin::Event> onEventSignal;
@@ -50,6 +51,11 @@ void EditorState_GameEditor::Enter()
         DN_WARN("Project has no EDITOR_CONFIG, creating new one...");
         tabBrowser.Init();
     }
+
+    static std::shared_ptr<duin::InputDevice_Keyboard> keyboardInput = std::make_shared<duin::InputDevice_Keyboard>();
+    static std::shared_ptr<duin::InputDevice_Mouse> mouseInput = std::make_shared<duin::InputDevice_Mouse>();
+    duin::AddInputActionBinding("OnEditorCameraOrbit", mouseInput, DN_BUTTON_RIGHT, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraOrbit", keyboardInput, DN_KEY_LALT, duin::Input::KeyEvent::HELD);
 }
 
 void EditorState_GameEditor::OnEvent(duin::Event e)
@@ -80,3 +86,4 @@ void EditorState_GameEditor::DrawUI()
 void EditorState_GameEditor::Exit()
 {
 }
+

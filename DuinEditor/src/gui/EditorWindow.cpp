@@ -279,7 +279,6 @@ void EditorWindow::Deserialise(duin::DataValue data)
     }
 
     duin::DataValue tabsArray = data[guitag::TABS_KEY];
-    DN_INFO("EditorWindow data: \n{}\n", data.Write());
     if (!tabsArray.IsArray()) {
         DN_WARN("Tabs array is empty!");
         return;

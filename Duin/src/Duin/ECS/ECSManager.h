@@ -48,6 +48,12 @@ namespace duin {
     //  ECS Components
     /*------------------------------------------------------------------------*/
     namespace ECSComponent {
+        struct Serialisable {
+            virtual std::string GetName() { return std::string(); }
+            virtual std::string SerialiseToText() { return std::string(); }
+            virtual void DeserialiseFromText(const std::string& data) {}
+        };
+
         /*------------------------------------------------------------------------*/
         //  2D Components
         /*------------------------------------------------------------------------*/
@@ -123,7 +129,7 @@ namespace duin {
         /*------------------------------------------------------------------------*/
         //  3D Components
         /*------------------------------------------------------------------------*/
-        struct Position3D {
+        struct Position3D : public Serialisable {
             Vector3 value;
 
             Position3D()
@@ -137,6 +143,22 @@ namespace duin {
             Position3D(float x, float y, float z)
                 : value(x, y, z)
             {}
+
+            std::string GetName() override
+            {
+                return "Position3D";
+            }
+
+            std::string SerialiseToText() override
+            {
+
+                return std::string();
+            }
+
+            void DeserialiseFromText(const std::string& data) override
+            {
+
+            }
         };
 
         struct Rotation3D {

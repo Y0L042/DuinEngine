@@ -213,7 +213,7 @@ namespace duin {
 
     void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size)
     {
-        DN_CORE_INFO("Shape queued for rendering");
+        //DN_CORE_INFO("Shape queued for rendering");
 
         Vector3 eulerRotation = QuaternionToEuler(rotation);
 
