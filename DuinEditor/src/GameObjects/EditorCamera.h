@@ -11,6 +11,8 @@ class EditorCamera : public duin::GameObject
 
         EditorCamera(duin::Vector3 pos = { 0.0f, -5.0f, 5.0f }, duin::Vector3 target = { 0.0f, 0.0f, 0.0f });
 
+        void Draw() override;
+
         void Enable(bool enable);
         void UpdatePosition(duin::Vector3 pos);
         void UpdateTarget(duin::Vector3 target);

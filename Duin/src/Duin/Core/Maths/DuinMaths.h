@@ -1240,6 +1240,12 @@ DNMAPI void Vector3OrthoNormalizeF(Vector3 *v1, Vector3 *v2)
     *v2 = vn2;
 }
 
+// Tests for orthonormal axis system
+DNMAPI bool Vector3TestOrhonormalBasis(Vector3 x, Vector3 y, Vector3 z)
+{
+    // TODO
+}
+
 // Transforms a Vector3 by a given Matrix
 DNMAPI Vector3 Vector3Transform(Vector3 v, Matrix mat)
 {

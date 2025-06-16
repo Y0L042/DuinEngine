@@ -1,0 +1,32 @@
+{
+    "SceneMeta" : 
+    {
+        "name" : "map_1",
+    },
+    "SceneTree" : 
+    {
+        "Root" : 
+        [
+            {
+                "Player" : {}
+            },
+            {
+                "Light" : {}
+            },
+            {
+                "Ground" : 
+                {
+                    "Children" :
+                        [
+                            {
+                                "Tree" : {}
+                            },
+                            {
+                                "Tree2" : {}
+                            }
+                        ]
+                }
+            }
+        ]
+    }
+}

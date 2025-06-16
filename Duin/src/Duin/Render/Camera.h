@@ -10,12 +10,19 @@ namespace duin {
         UUID uuid;
         Vector3 position;
         Vector3 target;
+
         Vector3 up;
         float fovy;
 
         Camera() {}
         Camera(UUID uuid, Vector3 position, Vector3 target, Vector3 up, float fovy)
-            : uuid(uuid), position(position), target(target), up(up), fovy(fovy) {}
+            : uuid(uuid), position(position), target(target), up(Vector3()), fovy(fovy) 
+        {
+            Vector3 forward = Vector3NormalizeF(Vector3Subtract(target, position));
+            Vector3 right = Vector3NormalizeF(Vector3CrossProduct(forward, up));
+            this->up = Vector3CrossProduct(right, forward);
+        }
+
         Camera(UUID uuid) : uuid(uuid) {}
         int IsValid() { return uuid != UUID::INVALID; }
     };
@@ -39,7 +46,10 @@ namespace duin {
 
     // Camera rotation
     void CameraYaw(Camera *camera, float angle, bool rotateAroundTarget = false);
-    void CameraPitch(Camera *camera, float angle, bool lockView = false, bool rotateAroundTarget = false, bool rotateUp = false);
+    void CameraPitch(Camera *camera, float angle, 
+                     bool lockView = true, 
+                     bool rotateAroundTarget = false, 
+                     bool rotateUp = false);
     void CameraRoll(Camera *camera, float angle);
 
     Matrix GetCameraViewMatrix(Camera *camera);
