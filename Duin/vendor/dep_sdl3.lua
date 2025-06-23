@@ -16,13 +16,13 @@ function dep_sdl3.build()
     else
         print("\t\tFetch")
         local currentDir = os.getcwd()
-        os.chdir(folder)
+        utils.changeDir(folder)
 
         utils.runCommand("git stash")
         utils.runCommand("git fetch --all --tags")
         utils.runCommand("git checkout tags/" .. tag .. "")
 
-        os.chdir(currentDir)
+        utils.changeDir(currentDir)
     end
     print("SDL3 downloaded.")
 

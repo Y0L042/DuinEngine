@@ -1,12 +1,12 @@
 local utils = require "utils"
-local dep_toml11 = {}
-local name = "TOML11"
+local dep_spdlog = {}
+local name = "SPDLOG"
 
-local repo = "https://github.com/ToruNiina/toml11"
-local tag = "v4.4.0"
-local folder = "toml11"
+local repo = "https://github.com/gabime/spdlog"
+local tag = "v1.15.0"
+local folder = "spdlog"
 
-function dep_toml11.build()
+function dep_spdlog.build()
     print("START: " .. name)
 
     -- Clone Repo
@@ -26,10 +26,7 @@ function dep_toml11.build()
     end
     print(name .. " downloaded.")
 
-    utils.runCommand('cd toml11 && cmake -B ./build/ -DTOML11_PRECOMPILE=ON -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDebug')
-    utils.runCommand("cd toml11 && cmake --build build --config Debug")
-
     print("END: " .. name)
 end
 
-return dep_toml11
+return dep_spdlog
