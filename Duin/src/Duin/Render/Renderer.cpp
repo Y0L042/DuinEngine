@@ -285,9 +285,7 @@ namespace duin {
     {
         ::ImTextureID img = (::ImTextureID)(uintptr_t)renderTexture.texture.idx;
         ::ImVec2 size{ targetSize.x, targetSize.y };
-        // uv0 = {0,1}, uv1 = {1,0} flips the image right-side up
-        ImGui::Image(img, size, ::ImVec2{0,1}, ::ImVec2{1,0});
-        // ImGui::Image(img, size, ::ImVec2{0,0}, ::ImVec2{1,1});
+         ImGui::Image(img, size, ::ImVec2{1,0}, ::ImVec2{0,1});
 
         return 0;
     }

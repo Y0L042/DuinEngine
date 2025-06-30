@@ -14,8 +14,6 @@
 #endif /* DISTANCE_MARGIN */
 
 namespace duin {
-    Camera* activeCamera = new Camera(UUID::INVALID);
-
     Camera DEFAULT_CAMERA = {
         UUID(),
         {0.0f, 0.0f, -1.0f}, // Position
@@ -23,6 +21,8 @@ namespace duin {
         {0.0f, 1.0f, 0.0f},  // Up
         60.0f // FOVY
     };
+    Camera* activeCamera = new Camera(UUID::INVALID);
+
 
 
     void SetActiveCamera(Camera* camera)
@@ -45,21 +45,43 @@ namespace duin {
         return activeCamera;
     }
 
+    /**
+     * @brief Returns camera forward, defined as direction from position to
+     * target.
+     *
+     * @param camera 
+     * @return forward vector3 
+     */
     Vector3 GetCameraForward(Camera *camera)
     {
-        if (camera == nullptr || !camera->IsValid()) { return Vector3(); }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return Vector3(); 
+        }
         return Vector3NormalizeF(Vector3Subtract(camera->target, camera->position));
     }
 
+    /**
+     * @brief Returns camera up, defined
+     *
+     * @param camera 
+     * @return 
+     */
     Vector3 GetCameraUp(Camera *camera)
     {
-        if (camera == nullptr || !camera->IsValid()) { return Vector3(); }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return Vector3(); 
+        }
         return Vector3NormalizeF(camera->up);
     }
 
     Vector3 GetCameraRight(Camera *camera)
     {
-        if (camera == nullptr || !camera->IsValid()) { return Vector3(); }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return Vector3(); 
+        }
         Vector3 forward = Vector3NormalizeF(Vector3Subtract(camera->target, camera->position));
         Vector3 up = Vector3NormalizeF(camera->up);
         return Vector3NormalizeF(Vector3CrossProduct(forward, up));
@@ -68,7 +90,10 @@ namespace duin {
     // Camera movement
     void CameraMoveForward(Camera* camera, float distance)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
         Vector3 forward = GetCameraForward(camera);
         camera->position = Vector3Add(camera->position, Vector3Scale(forward, distance));
         camera->target = Vector3Add(camera->target, Vector3Scale(forward, distance));
@@ -76,7 +101,10 @@ namespace duin {
 
     void CameraMoveUp(Camera* camera, float distance)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
         Vector3 up = GetCameraUp(camera);
         camera->position = Vector3Add(camera->position, Vector3Scale(up, distance));
         camera->target = Vector3Add(camera->target, Vector3Scale(up, distance));
@@ -84,7 +112,10 @@ namespace duin {
 
     void CameraMoveRight(Camera* camera, float distance)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
         Vector3 right = GetCameraRight(camera);
         camera->position = Vector3Add(camera->position, Vector3Scale(right, distance));
         camera->target = Vector3Add(camera->target, Vector3Scale(right, distance));
@@ -92,7 +123,10 @@ namespace duin {
 
     void CameraMoveToTarget(Camera* camera, float delta)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
         Vector3 direction = Vector3Subtract(camera->target, camera->position);
         float distance = Vector3LengthF(direction);
 
@@ -105,7 +139,10 @@ namespace duin {
     // Camera rotation
     void CameraYaw(Camera* camera, float angle, bool rotateAroundTarget)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
         Vector3 forward = GetCameraForward(camera);
         
         if (rotateAroundTarget) {
@@ -130,7 +167,10 @@ namespace duin {
                      bool rotateAroundTarget, 
                      bool rotateUp)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
 
         Vector3 forward = GetCameraForward(camera);
         
@@ -160,7 +200,10 @@ namespace duin {
 
     void CameraRoll(Camera* camera, float angle)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
         Vector3 forward = GetCameraForward(camera);
         Matrix rotation = MatrixRotate(forward, angle);
         camera->up = Vector3Transform(camera->up, rotation);
@@ -206,7 +249,10 @@ namespace duin {
 
     void GetBGFXMatrix(Camera* camera)
     {
-        if (camera == nullptr || !camera->IsValid()) { return; }
+        if (camera == nullptr || !camera->IsValid()) { 
+            DN_CORE_WARN("Camera pointer not valid!");
+            return; 
+        }
 
         int WINDOW_WIDTH = GetWindowWidth();
         int WINDOW_HEIGHT = GetWindowHeight();
