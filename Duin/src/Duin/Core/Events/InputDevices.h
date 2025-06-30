@@ -5,14 +5,13 @@
 
 #include <memory>
 
+#define DN_KEYBOARD_01 duin::GetKeyboard_01()
+#define DN_MOUSE_01 duin::GetMouse_01()
+
+#define DN_KEYBOARD_02 duin::GetKeyboard_02()
+#define DN_MOUSE_02 duin::GetMouse_02()
+
 namespace duin {
-
-#define DN_KEYBOARD_1 GetKeyboard_01()
-#define DN_MOUSE_1 GetMouse_01()
-
-#define DN_KEYBOARD_2 GetKeyboard_02()
-#define DN_MOUSE_2 GetMouse_02()
-
 	std::shared_ptr<InputDevice_Keyboard> GetKeyboard_01();
 	std::shared_ptr<InputDevice_Mouse> GetMouse_01();
 
