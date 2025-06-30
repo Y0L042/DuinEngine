@@ -20,6 +20,8 @@ void EditorCamera::SetupInput()
     duin::AddInputActionBinding("OnEditorCameraMoveRight", DN_KEYBOARD_01, DN_KEY_RIGHT, duin::Input::KeyEvent::HELD);
     duin::AddInputActionBinding("OnEditorCameraMoveForward", DN_KEYBOARD_01, DN_KEY_UP, duin::Input::KeyEvent::HELD);
     duin::AddInputActionBinding("OnEditorCameraMoveBackward", DN_KEYBOARD_01, DN_KEY_DOWN, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_LCTRL, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_RCTRL, duin::Input::KeyEvent::HELD);
 }
 
 void EditorCamera::Draw()
@@ -80,7 +82,7 @@ void EditorCamera::MovePosition(double delta)
 
         float mouseYDelta = duin::Input::GetMouseDelta().y;
         float angleYDelta = mouseYDelta * SENSITIVITY_Y;
-        Pitch(angleYDelta, true);
+        Pitch(-angleYDelta, true);
     }
     else {
         duin::Input::CaptureMouse(false);
@@ -109,14 +111,27 @@ void EditorCamera::MovePosition(double delta)
     float dx = (R - L);
     float dz = (F - B);
 
-    duin::Vector3 right_xz = duin::GetCameraRight(&camera);
-    right_xz.y = 0.0f;
-    duin::Vector3 forward_xz = duin::Vector3Negate(duin::Vector3CrossProduct(duin::Vector3::UP, right_xz));
-    forward_xz.y = 0.0f;
-    duin::Vector3 delta_xz = duin::Vector3Add(duin::Vector3Scale(right_xz, dx), duin::Vector3Scale(forward_xz, dz));
-    delta_xz = duin::Vector3NormalizeF(delta_xz);
-    delta_xz = duin::Vector3Scale(delta_xz, (float)delta * MOVE_SPEED_XZ);
+    if ((std::abs(dx) || std::abs(dz))) {
+        duin::Vector3 delta_xz;
 
-    camera.position = duin::Vector3Add(camera.position, delta_xz);    
-    camera.target = duin::Vector3Add(camera.target, delta_xz);
+        if (duin::IsInputActionTriggered("OnEditorCameraMoveAxisLock")) {
+            delta_xz = duin::Vector3(dx, 0.0f, -dz); // -dz makes UP key move camera forward along -Z
+            delta_xz = duin::Vector3NormalizeF(delta_xz);
+            delta_xz = duin::Vector3Scale(delta_xz, (float)delta * MOVE_SPEED_XZ);
+        }
+        else {
+            duin::Vector3 right_xz = duin::GetCameraRight(&camera);
+            right_xz.y = 0.0f;
+            duin::Vector3 forward_xz = duin::Vector3CrossProduct(duin::Vector3::UP, right_xz);
+            forward_xz.y = 0.0f;
+            delta_xz = duin::Vector3Add(duin::Vector3Scale(right_xz, dx), duin::Vector3Scale(forward_xz, dz));
+            delta_xz = duin::Vector3NormalizeF(delta_xz);
+            delta_xz = duin::Vector3Scale(delta_xz, (float)delta * MOVE_SPEED_XZ);
+        }
+
+        camera.position = duin::Vector3Add(camera.position, delta_xz);
+        camera.target = duin::Vector3Add(camera.target, delta_xz);
+    }
+
+
 }
