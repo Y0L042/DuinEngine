@@ -1,12 +1,25 @@
 #include "EditorCamera.h"
 
 #include <Duin/Render/RenderModule.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 
 EditorCamera::EditorCamera(duin::Vector3 pos, duin::Vector3 target)
 {
-    camera.position = pos;
-    camera.target = target;
+    SetupInput();
+    camera.SetAxis(pos, target, duin::Vector3::UP);
+    camera.position = duin::Vector3(0.0f, 15.0f, 5.0f);
+}
+
+void EditorCamera::SetupInput()
+{
+    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_MOUSE_01, DN_BUTTON_RIGHT, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_KEYBOARD_01, DN_KEY_LALT, duin::Input::KeyEvent::HELD);
+
+    duin::AddInputActionBinding("OnEditorCameraMoveLeft", DN_KEYBOARD_01, DN_KEY_LEFT, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveRight", DN_KEYBOARD_01, DN_KEY_RIGHT, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveForward", DN_KEYBOARD_01, DN_KEY_UP, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveBackward", DN_KEYBOARD_01, DN_KEY_DOWN, duin::Input::KeyEvent::HELD);
 }
 
 void EditorCamera::Draw()
@@ -51,4 +64,59 @@ void EditorCamera::Pitch(float angle, bool aroundTarget)
 void EditorCamera::Roll(float angle)
 {
     duin::CameraRoll(&camera, angle);
+}
+
+void EditorCamera::MovePosition(double delta)
+{
+    const float MOVE_SPEED_XZ = 10.0f;
+    const float SENSITIVITY_X = 1.00f / 180.0f;
+    const float SENSITIVITY_Y = 1.0f / 180.0f;
+
+    if (duin::IsInputActionTriggered("OnEditorCameraOrbit")) {
+        duin::Input::CaptureMouse(true);
+        float mouseXDelta = duin::Input::GetMouseDelta().x;
+        float angleXDelta = mouseXDelta * SENSITIVITY_X;
+        Yaw(angleXDelta, true);
+
+        float mouseYDelta = duin::Input::GetMouseDelta().y;
+        float angleYDelta = mouseYDelta * SENSITIVITY_Y;
+        Pitch(angleYDelta, true);
+    }
+    else {
+        duin::Input::CaptureMouse(false);
+    }
+
+
+
+    int L = 0;
+    int R = 0;
+    int F = 0;
+    int B = 0;
+
+    duin::OnInputActionTriggered("OnEditorCameraMoveLeft", [&L]() {
+        L = 1;
+    });
+    duin::OnInputActionTriggered("OnEditorCameraMoveRight", [&R]() {
+        R = 1;
+    });
+    duin::OnInputActionTriggered("OnEditorCameraMoveForward", [&F]() {
+        F = 1;
+    });
+    duin::OnInputActionTriggered("OnEditorCameraMoveBackward", [&B]() {
+        B = 1;
+    });
+
+    float dx = (R - L);
+    float dz = (F - B);
+
+    duin::Vector3 right_xz = duin::GetCameraRight(&camera);
+    right_xz.y = 0.0f;
+    duin::Vector3 forward_xz = duin::Vector3Negate(duin::Vector3CrossProduct(duin::Vector3::UP, right_xz));
+    forward_xz.y = 0.0f;
+    duin::Vector3 delta_xz = duin::Vector3Add(duin::Vector3Scale(right_xz, dx), duin::Vector3Scale(forward_xz, dz));
+    delta_xz = duin::Vector3NormalizeF(delta_xz);
+    delta_xz = duin::Vector3Scale(delta_xz, (float)delta * MOVE_SPEED_XZ);
+
+    camera.position = duin::Vector3Add(camera.position, delta_xz);    
+    camera.target = duin::Vector3Add(camera.target, delta_xz);
 }

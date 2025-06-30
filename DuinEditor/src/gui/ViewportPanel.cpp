@@ -91,7 +91,7 @@ void ViewportPanel::SimulatePhysics(double delta)
 {
     if (!isFocussed) return;
 
-    MoveMainCamera();
+    MoveMainCamera(delta);
 }
 
 void ViewportPanel::Render()
@@ -107,6 +107,10 @@ void ViewportPanel::Render()
     duin::ClearBackground(duin::GRAY);
 
     duin::DrawGrid(100.0f);
+    duin::DrawDebugSphere({ 15, 0, 0 }, 1);
+    duin::DrawDebugSphere({ 0, 15, 0 }, 2);
+    duin::DrawDebugSphere({ 0, 0, 15 }, 4);
+
     mainCamera.Draw();
 
     duin::EndTextureMode();
@@ -139,23 +143,7 @@ void ViewportPanel::CreateRenderTexture()
     target = duin::RenderTexture(duin::GetWindowWidth(), duin::GetWindowHeight(), 0);
 }
 
-void ViewportPanel::MoveMainCamera()
+void ViewportPanel::MoveMainCamera(double delta)
 {
-    const float sensitivityX = 1.00f / 180.0f;
-    const float sensitivityY = 1.0f / 180.0f;
-
-    //if (duin::Input::IsMouseButtonDown(DN_BUTTON_RIGHT)) {
-    if (duin::IsInputActionTriggered("OnEditorCameraOrbit")) {
-        duin::Input::CaptureMouse(true);
-        float mouseXDelta = duin::Input::GetMouseDelta().x;
-        //float mouseXDelta = 3.14f;
-        float angleXDelta = mouseXDelta * sensitivityX;
-        mainCamera.Yaw(angleXDelta, true);
-
-         float mouseYDelta = duin::Input::GetMouseDelta().y;
-         float angleYDelta = mouseYDelta * sensitivityY;
-         mainCamera.Pitch(-angleYDelta, true);
-    } else {
-        duin::Input::CaptureMouse(false);
-    }
+    mainCamera.MovePosition(delta);
 }

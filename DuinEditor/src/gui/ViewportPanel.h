@@ -44,5 +44,5 @@ class ViewportPanel : public Panel
         void ConnectToGameEditorSignals();
         void DisconnectFromGameEditorSignals();
         void CreateRenderTexture();
-        void MoveMainCamera();
+        void MoveMainCamera(double delta);
 };
