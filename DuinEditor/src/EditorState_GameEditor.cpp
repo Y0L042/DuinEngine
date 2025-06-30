@@ -52,10 +52,7 @@ void EditorState_GameEditor::Enter()
         tabBrowser.Init();
     }
 
-    static std::shared_ptr<duin::InputDevice_Keyboard> keyboardInput = std::make_shared<duin::InputDevice_Keyboard>();
-    static std::shared_ptr<duin::InputDevice_Mouse> mouseInput = std::make_shared<duin::InputDevice_Mouse>();
-    duin::AddInputActionBinding("OnEditorCameraOrbit", mouseInput, DN_BUTTON_RIGHT, duin::Input::KeyEvent::HELD);
-    duin::AddInputActionBinding("OnEditorCameraOrbit", keyboardInput, DN_KEY_LALT, duin::Input::KeyEvent::HELD);
+
 }
 
 void EditorState_GameEditor::OnEvent(duin::Event e)

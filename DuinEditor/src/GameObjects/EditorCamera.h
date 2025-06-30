@@ -9,7 +9,7 @@ class EditorCamera : public duin::GameObject
     public:
         duin::Camera camera;
 
-        EditorCamera(duin::Vector3 pos = { 0.0f, -5.0f, 5.0f }, duin::Vector3 target = { 0.0f, 0.0f, 0.0f });
+        EditorCamera(duin::Vector3 pos = { 0.0f, 5.0f, 5.0f }, duin::Vector3 target = { 0.0f, 0.0f, 0.0f });
 
         void Draw() override;
 
@@ -21,7 +21,10 @@ class EditorCamera : public duin::GameObject
         void Pitch(float angle, bool aroundTarget);
         void Roll(float angle);
 
+        void MovePosition(double delta);
+
         void PhysicsUpdate(double delta) override;
 
     private:
+        void SetupInput();
 };
