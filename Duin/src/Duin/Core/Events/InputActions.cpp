@@ -90,3 +90,19 @@ bool duin::IsInputActionTriggered(const std::string& actionName)
 
 	return false;
 }
+
+void duin::OnInputActionTriggered(const std::string& actionName, std::function<void(void)> callback)
+{
+    if (inputActionMap.find(actionName) == inputActionMap.end()) {
+        DN_CORE_WARN("InputAction {} not found!", actionName);
+        return;
+    }
+
+    auto& action = inputActionMap[actionName];
+    for (auto& binding : action.inputBindings) {
+        if (binding.Triggered()) {
+            callback();
+            return;
+        }
+    }
+}
