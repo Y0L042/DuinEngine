@@ -13,15 +13,17 @@ EditorCamera::EditorCamera(duin::Vector3 pos, duin::Vector3 target)
 
 void EditorCamera::SetupInput()
 {
-    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_MOUSE_01, DN_BUTTON_RIGHT, duin::Input::KeyEvent::HELD);
-    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_KEYBOARD_01, DN_KEY_LALT, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_MOUSE_01, DN_MOUSE_BUTTON_RIGHT, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_KEYBOARD_01, DN_KEY_LALT, DN_KEVENT_HELD);
 
-    duin::AddInputActionBinding("OnEditorCameraMoveLeft", DN_KEYBOARD_01, DN_KEY_LEFT, duin::Input::KeyEvent::HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveRight", DN_KEYBOARD_01, DN_KEY_RIGHT, duin::Input::KeyEvent::HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveForward", DN_KEYBOARD_01, DN_KEY_UP, duin::Input::KeyEvent::HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveBackward", DN_KEYBOARD_01, DN_KEY_DOWN, duin::Input::KeyEvent::HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_LCTRL, duin::Input::KeyEvent::HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_RCTRL, duin::Input::KeyEvent::HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveLeft", DN_KEYBOARD_01, DN_KEY_LEFT, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveRight", DN_KEYBOARD_01, DN_KEY_RIGHT, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveForward", DN_KEYBOARD_01, DN_KEY_UP, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveBackward", DN_KEYBOARD_01, DN_KEY_DOWN, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_LCTRL, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_RCTRL, DN_KEVENT_HELD);
+
+    duin::AddInputActionBinding("OnEditorCameraZoom", DN_MOUSE_01, DN_MOUSE_WHEEL, DN_KEVENT_PRESSED);
 }
 
 void EditorCamera::Draw()
@@ -133,5 +135,6 @@ void EditorCamera::MovePosition(double delta)
         camera.target = duin::Vector3Add(camera.target, delta_xz);
     }
 
-
+    //duin::Vector2 mouseWheel;
+    //duin::GetInputActionTriggeredValue<duin::Vector2>(mouseWheel);
 }
