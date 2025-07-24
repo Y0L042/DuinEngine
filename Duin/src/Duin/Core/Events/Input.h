@@ -4,6 +4,12 @@
 
 #include "Keys.h"
 
+#define DN_KEVENT_PRESSED           duin::Input::KeyEvent::PRESSED
+#define DN_KEVENT_PRESSED_REPEATED  duin::Input::KeyEvent::PRESSED_REPEATED
+#define DN_KEVENT_HELD              duin::Input::KeyEvent::HELD
+#define DN_KEVENT_RELEASED          duin::Input::KeyEvent::RELEASED
+#define DN_KEVENT_IDLE              duin::Input::KeyEvent::IDLE
+
 namespace duin {
     struct Vector2;
 }

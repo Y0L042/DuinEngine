@@ -67,4 +67,6 @@ namespace duin {
 
     bool IsInputActionTriggered(const std::string& actionName);
     void OnInputActionTriggered(const std::string& actionName, std::function<void(void)> callback);
+
+    
 }
