@@ -5,6 +5,8 @@
 
 #include <Duin.h>
 
+#include <Duin/ECS/SceneBuilder.h>
+
 flecs::entity player;
 flecs::entity cameraRoot;
 flecs::entity playerCamera;
@@ -71,6 +73,11 @@ void Player::Ready()
 
 	//cameraRef = flecs::ref<duin::Camera>(ecs.world, playerCamera);
 	//duin::Camera* cam = cameraRef.get();
+
+    std::string scene;
+    duin::SceneBuilder::WriteScene(scene, ecs);
+
+    DN_INFO("Hello!");
 
     playerStateMachine.SwitchState<State_OnGround>();
 }
