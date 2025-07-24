@@ -85,3 +85,4 @@ nuget.config
 /stash_changes.diff
 *.rdc
 /ExampleProjects/DuinFPS/imgui.ini
+/ExampleProjects/DuinFPS/logs
