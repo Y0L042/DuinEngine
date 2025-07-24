@@ -3,6 +3,7 @@
 
 #include "Duin/Core/Core.h"
 #include <spdlog/spdlog.h>
+#include <vector>
 
 namespace duin
 {
