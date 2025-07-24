@@ -37,7 +37,7 @@ void State_OnGround::Update(double delta)
 
 void State_OnGround::PhysicsUpdate(double delta)
 {
-    const CharacterBodyComponent *cbc = player.get<CharacterBodyComponent>(); 
+    const CharacterBodyComponent *cbc = player.try_get<CharacterBodyComponent>();
     if (cbc) {
         int isOnFloor = cbc->body->IsOnFloor();
         if (!isOnFloor) {
