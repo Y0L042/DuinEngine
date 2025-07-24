@@ -65,6 +65,10 @@ namespace duin {
             static void WriteToFile(const std::string& filePath);
             */
 
+            /**
+             * @brief DataValue constructors.
+             * !TODO These currently do not work properly, and requires the user to correctly cast the parameter
+             */
             DataValue();
             DataValue(bool b);
             DataValue(int x);
@@ -73,11 +77,15 @@ namespace duin {
 
             ~DataValue() = default;
 
+            /* Returns underlying rapidjson reference*/
             rapidjson::Value& GetRJSONValue() { return *jvalue_; }
 
+            /* Write the DataValue to a string */
             std::string Write() const;
+            /* Createa deep copy of the DataValue and the underlying rjson document */
             DataValue Clone() const;
 
+            /* Tests if the DataValue is valid, with valid underlying data */
             bool IsReadValid() const;
             bool HasMember(const std::string& member) const;
             DataValue& AddMember(const std::string& key, DataValue dv, bool allowDuplicates = false);
@@ -95,21 +103,25 @@ namespace duin {
             bool IsDouble() const;
             double GetDouble() const;
 
+            /* Array-related methods */
             bool IsArray() const;
             // TODO GetArray();
             bool Empty() const;
+            /* Adds a shallow copy of dv to DataValue (of array type). Only push back after dv is initialised. */
+            DataValue& PushBack(DataValue dv);
             size_t Capacity() const;
             ConstDataIterator Begin();
             ConstDataIterator End();
             ConstDataIterator FindMember(const std::string& member) const;
 
-
+            /* Sets the type of the data the DataValue is storing */
             DataValue SetObject();
             DataValue SetInt(int x);
             DataValue SetString(const std::string& text);
             DataValue SetDouble(double x);
             DataValue SetBool(bool b);
             DataValue SetArray();
+
 
             template <typename T>
             DataValue& AddMember(const std::string& key, T val, bool allowDuplicates = false) // Add Key:Value member to object
@@ -151,6 +163,7 @@ namespace duin {
                 return *this;
             }
 
+            /* Adds data to array-type DataValue */
             template <typename T>
             DataValue PushBack(T val)
             {
@@ -165,7 +178,6 @@ namespace duin {
                 return DataValue();
             }
 
-            DataValue& PushBack(DataValue dv);
 
 
             DataValue operator[](const std::string& member);
