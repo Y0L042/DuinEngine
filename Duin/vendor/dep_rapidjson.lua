@@ -13,14 +13,14 @@ function dep_rapidjson.build()
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. tag .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout tag/" .. tag .. "")
     else
         print("\t\tFetch")
         local currentDir = os.getcwd()
         utils.changeDir(folder)
 
         utils.runCommand("git stash")
-        utils.runCommand("git checkout " .. tag .. "")
+        utils.runCommand("git checkout tag/" .. tag .. "")
 
         utils.popDir()
     end

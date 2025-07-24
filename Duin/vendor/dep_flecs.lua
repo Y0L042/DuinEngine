@@ -3,7 +3,7 @@ local dep_flecs = {}
 local name = "FLECS"
 
 local repo = "https://github.com/SanderMertens/flecs"
-local tag = "v4.0.5"
+local commit = "2c373c3"
 local folder = "flecs"
 
 function dep_flecs.build()
@@ -13,13 +13,14 @@ function dep_flecs.build()
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. tag .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout " .. commit .. "")
     else
         print("\t\tFetch")
         utils.changeDir(folder)
 
         utils.runCommand("git stash")
-        utils.runCommand("git checkout " .. tag .. "")
+        utils.runCommand("git pull")
+        utils.runCommand("git checkout " .. commit .. "")
 
         utils.popDir()
     end
