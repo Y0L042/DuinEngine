@@ -25,6 +25,7 @@ namespace duin::Input {
     //    IDLE
     //};
 
+    // TODO move these to device struct, to allow multiple input devices
     static const int MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;
     static KeyState previousKeyState[MAX_KEYS]; 
     static KeyState currentKeyState[MAX_KEYS]; 
@@ -36,6 +37,7 @@ namespace duin::Input {
     static Vector2 previousMouseLocalPos;
     static Vector2 currentMouseLocalPos;
     static Vector2 mouseFrameDelta;
+    static Vector2 mouseScrollDelta;
 
     void CacheCurrentKeyState()
     {
@@ -59,6 +61,10 @@ namespace duin::Input {
         memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
     }
 
+    /**
+     * @brief Test the SDL event to see if it is a keyboard event, then process the event. This function is called from Application.Run().
+     * @param e
+     */
     void ProcessSDLKeyboardEvent(::SDL_Event e)
     {
         if (!EVENT_IS_KEYBOARD(e.type)) { return; }
@@ -112,7 +118,7 @@ namespace duin::Input {
 
     int IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
     {
-        return IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right);
+        return (IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right));
     }
 
     Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
@@ -127,6 +133,10 @@ namespace duin::Input {
 		return 0;
 	}
 
+    /**
+     * @brief Test the SDL event to see if it is a mouse event, then process the event. This function is called from Application.Run().
+     * @param e 
+     */
     void ProcessSDLMouseEvent(::SDL_Event e)
     {
         previousMouseLocalPos = currentMouseLocalPos;
@@ -147,6 +157,13 @@ namespace duin::Input {
             state = KeyState::UP;
             DN_MouseButtonFlags btnIdx = e.button.button - 1;
             currentMouseKeyState[btnIdx] = state;
+        }
+
+        mouseScrollDelta = Vector2();
+        if (e.type == SDL_EVENT_MOUSE_WHEEL) {
+            DN_CORE_INFO("MOUSE_WHEEL {} {}", e.wheel.x, e.wheel.y);
+            mouseScrollDelta.x = e.wheel.x;
+            mouseScrollDelta.y = e.wheel.y;
         }
     }
 
@@ -220,12 +237,13 @@ namespace duin::Input {
         
     float GetMouseWheelMove(void)
 	{
-        return 0.0f;
+
+        return mouseScrollDelta.y;
 	}
                          
     Vector2 GetMouseWheelMoveV(void)
 	{
-        return Vector2();
+        return mouseScrollDelta;
 	}
                       
     void SetMouseCursor(int cursor)
