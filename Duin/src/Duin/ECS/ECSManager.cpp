@@ -194,7 +194,7 @@ namespace ECSObserver {
                           if (globalObserver.is_valid()) {
                               globalObserver.disable();
                               // DN_CORE_INFO("syncinc global");
-                              Vector3 gPos = it.entity(i).get<ECSComponent::Position3D, ECSTag::Global>()->value;
+                              Vector3 gPos = it.entity(i).try_get<ECSComponent::Position3D, ECSTag::Global>()->value;
                               it.entity(i).set<ECSComponent::Position3D, ECSTag::Global>({{0.0f, 0.0f, 0.0f}});
                               globalObserver.enable();
                           }
