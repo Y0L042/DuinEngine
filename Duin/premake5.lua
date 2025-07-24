@@ -148,5 +148,5 @@ project "Duin"
 
 if _OPTIONS["deps"] then
     local vendorDeps = require "dependencies"
-    vendorDeps.processAllDependencies()
+    vendorDeps.processDependencies()
 end
