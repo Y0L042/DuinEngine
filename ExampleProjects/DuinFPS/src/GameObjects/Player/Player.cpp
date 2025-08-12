@@ -76,8 +76,15 @@ void Player::Ready()
 
     std::string scene;
     duin::SceneBuilder::WriteScene(scene, ecs);
+    DN_INFO("Scene:\n{}", scene);
 
-    DN_INFO("Hello!");
+    std::string plrjson;
+    duin::SceneBuilder::WriteEntity(plrjson, player);
+    DN_INFO("Plr:\n{}", plrjson);
+
+    std::string plrrecjson;
+    duin::SceneBuilder::WriteEntity(plrrecjson, player, true);
+    DN_INFO("Plr Recursive:\n{}", plrrecjson);
 
     playerStateMachine.SwitchState<State_OnGround>();
 }
