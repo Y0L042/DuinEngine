@@ -13,9 +13,9 @@ namespace duin {
             static void ReadScene(const std::string& string, ECSManager& ecs);          // Read world from json string
             static void WriteScene(std::string& file, ECSManager& ecs);                 // Write world to json string
             static flecs::entity ReadEntity(const std::string& file, ECSManager& ecs);  // Read entity from json string
-            static void WriteEntity(std::string& file, flecs::entity entity);           // Write entity to json string
+            static void WriteEntity(std::string& file, flecs::entity entity, bool recursive = false);           // Write entity to json string
 
         private:
-            static void RecursiveWriter(flecs::entity e, DataValue& entityData);
+            static void RecursiveWriter(flecs::entity e, std::string& file);
     };
 }
