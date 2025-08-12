@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PanelList.h"
+
 #include "TabBlackboard.h"
 
 #include <string>
@@ -31,12 +33,6 @@ struct PanelEvent {
 class Panel
 {
     public:
-        enum PanelType {
-            INVALID = 0,
-            DEFAULT,
-            VIEWPORT
-        };
-
         PanelType type = PanelType::INVALID;
         bool queuedForDeletion = false;
         std::shared_ptr<TabBlackboard> blackboard = nullptr;
@@ -53,7 +49,6 @@ class Panel
         virtual ~Panel() = default;
 
         void SetBlackboard(std::shared_ptr<TabBlackboard> b);
-
 
         virtual void SetupMenuBar();    // Can be overridden to customize menu
         virtual void DrawContent() = 0; // Pure virtual - must be implemented by derived classes

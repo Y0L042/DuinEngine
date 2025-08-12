@@ -3,6 +3,7 @@
 #include "Panel.h"
 #include "DefaultPanel.h"
 #include "ViewportPanel.h"
+#include "SceneTreePanel.h"
 
 #include <memory>
 
@@ -11,7 +12,7 @@ class PanelFactory
 {
 public:
 	template<typename... Args>
-	static std::shared_ptr<Panel> CreatePanel(Panel::PanelType type, Args... args)
+	static std::shared_ptr<Panel> CreatePanel(PanelType type, Args... args)
 	{
         std::shared_ptr<Panel> ptr;
 
@@ -21,6 +22,9 @@ public:
             break;
         case Panel::DEFAULT:
             ptr = std::make_shared<DefaultPanel>(std::forward<Args>(args)...);
+            break;
+        case Panel::SCENETREE:
+            ptr = std::make_shared<SceneTreePanel>(std::forward<Args>(args)...);
             break;
         case Panel::VIEWPORT:
             ptr = std::make_shared<ViewportPanel>(std::forward<Args>(args)...);

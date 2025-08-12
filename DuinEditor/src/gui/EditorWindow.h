@@ -30,8 +30,6 @@ public:
     void AddTab(duin::DataValue data);
     void CloseTab(int index);
 
-
-
 private:
     duin::UUID uuid;
     std::vector<std::shared_ptr<Tab>> tabs;
