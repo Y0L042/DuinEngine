@@ -86,3 +86,6 @@ nuget.config
 *.rdc
 /ExampleProjects/DuinFPS/imgui.ini
 /ExampleProjects/DuinFPS/logs
+/DuinEditor/logs
+/ExampleProjects/DuinFPS/duin.project
+/Duin/docs/TODO.md

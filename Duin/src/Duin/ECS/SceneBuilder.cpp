@@ -21,30 +21,11 @@
  */
 void duin::SceneBuilder::ReadScene(const std::string& file, ECSManager& ecs)
 {
-    //DataValue root(file);
-
-    //flecs::entity e_root = ecs.world.entity();
-    //e_root.is_a(ecs.world.lookup("TYPE"));
-    
     ecs.world.from_json(file.c_str());
 }
 
 void duin::SceneBuilder::WriteScene(std::string& file, ECSManager& ecs)
 {
-    //DataValue sceneTree;
-    //DataValue children;
-    //children.SetArray();
-
-    ///* Loop through each entity in world root */
-    //ecs.world.children([&](flecs::entity e) {
-    //    DataValue childData;
-    //    RecursiveWriter(e, childData);
-    //    children.PushBack(childData);
-    //    });
-    //sceneTree.AddMember("Children", children);
-
-    //file = DataValue::Write(sceneTree, true);
-
     file = ecs.world.to_json();
 
     const char* json = file.c_str();
@@ -66,49 +47,40 @@ flecs::entity duin::SceneBuilder::ReadEntity(const std::string& file, ECSManager
     return e;
 }
 
-void duin::SceneBuilder::WriteEntity(std::string& file, flecs::entity entity)
+void duin::SceneBuilder::WriteEntity(std::string& file, flecs::entity entity, bool recursive)
 {
-    //DataValue tree;
-    //DataValue children;
+    if (recursive) {
+        RecursiveWriter(entity, file);
+    }
+    else {
+        file = entity.to_json();
 
-    ///* Loop through root entity's children */
-    //children.SetArray();
-    //entity.children([&](flecs::entity e) {
-    //    DataValue childData;
-    //    RecursiveWriter(e, childData);
-    //    children.PushBack(childData);
-    //    });
-    //tree.AddMember("Children", children);
+        const char* json = file.c_str();
+        rapidjson::Document d;
+        d.Parse(json);
 
-    //file = DataValue::Write(tree, true);
+        rapidjson::StringBuffer buffer;
+        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+        d.Accept(writer);
 
-    file = entity.to_json();
+        file = buffer.GetString();
+    }
+}
 
-    const char* json = file.c_str();
+void duin::SceneBuilder::RecursiveWriter(flecs::entity entity, std::string& file)
+{
+    std::string json = static_cast<std::string>(entity.to_json());
     rapidjson::Document d;
-    d.Parse(json);
+    d.Parse(json.c_str());
 
     rapidjson::StringBuffer buffer;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
     d.Accept(writer);
 
-    file = buffer.GetString();
-}
+    file = file + buffer.GetString();
 
-void duin::SceneBuilder::RecursiveWriter(flecs::entity entity, DataValue& entityData)
-{
-    // Serialise entity
-    DataValue ecsID((int)entity);
-    DataValue children;
-
-    entityData.AddMember("ECS_ID", ecsID);
-
-    // Loop through children
-    children.SetArray();
     entity.children([&](flecs::entity e) {
-        DataValue childData;
-        RecursiveWriter(e, childData);
-        children.PushBack(childData);
+        file = file + ",";
+        RecursiveWriter(e, file);
         }); 
-    entityData.AddMember("Children", children);
 }
