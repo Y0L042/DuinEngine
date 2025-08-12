@@ -38,17 +38,6 @@ class Tab
 
         void ProcessBlackboard();
 
-
-        //bool operator==(Tab& o)
-        //{
-        //    return !this->title.compare(o.title);
-        //}
-
-        //bool operator!=(Tab& o)
-        //{
-        //    return this->title.compare(o.title);
-        //}
-
         duin::UUID GetUUID();
 
         duin::DataValue Serialise();

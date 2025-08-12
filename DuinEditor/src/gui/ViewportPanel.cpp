@@ -10,7 +10,7 @@
 ViewportPanel::ViewportPanel(const std::string& name, PanelManager *panelManager)
     : Panel(name, panelManager)
 {
-    type = Panel::VIEWPORT;
+    type = PanelType::VIEWPORT;
     Init();
 }
 
@@ -50,7 +50,7 @@ void ViewportPanel::DrawContent()
     if (!isTabOpen) return;
 
     // ImGui::GetCurrentWindow()->TitleBarHeight()
-    ImGui::Text("This is my custom window content!");
+    ImGui::Text("This is my custom Viewport window content!");
 
     ::ImVec2 avail = ImGui::GetWindowSize();
     windowX = avail.x;

@@ -32,7 +32,7 @@ duin::DataValue PanelManager::Serialise()
 
     int i = 0;
     for (const auto & [ uuid, panelPtr ] : panels) {
-        if (panelPtr->type != Panel::INVALID) {
+        if (panelPtr->type != PanelType::INVALID) {
             panelsArray.PushBack(panelPtr->Serialise());
         }
         ++i;
@@ -58,8 +58,27 @@ void PanelManager::Deserialise(duin::DataValue data)
     for (auto item : panelsArray) {
         if (!item.HasMember(guitag::PANEL_TYPE)) continue;
         std::string typeStr = item[guitag::PANEL_TYPE].GetString();
-        Panel::PanelType type = (Panel::PanelType)std::stoi(typeStr.c_str());
+        PanelType type = (PanelType)std::stoi(typeStr.c_str());
         CreatePanel(type, item);
+    }
+}
+
+void PanelManager::DrawPanelMenu()
+{
+    static int counter = 0;
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("Add Panel")) {
+            if (ImGui::MenuItem("Add SceneTree Panel")) {
+                const std::string panelName = "SceneTree_Panel_" + std::to_string(++counter);
+                CreatePanel(PanelType::SCENETREE, panelName, this);
+            }
+            if (ImGui::MenuItem("Add Viewport Panel")) {
+                const std::string panelName = "Viewport_Panel_" + std::to_string(++counter);
+                CreatePanel(PanelType::VIEWPORT, panelName, this);
+            }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
     }
 }
 
@@ -74,7 +93,7 @@ void PanelManager::DrawPanels()
 {
     ErasePanels();
 
-    for (const auto & [ uuid, panelPtr ] : panels) {
+    for (const auto& [ uuid, panelPtr ] : panels) {
         panelPtr->Draw();
     }
 }

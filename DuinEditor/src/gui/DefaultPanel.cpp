@@ -4,7 +4,7 @@
 DefaultPanel::DefaultPanel(const std::string& name, PanelManager *panelManager)
     : Panel(name, panelManager)
 {
-    type = Panel::DEFAULT;
+    type = PanelType::DEFAULT;
 }
 
 DefaultPanel::DefaultPanel(duin::DataValue value)
