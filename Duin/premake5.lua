@@ -147,6 +147,18 @@ project "Duin"
     -- include "vendor"
 
 if _OPTIONS["deps"] then
-    local vendorDeps = require "dependencies"
-    vendorDeps.processDependencies()
+    local answer
+    repeat
+       io.write("This will fetch and rebuild all dependencies, and may take a long time. \n")
+       io.write("Continue with this operation (yes/n)? ")
+       io.flush()
+       answer=io.read()
+    until answer=="yes" or answer=="n"
+    if answer == "yes" then
+        print("Operation continued.")
+        local vendorDeps = require "dependencies"
+        vendorDeps.processDependencies()
+    elseif answer == "n" then
+        print("Operation aborted.")
+    end
 end
