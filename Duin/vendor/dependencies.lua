@@ -16,6 +16,7 @@ local dep_toml11 = require "dep_toml11"
 local dep_imgui = require "dep_imgui"
 local dep_rapidjson = require "dep_rapidjson"
 local dep_flecs = require "dep_flecs"
+local dep_doctest = require "dep_doctest"
 
 local dependencies = {
     SDL3 = dep_sdl3.build,
@@ -28,7 +29,8 @@ local dependencies = {
     TOML11 = dep_toml11.build,
     IMGUI = dep_imgui.build,
     RAPIDJSON = dep_rapidjson.build,
-    FLECS = dep_flecs.build
+    FLECS = dep_flecs.build,
+    DOCTEST = dep_doctest.build
 }
 
 

@@ -23,7 +23,18 @@ function utils.printCurrentDir()
     print(utils.colors.yellow .. "Current dir: " ..  utils.colors.green .. current_dir .. utils.colors.reset)                      
 end
 
+function utils.print(message)
+    print(message)
+end
+
+-- Depreciate, use pushDir for concistency
 function utils.changeDir(newDir)
+    utils.prevDir = os.getcwd()
+    os.chdir(newDir)
+    print(utils.colors.yellow .. "Changed dir to " ..  utils.colors.green .. newDir .. utils.colors.reset)
+end
+
+function utils.pushDir(newDir)
     utils.prevDir = os.getcwd()
     os.chdir(newDir)
     print(utils.colors.yellow .. "Changed dir to " ..  utils.colors.green .. newDir .. utils.colors.reset)
@@ -34,6 +45,10 @@ function utils.popDir()
         os.chdir(utils.prevDir)
         print(utils.colors.yellow .. "Popped dir to " ..  utils.colors.green .. utils.prevDir .. utils.colors.reset)
     end
+end
+
+function utils.isDir(folder)
+    return os.isdir(folder)
 end
 
 function utils.fileExists(path)
