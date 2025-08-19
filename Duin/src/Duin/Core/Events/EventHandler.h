@@ -15,10 +15,13 @@ namespace duin {
             EventHandler();
             ~EventHandler();
 
+            bool IsCloseRequested();
+
 
             void RegisterInputEventListener(std::function<void(Event)> listener);
 
         private:
+            int closeRequested;
             std::vector<std::function<void(Event)>> inputEventListeners;
 
             void CallInputEventListeners(Event event);

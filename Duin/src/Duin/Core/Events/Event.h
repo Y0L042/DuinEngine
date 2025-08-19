@@ -31,4 +31,13 @@ namespace duin {
         private:
 
     };
+
+    class WindowEvent : public Event
+    {
+    public:
+        WindowEvent() = default;
+        ~WindowEvent() = default;
+
+    private:
+    };
 }
