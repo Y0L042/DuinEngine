@@ -18,8 +18,19 @@ namespace duin {
                 return instance;
             }
 
-            EventHandler::EventHandler() {}
+            EventHandler::EventHandler() 
+            {
+                closeRequested = 0;
+            }
+
             EventHandler::~EventHandler() {}
+
+            bool EventHandler::IsCloseRequested()
+            {
+                bool res = closeRequested;
+                closeRequested = 0;
+                return res;
+            }
 
             void EventHandler::GetPolledEvent(::SDL_Event e)
             {
@@ -28,6 +39,10 @@ namespace duin {
                     InputEvent event;
                     event.SetSDLEvent(e);
                     instance.CallInputEventListeners(event);
+                }
+
+                if (e.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED) {
+                    Get().closeRequested = 1;
                 }
             }
 

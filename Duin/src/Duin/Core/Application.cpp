@@ -447,6 +447,7 @@ namespace duin {
             Input::CacheCurrentKeyState();
             Input::CacheCurrentMouseKeyState();
             Input::UpdateMouseFrameDelta();
+            gameShouldQuit = EventHandler::Get().IsCloseRequested();
 
             EngineUpdate(deltaTime);
             Update(deltaTime);
