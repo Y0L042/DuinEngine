@@ -1,73 +1,83 @@
 #pragma once
 
 #include <cstdint>
-#include <cmath>
-
-#define LIMITRANGE(x) ((int)fmin((int)x, 255))
-#define NORMTOCOLOR(x) (int)(x * 255.0f)
-#define COLORTONORM(x) ((float)x / 255.0f)
+#include <array>
+#include <algorithm>
 
 namespace duin {
-    struct Color {
-        struct NormalizedColor { float r, b, g, a = 1.0f; };
-        uint8_t r, g, b, a;
 
-        Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
-            : r(r), g(g), b(b), a(a) {}
+    struct Color
+    {
+        float r, g, b, a;
 
-        Color(int r, int g, int b, int a)
-            : r(LIMITRANGE(r)), g(LIMITRANGE(g)), b(LIMITRANGE(b)), a(LIMITRANGE(a))
+        // From normalized floats [0,1]
+        Color(float _r, float _g, float _b, float _a = 1.0f)
+          : r{_r}, g{_g}, b{_b}, a{_a}
         {}
 
-        Color(float r, float g, float b, float a)
-            : r(NORMTOCOLOR(r)), g(NORMTOCOLOR(g)), b(NORMTOCOLOR(b)), a(NORMTOCOLOR(a))
+        // From 0–255 ints
+        Color(int _r, int _g, int _b, int _a = 255)
+          : r{_r / 255.0f}
+          , g{_g / 255.0f}
+          , b{_b / 255.0f}
+          , a{_a / 255.0f}
         {}
 
-
-        /**
-         * @brief Gets color compatible with BGFX
-         *
-         * @return uint32_t abgr
-         */
-        uint32_t GetReverseColorInt()
+        // From hex 0xRRGGBB or 0xRRGGBBAA
+        Color(uint32_t hex)
         {
-            return (((uint32_t)a << 24) |
-                    ((uint32_t)b << 16) |
-                    ((uint32_t)g << 8) |
-                     (uint32_t)r);
+            if (hex > 0xFFFFFFu)
+            {
+                // AARRGGBB in memory, but hex literal is 0xRRGGBBAA
+                r = ((hex >> 24) & 0xFF) / 255.0f;
+                g = ((hex >> 16) & 0xFF) / 255.0f;
+                b = ((hex >>  8) & 0xFF) / 255.0f;
+                a = ((hex >>  0) & 0xFF) / 255.0f;
+            }
+            else
+            {
+                r = ((hex >> 16) & 0xFF) / 255.0f;
+                g = ((hex >>  8) & 0xFF) / 255.0f;
+                b = ((hex >>  0) & 0xFF) / 255.0f;
+                a = 1.0f;
+            }
         }
 
-        NormalizedColor ColorToNorm()
+        /// As 4-element array of floats [0,1], in RGBA order
+        std::array<float,4> ToFloatArray() const
         {
-            return { COLORTONORM(r), COLORTONORM(g), COLORTONORM(b), COLORTONORM(a) };
+            return { r, g, b, a };
+        }
+
+        /// As 0–255 bytes in RGBA order
+        std::array<uint8_t,4> ToByteArray() const
+        {
+            auto clamp = [](float x){
+                return uint8_t(std::clamp(x * 255.0f, 0.0f, 255.0f));
+            };
+            return { clamp(r), clamp(g), clamp(b), clamp(a) };
+        }
+
+        /// Packed ABGR as BGFX expects for clear color, etc:
+        ///   [ byte 0 = A ] [ B ] [ G ] [ R ] (big-endian word: 0xAABBGGRR)
+        uint32_t PackedABGR() const
+        {
+            auto bytes = ToByteArray();
+            // bytes = { R, G, B, A }
+            return  (uint32_t(bytes[3]) << 24)
+                  | (uint32_t(bytes[2]) << 16)
+                  | (uint32_t(bytes[1]) <<  8)
+                  |  uint32_t(bytes[0]);
         }
     };
 
-    const Color COLOR_BLACK     = Color(0,   0,   0,   255);    // Black
-    const Color COLOR_GREY      = Color(122, 122, 122, 255);    // Grey
-    const Color COLOR_WHITE     = Color(255, 255, 255, 255);    // White
-    const Color COLOR_RED       = Color(255, 0,   0,   255);    // Red
-    const Color COLOR_GREEN     = Color(0,   128, 0,   255);    // Forest Green
-    const Color COLOR_LIME      = Color(0,   255, 0,   255);    // Lime (Bright Green)
-    const Color COLOR_BLUE      = Color(0,   0,   255, 255);    // Blue
-    const Color COLOR_YELLOW    = Color(255, 255, 0,   255);    // Yellow
-    const Color COLOR_CYAN      = Color(0,   255, 255, 255);    // Cyan
-    const Color COLOR_MAGENTA   = Color(255, 0,   255, 255);    // Magenta
-    const Color COLOR_GRAY      = Color(128, 128, 128, 255);    // Gray
-    const Color COLOR_SILVER    = Color(192, 192, 192, 255);    // Silver
-    const Color COLOR_ORANGE    = Color(255, 165, 0,   255);    // Orange
-    const Color COLOR_PURPLE    = Color(128, 0,   128, 255);    // Purple
-    const Color COLOR_BROWN     = Color(165, 42,  42,  255);    // Brown
-    const Color COLOR_PINK      = Color(255, 192, 203, 255);    // Pink
-    const Color COLOR_TEAL      = Color(0,   128, 128, 255);    // Teal
-    const Color COLOR_NAVY      = Color(0,   0,   128, 255);    // Navy
-    const Color COLOR_MAROON    = Color(128, 0,   0,   255);    // Maroon
-    const Color COLOR_OLIVE     = Color(128, 128, 0,   255);    // Olive
-    const Color COLOR_SKYBLUE   = Color(135, 206, 235, 255);    // Sky Blue
-    const Color COLOR_GOLD      = Color(255, 215, 0,   255);    // Gold
-    const Color COLOR_INDIGO    = Color(75,  0,   130, 255);    // Indigo
-    const Color COLOR_VIOLET    = Color(238, 130, 238, 255);    // Violet
-    const Color COLOR_CORAL     = Color(255, 127, 80,  255);    // Coral
-    const Color COLOR_TURQUOISE = Color(64,  224, 208, 255);    // Turquoise
-    const Color COLOR_CRIMSON   = Color(220, 20,  60,  255);    // Crimson
-}
+    // Common CSS-style colors you can tweak or expand:
+    inline const Color BLACK   { 0,   0,   0   };
+    inline const Color WHITE   { 225, 225, 225 };
+    inline const Color GRAY   { 0.5f, 0.5f, 0.5f };
+    inline const Color RED     { 255, 0,   0   };
+    inline const Color GREEN   { 0,   255, 0   };
+    inline const Color BLUE    { 0,   0,   255 };
+    inline const Color PINK    { 255, 192, 203 };
+
+} // namespace duin

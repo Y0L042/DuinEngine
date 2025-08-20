@@ -22,9 +22,18 @@ namespace duin {
     class StateMachine
     {
         public:
-
             StateMachine();
             ~StateMachine();
+
+            template<typename T>
+            T *GetActiveState()
+            {
+                static_assert(std::is_base_of<State, T>::value, "T must derive from State");
+                if (!stateStack.empty()) {
+                    return static_cast<T *>(stateStack.top().get());
+                }
+                return nullptr;
+            }
 
             template<typename T>
             void SwitchState()

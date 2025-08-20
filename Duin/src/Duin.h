@@ -15,6 +15,7 @@
 
 
 
+
 /* ---------- Render ----------- */
 #include "Duin/Render/RenderIncludes.h"
 
@@ -33,6 +34,9 @@
 /* ---------- Scene ----------- */
 #include "Duin/Scene/SceneManager.h"
 #include "Duin/Scene/GameObject.h"
+
+/* ---------- IO ----------- */
+#include "Duin/IO/IOModule.h"
 
 
 

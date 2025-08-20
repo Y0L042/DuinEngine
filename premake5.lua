@@ -24,18 +24,14 @@ workspace "Duin"
     IncludeDir["bx"] = "Duin/vendor/bx/include"
     IncludeDir["bimg"] = "Duin/vendor/bimg/include"
     IncludeDir["spdlog"] = "Duin/vendor/spdlog/include"
-    IncludeDir["rlimgui"] = "Duin/vendor/rlimgui"
-    IncludeDir["raylib"] = "Duin/vendor/rlimgui/raylib-master/src"
-    IncludeDir["raygui"] = "Duin/vendor/raygui/src"
-    IncludeDir["imgui"] = "" --"Duin/vendor/imgui"
-    IncludeDir["imguibackends"] = "" --"Duin/vendor/imgui/backends"
-    IncludeDir["glfw"] = "Duin/vendor/rlimgui/raylib-master/src/external/glfw/include"
     IncludeDir["flecs"] = "Duin/vendor/flecs/include"
     IncludeDir["fmt"] = "Duin/vendor/fmt/include"
     IncludeDir["patches"] = "Duin/vendor/patches"
+    IncludeDir["toml11"] = "Duin/vendor/toml11/include"
     IncludeDir["rapidjson"] = "Duin/vendor/rapidjson/include"
-    IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog/"
+    IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog"
     IncludeDir["physx"] = "Duin/vendor/PhysX/physx/include"
+    IncludeDir["doctest"] = "Duin/vendor/doctest/doctest"
 
     global_files = {}
     global_includedirs = 
@@ -56,8 +52,10 @@ workspace "Duin"
         "%{IncludeDir.flecs}",
         "%{IncludeDir.fmt}",
         "%{IncludeDir.patches}",
+        "%{IncludeDir.toml11}",
         "%{IncludeDir.rapidjson}",
         "%{IncludeDir.physx}",
+        "%{IncludeDir.doctest}",
     }
     global_libdirs = 
     {
@@ -66,6 +64,7 @@ workspace "Duin"
         "Duin/vendor/bgfx/.build/win64_vs2022/bin",
         "Duin/vendor/flecs/build_vs2022/Debug",	
         "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
+        "Duin/vendor/toml11/build/src/Debug",
     }
     global_defines = 
     {
@@ -85,6 +84,7 @@ workspace "Duin"
         "Imm32.lib",
         "Cfgmgr32.lib",
         "SDL3-static.lib",
+        "toml11.lib",
         "bxDebug.lib",
         "bimgDebug.lib",
         "bgfxDebug.lib",

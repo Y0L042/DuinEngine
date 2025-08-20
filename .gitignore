@@ -18,6 +18,7 @@ Duin/vendor/*
 
 !vendor/premake5.lua
 !Duin/vendor/premake5.lua
+!Duin/vendor/*.lua
 !Duin/vendor/dependencies.lua
 !premake5.lua.old
 
@@ -84,3 +85,7 @@ nuget.config
 /stash_changes.diff
 *.rdc
 /ExampleProjects/DuinFPS/imgui.ini
+/ExampleProjects/DuinFPS/logs
+/DuinEditor/logs
+/ExampleProjects/DuinFPS/duin.project
+/Duin/docs/TODO.md

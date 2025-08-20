@@ -48,12 +48,23 @@ static int TARGET_PHYSICS_FRAMERATE = 60;
 static int WINDOW_WIDTH = 1280;
 static int WINDOW_HEIGHT = 720;
 
+static bool USE_CUSTOM_IMGUI_INI_PATH = false;
+static std::string IMGUI_INI_PATH = "./";
+
+static bool PAUSE_ON_MINIMIZE = false;
+static bool ALLOW_DOCKING_IN_MAIN = false;
+
 // Color backgroundColor = WHITE;
 // ::Camera3D activeCamera3D;
 
 static SDL_Window *sdlWindow = NULL;
 static SDL_Surface* sdlSurface = NULL;
 static SDL_Renderer *sdlRenderer = NULL;
+
+static SDL_WindowFlags sdlWindowFlags = 0;
+
+const bgfx::ViewId MAIN_DISPLAY = 0;
+
 
 
 namespace duin {
@@ -67,6 +78,7 @@ namespace duin {
     static std::vector<std::function<void(void)>> preFrameCallbacks;
     static std::vector<std::function<void(void)>> postFrameCallbacks;
     static std::vector<std::function<void(void)>> postDebugCallbacks;
+    static std::vector<std::function<void(void)>> exitCallbacks;
 
     std::string GetRootDirectory()
     {
@@ -226,6 +238,43 @@ namespace duin {
         return WINDOW_HEIGHT;
     }
 
+    void SetWindowResizable(bool enable)
+    {
+        SDL_SetWindowResizable(sdlWindow, enable);
+        sdlWindowFlags |= (SDL_WINDOW_RESIZABLE && enable);
+    }
+
+    void MaximizeWindow()
+    {
+        SDL_MaximizeWindow(sdlWindow);
+    }
+
+    void MinimizeWindow()
+    {
+        SDL_MinimizeWindow(sdlWindow);
+    }
+
+    void SetPauseOnMinimized(bool enable)
+    {
+        PAUSE_ON_MINIMIZE = enable;
+    }
+
+    void SetAllowDockingInMain(bool enable)
+    {
+        ALLOW_DOCKING_IN_MAIN = enable;
+    }
+
+    void SetImGuiINIPath(const std::string& newPath)
+    {
+        DN_CORE_INFO("Custom ImGui INI path set: {}", newPath.c_str());
+        USE_CUSTOM_IMGUI_INI_PATH = true;
+        IMGUI_INI_PATH = newPath;
+        ImGui::GetIO().IniFilename = NULL;
+        ImGui::LoadIniSettingsFromDisk(IMGUI_INI_PATH.c_str());
+    }
+
+
+
     SDL_Window* GetSDLWindow()
     {
         return sdlWindow;
@@ -274,6 +323,11 @@ namespace duin {
     void QueuePostDebugCallback(std::function<void()> f)
     {
         postDebugCallbacks.push_back(f);
+    }
+
+    void QueueExitCallback(std::function<void()> f)
+    {
+        exitCallbacks.push_back(f);
     }
 
     Application::Application()
@@ -328,7 +382,7 @@ namespace duin {
         if(!::SDL_Init(SDL_INIT_VIDEO)) {
             ::SDL_Log("SDL could not initialize! SDL error: %s\n", ::SDL_GetError());
         } else {
-            sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+            sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
             if(sdlWindow == nullptr) {
                 ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
             } else {
@@ -341,18 +395,21 @@ namespace duin {
         }
         bgfx::renderFrame();
         bgfx::Init bgfxInit;
-        bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
+        bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer
         bgfxInit.resolution.width = WINDOW_WIDTH;
         bgfxInit.resolution.height = WINDOW_HEIGHT;
         bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
         bgfxInit.platformData.nwh = hwnd;
-        const bgfx::ViewId MAIN_DISPLAY = 0;
         bgfx::init(bgfxInit);
         bgfx::setViewClear(MAIN_DISPLAY, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
         bgfx::setViewRect(MAIN_DISPLAY, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         ImGui::CreateContext();
         ::ImGui_Implbgfx_Init(255);
         ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
+        ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+        InitRenderer();
+        SetRenderContextAvailable(true);
 
         EngineReady();
         Ready();
@@ -364,10 +421,20 @@ namespace duin {
                 if (!debugIsGamePaused_) {
             #endif /* DN_DEBUG */
 
+            /* Do not run game when minimized */
+            if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(sdlWindow) && SDL_WINDOW_MINIMIZED) {
+                DelayProcessMilli(100);
+                continue;
+            }
 
             frameStartTime = GetTicks();
 
             EnginePreFrame();
+
+            /* If custom ImGui path is set, manually save to memory/disk */
+            if (USE_CUSTOM_IMGUI_INI_PATH && ImGui::GetIO().WantSaveIniSettings) {
+                ImGui::SaveIniSettingsToDisk(IMGUI_INI_PATH.c_str());
+            }
 
             ::SDL_Event e;
             ::SDL_zero(e);
@@ -378,7 +445,9 @@ namespace duin {
                 ::ImGui_ImplSDL3_ProcessEvent(&e);
             }
             Input::CacheCurrentKeyState();
+            Input::CacheCurrentMouseKeyState();
             Input::UpdateMouseFrameDelta();
+            gameShouldQuit = EventHandler::Get().IsCloseRequested();
 
             EngineUpdate(deltaTime);
             Update(deltaTime);
@@ -401,27 +470,52 @@ namespace duin {
                 EnginePostPhysicsUpdate(physicsDeltaTime);
             } // End of Physics
 
+            /* Skip rendering when minimized */
+            if (SDL_GetWindowFlags(sdlWindow) && e.type == SDL_WINDOW_MINIMIZED) {
+                ImGui::Render();
+                DelayProcessMilli(100);
+                continue;
+            }
 
-            Renderer::Get().EmptyStack();
-            ++renderFrameCount;
+            
+            // Update render rect on window resizing
+            int displayWidth, displayHeight;
+            ::SDL_GetWindowSize(sdlWindow, &displayWidth, &displayHeight);
+            /* Skip rendering if window size is 0 */
+            if (!(displayWidth && displayHeight)) {
+                DelayProcessMilli(100);
+                continue;
+            }
+
+            bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
+            bgfx::setViewRect(MAIN_DISPLAY, 0, 0, bgfx::BackbufferRatio::Equal);
             bgfx::touch(MAIN_DISPLAY);
+
+            ++renderFrameCount;
             ::ImGui_Implbgfx_NewFrame();
             ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
 
-            EngineDraw();
-            Draw();
-            EnginePostDraw();
+            if (ALLOW_DOCKING_IN_MAIN) {
+                const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+                ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
+            }
 
-            EngineDrawUI();
-            DrawUI();
-            EnginePostDrawUI();
+            BeginDraw3D(*GetActiveCamera());
 
-            Renderer::Get().RenderPipeline();
+                EngineDraw();
+                Draw();
+                EnginePostDraw();
+
+                EngineDrawUI();
+                DrawUI();
+                EnginePostDrawUI();
+
+            EndDraw3D();
 
             ImGui::Render();
             ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
-            bgfx::frame();
+            ExecuteRenderPipeline();
 
             EnginePostFrame();
 
@@ -457,16 +551,21 @@ namespace duin {
         EngineExit();
         Exit();
 
+        DN_CORE_INFO("Shutting down Rendering dependencies...");
+        SetRenderContextAvailable(false);
+
         ::ImGui_ImplSDL3_Shutdown();
         ::ImGui_Implbgfx_Shutdown();
 
         ImGui::DestroyContext();
         bgfx::shutdown();
+        DN_CORE_INFO("ImGui context destroyed, bgfx shut down...");
 
         ::SDL_DestroySurface(sdlSurface);
         sdlSurface = nullptr;
         ::SDL_DestroyWindow(sdlWindow);
         sdlWindow = nullptr;
+        DN_CORE_INFO("Quitting...");
         ::SDL_Quit();
     }
 
@@ -510,7 +609,7 @@ namespace duin {
     void Application::EngineOnEvent(Event e)
     {
         if (Input::IsKeyDown(DN_KEY_ESCAPE)) {
-            DN_CORE_INFO("Quiting... {}", e.sdlEvent.key.key);
+            DN_CORE_INFO("Quit event called... {}", e.sdlEvent.key.key);
             gameShouldQuit = true;
         }
 
@@ -621,6 +720,9 @@ namespace duin {
 
     void Application::EngineExit()
     {
+        for (auto& callback : exitCallbacks) {
+            callback();
+        }
     }
 
     void Application::Exit()

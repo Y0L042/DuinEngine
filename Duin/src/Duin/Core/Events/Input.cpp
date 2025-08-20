@@ -17,24 +17,31 @@ namespace duin::Input {
         UP = 0,
         DOWN = 1
     };
-    enum KeyEvent {
-        PRESSED,
-        PRESSED_REPEATED,
-        HELD,
-        RELEASED,
-        IDLE
-    };
+    //enum KeyEvent {
+    //    PRESSED,
+    //    PRESSED_REPEATED,
+    //    HELD,
+    //    RELEASED,
+    //    IDLE
+    //};
 
+    // TODO move these to device struct, to allow multiple input devices
     static const int MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;
     static KeyState previousKeyState[MAX_KEYS]; 
     static KeyState currentKeyState[MAX_KEYS]; 
 
+    static const int MAX_MOUSE_KEYS = DN_MOUSE_BUTTON_CNT;
+    static KeyState previousMouseKeyState[MAX_MOUSE_KEYS];
+    static KeyState currentMouseKeyState[MAX_MOUSE_KEYS];
+
     static Vector2 previousMouseLocalPos;
     static Vector2 currentMouseLocalPos;
     static Vector2 mouseFrameDelta;
+    static Vector2 mouseScrollDelta;
 
     void CacheCurrentKeyState()
     {
+        // Called in Application.cpp run
         memcpy(previousKeyState, currentKeyState, sizeof(previousKeyState));
     }
 
@@ -43,12 +50,32 @@ namespace duin::Input {
         memset(currentKeyState, 0, sizeof(currentKeyState));
     }
 
+    void CacheCurrentMouseKeyState()
+    {
+        // Called in Application.cpp run
+        memcpy(previousMouseKeyState, currentMouseKeyState, sizeof(previousMouseKeyState));
+    }
+
+    void ClearCurrentMouseKeyState()
+    {
+        memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
+    }
+
+    /**
+     * @brief Test the SDL event to see if it is a keyboard event, then process the event. This function is called from Application.Run().
+     * @param e
+     */
     void ProcessSDLKeyboardEvent(::SDL_Event e)
     {
         if (!EVENT_IS_KEYBOARD(e.type)) { return; }
         // Set current key state
         ::SDL_Scancode code = e.key.scancode;
-        KeyState state;
+        if (code > 511 || code < 0) {
+            DN_CORE_WARN("Keyboard event out of bounds {}!", (int)code);
+            return;
+        }
+
+        KeyState state = KeyState::UP;
         if (e.type == SDL_EVENT_KEY_DOWN) { state = KeyState::DOWN; }
         if (e.type == SDL_EVENT_KEY_UP) { state = KeyState::UP; }
         currentKeyState[code] = state;
@@ -91,12 +118,12 @@ namespace duin::Input {
 
     int IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
     {
-        return IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right);
+        return (IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right));
     }
 
     Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
     {
-        return Vector2NormalizeF(Vector2(IsKeyDown(left) - IsKeyDown(right), IsKeyDown(down) - IsKeyDown(up)));
+        return Vector2NormalizeF(Vector2((float)(IsKeyDown(left) - IsKeyDown(right)), (float)(IsKeyDown(down) - IsKeyDown(up))));
     }
                
          
@@ -105,8 +132,11 @@ namespace duin::Input {
         // TODO
 		return 0;
 	}
-                 
 
+    /**
+     * @brief Test the SDL event to see if it is a mouse event, then process the event. This function is called from Application.Run().
+     * @param e 
+     */
     void ProcessSDLMouseEvent(::SDL_Event e)
     {
         previousMouseLocalPos = currentMouseLocalPos;
@@ -116,8 +146,24 @@ namespace duin::Input {
             ::SDL_GetMouseState(&x, &y);
             currentMouseLocalPos = Vector2(x, y);
         }
-        if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
 
+        KeyState state = KeyState::UP;
+        if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+            state = KeyState::DOWN;
+            DN_MouseButtonFlags btnIdx = e.button.button - 1;
+            currentMouseKeyState[btnIdx] = state;
+        }
+        if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {
+            state = KeyState::UP;
+            DN_MouseButtonFlags btnIdx = e.button.button - 1;
+            currentMouseKeyState[btnIdx] = state;
+        }
+
+        mouseScrollDelta = Vector2();
+        if (e.type == SDL_EVENT_MOUSE_WHEEL) {
+            DN_CORE_INFO("MOUSE_WHEEL {} {}", e.wheel.x, e.wheel.y);
+            mouseScrollDelta.x = e.wheel.x;
+            mouseScrollDelta.y = e.wheel.y;
         }
     }
 
@@ -133,24 +179,24 @@ namespace duin::Input {
         ::SDL_SetWindowRelativeMouseMode(GetSDLWindow(), enable);
     }
 
-    int IsMouseButtonPressed(int button)
+    int IsMouseButtonPressed(DN_MouseButtonFlags button)
     {
-        return 0;
+        return (currentMouseKeyState[button-1] && !previousMouseKeyState[button-1]);
     }
 
-    int IsMouseButtonDown(int button)
+    int IsMouseButtonDown(DN_MouseButtonFlags button)
 	{
-        return 0;
+        return currentMouseKeyState[button-1];
 	}
                      
-    int IsMouseButtonReleased(int button)
+    int IsMouseButtonReleased(DN_MouseButtonFlags button)
 	{
-        return 0;
+        return (!currentMouseKeyState[button-1] && previousMouseKeyState[button-1]);
 	}
                  
-    int IsMouseButtonUp(int button)
+    int IsMouseButtonUp(DN_MouseButtonFlags button)
 	{
-        return 0;
+        return !currentMouseKeyState[button-1];
 	}
                        
     Vector2 GetMouseGlobalPosition(void)
@@ -191,12 +237,13 @@ namespace duin::Input {
         
     float GetMouseWheelMove(void)
 	{
-        return 0.0f;
+
+        return mouseScrollDelta.y;
 	}
                          
     Vector2 GetMouseWheelMoveV(void)
 	{
-        return Vector2();
+        return mouseScrollDelta;
 	}
                       
     void SetMouseCursor(int cursor)

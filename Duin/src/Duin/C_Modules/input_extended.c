@@ -42,7 +42,11 @@ void ReleaseCursor()
 
 int IsInputVector2DPressed(int up, int down, int left, int right)
 {
-    int U, D, L, R = 0;
+    int U, D, L, R;
+    U = 0;
+    D = 0;
+    L = 0;
+    R = 0;
 
     //U = IsKeyDown(up);
     //D = IsKeyDown(down);

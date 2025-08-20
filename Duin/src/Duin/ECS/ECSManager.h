@@ -48,6 +48,12 @@ namespace duin {
     //  ECS Components
     /*------------------------------------------------------------------------*/
     namespace ECSComponent {
+        struct Serialisable {
+            virtual std::string GetName() { return std::string(); }
+            virtual std::string SerialiseToText() { return std::string(); }
+            virtual void DeserialiseFromText(const std::string& data) {}
+        };
+
         /*------------------------------------------------------------------------*/
         //  2D Components
         /*------------------------------------------------------------------------*/
@@ -123,7 +129,7 @@ namespace duin {
         /*------------------------------------------------------------------------*/
         //  3D Components
         /*------------------------------------------------------------------------*/
-        struct Position3D {
+        struct Position3D : public Serialisable {
             Vector3 value;
 
             Position3D()
@@ -137,6 +143,22 @@ namespace duin {
             Position3D(float x, float y, float z)
                 : value(x, y, z)
             {}
+
+            std::string GetName() override
+            {
+                return "Position3D";
+            }
+
+            std::string SerialiseToText() override
+            {
+
+                return std::string();
+            }
+
+            void DeserialiseFromText(const std::string& data) override
+            {
+
+            }
         };
 
         struct Rotation3D {
@@ -201,7 +223,7 @@ namespace duin {
                         DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
                         return; 
                     }
-                    Transform3D *comp = e.get_mut<Transform3D>();
+                    Transform3D *comp = e.try_get_mut<Transform3D>();
                     if (!comp) { return; }
 
                     flecs::entity parent = e.parent();
@@ -244,7 +266,7 @@ namespace duin {
                     if (!e.is_valid() || !e.has<Transform3D>()) { 
                         return Transform3D(); 
                     }
-                    Transform3D *tx = e.get_mut<Transform3D>();
+                    Transform3D *tx = e.try_get_mut<Transform3D>();
                     if (!tx) { 
                         return Transform3D(); 
                     }
@@ -288,7 +310,7 @@ namespace duin {
                         DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
                         return; 
                     }
-                    Transform3D *tx = e.get_mut<Transform3D>();
+                    Transform3D *tx = e.try_get_mut<Transform3D>();
                     if (!tx) return;
 
                     flecs::entity parent = e.parent();
@@ -313,7 +335,7 @@ namespace duin {
                         DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
                         return Vector3Zero(); 
                     }
-                    Transform3D *tx = e.get_mut<Transform3D>();
+                    Transform3D *tx = e.try_get_mut<Transform3D>();
                     if (!tx) { return Vector3Zero(); }
 
                     if (tx->globalPositionCacheDirtyFlag) {
@@ -337,7 +359,7 @@ namespace duin {
                 static void SetGlobalScale(flecs::entity e, Vector3 scale)
                 {
                     if (!e.is_valid() || !e.has<Transform3D>()) { return; }
-                    Transform3D *tx = e.get_mut<Transform3D>();
+                    Transform3D *tx = e.try_get_mut<Transform3D>();
                     if (!tx) { return; }
 
                     flecs::entity parent = e.parent();
@@ -353,7 +375,7 @@ namespace duin {
                 static Vector3 GetGlobalScale(flecs::entity e)
                 {
                     if (!e.is_valid() || !e.has<Transform3D>()) { return Vector3One(); }
-                    Transform3D* tx = e.get_mut<Transform3D>();
+                    Transform3D* tx = e.try_get_mut<Transform3D>();
                     if (!tx) { return Vector3One(); }
 
                     if (tx->globalScaleCacheDirtyFlag) {
@@ -375,7 +397,7 @@ namespace duin {
                         DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
                         return; 
                     }
-                    Transform3D *tx = e.get_mut<Transform3D>();
+                    Transform3D *tx = e.try_get_mut<Transform3D>();
                     if (!tx) { return; }
 
                     flecs::entity parent = e.parent();
@@ -397,7 +419,7 @@ namespace duin {
                         DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
                         return QuaternionIdentity();
                     }
-                    Transform3D* tx = e.get_mut<Transform3D>();
+                    Transform3D* tx = e.try_get_mut<Transform3D>();
                     if (!tx) { return QuaternionIdentity(); }
 
                     if (tx->globalRotationCacheDirtyFlag) {
@@ -585,7 +607,7 @@ namespace duin {
                         DN_CORE_WARN("STATIC Entity not valid, or does not have Transform3D!");
                         return; 
                     }
-                    Transform3D *tx = e.get_mut<Transform3D>();
+                    Transform3D *tx = e.try_get_mut<Transform3D>();
                     if (!tx) { return; }
 
                     tx->InvalidateCacheFlags();
@@ -627,7 +649,7 @@ namespace duin {
                 static Vector3 GetGlobalPositionRecursively(flecs::world& world, flecs::entity e)
                 {
                     if (!e.is_valid()) { return Vector3Zero(); }
-                    const Transform3D *tx = e.get<Transform3D>();
+                    const Transform3D *tx = e.try_get<Transform3D>();
                     if (!tx) { return Vector3Zero(); }
                     if (!e.parent().is_valid()) { return tx->GetPosition(); }
 
@@ -637,7 +659,7 @@ namespace duin {
                 static Vector3 GetGlobalScaleRecursively(flecs::world& world, flecs::entity e)
                 {
                     if (!e.is_valid()) { return Vector3One(); }
-                    const Transform3D *tx = e.get<Transform3D>();
+                    const Transform3D *tx = e.try_get<Transform3D>();
                     if (!tx) { return Vector3One(); }
                     if (!e.parent().is_valid()) { return tx->GetScale(); }
 
@@ -647,7 +669,7 @@ namespace duin {
                 static Quaternion GetGlobalRotationRecursively(flecs::world& world, flecs::entity e)
                 {
                     if (!e.is_valid()) { return QuaternionIdentity(); }
-                    const Transform3D *tx = e.get<Transform3D>();
+                    const Transform3D *tx = e.try_get<Transform3D>();
                     if (!tx) { return QuaternionIdentity(); }
                     if (!e.parent().is_valid()) { return tx->GetRotation(); }
 
@@ -657,7 +679,7 @@ namespace duin {
                 static Transform3D GetGlobalTransformRecursively(flecs::world& world, flecs::entity e)
                 {
                     if (!e.is_valid()) { return Transform3D(); }
-                    const Transform3D *tx = e.get<Transform3D>();
+                    const Transform3D *tx = e.try_get<Transform3D>();
                     if (!tx) { return Transform3D(); }
                     if (!e.parent().is_valid()) { return *tx; }
 

@@ -1,15 +1,23 @@
 #pragma once
 
-#include <Duin.h>
-#include "DuinEditor.h"
-#include "Project.h"
-#include "FileManager.h"
+#include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Utils/UtilsModule.h>
 
-#include <string>
+#include "Project.h"
+#include "gui/FileManager.h"
+#include "gui/EditorWindow.h"
+
+extern int PROJECT_EDITOR_VERSION;
+extern int PROJECT_ENGINE_VERSION;
+
+extern FileManager fileManager;
+extern EditorWindow tabBrowser;
 
 extern duin::DebugConsole debugConsole;
-extern DuinEditor *application;
-extern FileManager fileManager;
+extern duin::DebugWatchlist debugWatchlist;
+extern duin::StateMachine mainStateMachine;
+
 
 void SetActiveProject(Project project);
 Project& GetActiveProject();
+

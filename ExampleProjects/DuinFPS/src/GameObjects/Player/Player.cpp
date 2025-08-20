@@ -5,9 +5,13 @@
 
 #include <Duin.h>
 
+#include <Duin/ECS/SceneBuilder.h>
+
 flecs::entity player;
 flecs::entity cameraRoot;
 flecs::entity playerCamera;
+
+flecs::ref<duin::Camera> cameraRef;
 duin::StateMachine playerStateMachine;
 
 void Player::Ready()
@@ -67,7 +71,22 @@ void Player::Ready()
         .add<duin::ECSTag::ActiveCamera>()
         ;
 
-        playerStateMachine.SwitchState<State_OnGround>();
+	//cameraRef = flecs::ref<duin::Camera>(ecs.world, playerCamera);
+	//duin::Camera* cam = cameraRef.get();
+
+    std::string scene;
+    duin::SceneBuilder::WriteScene(scene, ecs);
+    DN_INFO("Scene:\n{}", scene);
+
+    std::string plrjson;
+    duin::SceneBuilder::WriteEntity(plrjson, player);
+    DN_INFO("Plr:\n{}", plrjson);
+
+    std::string plrrecjson;
+    duin::SceneBuilder::WriteEntity(plrrecjson, player, true);
+    DN_INFO("Plr Recursive:\n{}", plrrecjson);
+
+    playerStateMachine.SwitchState<State_OnGround>();
 }
 void Player::OnEvent(duin::Event e)
 {

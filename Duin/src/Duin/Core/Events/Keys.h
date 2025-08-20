@@ -51,6 +51,17 @@
  *
  * \since This datatype is available since SDL 3.2.0.
  */
+
+typedef Uint32 DN_MouseButtonFlags;
+
+#define DN_MOUSE_BUTTON_LEFT    1
+#define DN_MOUSE_BUTTON_MIDDLE  2
+#define DN_MOUSE_BUTTON_RIGHT   3
+#define DN_MOUSE_BUTTON_X1      4
+#define DN_MOUSE_BUTTON_X2      5
+#define DN_MOUSE_WHEEL          6
+#define DN_MOUSE_BUTTON_CNT     6 
+
 typedef Uint32 DN_Keycode;
 
 #define DN_KEY_EXTENDED_MASK          (1u << 29)

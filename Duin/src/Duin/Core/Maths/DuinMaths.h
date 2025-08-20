@@ -64,9 +64,6 @@
 #include <xmmintrin.h>
 
 #define DUINMATHS_STATIC_INLINE
-// #if defined(RAYMATH_IMPLEMENTATION) && defined(RAYMATH_STATIC_INLINE)
-//     #error "Specifying both RAYMATH_IMPLEMENTATION and RAYMATH_STATIC_INLINE is contradictory"
-// #endif
 
 // Function specifiers definition
 #if defined(DUINMATHS_IMPLEMENTATION)
@@ -287,6 +284,8 @@ typedef struct Matrix {
           m1(row2.x), m5(row2.y), m9(row2.z), m13(row2.w),
           m2(row3.x), m6(row3.y), m10(row3.z), m14(row3.w),
           m3(row4.x), m7(row4.y), m11(row4.z), m15(row4.w) {}
+
+
 
     explicit Matrix(const physx::PxMat44T<float>& physxMat)
         : m0(physxMat.column0.x), m4(physxMat.column0.y), m8(physxMat.column0.z), m12(physxMat.column0.w),
@@ -941,7 +940,7 @@ DNMAPI Vector3 Vector3Multiply(Vector3 v1, Vector3 v2)
     return result;
 }
 
-// Calculate two vectors cross product
+// Calculate two vectors cross product, RHR from V1 to V2
 DNMAPI Vector3 Vector3CrossProduct(Vector3 v1, Vector3 v2)
 {
     Vector3 result = { v1.y*v2.z - v1.z*v2.y, v1.z*v2.x - v1.x*v2.z, v1.x*v2.y - v1.y*v2.x };
@@ -1239,6 +1238,12 @@ DNMAPI void Vector3OrthoNormalizeF(Vector3 *v1, Vector3 *v2)
     Vector3 vn2 = { vn1.y*v1->z - vn1.z*v1->y, vn1.z*v1->x - vn1.x*v1->z, vn1.x*v1->y - vn1.y*v1->x };
 
     *v2 = vn2;
+}
+
+// Tests for orthonormal axis system
+DNMAPI bool Vector3TestOrhonormalBasis(Vector3 x, Vector3 y, Vector3 z)
+{
+    // TODO
 }
 
 // Transforms a Vector3 by a given Matrix

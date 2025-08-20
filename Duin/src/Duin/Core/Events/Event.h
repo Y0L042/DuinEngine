@@ -1,17 +1,15 @@
 #pragma once
 
-
-#include "Keys.h"
-
 #include <SDL3/SDL_events.h>
 
-
 namespace duin {
+    typedef Uint32 DN_Keycode;
+
     class Event
     {
         public:
-
             ::SDL_Event sdlEvent;
+
         protected:
             friend class EventHandler;
 
@@ -32,5 +30,14 @@ namespace duin {
 
         private:
 
+    };
+
+    class WindowEvent : public Event
+    {
+    public:
+        WindowEvent() = default;
+        ~WindowEvent() = default;
+
+    private:
     };
 }

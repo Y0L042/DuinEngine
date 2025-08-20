@@ -1,11 +1,28 @@
 #pragma once
 
-#include "Keys.h"
-#include "Duin/Core/Maths/DuinMaths.h" // for inputvector
-
 // TODO add raylib license
 
+#include "Keys.h"
+
+#define DN_KEVENT_PRESSED           duin::Input::KeyEvent::PRESSED
+#define DN_KEVENT_PRESSED_REPEATED  duin::Input::KeyEvent::PRESSED_REPEATED
+#define DN_KEVENT_HELD              duin::Input::KeyEvent::HELD
+#define DN_KEVENT_RELEASED          duin::Input::KeyEvent::RELEASED
+#define DN_KEVENT_IDLE              duin::Input::KeyEvent::IDLE
+
+namespace duin {
+    struct Vector2;
+}
+
 namespace duin::Input {
+    enum KeyEvent {
+        PRESSED,
+        PRESSED_REPEATED,
+        HELD,
+        RELEASED,
+        IDLE
+    };
+
     /* KEYBOARD */
     int IsKeyPressed(DN_Keycode code);          // Down and up, not held
     int IsKeyPressedAgain(DN_Keycode code);     // Pressed more than once in short period
@@ -22,10 +39,10 @@ namespace duin::Input {
     /* MOUSE */
 	void CaptureMouse(int enable);                               // Capture mouse (lock mouse cursor in window)
 
-    int IsMouseButtonPressed(int button);                  // Check if a mouse button has been pressed once
-    int IsMouseButtonDown(int button);                     // Check if a mouse button is being pressed
-    int IsMouseButtonReleased(int button);                 // Check if a mouse button has been released once
-    int IsMouseButtonUp(int button);                       // Check if a mouse button is NOT being pressed
+    int IsMouseButtonPressed(DN_MouseButtonFlags button);                  // Check if a mouse button has been pressed once
+    int IsMouseButtonDown(DN_MouseButtonFlags button);                     // Check if a mouse button is being pressed
+    int IsMouseButtonReleased(DN_MouseButtonFlags button);                 // Check if a mouse button has been released once
+    int IsMouseButtonUp(DN_MouseButtonFlags button);                       // Check if a mouse button is NOT being pressed
     Vector2 GetMouseGlobalPosition(void);                         // Get mouse position XY relative to system window 
     Vector2 GetMousePosition(void);                         // Get mouse position XY relative to game window
     Vector2 GetMouseDelta(void);                            // Get mouse delta between frames

@@ -1,7 +1,7 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#pragma once
 
 #include <string>
+#include <memory>
 #include <functional>
 
 #include "Duin/Core/Core.h"
@@ -9,9 +9,7 @@
 #include "Duin/Scene/GameObject.h"
 
 
-
-namespace duin
-{
+namespace duin {
     std::string GetRootDirectory();
     void DebugPauseGame();
     void DebugResumeGame();
@@ -37,7 +35,14 @@ namespace duin
     int GetWindowWidth();
     int GetWindowHeight();
 
-	SDL_Window* GetSDLWindow();
+	void SetWindowResizable(bool enable);
+	void MaximizeWindow();
+	void MinimizeWindow();
+	void SetPauseOnMinimized(bool enable);
+	void SetAllowDockingInMain(bool enable);
+	void SetImGuiINIPath(const std::string& newPath);
+
+	::SDL_Window* GetSDLWindow();
 
     void QueuePostReadyCallback(std::function<void(void)> f);
     void QueuePostInputCallback(std::function<void(::SDL_Event)> f);
@@ -48,6 +53,8 @@ namespace duin
 	void QueuePreFrameCallback(std::function<void()>);
 	void QueuePostFrameCallback(std::function<void()>);
 	void QueuePostDebugCallback(std::function<void()>);
+
+    void QueueExitCallback(std::function<void()>);
 
 	class DAPI Application
 	{
@@ -118,4 +125,3 @@ namespace duin
 
 }
 
-#endif /* APPLICATION_H */

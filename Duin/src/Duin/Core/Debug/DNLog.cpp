@@ -2,7 +2,17 @@
 #include "DNLog.h"
 
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/pattern_formatter.h>
+
+
+#define LOG_TO_FILE 1
+
+#ifdef LOG_TO_FILE
+#include <format>
+#include <iostream>
+#include <chrono>
+#endif
 
 namespace duin {
 
@@ -22,16 +32,26 @@ namespace duin {
         }
     };
 
+    std::vector<spdlog::sink_ptr> sinks;
     std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
     std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
 
     void Log::Init() {
+        // Create sinks to log to console and file
+        sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+#ifdef LOG_TO_FILE
+        const auto now = std::chrono::system_clock::now();
+        std::string fileName = std::format("{:%Y-%m-%d_%H_%M_%OS}", now) + "_dnlogfile.txt";
+        sinks.push_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("./logs/" + fileName));
+#endif
+
         // Create a custom formatter with the frame count flag
         auto coreFormatter = std::make_unique<spdlog::pattern_formatter>();
         coreFormatter->add_flag<FrameCountFormatter>('F');
         coreFormatter->set_pattern("%^[ %T | %F ]\t%n\t(%s:%#): %v%$");
 
-        s_CoreLogger = spdlog::stdout_color_mt("DUIN");
+        //s_CoreLogger = spdlog::stdout_color_mt("DUIN");
+        s_CoreLogger = std::make_shared<spdlog::logger>("CORE", begin(sinks), end(sinks));
         s_CoreLogger->set_formatter(std::move(coreFormatter));
         s_CoreLogger->set_level(spdlog::level::trace);
 
@@ -41,9 +61,14 @@ namespace duin {
         //clientFormatter->set_pattern("%^[%T] %n [%F] (%s:%#): %v%$");
         clientFormatter->set_pattern("%^[ %T | %F ]\t%n\t(%s:%#): %v%$");
 
-        s_ClientLogger = spdlog::stdout_color_mt("APP");
+        //s_ClientLogger = spdlog::stdout_color_mt("APP");
+        s_ClientLogger = std::make_shared<spdlog::logger>("APP", begin(sinks), end(sinks));
         s_ClientLogger->set_formatter(std::move(clientFormatter));
         s_ClientLogger->set_level(spdlog::level::trace);
+
+        
+
+
     }
 }
 

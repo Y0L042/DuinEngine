@@ -15,6 +15,11 @@ project "Duin"
     kind "StaticLib"
     language "C++"
 
+    externalanglebrackets "On" 
+    linkoptions { "-IGNORE:4006" }
+    externalwarnings    "Off"
+
+
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -30,6 +35,7 @@ project "Duin"
     -- Filter to apply settings only to .cpp files inside "ignoredir"
     filter "files:**/external/**.cpp"  -- Added: match .cpp files in any "ignoredir" folder
         flags { "NoPCH" }             -- Added: disable precompiled headers
+        warnings      "Off"                 -- Added: turn off all warnings for these files
         pchheader ""                  -- Added: clear the precompiled header setting
     filter {}                        -- Clear the filter
 
@@ -65,6 +71,7 @@ project "Duin"
 		SolutionRoot .. "/%{IncludeDir.fmt}",
 		SolutionRoot .. "/%{IncludeDir.patches}",
         SolutionRoot .. "/%{IncludeDir.rapidjson}",
+        SolutionRoot .. "/%{IncludeDir.toml11}",
 		SolutionRoot .. "/%{IncludeDir.physx}",
     }
     -- libdirs(global_libdirs) 
@@ -74,6 +81,7 @@ project "Duin"
         ProjectRoot .. "/vendor/bgfx/.build/win64_vs2022/bin",
 		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
+        ProjectRoot .. "/vendor/toml11/build/src/Debug",
     }
     -- defines(global_defines)
     defines 
@@ -97,6 +105,7 @@ project "Duin"
         "Imm32.lib",
         "Cfgmgr32.lib",
         "SDL3-static.lib",
+        "toml11.lib",
         "bxDebug.lib",
         "bimgDebug.lib",
         "bgfxDebug.lib",
@@ -110,11 +119,14 @@ project "Duin"
     }
 
     filter "action:vs*"
-        buildoptions { "/utf-8", '/Zc:__cplusplus', '/Zc:preprocessor' }  -- Changed: Added /utf-8 flag for Unicode support
-
-    -- Enable multi-processor compilation
-    filter "action:vs*"
-      flags { "MultiProcessorCompile" }
+        buildoptions { 
+            "/utf-8", 
+            '/Zc:__cplusplus', 
+            '/Zc:preprocessor' ,
+        }  -- Changed: Added /utf-8 flag for Unicode support
+        flags { "MultiProcessorCompile" }
+    filter {}
+      
 
     filter "system:windows"
         buildoptions { "/openmp" }
@@ -135,6 +147,18 @@ project "Duin"
     -- include "vendor"
 
 if _OPTIONS["deps"] then
-    local vendorDeps = require "dependencies"
-    vendorDeps.processAllDependencies()
+    local answer
+    repeat
+       io.write("This will fetch and rebuild all dependencies, and may take a long time. \n")
+       io.write("Continue with this operation (yes/n)? ")
+       io.flush()
+       answer=io.read()
+    until answer=="yes" or answer=="n"
+    if answer == "yes" then
+        print("Operation continued.")
+        local vendorDeps = require "dependencies"
+        vendorDeps.processDependencies()
+    elseif answer == "n" then
+        print("Operation aborted.")
+    end
 end
