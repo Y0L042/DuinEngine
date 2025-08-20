@@ -1,17 +1,17 @@
-#include "EditorWorld.h"
+#include "SceneWorld.h"
 #include <fstream>
 #include <Duin/IO/IOModule.h>
 
-EditorWorld::EditorWorld()
+SceneWorld::SceneWorld()
 {
 
 }
 
-EditorWorld::~EditorWorld()
+SceneWorld::~SceneWorld()
 {
 }
 
-void EditorWorld::LoadEntitiesFromFile(std::string filePath)
+void SceneWorld::LoadEntitiesFromFile(std::string filePath)
 {
 	std::string entities_json;
 	if (duin::FileUtils::ReadFileIntoString(filePath, entities_json)) {
@@ -22,7 +22,7 @@ void EditorWorld::LoadEntitiesFromFile(std::string filePath)
 	}
 }
 
-void EditorWorld::SaveEntitiesToFile(std::string filePath)
+void SceneWorld::SaveEntitiesToFile(std::string filePath)
 {
 	std::string ecs_json = static_cast<std::string>(ecs.world.to_json());
 	if (!duin::FileUtils::WriteStringIntoFile(filePath, ecs_json)) {

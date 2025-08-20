@@ -79,6 +79,11 @@ std::shared_ptr<PanelManager> Tab::CreatePanelManager(duin::DataValue value)
     return pm;
 }
 
+std::shared_ptr<SceneWorld> Tab::GetSceneWorld()
+{
+    return sceneWorld;
+}
+
 void Tab::ProcessBlackboard()
 {
     blackboard = std::make_shared<TabBlackboard>();
