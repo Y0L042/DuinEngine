@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vector_0',['Vector',['../classduin_1_1LookupVector.html#ace49bd52a2a6f28522a4400abadd0024',1,'duin::LookupVector']]]
+  ['packedabgr_0',['PackedABGR',['../structduin_1_1Color.html#a577160c0c964f954e42d38bc0ed986ae',1,'duin::Color']]]
 ];

@@ -132,6 +132,8 @@ Collaboration diagram for duin::DynamicBody:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acff12308b3bba83baa53ac2e8a71af67" id="r_acff12308b3bba83baa53ac2e8a71af67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#acff12308b3bba83baa53ac2e8a71af67">DynamicBody</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> collisionShape)</td></tr>
 <tr class="separator:acff12308b3bba83baa53ac2e8a71af67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a332e58ab64055d1473caca31239483ba" id="r_a332e58ab64055d1473caca31239483ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a332e58ab64055d1473caca31239483ba">DynamicBody</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, CollisionGeometryVariant geometry, <a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a> material)</td></tr>
+<tr class="separator:a332e58ab64055d1473caca31239483ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0ca8d947dc501bc2647580f9d9fc88d" id="r_ad0ca8d947dc501bc2647580f9d9fc88d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#ad0ca8d947dc501bc2647580f9d9fc88d">GetPosition</a> () override</td></tr>
 <tr class="separator:ad0ca8d947dc501bc2647580f9d9fc88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4647ba167bfe9aace314b2b883b44c15" id="r_a4647ba167bfe9aace314b2b883b44c15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1Vector4.html">Quaternion</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a4647ba167bfe9aace314b2b883b44c15">GetRotation</a> ()</td></tr>
@@ -156,13 +158,15 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a725e86c58a4fa273431b8815ced4c8bf" id="r_a725e86c58a4fa273431b8815ced4c8bf"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1DynamicBody.html">DynamicBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a725e86c58a4fa273431b8815ced4c8bf">Create</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> collisionShape)</td></tr>
 <tr class="separator:a725e86c58a4fa273431b8815ced4c8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95bb71f093b91dd25846140dd0edf66a" id="r_a95bb71f093b91dd25846140dd0edf66a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1DynamicBody.html">DynamicBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a95bb71f093b91dd25846140dd0edf66a">Create</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, CollisionGeometryVariant geometry, <a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a> material)</td></tr>
+<tr class="separator:a95bb71f093b91dd25846140dd0edf66a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="DynamicBody_8h_source.html#l00014">14</a> of file <a class="el" href="DynamicBody_8h_source.html">DynamicBody.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acff12308b3bba83baa53ac2e8a71af67" name="acff12308b3bba83baa53ac2e8a71af67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acff12308b3bba83baa53ac2e8a71af67">&#9670;&#160;</a></span>DynamicBody()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acff12308b3bba83baa53ac2e8a71af67">&#9670;&#160;</a></span>DynamicBody() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,7 +191,43 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00016">16</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00021">21</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a332e58ab64055d1473caca31239483ba" name="a332e58ab64055d1473caca31239483ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a332e58ab64055d1473caca31239483ba">&#9670;&#160;</a></span>DynamicBody() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">duin::DynamicBody::DynamicBody </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structduin_1_1Transform3D.html">Transform3D</a>&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CollisionGeometryVariant&#160;</td>
+          <td class="paramname"><em>geometry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a>&#160;</td>
+          <td class="paramname"><em>material</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00034">34</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -206,13 +246,57 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00028">28</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00046">46</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a95bb71f093b91dd25846140dd0edf66a" name="a95bb71f093b91dd25846140dd0edf66a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95bb71f093b91dd25846140dd0edf66a">&#9670;&#160;</a></span>Create() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1DynamicBody.html">DynamicBody</a> &gt; duin::DynamicBody::Create </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structduin_1_1Transform3D.html">Transform3D</a>&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CollisionGeometryVariant&#160;</td>
+          <td class="paramname"><em>geometry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a>&#160;</td>
+          <td class="paramname"><em>material</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00016">16</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a725e86c58a4fa273431b8815ced4c8bf" name="a725e86c58a4fa273431b8815ced4c8bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a725e86c58a4fa273431b8815ced4c8bf">&#9670;&#160;</a></span>Create()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a725e86c58a4fa273431b8815ced4c8bf">&#9670;&#160;</a></span>Create() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,7 +358,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classduin_1_1PhysicsObject.html">duin::PhysicsObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00036">36</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00054">54</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -293,7 +377,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00041">41</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00059">59</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>

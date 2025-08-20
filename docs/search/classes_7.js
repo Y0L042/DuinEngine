@@ -215,6 +215,11 @@ var searchData=
   ['imvector_3c_20mydocument_20_3e_212',['ImVector&lt; MyDocument &gt;',['../structImVector.html',1,'']]],
   ['imvector_3c_20sdl_5fgamepad_20_2a_20_3e_213',['ImVector&lt; SDL_Gamepad * &gt;',['../structImVector.html',1,'']]],
   ['imvector_3c_20unsigned_20char_20_3e_214',['ImVector&lt; unsigned char &gt;',['../structImVector.html',1,'']]],
-  ['inputevent_215',['InputEvent',['../classduin_1_1InputEvent.html',1,'duin']]],
-  ['inputvector2dkeys_216',['InputVector2DKeys',['../structInputVector2DKeys.html',1,'']]]
+  ['inputaction_215',['InputAction',['../structduin_1_1InputAction.html',1,'duin']]],
+  ['inputbinding_216',['InputBinding',['../structduin_1_1InputBinding.html',1,'duin']]],
+  ['inputdevice_217',['InputDevice',['../structduin_1_1InputDevice.html',1,'duin']]],
+  ['inputdevice_5fkeyboard_218',['InputDevice_Keyboard',['../structduin_1_1InputDevice__Keyboard.html',1,'duin']]],
+  ['inputdevice_5fmouse_219',['InputDevice_Mouse',['../structduin_1_1InputDevice__Mouse.html',1,'duin']]],
+  ['inputevent_220',['InputEvent',['../classduin_1_1InputEvent.html',1,'duin']]],
+  ['inputvector2dkeys_221',['InputVector2DKeys',['../structInputVector2DKeys.html',1,'']]]
 ];

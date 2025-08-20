@@ -109,19 +109,24 @@ $(document).ready(function(){initNavTree('classduin_1_1Signal.html',''); initRes
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classduin_1_1Signal-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">duin::Signal&lt; types &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a1dbb5d8c74af75932603dbcaa009ae39" id="r_a1dbb5d8c74af75932603dbcaa009ae39"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#a1dbb5d8c74af75932603dbcaa009ae39">Listener</a> = std::pair&lt; <a class="el" href="classduin_1_1UUID.html">UUID</a>, std::function&lt; void(types...)&gt; &gt;</td></tr>
+<tr class="separator:a1dbb5d8c74af75932603dbcaa009ae39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a509995a975d49fdc7fe8a09ba4b94974" id="r_a509995a975d49fdc7fe8a09ba4b94974"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#a509995a975d49fdc7fe8a09ba4b94974">Connect</a> (std::function&lt; void(types...)&gt; callback)</td></tr>
-<tr class="separator:a509995a975d49fdc7fe8a09ba4b94974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef11ddd14fd6b183bbb23a6345e2c12d" id="r_aef11ddd14fd6b183bbb23a6345e2c12d"><td class="memItemLeft" align="right" valign="top"><a id="aef11ddd14fd6b183bbb23a6345e2c12d" name="aef11ddd14fd6b183bbb23a6345e2c12d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Disconnect</b> (std::function&lt; void(types...)&gt;)</td></tr>
-<tr class="separator:aef11ddd14fd6b183bbb23a6345e2c12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0cd0f876530cda5cee9f4683336a944" id="r_ae0cd0f876530cda5cee9f4683336a944"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">Connect</a> (std::function&lt; void(types...)&gt; callback)</td></tr>
+<tr class="separator:ae0cd0f876530cda5cee9f4683336a944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa623b253e57b0dbc493c6478d5c05093" id="r_aa623b253e57b0dbc493c6478d5c05093"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#aa623b253e57b0dbc493c6478d5c05093">Disconnect</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:aa623b253e57b0dbc493c6478d5c05093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0d3d6e3a9efebc1bc61d15b500a35b6" id="r_af0d3d6e3a9efebc1bc61d15b500a35b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a> (types... args)</td></tr>
 <tr class="separator:af0d3d6e3a9efebc1bc61d15b500a35b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa09bccea9fb3078cd90269ecf314ac7a" id="r_aa09bccea9fb3078cd90269ecf314ac7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">GetUUID</a> ()</td></tr>
@@ -131,9 +136,28 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>Disconnect</b> (std::
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... types&gt;<br />
 class duin::Signal&lt; types &gt;</div>
 <p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00011">11</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a509995a975d49fdc7fe8a09ba4b94974" name="a509995a975d49fdc7fe8a09ba4b94974"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a509995a975d49fdc7fe8a09ba4b94974">&#9670;&#160;</a></span>Connect()</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a1dbb5d8c74af75932603dbcaa009ae39" name="a1dbb5d8c74af75932603dbcaa009ae39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dbb5d8c74af75932603dbcaa009ae39">&#9670;&#160;</a></span>Listener</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... types&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Listener =  std::pair&lt;<a class="el" href="classduin_1_1UUID.html">UUID</a>, std::function&lt;void(types...)&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00014">14</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae0cd0f876530cda5cee9f4683336a944" name="ae0cd0f876530cda5cee9f4683336a944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0cd0f876530cda5cee9f4683336a944">&#9670;&#160;</a></span>Connect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +168,7 @@ template&lt;typename... types&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Connect </td>
+          <td class="memname"><a class="el" href="classduin_1_1UUID.html">UUID</a> <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Connect </td>
           <td>(</td>
           <td class="paramtype">std::function&lt; void(types...)&gt;&#160;</td>
           <td class="paramname"><em>callback</em></td><td>)</td>
@@ -158,7 +182,37 @@ template&lt;typename... types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00014">14</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00016">16</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+
+</div>
+</div>
+<a id="aa623b253e57b0dbc493c6478d5c05093" name="aa623b253e57b0dbc493c6478d5c05093"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa623b253e57b0dbc493c6478d5c05093">&#9670;&#160;</a></span>Disconnect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... types&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Disconnect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td>
+          <td class="paramname"><em>uuid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00024">24</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
@@ -188,7 +242,7 @@ template&lt;typename... types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00021">21</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00038">38</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
@@ -217,7 +271,7 @@ template&lt;typename... types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00028">28</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00047">47</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>

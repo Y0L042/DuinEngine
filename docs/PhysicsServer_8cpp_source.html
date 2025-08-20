@@ -150,73 +150,71 @@ $(document).ready(function(){initNavTree('PhysicsServer_8cpp_source.html',''); i
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordflow">if</span> (pxFoundation == <span class="keyword">nullptr</span>)</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxFoundation creation failed!&quot;</span>);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#ifdef DEBUG</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        pxPvd = physx::PxCreatePvd(*pxFoundation);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">if</span> (pxPvd == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxPvd creation failed!&quot;</span>);</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 5425, 10);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">if</span> (transport == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxPvd transport creation failed!&quot;</span>);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        pxPvd-&gt;connect(*transport, physx::PxPvdInstrumentationFlag::eALL);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        pxPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), <span class="keyword">true</span>, pxPvd);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordflow">if</span> (pxPhysics == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxPhysics creation failed!&quot;</span>);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        physx::PxSceneDesc sceneDesc(pxPhysics-&gt;getTolerancesScale());</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        sceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        pxDispatcher = physx::PxDefaultCpuDispatcherCreate(2);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordflow">if</span> (pxDispatcher == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxDefaultCPUDispatcher creation failed!&quot;</span>);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        sceneDesc.cpuDispatcher = pxDispatcher;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        pxScene = pxPhysics-&gt;createScene(sceneDesc);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordflow">if</span> (pxScene == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxScene creation failed!&quot;</span>);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        pxMaterial = pxPhysics-&gt;createMaterial(0.5f, 0.5f, 0.6f);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">if</span> (pxMaterial == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Default PxMaterial creation failed!&quot;</span>);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#ifdef DEBUG</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        physx::PxPvdSceneClient* pvdClient = pxScene-&gt;getScenePvdClient();</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">if</span> (pvdClient)</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        {</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            pvdClient-&gt;setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            pvdClient-&gt;setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            pvdClient-&gt;setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        }</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        pxControllerManager = PxCreateControllerManager(*pxScene);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">if</span> (pxControllerManager == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxControllerManager creation failed!&quot;</span>);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordtype">void</span> PhysicsServer::Clean()</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    {</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        PX_RELEASE(pxScene);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        PX_RELEASE(pxDispatcher);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        PX_RELEASE(pxPhysics);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordflow">if</span> (pxPvd) {</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            physx::PxPvdTransport* transport = pxPvd-&gt;getTransport();</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            PX_RELEASE(pxPvd);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            PX_RELEASE(transport);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        }</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="comment">//pxControllerManager-&gt;purgeControllers();</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <span class="comment">//PX_RELEASE(pxControllerManager);</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        PX_RELEASE(pxFoundation);</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    }</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordtype">void</span> PhysicsServer::StepPhysics(<span class="keywordtype">double</span> delta)</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    {</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        pxScene-&gt;simulate((<span class="keywordtype">float</span>)delta);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        pxScene-&gt;fetchResults(<span class="keyword">true</span>);</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    }</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>}</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        pxPvd = physx::PxCreatePvd(*pxFoundation);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">if</span> (pxPvd == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxPvd creation failed!&quot;</span>);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 5425, 10);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">if</span> (transport == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxPvd transport creation failed!&quot;</span>);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        pxPvd-&gt;connect(*transport, physx::PxPvdInstrumentationFlag::eALL);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        pxPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), <span class="keyword">true</span>, pxPvd);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">if</span> (pxPhysics == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxPhysics creation failed!&quot;</span>);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        physx::PxSceneDesc sceneDesc(pxPhysics-&gt;getTolerancesScale());</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        sceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        pxDispatcher = physx::PxDefaultCpuDispatcherCreate(2);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">if</span> (pxDispatcher == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxDefaultCPUDispatcher creation failed!&quot;</span>);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        sceneDesc.cpuDispatcher = pxDispatcher;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        pxScene = pxPhysics-&gt;createScene(sceneDesc);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordflow">if</span> (pxScene == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxScene creation failed!&quot;</span>);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        pxMaterial = pxPhysics-&gt;createMaterial(0.5f, 0.5f, 0.6f);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordflow">if</span> (pxMaterial == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Default PxMaterial creation failed!&quot;</span>);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#ifdef DEBUG</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        physx::PxPvdSceneClient* pvdClient = pxScene-&gt;getScenePvdClient();</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">if</span> (pvdClient)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            pvdClient-&gt;setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            pvdClient-&gt;setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            pvdClient-&gt;setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        pxControllerManager = PxCreateControllerManager(*pxScene);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keywordflow">if</span> (pxControllerManager == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;PxControllerManager creation failed!&quot;</span>);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordtype">void</span> PhysicsServer::Clean()</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        PX_RELEASE(pxScene);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        PX_RELEASE(pxDispatcher);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        PX_RELEASE(pxPhysics);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordflow">if</span> (pxPvd) {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            physx::PxPvdTransport* transport = pxPvd-&gt;getTransport();</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            PX_RELEASE(pxPvd);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            PX_RELEASE(transport);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="comment">//pxControllerManager-&gt;purgeControllers();</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="comment">//PX_RELEASE(pxControllerManager);</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        PX_RELEASE(pxFoundation);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    }</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordtype">void</span> PhysicsServer::StepPhysics(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        pxScene-&gt;simulate((<span class="keywordtype">float</span>)delta);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        pxScene-&gt;fetchResults(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    }</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

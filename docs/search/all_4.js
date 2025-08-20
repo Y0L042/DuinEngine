@@ -1,7 +1,7 @@
 var searchData=
 [
   ['ecsmanager_0',['ECSManager',['../classduin_1_1ECSManager.html',1,'duin']]],
-  ['enginehandleinputs_1',['EngineHandleInputs',['../classduin_1_1Application.html#a2d9cae7e86ade8e8915c200f33ad6395',1,'duin::Application']]],
+  ['engineonevent_1',['EngineOnEvent',['../classduin_1_1Application.html#a1f30aa58a92eef323440f56880e8d0cf',1,'duin::Application']]],
   ['event_2',['Event',['../classduin_1_1Event.html',1,'duin']]],
   ['eventhandler_3',['EventHandler',['../classduin_1_1EventHandler.html',1,'duin']]],
   ['exampleappconsole_4',['ExampleAppConsole',['../structExampleAppConsole.html',1,'']]],

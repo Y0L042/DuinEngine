@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['enginehandleinputs_0',['EngineHandleInputs',['../classduin_1_1Application.html#a2d9cae7e86ade8e8915c200f33ad6395',1,'duin::Application']]]
+  ['datavalue_0',['DataValue',['../classduin_1_1DataValue.html#ae071c34ed27aeb979849e73080417cfb',1,'duin::DataValue']]]
 ];

@@ -1,0 +1,21 @@
+<map id="duin::RenderState" name="duin::RenderState">
+<area shape="rect" id="Node000001" title=" " alt="" coords="264,361,403,387"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1RenderTexture.html" title=" " alt="" coords="103,259,255,284"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,289,317,359,314,364,206,294"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title=" " alt="" coords="82,73,174,99"/>
+<area shape="poly" id="edge11_Node000001_Node000003" title=" " alt="" coords="103,109,65,144,29,189,16,213,9,237,10,260,21,282,36,296,59,308,122,331,195,348,264,360,263,366,194,353,120,336,57,313,33,300,17,286,5,262,4,236,11,211,24,186,61,140,100,106"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,112,133,170,140,202,150,233,168,257,163,260,146,236,135,204,128,170,125,113"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="152,64,169,60,185,62,196,71,201,86,195,103,179,111,160,111,140,101,142,96,161,105,178,106,191,100,195,86,192,74,183,67,169,65,154,69"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1Camera.html" title="The struct for the primitive camera. The camera uses an orthogonal axis system of FORWARD,..." alt="" coords="279,259,388,284"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="153,106,322,257,319,261,150,110"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="336,298,336,361,331,361,331,298"/>
+<area shape="rect" id="Node000005" href="$structduin_1_1Vector3.html" title=" " alt="" coords="280,73,387,99"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="336,112,336,259,331,259,331,112"/>
+<area shape="poly" id="edge7_Node000005_Node000005" title=" " alt="" coords="359,64,378,60,395,62,408,71,413,86,407,103,390,111,368,111,347,101,349,96,370,105,389,106,403,100,408,86,404,74,394,67,378,65,361,69"/>
+<area shape="rect" id="Node000006" href="$structduin_1_1DebugDrawState.html" title=" " alt="" coords="412,259,580,284"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="467,294,393,340,354,364,351,359,391,335,464,289"/>
+<area shape="rect" id="Node000007" href="$structDebugDrawEncoder.html" title=" " alt="" coords="494,73,645,99"/>
+<area shape="poly" id="edge9_Node000006_Node000007" title=" " alt="" coords="562,113,503,260,498,258,557,111"/>
+<area shape="rect" id="Node000008" href="$structduin_1_1Matrix.html" title=" " alt="" coords="605,259,705,284"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="632,295,598,319,557,340,479,361,403,372,403,367,478,356,555,335,595,314,629,291"/>
+</map>

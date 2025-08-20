@@ -312,7 +312,7 @@ $(document).ready(function(){initNavTree('ECSManager_8cpp_source.html',''); init
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                          <span class="keywordflow">if</span> (globalObserver.is_valid()) {</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                              globalObserver.disable();</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                              <span class="comment">// DN_CORE_INFO(&quot;syncinc global&quot;);</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                              Vector3 gPos = it.entity(i).get&lt;ECSComponent::Position3D, ECSTag::Global&gt;()-&gt;value;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                              Vector3 gPos = it.entity(i).try_get&lt;ECSComponent::Position3D, ECSTag::Global&gt;()-&gt;value;</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                              it.entity(i).set&lt;ECSComponent::Position3D, ECSTag::Global&gt;({{0.0f, 0.0f, 0.0f}});</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                              globalObserver.enable();</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                          }</div>
@@ -338,7 +338,7 @@ $(document).ready(function(){initNavTree('ECSManager_8cpp_source.html',''); init
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>};</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="comment">/*----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="comment">//  ECSManager Functions</span></div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="comment">/*----------------------------------------------------------------------------*/</span></div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keywordtype">void</span> ECSManager::Initialize()</div>
@@ -432,16 +432,16 @@ $(document).ready(function(){initNavTree('ECSManager_8cpp_source.html',''); init
 <div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                <span class="keywordtype">double</span> delta = GetPhysicsFrameTime();</div>
 <div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());</div>
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                Vector3 oldPos = cb.characterBody-&gt;GetFootPosition();</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                cb.characterBody-&gt;Move(vDelta, delta);</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                Vector3 newPos = cb.characterBody-&gt;GetFootPosition();</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                Vector3 oldPos = cb.body-&gt;GetFootPosition();</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                cb.body-&gt;Move(vDelta, delta);</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                Vector3 newPos = cb.body-&gt;GetFootPosition();</div>
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> </div>
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                <span class="comment">// add distance between current globalPos (old) and pxBody global pos (new) to localPos</span></div>
 <div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>                Vector3 globalDelta = Vector3Subtract(newPos, ECSComponent::Transform3D::GetGlobalPosition(e));</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>                Vector3 newLocalPos = Vector3Add(globalDelta, tx.GetPosition()); </div>
 <div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>                tx.SetPosition(newLocalPos);</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>                velocity.value = cb.characterBody-&gt;GetCurrentVelocity();</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>                velocity.value = cb.body-&gt;GetCurrentVelocity();</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
 <div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>                <span class="comment">// If autostep has happened, cap Y velocity</span></div>
 <div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>                Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);</div>
@@ -466,9 +466,9 @@ $(document).ready(function(){initNavTree('ECSManager_8cpp_source.html',''); init
 <div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                <span class="keyword">const</span> ECSComponent::DynamicBodyComponent&amp; dynamicBodyComponent,</div>
 <div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>                ECSComponent::Transform3D&amp; tx</div>
 <div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>            ) {</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>               Vector3 newGPos = dynamicBodyComponent.dynamicBody-&gt;GetPosition();</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>               Vector3 newGPos = dynamicBodyComponent.body-&gt;GetPosition();</div>
 <div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>               ECSComponent::Transform3D::SetGlobalPosition(e, newGPos);</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>               Quaternion newGRot = dynamicBodyComponent.dynamicBody-&gt;GetRotation();</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>               Quaternion newGRot = dynamicBodyComponent.body-&gt;GetRotation();</div>
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>               ECSComponent::Transform3D::SetGlobalRotation(e, newGRot);</div>
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            });</div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    }</div>

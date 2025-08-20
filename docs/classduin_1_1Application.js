@@ -1,4 +1,4 @@
 var classduin_1_1Application =
 [
-    [ "EngineHandleInputs", "classduin_1_1Application.html#a2d9cae7e86ade8e8915c200f33ad6395", null ]
+    [ "EngineOnEvent", "classduin_1_1Application.html#a1f30aa58a92eef323440f56880e8d0cf", null ]
 ];

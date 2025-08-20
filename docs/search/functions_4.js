@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['map_0',['Map',['../classduin_1_1LookupVector.html#ae91b8658393f025a86ff60428cb9f5d6',1,'duin::LookupVector']]]
+  ['insert_0',['Insert',['../classduin_1_1LookupVector.html#ac64d8aa6cbea33af79813152a25db5d7',1,'duin::LookupVector']]]
 ];

@@ -110,6 +110,7 @@ $(document).ready(function(){initNavTree('classduin_1_1UUID.html',''); initResiz
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classduin_1_1UUID-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">duin::UUID Class Reference</div></div>
@@ -136,6 +137,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a318030f33f00457480df84cea31612a1" id="r_a318030f33f00457480df84cea31612a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1UUID.html#a318030f33f00457480df84cea31612a1">operator uint64_t</a> () const</td></tr>
 <tr class="separator:a318030f33f00457480df84cea31612a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ac29335c4d03a825b3974ef1224aa5a14" id="r_ac29335c4d03a825b3974ef1224aa5a14"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1UUID.html#ac29335c4d03a825b3974ef1224aa5a14">ToStringDec</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:ac29335c4d03a825b3974ef1224aa5a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2a1fb40d47fd40cf38d5c6c3500219b" id="r_ab2a1fb40d47fd40cf38d5c6c3500219b"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1UUID.html#ab2a1fb40d47fd40cf38d5c6c3500219b">ToStringHex</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:ab2a1fb40d47fd40cf38d5c6c3500219b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05f5aa763a0b78020b37dde4ad98b335" id="r_a05f5aa763a0b78020b37dde4ad98b335"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1UUID.html#a05f5aa763a0b78020b37dde4ad98b335">FromStringDec</a> (const std::string &amp;string)</td></tr>
+<tr class="separator:a05f5aa763a0b78020b37dde4ad98b335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae531761f9eff5ad3b4768d9d76f44583" id="r_ae531761f9eff5ad3b4768d9d76f44583"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1UUID.html#ae531761f9eff5ad3b4768d9d76f44583">FromStringHex</a> (const std::string &amp;string)</td></tr>
+<tr class="separator:ae531761f9eff5ad3b4768d9d76f44583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a0ac3b4683f651097612a519f76209990" id="r_a0ac3b4683f651097612a519f76209990"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1UUID.html#a0ac3b4683f651097612a519f76209990">INVALID</a> = 0</td></tr>
@@ -143,7 +155,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00008">8</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00009">9</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a56b6dfa8d38418093502ad169a814dfb" name="a56b6dfa8d38418093502ad169a814dfb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a56b6dfa8d38418093502ad169a814dfb">&#9670;&#160;</a></span>UUID() <span class="overload">[1/2]</span></h2>
@@ -160,7 +172,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00013">13</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00018">18</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
 
 </div>
 </div>
@@ -180,7 +192,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00018">18</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00023">23</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
 
 </div>
 </div>
@@ -199,11 +211,67 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00023">23</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00028">28</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a05f5aa763a0b78020b37dde4ad98b335" name="a05f5aa763a0b78020b37dde4ad98b335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05f5aa763a0b78020b37dde4ad98b335">&#9670;&#160;</a></span>FromStringDec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classduin_1_1UUID.html">UUID</a> UUID::FromStringDec </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>string</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00041">41</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae531761f9eff5ad3b4768d9d76f44583" name="ae531761f9eff5ad3b4768d9d76f44583"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae531761f9eff5ad3b4768d9d76f44583">&#9670;&#160;</a></span>FromStringHex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classduin_1_1UUID.html">UUID</a> UUID::FromStringHex </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>string</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00064">64</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a318030f33f00457480df84cea31612a1" name="a318030f33f00457480df84cea31612a1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a318030f33f00457480df84cea31612a1">&#9670;&#160;</a></span>operator uint64_t()</h2>
 
@@ -227,7 +295,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00027">27</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00033">33</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
 
 </div>
 </div>
@@ -255,7 +323,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00022">22</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00028">28</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
 
 </div>
 </div>
@@ -283,7 +351,63 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00017">17</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00023">23</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
+
+</div>
+</div>
+<a id="ac29335c4d03a825b3974ef1224aa5a14" name="ac29335c4d03a825b3974ef1224aa5a14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac29335c4d03a825b3974ef1224aa5a14">&#9670;&#160;</a></span>ToStringDec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string UUID::ToStringDec </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td>
+          <td class="paramname"><em>uuid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00032">32</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab2a1fb40d47fd40cf38d5c6c3500219b" name="ab2a1fb40d47fd40cf38d5c6c3500219b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2a1fb40d47fd40cf38d5c6c3500219b">&#9670;&#160;</a></span>ToStringHex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string UUID::ToStringHex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td>
+          <td class="paramname"><em>uuid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="UUID_8cpp_source.html#l00055">55</a> of file <a class="el" href="UUID_8cpp_source.html">UUID.cpp</a>.</p>
 
 </div>
 </div>
@@ -308,7 +432,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00011">11</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="UUID_8h_source.html#l00012">12</a> of file <a class="el" href="UUID_8h_source.html">UUID.h</a>.</p>
 
 </div>
 </div>

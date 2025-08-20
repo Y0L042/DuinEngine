@@ -27,7 +27,6 @@ var NAVTREE =
   [ "Duin", "index.html", [
     [ "ReadMe", "index.html", null ],
     [ "Physics", "page_Physics.html", null ],
-    [ "TODO", "md_docs_2TODO.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -46,7 +45,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"structImGuiBoxSelectState.html"
+"structExampleMemberInfo.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

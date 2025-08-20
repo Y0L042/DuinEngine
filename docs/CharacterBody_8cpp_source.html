@@ -201,7 +201,7 @@ $(document).ready(function(){initNavTree('CharacterBody_8cpp_source.html',''); i
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        Vector3 newPos = Vector3(pxController-&gt;getPosition());</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        currentVelocity = Vector3Scale(distanceMoved, 1.0f / timeSinceLastMove);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        currentVelocity = Vector3Scale(distanceMoved, (<span class="keywordtype">float</span>)(1.0 / timeSinceLastMove));</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        OnFloorShapeCast(timeSinceLastMove);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>

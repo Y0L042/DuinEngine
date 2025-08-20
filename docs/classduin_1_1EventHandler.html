@@ -118,8 +118,10 @@ $(document).ready(function(){initNavTree('classduin_1_1EventHandler.html',''); i
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1348487de0b67a9920193b5f0b80026a" id="r_a1348487de0b67a9920193b5f0b80026a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1EventHandler.html#a1348487de0b67a9920193b5f0b80026a">RegisterInputEventListener</a> (std::function&lt; void(<a class="el" href="classduin_1_1InputEvent.html">InputEvent</a>)&gt; listener)</td></tr>
-<tr class="separator:a1348487de0b67a9920193b5f0b80026a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a411010a6d6654f54e896e3e87ed5d1c8" id="r_a411010a6d6654f54e896e3e87ed5d1c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1EventHandler.html#a411010a6d6654f54e896e3e87ed5d1c8">IsCloseRequested</a> ()</td></tr>
+<tr class="separator:a411010a6d6654f54e896e3e87ed5d1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae815faf18ba95fcd9898de2abb96d727" id="r_ae815faf18ba95fcd9898de2abb96d727"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727">RegisterInputEventListener</a> (std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; listener)</td></tr>
+<tr class="separator:ae815faf18ba95fcd9898de2abb96d727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -166,7 +168,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00022">22</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00026">26</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,12 +224,31 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00024">24</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00035">35</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a1348487de0b67a9920193b5f0b80026a" name="a1348487de0b67a9920193b5f0b80026a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1348487de0b67a9920193b5f0b80026a">&#9670;&#160;</a></span>RegisterInputEventListener()</h2>
+<a id="a411010a6d6654f54e896e3e87ed5d1c8" name="a411010a6d6654f54e896e3e87ed5d1c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a411010a6d6654f54e896e3e87ed5d1c8">&#9670;&#160;</a></span>IsCloseRequested()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::EventHandler::IsCloseRequested </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00028">28</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae815faf18ba95fcd9898de2abb96d727" name="ae815faf18ba95fcd9898de2abb96d727"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae815faf18ba95fcd9898de2abb96d727">&#9670;&#160;</a></span>RegisterInputEventListener()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,14 +256,14 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void duin::EventHandler::RegisterInputEventListener </td>
           <td>(</td>
-          <td class="paramtype">std::function&lt; void(<a class="el" href="classduin_1_1InputEvent.html">InputEvent</a>)&gt;&#160;</td>
+          <td class="paramtype">std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt;&#160;</td>
           <td class="paramname"><em>listener</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00034">34</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="EventHandler_8cpp_source.html#l00049">49</a> of file <a class="el" href="EventHandler_8cpp_source.html">EventHandler.cpp</a>.</p>
 
 </div>
 </div>
