@@ -17,6 +17,7 @@ extern duin::DebugConsole debugConsole;
 extern duin::DebugWatchlist debugWatchlist;
 extern duin::StateMachine mainStateMachine;
 
+extern std::shared_ptr<duin::JSONValue> PROJECT_DATA;
 
 void SetActiveProject(Project project);
 Project& GetActiveProject();

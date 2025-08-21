@@ -58,9 +58,44 @@ void PanelManager::Deserialise(duin::JSONValue data)
     for (auto item : panelsArray) {
         if (!item.HasMember(guitag::PANEL_TYPE)) continue;
         std::string typeStr = item[guitag::PANEL_TYPE].GetString();
-        PanelType type = (PanelType)std::stoi(typeStr.c_str());
+        PanelType type = PanelManager::NameToPanelType(typeStr);
         CreatePanel(type, item);
     }
+}
+
+std::string PanelManager::PanelTypeToName(PanelType type)
+{
+    std::string panelName = "";
+    switch (type) {
+    case INVALID:
+        panelName = "INVALID";
+        break;
+    case DEFAULT:
+        panelName = "DEFAULT";
+        break;
+    case SCENETREE:
+        panelName = "SCENETREE";
+        break;
+    case VIEWPORT:
+        panelName = "VIEWPORT";
+        break;
+    default:
+        panelName = "__EMPTY__";
+        break;  
+    }
+
+    return panelName;
+}
+
+PanelType PanelManager::NameToPanelType(const std::string& name)
+{
+    PanelType type = DEFAULT;
+    if (name == "INVALID") type = INVALID;
+    if (name == "DEFAULT") type = DEFAULT;
+    if (name == "SCENETREE") type = SCENETREE;
+    if (name == "VIEWPORT") type = VIEWPORT;
+
+    return type;
 }
 
 void PanelManager::DrawPanelMenu()

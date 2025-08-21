@@ -20,8 +20,8 @@ std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, duin::JSONValue value)
     auto tab = std::make_shared<Tab>();
     tab->SetOwner(owner);
     tab->ProcessBlackboard();
-    duin::JSONValue pmv = tab->Deserialise(value);
-    tab->CreatePanelManager(pmv);
+    duin::JSONValue panelManagerValue = tab->Deserialise(value);
+    tab->CreatePanelManager(panelManagerValue);
     return tab;
 }
 

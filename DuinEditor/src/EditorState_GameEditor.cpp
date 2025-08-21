@@ -44,17 +44,15 @@ void EditorState_GameEditor::Enter()
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING GameEditor");
 
     // Load editor tabs data
-    duin::JSONValue data = Editor::LoadProjectEditorConfig();
-    if (data.HasMember(guitag::EDITOR_CONFIG)) {
-        duin::JSONValue tabBrowserData = data[guitag::EDITOR_CONFIG];
+    duin::JSONValue projectData = Editor::LoadProjectEditorConfig();
+    if (projectData.HasMember(guitag::EDITOR_CONFIG)) {
+        duin::JSONValue tabBrowserData = projectData[guitag::EDITOR_CONFIG];
         tabBrowser.Init(tabBrowserData);
     }
     else {
         DN_WARN("Project has no EDITOR_CONFIG, creating new one...");
         tabBrowser.Init();
     }
-
-
 }
 
 void EditorState_GameEditor::OnEvent(duin::Event e)

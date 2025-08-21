@@ -27,7 +27,7 @@ duin::StateMachine mainStateMachine;
 
 FileManager fileManager;
 Project activeProject;
-duin::JSONValue projectData;
+std::shared_ptr<duin::JSONValue> PROJECT_DATA;
 
 Editor* Editor::instance = nullptr;
 
@@ -92,29 +92,29 @@ void Editor::SaveProjectEditorConfig(duin::JSONValue value)
     }
 
     if (value.IsReadValid() && !value.IsNull()) {
-        projectData.AddMember(guitag::EDITORVERSION, EDITOR_VERSION);
-        projectData.AddMember(guitag::ENGINEVERSION, ENGINE_VERSION);
-        projectData.AddMember(guitag::EDITOR_CONFIG, value);
+        PROJECT_DATA->AddMember(guitag::EDITORVERSION, EDITOR_VERSION);
+        PROJECT_DATA->AddMember(guitag::ENGINEVERSION, ENGINE_VERSION);
+        PROJECT_DATA->AddMember(guitag::EDITOR_CONFIG, value);
     }
 
-    ofs << duin::JSONValue::Write(projectData, true);
+    ofs << duin::JSONValue::Write((*PROJECT_DATA), true);
     ofs.close();
 }
 
 duin::JSONValue Editor::LoadProjectEditorConfig()
 {
     Project& project = GetActiveProject();
-    projectData = duin::JSONValue::Parse(project.GetPathAsString());
+    PROJECT_DATA = std::make_shared<duin::JSONValue>(duin::JSONValue::Parse(project.GetPathAsString()));
     
-    if (projectData.HasMember(guitag::EDITORVERSION)) {
-        PROJECT_EDITOR_VERSION = projectData[guitag::EDITORVERSION].GetInt();
+    if (PROJECT_DATA->HasMember(guitag::EDITORVERSION)) {
+        PROJECT_EDITOR_VERSION = (*PROJECT_DATA)[guitag::EDITORVERSION].GetInt();
     } else { PROJECT_EDITOR_VERSION = -1; }
 
-    if (projectData.HasMember(guitag::ENGINEVERSION)) {
-        PROJECT_EDITOR_VERSION = projectData[guitag::ENGINEVERSION].GetInt();
+    if (PROJECT_DATA->HasMember(guitag::ENGINEVERSION)) {
+        PROJECT_EDITOR_VERSION = (*PROJECT_DATA)[guitag::ENGINEVERSION].GetInt();
     } else { PROJECT_ENGINE_VERSION = -1; }
 
-    return projectData;
+    return (*PROJECT_DATA);
 }
 
 Project& GetActiveProject()

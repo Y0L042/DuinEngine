@@ -76,7 +76,7 @@ duin::UUID Panel::GetUUID()
 duin::JSONValue Panel::Serialise()
 {
     duin::JSONValue data;
-    const char c = '0' + static_cast<int>(type);
+    std::string c = PanelManager::PanelTypeToName(type);
     data.AddMember(guitag::PANEL_TYPE, c);
     data.AddMember(guitag::PANEL_UUID, duin::UUID::ToStringHex(uuid));
     data.AddMember(guitag::PANEL_NAME, panelName);
@@ -89,7 +89,7 @@ void Panel::Deserialise(duin::JSONValue data)
 {
     if (!data.HasMember(guitag::PANEL_TYPE)) return;
     std::string typeStr = data[guitag::PANEL_TYPE].GetString();
-    type = (PanelType)std::stoi(typeStr.c_str());
+    type = PanelManager::NameToPanelType(typeStr);
 
     if (!data.HasMember(guitag::PANEL_NAME)) return;
     panelName = data[guitag::PANEL_NAME].GetString();

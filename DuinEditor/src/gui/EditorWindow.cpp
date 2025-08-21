@@ -281,11 +281,6 @@ void EditorWindow::Deserialise(duin::JSONValue data)
     }
 
     duin::JSONValue tabsArray = data[guitag::TABS_KEY];
-    if (!tabsArray.IsArray()) {
-        DN_WARN("Tabs array is empty!");
-        return;
-    }
-
     tabs.clear();
     for (auto item : tabsArray) {
         DN_INFO("Tab item: \n{}\n", duin::JSONValue::Write(item));

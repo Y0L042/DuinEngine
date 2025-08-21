@@ -21,6 +21,9 @@ class PanelManager
         Tab* owner = nullptr;
         std::shared_ptr<TabBlackboard> blackboard = nullptr;
 
+        static std::string PanelTypeToName(PanelType type);
+        static PanelType NameToPanelType(const std::string& name);
+
         PanelManager() = default;
         PanelManager(std::string uuidHexString);
         PanelManager(duin::JSONValue value);
