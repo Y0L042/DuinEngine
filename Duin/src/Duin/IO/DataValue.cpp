@@ -31,7 +31,9 @@ namespace duin {
             DN_CORE_INFO("Document parsed into JSONValue.");
         } else {
             DN_CORE_WARN("Document parsing failed, JSONValue not an Object!");
+            dv.SetObject(); // Ensure that value is valid Object, even when parsing invalid files
         }
+
         return dv;
     }
 

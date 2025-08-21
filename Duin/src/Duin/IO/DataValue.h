@@ -198,6 +198,5 @@ namespace duin {
 
             JSONValue(std::shared_ptr<rapidjson::Document> document, rapidjson::Value *value = nullptr);
             JSONValue(std::shared_ptr<rapidjson::Document> document, const rapidjson::Value* value);
-
     };
 }
