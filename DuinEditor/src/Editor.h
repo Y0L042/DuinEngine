@@ -6,7 +6,7 @@
 
 namespace duin {
     class Event;
-    class DataValue;
+    class JSONValue;
 }
 
 class Editor : public duin::Application
@@ -26,8 +26,8 @@ class Editor : public duin::Application
         void DrawUI() override;
         void Debug() override;
 
-        static void SaveProjectEditorConfig(duin::DataValue value);
-        static duin::DataValue LoadProjectEditorConfig();
+        static void SaveProjectEditorConfig(duin::JSONValue value);
+        static duin::JSONValue LoadProjectEditorConfig();
 
 private:
     static Editor* instance;

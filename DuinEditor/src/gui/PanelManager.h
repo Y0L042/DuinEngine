@@ -23,14 +23,14 @@ class PanelManager
 
         PanelManager() = default;
         PanelManager(std::string uuidHexString);
-        PanelManager(duin::DataValue value);
+        PanelManager(duin::JSONValue value);
 
         void Init();
 
         void SetBlackboard(std::shared_ptr<TabBlackboard> b);
 
-        duin::DataValue Serialise(); // Serialise panels to toml value
-        void Deserialise(duin::DataValue value); // Deserialise panels from toml value
+        duin::JSONValue Serialise(); // Serialise panels to toml value
+        void Deserialise(duin::JSONValue value); // Deserialise panels from toml value
 
         template<typename... Args>
         void CreatePanel(PanelType type, Args... args)

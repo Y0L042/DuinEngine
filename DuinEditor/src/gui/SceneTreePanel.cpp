@@ -7,7 +7,7 @@ SceneTreePanel::SceneTreePanel(const std::string& name, PanelManager* panelManag
     Init();
 }
 
-SceneTreePanel::SceneTreePanel(duin::DataValue value)
+SceneTreePanel::SceneTreePanel(duin::JSONValue value)
     : Panel(value)
 {
     Deserialise(value);

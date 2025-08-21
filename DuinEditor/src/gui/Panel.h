@@ -45,7 +45,7 @@ class Panel
         Panel() = default;
         Panel(const std::string& name, PanelManager *panelManager);
         Panel(const std::string& name, duin::UUID uuid, PanelManager* panelManager);
-        Panel(duin::DataValue value);
+        Panel(duin::JSONValue value);
         virtual ~Panel() = default;
 
         void SetBlackboard(std::shared_ptr<TabBlackboard> b);
@@ -54,8 +54,8 @@ class Panel
         virtual void DrawContent() = 0; // Pure virtual - must be implemented by derived classes
         virtual void OnPanelEvent(PanelEvent e) {};
 
-        virtual duin::DataValue Serialise(); // Serialise panel
-        virtual void Deserialise(duin::DataValue value); // Deserialise panel
+        virtual duin::JSONValue Serialise(); // Serialise panel
+        virtual void Deserialise(duin::JSONValue value); // Deserialise panel
 
         void AddMenuItem(const std::string& menuName, const std::string& itemName, std::function<void()> callback);
         void AddSeparator(const std::string& menuName);

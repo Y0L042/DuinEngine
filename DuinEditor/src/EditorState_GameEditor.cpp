@@ -23,10 +23,9 @@ duin::Signal<> onDrawUISignal;
 
 void SaveProjectConfig()
 {
-    duin::DataValue dataValue = tabBrowser.Serialise();
+    duin::JSONValue dataValue = tabBrowser.Serialise();
     Editor::SaveProjectEditorConfig(dataValue);
 }
-
 
 EditorState_GameEditor::EditorState_GameEditor(duin::StateMachine& owner)
     : State(owner)
@@ -45,9 +44,9 @@ void EditorState_GameEditor::Enter()
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING GameEditor");
 
     // Load editor tabs data
-    duin::DataValue data = Editor::LoadProjectEditorConfig();
+    duin::JSONValue data = Editor::LoadProjectEditorConfig();
     if (data.HasMember(guitag::EDITOR_CONFIG)) {
-        duin::DataValue tabBrowserData = data[guitag::EDITOR_CONFIG];
+        duin::JSONValue tabBrowserData = data[guitag::EDITOR_CONFIG];
         tabBrowser.Init(tabBrowserData);
     }
     else {

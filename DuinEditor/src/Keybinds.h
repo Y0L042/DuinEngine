@@ -17,5 +17,5 @@ extern const char KEYBIND_HEAD[];
 /**
  * Make sure that data starts at KEYBIND_HEAD
  */
-void DeserialiseKeybinds(duin::DataValue keybinds);
-duin::DataValue SerialiseKeybinds();
+void DeserialiseKeybinds(duin::JSONValue keybinds);
+duin::JSONValue SerialiseKeybinds();

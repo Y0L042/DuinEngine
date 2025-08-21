@@ -17,17 +17,17 @@ public:
     duin::UUID GetUUID();
 
     void Init();
-    void Init(duin::DataValue value);
+    void Init(duin::JSONValue value);
 
-    duin::DataValue Serialise();
-    void Deserialise(duin::DataValue data);
+    duin::JSONValue Serialise();
+    void Deserialise(duin::JSONValue data);
 
     void Render();
 
 
     void CreateTab(const std::string& title);
     void AddTab(const std::string& title);
-    void AddTab(duin::DataValue data);
+    void AddTab(duin::JSONValue data);
     void CloseTab(int index);
 
 private:

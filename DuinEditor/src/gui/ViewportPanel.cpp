@@ -14,7 +14,7 @@ ViewportPanel::ViewportPanel(const std::string& name, PanelManager *panelManager
     Init();
 }
 
-ViewportPanel::ViewportPanel(duin::DataValue value)
+ViewportPanel::ViewportPanel(duin::JSONValue value)
     : Panel(value)
 {
     Deserialise(value);
@@ -40,7 +40,7 @@ void ViewportPanel::Init()
     mainCamera.UpdateTarget({ 0.0f, 0.0f, 0.0f });
 }
 
-void ViewportPanel::Deserialise(duin::DataValue value)
+void ViewportPanel::Deserialise(duin::JSONValue value)
 {
     DN_INFO("DOTO");
 }

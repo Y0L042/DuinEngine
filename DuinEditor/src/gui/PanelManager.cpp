@@ -7,7 +7,7 @@ PanelManager::PanelManager(std::string uuidHexString)
     : uuid(duin::UUID::FromStringHex(uuidHexString))
 {}
 
-PanelManager::PanelManager(duin::DataValue data)
+PanelManager::PanelManager(duin::JSONValue data)
 {
     Deserialise(data);
 }
@@ -22,12 +22,12 @@ void PanelManager::SetBlackboard(std::shared_ptr<TabBlackboard> b)
     blackboard = b;
 }
 
-duin::DataValue PanelManager::Serialise()
+duin::JSONValue PanelManager::Serialise()
 {
-    duin::DataValue data;
+    duin::JSONValue data;
     data.AddMember(guitag::PANELMANAGER_UUID, duin::UUID::ToStringHex(uuid));
 
-    duin::DataValue panelsArray;
+    duin::JSONValue panelsArray;
     panelsArray.SetArray();
 
     int i = 0;
@@ -42,7 +42,7 @@ duin::DataValue PanelManager::Serialise()
     return data;
 }
 
-void PanelManager::Deserialise(duin::DataValue data)
+void PanelManager::Deserialise(duin::JSONValue data)
 {
     if (!data.HasMember(guitag::PANELS_ARRAY_KEY)) {
         DN_WARN("No panels array found in data: \n{}\n", data.Write());
@@ -53,7 +53,7 @@ void PanelManager::Deserialise(duin::DataValue data)
         return;
     }
 
-    duin::DataValue panelsArray = data[guitag::PANELS_ARRAY_KEY];
+    duin::JSONValue panelsArray = data[guitag::PANELS_ARRAY_KEY];
     panels.clear();
     for (auto item : panelsArray) {
         if (!item.HasMember(guitag::PANEL_TYPE)) continue;

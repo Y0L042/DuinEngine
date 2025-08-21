@@ -11,9 +11,9 @@ class DefaultPanel : public Panel
 {
     public:
         DefaultPanel(const std::string& name, PanelManager *panelManager);
-        DefaultPanel(duin::DataValue value);
+        DefaultPanel(duin::JSONValue value);
 
-        void Deserialise(duin::DataValue value) override;
+        void Deserialise(duin::JSONValue value) override;
 
         void DrawContent() override;
     private:

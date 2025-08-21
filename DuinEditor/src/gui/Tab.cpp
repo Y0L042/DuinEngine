@@ -15,12 +15,12 @@ std::shared_ptr<Tab> Tab::Create(EditorWindow* owner)
     return tab;
 }
 
-std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, duin::DataValue value)
+std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, duin::JSONValue value)
 {
     auto tab = std::make_shared<Tab>();
     tab->SetOwner(owner);
     tab->ProcessBlackboard();
-    duin::DataValue pmv = tab->Deserialise(value);
+    duin::JSONValue pmv = tab->Deserialise(value);
     tab->CreatePanelManager(pmv);
     return tab;
 }
@@ -36,7 +36,7 @@ std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, const std::string& title)
     return tab;
 }
 
-Tab::Tab(duin::DataValue value)
+Tab::Tab(duin::JSONValue value)
 {
     Deserialise(value);
 }
@@ -69,7 +69,7 @@ std::shared_ptr<PanelManager> Tab::CreatePanelManager()
     return pm;
 }
 
-std::shared_ptr<PanelManager> Tab::CreatePanelManager(duin::DataValue value)
+std::shared_ptr<PanelManager> Tab::CreatePanelManager(duin::JSONValue value)
 {
     auto pm = std::make_shared<PanelManager>();
     pm->SetBlackboard(blackboard);
@@ -96,9 +96,9 @@ duin::UUID Tab::GetUUID()
     return uuid;
 }
 
-duin::DataValue Tab::Serialise()
+duin::JSONValue Tab::Serialise()
 {
-    duin::DataValue value;
+    duin::JSONValue value;
     value.AddMember(guitag::TAB_TITLE, title);
     value.AddMember(guitag::TAB_UUID, duin::UUID::ToStringHex(uuid));
     value.AddMember(guitag::TAB_PANELMANAGER, panelManager->Serialise());
@@ -108,21 +108,21 @@ duin::DataValue Tab::Serialise()
     return value;
 }
 
-duin::DataValue Tab::Deserialise(duin::DataValue data)
+duin::JSONValue Tab::Deserialise(duin::JSONValue data)
 {
-    if (!data.HasMember(guitag::TAB_TITLE)) return duin::DataValue();
+    if (!data.HasMember(guitag::TAB_TITLE)) return duin::JSONValue();
     title = data[guitag::TAB_TITLE].GetString();
     if (title.empty()) DN_ERROR("Tab title empty when deserialising!");
 
-    if (!data.HasMember(guitag::TAB_UUID)) return duin::DataValue();
+    if (!data.HasMember(guitag::TAB_UUID)) return duin::JSONValue();
     uuid = duin::UUID::FromStringHex(data[guitag::TAB_UUID].GetString());
     if (uuid == duin::UUID::INVALID) DN_ERROR("Tab uuid invalid when deserialising!");
 
     if (!data.HasMember(guitag::TAB_PANELMANAGER)) {
         DN_WARN("Tab has no PanelManager!");
-        return duin::DataValue();
+        return duin::JSONValue();
     }
-    duin::DataValue panelManagerValue = data[guitag::TAB_PANELMANAGER];
+    duin::JSONValue panelManagerValue = data[guitag::TAB_PANELMANAGER];
     return panelManagerValue;
 }
 

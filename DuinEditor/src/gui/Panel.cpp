@@ -46,7 +46,7 @@ Panel::Panel(const std::string& name, duin::UUID uuid, PanelManager* panelManage
     AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(this->uuid); });
 }
 
-Panel::Panel(duin::DataValue value)
+Panel::Panel(duin::JSONValue value)
 {
     Deserialise(value);
     m_windowFlags = ImGuiWindowFlags_MenuBar |
@@ -73,9 +73,9 @@ duin::UUID Panel::GetUUID()
     return uuid;
 }
 
-duin::DataValue Panel::Serialise()
+duin::JSONValue Panel::Serialise()
 {
-    duin::DataValue data;
+    duin::JSONValue data;
     const char c = '0' + static_cast<int>(type);
     data.AddMember(guitag::PANEL_TYPE, c);
     data.AddMember(guitag::PANEL_UUID, duin::UUID::ToStringHex(uuid));
@@ -85,7 +85,7 @@ duin::DataValue Panel::Serialise()
     return data;
 }
 
-void Panel::Deserialise(duin::DataValue data)
+void Panel::Deserialise(duin::JSONValue data)
 {
     if (!data.HasMember(guitag::PANEL_TYPE)) return;
     std::string typeStr = data[guitag::PANEL_TYPE].GetString();

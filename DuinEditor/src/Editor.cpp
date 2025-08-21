@@ -27,7 +27,7 @@ duin::StateMachine mainStateMachine;
 
 FileManager fileManager;
 Project activeProject;
-duin::DataValue projectData;
+duin::JSONValue projectData;
 
 Editor* Editor::instance = nullptr;
 
@@ -84,7 +84,7 @@ void Editor::Debug()
 {
 }
 
-void Editor::SaveProjectEditorConfig(duin::DataValue value)
+void Editor::SaveProjectEditorConfig(duin::JSONValue value)
 {
     std::ofstream ofs(activeProject.GetPathAsString());
     if (!ofs) {
@@ -97,14 +97,14 @@ void Editor::SaveProjectEditorConfig(duin::DataValue value)
         projectData.AddMember(guitag::EDITOR_CONFIG, value);
     }
 
-    ofs << duin::DataValue::Write(projectData, true);
+    ofs << duin::JSONValue::Write(projectData, true);
     ofs.close();
 }
 
-duin::DataValue Editor::LoadProjectEditorConfig()
+duin::JSONValue Editor::LoadProjectEditorConfig()
 {
     Project& project = GetActiveProject();
-    projectData = duin::DataValue::Parse(project.GetPathAsString());
+    projectData = duin::JSONValue::Parse(project.GetPathAsString());
     
     if (projectData.HasMember(guitag::EDITORVERSION)) {
         PROJECT_EDITOR_VERSION = projectData[guitag::EDITORVERSION].GetInt();

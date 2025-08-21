@@ -25,17 +25,17 @@ class Tab
         std::shared_ptr<TabBlackboard> blackboard;
 
         static std::shared_ptr<Tab> Create(EditorWindow *owner);
-        static std::shared_ptr<Tab> Create(EditorWindow *owner, duin::DataValue value);
+        static std::shared_ptr<Tab> Create(EditorWindow *owner, duin::JSONValue value);
         static std::shared_ptr<Tab> Create(EditorWindow* owner, const std::string& title);
 
         Tab() {};
-        Tab(duin::DataValue value);
+        Tab(duin::JSONValue value);
 
         std::string GetPanelManagerID();
         void SetFocussed(bool status);
         void SetOwner(EditorWindow* owner);
         std::shared_ptr<PanelManager> CreatePanelManager();
-        std::shared_ptr<PanelManager> CreatePanelManager(duin::DataValue value);
+        std::shared_ptr<PanelManager> CreatePanelManager(duin::JSONValue value);
 
         std::shared_ptr<SceneWorld> GetSceneWorld();
 
@@ -43,8 +43,8 @@ class Tab
 
         duin::UUID GetUUID();
 
-        duin::DataValue Serialise();
-        duin::DataValue Deserialise(duin::DataValue value);
+        duin::JSONValue Serialise();
+        duin::JSONValue Deserialise(duin::JSONValue value);
 
         void DrawWorkspace();
 

@@ -16,14 +16,14 @@ const char INPUT_DEVICE_UUID[] = "INPUT_DEVICE_UUID";
 const char INPUT_KEY_CODE[] = "INPUT_KEY_CODE";
 const char INPUT_KEY_EVENT[] = "INPUT_KEY_EVENT";
 
-void DeserialiseKeybinds(duin::DataValue keybinds)
+void DeserialiseKeybinds(duin::JSONValue keybinds)
 {
     if (keybinds.HasMember(INPUT_ACTIONS_LIST)) {
-        duin::DataValue inputActions = keybinds[INPUT_ACTIONS_LIST];
+        duin::JSONValue inputActions = keybinds[INPUT_ACTIONS_LIST];
         for (auto action : inputActions) {
             std::string actionName = action[INPUT_ACTION_NAME].GetString();
 
-            duin::DataValue bindings = action[INPUT_ACTION_BINDINGS_LIST];
+            duin::JSONValue bindings = action[INPUT_ACTION_BINDINGS_LIST];
             for (auto binding : bindings) {
                 // TODO
                 // duin::UUID bindingUUID = binding[INPUT_ACTION_BINDING_UUID];
@@ -37,8 +37,8 @@ void DeserialiseKeybinds(duin::DataValue keybinds)
     }
 }
 
-duin::DataValue SerialiseKeybinds()
+duin::JSONValue SerialiseKeybinds()
 {
 
-    return duin::DataValue();
+    return duin::JSONValue();
 }

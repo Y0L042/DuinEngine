@@ -29,7 +29,7 @@ void EditorWindow::Init()
     }
 }
 
-void EditorWindow::Init(duin::DataValue value)
+void EditorWindow::Init(duin::JSONValue value)
 {
     Deserialise(value);
     if (tabs.empty()) 
@@ -61,7 +61,7 @@ void EditorWindow::AddTab(const std::string& title)
     tabs.emplace_back(Tab::Create(this, title));
 }
 
-void EditorWindow::AddTab(duin::DataValue data)
+void EditorWindow::AddTab(duin::JSONValue data)
 {
     tabs.emplace_back(Tab::Create(this, data));
 }
@@ -257,9 +257,9 @@ bool EditorWindow::DrawConfirmDeleteTabPopup()
 }
 
 
-duin::DataValue EditorWindow::Serialise()
+duin::JSONValue EditorWindow::Serialise()
 {
-    duin::DataValue tabsArray;
+    duin::JSONValue tabsArray;
     tabsArray.SetArray();
 
     for (auto& tab : tabs) {
@@ -267,20 +267,20 @@ duin::DataValue EditorWindow::Serialise()
         tabsArray.PushBack(tab->Serialise());
     }
 
-    duin::DataValue value;
+    duin::JSONValue value;
     value.AddMember(guitag::TABS_KEY, tabsArray);
 
     return value;
 }
 
-void EditorWindow::Deserialise(duin::DataValue data)
+void EditorWindow::Deserialise(duin::JSONValue data)
 {
     if (!(data.HasMember(guitag::TABS_KEY) && data[guitag::TABS_KEY].IsArray())) {
         DN_WARN("EditorWindow passed empty tabs array!");
         return;
     }
 
-    duin::DataValue tabsArray = data[guitag::TABS_KEY];
+    duin::JSONValue tabsArray = data[guitag::TABS_KEY];
     if (!tabsArray.IsArray()) {
         DN_WARN("Tabs array is empty!");
         return;
@@ -288,7 +288,7 @@ void EditorWindow::Deserialise(duin::DataValue data)
 
     tabs.clear();
     for (auto item : tabsArray) {
-        DN_INFO("Tab item: \n{}\n", duin::DataValue::Write(item));
+        DN_INFO("Tab item: \n{}\n", duin::JSONValue::Write(item));
         AddTab(item);
     }
 }

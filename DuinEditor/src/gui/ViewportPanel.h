@@ -15,12 +15,12 @@ class ViewportPanel : public Panel
 {
     public:
         ViewportPanel(const std::string& name, PanelManager *panelManager);
-        ViewportPanel(duin::DataValue value);
+        ViewportPanel(duin::JSONValue value);
         ~ViewportPanel() override;
 
         void Init();
 
-        void Deserialise(duin::DataValue value) override;
+        void Deserialise(duin::JSONValue value) override;
         void DrawContent() override;
         void OnPanelEvent(PanelEvent e) override;
 

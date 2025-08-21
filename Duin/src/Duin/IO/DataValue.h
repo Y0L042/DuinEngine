@@ -7,7 +7,7 @@
 #include <memory>
 
 namespace duin {
-    class DataValue
+    class JSONValue
     {
         public:
             class DataIterator
@@ -16,15 +16,15 @@ namespace duin {
                 DataIterator();
                 ~DataIterator() = default;
 
-                DataValue GetValue();
+                JSONValue GetValue();
 
-                DataValue operator*() const;
+                JSONValue operator*() const;
                 DataIterator& operator++();
                 bool operator==(const DataIterator other);
                 bool operator!=(const DataIterator other);
 
             private:
-                friend class DataValue;
+                friend class JSONValue;
                 bool isReadValid;
                 bool isModValid;
                 std::shared_ptr<rapidjson::Document> readDocument_;
@@ -39,15 +39,15 @@ namespace duin {
                     ConstDataIterator();
                     ~ConstDataIterator() = default;
 
-                    const DataValue GetValue();
+                    const JSONValue GetValue();
 
-                    DataValue operator*() const;
+                    JSONValue operator*() const;
                     ConstDataIterator operator++();
                     bool operator==(const ConstDataIterator other);
                     bool operator!=(const ConstDataIterator other);
 
                 private:
-                    friend class DataValue;
+                    friend class JSONValue;
                     bool isReadValid;
                     std::shared_ptr<rapidjson::Document> readDocument_;
                     rapidjson::Value::ConstValueIterator it_;
@@ -58,38 +58,38 @@ namespace duin {
 
 
             // TODO change this so that it only parses json string no loading
-            static DataValue Parse(const std::string& data);
-            static std::string Write(const DataValue& value, bool prettyWrite = false);
+            static JSONValue Parse(const std::string& data);
+            static std::string Write(const JSONValue& value, bool prettyWrite = false);
             /* TODO
             static void WriteToFile(const std::string& filePath);
             static void WriteToFile(const std::string& filePath);
             */
 
             /**
-             * @brief DataValue constructors.
+             * @brief JSONValue constructors.
              * !TODO These currently do not work properly, and requires the user to correctly cast the parameter
              */
-            DataValue();
-            DataValue(bool b);
-            DataValue(int x);
-            DataValue(const std::string& text);
-            DataValue(double x);
+            JSONValue();
+            JSONValue(bool b);
+            JSONValue(int x);
+            JSONValue(const std::string& text);
+            JSONValue(double x);
 
-            ~DataValue() = default;
+            ~JSONValue() = default;
 
             /* Returns underlying rapidjson reference*/
             rapidjson::Value& GetRJSONValue() { return *jvalue_; }
 
-            /* Write the DataValue to a string */
+            /* Write the JSONValue to a string */
             std::string Write() const;
-            /* Createa deep copy of the DataValue and the underlying rjson document */
-            DataValue Clone() const;
+            /* Createa deep copy of the JSONValue and the underlying rjson document */
+            JSONValue Clone() const;
 
-            /* Tests if the DataValue is valid, with valid underlying data */
+            /* Tests if the JSONValue is valid, with valid underlying data */
             bool IsReadValid() const;
             bool HasMember(const std::string& member) const;
-            DataValue& AddMember(const std::string& key, DataValue dv, bool allowDuplicates = false);
-            DataValue& RemoveMember(const std::string& key);
+            JSONValue& AddMember(const std::string& key, JSONValue dv, bool allowDuplicates = false);
+            JSONValue& RemoveMember(const std::string& key);
 
             bool IsNull() const;
             bool IsObject() const;
@@ -107,27 +107,27 @@ namespace duin {
             bool IsArray() const;
             // TODO GetArray();
             bool Empty() const;
-            /* Adds a shallow copy of dv to DataValue (of array type). Only push back after dv is initialised. */
-            DataValue& PushBack(DataValue dv);
+            /* Adds a shallow copy of dv to JSONValue (of array type). Only push back after dv is initialised. */
+            JSONValue& PushBack(JSONValue dv);
             size_t Capacity() const;
             ConstDataIterator Begin();
             ConstDataIterator End();
             ConstDataIterator FindMember(const std::string& member) const;
 
-            /* Sets the type of the data the DataValue is storing */
-            DataValue SetObject();
-            DataValue SetInt(int x);
-            DataValue SetString(const std::string& text);
-            DataValue SetDouble(double x);
-            DataValue SetBool(bool b);
-            DataValue SetArray();
+            /* Sets the type of the data the JSONValue is storing */
+            JSONValue SetObject();
+            JSONValue SetInt(int x);
+            JSONValue SetString(const std::string& text);
+            JSONValue SetDouble(double x);
+            JSONValue SetBool(bool b);
+            JSONValue SetArray();
 
 
             template <typename T>
-            DataValue& AddMember(const std::string& key, T val, bool allowDuplicates = false) // Add Key:Value member to object
+            JSONValue& AddMember(const std::string& key, T val, bool allowDuplicates = false) // Add Key:Value member to object
             {
                 if (!jvalue_->IsObject()) {
-                    DN_CORE_WARN("DataValue not an Object, cannot add member!");
+                    DN_CORE_WARN("JSONValue not an Object, cannot add member!");
                     return *this;
                 }
 
@@ -163,9 +163,9 @@ namespace duin {
                 return *this;
             }
 
-            /* Adds data to array-type DataValue */
+            /* Adds data to array-type JSONValue */
             template <typename T>
-            DataValue PushBack(T val)
+            JSONValue PushBack(T val)
             {
                 if (jvalue_->IsArray()) {
                     rapidjson::Document::AllocatorType& alloc = jdoc_->GetAllocator();
@@ -174,17 +174,17 @@ namespace duin {
                     jvalue_->PushBack(std::move(v), alloc);
                     return *this;
                 }
-                DN_CORE_WARN("DataValue is not an array!");
-                return DataValue();
+                DN_CORE_WARN("JSONValue is not an array!");
+                return JSONValue();
             }
 
 
 
-            DataValue operator[](const std::string& member);
-            DataValue operator[](int idx); // Array access
-            const DataValue& operator*() const;
-            bool operator==(const DataValue& other);
-            bool operator!=(const DataValue& other);
+            JSONValue operator[](const std::string& member);
+            JSONValue operator[](int idx); // Array access
+            const JSONValue& operator*() const;
+            bool operator==(const JSONValue& other);
+            bool operator!=(const JSONValue& other);
 
             // For range-based looping
             DataIterator      begin()       { return DataIterator(jdoc_, jvalue_->Begin()); }      
@@ -196,8 +196,8 @@ namespace duin {
             std::shared_ptr<rapidjson::Document> jdoc_;
             rapidjson::Value *jvalue_;
 
-            DataValue(std::shared_ptr<rapidjson::Document> document, rapidjson::Value *value = nullptr);
-            DataValue(std::shared_ptr<rapidjson::Document> document, const rapidjson::Value* value);
+            JSONValue(std::shared_ptr<rapidjson::Document> document, rapidjson::Value *value = nullptr);
+            JSONValue(std::shared_ptr<rapidjson::Document> document, const rapidjson::Value* value);
 
     };
 }

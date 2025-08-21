@@ -11,6 +11,12 @@ import subprocess
 import sys
 import re
 
+types = (
+            "feature",
+            "fix",
+            "refactor"
+        )
+
 def run_git(args):
     """Run a git command and return stdout as text."""
     result = subprocess.run(["git"] + args,
@@ -29,15 +35,15 @@ def slugify(name: str) -> str:
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: create_branch.py {feature|fix} <name> [--push]", file=sys.stderr)
+        print("Usage: create_branch.py {", type, "} <name> [--push]", file=sys.stderr)
         sys.exit(1)
 
     branch_type = sys.argv[1]
     raw_name = sys.argv[2]
     pushflag = sys.argv[3] if len(sys.argv) > 3 else None
 
-    if branch_type not in ("feature", "fix"):
-        print("Type must be 'feature' or 'fix'", file=sys.stderr)
+    if branch_type not in types:
+        print("Type must be ", type, file=sys.stderr)
         sys.exit(1)
 
     slug = slugify(raw_name)
