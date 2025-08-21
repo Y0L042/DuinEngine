@@ -2,6 +2,7 @@
 
 #include "PanelManager.h"
 #include "TabBlackboard.h"
+#include "GameObjects/SceneWorld.h"
 
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/IO/IOModule.h>
@@ -24,8 +25,8 @@ class Tab
         std::shared_ptr<TabBlackboard> blackboard;
 
         static std::shared_ptr<Tab> Create(EditorWindow *owner);
-        static std::shared_ptr<Tab>  Create(EditorWindow *owner, duin::DataValue value);
-        static std::shared_ptr<Tab>  Create(EditorWindow* owner, const std::string& title);
+        static std::shared_ptr<Tab> Create(EditorWindow *owner, duin::DataValue value);
+        static std::shared_ptr<Tab> Create(EditorWindow* owner, const std::string& title);
 
         Tab() {};
         Tab(duin::DataValue value);
@@ -35,6 +36,8 @@ class Tab
         void SetOwner(EditorWindow* owner);
         std::shared_ptr<PanelManager> CreatePanelManager();
         std::shared_ptr<PanelManager> CreatePanelManager(duin::DataValue value);
+
+        std::shared_ptr<SceneWorld> GetSceneWorld();
 
         void ProcessBlackboard();
 
@@ -48,7 +51,7 @@ class Tab
     private:
         duin::UUID uuid;
         std::shared_ptr<PanelManager> panelManager = nullptr;
-
+        std::shared_ptr<SceneWorld> sceneWorld;
 
         void DrawMenu();
 };

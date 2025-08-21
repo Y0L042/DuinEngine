@@ -23,7 +23,8 @@ EditorWindow::EditorWindow()
 void EditorWindow::Init()
 {
     DN_WARN("Initialising with no tab data, adding tab!");
-    if (tabs.empty()) {
+    if (tabs.empty()) 
+    {
         CreateTab("Editor");
     }
 }
@@ -31,7 +32,8 @@ void EditorWindow::Init()
 void EditorWindow::Init(duin::DataValue value)
 {
     Deserialise(value);
-    if (tabs.empty()) {
+    if (tabs.empty()) 
+    {
         DN_WARN("No tabs found, adding tab!");
         CreateTab("Editor");
         DN_WARN("Tab added.");

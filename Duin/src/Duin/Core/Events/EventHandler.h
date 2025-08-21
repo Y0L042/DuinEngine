@@ -21,7 +21,8 @@ namespace duin {
             void RegisterInputEventListener(std::function<void(Event)> listener);
 
         private:
-            std::vector<std::function<void(InputEvent)>> inputEventListeners;
+            int closeRequested;
+            std::vector<std::function<void(Event)>> inputEventListeners;
 
             void CallInputEventListeners(Event event);
     };

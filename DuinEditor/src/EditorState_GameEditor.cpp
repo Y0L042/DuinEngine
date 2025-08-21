@@ -3,6 +3,7 @@
 #include <Duin/Core/Utils/UtilsModule.h>
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Events/EventsModule.h>
+#include <Duin/ECS/SceneBuilder.h>
 #include <external/imgui.h>
 
 #include "Singletons.h"
@@ -11,6 +12,7 @@
 #include "gui/ViewportPanel.h"
 #include "gui/GuiMeta.h"
 #include "Editor.h"
+#include "GameObjects/SceneWorld.h"
 
 EditorWindow tabBrowser;
 bool isGameEditorValid = false;
@@ -42,6 +44,7 @@ void EditorState_GameEditor::Enter()
 {
     debugConsole.LogEx(duin::LogLevel::Info, "ENTERING GameEditor");
 
+    // Load editor tabs data
     duin::DataValue data = Editor::LoadProjectEditorConfig();
     if (data.HasMember(guitag::EDITOR_CONFIG)) {
         duin::DataValue tabBrowserData = data[guitag::EDITOR_CONFIG];

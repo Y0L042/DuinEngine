@@ -89,3 +89,5 @@ nuget.config
 /DuinEditor/logs
 /ExampleProjects/DuinFPS/duin.project
 /Duin/docs/TODO.md
+/docs/.$Planning.drawio.bkp
+/uv.lock
