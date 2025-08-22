@@ -16,10 +16,12 @@
 
 EditorWindow tabBrowser;
 bool isGameEditorValid = false;
-duin::Signal<double> onPhysicsUpdateSignal;
-duin::Signal<duin::Event> onEventSignal;
-duin::Signal<> onDrawSignal;
-duin::Signal<> onDrawUISignal;
+
+duin::Signal<double> EditorState_GameEditor::onUpdateSignal;
+duin::Signal<double> EditorState_GameEditor::onPhysicsUpdateSignal;
+duin::Signal<duin::Event> EditorState_GameEditor::onEventSignal;
+duin::Signal<> EditorState_GameEditor::onDrawSignal;
+duin::Signal<> EditorState_GameEditor::onDrawUISignal;
 
 void SaveProjectConfig()
 {
@@ -62,6 +64,7 @@ void EditorState_GameEditor::OnEvent(duin::Event e)
 
 void EditorState_GameEditor::Update(double delta)
 {
+    onUpdateSignal.Emit(delta);
 }
 
 void EditorState_GameEditor::PhysicsUpdate(double delta)

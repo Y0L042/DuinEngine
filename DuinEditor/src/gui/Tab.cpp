@@ -9,6 +9,7 @@ std::shared_ptr<Tab> Tab::Create(EditorWindow* owner)
 {
     auto tab = std::make_shared<Tab>();
     tab->SetOwner(owner);
+    tab->sceneWorld = std::make_shared<SceneWorld>();
     tab->ProcessBlackboard();
     tab->CreatePanelManager();
 
@@ -19,6 +20,7 @@ std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, duin::JSONValue value)
 {
     auto tab = std::make_shared<Tab>();
     tab->SetOwner(owner);
+    tab->sceneWorld = std::make_shared<SceneWorld>();
     tab->ProcessBlackboard();
     duin::JSONValue panelManagerValue = tab->Deserialise(value);
     tab->CreatePanelManager(panelManagerValue);
@@ -29,6 +31,7 @@ std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, const std::string& title)
 {
     auto tab = std::make_shared<Tab>();
     tab->SetOwner(owner);
+    tab->sceneWorld = std::make_shared<SceneWorld>();
     tab->ProcessBlackboard();
     tab->title = title;
     tab->CreatePanelManager();
@@ -89,6 +92,7 @@ void Tab::ProcessBlackboard()
     blackboard = std::make_shared<TabBlackboard>();
     blackboard->onFocusChange = &onFocusChange;
     blackboard->tab = this;
+    blackboard->sceneWorld = sceneWorld;
 }
 
 duin::UUID Tab::GetUUID()

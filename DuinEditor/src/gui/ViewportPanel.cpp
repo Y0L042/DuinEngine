@@ -123,19 +123,19 @@ void ViewportPanel::RenderUI()
 void ViewportPanel::ConnectToGameEditorSignals()
 {
     if (isGameEditorValid) {
-        eventSignalTag = onEventSignal.Connect([this](duin::Event e) { OnEvent(e); });
-        physicsSignalTag = onPhysicsUpdateSignal.Connect([this](double delta) { SimulatePhysics(delta); });
-        drawSignalTag = onDrawSignal.Connect([this]() { Render(); });
-        drawuiSignalTag = onDrawUISignal.Connect([this]() { RenderUI(); });
+        eventSignalTag = EditorState_GameEditor::onEventSignal.Connect([this](duin::Event e) { OnEvent(e); });
+        physicsSignalTag = EditorState_GameEditor::onPhysicsUpdateSignal.Connect([this](double delta) { SimulatePhysics(delta); });
+        drawSignalTag = EditorState_GameEditor::onDrawSignal.Connect([this]() { Render(); });
+        drawuiSignalTag = EditorState_GameEditor::onDrawUISignal.Connect([this]() { RenderUI(); });
     }
 }
 
 void ViewportPanel::DisconnectFromGameEditorSignals()
 {
-    onEventSignal.Disconnect(eventSignalTag);
-    onPhysicsUpdateSignal.Disconnect(physicsSignalTag);
-    onDrawSignal.Disconnect(drawSignalTag);
-    onDrawUISignal.Disconnect(drawuiSignalTag);
+    EditorState_GameEditor::onEventSignal.Disconnect(eventSignalTag);
+    EditorState_GameEditor::onPhysicsUpdateSignal.Disconnect(physicsSignalTag);
+    EditorState_GameEditor::onDrawSignal.Disconnect(drawSignalTag);
+    EditorState_GameEditor::onDrawUISignal.Disconnect(drawuiSignalTag);
 }
 
 void ViewportPanel::CreateRenderTexture()

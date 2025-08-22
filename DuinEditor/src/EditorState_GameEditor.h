@@ -5,16 +5,18 @@
 #include <Duin/Core/Signals/SignalsModule.h>
 
 extern bool isGameEditorValid;
-extern duin::Signal<double> onPhysicsUpdateSignal;
-extern duin::Signal<duin::Event> onEventSignal;
-extern duin::Signal<> onDrawSignal;
-extern duin::Signal<> onDrawUISignal;
 
 class EditorState_GameEditor : public duin::State
 {
     public:
 		EditorState_GameEditor(duin::StateMachine& owner);
 		~EditorState_GameEditor() override;
+
+		static duin::Signal<double> onUpdateSignal;
+		static duin::Signal<double> onPhysicsUpdateSignal;
+		static duin::Signal<duin::Event> onEventSignal;
+		static duin::Signal<> onDrawSignal;
+		static duin::Signal<> onDrawUISignal;
 
 		void Enter() override;
 		void OnEvent(duin::Event e) override;
