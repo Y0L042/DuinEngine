@@ -287,6 +287,11 @@ namespace ECSObserver {
     {
     }
 
+    void ECSManager::Clear()
+    {
+        world.reset();
+    }
+
     void ECSManager::InitializeRemoteExplorer()
     {}
 

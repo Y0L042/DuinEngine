@@ -833,6 +833,8 @@ namespace duin {
         void PostDrawQueryExecution();
         void PostDrawUIQueryExecution();
 
+        void Clear();
+
         /*----------------------------------------------------------------------  
          * Transform Updates
         ----------------------------------------------------------------------*/  
