@@ -17,23 +17,22 @@
 
 
 /* ---------- Render ----------- */
-#include "Duin/Render/RenderIncludes.h"
+#include "Duin/Render/RenderModule.h"
 
 
 
 /* ---------- ECS ----------- */
-#include "Duin/ECS/ECSManager.h"
+#include "Duin/ECS/ECSModule.h"
 
 
 
 /* ---------- Physics ----------- */
-#include "Duin/Physics/PhysicsIncludes.h"
+#include "Duin/Physics/PhysicsModule.h"
 
 
 
 /* ---------- Scene ----------- */
-#include "Duin/Scene/SceneManager.h"
-#include "Duin/Scene/GameObject.h"
+#include "Duin/Scene/SceneModule.h"
 
 /* ---------- IO ----------- */
 #include "Duin/IO/IOModule.h"

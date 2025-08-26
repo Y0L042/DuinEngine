@@ -22,6 +22,11 @@ void PanelManager::SetBlackboard(std::shared_ptr<TabBlackboard> b)
     blackboard = b;
 }
 
+std::shared_ptr<TabBlackboard> PanelManager::GetBlackboard()
+{
+    return blackboard;
+}
+
 duin::JSONValue PanelManager::Serialise()
 {
     duin::JSONValue data;

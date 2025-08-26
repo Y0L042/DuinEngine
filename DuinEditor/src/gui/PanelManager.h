@@ -31,6 +31,7 @@ class PanelManager
         void Init();
 
         void SetBlackboard(std::shared_ptr<TabBlackboard> b);
+        std::shared_ptr<TabBlackboard> GetBlackboard();
 
         duin::JSONValue Serialise(); // Serialise panels to toml value
         void Deserialise(duin::JSONValue value); // Deserialise panels from toml value

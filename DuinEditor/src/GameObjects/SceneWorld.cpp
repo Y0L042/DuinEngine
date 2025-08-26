@@ -1,5 +1,6 @@
 #include "SceneWorld.h"
 #include "EditorState_GameEditor.h"
+#include "Singletons.h"
 #include <fstream>
 #include <Duin/IO/IOModule.h>
 
@@ -56,6 +57,9 @@ void SceneWorld::DisconnectFromSignals()
 
 void SceneWorld::Enter()
 {
+	std::string projDir = GetActiveProject().GetPathAsString();
+	std::string projTreeDemo = projDir + "/Demo_Scenetree.ecst";
+	LoadEntitiesFromFile(projTreeDemo);
 }
 
 void SceneWorld::HandleEvents(duin::Event e)

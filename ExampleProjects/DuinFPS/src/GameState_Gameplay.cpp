@@ -28,6 +28,11 @@ void GameState_Gameplay::Enter()
 
     static std::shared_ptr<BeachBall> ball = CreateChild<BeachBall>();
 
+	DN_INFO("Writing scenetree to Demo_Scenetree.ecst ...");
+    std::string scene = "";
+    duin::SceneBuilder::WriteScene(scene, ecs);
+    duin::FileUtils::WriteStringIntoFile("./Demo_Scenetree.ecst", scene);
+	DN_INFO("Wrote scenetree to Demo_Scenetree.ecst !");
 }
 
 void GameState_Gameplay::OnEvent(duin::Event e)

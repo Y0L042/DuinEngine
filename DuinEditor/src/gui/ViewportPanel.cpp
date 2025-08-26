@@ -34,6 +34,9 @@ void ViewportPanel::Init()
     ConnectToGameEditorSignals();
     CreateRenderTexture();
 
+    blackboard = panelManager->GetBlackboard();
+    sceneWorld = (blackboard != nullptr) ? blackboard->sceneWorld : nullptr;
+
     duin::ClearBackground(duin::PINK);
 
     mainCamera.Enable(true);
@@ -45,6 +48,9 @@ void ViewportPanel::Deserialise(duin::JSONValue value)
     DN_INFO("DOTO");
 }
 
+/**
+ * @brief Draws ImGUI rendering window, and handles sizing.
+ */
 void ViewportPanel::DrawContent()
 {
     if (!isTabOpen) return;

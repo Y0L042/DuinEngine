@@ -32,6 +32,9 @@ class ViewportPanel : public Panel
     private:
         duin::RenderTexture target;
         EditorCamera mainCamera;
+        std::shared_ptr<SceneWorld> sceneWorld = nullptr;
+        std::shared_ptr<TabBlackboard> blackboard = nullptr;
+        std::shared_ptr<SceneWorld> sceneWorld = nullptr;
 
         float windowX = 0.0f;
         float windowY = 0.0f;
