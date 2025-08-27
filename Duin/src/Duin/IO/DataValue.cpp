@@ -65,6 +65,11 @@ namespace duin {
 
     }
 
+    JSONValue JSONValue::Invalid()
+    {
+        return JSONValue();
+    }
+
     JSONValue::JSONValue()
     {
         jdoc_ = std::make_shared<rapidjson::Document>();
@@ -188,6 +193,17 @@ namespace duin {
 
         return *this;
     }
+
+    bool JSONValue::IsValid()
+    {
+        if (jdoc_ && jvalue_) {
+            return true;
+        } else {
+            return false;
+        }
+        DN_CORE_WARN("JSONValue is empty!");
+        return false;
+	}
 
     bool JSONValue::IsNull() const
     {

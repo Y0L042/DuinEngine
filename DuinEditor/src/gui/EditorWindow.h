@@ -16,8 +16,7 @@ public:
 
     duin::UUID GetUUID();
 
-    void Init();
-    void Init(duin::JSONValue value);
+    void Init(duin::JSONValue value = duin::JSONValue::Invalid());
 
     duin::JSONValue Serialise();
     void Deserialise(duin::JSONValue data);
@@ -26,8 +25,7 @@ public:
 
 
     void CreateTab(const std::string& title);
-    void AddTab(const std::string& title);
-    void AddTab(duin::JSONValue data);
+    std::shared_ptr<Tab> AddTab();
     void CloseTab(int index);
 
 private:

@@ -63,6 +63,11 @@ void Tab::SetOwner(EditorWindow* owner)
     this->owner = owner;
 }
 
+void Tab::SetTitle(const std::string& newTitle)
+{
+	title = newTitle;
+}
+
 std::shared_ptr<PanelManager> Tab::CreatePanelManager()
 {
     auto pm = std::make_shared<PanelManager>();

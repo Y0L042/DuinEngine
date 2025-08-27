@@ -60,6 +60,8 @@ namespace duin {
             // TODO change this so that it only parses json string no loading
             static JSONValue Parse(const std::string& data);
             static std::string Write(const JSONValue& value, bool prettyWrite = false);
+
+			static JSONValue Invalid();
             /* TODO
             static void WriteToFile(const std::string& filePath);
             static void WriteToFile(const std::string& filePath);
@@ -90,6 +92,8 @@ namespace duin {
             bool HasMember(const std::string& member) const;
             JSONValue& AddMember(const std::string& key, JSONValue dv, bool allowDuplicates = false);
             JSONValue& RemoveMember(const std::string& key);
+
+            bool IsValid();
 
             bool IsNull() const;
             bool IsObject() const;

@@ -34,6 +34,7 @@ class Tab
         std::string GetPanelManagerID();
         void SetFocussed(bool status);
         void SetOwner(EditorWindow* owner);
+		void SetTitle(const std::string& newTitle);
         std::shared_ptr<PanelManager> CreatePanelManager();
         std::shared_ptr<PanelManager> CreatePanelManager(duin::JSONValue value);
 

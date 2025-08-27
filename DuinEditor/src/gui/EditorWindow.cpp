@@ -20,23 +20,25 @@ static int requestDeleteIndex = -1;
 EditorWindow::EditorWindow()
 {}
 
-void EditorWindow::Init()
-{
-    DN_WARN("Initialising with no tab data, adding tab!");
-    if (tabs.empty()) 
-    {
-        CreateTab("Editor");
-    }
-}
-
 void EditorWindow::Init(duin::JSONValue value)
 {
-    Deserialise(value);
-    if (tabs.empty()) 
+    if (value.IsValid())
     {
-        DN_WARN("No tabs found, adding tab!");
-        CreateTab("Editor");
-        DN_WARN("Tab added.");
+        Deserialise(value);
+        if (tabs.empty())
+        {
+            DN_WARN("No tabs found, adding tab!");
+            CreateTab("Editor");
+            DN_WARN("Tab added.");
+        }
+    }
+    else
+    {
+        DN_WARN("Initialising with no tab data, adding tab!");
+        if (tabs.empty())
+        {
+            CreateTab("Editor");
+        }
     }
 }
 
@@ -53,17 +55,15 @@ void EditorWindow::CreateTab(const std::string& title)
     } else {
         newTitle = title;
     }
-    AddTab(newTitle);
+    auto tab = AddTab();
+	tab->SetTitle(newTitle);
 }
 
-void EditorWindow::AddTab(const std::string& title)
+std::shared_ptr<Tab> EditorWindow::AddTab()
 {
-    tabs.emplace_back(Tab::Create(this, title));
-}
-
-void EditorWindow::AddTab(duin::JSONValue data)
-{
-    tabs.emplace_back(Tab::Create(this, data));
+	tabs.emplace_back(Tab::Create(this));
+    
+    return tabs.back();
 }
 
 void EditorWindow::CloseTab(int index) 
@@ -284,7 +284,8 @@ void EditorWindow::Deserialise(duin::JSONValue data)
     tabs.clear();
     for (auto item : tabsArray) {
         DN_INFO("Tab item: \n{}\n", duin::JSONValue::Write(item));
-        AddTab(item);
+        auto tab = AddTab();
+		tab->Deserialise(item);
     }
 }
 
