@@ -14,7 +14,7 @@
 #include "Editor.h"
 #include "GameObjects/SceneWorld.h"
 
-EditorWindow tabBrowser;
+std::shared_ptr<EditorWindow> editorWindow;
 bool isGameEditorValid = false;
 
 duin::Signal<double> EditorState_GameEditor::onUpdateSignal;
@@ -25,7 +25,7 @@ duin::Signal<> EditorState_GameEditor::onDrawUISignal;
 
 void SaveProjectConfig()
 {
-    duin::JSONValue dataValue = tabBrowser.Serialise();
+    duin::JSONValue dataValue = editorWindow ? editorWindow->Serialise() : duin::JSONValue::Invalid();
     Editor::SaveProjectEditorConfig(dataValue);
 }
 
@@ -48,12 +48,14 @@ void EditorState_GameEditor::Enter()
     // Load editor tabs data
     duin::JSONValue projectData = Editor::LoadProjectEditorConfig();
     if (projectData.HasMember(guitag::EDITOR_CONFIG)) {
-        duin::JSONValue tabBrowserData = projectData[guitag::EDITOR_CONFIG];
-        tabBrowser.Init(tabBrowserData);
+        // Deserialise
+        duin::JSONValue data = projectData[guitag::EDITOR_CONFIG];
+        editorWindow = EditorWindow::Deserialise(data);
     }
     else {
+        // Create from scratch
         DN_WARN("Project has no EDITOR_CONFIG, creating new one...");
-        tabBrowser.Init();
+		editorWindow = std::make_shared<EditorWindow>();
     }
 }
 
@@ -80,7 +82,7 @@ void EditorState_GameEditor::Draw()
 void EditorState_GameEditor::DrawUI()
 {
     onDrawUISignal.Emit();
-    tabBrowser.Render();
+    editorWindow->Render();
 }
 
 void EditorState_GameEditor::Exit()

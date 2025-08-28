@@ -12,6 +12,7 @@
 
 class EditorWindow {
 public:
+	static std::shared_ptr<EditorWindow> Deserialise(duin::JSONValue value);
     EditorWindow();
 
     duin::UUID GetUUID();
@@ -19,7 +20,7 @@ public:
     void Init(duin::JSONValue value = duin::JSONValue::Invalid());
 
     duin::JSONValue Serialise();
-    void Deserialise(duin::JSONValue data);
+    //void Deserialise(duin::JSONValue data);
 
     void Render();
 

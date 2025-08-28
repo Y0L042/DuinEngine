@@ -33,6 +33,8 @@ struct PanelEvent {
 class Panel
 {
     public:
+        static std::string ReadPanelName(duin::JSONValue value);
+
         PanelType type = PanelType::INVALID;
         bool queuedForDeletion = false;
         std::shared_ptr<TabBlackboard> blackboard = nullptr;
@@ -42,10 +44,7 @@ class Panel
             std::function<void()> callback;
         };
 
-        Panel() = default;
-        Panel(const std::string& name, PanelManager *panelManager);
-        Panel(const std::string& name, duin::UUID uuid, PanelManager* panelManager);
-        Panel(duin::JSONValue value);
+		Panel(PanelManager* panelManager, PanelType type = PanelType::INVALID, const std::string& name = "INVALID_");
         virtual ~Panel() = default;
 
         void SetBlackboard(std::shared_ptr<TabBlackboard> b);
@@ -55,10 +54,11 @@ class Panel
         virtual void OnPanelEvent(PanelEvent e) {};
 
         virtual duin::JSONValue Serialise(); // Serialise panel
-        virtual void Deserialise(duin::JSONValue value); // Deserialise panel
+        virtual void PostDeserialise(duin::JSONValue value); // Deserialise panel post creation
 
         void AddMenuItem(const std::string& menuName, const std::string& itemName, std::function<void()> callback);
         void AddSeparator(const std::string& menuName);
+		void SetPanelName(const std::string& name);
         duin::UUID GetUUID();
         std::string CreateUniquePanelName();
         std::pair<std::string, std::string> SplitPanelName(const std::string& panelName);

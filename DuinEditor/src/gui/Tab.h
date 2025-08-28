@@ -14,6 +14,8 @@ class EditorWindow;
 class Tab
 {
     public:
+		static std::shared_ptr<Tab> Deserialise(EditorWindow* owner, duin::JSONValue value);
+
         std::string title;
         bool open = true;
         bool renaming = false;
@@ -33,7 +35,7 @@ class Tab
         void SetSceneWorld(std::shared_ptr<SceneWorld> newSceneWorld);
 		void SetTitle(const std::string& newTitle);
         std::shared_ptr<PanelManager> CreatePanelManager();
-        std::shared_ptr<PanelManager> CreatePanelManager(duin::JSONValue value);
+        //std::shared_ptr<PanelManager> CreatePanelManager(duin::JSONValue value);
 
         std::shared_ptr<SceneWorld> GetSceneWorld();
 
@@ -42,7 +44,7 @@ class Tab
         duin::UUID GetUUID();
 
         duin::JSONValue Serialise();
-        duin::JSONValue Deserialise(duin::JSONValue value);
+        //duin::JSONValue Deserialise(duin::JSONValue value);
 
         void DrawWorkspace();
 

@@ -1,9 +1,14 @@
 #pragma once
 
-#include "PanelFactory.h"
+//#include "PanelFactory.h"
 #include "TabBlackboard.h"
 
 #include "PanelList.h"
+#include "Panel.h"
+#include "DefaultPanel.h"
+#include "ViewportPanel.h"
+#include "SceneTreePanel.h"
+#include "FileBrowser.h"
 
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/IO/IOModule.h>
@@ -18,53 +23,27 @@ class Tab;
 class PanelManager
 {
     public:        
+		static std::shared_ptr<PanelManager> Deserialise(Tab* owner, duin::JSONValue value);
+
         Tab* owner = nullptr;
         std::shared_ptr<TabBlackboard> blackboard = nullptr;
 
-        static std::string PanelTypeToName(PanelType type);
-        static PanelType NameToPanelType(const std::string& name);
-
-        PanelManager() = default;
-        PanelManager(std::string uuidHexString);
-        PanelManager(duin::JSONValue value);
+        PanelManager(Tab* owner);
+        //PanelManager(std::string uuidHexString);
+        //PanelManager(duin::JSONValue value);
 
         void Init();
 
+		void SetOwner(Tab* newOwner);
         void SetBlackboard(std::shared_ptr<TabBlackboard> b);
         std::shared_ptr<TabBlackboard> GetBlackboard();
 
         duin::JSONValue Serialise(); // Serialise panels to toml value
-        void Deserialise(duin::JSONValue value); // Deserialise panels from toml value
+        //void Deserialise(duin::JSONValue value); // Deserialise panels from toml value
 
-        template<typename... Args>
-        void CreatePanel(PanelType type, Args... args)
-        {
-            std::shared_ptr<Panel> panel;
-
-            switch (type) {
-            case PanelType::INVALID:
-                panel = nullptr;
-                break;
-            case PanelType::DEFAULT:
-                panel = std::make_shared<DefaultPanel>(std::forward<Args>(args)...);
-                break;
-            case PanelType::SCENETREE:
-                panel = std::make_shared<SceneTreePanel>(std::forward<Args>(args)...);
-                break;
-            case PanelType::VIEWPORT:
-                panel = std::make_shared<ViewportPanel>(std::forward<Args>(args)...);
-                break;
-            default:
-                panel = nullptr;
-                break;
-            }
-
-            if (panel!= nullptr && !panels[panel->GetUUID()]) {
-                panels[panel->GetUUID()] = panel;
-                if (panel->panelManager == nullptr) panel->panelManager = this;
-            }
-            panel->SetBlackboard(blackboard);
-        }
+		//std::string ReadPanelName(duin::JSONValue value);
+        std::shared_ptr<Panel> CreatePanel(PanelType type, const std::string& name = "__NO_NAME__");
+        //void CreatePanel(PanelType type, const std::string name);
 
         void DrawPanelMenu();
 
@@ -78,5 +57,6 @@ class PanelManager
         duin::UUID uuid;
         std::unordered_map<duin::UUID, std::shared_ptr<Panel>> panels;
 
+        void CreatePanel_();
         void ErasePanels();
 };

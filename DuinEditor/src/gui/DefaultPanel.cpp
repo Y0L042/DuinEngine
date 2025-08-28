@@ -1,21 +1,10 @@
 #include "DefaultPanel.h"
 #include "PanelManager.h"
 
-DefaultPanel::DefaultPanel(const std::string& name, PanelManager *panelManager)
-    : Panel(name, panelManager)
+DefaultPanel::DefaultPanel(PanelManager *panelManager, const std::string& name)
+    : Panel(panelManager, PanelType::DEFAULT, name)
 {
-    type = PanelType::DEFAULT;
-}
 
-DefaultPanel::DefaultPanel(duin::JSONValue value)
-    : Panel(value)
-{
-    Deserialise(value);
-}
-
-void DefaultPanel::Deserialise(duin::JSONValue value)
-{
-    DN_INFO("TODO");
 }
 
 void DefaultPanel::DrawContent()

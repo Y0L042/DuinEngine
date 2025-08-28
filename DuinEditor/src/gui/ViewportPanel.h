@@ -14,13 +14,12 @@ class PanelManager;
 class ViewportPanel : public Panel
 {
     public:
-        ViewportPanel(const std::string& name, PanelManager *panelManager);
-        ViewportPanel(duin::JSONValue value);
+        ViewportPanel(PanelManager* panelManager, const std::string& name);
         ~ViewportPanel() override;
 
         void Init();
 
-        void Deserialise(duin::JSONValue value) override;
+        void PostDeserialise(duin::JSONValue value) override;
         void DrawContent() override;
         void OnPanelEvent(PanelEvent e) override;
 
@@ -34,7 +33,6 @@ class ViewportPanel : public Panel
         EditorCamera mainCamera;
         std::shared_ptr<SceneWorld> sceneWorld = nullptr;
         std::shared_ptr<TabBlackboard> blackboard = nullptr;
-        std::shared_ptr<SceneWorld> sceneWorld = nullptr;
 
         float windowX = 0.0f;
         float windowY = 0.0f;

@@ -7,8 +7,7 @@ class PanelManager;
 class SceneTreePanel : public Panel
 {
     public:
-        SceneTreePanel(const std::string& name, PanelManager *panelManager);
-        SceneTreePanel(duin::JSONValue value);
+        SceneTreePanel(PanelManager *panelManager, const std::string& name);
         ~SceneTreePanel() override;
 
         void Init();

@@ -7,17 +7,9 @@
 
 
 
-ViewportPanel::ViewportPanel(const std::string& name, PanelManager *panelManager)
-    : Panel(name, panelManager)
+ViewportPanel::ViewportPanel(PanelManager* panelManager, const std::string& name)
+    : Panel(panelManager, PanelType::VIEWPORT, name)
 {
-    type = PanelType::VIEWPORT;
-    Init();
-}
-
-ViewportPanel::ViewportPanel(duin::JSONValue value)
-    : Panel(value)
-{
-    Deserialise(value);
     Init();
 }
 
@@ -31,6 +23,11 @@ ViewportPanel::~ViewportPanel()
 
 void ViewportPanel::Init()
 {
+    if (panelManager == nullptr) {
+        DN_ERROR("PanelManager is null!");
+        return;
+	}
+
     ConnectToGameEditorSignals();
     CreateRenderTexture();
 
@@ -43,8 +40,10 @@ void ViewportPanel::Init()
     mainCamera.UpdateTarget({ 0.0f, 0.0f, 0.0f });
 }
 
-void ViewportPanel::Deserialise(duin::JSONValue value)
+void ViewportPanel::PostDeserialise(duin::JSONValue value)
 {
+	Panel::PostDeserialise(value);
+
     DN_INFO("DOTO");
 }
 

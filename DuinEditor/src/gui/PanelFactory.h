@@ -4,6 +4,7 @@
 #include "DefaultPanel.h"
 #include "ViewportPanel.h"
 #include "SceneTreePanel.h"
+#include "FileBrowser.h"
 
 #include <memory>
 
@@ -28,6 +29,9 @@ public:
             break;
         case Panel::VIEWPORT:
             ptr = std::make_shared<ViewportPanel>(std::forward<Args>(args)...);
+            break;
+		case Panel::FILEBROWSER:
+			ptr = std::make_shared<FileBrowser>(std::forward<Args>(args)...);
             break;
         default:
             return nullptr;

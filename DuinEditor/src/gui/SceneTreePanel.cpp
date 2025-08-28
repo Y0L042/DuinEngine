@@ -1,16 +1,9 @@
 #include "SceneTreePanel.h"
 
-SceneTreePanel::SceneTreePanel(const std::string& name, PanelManager* panelManager)
-    : Panel(name, panelManager)
+SceneTreePanel::SceneTreePanel(PanelManager* panelManager, const std::string& name)
+    : Panel(panelManager, PanelType::SCENETREE, name)
 {
-    type = PanelType::SCENETREE;
     Init();
-}
-
-SceneTreePanel::SceneTreePanel(duin::JSONValue value)
-    : Panel(value)
-{
-    Deserialise(value);
 }
 
 SceneTreePanel::~SceneTreePanel()

@@ -7,10 +7,10 @@
 #include <string>
 
 class PanelManager;
-class DefaultPanel : public Panel
+class FileBrowser : public Panel
 {
     public:
-        DefaultPanel(PanelManager *panelManager, const std::string& name);
+        FileBrowser(PanelManager *panelManager, const std::string& name);
 
         void DrawContent() override;
     private:

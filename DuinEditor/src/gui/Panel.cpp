@@ -7,52 +7,23 @@
 
 void DrawPanelMenu(PanelManager *panelManager)
 {
-    //static int counter = 0;
-    //if (ImGui::BeginMenuBar()) {
-    //    if (ImGui::BeginMenu("Add Panel")) {
-    //        if (ImGui::MenuItem("Add SceneTree Panel")) {
-    //            const std::string panelName = "Default_Panel_" + std::to_string(++counter);
-    //            panelManager->CreatePanel(PanelType::SCENETREE, panelName, panelManager);
-    //        }
-    //        if (ImGui::MenuItem("Add Viewport Panel")) {
-    //            const std::string panelName = "Viewport_Panel_" + std::to_string(++counter);
-    //            panelManager->CreatePanel(PanelType::VIEWPORT, panelName, panelManager);
-    //        }
-    //        ImGui::EndMenu();
-    //    }
-    //    ImGui::EndMenuBar();
-    //}
     panelManager->DrawPanelMenu();
 }
 
-
-
-Panel::Panel(const std::string& name, PanelManager *panelManager)
-    : uuid(duin::UUID()), panelManager(panelManager), panelName(name) 
+std::string Panel::ReadPanelName(duin::JSONValue value)
 {
-    uniqueWindowName = CreateUniquePanelName();
-    m_windowFlags = ImGuiWindowFlags_MenuBar | 
+    const std::string name = value[guitag::PANEL_NAME].GetString();
+    return name;
+}
+
+Panel::Panel(PanelManager* panelManager, PanelType type_, const std::string& name)
+	: panelManager(panelManager)
+{
+    type = type_;
+	SetPanelName(name);
+    m_windowFlags = ImGuiWindowFlags_MenuBar |
                     ImGuiWindowFlags_NoCollapse;
     AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(uuid); });
-}
-
-Panel::Panel(const std::string& name, duin::UUID uuid, PanelManager* panelManager)
-    : uuid(uuid), panelManager(panelManager), panelName(name)
-{
-    uniqueWindowName = CreateUniquePanelName();
-    m_windowFlags = ImGuiWindowFlags_MenuBar |
-        ImGuiWindowFlags_NoCollapse;
-
-    AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(this->uuid); });
-}
-
-Panel::Panel(duin::JSONValue value)
-{
-    Deserialise(value);
-    m_windowFlags = ImGuiWindowFlags_MenuBar |
-        ImGuiWindowFlags_NoCollapse;
-
-    AddMenuItem("Panel", "Remove Panel", [this]() mutable { this->panelManager->RemovePanel(this->uuid); });
 }
 
 void Panel::SetBlackboard(std::shared_ptr<TabBlackboard> b)
@@ -76,7 +47,7 @@ duin::UUID Panel::GetUUID()
 duin::JSONValue Panel::Serialise()
 {
     duin::JSONValue data;
-    std::string c = PanelManager::PanelTypeToName(type);
+    std::string c = PanelTypeToName(type);
     data.AddMember(guitag::PANEL_TYPE, c);
     data.AddMember(guitag::PANEL_UUID, duin::UUID::ToStringHex(uuid));
     data.AddMember(guitag::PANEL_NAME, panelName);
@@ -85,11 +56,11 @@ duin::JSONValue Panel::Serialise()
     return data;
 }
 
-void Panel::Deserialise(duin::JSONValue data)
+void Panel::PostDeserialise(duin::JSONValue data)
 {
     if (!data.HasMember(guitag::PANEL_TYPE)) return;
     std::string typeStr = data[guitag::PANEL_TYPE].GetString();
-    type = PanelManager::NameToPanelType(typeStr);
+    type = NameToPanelType(typeStr);
 
     if (!data.HasMember(guitag::PANEL_NAME)) return;
     panelName = data[guitag::PANEL_NAME].GetString();
@@ -190,6 +161,12 @@ void Panel::AddSeparator(const std::string& menuName)
 {
     if (!m_menuItems.count(menuName)) return;
     m_menuSeparators[menuName].push_back(m_menuItems[menuName].size());
+}
+
+void Panel::SetPanelName(const std::string& name)
+{
+    panelName = name;
+	uniqueWindowName = CreateUniquePanelName();
 }
 
 void Panel::DrawMenu()

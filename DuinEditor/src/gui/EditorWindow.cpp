@@ -17,6 +17,26 @@ static const char CONFIRM_TAB_DELETE[] = "CONFIRM_TAB_DELETE";
 static bool requestDeleteTabFlag = false;
 static int requestDeleteIndex = -1;
 
+std::shared_ptr<EditorWindow> EditorWindow::Deserialise(duin::JSONValue value)
+{
+	std::shared_ptr<EditorWindow> window = std::make_shared<EditorWindow>();
+
+    if (!(value.HasMember(guitag::TABS_KEY) && value[guitag::TABS_KEY].IsArray())) {
+        DN_WARN("EditorWindow passed empty tabs array!");
+        return window;
+    }
+
+    duin::JSONValue tabsArray = value[guitag::TABS_KEY];
+    for (auto item : tabsArray) {
+        DN_INFO("Tab item: \n{}\n", duin::JSONValue::Write(item));
+        auto tab = Tab::Deserialise(window.get(), item);
+        window->AddTab(tab);
+    }
+
+    return window;
+}
+
+
 EditorWindow::EditorWindow()
 {}
 
@@ -282,22 +302,22 @@ duin::JSONValue EditorWindow::Serialise()
     return value;
 }
 
-void EditorWindow::Deserialise(duin::JSONValue data)
-{
-    if (!(data.HasMember(guitag::TABS_KEY) && data[guitag::TABS_KEY].IsArray())) {
-        DN_WARN("EditorWindow passed empty tabs array!");
-        return;
-    }
-
-    duin::JSONValue tabsArray = data[guitag::TABS_KEY];
-    tabs.clear();
-    for (auto item : tabsArray) {
-        DN_INFO("Tab item: \n{}\n", duin::JSONValue::Write(item));
-        auto tab = CreateTab();
-		tab->Deserialise(item);
-        AddTab(tab);
-    }
-}
+//void EditorWindow::Deserialise(duin::JSONValue data)
+//{
+//    if (!(data.HasMember(guitag::TABS_KEY) && data[guitag::TABS_KEY].IsArray())) {
+//        DN_WARN("EditorWindow passed empty tabs array!");
+//        return;
+//    }
+//
+//    duin::JSONValue tabsArray = data[guitag::TABS_KEY];
+//    tabs.clear();
+//    for (auto item : tabsArray) {
+//        DN_INFO("Tab item: \n{}\n", duin::JSONValue::Write(item));
+//        auto tab = CreateTab();
+//		tab->Deserialise(item);
+//        AddTab(tab);
+//    }
+//}
 
 duin::UUID EditorWindow::GetUUID()
 {

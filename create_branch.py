@@ -35,7 +35,7 @@ def slugify(name: str) -> str:
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: create_branch.py {", type, "} <name> [--push]", file=sys.stderr)
+        print("Usage: create_branch.py {", types, "} <name> [--push]", file=sys.stderr)
         sys.exit(1)
 
     branch_type = sys.argv[1]

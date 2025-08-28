@@ -7,11 +7,13 @@
 #include "gui/FileManager.h"
 #include "gui/EditorWindow.h"
 
+#include <memory>
+
 extern int PROJECT_EDITOR_VERSION;
 extern int PROJECT_ENGINE_VERSION;
 
 extern FileManager fileManager;
-extern EditorWindow tabBrowser;
+extern std::shared_ptr<EditorWindow> editorWindow;
 
 extern duin::DebugConsole debugConsole;
 extern duin::DebugWatchlist debugWatchlist;

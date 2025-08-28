@@ -5,6 +5,33 @@
 #include "ViewportPanel.h"
 #include <Duin/Core/Debug/DNLog.h>
 
+std::shared_ptr<Tab> Tab::Deserialise(EditorWindow* owner, duin::JSONValue value)
+{
+    auto tab = std::make_shared<Tab>(owner);
+    tab->SetSceneWorld(std::make_shared<SceneWorld>());
+    tab->ProcessBlackboard();
+
+    // Set title
+    if (!value.HasMember(guitag::TAB_TITLE)) return nullptr;
+    tab->title = value[guitag::TAB_TITLE].GetString();
+    if (tab->title.empty()) DN_ERROR("Tab title empty when deserialising!");
+
+    // Set UUID ???
+    if (!value.HasMember(guitag::TAB_UUID)) return nullptr;
+    tab->uuid = duin::UUID::FromStringHex(value[guitag::TAB_UUID].GetString());
+    if (tab->uuid == duin::UUID::INVALID) DN_ERROR("Tab uuid invalid when deserialising!");
+
+    // Return Panel info for panelManager
+    if (!value.HasMember(guitag::TAB_PANELMANAGER)) {
+        DN_WARN("Tab has no PanelManager!");
+        return nullptr;
+    }
+    duin::JSONValue panelManagerValue = value[guitag::TAB_PANELMANAGER];
+    tab->panelManager = PanelManager::Deserialise(tab.get(), panelManagerValue);
+
+    return tab;
+}
+
 std::shared_ptr<Tab> Tab::Create(EditorWindow* owner)
 {
     auto tab = std::make_shared<Tab>(owner);
@@ -51,22 +78,21 @@ void Tab::SetTitle(const std::string& newTitle)
 
 std::shared_ptr<PanelManager> Tab::CreatePanelManager()
 {
-    auto pm = std::make_shared<PanelManager>();
-    pm->SetBlackboard(blackboard);
-    this->panelManager = pm;
+    panelManager = std::make_shared<PanelManager>(this);
+    panelManager->SetBlackboard(blackboard);
 
-    return pm;
+    return panelManager;
 }
 
-std::shared_ptr<PanelManager> Tab::CreatePanelManager(duin::JSONValue value)
-{
-    auto pm = std::make_shared<PanelManager>();
-    pm->SetBlackboard(blackboard);
-    pm->Deserialise(value);
-    this->panelManager = pm;
-
-    return pm;
-}
+//std::shared_ptr<PanelManager> Tab::CreatePanelManager(duin::JSONValue value)
+//{
+//    auto pm = std::make_shared<PanelManager>();
+//    pm->SetBlackboard(blackboard);
+//    pm->Deserialise(value);
+//    this->panelManager = pm;
+//
+//    return pm;
+//}
 
 std::shared_ptr<SceneWorld> Tab::GetSceneWorld()
 {
@@ -98,23 +124,28 @@ duin::JSONValue Tab::Serialise()
     return value;
 }
 
-duin::JSONValue Tab::Deserialise(duin::JSONValue data)
-{
-    if (!data.HasMember(guitag::TAB_TITLE)) return duin::JSONValue();
-    title = data[guitag::TAB_TITLE].GetString();
-    if (title.empty()) DN_ERROR("Tab title empty when deserialising!");
-
-    if (!data.HasMember(guitag::TAB_UUID)) return duin::JSONValue();
-    uuid = duin::UUID::FromStringHex(data[guitag::TAB_UUID].GetString());
-    if (uuid == duin::UUID::INVALID) DN_ERROR("Tab uuid invalid when deserialising!");
-
-    if (!data.HasMember(guitag::TAB_PANELMANAGER)) {
-        DN_WARN("Tab has no PanelManager!");
-        return duin::JSONValue();
-    }
-    duin::JSONValue panelManagerValue = data[guitag::TAB_PANELMANAGER];
-    return panelManagerValue;
-}
+//duin::JSONValue Tab::Deserialise(duin::JSONValue data)
+//{
+//    // Set title
+//    if (!data.HasMember(guitag::TAB_TITLE)) return duin::JSONValue();
+//    title = data[guitag::TAB_TITLE].GetString();
+//    if (title.empty()) DN_ERROR("Tab title empty when deserialising!");
+//
+//    // Set UUID ???
+//    if (!data.HasMember(guitag::TAB_UUID)) return duin::JSONValue();
+//    uuid = duin::UUID::FromStringHex(data[guitag::TAB_UUID].GetString());
+//    if (uuid == duin::UUID::INVALID) DN_ERROR("Tab uuid invalid when deserialising!");
+//
+//    // Return Panel info for panelManager
+//    if (!data.HasMember(guitag::TAB_PANELMANAGER)) {
+//        DN_WARN("Tab has no PanelManager!");
+//        return duin::JSONValue();
+//    }
+//    duin::JSONValue panelManagerValue = data[guitag::TAB_PANELMANAGER];
+//	panelManager->Deserialise(panelManagerValue);
+//
+//    return panelManagerValue;
+//}
 
 void Tab::DrawWorkspace()
 {
