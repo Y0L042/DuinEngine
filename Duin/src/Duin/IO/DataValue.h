@@ -197,6 +197,7 @@ namespace duin {
             ConstDataIterator end()   const { return ConstDataIterator(jdoc_, jvalue_->End()); }   
 
         private:
+            bool INVALID_ = false;
             std::shared_ptr<rapidjson::Document> jdoc_;
             rapidjson::Value *jvalue_;
 

@@ -7,41 +7,17 @@
 
 std::shared_ptr<Tab> Tab::Create(EditorWindow* owner)
 {
-    auto tab = std::make_shared<Tab>();
-    tab->SetOwner(owner);
-    tab->sceneWorld = std::make_shared<SceneWorld>();
+    auto tab = std::make_shared<Tab>(owner);
+    tab->SetSceneWorld(std::make_shared<SceneWorld>());
     tab->ProcessBlackboard();
     tab->CreatePanelManager();
 
     return tab;
 }
 
-std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, duin::JSONValue value)
+Tab::Tab(EditorWindow* owner)
+	: owner(owner)
 {
-    auto tab = std::make_shared<Tab>();
-    tab->SetOwner(owner);
-    tab->sceneWorld = std::make_shared<SceneWorld>();
-    tab->ProcessBlackboard();
-    duin::JSONValue panelManagerValue = tab->Deserialise(value);
-    tab->CreatePanelManager(panelManagerValue);
-    return tab;
-}
-
-std::shared_ptr<Tab> Tab::Create(EditorWindow* owner, const std::string& title)
-{
-    auto tab = std::make_shared<Tab>();
-    tab->SetOwner(owner);
-    tab->sceneWorld = std::make_shared<SceneWorld>();
-    tab->ProcessBlackboard();
-    tab->title = title;
-    tab->CreatePanelManager();
-
-    return tab;
-}
-
-Tab::Tab(duin::JSONValue value)
-{
-    Deserialise(value);
 }
 
 std::string Tab::GetPanelManagerID()
@@ -61,6 +37,11 @@ void Tab::SetFocussed(bool status)
 void Tab::SetOwner(EditorWindow* owner)
 {
     this->owner = owner;
+}
+
+void Tab::SetSceneWorld(std::shared_ptr<SceneWorld> newSceneWorld)
+{
+    sceneWorld = newSceneWorld;
 }
 
 void Tab::SetTitle(const std::string& newTitle)

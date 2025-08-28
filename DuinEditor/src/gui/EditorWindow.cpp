@@ -28,7 +28,7 @@ void EditorWindow::Init(duin::JSONValue value)
         if (tabs.empty())
         {
             DN_WARN("No tabs found, adding tab!");
-            CreateTab("Editor");
+            CreateAndAddTab("Editor");
             DN_WARN("Tab added.");
         }
     }
@@ -37,12 +37,12 @@ void EditorWindow::Init(duin::JSONValue value)
         DN_WARN("Initialising with no tab data, adding tab!");
         if (tabs.empty())
         {
-            CreateTab("Editor");
+            CreateAndAddTab("Editor");
         }
     }
 }
 
-void EditorWindow::CreateTab(const std::string& title)
+std::shared_ptr<Tab> EditorWindow::CreateTab(const std::string& title)
 {    
     static int counter = 1;
     bool contains = false;
@@ -55,15 +55,24 @@ void EditorWindow::CreateTab(const std::string& title)
     } else {
         newTitle = title;
     }
-    auto tab = AddTab();
-	tab->SetTitle(newTitle);
+    std::shared_ptr<Tab> newTab = Tab::Create(this);
+    if (newTitle != "__NO_TITLE__")
+    {
+	    newTab->SetTitle(newTitle);
+    }
+
+	return newTab;
 }
 
-std::shared_ptr<Tab> EditorWindow::AddTab()
+void EditorWindow::AddTab(std::shared_ptr<Tab> tab)
 {
-	tabs.emplace_back(Tab::Create(this));
-    
-    return tabs.back();
+    tabs.emplace_back(tab);
+}
+
+void EditorWindow::CreateAndAddTab(const std::string& title)
+{
+    std::shared_ptr<Tab> newTab = CreateTab(title);
+	tabs.emplace_back(newTab);
 }
 
 void EditorWindow::CloseTab(int index) 
@@ -75,7 +84,7 @@ void EditorWindow::CloseTab(int index)
         selectedTab = tabs.size() - 1;
     }
     if (tabs.empty()) {
-        CreateTab("New Tab");
+        CreateAndAddTab("New Tab");
     }
 }
 
@@ -165,7 +174,7 @@ void EditorWindow::DrawTabBar()
 
             // Add a "+" button to create new tabs
             if (ImGui::TabItemButton("+", ImGuiTabItemFlags_Trailing | ImGuiTabItemFlags_NoTooltip)) {
-                CreateTab("New Tab");
+                CreateAndAddTab("New Tab");
             }
             ImGui::EndTabBar();
         }
@@ -284,8 +293,9 @@ void EditorWindow::Deserialise(duin::JSONValue data)
     tabs.clear();
     for (auto item : tabsArray) {
         DN_INFO("Tab item: \n{}\n", duin::JSONValue::Write(item));
-        auto tab = AddTab();
+        auto tab = CreateTab();
 		tab->Deserialise(item);
+        AddTab(tab);
     }
 }
 

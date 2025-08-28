@@ -67,7 +67,9 @@ namespace duin {
 
     JSONValue JSONValue::Invalid()
     {
-        return JSONValue();
+        JSONValue v;
+        v.INVALID_ = true;
+        return v;
     }
 
     JSONValue::JSONValue()
@@ -196,13 +198,7 @@ namespace duin {
 
     bool JSONValue::IsValid()
     {
-        if (jdoc_ && jvalue_) {
-            return true;
-        } else {
-            return false;
-        }
-        DN_CORE_WARN("JSONValue is empty!");
-        return false;
+        return !INVALID_;
 	}
 
     bool JSONValue::IsNull() const

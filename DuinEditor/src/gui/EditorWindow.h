@@ -24,8 +24,9 @@ public:
     void Render();
 
 
-    void CreateTab(const std::string& title);
-    std::shared_ptr<Tab> AddTab();
+    std::shared_ptr<Tab> CreateTab(const std::string& title = "__NO_TITLE__");
+	void AddTab(std::shared_ptr<Tab> tab);
+	void CreateAndAddTab(const std::string& title = "__NO_TITLE__");
     void CloseTab(int index);
 
 private:
