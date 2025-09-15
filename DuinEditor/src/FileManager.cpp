@@ -11,13 +11,13 @@
 #include <iostream>
 
 
-struct FileExtension 
+struct FileExtension
 {
     std::string extension;
     FileType type;
 };
 
-const std::array<FileExtension, 48> AllExtensions = {{
+const std::array<FileExtension, 48> AllExtensions = { {
         // Image Extensions
         {".png", IMAGE_EXT},
         {".jpg", IMAGE_EXT},
@@ -75,16 +75,17 @@ const std::array<FileExtension, 48> AllExtensions = {{
         {".shader", TEXT_EXT},
         {".vert", TEXT_EXT},
         {".frag", TEXT_EXT}
-    }};
+    } };
 
 
 FSNode::FSNode(std::string path)
-    : path(path) 
+    : path(path), fileType(FileType::INVALID_EXT)
 {
     if (fs::is_directory(path)) {
         type = ArcheType::P_DIRECTORY;
         name = fs::path(path).filename().string();
-    } else {
+    }
+    else {
         type = ArcheType::P_FILE;
         SetFileType();
     }
@@ -92,16 +93,22 @@ FSNode::FSNode(std::string path)
 
 void FSNode::Traverse()
 {
-    if (fs::is_empty(path)) { return; }
+    //if (fs::is_empty(path)) { return; }
 
-    for (const auto& dirEntry : fs::directory_iterator(path)) {
-        std::cout << dirEntry.path() << "\n";
+    try {
+        for (const auto& dirEntry : fs::directory_iterator(path)) {
+            std::cout << dirEntry.path() << "\n";
 
-        FSNode *child = new FSNode(dirEntry.path().string());
-        subNodes.push_back(child);
-        if (child->type == ArcheType::P_DIRECTORY) {
-            child->Traverse();
+            FSNode* child = new FSNode(dirEntry.path().string());
+            subNodes.push_back(child);
+            if (child->type == ArcheType::P_DIRECTORY) {
+                child->Traverse();
+            }
         }
+    }
+    catch (const fs::filesystem_error& ex) {
+        // Handle permission errors or other filesystem issues
+        DN_ERROR("Error accessing directory: {} - {}", path, ex.what());
     }
 }
 
@@ -122,13 +129,14 @@ void FSNode::SetFileType()
 
 FileManager::FileManager(std::string rootPath)
     : rootPath(rootPath), rootNode(rootPath)
-{}
+{
+}
 
 void FileManager::BuildFileSystemTree()
 {
-    if (rootPath.empty()) { 
+    if (rootPath.empty()) {
         DN_WARN("Project root path invalid!");
-        return; 
+        return;
     }
 
     rootNode = FSNode(rootPath.string());
@@ -137,34 +145,18 @@ void FileManager::BuildFileSystemTree()
     }
 }
 
-void FileManager::DrawGUI()
+void FileManager::SetRootPath(const std::string& rootPath)
 {
-    ImGui::Begin("File System Tree");
-    DrawNode(&rootNode, rootNode.name);
-    ImGui::End();
+	this->rootPath = rootPath;
+    rootNode = FSNode(this->rootPath.string());
 }
 
-void FileManager::DrawNode(FSNode* node, const std::string& nodeLabel)
+FSNode& FileManager::GetRootNode()
 {
-    if (node->type == ArcheType::P_DIRECTORY) {
-        // Open a tree node
-        bool nodeOpen = ImGui::TreeNodeEx(nodeLabel.c_str(), 
-                                          ImGuiTreeNodeFlags_OpenOnArrow 
-                                          | ImGuiTreeNodeFlags_OpenOnDoubleClick);
-        if (nodeOpen) {
-            for (FSNode* child : node->subNodes) {
-                DrawNode(child, child->name);
-            }
-            ImGui::TreePop();
-        }
-    }
-    else {
-        // Render as leaf node
-        ImGui::BulletText("%s", nodeLabel.c_str());
-    }
+    return rootNode;
 }
 
-static void RecurseTree(FSNode *node);
+static void RecurseTree(FSNode* node);
 void FileManager::PrintTree()
 {
     std::string depth = "";
@@ -172,13 +164,15 @@ void FileManager::PrintTree()
     DN_INFO("{}", rootNode.name);
     RecurseTree(&rootNode);
 }
-static void RecurseTree(FSNode *node)
+
+static void RecurseTree(FSNode* node)
 {
-    for (FSNode *nodePtr : node->subNodes) {
+    for (FSNode* nodePtr : node->subNodes) {
         if (nodePtr->type == ArcheType::P_DIRECTORY) {
             DN_INFO("{}/", nodePtr->path);
             RecurseTree(nodePtr);
-        } else {
+        }
+        else {
             DN_INFO(" - {}", nodePtr->name);
             RecurseTree(nodePtr);
         }

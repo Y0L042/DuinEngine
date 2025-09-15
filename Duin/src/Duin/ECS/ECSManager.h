@@ -824,8 +824,10 @@ namespace duin {
 
         void Initialize();
 
-        flecs::entity CreateEntityFromJSON(JSONMember& member);
+        flecs::entity CreateEntityFromJSON(JSONMember& member); // TODO delete
 
+
+        // TODO move these to private, user must not access these directly
         void ActivateCameraEntity(flecs::entity entity);
 
         void PostUpdateQueryExecution(double delta);

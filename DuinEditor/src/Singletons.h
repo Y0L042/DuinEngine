@@ -4,7 +4,7 @@
 #include <Duin/Core/Utils/UtilsModule.h>
 
 #include "Project.h"
-#include "gui/FileManager.h"
+#include "FileManager.h"
 #include "gui/EditorWindow.h"
 
 #include <memory>

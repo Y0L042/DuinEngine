@@ -1,0 +1,55 @@
+{
+    "name": "#580",
+    "tags": [
+        "duin.ECSTag.PxKinematic",
+        "OnGroundTag",
+        "CanGravity"
+    ],
+    "pairs": {
+        "flecs.core.IsA": "CharacterBody"
+    },
+    "components": {
+        "duin.ECSComponent.Transform3D": null,
+        "duin.ECSComponent.Velocity3D": null,
+        "duin.ECSComponent.CharacterBodyComponent": null,
+        "duin.UUID": null,
+        "PlayerMovementInputVec3": null,
+        "GravityComponent": null,
+        "MouseInputVec2": null,
+        "CameraYawComponent": null,
+        "InputVelocities": null,
+        "InputForces": null,
+        "InputVelocityDirection": null,
+        "Mass": null,
+        "CanRunComponent": null,
+        "CanJumpComponent": null,
+        "CanSprintComponent": null
+    }
+},{
+    "parent": "#580",
+    "name": "#581",
+    "pairs": {
+        "flecs.core.IsA": "Node3D"
+    },
+    "components": {
+        "duin.ECSComponent.Transform3D": null,
+        "duin.UUID": null,
+        "MouseInputVec2": null,
+        "CameraPitchComponent": null
+    }
+},{
+    "parent": "#581",
+    "name": "#582",
+    "tags": [
+        "duin.ECSTag.ActiveCamera"
+    ],
+    "pairs": {
+        "flecs.core.IsA": "Camera3D"
+    },
+    "components": {
+        "duin.ECSComponent.Transform3D": null,
+        "duin.Camera": null,
+        "duin.UUID": null,
+        "VelocityBob": null
+    }
+}

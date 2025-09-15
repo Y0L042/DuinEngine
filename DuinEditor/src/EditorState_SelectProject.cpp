@@ -12,7 +12,7 @@
 
 #include "Project.h"
 #include "Singletons.h"
-#include "gui/FileManager.h"
+#include "FileManager.h"
 #include "States.h"
 
 #define MAX_DIR_LEN 1024
@@ -111,7 +111,7 @@ void EditorState_SelectProject::LoadSelectedProject()
                 DN_INFO("Project loaded: {0}", activeProject.projectDir.string());
                 SetActiveProject(activeProject);
 
-                fileManager.rootPath = projectPath.string();
+                fileManager.SetRootPath(projectPath.string());
                 duin::SetImGuiINIPath(projectPath.string() + "/imgui.ini"); // Set per-project imgui ini
 
                 SwitchState<EditorState_GameEditor>();

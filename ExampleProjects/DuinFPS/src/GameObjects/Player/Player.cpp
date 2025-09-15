@@ -6,6 +6,7 @@
 #include <Duin.h>
 
 #include <Duin/ECS/SceneBuilder.h>
+#include <Duin/IO/IOModule.h>
 
 flecs::entity player;
 flecs::entity cameraRoot;
@@ -85,6 +86,11 @@ void Player::Ready()
     std::string plrrecjson;
     duin::SceneBuilder::WriteEntity(plrrecjson, player, true);
     DN_INFO("Plr Recursive:\n{}", plrrecjson);
+
+    duin::FileUtils::WriteStringIntoFile("./recursive_entity.json", plrrecjson);
+    duin::FileUtils::WriteStringIntoFile("./nonrecursive_entity.json", plrjson);
+    duin::FileUtils::WriteStringIntoFile("./scene.json", scene);
+    
 
     playerStateMachine.SwitchState<State_OnGround>();
 }

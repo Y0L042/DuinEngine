@@ -1,0 +1,583 @@
+{
+    "results": [
+        {
+            "name": "Node",
+            "id": 566,
+            "tags": [
+                "flecs.core.Prefab"
+            ],
+            "components": {
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "Node2D",
+            "id": 567,
+            "tags": [
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node"
+            },
+            "components": {
+                "duin.UUID": null,
+                "(duin.ECSComponent.Position2D,duin.ECSTag.Local)": null,
+                "(duin.ECSComponent.Position2D,duin.ECSTag.Global)": null,
+                "(duin.ECSComponent.Rotation2D,duin.ECSTag.Local)": null,
+                "(duin.ECSComponent.Rotation2D,duin.ECSTag.Global)": null,
+                "(duin.ECSComponent.Scale2D,duin.ECSTag.Local)": null,
+                "(duin.ECSComponent.Scale2D,duin.ECSTag.Global)": null
+            }
+        },
+        {
+            "name": "Node3D",
+            "id": 568,
+            "tags": [
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "Cube",
+            "id": 574,
+            "tags": [
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "DebugCapsule",
+            "id": 575,
+            "tags": [
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "StaticBody",
+            "id": 569,
+            "tags": [
+                "duin.ECSTag.PxStatic",
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.ECSComponent.Velocity3D": null,
+                "duin.ECSComponent.StaticBodyComponent": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "KinematicBody",
+            "id": 570,
+            "tags": [
+                "duin.ECSTag.PxKinematic",
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.ECSComponent.Velocity3D": null,
+                "duin.ECSComponent.KinematicBodyComponent": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "DynamicBody",
+            "id": 571,
+            "tags": [
+                "duin.ECSTag.PxDynamic",
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.ECSComponent.Velocity3D": null,
+                "duin.ECSComponent.DynamicBodyComponent": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "CharacterBody",
+            "id": 572,
+            "tags": [
+                "duin.ECSTag.PxKinematic",
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.ECSComponent.Velocity3D": null,
+                "duin.ECSComponent.CharacterBodyComponent": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "Camera3D",
+            "id": 573,
+            "tags": [
+                "flecs.core.Prefab"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.Camera": null,
+                "duin.UUID": null
+            }
+        },
+        {
+            "name": "#576",
+            "id": 576,
+            "tags": [
+                "flecs.core.Observer"
+            ],
+            "components": {
+                "(flecs.core.Poly,flecs.core.Observer)": null
+            }
+        },
+        {
+            "name": "#577",
+            "id": 577,
+            "tags": [
+                "flecs.core.Observer"
+            ],
+            "components": {
+                "(flecs.core.Poly,flecs.core.Observer)": null
+            }
+        },
+        {
+            "name": "#578",
+            "id": 578,
+            "tags": [
+                "flecs.core.Observer"
+            ],
+            "components": {
+                "(flecs.core.Poly,flecs.core.Observer)": null
+            }
+        },
+        {
+            "name": "#579",
+            "id": 579,
+            "tags": [
+                "flecs.core.Observer"
+            ],
+            "components": {
+                "(flecs.core.Poly,flecs.core.Observer)": null
+            }
+        },
+        {
+            "name": "PlayerMovementInputVec3",
+            "id": 52,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 12,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "PlayerMovementInputVec3"
+                }
+            }
+        },
+        {
+            "name": "GravityComponent",
+            "id": 53,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 12,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "GravityComponent"
+                }
+            }
+        },
+        {
+            "name": "DebugCameraTarget",
+            "id": 54,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 12,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "DebugCameraTarget"
+                }
+            }
+        },
+        {
+            "name": "DebugCameraTag",
+            "id": 55,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "DebugCameraTag"
+                }
+            }
+        },
+        {
+            "name": "MouseInputVec2",
+            "id": 56,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 8,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "MouseInputVec2"
+                }
+            }
+        },
+        {
+            "name": "CameraPitchComponent",
+            "id": 57,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "CameraPitchComponent"
+                }
+            }
+        },
+        {
+            "name": "CameraYawComponent",
+            "id": 58,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "CameraYawComponent"
+                }
+            }
+        },
+        {
+            "name": "InputVelocities",
+            "id": 59,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 32,
+                    "alignment": 8
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "InputVelocities"
+                }
+            }
+        },
+        {
+            "name": "Movement3DInput",
+            "id": 60,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 12,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "Movement3DInput"
+                }
+            }
+        },
+        {
+            "name": "InputForces",
+            "id": 61,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 32,
+                    "alignment": 8
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "InputForces"
+                }
+            }
+        },
+        {
+            "name": "InputVelocityDirection",
+            "id": 62,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 12,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "InputVelocityDirection"
+                }
+            }
+        },
+        {
+            "name": "Mass",
+            "id": 63,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "Mass"
+                }
+            }
+        },
+        {
+            "name": "GroundFriction",
+            "id": 64,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "GroundFriction"
+                }
+            }
+        },
+        {
+            "name": "AirFriction",
+            "id": 65,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "AirFriction"
+                }
+            }
+        },
+        {
+            "name": "IdleTag",
+            "id": 66,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "IdleTag"
+                }
+            }
+        },
+        {
+            "name": "VelocityBob",
+            "id": 67,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 8,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "VelocityBob"
+                }
+            }
+        },
+        {
+            "name": "CanRunComponent",
+            "id": 68,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "CanRunComponent"
+                }
+            }
+        },
+        {
+            "name": "RunTag",
+            "id": 69,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "RunTag"
+                }
+            }
+        },
+        {
+            "name": "CanJumpComponent",
+            "id": 70,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "CanJumpComponent"
+                }
+            }
+        },
+        {
+            "name": "JumpTag",
+            "id": 71,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "JumpTag"
+                }
+            }
+        },
+        {
+            "name": "CanSprintComponent",
+            "id": 72,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 4,
+                    "alignment": 4
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "CanSprintComponent"
+                }
+            }
+        },
+        {
+            "name": "SprintTag",
+            "id": 73,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "SprintTag"
+                }
+            }
+        },
+        {
+            "name": "OnGroundTag",
+            "id": 74,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "OnGroundTag"
+                }
+            }
+        },
+        {
+            "name": "InAirTag",
+            "id": 75,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "InAirTag"
+                }
+            }
+        },
+        {
+            "name": "CanGravity",
+            "id": 76,
+            "components": {
+                "flecs.core.Component": {
+                    "size": 0,
+                    "alignment": 0
+                },
+                "(flecs.core.Identifier,flecs.core.Symbol)": {
+                    "value": "CanGravity"
+                }
+            }
+        },
+        {
+            "name": "#580",
+            "id": 580,
+            "tags": [
+                "duin.ECSTag.PxKinematic",
+                "OnGroundTag",
+                "CanGravity"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "CharacterBody"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.ECSComponent.Velocity3D": null,
+                "duin.ECSComponent.CharacterBodyComponent": null,
+                "duin.UUID": null,
+                "PlayerMovementInputVec3": null,
+                "GravityComponent": null,
+                "MouseInputVec2": null,
+                "CameraYawComponent": null,
+                "InputVelocities": null,
+                "InputForces": null,
+                "InputVelocityDirection": null,
+                "Mass": null,
+                "CanRunComponent": null,
+                "CanJumpComponent": null,
+                "CanSprintComponent": null
+            }
+        },
+        {
+            "parent": "#580",
+            "name": "#581",
+            "id": 581,
+            "pairs": {
+                "flecs.core.IsA": "Node3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.UUID": null,
+                "MouseInputVec2": null,
+                "CameraPitchComponent": null
+            }
+        },
+        {
+            "parent": "#581",
+            "name": "#582",
+            "id": 582,
+            "tags": [
+                "duin.ECSTag.ActiveCamera"
+            ],
+            "pairs": {
+                "flecs.core.IsA": "Camera3D"
+            },
+            "components": {
+                "duin.ECSComponent.Transform3D": null,
+                "duin.Camera": null,
+                "duin.UUID": null,
+                "VelocityBob": null
+            }
+        }
+    ]
+}

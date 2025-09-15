@@ -14,6 +14,8 @@ public:
 	SceneWorld();
 	~SceneWorld();
 
+	//void LoadNewScene(const std::string& path);
+
 	void LoadEntitiesFromFile(std::string filePath);
 	void SaveEntitiesToFile(std::string filePath);
 
@@ -21,6 +23,11 @@ public:
 
 	void ConnectToSignals();
 	void DisconnectFromSignals();
+
+	void SetActiveScene(duin::Scene newScene);
+	duin::Scene& GetActiveScene();
+
+	void InstantiateActiveScene();
 
 	void Enter();
 	void HandleEvents(duin::Event e);
@@ -31,6 +38,7 @@ public:
 	void Exit();
 
 private:
+	duin::Scene activeScene;
 	duin::ECSManager ecs;
 
 	duin::UUID onEventSignalHandle = duin::UUID::INVALID;

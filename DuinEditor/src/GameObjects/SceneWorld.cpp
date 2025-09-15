@@ -55,6 +55,21 @@ void SceneWorld::DisconnectFromSignals()
 	EditorState_GameEditor::onDrawUISignal.Disconnect(onDrawUISignalHandle);
 }
 
+void SceneWorld::SetActiveScene(duin::Scene newScene)
+{
+	activeScene = newScene;
+}
+
+duin::Scene& SceneWorld::GetActiveScene()
+{
+	return activeScene;
+}
+
+void SceneWorld::InstantiateActiveScene()
+{
+	ecs.world.from_json(activeScene.flecsJSON.c_str());
+}
+
 void SceneWorld::Enter()
 {
 	std::string projDir = GetActiveProject().GetPathAsString();

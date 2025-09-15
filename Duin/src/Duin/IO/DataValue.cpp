@@ -61,8 +61,6 @@ namespace duin {
 
             return out;
         }
-
-
     }
 
     JSONValue JSONValue::Invalid()
@@ -161,6 +159,24 @@ namespace duin {
         }
         DN_CORE_WARN("JSONValue is empty!");
         return false;
+    }
+
+    JSONValue JSONValue::GetMember(const std::string& member) const
+    {
+        if (IsReadValid()) {
+            if (!jvalue_->IsObject()) {
+                DN_CORE_WARN("JSONValue is not an Object!");
+                return JSONValue();
+            }
+            if (!jvalue_->HasMember(member.c_str())) {
+                DN_CORE_WARN("JSONValue does not contain member {}!", member);
+                return JSONValue();
+            }
+            rapidjson::Value& value = (*jvalue_)[member.c_str()];
+            return JSONValue(jdoc_, &value);
+        }
+        DN_CORE_WARN("JSONValue is empty!");
+        return JSONValue();
     }
 
     JSONValue& JSONValue::AddMember(const std::string& key, JSONValue dv, bool allowDuplicates)

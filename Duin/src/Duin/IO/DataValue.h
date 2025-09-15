@@ -90,6 +90,7 @@ namespace duin {
             /* Tests if the JSONValue is valid, with valid underlying data */
             bool IsReadValid() const;
             bool HasMember(const std::string& member) const;
+            JSONValue GetMember(const std::string& member) const;
             JSONValue& AddMember(const std::string& key, JSONValue dv, bool allowDuplicates = false);
             JSONValue& RemoveMember(const std::string& key);
 
@@ -184,7 +185,7 @@ namespace duin {
 
 
 
-            JSONValue operator[](const std::string& member);
+            JSONValue operator[](const std::string& member); // Member access
             JSONValue operator[](int idx); // Array access
             const JSONValue& operator*() const;
             bool operator==(const JSONValue& other);

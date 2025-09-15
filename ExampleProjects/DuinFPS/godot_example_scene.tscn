@@ -1,0 +1,223 @@
+[gd_scene load_steps=28 format=3 uid="uid://bixl2bghc80tt"]
+
+[ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
+[ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
+[ext_resource type="PackedScene" uid="uid://dm5ca30ly74ow" path="res://Utils/SimpleFPSCamera/simple_fps_camera.tscn" id="2_owj77"]
+[ext_resource type="Resource" uid="uid://tj62diq6ijdu" path="res://entities/Player/Resources/player_movement_stats.tres" id="2_ytm56"]
+[ext_resource type="PackedScene" uid="uid://dpk5eqnpldcax" path="res://entities/Player/Components/PlayerInteractor/player_interactor.tscn" id="3_75xq8"]
+[ext_resource type="PackedScene" uid="uid://ck7ix6eiplcos" path="res://Utils/StateMachine/state.tscn" id="3_jtqg0"]
+[ext_resource type="Shape3D" uid="uid://d1kjh45ym8m2c" path="res://entities/Player/Resources/Player_body_stand.tres" id="3_nkcvc"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_idle.gd" id="4_aw57w"]
+[ext_resource type="Shape3D" uid="uid://d03ioi5rux4jl" path="res://entities/Player/Resources/Player_body_crouch.tres" id="4_vrbe4"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground.gd" id="5_i1bfk"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/player_state_class.gd" id="6_rk5f0"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_walk.gd" id="7_3ifpr"]
+[ext_resource type="PackedScene" uid="uid://de24xyfl10kgy" path="res://UI/HUD/Crosshairs/crosshair.tscn" id="7_b3c7t"]
+[ext_resource type="PackedScene" uid="uid://tvh3dun5s32q" path="res://Items/wpn_shotgun_plasma/wpn_shotgun_plasma.tscn" id="8_3m2jk"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair_idle.gd" id="8_8qixk"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_sprint.gd" id="8_bvmlt"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair_move.gd" id="9_gaje5"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_jump.gd" id="9_iog75"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_crouch.gd" id="12_4t5gy"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair.gd" id="13_r355b"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onclimbable.gd" id="18_q70x2"]
+[ext_resource type="Script" path="res://entities/Player/Scripts/player_weapon_manager.gd" id="22_hxjxj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nxaro"]
+radius = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evhkp"]
+radius = 0.225
+height = 0.45
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aynnx"]
+radius = 0.25
+height = 1.8
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_nk36c"]
+length = 0.75
+
+[sub_resource type="GDScript" id="GDScript_ocyux"]
+script/source = "extends Node
+
+@export var enabled: bool = true
+@export var captured_by_default: bool = true
+
+func _ready() -> void:
+	if enabled:
+		if captured_by_default:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		GDebug.print(self, [\"Debug mouse capture toggle active.\"])
+
+func _unhandled_input(_event: InputEvent) -> void:
+	if enabled && Input.is_action_just_pressed(\"ui_cancel\"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+"
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Spine", "Head", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "Interact_Raycast", "Pickup_Container", "BaseStepUpSeparationRay", "StairBelowRay", "VaultRay", "VaultShapeCast")]
+collision_layer = 2
+collision_mask = 29
+script = ExtResource("1_s7lkf")
+Body = NodePath(".")
+Spine = NodePath("Spine")
+Head = NodePath("Spine/Head")
+CrouchHigh = NodePath("CrouchHigh")
+CrouchLow = NodePath("CrouchLow")
+BodyShape_Stand = NodePath("BodyCollisionShape_Stand")
+BodyShape_Crouch = NodePath("BodyCollisionShape_Crouch")
+Interact_Raycast = NodePath("Spine/Head/CameraContainer/SimpleFPSCamera/InteractRaycast")
+Pickup_Container = NodePath("Spine/Head/PickUpContainer")
+BaseStepUpSeparationRay = NodePath("StepUpSeparationRay_F")
+StairBelowRay = NodePath("StairsBelowRayCast3D")
+VaultRay = NodePath("VaultRay")
+VaultShapeCast = NodePath("VaultShapeCast")
+MOVE_STATS = ExtResource("2_ytm56")
+JUMP_FRAME_GRACE = 6.0
+
+[node name="PlayerInteractor" parent="." node_paths=PackedStringArray("node_root", "Interact_Raycast", "Pickup_Raycast", "Pickup_Container") instance=ExtResource("3_75xq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
+node_root = NodePath("..")
+Interact_Raycast = NodePath("../Spine/Head/CameraContainer/SimpleFPSCamera/InteractRaycast")
+Pickup_Raycast = NodePath("../Spine/Head/CameraContainer/SimpleFPSCamera/PickupRaycast")
+Pickup_Container = NodePath("../Spine/Head/PickUpContainer")
+
+[node name="GroundTest" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("SphereShape3D_nxaro")
+
+[node name="BodyCollisionShape_Stand" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25183, 0)
+shape = ExtResource("3_nkcvc")
+
+[node name="BodyCollisionShape_Crouch" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43, 0)
+shape = ExtResource("4_vrbe4")
+disabled = true
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="BodyCollisionShape_Crouch"]
+shape = SubResource("CapsuleShape3D_evhkp")
+target_position = Vector3(0, 1.235, 0)
+
+[node name="StairsBelowRayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -0.55, 0)
+
+[node name="VaultRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999848, -0.0174524, 0, 0.0174524, 0.999848, 0, 2.1, -0.425)
+target_position = Vector3(0, -0.75, 0)
+
+[node name="VaultShapeCast" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.07416, -0.429394)
+shape = SubResource("CapsuleShape3D_aynnx")
+target_position = Vector3(0, 0, 0)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="StepUpSeparationRay_F" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.75, -0.255)
+shape = SubResource("SeparationRayShape3D_nk36c")
+
+[node name="RayCast3D" type="RayCast3D" parent="StepUpSeparationRay_F"]
+transform = Transform3D(1, 0, 0, 0, 0.0174524, 0.999848, 0, -0.999848, 0.0174524, 0, 0, 0)
+enabled = false
+target_position = Vector3(0, -0.795, 0)
+
+[node name="CrouchHigh" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
+
+[node name="CrouchLow" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="Spine" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
+
+[node name="Head" type="Node3D" parent="Spine"]
+unique_name_in_owner = true
+
+[node name="PickUpContainer" type="Marker3D" parent="Spine/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.017, -2)
+
+[node name="CameraContainer" type="Marker3D" parent="Spine/Head"]
+metadata/_edit_group_ = true
+
+[node name="SimpleFPSCamera" parent="Spine/Head/CameraContainer" node_paths=PackedStringArray("character", "rot_target_y", "rot_target_x") instance=ExtResource("2_owj77")]
+cull_mask = 1
+current = true
+character = NodePath("../../../..")
+rot_target_y = NodePath("../../../..")
+rot_target_x = NodePath("../../..")
+BOB_EFFECTS_ENABLED = true
+BOB_FREQ = 1.35
+BOB_AMP = 0.06
+FOV_EFFECTS_ENABLED = true
+BASE_FOV = 90.0
+
+[node name="Crosshair" parent="Spine/Head/CameraContainer/SimpleFPSCamera" instance=ExtResource("7_b3c7t")]
+crosshair_color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[node name="InteractRaycast" type="RayCast3D" parent="Spine/Head/CameraContainer/SimpleFPSCamera"]
+target_position = Vector3(0, 0, -5)
+collision_mask = 8
+collide_with_areas = true
+debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
+debug_shape_thickness = 1
+
+[node name="PickupRaycast" type="RayCast3D" parent="Spine/Head/CameraContainer/SimpleFPSCamera"]
+target_position = Vector3(0, 0, -5)
+collision_mask = 8
+debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
+debug_shape_thickness = 1
+
+[node name="WeaponContainer" type="Marker3D" parent="Spine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.194351, -0.443827, -0.477977)
+
+[node name="Shotgun_Plasma" parent="Spine/WeaponContainer" instance=ExtResource("8_3m2jk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0448071, 0, -0.148949)
+firing_mode = null
+firing_rate_rpm = null
+
+[node name="PlayerStateMachineHandler" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("2_8kf2d")]
+node_root = NodePath("..")
+
+[node name="PlayerStateClass" parent="PlayerStateMachineHandler" instance=ExtResource("3_jtqg0")]
+script = ExtResource("6_rk5f0")
+
+[node name="OnGround" parent="PlayerStateMachineHandler/PlayerStateClass" instance=ExtResource("3_jtqg0")]
+script = ExtResource("5_i1bfk")
+
+[node name="OnGround_Idle" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("4_aw57w")
+
+[node name="OnGround_Walk" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("7_3ifpr")
+
+[node name="OnGround_Sprint" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("8_bvmlt")
+
+[node name="OnGround_Jump" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("9_iog75")
+
+[node name="OnGround_Crouch" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("12_4t5gy")
+
+[node name="InAir" parent="PlayerStateMachineHandler/PlayerStateClass" instance=ExtResource("3_jtqg0")]
+script = ExtResource("13_r355b")
+
+[node name="InAir_Idle" parent="PlayerStateMachineHandler/PlayerStateClass/InAir" instance=ExtResource("3_jtqg0")]
+script = ExtResource("8_8qixk")
+
+[node name="InAir_Move" parent="PlayerStateMachineHandler/PlayerStateClass/InAir" instance=ExtResource("3_jtqg0")]
+script = ExtResource("9_gaje5")
+
+[node name="OnClimbable" parent="PlayerStateMachineHandler/PlayerStateClass" instance=ExtResource("3_jtqg0")]
+script = ExtResource("18_q70x2")
+
+[node name="MouseCaptureDebug" type="Node" parent="."]
+script = SubResource("GDScript_ocyux")
+
+[node name="PlayerWeaponManager" type="Node3D" parent="." node_paths=PackedStringArray("node_root", "weapon")]
+script = ExtResource("22_hxjxj")
+node_root = NodePath("..")
+weapon = NodePath("../Spine/WeaponContainer/Shotgun_Plasma")
