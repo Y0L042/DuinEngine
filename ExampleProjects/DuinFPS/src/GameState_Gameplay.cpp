@@ -6,9 +6,12 @@
 #include "ECS.h"
 
 #include <Duin.h>
+#include <Duin/ECS/ECSModule.h>
 
 duin::ECSManager ecs;
 std::shared_ptr<Player> playerObj;
+
+duin::World world;
 
 void GameState_Gameplay::Enter()
 {
@@ -33,6 +36,13 @@ void GameState_Gameplay::Enter()
     duin::SceneBuilder::WriteScene(scene, ecs);
     duin::FileUtils::WriteStringIntoFile("./Demo_Scenetree.ecst", scene);
 	DN_INFO("Wrote scenetree to Demo_Scenetree.ecst !");
+
+	static duin::Entity testEntity = world.CreateEntity("TestEntity");
+	testEntity
+        .Set<duin::ECSComponent::Position3D>(duin::Vector3{0,0,0})
+        .Add<duin::ECSComponent::DebugCubeComponent>();
+	DN_INFO("TestEntity ID: {}", testEntity.GetID());
+	DN_INFO("TestEntity component: {}", testEntity.Has<duin::ECSComponent::Position3D>());
 }
 
 void GameState_Gameplay::OnEvent(duin::Event e)
