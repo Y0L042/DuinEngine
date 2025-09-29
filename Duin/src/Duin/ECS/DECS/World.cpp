@@ -1,6 +1,7 @@
 #include "dnpch.h"
 #include "DECS.h"
 #include "Entity.h"
+#include "Query.h"
 
 duin::World::World()
     : flecsWorld(flecs::world())
