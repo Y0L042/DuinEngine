@@ -358,7 +358,7 @@ void ExecuteQuerySprint(flecs::world& world)
 void ExecuteQueryVelocityBob(flecs::world& world)
 {
     static flecs::query q = world.query_builder<
-        VelocityBob,
+        VelocityBob, 
         // Position3D,
         Transform3D,
         const Velocity3D *

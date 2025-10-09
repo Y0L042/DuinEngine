@@ -8,7 +8,7 @@ end
 
 workspace "Duin"
     architecture "x64"
-    startproject "Sandbox"
+    startproject "DuinFPS"
 
     configurations { "Debug", "Release", "Dist", "Archive" }
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -100,6 +100,7 @@ workspace "Duin"
 
     -- Include sub-Premake files
     include "Duin"
+    include "DuinTests"
     include "DuinEditor"
     include "ExampleProjects/DuinFPS"
     -- include "ExampleProjects/Sandbox"
