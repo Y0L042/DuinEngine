@@ -13,7 +13,7 @@ var searchData=
   ['color_10',['Color',['../structduin_1_1Color.html',1,'duin']]],
   ['conerendergeometry_11',['ConeRenderGeometry',['../structduin_1_1ConeRenderGeometry.html',1,'duin']]],
   ['configvalue_12',['ConfigValue',['../classduin_1_1ConfigValue.html',1,'duin']]],
-  ['constdataiterator_13',['ConstDataIterator',['../classduin_1_1DataValue_1_1ConstDataIterator.html',1,'duin::DataValue']]],
+  ['constdataiterator_13',['constdataiterator',['../classConstDataIterator.html',1,'ConstDataIterator'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html',1,'duin::JSONValue::ConstDataIterator']]],
   ['convexmeshgeometry_14',['ConvexMeshGeometry',['../classduin_1_1ConvexMeshGeometry.html',1,'duin']]],
   ['createexternalref_15',['CreateExternalRef',['../structduin_1_1ECSTag_1_1CreateExternalRef.html',1,'duin::ECSTag']]],
   ['cubecomponent_16',['CubeComponent',['../structduin_1_1ECSComponent_1_1CubeComponent.html',1,'duin::ECSComponent']]],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['datavalue_0',['DataValue',['../classduin_1_1DataValue.html#ae071c34ed27aeb979849e73080417cfb',1,'duin::DataValue']]]
+  ['begin_0',['begin',['../classduin_1_1JSONValue.html#a827c9638724cf584317563e94e489b45',1,'duin::JSONValue::begin()'],['../classduin_1_1JSONValue.html#aafbcf9c008215f9f668c7a8cd9d0ca6a',1,'duin::JSONValue::begin() const'],['../classduin_1_1JSONValue.html#a3203e73d75ff60c387d3e06dd85fbe49',1,'duin::JSONValue::Begin()']]]
 ];

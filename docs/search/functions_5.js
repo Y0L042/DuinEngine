@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['map_0',['Map',['../classduin_1_1LookupVector.html#ae91b8658393f025a86ff60428cb9f5d6',1,'duin::LookupVector']]]
+  ['findmember_0',['FindMember',['../classduin_1_1JSONValue.html#a9f56c90a23f38d6b7200902a255a6586',1,'duin::JSONValue']]]
 ];

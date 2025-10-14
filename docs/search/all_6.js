@@ -6,7 +6,13 @@ var searchData=
   ['geometryhandle_3',['GeometryHandle',['../structGeometryHandle.html',1,'']]],
   ['geometryt_4',['GeometryT',['../structGeometryT.html',1,'']]],
   ['geometryt_3c_20debug_5fdraw_5fconfig_5fmax_5fgeometry_20_3e_5',['GeometryT&lt; DEBUG_DRAW_CONFIG_MAX_GEOMETRY &gt;',['../structGeometryT.html',1,'']]],
-  ['getelementcount_6',['GetElementCount',['../classduin_1_1LookupVector.html#aff88cbc2f8825230df5fb5d7f2594b66',1,'duin::LookupVector']]],
-  ['getvalue_7',['GetValue',['../classduin_1_1LookupVector.html#aeb3e47bc4e73a8e647595b95f72b551f',1,'duin::LookupVector']]],
-  ['global_8',['Global',['../structduin_1_1ECSTag_1_1Global.html',1,'duin::ECSTag']]]
+  ['getbool_6',['GetBool',['../classduin_1_1JSONValue.html#a6512655ede0b98b50620517f7ddf5296',1,'duin::JSONValue']]],
+  ['getdouble_7',['GetDouble',['../classduin_1_1JSONValue.html#a49c8e95be8708f8f3855c2451479146f',1,'duin::JSONValue']]],
+  ['getelementcount_8',['GetElementCount',['../classduin_1_1LookupVector.html#aff88cbc2f8825230df5fb5d7f2594b66',1,'duin::LookupVector']]],
+  ['getint_9',['GetInt',['../classduin_1_1JSONValue.html#ab92b04c14a9cc7193b302133cebb45cf',1,'duin::JSONValue']]],
+  ['getmember_10',['GetMember',['../classduin_1_1JSONValue.html#ae307c708ace460fca79b3851b8e9f959',1,'duin::JSONValue']]],
+  ['getrjsonvalue_11',['GetRJSONValue',['../classduin_1_1JSONValue.html#ac0b7ef6d9259d906baa322e365f533ba',1,'duin::JSONValue']]],
+  ['getstring_12',['GetString',['../classduin_1_1JSONValue.html#aab6eb6a2c1588f524464fd06b377dca3',1,'duin::JSONValue']]],
+  ['getvalue_13',['getvalue',['../classduin_1_1LookupVector.html#aeb3e47bc4e73a8e647595b95f72b551f',1,'duin::LookupVector::GetValue()'],['../classduin_1_1JSONValue_1_1DataIterator.html#ac4ee40686baf8284d17836b07a6295e0',1,'duin::JSONValue::DataIterator::GetValue()'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html#a118620bec332988b2d781a30e20461e8',1,'duin::JSONValue::ConstDataIterator::GetValue()']]],
+  ['global_14',['Global',['../structduin_1_1ECSTag_1_1Global.html',1,'duin::ECSTag']]]
 ];

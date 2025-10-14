@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structduin_1_1ECSComponent_1_1Scale3D.html" title=" " alt="" coords="5,5,164,45"/>
+<area shape="rect" id="Node000000" href="$structduin_1_1ECSComponent_1_1Serialisable.html" title=" " alt="" coords="5,5,164,45"/>
+<area shape="rect" id="Node000001" href="$structduin_1_1ECSComponent_1_1Position3D.html" title=" " alt="" coords="212,5,371,45"/>
+<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="178,23,212,23,212,28,178,28"/>
 </map>

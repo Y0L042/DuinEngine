@@ -1,0 +1,6 @@
+<map id="duin::Scene" name="duin::Scene">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,103,119"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title=" " alt="" coords="8,5,100,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,45,57,93,51,93,51,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="115,9,127,18,118,26,100,29,100,23,116,21,121,18,112,14"/>
+</map>
