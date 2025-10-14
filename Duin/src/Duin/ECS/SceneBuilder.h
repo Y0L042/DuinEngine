@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Duin/IO/DataValue.h"
+#include "Duin/IO/JSONValue.h"
 #include "ECSManager.h"
 #include <flecs.h>
 #include <vector>

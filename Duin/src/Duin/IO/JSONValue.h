@@ -1,5 +1,5 @@
 /**
- * @file DataValue.h
+ * @file JSONValue.h
  * @brief Defines the duin::JSONValue class for manipulating JSON data using RapidJSON.
  * @author DuinEngine Contributors
  * @date 2024
@@ -23,7 +23,7 @@
  * and serialize the result back to a string.
  *
  * @code
- * #include <Duin/IO/DataValue.h>
+ * #include <Duin/IO/JSONValue.h>
  * 
  * // Parse a JSON string
  * duin::JSONValue json = duin::JSONValue::Parse("{\"name\": \"DuinEditor\", \"version\": 1}");

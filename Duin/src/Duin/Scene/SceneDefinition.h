@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Duin/IO/DataValue.h"
+#include "Duin/IO/JSONValue.h"
 #include "Duin/Core/Utils/UUID.h"
 
 #include <string>

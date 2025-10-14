@@ -1,7 +1,7 @@
 #include "dnpch.h"
 #include "SceneBuilder.h"
 #include "ECSManager.h"
-#include "Duin/IO/DataValue.h"
+#include "Duin/IO/JSONValue.h"
 #include "Duin/IO/FileUtils.h"
 #include <flecs.h>
 

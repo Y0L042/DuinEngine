@@ -10,7 +10,7 @@
  */
 
 #include "dnpch.h"
-#include "DataValue.h"
+#include "JSONValue.h"
 #include <Duin/Core/Debug/DNLog.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
