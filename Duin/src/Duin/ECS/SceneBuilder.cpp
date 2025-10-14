@@ -83,7 +83,7 @@ duin::Scene duin::Scene::ReadFromFile(const std::string& filePath)
     // TODO error handling
     std::string sceneStr = "";
     FileUtils::ReadFileIntoString(filePath, sceneStr);
-	JSONValue sceneJSON = JSONValue::Parse(sceneStr);
+	JSONValue sceneJSON = JSONValue::ParseFromFile(sceneStr);
     if (sceneJSON.IsReadValid()) {
         return ReadJSON(sceneJSON);
 	}

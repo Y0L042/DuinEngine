@@ -104,7 +104,7 @@ void Editor::SaveProjectEditorConfig(duin::JSONValue value)
 duin::JSONValue Editor::LoadProjectEditorConfig()
 {
     Project& project = GetActiveProject();
-    PROJECT_DATA = std::make_shared<duin::JSONValue>(duin::JSONValue::Parse(project.GetPathAsString()));
+    PROJECT_DATA = std::make_shared<duin::JSONValue>(duin::JSONValue::ParseFromFile(project.GetPathAsString()));
     
     if (PROJECT_DATA->HasMember(guitag::EDITORVERSION)) {
         PROJECT_EDITOR_VERSION = (*PROJECT_DATA)[guitag::EDITORVERSION].GetInt();
