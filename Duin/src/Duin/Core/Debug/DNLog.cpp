@@ -66,9 +66,8 @@ namespace duin {
         s_ClientLogger->set_formatter(std::move(clientFormatter));
         s_ClientLogger->set_level(spdlog::level::trace);
 
-        
-
-
+        std::printf("Duin: CoreLogger initialised.\n");
+        std::printf("Duin: ClientLogger initialised.\n");
     }
 }
 

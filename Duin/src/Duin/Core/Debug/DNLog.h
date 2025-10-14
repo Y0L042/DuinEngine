@@ -14,11 +14,22 @@ namespace duin
 
 		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() 
         { 
+			if (s_CoreLogger == nullptr)
+			{
+				std::printf("Duin: DNLog was not initialised, running Init() now.\n");
+				Init();
+			}
+
             return s_CoreLogger; 
         }
 
 		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() 
         { 
+			if (s_ClientLogger == nullptr)
+			{
+				std::printf("Duin: DNLog was not initialised, running Init() now.\n");
+				Init();
+			}
             return s_ClientLogger; 
         }
 
