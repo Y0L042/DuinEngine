@@ -1,10 +1,11 @@
 //#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "doctest.h"
+#include <doctest.h>
 #include <iostream>
 #include <fstream>
 #include <ctime>
 #include <sstream>
+#include <Duin/Core/Debug/DNLog.h>
 
 const char testLogDir[] = "./TestLogs";
 
@@ -30,6 +31,8 @@ std::string getTimestampedFilename() {
 
 int main(int argc, char** argv) 
 {
+    duin::Log::Init();
+
     doctest::Context ctx;
     ctx.setOption("abort-after", 50);
     ctx.setOption("no-breaks", true);
