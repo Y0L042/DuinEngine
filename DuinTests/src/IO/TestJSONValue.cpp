@@ -1,5 +1,5 @@
 #include <doctest.h>
-#include <Duin/IO/DataValue.h>
+#include <Duin/IO/JSONValue.h>
 #include <string>
 
 TEST_SUITE("JSONValue - Construction & Type Checks") {
