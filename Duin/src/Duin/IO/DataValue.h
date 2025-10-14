@@ -15,6 +15,36 @@
  * @endcode
  */
 
+ /**
+ * @example
+ * @brief Example usage of duin::JSONValue for parsing, accessing, and modifying JSON data.
+ *
+ * This example demonstrates how to parse a JSON string, access members, modify values,
+ * and serialize the result back to a string.
+ *
+ * @code
+ * #include <Duin/IO/DataValue.h>
+ * 
+ * // Parse a JSON string
+ * duin::JSONValue json = duin::JSONValue::Parse("{\"name\": \"DuinEditor\", \"version\": 1}");
+ * 
+ * // Access a member by name
+ * std::string name = json["name"].GetString();
+ * int version = json["version"].GetInt();
+ * 
+ * // Modify a member
+ * json["version"].SetInt(2);
+ * 
+ * // Add a new member
+ * json.AddMember("active", true);
+ * 
+ * // Serialize back to string
+ * std::string output = json.Write(true); // pretty print
+ * 
+ * // Output: {"name": "DuinEditor", "version": 2, "active": true}
+ * @endcode
+ */
+
 #pragma once
 
 #include <Duin/Core/Debug/DebugModule.h>
@@ -24,13 +54,15 @@
 #include <memory>
 
 namespace duin {
+	class JSONValue;
+
     /**
-     * @class JSONValue
-     * @brief Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.
-     *
-     * JSONValue allows parsing, writing, and modifying JSON data, supporting objects, arrays,
-     * and primitive types. It manages memory using shared_ptr for the underlying RapidJSON Document.
-     */
+    * @class JSONValue
+    * @brief Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.
+    *
+    * JSONValue allows parsing, writing, and modifying JSON data, supporting objects, arrays,
+    * and primitive types. It manages memory using shared_ptr for the underlying RapidJSON Document.
+    */
     class JSONValue
     {
         public:
@@ -154,11 +186,18 @@ namespace duin {
             };
 
             /**
-             * @brief Parses a JSON string into a JSONValue object.
-             * @param data JSON string to parse.
+             * @brief Parses a JSON file into a JSONValue object.
+             * @param data JSON filepath to parse.
              * @return Parsed JSONValue object.
              */
-            static JSONValue Parse(const std::string& data);
+            static JSONValue ParseFromFile(const std::string& filePath);
+
+            /**
+            * @brief Parses a JSON string into a JSONValue object.
+            * @param data JSON string to parse.
+            * @return Parsed JSONValue object.
+            */
+            static JSONValue Parse(const std::string& string);
 
             /**
              * @brief Serializes a JSONValue to a string.
@@ -474,9 +513,7 @@ namespace duin {
             {
                 if (jvalue_->IsArray()) {
                     rapidjson::Document::AllocatorType& alloc = jdoc_->GetAllocator();
-                    rapidjson::Value v;
-                    v.Set(val);
-                    jvalue_->PushBack(std::move(v), alloc);
+                    jvalue_->PushBack(val, alloc);
                     return *this;
                 }
                 DN_CORE_WARN("JSONValue is not an array!");
@@ -508,14 +545,14 @@ namespace duin {
              * @param other JSONValue to compare with.
              * @return True if equal.
              */
-            bool operator==(const JSONValue& other);
+            bool operator==(const JSONValue& other) const;
 
             /**
              * @brief Inequality comparison operator.
              * @param other JSONValue to compare with.
              * @return True if not equal.
              */
-            bool operator!=(const JSONValue& other);
+            bool operator!=(const JSONValue& other) const;
 
             /**
              * @brief Returns iterator to beginning of array (mutable).

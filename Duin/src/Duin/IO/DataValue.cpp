@@ -25,32 +25,73 @@ namespace duin {
      * @param filePath Path to the JSON file.
      * @return Parsed JSONValue object.
      */
-    JSONValue JSONValue::Parse(const std::string& filePath)
+    JSONValue JSONValue::ParseFromFile(const std::string& filePath)
     {
         DN_CORE_INFO("Attempting to parse {} into JSONValue...", filePath);
         JSONValue dv;
 
         std::ifstream ifs(filePath);
         if (!ifs) {
-            DN_CORE_FATAL("Cannot open {}!", filePath);
+            DN_CORE_ERROR("Cannot open {}!", filePath);
+            dv.SetObject();
+            return dv;
         }
+        
         std::stringstream buffer;
         buffer << ifs.rdbuf();
         std::string content = buffer.str();
         DN_CORE_INFO("Content:\n{}", content);
 
-        dv.jdoc_ =  std::make_shared<rapidjson::Document>();
-        dv.jdoc_->Parse(content.c_str());
+        return Parse(content); // Reuse Parse logic
+    }
+
+    /**
+    * @brief Parses a JSON string into a JSONValue object.
+    * @param string JSON string.
+    * @return Parsed JSONValue object.
+    */
+    JSONValue JSONValue::Parse(const std::string& string)
+    {
+        JSONValue dv;
+
+        dv.jdoc_ = std::make_shared<rapidjson::Document>();
+        dv.jdoc_->Parse(string.c_str());
         dv.jvalue_ = dv.jdoc_.get();
 
+        // Check for parse errors
+        if (dv.jdoc_->HasParseError()) {
+            DN_CORE_ERROR("JSON parsing failed at offset {}: Error code {}", 
+                          dv.jdoc_->GetErrorOffset(),
+                          static_cast<int>(dv.jdoc_->GetParseError()));
+            dv.SetObject(); // Default to empty object on error
+            return dv;
+        }
+
+        // Accept any valid JSON type (object, array, primitive, etc.)
         if (dv.jvalue_->IsObject()) {
-            DN_CORE_INFO("Document parsed into JSONValue.");
-        } else {
-            DN_CORE_WARN("Document parsing failed, JSONValue not an Object!");
-            dv.SetObject(); // Ensure that value is valid Object, even when parsing invalid files
+            DN_CORE_TRACE("Parsed JSON object");
+        } else if (dv.jvalue_->IsArray()) {
+            DN_CORE_TRACE("Parsed JSON array");
+        } else if (dv.jvalue_->IsString()) {
+            DN_CORE_TRACE("Parsed JSON string");
+        } else if (dv.jvalue_->IsNumber()) {
+            DN_CORE_TRACE("Parsed JSON number");
+        } else if (dv.jvalue_->IsBool()) {
+            DN_CORE_TRACE("Parsed JSON boolean");
+        } else if (dv.jvalue_->IsNull()) {
+            DN_CORE_TRACE("Parsed JSON null");
         }
 
         return dv;
+    }
+
+    /**
+     * @brief Returns underlying RapidJSON value reference.
+     * @return Reference to RapidJSON value.
+     */
+    rapidjson::Value& JSONValue::GetRJSONValue()
+    {
+        return *jvalue_;
     }
 
     /**
@@ -356,7 +397,7 @@ namespace duin {
     {
         if (jvalue_) {
             if (jvalue_->IsString()) {
-                std::string s = jvalue_->GetString();
+                std::string s(jvalue_->GetString());
                 return s;
             } else {
                 DN_CORE_WARN("JSONValue not string!");
@@ -518,8 +559,8 @@ namespace duin {
         if (jvalue_) {
             if (jvalue_->IsArray()) {
                 rapidjson::SizeType v = jvalue_->Capacity();
-                size_t size = (size_t)v;
-                return size_t();
+                size_t size = static_cast<size_t>(v);
+                return size;
             } else {
                 DN_CORE_WARN("JSONValue not array!");
             }
@@ -529,10 +570,46 @@ namespace duin {
     }
 
     /**
-     * @brief Returns iterator to beginning of array.
+     * @brief Returns iterator to beginning of array (mutable).
+     * @return DataIterator to beginning.
+     */
+    JSONValue::DataIterator JSONValue::begin()
+    {
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                rapidjson::Value::ValueIterator it = jvalue_->Begin();
+                return DataIterator(jdoc_, it);
+            } else {
+                DN_CORE_WARN("JSONValue not array!");
+            }
+        }
+        DN_CORE_WARN("JSONValue is empty!");
+        return DataIterator();
+    }
+
+    /**
+     * @brief Returns iterator to end of array (mutable).
+     * @return DataIterator to end.
+     */
+    JSONValue::DataIterator JSONValue::end()
+    {
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                rapidjson::Value::ValueIterator it = jvalue_->End();
+                return DataIterator(jdoc_, it);
+            } else {
+                DN_CORE_WARN("JSONValue not array!");
+            }
+        }
+        DN_CORE_WARN("JSONValue is empty!");
+        return DataIterator();
+    }
+
+    /**
+     * @brief Returns iterator to beginning of array (const).
      * @return ConstDataIterator to beginning.
      */
-    JSONValue::ConstDataIterator JSONValue::Begin()
+    JSONValue::ConstDataIterator JSONValue::begin() const
     {
         if (jvalue_) {
             if (jvalue_->IsArray()) {
@@ -547,10 +624,10 @@ namespace duin {
     }
 
     /**
-     * @brief Returns iterator to end of array.
+     * @brief Returns iterator to end of array (const).
      * @return ConstDataIterator to end.
      */
-    JSONValue::ConstDataIterator JSONValue::End()
+    JSONValue::ConstDataIterator JSONValue::end() const
     {
         if (jvalue_) {
             if (jvalue_->IsArray()) {
@@ -602,7 +679,10 @@ namespace duin {
      */
     JSONValue JSONValue::SetString(const std::string& text)
     {
-        jvalue_->SetString(text.c_str(), static_cast<rapidjson::SizeType>(text.size()));
+        jvalue_->SetString(text.c_str(), 
+                           static_cast<rapidjson::SizeType>(text.size()),
+                           jdoc_->GetAllocator()
+                           );
         return *this;
     }
 
@@ -689,7 +769,7 @@ namespace duin {
         if (IsReadValid()) {
             if (jvalue_->IsArray()) {
                 rapidjson::SizeType rjIdx = static_cast<rapidjson::SizeType>(idx);
-                rapidjson::Value& value = jvalue_[rjIdx];
+                rapidjson::Value& value = (*jvalue_)[rjIdx];
                 return JSONValue(jdoc_, &value);
             } else {
                 DN_CORE_WARN("JSONValue not array, cannot dereference!");
@@ -718,7 +798,7 @@ namespace duin {
      * @param other JSONValue to compare with.
      * @return True if equal.
      */
-    bool JSONValue::operator==(const JSONValue& other)
+    bool JSONValue::operator==(const JSONValue& other) const
     {
         if (IsReadValid()) {
             if (other.IsReadValid()) {
@@ -736,7 +816,7 @@ namespace duin {
      * @param other JSONValue to compare with.
      * @return True if not equal.
      */
-    bool JSONValue::operator!=(const JSONValue& other)
+    bool JSONValue::operator!=(const JSONValue& other) const
     {
         if (IsReadValid()) {
             if (other.IsReadValid()) {
