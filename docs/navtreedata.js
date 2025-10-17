@@ -37,7 +37,11 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ]
+      ] ]
     ] ],
     [ "Examples", "examples.html", "examples" ]
   ] ]
@@ -46,8 +50,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"dir_442b83e730904a442a2c3e7502d47646.html",
-"structduin_1_1ECSComponent_1_1PhysicsStaticCubeComponent.html"
+"dir_49e56c817e5e54854c35e136979f97ca.html",
+"structduin_1_1BGFXBufferHandle.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
