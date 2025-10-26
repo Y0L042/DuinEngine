@@ -25,7 +25,6 @@ duin::DebugWatchlist debugWatchlist;
 
 duin::StateMachine mainStateMachine;
 
-FileManager fileManager;
 Project activeProject;
 std::shared_ptr<duin::JSONValue> PROJECT_DATA;
 

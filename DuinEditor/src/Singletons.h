@@ -12,7 +12,6 @@
 extern int PROJECT_EDITOR_VERSION;
 extern int PROJECT_ENGINE_VERSION;
 
-extern FileManager fileManager;
 extern std::shared_ptr<EditorWindow> editorWindow;
 
 extern duin::DebugConsole debugConsole;

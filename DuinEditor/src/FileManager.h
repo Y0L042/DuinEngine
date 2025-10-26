@@ -3,27 +3,13 @@
 #include <vector>
 #include <string>
 #include <filesystem>
+#include "FileTypes.h"
 
 namespace fs = std::filesystem;
 
-typedef enum ArcheType {
-    P_DIRECTORY,
-    P_FILE,
-    P_INVALID
-} ArcheType;
-
-typedef enum FileType {
-    INVALID_EXT,
-    IMAGE_EXT,
-    AUDIO_EXT,
-    VIDEO_EXT,
-    MODEL_EXT,
-    TEXT_EXT
-} FileType;
 
 
-
-class FSNode
+struct FSNode
 {
 public:
     ArcheType type;
@@ -44,11 +30,10 @@ public:
 private:
 };
 
-
-
 class FileManager
 {
 public:
+    static FileManager& Get();
 	FileManager() = default;
     FileManager(std::string rootPath);
 

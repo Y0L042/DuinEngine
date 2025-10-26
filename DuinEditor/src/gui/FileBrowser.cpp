@@ -6,12 +6,19 @@
 FileBrowser::FileBrowser(PanelManager *panelManager, const std::string& name)
     : Panel(panelManager, PanelType::FILEBROWSER, name)
 {
+	FileManager& fileManager = FileManager::Get();
     fileManager.BuildFileSystemTree();
 }
 
 
+void FileBrowser::ConnectOnFileSelected(std::function<void(FSNode *)> f)
+{
+	onFileSelected.Connect(f);
+}
+
 void FileBrowser::DrawContent()
 {
+	FileManager& fileManager = FileManager::Get();
     DrawNode(&fileManager.GetRootNode(), fileManager.GetRootNode().name);
 }
 
@@ -41,7 +48,7 @@ void FileBrowser::DrawNode(FSNode* node, const std::string& nodeLabel)
 		ImGui::TreeNodeEx(nodeLabel.c_str(), leafFlags);
         if (ImGui::IsItemClicked()) {
             selectedNode = node;
-            onFileSelected.Emit(node->path);
+            onFileSelected.Emit(selectedNode);
         }
     }
 }

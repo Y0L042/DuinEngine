@@ -1,3 +1,8 @@
+/**
+ * FileBrowser panel class
+ * Displays a file browser panel in the GUI
+ */
+
 #pragma once
 
 #include "Panel.h"
@@ -15,12 +20,17 @@ class FileBrowser : public Panel
 
         FileBrowser(PanelManager *panelManager, const std::string& name);
 
-        void ConnectOnFileSelected();
+        void ConnectOnFileSelected(std::function<void(FSNode *)> f);
         void DrawContent() override;
         void DrawNode(FSNode* node, const std::string& nodeLabel);
 
     private:
 		FSNode* selectedNode = nullptr;
-        duin::Signal<const std::string&> onFileSelected;
+        duin::Signal<FSNode *> onFileSelected;
 
+};
+
+struct FileObject
+{
+    std::string path;
 };

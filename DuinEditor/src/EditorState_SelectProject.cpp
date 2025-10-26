@@ -90,6 +90,8 @@ void EditorState_SelectProject::LoadSelectedProject()
 {
     if (selectedProjectIndex == -1) { return; }
 
+	FileManager& fileManager = FileManager::Get();
+
     const char *selectedProjectDir = recentProjectDirsVec[selectedProjectIndex].c_str();
     fs::path projectPath = selectedProjectDir;
     // If project dir exist
