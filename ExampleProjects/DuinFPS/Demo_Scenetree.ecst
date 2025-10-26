@@ -4,7 +4,7 @@
     "EXT_SCN_DEPS": [
         {
             "EXDEPUUID": 132161,
-            "PARENT": 580,
+            "LOCALPARENT": 580,
             "TYPE": "RES_UNKNOWN"
         }
     ],
