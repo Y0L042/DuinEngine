@@ -569,6 +569,43 @@ namespace duin {
         return size_t();
     }
 
+    JSONValue::ConstDataIterator JSONValue::Begin()
+    {
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                rapidjson::Value::ConstValueIterator it = jvalue_->Begin();
+                return ConstDataIterator(jdoc_, it);
+            } else if (jvalue_->IsObject()) {
+                rapidjson::Value::ConstMemberIterator mit = jvalue_->MemberBegin();
+                // Note: For objects, we'd need a different iterator type
+                // For now, warn and return invalid iterator
+                DN_CORE_WARN("Begin() called on object - use FindMember() or begin() for member iteration!");
+                return ConstDataIterator();
+            } else {
+                DN_CORE_WARN("JSONValue not array or object!");
+            }
+        }
+        DN_CORE_WARN("JSONValue is empty!");
+        return ConstDataIterator();
+    }
+
+    JSONValue::ConstDataIterator JSONValue::End()
+    {
+        if (jvalue_) {
+            if (jvalue_->IsArray()) {
+                rapidjson::Value::ConstValueIterator it = jvalue_->End();
+                return ConstDataIterator(jdoc_, it);
+            } else if (jvalue_->IsObject()) {
+                DN_CORE_WARN("End() called on object - use FindMember() or end() for member iteration!");
+                return ConstDataIterator();
+            } else {
+                DN_CORE_WARN("JSONValue not array or object!");
+            }
+        }
+        DN_CORE_WARN("JSONValue is empty!");
+        return ConstDataIterator();
+    }
+
     /**
      * @brief Returns iterator to beginning of array (mutable).
      * @return DataIterator to beginning.
@@ -648,6 +685,22 @@ namespace duin {
      */
     JSONValue::ConstDataIterator JSONValue::FindMember(const std::string& member) const
     {
+        if (jvalue_) {
+            if (jvalue_->IsObject()) {
+                auto mit = jvalue_->FindMember(member.c_str());
+                if (mit != jvalue_->MemberEnd()) {
+                    // FindMember returns a member iterator, but ConstDataIterator expects value iterator
+                    // Since these are incompatible types, we return the value as a ConstDataIterator
+                    // pointing to the member's value
+                    return ConstDataIterator(jdoc_, &mit->value);
+                }
+                DN_CORE_TRACE("Member '{}' not found in object", member);
+                return ConstDataIterator();
+            } else {
+                DN_CORE_WARN("JSONValue is not an object, cannot find member!");
+            }
+        }
+        DN_CORE_WARN("JSONValue is empty!");
         return ConstDataIterator();
     }
 

@@ -15,10 +15,10 @@ namespace duin
         SceneDefinition() = default;
         SceneDefinition(const JSONValue& json);
 
-        UUID uuid;
-        std::string name;
+        UUID uuid = UUID::INVALID;
+        std::string name = "";
         std::vector<ExternalSceneDependency> extScnDeps;
-        std::string flecsJSON;
+        std::string flecsJSON = "";
         
     private:
         friend class ExternalSceneDependency;
@@ -32,9 +32,9 @@ namespace duin
         ExternalSceneDependency() = default;
         ExternalSceneDependency(const JSONValue& json);
 
-        UUID exDepUUID;
-        uint64_t localParent;
-        std::string type;
+        UUID exDepUUID = UUID::INVALID;
+        uint64_t localParent = 0;
+        std::string type = "";
 
     private:
         friend class SceneDefinition;

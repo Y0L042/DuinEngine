@@ -22,16 +22,27 @@ const std::string tag_FED_COMPONENTS = "components";
 const std::string tag_FED_PARENT = "parent";
 
 duin::SceneDefinition::SceneDefinition(const JSONValue& json)
-    //: 
-    //    uuid(json[tag_SD_UUID]), 
-    //    name(json[tag_SD_NAME]), 
-    //    extScnDeps(json[tag_SD_EXT_SCN_DEPS]),
-    //    flecsJSON(json[tag_SD_FLECSJSON])
+    : 
+       uuid(UUID::FromStringHex(json.GetMember(tag_SD_UUID).GetString())), 
+       name(json.GetMember(tag_SD_NAME).GetString()), 
+       flecsJSON(json.GetMember(tag_SD_FLECSJSON).GetString())
 {
-
+    if (json.GetMember(tag_SD_EXT_SCN_DEPS).IsArray()) 
+    {
+        auto arr = json.GetMember(tag_SD_EXT_SCN_DEPS);
+        for (auto it = arr.Begin(); it != arr.End(); ++it) 
+        {
+            const duin::JSONValue value = *it;
+            extScnDeps.emplace_back(ExternalSceneDependency(value));
+        }
+    }
 }
 
 duin::ExternalSceneDependency::ExternalSceneDependency(const JSONValue& json)
+    :
+       exDepUUID(UUID::FromStringHex(json.GetMember(tag_EDD_EXDEPUUID).GetString())), 
+       localParent(static_cast<uint64_t>(json.GetMember(tag_EDD_LOCALPARENT).GetInt())),
+       type(json.GetMember(tag_EDD_TYPE).GetString())
 {
 
 }
