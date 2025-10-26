@@ -92,3 +92,8 @@ nuget.config
 /docs/.$Planning.drawio.bkp
 /uv.lock
 /Builds
+
+*_dnlogfile.txt
+enc_temp_folder/
+imgui.ini
+ClassDiagram.cd
