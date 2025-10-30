@@ -5,7 +5,8 @@
 #include <sstream>
 #include <cstdint>
 
-TEST_SUITE("UUID") {
+TEST_SUITE("UUID") 
+{
     TEST_CASE("Default Constructor - Generates Valid UUID") {
         duin::UUID uuid1;
         duin::UUID uuid2;
