@@ -14,7 +14,7 @@
 
 
 FSNode::FSNode(std::string path)
-    : path(path), fileType(FileType::INVALID_EXT)
+    : path(path), fileType(FileType::INVALID_EXT), fileExt(FileExt::FILEEXT_NULL)
 {
     if (fs::is_directory(path)) {
         type = ArcheType::P_DIRECTORY;
@@ -51,9 +51,12 @@ void FSNode::SetFileType()
 {
     name = std::string(duin::GetFileName(path));
     fileExtension = std::string(duin::GetFileExtension(name));
-    for (const FileExtension& type : AllExtensions) {
-        if (fileExtension.compare(type.extension) == 0) {
+    for (const FileExtension& type : AllExtensions) 
+    {
+        if (fileExtension.compare(type.extension) == 0) 
+        {
             fileType = type.type;
+            fileExt = type.ext;
             break;
         }
     }

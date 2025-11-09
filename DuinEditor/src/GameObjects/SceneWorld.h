@@ -2,6 +2,7 @@
 
 #include <Duin/ECS/ECSModule.h>
 #include <Duin/Core/Events/EventsModule.h>
+#include "../gui/TabSignals.h"
 
 /**
  * @brief SceneWorld controls the game world of the Editor tab (one SceneWorld per tab).
@@ -24,6 +25,9 @@ public:
 	void ConnectToSignals();
 	void DisconnectFromSignals();
 
+	std::shared_ptr<TabSignals> GetTabSignalsPointer();
+	void SetTabSignalsPointer(std::shared_ptr<TabSignals> ptr);
+
 	void SetActiveScene(duin::Scene newScene);
 	duin::Scene& GetActiveScene();
 
@@ -40,6 +44,7 @@ public:
 private:
 	duin::Scene activeScene;
 	duin::ECSManager ecs;
+	std::shared_ptr<TabSignals> signals;
 
 	duin::UUID onEventSignalHandle = duin::UUID::INVALID;
 	duin::UUID onUpdateSignalHandle = duin::UUID::INVALID;
@@ -47,4 +52,10 @@ private:
 	duin::UUID onDrawSignalHandle = duin::UUID::INVALID;
 	duin::UUID onDrawUISignalHandle = duin::UUID::INVALID;
 
+	void OnFileSelect(FSNode *file);
+	void OnFileDoubleSelect(FSNode *file);
+	void OnFileRightSelect(FSNode *file);
+
+	void HandleFileDoubleSelect(FSNode *file);
+	void HandleTextFileDoubleSelect(FSNode *file);
 };

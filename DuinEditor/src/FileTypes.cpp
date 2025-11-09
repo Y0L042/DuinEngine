@@ -2,65 +2,67 @@
 #include <string>
 #include <array>
 
-const std::array<FileExtension, 48> AllExtensions = { {
+const std::array<FileExtension, 49> AllExtensions = { {
     // Image Extensions
-    {".png", IMAGE_EXT},
-    {".jpg", IMAGE_EXT},
-    {".jpeg", IMAGE_EXT},
-    {".bmp", IMAGE_EXT},
-    {".tga", IMAGE_EXT},
-    {".gif", IMAGE_EXT},
-    {".hdr", IMAGE_EXT},
-    {".tiff", IMAGE_EXT},
-    {".dds", IMAGE_EXT},
-    {".ico", IMAGE_EXT},
-    {".svg", IMAGE_EXT},
+    {"png", IMAGE_EXT, FILEEXT_PNG},
+    {"jpg", IMAGE_EXT, FILEEXT_JPG},
+    {"jpeg", IMAGE_EXT, FILEEXT_JPEG},
+    {"bmp", IMAGE_EXT, FILEEXT_BMP},
+    {"tga", IMAGE_EXT, FILEEXT_TGA},
+    {"gif", IMAGE_EXT, FILEEXT_GIF},
+    {"hdr", IMAGE_EXT, FILEEXT_HDR},
+    {"tiff", IMAGE_EXT, FILEEXT_TIFF},
+    {"dds", IMAGE_EXT, FILEEXT_DDS},
+    {"ico", IMAGE_EXT, FILEEXT_ICO},
+    {"svg", IMAGE_EXT, FILEEXT_SVG},
 
     // Audio Extensions
-    {".wav", AUDIO_EXT},
-    {".mp3", AUDIO_EXT},
-    {".ogg", AUDIO_EXT},
-    {".flac", AUDIO_EXT},
-    {".aac", AUDIO_EXT},
-    {".wma", AUDIO_EXT},
-    {".aiff", AUDIO_EXT},
-    {".alac", AUDIO_EXT},
+    {"wav", AUDIO_EXT, FILEEXT_WAV},
+    {"mp3", AUDIO_EXT, FILEEXT_MP3},
+    {"ogg", AUDIO_EXT, FILEEXT_OGG},
+    {"flac", AUDIO_EXT, FILEEXT_FLAC},
+    {"aac", AUDIO_EXT, FILEEXT_AAC},
+    {"wma", AUDIO_EXT, FILEEXT_WMA},
+    {"aiff", AUDIO_EXT, FILEEXT_AIFF},
+    {"alac", AUDIO_EXT, FILEEXT_ALAC},
 
     // Video Extensions
-    {".mp4", VIDEO_EXT},
-    {".avi", VIDEO_EXT},
-    {".mov", VIDEO_EXT},
-    {".wmv", VIDEO_EXT},
-    {".mkv", VIDEO_EXT},
-    {".flv", VIDEO_EXT},
-    {".webm", VIDEO_EXT},
-    {".mpeg", VIDEO_EXT},
+    {"mp4", VIDEO_EXT, FILEEXT_MP4},
+    {"avi", VIDEO_EXT, FILEEXT_AVI},
+    {"mov", VIDEO_EXT, FILEEXT_MOV},
+    {"wmv", VIDEO_EXT, FILEEXT_WMV},
+    {"mkv", VIDEO_EXT, FILEEXT_MKV},
+    {"flv", VIDEO_EXT, FILEEXT_FLV},
+    {"webm", VIDEO_EXT, FILEEXT_WEBM},
+    {"mpeg", VIDEO_EXT, FILEEXT_MPEG},
 
     // Model Extensions
-    {".fbx", MODEL_EXT},
-    {".obj", MODEL_EXT},
-    {".dae", MODEL_EXT},
-    {".3ds", MODEL_EXT},
-    {".blend", MODEL_EXT},
-    {".gltf", MODEL_EXT},
-    {".glb", MODEL_EXT},
-    {".max", MODEL_EXT},
-    {".mb", MODEL_EXT},
-    {".stl", MODEL_EXT},
+    {"fbx", MODEL_EXT, FILEEXT_FBX},
+    {"obj", MODEL_EXT, FILEEXT_OBJ},
+    {"dae", MODEL_EXT, FILEEXT_DAE},
+    {"3ds", MODEL_EXT, FILEEXT_3DS},
+    {"blend", MODEL_EXT, FILEEXT_BLEND},
+    {"gltf", MODEL_EXT, FILEEXT_GLTF},
+    {"glb", MODEL_EXT, FILEEXT_GLB},
+    {"max", MODEL_EXT, FILEEXT_MAX},
+    {"mb", MODEL_EXT, FILEEXT_MB},
+    {"stl", MODEL_EXT, FILEEXT_STL},
 
     // Text Extensions
-    {".txt", TEXT_EXT},
-    {".json", TEXT_EXT},
-    {".xml", TEXT_EXT},
-    {".lua", TEXT_EXT},
-    {".csv", TEXT_EXT},
-    {".md", TEXT_EXT},
-    {".ini", TEXT_EXT},
-    {".cfg", TEXT_EXT},
-    {".shader", TEXT_EXT},
-    {".vert", TEXT_EXT},
-    {".frag", TEXT_EXT}
-    } };
+    {"txt", TEXT_EXT, FILEEXT_TXT},
+    {"json", TEXT_EXT, FILEEXT_JSON},
+    {"xml", TEXT_EXT, FILEEXT_XML},
+    {"lua", TEXT_EXT, FILEEXT_LUA},
+    {"csv", TEXT_EXT, FILEEXT_CSV},
+    {"md", TEXT_EXT, FILEEXT_MD},
+    {"ini", TEXT_EXT, FILEEXT_INI},
+    {"cfg", TEXT_EXT, FILEEXT_CFG},
+    {"shader", TEXT_EXT, FILEEXT_SHADER},
+    {"vert", TEXT_EXT, FILEEXT_VERT},
+    {"frag", TEXT_EXT, FILEEXT_FRAG},
+    // Editor Extensions
+    {"ecst", TEXT_EXT, FILEEXT_ECST}
+    }};
 
 ArcheType GetArcheType(const std::string& path)
 {

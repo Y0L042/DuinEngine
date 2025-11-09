@@ -3,11 +3,15 @@
 #include "GameObjects/SceneWorld.h"
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/Core/Signals/SignalsModule.h>
+#include "TabSignals.h"
+#include <memory>
 
 class Tab;
 struct TabBlackboard {
     duin::UUID uuid;
     Tab *tab = nullptr;
     std::shared_ptr<SceneWorld> sceneWorld = nullptr;
-    duin::Signal<bool>* onFocusChange = nullptr;
+
+    // Tab signals
+    std::shared_ptr<TabSignals> signals = nullptr;
 };

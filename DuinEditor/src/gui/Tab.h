@@ -49,10 +49,15 @@ class Tab
         void DrawWorkspace();
 
     private:
-        duin::UUID uuid;
-        EditorWindow* owner = nullptr;
+        duin::UUID uuid; // Tab UUID
+        EditorWindow* owner = nullptr; // Pointer to owner of this tab
         std::shared_ptr<PanelManager> panelManager = nullptr;
-        std::shared_ptr<SceneWorld> sceneWorld;
+        std::shared_ptr<SceneWorld> sceneWorld; // One SceneWorld per tab
+
+        // Signals
+        duin::Signal<FSNode *> onFileSelect;
+        duin::Signal<FSNode *> onFileDoubleSelect;
+        duin::Signal<FSNode *> onFileRightSelect;
 
         void DrawMenu();
 };

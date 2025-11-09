@@ -26,8 +26,6 @@ class FileBrowser : public Panel
 
     private:
 		FSNode* selectedNode = nullptr;
-        duin::Signal<FSNode *> onFileSelected;
-
 };
 
 struct FileObject

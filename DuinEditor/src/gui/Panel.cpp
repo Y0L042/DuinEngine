@@ -30,9 +30,9 @@ void Panel::SetBlackboard(std::shared_ptr<TabBlackboard> b)
 {
     DNASSERT((b != nullptr), "Blackboard cannot be NULL!");
     blackboard = b;
-    if (blackboard->onFocusChange) {
+    if (blackboard->signals->onFocusChange) {
         DN_INFO("Panel connected to blackboard signal");
-        blackboard->onFocusChange->Connect([this](bool isFocussed) { isTabOpen = isFocussed; });
+        blackboard->signals->onFocusChange->Connect([this](bool isFocussed) { isTabOpen = isFocussed; });
     }
     else {
         DN_WARN("Panel could not connect to blackboard signal");

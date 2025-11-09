@@ -84,16 +84,6 @@ std::shared_ptr<PanelManager> Tab::CreatePanelManager()
     return panelManager;
 }
 
-//std::shared_ptr<PanelManager> Tab::CreatePanelManager(duin::JSONValue value)
-//{
-//    auto pm = std::make_shared<PanelManager>();
-//    pm->SetBlackboard(blackboard);
-//    pm->Deserialise(value);
-//    this->panelManager = pm;
-//
-//    return pm;
-//}
-
 std::shared_ptr<SceneWorld> Tab::GetSceneWorld()
 {
     return sceneWorld;
@@ -102,9 +92,20 @@ std::shared_ptr<SceneWorld> Tab::GetSceneWorld()
 void Tab::ProcessBlackboard()
 {
     blackboard = std::make_shared<TabBlackboard>();
-    blackboard->onFocusChange = &onFocusChange;
+ 
+    // Add items to blackboard
     blackboard->tab = this;
     blackboard->sceneWorld = sceneWorld;
+
+    std::shared_ptr<TabSignals> signals = std::make_shared<TabSignals>();
+
+    signals->onFocusChange = &onFocusChange;
+    signals->onFileSelect = &onFileSelect;
+    signals->onFileDoubleSelect = &onFileDoubleSelect;
+    signals->onFileRightSelect = &onFileRightSelect;
+    
+    blackboard->signals = signals;
+    sceneWorld->SetTabSignalsPointer(signals);
 }
 
 duin::UUID Tab::GetUUID()
@@ -124,29 +125,6 @@ duin::JSONValue Tab::Serialise()
     return value;
 }
 
-//duin::JSONValue Tab::Deserialise(duin::JSONValue data)
-//{
-//    // Set title
-//    if (!data.HasMember(guitag::TAB_TITLE)) return duin::JSONValue();
-//    title = data[guitag::TAB_TITLE].GetString();
-//    if (title.empty()) DN_ERROR("Tab title empty when deserialising!");
-//
-//    // Set UUID ???
-//    if (!data.HasMember(guitag::TAB_UUID)) return duin::JSONValue();
-//    uuid = duin::UUID::FromStringHex(data[guitag::TAB_UUID].GetString());
-//    if (uuid == duin::UUID::INVALID) DN_ERROR("Tab uuid invalid when deserialising!");
-//
-//    // Return Panel info for panelManager
-//    if (!data.HasMember(guitag::TAB_PANELMANAGER)) {
-//        DN_WARN("Tab has no PanelManager!");
-//        return duin::JSONValue();
-//    }
-//    duin::JSONValue panelManagerValue = data[guitag::TAB_PANELMANAGER];
-//	panelManager->Deserialise(panelManagerValue);
-//
-//    return panelManagerValue;
-//}
-
 void Tab::DrawWorkspace()
 {
     /* Create the main content area below the tab bar */
@@ -159,11 +137,6 @@ void Tab::DrawWorkspace()
     if (ImGui::BeginChild("ContentArea", ImVec2(0, 0), 0, workspaceFlags)) {
 
         DrawMenu();
-
-        // ImGui::Text("This is tab: %s", title.c_str());
-        // ImGui::Text("Dock other panels here by setting their parent to this window.");
-
-
         // Create dockspace for the content area
         ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
         ImGuiID dockspaceID = ImGui::GetID("ContentDockspace");

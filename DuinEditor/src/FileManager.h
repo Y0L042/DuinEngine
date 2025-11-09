@@ -16,6 +16,7 @@ public:
     std::string path;
 
     FileType fileType;
+    FileExt fileExt;
     std::string name;
     std::string fileExtension;
 
