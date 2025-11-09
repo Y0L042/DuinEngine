@@ -31,11 +31,13 @@
 
 
 
-/* ---------- Scene ----------- */
-#include "Duin/Scene/SceneModule.h"
+/* ---------- Objects ----------- */
+#include "Duin/Objects/ObjectModule.h"
 
 /* ---------- IO ----------- */
 #include "Duin/IO/IOModule.h"
+
+#include "Duin/Core/Process/ProcessModule.h"
 
 
 

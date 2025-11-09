@@ -97,3 +97,4 @@ nuget.config
 enc_temp_folder/
 imgui.ini
 ClassDiagram.cd
+*.cd

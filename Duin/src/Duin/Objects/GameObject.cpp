@@ -1,7 +1,7 @@
 #include "dnpch.h"
 #include "GameObject.h"
 
-#include "SceneManager.h"
+#include "ObjectManager.h"
 #include "Duin/Core/Utils/StateMachine.h"
 
 namespace duin {
@@ -14,7 +14,7 @@ namespace duin {
     {
     }
 
-    void GameObject::AddChild(std::shared_ptr<GameObject> child)
+    void GameObject::AddChildObject(std::shared_ptr<GameObject> child)
     {
         if (child)
         {
@@ -39,7 +39,7 @@ namespace duin {
         }
     }
 
-    void GameObject::RemoveChild(std::shared_ptr<GameObject> child)
+    void GameObject::RemoveChildObject(std::shared_ptr<GameObject> child)
     {
         if (child)
         {

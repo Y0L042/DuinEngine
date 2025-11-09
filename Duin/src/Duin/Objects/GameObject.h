@@ -7,7 +7,7 @@
 #include <memory>
 
 namespace duin {
-    class SceneManager;
+    class ObjectManager;
     class GameObject : public std::enable_shared_from_this<GameObject>
     {
         public:
@@ -15,7 +15,7 @@ namespace duin {
             virtual ~GameObject();
 
             template<typename T, typename... Args>
-            std::shared_ptr<T> CreateChild(Args... args)
+            std::shared_ptr<T> CreateChildObject(Args... args)
             {
                 static_assert(std::is_base_of<GameObject, T>::value, "T must be a GameObject derived class");
 
@@ -33,8 +33,8 @@ namespace duin {
                 return std::static_pointer_cast<T>(shared_from_this());
             }
 
-            void AddChild(std::shared_ptr<GameObject> child);
-            void RemoveChild(std::shared_ptr<GameObject> child);
+            void AddChildObject(std::shared_ptr<GameObject> child);
+            void RemoveChildObject(std::shared_ptr<GameObject> child);
             void SetParent(std::shared_ptr<GameObject> parent);
             std::shared_ptr<GameObject> GetParent();
             void ResetParent();
@@ -53,7 +53,7 @@ namespace duin {
             bool operator==(GameObject& other);
 
         protected:
-            friend class SceneManager;
+            friend class ObjectManager;
             friend class Application;
             friend class StateMachine;
             friend class State;

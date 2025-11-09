@@ -1,8 +1,8 @@
 #pragma once
 
 /**
- * Scene Module
+ * Object Module
  */
 
-#include "SceneManager.h"
+#include "ObjectManager.h"
 #include "GameObject.h"

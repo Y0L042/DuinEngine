@@ -5,13 +5,13 @@
 
 namespace duin {
     class UUID;
-    class SceneManager
+    class ObjectManager
     {
         public:
-            static SceneManager& Get();
+            static ObjectManager& Get();
 
-            SceneManager() = default;
-            ~SceneManager() = default;
+            ObjectManager() = default;
+            ~ObjectManager() = default;
 
             void ExecuteReady();
             void ExecuteOnEvent(InputEvent event);
