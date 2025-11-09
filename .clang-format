@@ -1,0 +1,16 @@
+# Format Style Options - Created with Clang Power Tools
+---
+BasedOnStyle: Microsoft
+SortIncludes: Never
+IncludeBlocks: Preserve
+IncludeCategories:
+  - Regex: '^"dnpch\.h"$'
+    Priority: 1
+  - Regex: '^"Application\.h"$'
+    Priority: 10
+  - Regex: '^".*"$'
+    Priority: 20
+  - Regex: '^<.*>$'
+    Priority: 30
+TabWidth: 8
+...
