@@ -17,7 +17,7 @@ void GameState_Gameplay::Enter()
     ecs.Initialize();
     RegisterComponents(ecs.world);
 
-	playerObj = CreateChild<Player>();
+	playerObj = CreateChildObject<Player>();
 
     duin::Quaternion groundDir = duin::Vector3ToQuaternion(duin::Vector3::UP);
     duin::Vector3 groundPos = duin::Vector3::UP;
@@ -26,7 +26,7 @@ void GameState_Gameplay::Enter()
                                    duin::PlaneGeometry(), 
                                    duin::PhysicsMaterial(0.4f, 0.4f, 0.5f));
 
-    static std::shared_ptr<BeachBall> ball = CreateChild<BeachBall>();
+    static std::shared_ptr<BeachBall> ball = CreateChildObject<BeachBall>();
 
 	DN_INFO("Writing scenetree to Demo_Scenetree.ecst ...");
     std::string scene = "";
