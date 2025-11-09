@@ -28,6 +28,8 @@ public:
 	std::shared_ptr<TabSignals> GetTabSignalsPointer();
 	void SetTabSignalsPointer(std::shared_ptr<TabSignals> ptr);
 
+	void BuildScene(const std::string& path);
+
 	void SetActiveScene(duin::Scene newScene);
 	duin::Scene& GetActiveScene();
 

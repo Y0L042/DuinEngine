@@ -71,6 +71,11 @@ void SceneWorld::SetTabSignalsPointer(std::shared_ptr<TabSignals> ptr)
 	signals->onFileRightSelect->Connect([&](FSNode *file){ OnFileRightSelect(file); });
 }
 
+void SceneWorld::BuildScene(const std::string &path)
+{
+    duin::Scene scene = duin::Scene::ReadFromFile(path);
+}
+
 void SceneWorld::SetActiveScene(duin::Scene newScene)
 {
 	activeScene = newScene;
@@ -187,6 +192,7 @@ void SceneWorld::HandleTextFileDoubleSelect(FSNode* file)
 	// Engine Files
 	case FILEEXT_ECST:
 		DN_INFO("Load Scene: {} ...", file->name);
+
 		break;
 
 	case FILEEXT_NULL:
