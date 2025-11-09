@@ -6,7 +6,7 @@
 
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Events/Event.h"
-#include "Duin/Scene/GameObject.h"
+#include "Duin/Objects/GameObject.h"
 
 
 namespace duin {
@@ -109,12 +109,12 @@ namespace duin {
 		void EngineExit();
 
 		template<typename T, typename... Args>
-		std::shared_ptr<T> CreateChild(Args... args)
+		std::shared_ptr<T> CreateChildObject(Args... args)
 		{
-			return rootGameObject->CreateChild<T>(std::forward<Args>(args)...);
+			return rootGameObject->CreateChildObject<T>(std::forward<Args>(args)...);
 		}
-        void AddChild(std::shared_ptr<GameObject> child);
-        void RemoveChild(std::shared_ptr<GameObject> child);
+        void AddChildObject(std::shared_ptr<GameObject> child);
+        void RemoveChildObject(std::shared_ptr<GameObject> child);
 
 	private:
 		std::string windowName = "Game";

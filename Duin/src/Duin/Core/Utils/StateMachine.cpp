@@ -62,14 +62,14 @@ namespace duin {
         owner.FlushStack();
     }
 
-    void State::AddChild(std::shared_ptr<GameObject> child)
+    void State::AddChildObject(std::shared_ptr<GameObject> child)
     {
-        stateGameObject->AddChild(child);
+        stateGameObject->AddChildObject(child);
     }
 
-    void State::RemoveChild(std::shared_ptr<GameObject> child)
+    void State::RemoveChildObject(std::shared_ptr<GameObject> child)
     {
-        stateGameObject->RemoveChild(child);
+        stateGameObject->RemoveChildObject(child);
     }
 
     UUID State::GetUUID()

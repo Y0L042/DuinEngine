@@ -729,14 +729,14 @@ namespace duin {
     {
     }
 
-    void Application::AddChild(std::shared_ptr<GameObject> child)
+    void Application::AddChildObject(std::shared_ptr<GameObject> child)
     {
-        rootGameObject->AddChild(child);
+        rootGameObject->AddChildObject(child);
     }
 
-    void Application::RemoveChild(std::shared_ptr<GameObject> child)
+    void Application::RemoveChildObject(std::shared_ptr<GameObject> child)
     {
-        rootGameObject->RemoveChild(child);
+        rootGameObject->RemoveChildObject(child);
     }
 
 }

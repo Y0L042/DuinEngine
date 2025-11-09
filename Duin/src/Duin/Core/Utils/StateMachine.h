@@ -7,7 +7,7 @@
 
 #include "Duin/Core/Utils/UUID.h"
 #include "Duin/Core/Events/Event.h"
-#include "Duin/Scene/GameObject.h"
+#include "Duin/Objects/GameObject.h"
 
 
 
@@ -137,12 +137,12 @@ namespace duin {
 
 
         template<typename T, typename... Args>
-        std::shared_ptr<T> CreateChild(Args... args)
+        std::shared_ptr<T> CreateChildObject(Args... args)
         {
-            return stateGameObject->template CreateChild<T>(std::forward<Args>(args)...);
+            return stateGameObject->template CreateChildObject<T>(std::forward<Args>(args)...);
         }
-        void AddChild(std::shared_ptr<GameObject> child);
-        void RemoveChild(std::shared_ptr<GameObject> child);
+        void AddChildObject(std::shared_ptr<GameObject> child);
+        void RemoveChildObject(std::shared_ptr<GameObject> child);
 
         UUID GetUUID();
         StateMachine& GetOwner();
