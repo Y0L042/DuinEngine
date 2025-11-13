@@ -6,9 +6,12 @@
 #include "ECS.h"
 
 #include <Duin.h>
+#include <Duin/ECS/ECSModule.h>
 
 duin::ECSManager ecs;
 std::shared_ptr<Player> playerObj;
+
+duin::World world;
 
 void GameState_Gameplay::Enter()
 {

@@ -34,7 +34,7 @@ std::string getTimestampedFilename() {
     return oss.str();
 }
 
-int main(int argc, char** argv)
+int main(int argc, char** argv) 
 {
     // Check if we're running an isolated test FIRST (before doctest processing)
     if (argc == 3 && strcmp(argv[1], "--run-test-isolated") == 0)
