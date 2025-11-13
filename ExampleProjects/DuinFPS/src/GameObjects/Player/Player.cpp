@@ -73,24 +73,7 @@ void Player::Ready()
         ;
 
 	//cameraRef = flecs::ref<duin::Camera>(ecs.world, playerCamera);
-	//duin::Camera* cam = cameraRef.get();
-
-    std::string scene;
-    duin::SceneBuilder::WriteScene(scene, ecs);
-    DN_INFO("Scene:\n{}", scene);
-
-    std::string plrjson;
-    duin::SceneBuilder::WriteEntity(plrjson, player);
-    DN_INFO("Plr:\n{}", plrjson);
-
-    std::string plrrecjson;
-    duin::SceneBuilder::WriteEntity(plrrecjson, player, true);
-    DN_INFO("Plr Recursive:\n{}", plrrecjson);
-
-    duin::FileUtils::WriteStringIntoFile("./recursive_entity.json", plrrecjson);
-    duin::FileUtils::WriteStringIntoFile("./nonrecursive_entity.json", plrjson);
-    duin::FileUtils::WriteStringIntoFile("./scene.json", scene);
-    
+	//duin::Camera* cam = cameraRef.get();    
 
     playerStateMachine.SwitchState<State_OnGround>();
 }
