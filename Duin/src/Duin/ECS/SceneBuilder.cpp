@@ -15,6 +15,7 @@
 #include <rapidjson/stringbuffer.h>
 #endif
 
+const char duin::Scene::TAG_EXDEP_UUID[] = "UUID";
 const char duin::Scene::TAG_EXDEP_EXDEPUUID[] = "EXDEPUUID";
 const char duin::Scene::TAG_EXDEP_PARENT[] = "PARENT";
 const char duin::Scene::TAG_EXDEP_TYPE[] = "TYPE";
@@ -83,7 +84,13 @@ duin::Scene duin::Scene::ReadFromFile(const std::string& filePath)
     // TODO error handling
     std::string sceneStr = "";
     FileUtils::ReadFileIntoString(filePath, sceneStr);
-	JSONValue sceneJSON = JSONValue::ParseFromFile(sceneStr);
+
+    return ReadFromString(sceneStr);
+}
+
+duin::Scene duin::Scene::ReadFromString(const std::string &string)
+{
+	JSONValue sceneJSON = JSONValue::Parse(string);
     if (sceneJSON.IsReadValid()) {
         return ReadJSON(sceneJSON);
 	}
@@ -93,9 +100,17 @@ duin::Scene duin::Scene::ReadFromFile(const std::string& filePath)
 void duin::Scene::WriteToFile(const std::string& filePath)
 {
     // TODO error handling
+    std::string sceneStr = WriteToString();
+    FileUtils::WriteStringIntoFile(filePath, sceneStr);
+}
+
+
+std::string duin::Scene::WriteToString()
+{
     JSONValue sceneJSON = WriteJSON();
     std::string sceneStr = sceneJSON.Write();
-	FileUtils::WriteStringIntoFile(filePath, sceneStr);
+
+    return sceneStr;
 }
 
 duin::Scene duin::Scene::ReadJSON(JSONValue sceneJSON)
@@ -111,6 +126,8 @@ duin::Scene duin::Scene::ReadJSON(JSONValue sceneJSON)
     for (auto exDepJSON : exScnDepsArray)
     {
         ExDep exDep;
+        std::string uuidString = exDepJSON[TAG_EXDEP_UUID].GetString();
+        exDep.uuid = UUID::FromStringHex(uuidString);
         std::string exdepUUIDString = exDepJSON[TAG_EXDEP_EXDEPUUID].GetString();
         exDep.exdepUUID = UUID::FromStringHex(exdepUUIDString);
         exDep.parent = exDepJSON[TAG_EXDEP_PARENT].GetInt();
@@ -134,6 +151,7 @@ duin::JSONValue duin::Scene::WriteJSON()
     for (const auto& exDep : externalSceneDependencies)
     {
 		JSONValue exDepJSON;
+        exDepJSON.AddMember(TAG_EXDEP_UUID, UUID::ToStringHex(exDep.uuid));
 		exDepJSON.AddMember(TAG_EXDEP_EXDEPUUID, UUID::ToStringHex(exDep.exdepUUID));
 		exDepJSON.AddMember(TAG_EXDEP_PARENT, static_cast<int>(exDep.parent));
 		exDepJSON.AddMember(TAG_EXDEP_TYPE, ResourceTypeToString(exDep.type));
@@ -143,75 +161,6 @@ duin::JSONValue duin::Scene::WriteJSON()
 	out.AddMember(TAG_EXT_SCN_DEPS, exScnDepsArray);
 
     return out;
-}
-
-/**
- * Reads an ECS scenetree from file and generates the scenetree.
- */
-void duin::SceneBuilder::ReadScene(const std::string& file, ECSManager& ecs)
-{
-    ecs.world.from_json(file.c_str());
-}
-
-void duin::SceneBuilder::WriteScene(std::string& file, ECSManager& ecs)
-{
-    file = ecs.world.to_json();
-
-    const char* json = file.c_str();
-    rapidjson::Document d;
-    d.Parse(json);
-
-    rapidjson::StringBuffer buffer;
-    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-    d.Accept(writer);
-
-    file = buffer.GetString();
-}
-
-flecs::entity duin::SceneBuilder::ReadEntity(const std::string& file, ECSManager& ecs)
-{
-    flecs::entity e = ecs.world.entity();
-    e.from_json(file.c_str());
-    
-    return e;
-}
-
-void duin::SceneBuilder::WriteEntity(std::string& file, flecs::entity entity, bool recursive)
-{
-    if (recursive) {
-        RecursiveWriter(entity, file);
-    }
-    else {
-        file = entity.to_json();
-
-        const char* json = file.c_str();
-        rapidjson::Document d;
-        d.Parse(json);
-
-        rapidjson::StringBuffer buffer;
-        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-        d.Accept(writer);
-
-        file = buffer.GetString();
-    }
-}
-
-void duin::SceneBuilder::RecursiveWriter(flecs::entity entity, std::string& file)
-{
-    std::string json = static_cast<std::string>(entity.to_json());
-    rapidjson::Document d;
-    d.Parse(json.c_str());
-
-    rapidjson::StringBuffer buffer;
-    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-    d.Accept(writer);
-
-    file = file + buffer.GetString();
-
-    entity.children([&](flecs::entity e) {
-        file = file + ",";
-        RecursiveWriter(e, file);
-        }); 
 }
 
 
