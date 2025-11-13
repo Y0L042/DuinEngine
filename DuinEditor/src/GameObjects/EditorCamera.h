@@ -2,7 +2,7 @@
 
 #include <Duin/Core/Maths/MathsModule.h>
 #include <Duin/ECS/ECSModule.h>
-#include <Duin/Scene/SceneModule.h>
+#include <Duin/Objects/ObjectModule.h>
 
 class EditorCamera : public duin::GameObject
 {

@@ -33,6 +33,8 @@ void GameState_Gameplay::Enter()
     duin::SceneBuilder::WriteScene(scene, ecs);
     duin::FileUtils::WriteStringIntoFile("./Demo_Scenetree.ecst", scene);
 	DN_INFO("Wrote scenetree to Demo_Scenetree.ecst !");
+
+    duin::SceneBuilder::WriteScene("./DuinFPS.ecst", ecs);
 }
 
 void GameState_Gameplay::OnEvent(duin::Event e)

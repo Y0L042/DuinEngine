@@ -14,7 +14,7 @@ bool duin::FileUtils::ReadFileIntoString(const std::string& filePath, std::strin
 	return true;
 }
 
-bool duin::FileUtils::WriteStringIntoFile(const std::string& filePath, std::string& string)
+bool duin::FileUtils::WriteStringIntoFile(const std::string& filePath, const std::string& string)
 {
 	std::ofstream out(filePath);
 	out << string;

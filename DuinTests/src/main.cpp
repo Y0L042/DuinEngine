@@ -1,15 +1,15 @@
 //#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#define DN_DISABLE_ALL_LOGGING
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest.h>
+#include <Duin/Core/Debug/DNLog.h>
 #include <iostream>
 #include <fstream>
 #include <ctime>
 #include <sstream>
 #include <cstring>
-#include <Duin/Core/Debug/DNLog.h>
 
 // Forward declaration for process-isolated test execution
-// Defined in TestApplication.cpp
 extern int RunIsolatedTest(const char* testName);
 
 const char testLogDir[] = "./TestLogs";
@@ -36,41 +36,33 @@ std::string getTimestampedFilename() {
 
 int main(int argc, char** argv)
 {
-    // Check if we're running an isolated test
-    // Usage: DuinTests.exe --run-test-isolated "Test Name"
+    // Check if we're running an isolated test FIRST (before doctest processing)
     if (argc == 3 && strcmp(argv[1], "--run-test-isolated") == 0)
     {
         const char* testName = argv[2];
-
-        // Initialize logging for isolated test
-        duin::Log::Init();
-
-        // Run the isolated test and return its exit code
         int exitCode = RunIsolatedTest(testName);
-
         return exitCode;
     }
 
-    // Normal doctest execution
-    duin::Log::Init();
-
+    // Create doctest context
     doctest::Context ctx;
+    
+    // Apply command line arguments (this processes --list-tests and other flags)
+    ctx.applyCommandLine(argc, argv);
+
+    // Check if we should exit early (e.g., --list-tests, --help, --version)
+    // If doctest is in "list mode", it will have set shouldExit() to true
+    if (ctx.shouldExit()) {
+        // Just run doctest to output the list/help, then exit
+        return ctx.run();
+    }
+
+    // Only configure options for actual test execution
     ctx.setOption("abort-after", 50);
     ctx.setOption("no-breaks", true);
 
-    // Pass command line arguments to doctest
-    ctx.applyCommandLine(argc, argv);
-
-    // Set output file to timestamped log
-    std::string logFile = getTimestampedFilename();
-    //ctx.setOption("out", logFile.c_str());
-
+    // Run the tests
     int res = ctx.run();
-
-    if (ctx.shouldExit())
-    {
-
-    }
 
     return res;
 }

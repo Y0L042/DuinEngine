@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Duin/Scene/SceneModule.h>
+#include <Duin/Objects/ObjectModule.h>
 #include <Duin/ECS/ECSModule.h>
 
 #include "Singletons.h"
