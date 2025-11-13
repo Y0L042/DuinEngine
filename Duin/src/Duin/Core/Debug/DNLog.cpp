@@ -5,7 +5,6 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/pattern_formatter.h>
 
-
 #define LOG_TO_FILE 1
 
 #ifdef LOG_TO_FILE
