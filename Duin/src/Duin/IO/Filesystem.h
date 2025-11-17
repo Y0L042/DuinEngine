@@ -198,6 +198,7 @@ std::string GetCurrentDir(void);
  * @note The path is guaranteed to be writable by the user
  *
  * @see https://wiki.libsdl.org/SDL3/SDL_GetPrefPath
+ * @see SetPrefPath()
  *
  * Example:
  * @code
@@ -206,6 +207,38 @@ std::string GetCurrentDir(void);
  * @endcode
  */
 std::string GetPrefPath(const std::string &org, const std::string &app);
+
+/**
+ * @brief Set global organization and application names for virtual path resolution.
+ *
+ * Stores organization and application names in global variables that are used by
+ * MapVirtualToSystemPath() when resolving "app://" virtual paths. This allows you
+ * to set these values once at application startup and use virtual paths throughout
+ * your application without repeatedly specifying org/app names.
+ *
+ * @param org Organization name (e.g., "MyCompany")
+ * @param app Application name (e.g., "MyGame")
+ * @return Always returns true (currently cannot fail)
+ *
+ * @note This is a global setting that affects MapVirtualToSystemPath()
+ * @note Should be called once during application initialization
+ * @note Empty strings are allowed but may cause INVALID_PATH from MapVirtualToSystemPath()
+ * @note Thread safety: Not thread-safe - set before multi-threaded operation begins
+ *
+ * @see GetPrefPath()
+ * @see MapVirtualToSystemPath()
+ *
+ * Example:
+ * @code
+ * // At application startup
+ * duin::fs::SetPrefPath("MyCompany", "MyGame");
+ *
+ * // Later, use virtual paths without specifying org/app again
+ * std::string sysPath = duin::fs::MapVirtualToSystemPath("app://settings.json");
+ * // sysPath = "/home/user/.local/share/MyCompany/MyGame/settings.json" (on Linux)
+ * @endcode
+ */
+bool SetPrefPath(const std::string &org, const std::string &app);
 
 /**
  * @brief Remove a file or directory.
@@ -285,6 +318,95 @@ bool RenamePath(const std::string &oldPath, const std::string &newPath);
  * @endcode
  */
 bool IsPathInvalid(const std::string &path);
+
+/**
+ * @brief Convert Windows-style paths to Unix-style paths.
+ *
+ * Replaces all backslashes (\) with forward slashes (/) to normalize
+ * path separators to Unix-style. This ensures consistent path handling
+ * across all platforms.
+ *
+ * @param path The path to convert (may contain backslashes)
+ * @return A new string with all backslashes replaced by forward slashes
+ *
+ * @note This function operates on a copy of the input string (pass-by-value)
+ * @note If the path already uses Unix-style separators, it is returned unchanged
+ * @note Mixed separators (both \ and /) are normalized to all forward slashes
+ * @note This is automatically applied to paths returned by SDL3 filesystem functions
+ * @note Works with Windows drive letters: "C:\\path" becomes "C:/path"
+ * @note Works with UNC paths: "\\\\server\\share" becomes "//server/share"
+ *
+ * Example:
+ * @code
+ * std::string winPath = "C:\\Users\\Name\\Documents\\file.txt";
+ * std::string unixPath = duin::fs::EnsureUnixPath(winPath);
+ * // unixPath = "C:/Users/Name/Documents/file.txt"
+ *
+ * std::string mixed = "path\\to/mixed\\separators";
+ * std::string normalized = duin::fs::EnsureUnixPath(mixed);
+ * // normalized = "path/to/mixed/separators"
+ *
+ * std::string alreadyUnix = "path/to/file.txt";
+ * std::string unchanged = duin::fs::EnsureUnixPath(alreadyUnix);
+ * // unchanged = "path/to/file.txt"
+ * @endcode
+ */
+std::string EnsureUnixPath(const std::string &path);
+
+/**
+ * @brief Map a virtual path to an absolute system path.
+ *
+ * Converts Godot-style virtual paths (e.g., "bin://", "app://") to absolute
+ * system paths. This provides a convenient way to reference application directories
+ * without hardcoding absolute paths.
+ *
+ * Supported virtual path prefixes:
+ * - **bin://** - Maps to the application's base directory (executable location)
+ * - **app://** - Maps to the application's user data directory (requires SetPrefPath)
+ * - **usr://** - Maps to the user's folder (NOT YET IMPLEMENTED - returns INVALID_PATH)
+ *
+ * @param path Virtual path starting with a recognized prefix (e.g., "bin://config.ini")
+ * @return Absolute system path, or INVALID_PATH if the prefix is unrecognized or path is too short
+ *
+ * @note Path must be at least 6 characters ("bin://x")
+ * @note For "app://", you must call SetPrefPath() first to set org/app names
+ * @note If SetPrefPath() wasn't called, "app://" paths will fail (GetPrefPath returns INVALID_PATH)
+ * @note Returns INVALID_PATH for "usr://" (not yet implemented)
+ * @note Returns INVALID_PATH if path is shorter than minimum length
+ * @note The returned path uses Unix-style separators (forward slashes)
+ * @note If the virtual prefix doesn't match any known prefix, returns INVALID_PATH
+ *
+ * @see SetPrefPath()
+ * @see GetBasePath()
+ * @see GetPrefPath()
+ *
+ * Example:
+ * @code
+ * // First, set preferences for app:// paths
+ * duin::fs::SetPrefPath("MyCompany", "MyGame");
+ *
+ * // Map bin:// to executable directory
+ * std::string configPath = duin::fs::MapVirtualToSystemPath("bin://config.ini");
+ * // configPath = "/path/to/executable/config.ini"
+ *
+ * // Map app:// to user data directory
+ * std::string savePath = duin::fs::MapVirtualToSystemPath("app://saves/game1.sav");
+ * // savePath = "/home/user/.local/share/MyCompany/MyGame/saves/game1.sav" (Linux)
+ *
+ * // Invalid: path too short
+ * std::string invalid1 = duin::fs::MapVirtualToSystemPath("bin:");
+ * // invalid1 = INVALID_PATH
+ *
+ * // Invalid: unrecognized prefix
+ * std::string invalid2 = duin::fs::MapVirtualToSystemPath("xyz://file.txt");
+ * // invalid2 = INVALID_PATH
+ *
+ * // Not yet implemented
+ * std::string notImpl = duin::fs::MapVirtualToSystemPath("usr://documents/file.txt");
+ * // notImpl = INVALID_PATH
+ * @endcode
+ */
+std::string MapVirtualToSystemPath(const std::string &path);
 
 // TODO:
 // EnumerateDirectory

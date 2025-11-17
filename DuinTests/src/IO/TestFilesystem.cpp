@@ -808,6 +808,389 @@ TEST_SUITE("Filesystem - Integration Tests")
     }
 }
 
+TEST_SUITE("Filesystem - EnsureUnixPath")
+{
+    TEST_CASE("Windows path conversion - simple backslashes")
+    {
+        std::string winPath = "C:\\Users\\Name\\Documents\\file.txt";
+        std::string unixPath = duin::fs::EnsureUnixPath(winPath);
+        CHECK(unixPath == "C:/Users/Name/Documents/file.txt");
+    }
+
+    TEST_CASE("Windows path conversion - nested directories")
+    {
+        std::string winPath = "path\\to\\deeply\\nested\\directory\\file.txt";
+        std::string unixPath = duin::fs::EnsureUnixPath(winPath);
+        CHECK(unixPath == "path/to/deeply/nested/directory/file.txt");
+    }
+
+    TEST_CASE("Mixed separators normalization")
+    {
+        std::string mixed = "path\\to/mixed\\separators/file.txt";
+        std::string normalized = duin::fs::EnsureUnixPath(mixed);
+        CHECK(normalized == "path/to/mixed/separators/file.txt");
+    }
+
+    TEST_CASE("Already Unix-style path - no change")
+    {
+        std::string unixPath = "path/to/file.txt";
+        std::string result = duin::fs::EnsureUnixPath(unixPath);
+        CHECK(result == "path/to/file.txt");
+    }
+
+    TEST_CASE("Empty string")
+    {
+        std::string empty = "";
+        std::string result = duin::fs::EnsureUnixPath(empty);
+        CHECK(result == "");
+    }
+
+    TEST_CASE("Single backslash")
+    {
+        std::string singleBackslash = "\\";
+        std::string result = duin::fs::EnsureUnixPath(singleBackslash);
+        CHECK(result == "/");
+    }
+
+    TEST_CASE("Single forward slash")
+    {
+        std::string singleSlash = "/";
+        std::string result = duin::fs::EnsureUnixPath(singleSlash);
+        CHECK(result == "/");
+    }
+
+    TEST_CASE("Multiple consecutive backslashes")
+    {
+        std::string multipleBackslash = "path\\\\\\to\\\\file.txt";
+        std::string result = duin::fs::EnsureUnixPath(multipleBackslash);
+        CHECK(result == "path///to//file.txt");
+    }
+
+    TEST_CASE("Drive letter with backslash")
+    {
+        std::string drivePath = "C:\\";
+        std::string result = duin::fs::EnsureUnixPath(drivePath);
+        CHECK(result == "C:/");
+    }
+
+    TEST_CASE("UNC path conversion")
+    {
+        std::string uncPath = "\\\\server\\share\\folder\\file.txt";
+        std::string result = duin::fs::EnsureUnixPath(uncPath);
+        CHECK(result == "//server/share/folder/file.txt");
+    }
+
+    TEST_CASE("Relative Windows path")
+    {
+        std::string relativePath = "..\\..\\parent\\file.txt";
+        std::string result = duin::fs::EnsureUnixPath(relativePath);
+        CHECK(result == "../../parent/file.txt");
+    }
+
+    TEST_CASE("Path with spaces")
+    {
+        std::string pathWithSpaces = "C:\\Program Files\\My App\\file.txt";
+        std::string result = duin::fs::EnsureUnixPath(pathWithSpaces);
+        CHECK(result == "C:/Program Files/My App/file.txt");
+    }
+
+    TEST_CASE("Path with special characters")
+    {
+        std::string specialPath = "path\\with\\special@#$%\\chars.txt";
+        std::string result = duin::fs::EnsureUnixPath(specialPath);
+        CHECK(result == "path/with/special@#$%/chars.txt");
+    }
+
+    TEST_CASE("Integration - EnsureUnixPath with GetFileName")
+    {
+        std::string winPath = "C:\\Users\\Name\\Documents\\report.pdf";
+        std::string unixPath = duin::fs::EnsureUnixPath(winPath);
+        std::string filename = duin::fs::GetFileName(unixPath);
+
+        CHECK(unixPath == "C:/Users/Name/Documents/report.pdf");
+        CHECK(filename == "report.pdf");
+    }
+
+    TEST_CASE("Integration - EnsureUnixPath with GetFileExtension")
+    {
+        std::string winPath = "C:\\data\\archive.tar.gz";
+        std::string unixPath = duin::fs::EnsureUnixPath(winPath);
+        std::string filename = duin::fs::GetFileName(unixPath);
+        std::string extension = duin::fs::GetFileExtension(filename);
+
+        CHECK(unixPath == "C:/data/archive.tar.gz");
+        CHECK(filename == "archive.tar.gz");
+        CHECK(extension == "gz");
+    }
+
+    TEST_CASE("Path ending with backslash")
+    {
+        std::string pathEndingBackslash = "C:\\Users\\Name\\Documents\\";
+        std::string result = duin::fs::EnsureUnixPath(pathEndingBackslash);
+        CHECK(result == "C:/Users/Name/Documents/");
+    }
+
+    TEST_CASE("Only filename - no separators")
+    {
+        std::string filenameOnly = "file.txt";
+        std::string result = duin::fs::EnsureUnixPath(filenameOnly);
+        CHECK(result == "file.txt");
+    }
+}
+
+TEST_SUITE("Filesystem - SetPrefPath")
+{
+    TEST_CASE("Set valid organization and application names")
+    {
+        bool result = duin::fs::SetPrefPath("TestOrg", "TestApp");
+        CHECK(result == true);
+    }
+
+    TEST_CASE("Set with empty organization")
+    {
+        bool result = duin::fs::SetPrefPath("", "TestApp");
+        CHECK(result == true); // Currently always returns true
+    }
+
+    TEST_CASE("Set with empty application")
+    {
+        bool result = duin::fs::SetPrefPath("TestOrg", "");
+        CHECK(result == true); // Currently always returns true
+    }
+
+    TEST_CASE("Set with both empty")
+    {
+        bool result = duin::fs::SetPrefPath("", "");
+        CHECK(result == true); // Currently always returns true
+    }
+
+    TEST_CASE("Set with special characters")
+    {
+        bool result = duin::fs::SetPrefPath("My-Org_123", "My.App");
+        CHECK(result == true);
+    }
+
+    TEST_CASE("Set with spaces")
+    {
+        bool result = duin::fs::SetPrefPath("My Organization", "My Application");
+        CHECK(result == true);
+    }
+
+    TEST_CASE("Set multiple times (overwrite)")
+    {
+        bool result1 = duin::fs::SetPrefPath("OldOrg", "OldApp");
+        bool result2 = duin::fs::SetPrefPath("NewOrg", "NewApp");
+
+        CHECK(result1 == true);
+        CHECK(result2 == true);
+    }
+
+    TEST_CASE("Set with very long names")
+    {
+        std::string longOrg(100, 'O');
+        std::string longApp(100, 'A');
+        bool result = duin::fs::SetPrefPath(longOrg, longApp);
+        CHECK(result == true);
+    }
+}
+
+TEST_SUITE("Filesystem - MapVirtualToSystemPath")
+{
+    TEST_CASE("Map bin:// path")
+    {
+        std::string virtualPath = "bin://config.ini";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+        DN_INFO("SysPath: {}", sysPath);
+
+        // Should not be INVALID_PATH
+        CHECK(sysPath != INVALID_PATH);
+        CHECK_FALSE(sysPath.empty());
+
+        // Should end with the filename
+        CHECK(sysPath.find("config.ini") != std::string::npos);
+    }
+
+    TEST_CASE("Map bin:// with nested path")
+    {
+        std::string virtualPath = "bin://data/textures/image.png";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        CHECK(sysPath != INVALID_PATH);
+        CHECK(sysPath.find("data/textures/image.png") != std::string::npos);
+    }
+
+    TEST_CASE("Map app:// path after SetPrefPath")
+    {
+        // First set the preferences
+        duin::fs::SetPrefPath("TestOrgVPath", "TestAppVPath");
+
+        std::string virtualPath = "app://settings.json";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        // Should not be INVALID_PATH
+        CHECK(sysPath != INVALID_PATH);
+        CHECK_FALSE(sysPath.empty());
+
+        // Should end with the filename
+        CHECK(sysPath.find("settings.json") != std::string::npos);
+
+        // Cleanup the created preference directory
+        std::string prefPath = duin::fs::GetPrefPath("TestOrgVPath", "TestAppVPath");
+        if (prefPath != INVALID_PATH && std::filesystem::exists(prefPath))
+        {
+            std::filesystem::remove_all(prefPath);
+        }
+    }
+
+    TEST_CASE("Map app:// with nested path")
+    {
+        duin::fs::SetPrefPath("TestOrgNested", "TestAppNested");
+
+        std::string virtualPath = "app://saves/game1/progress.sav";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        CHECK(sysPath != INVALID_PATH);
+        CHECK(sysPath.find("saves/game1/progress.sav") != std::string::npos);
+
+        // Cleanup
+        std::string prefPath = duin::fs::GetPrefPath("TestOrgNested", "TestAppNested");
+        if (prefPath != INVALID_PATH && std::filesystem::exists(prefPath))
+        {
+            std::filesystem::remove_all(prefPath);
+        }
+    }
+
+    TEST_CASE("Map app:// without SetPrefPath - uses empty ORG/APP")
+    {
+        // Set to empty values
+        duin::fs::SetPrefPath("", "");
+
+        std::string virtualPath = "app://file.txt";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        // GetPrefPath with empty org/app returns INVALID_PATH
+        // So the result should be INVALID_PATH
+        CHECK(sysPath == INVALID_PATH);
+    }
+
+    TEST_CASE("Map usr:// path - not yet implemented")
+    {
+        std::string virtualPath = "usr://documents/file.txt";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        // Should return INVALID_PATH (not implemented)
+        CHECK(sysPath == INVALID_PATH);
+    }
+
+    TEST_CASE("Invalid: path too short")
+    {
+        std::string tooShort1 = "bin";
+        std::string tooShort2 = "bin:";
+        std::string tooShort3 = "bin:/";
+
+        CHECK(duin::fs::MapVirtualToSystemPath(tooShort1) == INVALID_PATH);
+        CHECK(duin::fs::MapVirtualToSystemPath(tooShort2) == INVALID_PATH);
+        CHECK(duin::fs::MapVirtualToSystemPath(tooShort3) == INVALID_PATH);
+    }
+
+    TEST_CASE("Invalid: unrecognized prefix")
+    {
+        std::string unknown1 = "xyz://file.txt";
+        std::string unknown2 = "res://file.txt";
+        std::string unknown3 = "data://file.txt";
+
+        CHECK(duin::fs::MapVirtualToSystemPath(unknown1) == INVALID_PATH);
+        CHECK(duin::fs::MapVirtualToSystemPath(unknown2) == INVALID_PATH);
+        CHECK(duin::fs::MapVirtualToSystemPath(unknown3) == INVALID_PATH);
+    }
+
+    TEST_CASE("Invalid: empty string")
+    {
+        std::string empty = "";
+        CHECK(duin::fs::MapVirtualToSystemPath(empty) == INVALID_PATH);
+    }
+
+    TEST_CASE("Map bin:// just the prefix")
+    {
+        std::string justPrefix = "bin://";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(justPrefix);
+
+        // Should return base path (might be the base directory itself)
+        CHECK(sysPath != INVALID_PATH);
+    }
+
+    TEST_CASE("Integration - Map and use with GetFileName")
+    {
+        std::string virtualPath = "bin://assets/sprites/player.png";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        CHECK(sysPath != INVALID_PATH);
+
+        std::string filename = duin::fs::GetFileName(sysPath);
+        CHECK(filename == "player.png");
+    }
+
+    TEST_CASE("Integration - Map and use with GetFileExtension")
+    {
+        duin::fs::SetPrefPath("TestIntegration", "TestExt");
+
+        std::string virtualPath = "app://config.toml";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        CHECK(sysPath != INVALID_PATH);
+
+        std::string filename = duin::fs::GetFileName(sysPath);
+        std::string extension = duin::fs::GetFileExtension(filename);
+
+        CHECK(filename == "config.toml");
+        CHECK(extension == "toml");
+
+        // Cleanup
+        std::string prefPath = duin::fs::GetPrefPath("TestIntegration", "TestExt");
+        if (prefPath != INVALID_PATH && std::filesystem::exists(prefPath))
+        {
+            std::filesystem::remove_all(prefPath);
+        }
+    }
+
+    TEST_CASE("Path with forward slashes after prefix")
+    {
+        std::string virtualPath = "bin://folder/subfolder/file.txt";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        CHECK(sysPath != INVALID_PATH);
+        // Verify the path structure is preserved
+        CHECK(sysPath.find("folder/subfolder/file.txt") != std::string::npos);
+    }
+
+    TEST_CASE("Workflow: SetPrefPath then use app:// paths")
+    {
+        // Simulate application startup
+        bool setPref = duin::fs::SetPrefPath("WorkflowOrg", "WorkflowApp");
+        CHECK(setPref == true);
+
+        // Use virtual paths throughout the application
+        std::string configPath = duin::fs::MapVirtualToSystemPath("app://config.ini");
+        std::string savePath = duin::fs::MapVirtualToSystemPath("app://saves/slot1.sav");
+        std::string logPath = duin::fs::MapVirtualToSystemPath("app://logs/debug.log");
+
+        CHECK(configPath != INVALID_PATH);
+        CHECK(savePath != INVALID_PATH);
+        CHECK(logPath != INVALID_PATH);
+
+        CHECK(configPath.find("config.ini") != std::string::npos);
+        CHECK(savePath.find("saves/slot1.sav") != std::string::npos);
+        CHECK(logPath.find("logs/debug.log") != std::string::npos);
+
+        // Cleanup
+        std::string prefPath = duin::fs::GetPrefPath("WorkflowOrg", "WorkflowApp");
+        if (prefPath != INVALID_PATH && std::filesystem::exists(prefPath))
+        {
+            std::filesystem::remove_all(prefPath);
+        }
+    }
+}
+
 TEST_SUITE("Filesystem - Edge Cases")
 {
     TEST_CASE("Very long path")
