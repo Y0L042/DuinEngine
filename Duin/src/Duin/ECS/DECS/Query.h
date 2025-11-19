@@ -8,7 +8,8 @@ namespace duin
 /**
  * @brief Wrapper for flecs::query to provide a unified query API.
  */
-template <typename... Components> class Query
+template <typename... Components>
+class Query
 {
   public:
     /**
@@ -16,9 +17,31 @@ template <typename... Components> class Query
      */
     Query() = default;
 
-    Query(flecs::query&& other)
+    /**
+     * @brief Constructor from flecs query (move).
+     * @param other The flecs query to wrap.
+     */
+    Query(flecs::query<Components...> &&other)
+        : rawQuery(std::move(other))
     {
+    }
 
+    /**
+     * @brief Constructor from flecs query (copy).
+     * @param other The flecs query to wrap.
+     */
+    Query(const flecs::query<Components...> &other)
+        : rawQuery(other)
+    {
+    }
+
+    /**
+     * @brief Constructor from query builder.
+     * @param builder The query builder to build and wrap.
+     */
+    Query(flecs::query_builder<Components...> &&builder)
+        : rawQuery(builder.build())
+    {
     }
 
     /**
@@ -26,39 +49,61 @@ template <typename... Components> class Query
      */
     ~Query() = default;
 
-    Query& Cached()
+    /**
+     * @brief Mark query as cached (for builder pattern compatibility).
+     * @return Reference to this query.
+     */
+    Query &Cached()
     {
         return *this;
     }
 
-    Query& Build()
+    /**
+     * @brief Build the query (for builder pattern compatibility).
+     * @return Reference to this query.
+     */
+    Query &Build()
     {
         return *this;
+    }
+
+    /**
+     * @brief Get the underlying flecs query.
+     * @tparam Comps Optional component types (defaults to Components...).
+     * @return Reference to the underlying flecs query.
+     */
+    template <typename... Comps>
+    const flecs::query<Comps...> &Get() const
+    {
+        return reinterpret_cast<const flecs::query<Comps...> &>(rawQuery);
     }
 
     /**
      * @brief Run the query with a callback for each matching entity.
-     * @tparam Components The component types.
+     * @tparam Comps Component types to query.
      * @tparam Func The callback function type.
      * @param func The callback to invoke for each entity.
      */
-    template <typename... Components, typename Func> void Each(Func &&func) const
+    template <typename... Comps, typename Func>
+    void Each(Func &&func) const
     {
-        Get<Components...>().each(std::forward<Func>(func));
+        Get<Comps...>().each(std::forward<Func>(func));
     }
 
     /**
      * @brief Iterate the query using a flecs iterator and callback.
-     * @tparam Components The component types.
+     * @tparam Comps Component types to query.
      * @tparam Func The callback function type.
      * @param func The callback to invoke for each iteration.
      */
-    template <typename... Components, typename Func> void Iter(Func &&func) const
+    template <typename... Comps, typename Func>
+    void Iter(Func &&func) const
     {
-        Get<Components...>().iter(std::forward<Func>(func));
+        Get<Comps...>().iter(std::forward<Func>(func));
     }
 
   private:
     friend class World;
+    flecs::query<Components...> rawQuery;
 };
 } // namespace duin

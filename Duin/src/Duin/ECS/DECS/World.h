@@ -167,7 +167,7 @@ class World
     template <typename... Comps, typename... Args> 
     Query<Comps...> QueryBuilder(Args &&...args) const
     {
-        return Query();
+        return Query<Comps...>();
     }
 
     flecs::world GetFlecsWorld();

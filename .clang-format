@@ -13,4 +13,5 @@ IncludeCategories:
   - Regex: '^<.*>$'
     Priority: 30
 TabWidth: 8
+AlwaysBreakTemplateDeclarations: Yes
 ...

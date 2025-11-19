@@ -107,13 +107,13 @@ TEST_SUITE("Query")
         e2.Set<TestComponent>({200});
 
         // Create query
-        auto flecsQuery = w.flecsWorld.query<TestComponent>();
+        auto flecsQuery = w.GetFlecsWorld().query<TestComponent>();
         duin::Query q(std::move(flecsQuery));
 
         // Test iter method
         int iterationCount = 0;
         int totalEntities = 0;
-        q.iter<TestComponent>([&](flecs::iter &it, TestComponent *components) {
+        q.Iter<TestComponent>([&](flecs::iter &it, TestComponent *components) {
             iterationCount++;
             totalEntities += it.count();
 
@@ -149,7 +149,7 @@ TEST_SUITE("Query")
         e2.Set<CompA>({2}).Set<CompB>({"second"});
 
         // Create query for both components
-        auto flecsQuery = w.flecsWorld.query<CompA, CompB>();
+        auto flecsQuery = w.GetFlecsWorld().query<CompA, CompB>();
         duin::Query q(std::move(flecsQuery));
 
         // Test iter method
@@ -158,7 +158,7 @@ TEST_SUITE("Query")
         std::vector<int> aValues;
         std::vector<std::string> bValues;
 
-        q.iter<CompA, CompB>([&](flecs::iter &it, CompA *compAs, CompB *compBs) {
+        q.Iter<CompA, CompB>([&](flecs::iter &it, CompA *compAs, CompB *compBs) {
             iterationCount++;
             totalEntities += it.count();
 
@@ -191,18 +191,18 @@ TEST_SUITE("Query")
         w.Component<TestComponent>();
 
         // Create query but no entities with the component
-        auto flecsQuery = w.flecsWorld.query<TestComponent>();
+        auto flecsQuery = w.GetFlecsWorld().query<TestComponent>();
         duin::Query q(std::move(flecsQuery));
 
         // Test each method with no entities
         int count = 0;
-        q.each<TestComponent>([&](flecs::entity entity, TestComponent &comp) { count++; });
+        q.Each<TestComponent>([&](flecs::entity entity, TestComponent &comp) { count++; });
 
         CHECK(count == 0);
 
         // Test iter method with no entities
         int iterCount = 0;
-        q.iter<TestComponent>([&](flecs::iter &it, TestComponent *components) { iterCount++; });
+        q.Iter<TestComponent>([&](flecs::iter &it, TestComponent *components) { iterCount++; });
 
         CHECK(iterCount == 0);
     }
@@ -219,7 +219,7 @@ TEST_SUITE("Query")
         duin::Entity e = w.CreateEntity("TestEntity");
         e.Set<TestComponent>({42});
 
-        auto flecsQuery = w.flecsWorld.query<TestComponent>();
+        auto flecsQuery = w.GetFlecsWorld().query<TestComponent>();
         const duin::Query q(std::move(flecsQuery));
 
         // All query operations should work on const query
@@ -227,14 +227,14 @@ TEST_SUITE("Query")
         CHECK(typeid(underlyingQuery) == typeid(flecs::query<TestComponent>));
 
         int count = 0;
-        q.each<TestComponent>([&](flecs::entity entity, TestComponent &comp) {
+        q.Each<TestComponent>([&](flecs::entity entity, TestComponent &comp) {
             count++;
             CHECK(comp.value == 42);
         });
         CHECK(count == 1);
 
         count = 0;
-        q.iter<TestComponent>([&](flecs::iter &it, TestComponent *components) { count += it.count(); });
+        q.Iter<TestComponent>([&](flecs::iter &it, TestComponent *components) { count += it.count(); });
         CHECK(count == 1);
     }
 }

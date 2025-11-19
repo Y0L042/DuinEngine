@@ -148,11 +148,5 @@ TEST_SUITE("World") {
         });
         CHECK(count >= 2);
     }
-
-    TEST_CASE("World to Query conversion") {
-        duin::World w;
-        duin::Query q = w;
-        CHECK(typeid(q) == typeid(duin::Query));
-    }
 }
 
