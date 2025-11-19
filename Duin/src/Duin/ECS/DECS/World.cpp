@@ -102,3 +102,8 @@ void duin::World::Quit()
 {
     flecsWorld.quit();
 }
+
+flecs::world duin::World::GetFlecsWorld()
+{
+    return flecsWorld;
+}
