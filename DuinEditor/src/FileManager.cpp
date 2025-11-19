@@ -2,6 +2,7 @@
 
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Utils/UtilsModule.h>
+#include <Duin/IO/Filesystem.h>
 #include <SDL3/SDL.h>
 #include <external/imgui.h>
 
@@ -51,8 +52,8 @@ void FSNode::Traverse()
 
 void FSNode::SetFileType()
 {
-    name = std::string(duin::GetFileName(path));
-    fileExtension = std::string(duin::GetFileExtension(name));
+    name = std::string(::duin::fs::GetFileName(path));
+    fileExtension = std::string(::duin::fs::GetFileExtension(name));
     for (const FileExtension &type : AllExtensions)
     {
         if (fileExtension.compare(type.extension) == 0)
