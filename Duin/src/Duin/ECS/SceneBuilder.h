@@ -54,8 +54,8 @@ struct Scene
     void WriteToFile(const std::string &filePath);
     std::string WriteToString();
 
-    static Scene ReadJSON(JSONValue sceneJSON);
-    JSONValue WriteJSON();
+    static Scene ReadFromJSONValue(JSONValue sceneJSON);
+    JSONValue WriteToJSONValue();
 
   private:
 };

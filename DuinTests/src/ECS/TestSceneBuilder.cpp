@@ -180,7 +180,7 @@ TEST_SUITE("SceneBuilder")
     // Scene JSON Serialization Tests
     // ========================================================================
 
-    TEST_CASE("Scene::WriteJSON and ReadJSON - Basic Round-trip")
+    TEST_CASE("Scene::WriteToJSONValue and ReadFromJSONValue - Basic Round-trip")
     {
         SUBCASE("Empty scene with minimal data")
         {
@@ -189,8 +189,8 @@ TEST_SUITE("SceneBuilder")
             original.name = "TestScene";
             original.flecsJSON = "{}";
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.uuid == original.uuid);
             CHECK(parsed.name == original.name);
@@ -205,8 +205,8 @@ TEST_SUITE("SceneBuilder")
             original.name = "InvalidUUIDScene";
             original.flecsJSON = "{}";
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.uuid == duin::UUID::INVALID);
             CHECK(parsed.name == original.name);
@@ -219,8 +219,8 @@ TEST_SUITE("SceneBuilder")
             original.name = "";
             original.flecsJSON = "{}";
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.uuid == original.uuid);
             CHECK(parsed.name == "");
@@ -234,8 +234,8 @@ TEST_SUITE("SceneBuilder")
             original.name = "EmptyFlecsScene";
             original.flecsJSON = "";
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.uuid == original.uuid);
             CHECK(parsed.name == original.name);
@@ -249,14 +249,14 @@ TEST_SUITE("SceneBuilder")
             original.name = "MaxUUIDScene";
             original.flecsJSON = "{}";
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.uuid == original.uuid);
         }
     }
 
-    TEST_CASE("Scene::WriteJSON and ReadJSON - External Dependencies")
+    TEST_CASE("Scene::WriteToJSONValue and ReadFromJSONValue - External Dependencies")
     {
         SUBCASE("Single external dependency")
         {
@@ -273,8 +273,8 @@ TEST_SUITE("SceneBuilder")
 
             original.externalSceneDependencies.push_back(dep);
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             REQUIRE(parsed.externalSceneDependencies.size() == 1);
             CHECK(parsed.externalSceneDependencies[0].uuid == dep.uuid);
@@ -330,8 +330,8 @@ TEST_SUITE("SceneBuilder")
             audioDep.type = duin::ResourceType::RES_AUDIO;
             original.externalSceneDependencies.push_back(audioDep);
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             REQUIRE(parsed.externalSceneDependencies.size() == 5);
             CHECK(parsed.externalSceneDependencies[0].type == duin::ResourceType::RES_SCENE);
@@ -356,15 +356,15 @@ TEST_SUITE("SceneBuilder")
 
             original.externalSceneDependencies.push_back(dep);
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             REQUIRE(parsed.externalSceneDependencies.size() == 1);
             CHECK(parsed.externalSceneDependencies[0].parent == UINT64_MAX);
         }
     }
 
-    TEST_CASE("Scene::WriteJSON and ReadJSON - Complex flecsJSON")
+    TEST_CASE("Scene::WriteToJSONValue and ReadFromJSONValue - Complex flecsJSON")
     {
         SUBCASE("Realistic FLECS JSON structure")
         {
@@ -387,8 +387,8 @@ TEST_SUITE("SceneBuilder")
             original.name = "ComplexScene";
             original.flecsJSON = flecsJSON;
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.uuid == original.uuid);
             CHECK(parsed.name == original.name);
@@ -404,14 +404,14 @@ TEST_SUITE("SceneBuilder")
             original.name = "SpecialCharsScene";
             original.flecsJSON = flecsJSON;
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.flecsJSON == flecsJSON);
         }
     }
 
-    TEST_CASE("Scene::WriteJSON - JSON Structure Validation")
+    TEST_CASE("Scene::WriteToJSONValue - JSON Structure Validation")
     {
         SUBCASE("Verify JSON field names")
         {
@@ -420,7 +420,7 @@ TEST_SUITE("SceneBuilder")
             scene.name = "FieldTestScene";
             scene.flecsJSON = "{}";
 
-            duin::JSONValue json = scene.WriteJSON();
+            duin::JSONValue json = scene.WriteToJSONValue();
 
             // Verify required fields exist
             CHECK(json.HasMember("UUID"));
@@ -442,7 +442,7 @@ TEST_SUITE("SceneBuilder")
             scene.name = "HexUUIDScene";
             scene.flecsJSON = "{}";
 
-            duin::JSONValue json = scene.WriteJSON();
+            duin::JSONValue json = scene.WriteToJSONValue();
             std::string uuidStr = json["UUID"].GetString();
 
             // Should contain hex prefix and hex digits
@@ -463,7 +463,7 @@ TEST_SUITE("SceneBuilder")
             dep.type = duin::ResourceType::RES_TEXTURE;
             scene.externalSceneDependencies.push_back(dep);
 
-            duin::JSONValue json = scene.WriteJSON();
+            duin::JSONValue json = scene.WriteToJSONValue();
             duin::JSONValue depsArray = json["EXT_SCN_DEPS"];
 
             REQUIRE(depsArray.IsArray());
@@ -708,8 +708,8 @@ TEST_SUITE("SceneBuilder")
         {
             duin::Scene original;
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.uuid == duin::UUID::INVALID);
             CHECK(parsed.name == "");
@@ -775,8 +775,8 @@ TEST_SUITE("SceneBuilder")
                 original.externalSceneDependencies.push_back(dep);
             }
 
-            duin::JSONValue json = original.WriteJSON();
-            duin::Scene parsed = duin::Scene::ReadJSON(json);
+            duin::JSONValue json = original.WriteToJSONValue();
+            duin::Scene parsed = duin::Scene::ReadFromJSONValue(json);
 
             CHECK(parsed.externalSceneDependencies.size() == 100);
 

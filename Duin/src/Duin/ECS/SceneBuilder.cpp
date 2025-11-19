@@ -92,7 +92,7 @@ duin::Scene duin::Scene::ReadFromString(const std::string &string)
 {
 	JSONValue sceneJSON = JSONValue::Parse(string);
     if (sceneJSON.IsReadValid()) {
-        return ReadJSON(sceneJSON);
+        return ReadFromJSONValue(sceneJSON);
 	}
     return Scene();
 }
@@ -107,13 +107,13 @@ void duin::Scene::WriteToFile(const std::string& filePath)
 
 std::string duin::Scene::WriteToString()
 {
-    JSONValue sceneJSON = WriteJSON();
+    JSONValue sceneJSON = WriteToJSONValue();
     std::string sceneStr = sceneJSON.Write();
 
     return sceneStr;
 }
 
-duin::Scene duin::Scene::ReadJSON(JSONValue sceneJSON)
+duin::Scene duin::Scene::ReadFromJSONValue(JSONValue sceneJSON)
 {
     // TODO add asserts and error handling
 
@@ -138,7 +138,7 @@ duin::Scene duin::Scene::ReadJSON(JSONValue sceneJSON)
     return newScene;
 }
 
-duin::JSONValue duin::Scene::WriteJSON()
+duin::JSONValue duin::Scene::WriteToJSONValue()
 {
     // TODO add asserts and error handling
 

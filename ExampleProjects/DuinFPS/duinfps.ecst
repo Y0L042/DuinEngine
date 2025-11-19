@@ -1,0 +1,242 @@
+
+  {
+    "sceneUUID": "550e8400-e29b-41d4-a716-446655440000",
+    "sceneName": "MainScene",
+    "entities": 
+	[
+      {
+        "entity": 
+		{
+          "uuid": "123e4567-e89b-12d3-a456-426614174000",
+          "name": "Player",
+          "enabled": true,
+          "tags": ["PxDynamic", "CameraIsActive"],
+          "components": 
+		  [
+            {
+              "type": "Transform3D",
+              "data": 
+			  {
+                "position": {"x": 0.0, "y": 5.0, "z": 0.0},
+                "rotation": {"x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0},
+                "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+              }
+            },
+            {
+              "type": "DynamicBodyComponent",
+              "data": 
+			  {
+                "mass": 75.0,
+                "linearDamping": 0.1,
+                "angularDamping": 0.05,
+                "lockRotation": {"x": true, "y": false, "z": true}
+              }
+            },
+            {
+              "type": "CharacterBodyComponent",
+              "data": 
+			  {
+                "height": 1.8,
+                "radius": 0.4,
+                "stepHeight": 0.3,
+                "slopeLimit": 45.0
+              }
+            },
+            {
+              "type": "Camera3D",
+              "data": 
+			  {
+                "fov": 75.0,
+                "near": 0.1,
+                "far": 1000.0,
+                "aspectRatio": 1.777778
+              }
+            },
+            {
+              "type": "Velocity3D",
+              "data": 
+			  {
+                "linear": {"x": 0.0, "y": 0.0, "z": 0.0},
+                "angular": {"x": 0.0, "y": 0.0, "z": 0.0}
+              }
+            }
+          ]
+        },
+        "children": 
+		[
+          {
+            "entity": 
+			{
+              "uuid": "234e5678-e89b-12d3-a456-426614174001",
+              "name": "CameraRig",
+              "enabled": true,
+              "tags": [],
+              "components": 
+			  [
+                {
+                  "type": "Transform3D",
+                  "data": 
+				  {
+                    "position": {"x": 0.0, "y": 0.6, "z": 0.0},
+                    "rotation": {"x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0},
+                    "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+                  }
+                }
+              ]
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "entity": 
+		{
+          "uuid": "345e6789-e89b-12d3-a456-426614174002",
+          "name": "Environment",
+          "enabled": true,
+          "tags": [],
+          "components": 
+		  [
+            {
+              "type": "Transform3D",
+              "data": {
+                "position": {"x": 0.0, "y": 0.0, "z": 0.0},
+                "rotation": {"x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0},
+                "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+              }
+            }
+          ]
+        },
+        "children": 
+		[
+          {
+            "entity": 
+			{
+              "uuid": "456e7890-e89b-12d3-a456-426614174003",
+              "name": "Ground",
+              "enabled": true,
+              "tags": ["PxStatic"],
+              "components": 
+			  [
+                {
+                  "type": "Transform3D",
+                  "data": 
+				  {
+                    "position": {"x": 0.0, "y": 0.0, "z": 0.0},
+                    "rotation": {"x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0},
+                    "scale": {"x": 100.0, "y": 1.0, "z": 100.0}
+                  }
+                },
+                {
+                  "type": "StaticBodyComponent",
+                  "data": 
+				  {
+                    "friction": 0.6,
+                    "restitution": 0.2
+                  }
+                },
+                {
+                  "type": "CubeComponent",
+                  "data": 
+				  {
+                    "material": 
+					{
+                      "albedo": {"r": 0.5, "g": 0.5, "b": 0.5, "a": 1.0},
+                      "metallic": 0.0,
+                      "roughness": 0.8
+                    }
+                  }
+                }
+              ]
+            },
+            "children": []
+          },
+          {
+            "entity": 
+			{
+              "uuid": "567e8901-e89b-12d3-a456-426614174004",
+              "name": "Obstacles",
+              "enabled": true,
+              "tags": [],
+              "components": [
+                {
+                  "type": "Transform3D",
+                  "data": 
+				  {
+                    "position": {"x": 0.0, "y": 0.0, "z": 0.0},
+                    "rotation": {"x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0},
+                    "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+                  }
+                }
+              ]
+            },
+            "children": 
+			[
+              {
+                "entity": 
+				{
+                  "uuid": "678e9012-e89b-12d3-a456-426614174005",
+                  "name": "Wall_1",
+                  "enabled": true,
+                  "tags": ["PxStatic"],
+                  "components": 
+				  [
+                    {
+                      "type": "Transform3D",
+                      "data": 
+					  {
+                        "position": {"x": 10.0, "y": 2.5, "z": 0.0},
+                        "rotation": {"x": 0.0, "y": 0.0, "z": 0.0, "w": 1.0},
+                        "scale": {"x": 1.0, "y": 5.0, "z": 10.0}
+                      }
+                    },
+                    {
+                      "type": "StaticBodyComponent",
+                      "data": 
+					  {
+                        "friction": 0.5,
+                        "restitution": 0.1
+                      }
+                    },
+                    {
+                      "type": "CubeComponent",
+                      "data": 
+					  {
+                        "material": 
+						{
+                          "albedo": {"r": 0.7, "g": 0.3, "b": 0.2, "a": 1.0},
+                          "metallic": 0.0,
+                          "roughness": 0.9
+                        }
+                      }
+                    }
+                  ]
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "metadata": 
+	{
+      "version": "1.0",
+      "engineVersion": "0.1.0",
+      "lastModified": "2025-11-16T12:00:00Z",
+      "author": "DuinEditor"
+    },
+    "externalDependencies": 
+	[
+      {
+        "uuid": "789e0123-e89b-12d3-a456-426614174006",
+        "type": "scene",
+        "path": "scenes/lighting_setup.ecst"
+      },
+      {
+        "uuid": "890e1234-e89b-12d3-a456-426614174007",
+        "type": "asset",
+        "path": "assets/materials/concrete.mat"
+      }
+    ]
+  }
