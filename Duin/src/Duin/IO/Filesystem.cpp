@@ -16,9 +16,9 @@ static const int vpathSize = 6;
 static const std::string sep = "/";
 
 // Virtual path prefixes (Godot-style virtual filesystem)
-static const std::string APPROOT = "bin://";  // Application executable directory
-static const std::string APPDATA = "app://";  // Application user data directory
-static const std::string USRDATA = "usr://";  // User's home folder (not yet implemented)
+static const std::string APPROOT = "bin://"; // Application executable directory
+static const std::string APPDATA = "app://"; // Application user data directory
+static const std::string USRDATA = "usr://"; // User's home folder (not yet implemented)
 
 // Global variables for app:// virtual path resolution
 // Set via SetPrefPath(), used by MapVirtualToSystemPath()
@@ -32,24 +32,31 @@ std::string duin::fs::GetFileName(const std::string &path)
     size_t i = path.rfind(sep, path.length());
     if (i != std::string::npos)
     {
-        // Return substring after the last separator
         return (path.substr(i + 1, path.length() - i));
     }
 
-    // No separator found - invalid path
     return (INVALID_PATH);
 }
 
 std::string duin::fs::GetFileExtension(const std::string &filename)
 {
-    // Find the last dot in the filename
-    const char *dot = strrchr(filename.c_str(), '.');
-
-    // No dot found or dot is at the beginning (hidden file like ".git")
-    if (!dot || dot == filename)
+    if (filename.empty())
+        return INVALID_PATH;
+    if (filename == ".")
         return INVALID_PATH;
 
-    // Return everything after the dot (excluding the dot itself)
+    const char *dot = strrchr(filename.c_str(), '.');
+    if (!dot)
+        return INVALID_PATH;
+
+    size_t dotPos = dot - filename.c_str();
+    if (dotPos == 0)
+    {
+        std::string ext = dot + 1;
+        if (ext.empty())
+            return INVALID_PATH;
+        return ext;
+    }
     return dot + 1;
 }
 
@@ -160,7 +167,15 @@ std::string duin::fs::MapVirtualToSystemPath(const std::string &path)
 
     if (drive == APPDATA)
     {
-        sysPath = GetPrefPath(ORG, APP) + path.substr(vpathSize, path.size());
+        // Only map if ORG and APP have been set to non-empty values
+        if (ORG.empty() || APP.empty())
+        {
+            sysPath = INVALID_PATH;
+        }
+        else
+        {
+            sysPath = GetPrefPath(ORG, APP) + path.substr(vpathSize, path.size());
+        }
     }
 
     if (drive == USRDATA)
