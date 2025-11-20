@@ -347,15 +347,6 @@ class Query
     }
 
     /**
-     * @brief Constructor from query builder.
-     * @param builder The query builder to build and wrap.
-     */
-    Query(flecs::query_builder<Components...> &&builder) : rawQuery(builder.build())
-    {
-        DN_CORE_INFO("Constructing query using query_builder.build()");
-    }
-
-    /**
      * @brief Destructor.
      */
     ~Query() = default;
