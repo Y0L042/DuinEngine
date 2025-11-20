@@ -8,13 +8,15 @@
 
 #define DEBUG
 
-duin::Application* duin::CreateApplication() { return new Game(); }
+duin::Application *duin::CreateApplication()
+{
+    return new Game();
+}
 
 duin::DebugConsole debugConsole;
 duin::DebugWatchlist debugWatchlist;
 
 duin::StateMachine mainStateMachine;
-
 
 void Game::Initialize()
 {
@@ -24,7 +26,7 @@ void Game::Initialize()
 
 void Game::Ready()
 {
-	debugConsole.Log("Game is ready!");
+    debugConsole.Log("Game is ready!");
     mainStateMachine.SwitchState<GameState_Gameplay>();
 }
 
@@ -52,11 +54,10 @@ void Game::DrawUI()
 {
     mainStateMachine.ExecuteDrawUI();
 
-	debugWatchlist.Draw("Watchlist");
+    debugWatchlist.Draw("Watchlist");
     debugConsole.Draw("Console");
 }
 
 void Game::Debug()
 {
 }
-

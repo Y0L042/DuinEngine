@@ -28,7 +28,6 @@ Panel::Panel(PanelManager* panelManager, PanelType type_, const std::string& nam
 
 void Panel::SetBlackboard(std::shared_ptr<TabBlackboard> b)
 {
-    DNASSERT((b != nullptr), "Blackboard cannot be NULL!");
     blackboard = b;
     if (blackboard->signals->onFocusChange) {
         DN_INFO("Panel connected to blackboard signal");

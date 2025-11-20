@@ -39,7 +39,8 @@ class World
      * @brief Remove all entities with a given component or pair.
      * @tparam T The component type.
      */
-    template <typename T> void DeleteWith()
+    template <typename T>
+    void DeleteWith()
     {
         flecsWorld.delete_with<T>();
     }
@@ -59,7 +60,8 @@ class World
      * @brief Remove all instances of a component or pair from all entities.
      * @tparam T The component type.
      */
-    template <typename T> void RemoveAll()
+    template <typename T>
+    void RemoveAll()
     {
         flecsWorld.remove_all<T>();
     }
@@ -93,7 +95,8 @@ class World
      * @tparam Func The function type.
      * @param func The function to defer.
      */
-    template <typename Func> void Defer(Func &&func)
+    template <typename Func>
+    void Defer(Func &&func)
     {
         flecsWorld.defer(std::forward<Func>(func));
     }
@@ -145,7 +148,8 @@ class World
      * @tparam Func The function type.
      * @param f The function to apply to each child.
      */
-    template <typename Func> void IterateChildren(Func &&f) const
+    template <typename Func>
+    void IterateChildren(Func &&f) const
     {
         flecsWorld.children([&](flecs::entity child) {
             Entity e;
@@ -159,15 +163,17 @@ class World
      * @brief Register a component type with the world.
      * @tparam T The component type.
      */
-    template <typename T> void Component()
+    template <typename T>
+    void Component()
     {
         flecsWorld.component<T>();
     }
 
-    template <typename... Comps, typename... Args> 
-    Query<Comps...> QueryBuilder(Args &&...args) const
+    template <typename... Comps>
+    Query<Comps...> QueryBuilder() const
     {
-        return Query<Comps...>();
+        Query<Comps...> q(flecsWorld.query_builder<Comps...>());
+        return q;
     }
 
     flecs::world GetFlecsWorld();
