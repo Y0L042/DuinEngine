@@ -6,7 +6,10 @@
 namespace duin
 {
 class Entity;
-class World
+template <typename... Components>
+class QueryBuilder;
+
+    class World
 {
   public:
     /**
@@ -170,10 +173,9 @@ class World
     }
 
     template <typename... Comps>
-    Query<Comps...> QueryBuilder() const
+    duin::QueryBuilder<Comps...> QueryBuilder() const
     {
-        Query<Comps...> q(flecsWorld.query_builder<Comps...>());
-        return q;
+        return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>());
     }
 
     flecs::world GetFlecsWorld();

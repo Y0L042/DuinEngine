@@ -6,14 +6,6 @@
 
 TEST_SUITE("Query")
 {
-
-    TEST_CASE("Default constructor")
-    {
-        duin::Query<> q;
-        // Query should be constructible but not usable without proper initialization
-        CHECK(typeid(q) == typeid(duin::Query<>));
-    }
-
     TEST_CASE("each method iterates over entities with components")
     {
         duin::World w;
@@ -72,7 +64,7 @@ TEST_SUITE("Query")
 
         // Create query for both components
         auto flecsQuery = w.GetFlecsWorld().query<CompA, CompB>();
-        duin::Query<CompA, CompB> q(flecsQuery);
+        duin::Query q = w.QueryBuilder<CompA, CompB>().Build();
 
         // Test each method - now uses duin::Entity
         int count = 0;
@@ -98,11 +90,10 @@ TEST_SUITE("Query")
         };
         w.Component<TestComponent>();
 
-        // Create query but no entities with the component
-        auto flecsQuery = w.GetFlecsWorld().query<TestComponent>();
-        duin::Query q(std::move(flecsQuery));
+        // Use QueryBuilder for consistency
+        auto q = w.QueryBuilder<TestComponent>().Build();
 
-        // Test each method with no entities - now uses duin::Entity
+        // Test each method with no entities
         int count = 0;
         q.Each([&](duin::Entity entity, TestComponent &comp) { count++; });
 
@@ -121,8 +112,8 @@ TEST_SUITE("Query")
         duin::Entity e = w.CreateEntity("TestEntity");
         e.Set<TestComponent>({42});
 
-        auto flecsQuery = w.GetFlecsWorld().query<TestComponent>();
-        const duin::Query q(std::move(flecsQuery));
+        // Explicitly specify template parameters
+        const duin::Query q = w.QueryBuilder<TestComponent>().Build();
 
         // All query operations should work on const query
         const auto &underlyingQuery = q.GetFlecsQuery<TestComponent>();

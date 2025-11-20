@@ -2,6 +2,7 @@
 
 #include <flecs.h>
 #include <memory>
+#include "Duin/Core/Debug/DNLog.h"
 
 namespace duin
 {
@@ -269,6 +270,52 @@ class Iter
     ecs_iter_t *iter_;
 };
 
+
+
+
+
+// Forward declare Query template before QueryBuilder
+template <typename... Components>
+class Query;
+
+/**
+ * @brief Wrapper for flecs::query_builder to provide a unified query builder API.
+ */
+template <typename... Components>
+class QueryBuilder
+{
+  public:
+    QueryBuilder(flecs::query_builder<Components...> &&builder) : flecsQueryBuilder(std::move(builder))
+    {
+    }
+
+    /**
+     * @brief Mark the query as cached.
+     * @return Reference to this QueryBuilder for method chaining.
+     */
+    QueryBuilder<Components...> &Cached()
+    {
+        flecsQueryBuilder.cached();
+        return *this;
+    }
+
+    /**
+     * @brief Build and return the final Query object.
+     * @return Constructed Query object.
+     */
+    Query<Components...> Build()
+    {
+        return Query<Components...>(flecsQueryBuilder.build());
+    }
+
+  private:
+    flecs::query_builder<Components...> flecsQueryBuilder;
+};
+
+
+
+
+
 /**
  * @brief Wrapper for flecs::query to provide a unified query API.
  */
@@ -279,7 +326,7 @@ class Query
     /**
      * @brief Default constructor.
      */
-    Query() = default;
+    Query() = delete;
 
     /**
      * @brief Constructor from flecs query (move).
@@ -287,6 +334,7 @@ class Query
      */
     Query(flecs::query<Components...> &&other) : rawQuery(std::move(other))
     {
+        DN_CORE_INFO("Constructing query using r-value move");
     }
 
     /**
@@ -295,6 +343,7 @@ class Query
      */
     Query(const flecs::query<Components...> &other) : rawQuery(other)
     {
+        DN_CORE_INFO("Constructing query using l-value");
     }
 
     /**
@@ -303,6 +352,7 @@ class Query
      */
     Query(flecs::query_builder<Components...> &&builder) : rawQuery(builder.build())
     {
+        DN_CORE_INFO("Constructing query using query_builder.build()");
     }
 
     /**
