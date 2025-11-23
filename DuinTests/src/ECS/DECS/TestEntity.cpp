@@ -5,14 +5,19 @@
 #include <string>
 #include <vector>
 
-TEST_SUITE("Entity") {
+namespace TestEntity
+{
+TEST_SUITE("Entity")
+{
 
-    TEST_CASE("Default constructor and destructor") {
+    TEST_CASE("Default constructor and destructor")
+    {
         duin::Entity e;
         CHECK(!e.IsValid());
     }
 
-    TEST_CASE("CreateEntity, IsValid, IsAlive, GetID, GetWorld") {
+    TEST_CASE("CreateEntity, IsValid, IsAlive, GetID, GetWorld")
+    {
         duin::World w;
         duin::Entity e = w.CreateEntity("TestEntity");
         CHECK(e.IsValid());
@@ -21,7 +26,8 @@ TEST_SUITE("Entity") {
         CHECK(e.GetWorld() == &w);
     }
 
-    TEST_CASE("operator== and operator!=") {
+    TEST_CASE("operator== and operator!=")
+    {
         duin::World w;
         duin::Entity e1 = w.CreateEntity("Entity1");
         duin::Entity e2 = w.CreateEntity("Entity2");
@@ -30,7 +36,8 @@ TEST_SUITE("Entity") {
         CHECK(e1 != e2);
     }
 
-    TEST_CASE("explicit operator bool") {
+    TEST_CASE("explicit operator bool")
+    {
         duin::World w;
         duin::Entity e = w.CreateEntity("EntityBool");
         CHECK(static_cast<bool>(e));
@@ -38,7 +45,8 @@ TEST_SUITE("Entity") {
         CHECK(!static_cast<bool>(e));
     }
 
-    TEST_CASE("GetName and SetName") {
+    TEST_CASE("GetName and SetName")
+    {
         duin::World w;
         duin::Entity e = w.CreateEntity("OriginalName");
         CHECK(e.GetName() == "OriginalName");
@@ -46,7 +54,8 @@ TEST_SUITE("Entity") {
         CHECK(e.GetName() == "NewName");
     }
 
-    TEST_CASE("Enable and Disable") {
+    TEST_CASE("Enable and Disable")
+    {
         duin::World w;
         duin::Entity e = w.CreateEntity("EnableDisable");
         e.Disable();
@@ -54,7 +63,8 @@ TEST_SUITE("Entity") {
         e.Enable();
     }
 
-    TEST_CASE("Destruct and Clear") {
+    TEST_CASE("Destruct and Clear")
+    {
         duin::World w;
         duin::Entity e = w.CreateEntity("DestructClear");
         CHECK(e.IsAlive());
@@ -64,7 +74,8 @@ TEST_SUITE("Entity") {
         CHECK(!e.IsAlive());
     }
 
-    TEST_CASE("Clone") {
+    TEST_CASE("Clone")
+    {
         duin::World w;
         duin::Entity e = w.CreateEntity("CloneEntity");
         duin::Entity clone = e.Clone();
@@ -72,7 +83,8 @@ TEST_SUITE("Entity") {
         CHECK(clone != e);
     }
 
-    TEST_CASE("ChildOf and GetParent") {
+    TEST_CASE("ChildOf and GetParent")
+    {
         duin::World w;
         duin::Entity parent = w.CreateEntity("ParentEntity");
         duin::Entity child = w.CreateEntity("ChildEntity");
@@ -82,15 +94,30 @@ TEST_SUITE("Entity") {
         CHECK(gotParent.GetID() == parent.GetID());
     }
 
-    TEST_CASE("IsA") {
+    TEST_CASE("IsA")
+    {
+        struct CompA
+        {
+            int damage;
+        };
+        struct CompB
+        {
+            int damage;
+        };
         duin::World w;
         duin::Entity base = w.CreateEntity("BaseEntity");
+        base.Set<CompA>({10});
         duin::Entity derived = w.CreateEntity("DerivedEntity");
         derived.IsA(base);
-        // No direct API to check IsA, but should not throw
+        derived.Set<CompB>({25});
+        CHECK(derived.TryGet<CompA>() != nullptr);
+        CHECK(derived.TryGet<CompB>() != nullptr);
+        CHECK(derived.Get<CompA>().damage == 10);
+        CHECK(derived.Get<CompB>().damage == 25);
     }
 
-    TEST_CASE("GetChildren") {
+    TEST_CASE("GetChildren")
+    {
         duin::World w;
         duin::Entity parent = w.CreateEntity("ParentForChildren");
         duin::Entity child1 = w.CreateEntity("Child1");
@@ -99,20 +126,23 @@ TEST_SUITE("Entity") {
         child2.ChildOf(parent);
         std::vector<duin::Entity> children = parent.GetChildren();
         CHECK(children.size() >= 2);
-        for (const auto& c : children) {
+        for (const auto &c : children)
+        {
             CHECK(c.IsValid());
             CHECK(c.GetParent() == parent);
         }
     }
 
-    TEST_CASE("GetPath") {
+    TEST_CASE("GetPath")
+    {
         duin::World w;
         duin::Entity e = w.CreateEntity("PathEntity");
         std::string path = e.GetPath();
         CHECK(path.empty()); // Implementation is TODO, so should be empty
     }
 
-    TEST_CASE("GetTarget") {
+    TEST_CASE("GetTarget")
+    {
         duin::World w;
         duin::Entity rel = w.CreateEntity("Relationship");
         duin::Entity target = w.CreateEntity("TargetEntity");
@@ -122,9 +152,13 @@ TEST_SUITE("Entity") {
     }
 
     // Template API tests
-    TEST_CASE("Component API: Add, Remove, Has, Set, Get, TryGet, GetMut, TryGetMut, Ensure") {
+    TEST_CASE("Component API: Add, Remove, Has, Set, Get, TryGet, GetMut, TryGetMut, Ensure")
+    {
         duin::World w;
-        struct DummyComponent { int x = 0; };
+        struct DummyComponent
+        {
+            int x = 0;
+        };
         w.Component<DummyComponent>();
         duin::Entity e = w.CreateEntity("CompEntity");
         CHECK(!e.Has<DummyComponent>());
@@ -142,9 +176,13 @@ TEST_SUITE("Entity") {
         CHECK(e.Get<DummyComponent>().x == 123);
     }
 
-    TEST_CASE("Component API: AddIf") {
+    TEST_CASE("Component API: AddIf")
+    {
         duin::World w;
-        struct CompA { int a = 1; };
+        struct CompA
+        {
+            int a = 1;
+        };
         w.Component<CompA>();
         duin::Entity e = w.CreateEntity("AddIfEntity");
         e.AddIf<CompA>(true);
@@ -153,10 +191,17 @@ TEST_SUITE("Entity") {
         CHECK(!e.Has<CompA>());
     }
 
-    TEST_CASE("Component API: Set with multiple components") {
+    TEST_CASE("Component API: Set with multiple components")
+    {
         duin::World w;
-        struct CompA { int a = 1; };
-        struct CompB { int b = 2; };
+        struct CompA
+        {
+            int a = 1;
+        };
+        struct CompB
+        {
+            int b = 2;
+        };
         w.Component<CompA>();
         w.Component<CompB>();
         duin::Entity e = w.CreateEntity("MultiSetEntity");
@@ -165,10 +210,16 @@ TEST_SUITE("Entity") {
         CHECK(e.Get<CompB>().b == 20);
     }
 
-    TEST_CASE("Pair API: AddPair, RemovePair, HasPair, SetPair, GetPair, TryGetPair, GetPairMut") {
+    TEST_CASE("Pair API: AddPair, RemovePair, HasPair, SetPair, GetPair, TryGetPair, GetPairMut")
+    {
         duin::World w;
-        struct TagA {};
-        struct DataB { int v = 5; };
+        struct TagA
+        {
+        };
+        struct DataB
+        {
+            int v = 5;
+        };
         w.Component<TagA>();
         w.Component<DataB>();
         duin::Entity e = w.CreateEntity("PairEntity");
@@ -183,7 +234,8 @@ TEST_SUITE("Entity") {
         CHECK(!e.HasPair<TagA, DataB>());
     }
 
-    TEST_CASE("Pair API: AddPair/RemovePair/HasPair by ID") {
+    TEST_CASE("Pair API: AddPair/RemovePair/HasPair by ID")
+    {
         duin::World w;
         duin::Entity first = w.CreateEntity("FirstPair");
         duin::Entity second = w.CreateEntity("SecondPair");
@@ -194,108 +246,128 @@ TEST_SUITE("Entity") {
         CHECK(!e.HasPair(first.GetID(), second.GetID()));
     }
 
-    TEST_CASE("Advanced API: Emplace") {
+    TEST_CASE("Advanced API: Emplace")
+    {
         duin::World w;
-        struct CompC { int c = 0; };
+        struct CompC
+        {
+            int c = 0;
+        };
         w.Component<CompC>();
         duin::Entity e = w.CreateEntity("AdvancedEntity");
         e.Emplace<CompC>(123);
         CHECK(e.Get<CompC>().c == 123);
     }
 
-    TEST_CASE("Advanced API: Assign") {
+    TEST_CASE("Advanced API: Assign")
+    {
         duin::World w;
-        struct CompC { int c = 0; };
+        struct CompC
+        {
+            int c = 0;
+        };
         w.Component<CompC>();
         duin::Entity e = w.CreateEntity("AdvancedEntity");
-        e.Set<CompC>({ 123 });
+        e.Set<CompC>({123});
         CHECK(e.Get<CompC>().c == 123);
-        e.Assign<CompC>(CompC{ 456 });
+        e.Assign<CompC>(CompC{456});
         CHECK(e.Get<CompC>().c == 456);
     }
 
-    TEST_CASE("Advanced API: Modify") {
+    TEST_CASE("Advanced API: Modify")
+    {
         // TODO
-        //duin::World w;
-        //struct CompC { int c = 0; };
-        //w.Component<CompC>();
-        //duin::Entity e = w.CreateEntity("AdvancedEntity");
-        //e.Set<CompC>({ 123 });
-        //CHECK(e.Get<CompC>().c == 123);
-        //e.Modify([](auto& entity) {
+        // duin::World w;
+        // struct CompC { int c = 0; };
+        // w.Component<CompC>();
+        // duin::Entity e = w.CreateEntity("AdvancedEntity");
+        // e.Set<CompC>({ 123 });
+        // CHECK(e.Get<CompC>().c == 123);
+        // e.Modify([](auto& entity) {
         //    entity.Set<CompC>(CompC{ 789 });
         //});
-        //CHECK(e.Get<CompC>().c == 789);
+        // CHECK(e.Get<CompC>().c == 789);
         WARN(false);
-	}
-
-    TEST_CASE("EnableComponent, DisableComponent, IsComponentEnabled") {
-		// TODO
-        //duin::World w;
-        //struct CompD { int d = 0; };
-        //w.Component<CompD>();
-        //duin::Entity e = w.CreateEntity("EnableDisableCompEntity");
-        //e.Add<CompD>();
-        //e.DisableComponent<CompD>();
-        //CHECK(!e.IsComponentEnabled<CompD>());
-        //e.EnableComponent<CompD>();
-        //CHECK(e.IsComponentEnabled<CompD>());
-		WARN(false);
     }
 
-    TEST_CASE("SetAutoOverride") {
+    TEST_CASE("EnableComponent, DisableComponent, IsComponentEnabled")
+    {
+        // TODO
+        // duin::World w;
+        // struct CompD { int d = 0; };
+        // w.Component<CompD>();
+        // duin::Entity e = w.CreateEntity("EnableDisableCompEntity");
+        // e.Add<CompD>();
+        // e.DisableComponent<CompD>();
+        // CHECK(!e.IsComponentEnabled<CompD>());
+        // e.EnableComponent<CompD>();
+        // CHECK(e.IsComponentEnabled<CompD>());
+        WARN(false);
+    }
+
+    TEST_CASE("SetAutoOverride")
+    {
         duin::World w;
-        struct CompE { int e = 0; };
+        struct CompE
+        {
+            int e = 0;
+        };
         w.Component<CompE>();
         duin::Entity e = w.CreateEntity("AutoOverrideEntity");
         e.SetAutoOverride<CompE>(CompE{321});
         CHECK(e.Get<CompE>().e == 321);
     }
 
-    TEST_CASE("WithScope and WithComponent") {
+    TEST_CASE("WithScope and WithComponent")
+    {
         // TODO
-        //duin::World w;
-        //struct CompF { int f = 0; };
-        //w.Component<CompF>();
-        //duin::Entity e = w.CreateEntity("ScopeCompEntity");
-        //bool calledScope = false;
-        //e.WithScope([&](duin::Entity& ent){
+        // duin::World w;
+        // struct CompF { int f = 0; };
+        // w.Component<CompF>();
+        // duin::Entity e = w.CreateEntity("ScopeCompEntity");
+        // bool calledScope = false;
+        // e.WithScope([&](duin::Entity& ent){
         //    calledScope = true;
         //    ent.Add<CompF>();
         //});
-        //CHECK(calledScope);
-        //bool calledComp = false;
-        //e.WithComponent([&](duin::Entity& ent){
+        // CHECK(calledScope);
+        // bool calledComp = false;
+        // e.WithComponent([&](duin::Entity& ent){
         //    calledComp = true;
         //    ent.Set<CompF>(CompF{555});
         //});
-        //CHECK(calledComp);
-        //CHECK(e.Get<CompF>().f == 555);
-		WARN(false);
-    }
-
-    TEST_CASE("Emit and Modified") {
-        // TODO
-        //duin::World w;
-        //struct EventA { int val; };
-        //w.Component<EventA>();
-        //duin::Entity e = w.CreateEntity("EmitEntity");
-        //// Emit is a no-op unless flecs event system is set up, but should not throw
-        //e.Emit<EventA>(123);
-        //e.Modified<EventA>();
-        //e.Modified();
+        // CHECK(calledComp);
+        // CHECK(e.Get<CompF>().f == 555);
         WARN(false);
     }
 
-    TEST_CASE("EachChild") {
+    TEST_CASE("Emit and Modified")
+    {
+        // TODO
+        // duin::World w;
+        // struct EventA { int val; };
+        // w.Component<EventA>();
+        // duin::Entity e = w.CreateEntity("EmitEntity");
+        //// Emit is a no-op unless flecs event system is set up, but should not throw
+        // e.Emit<EventA>(123);
+        // e.Modified<EventA>();
+        // e.Modified();
+        WARN(false);
+    }
+
+    TEST_CASE("EachChild")
+    {
         duin::World w;
-        struct CompG { int g = 0; };
+        struct CompG
+        {
+            int g = 0;
+        };
         w.Component<CompG>();
         duin::Entity parent = w.CreateEntity("ParentForEach");
         duin::Entity child1 = w.CreateEntity("ChildForEach1");
         duin::Entity child2 = w.CreateEntity("ChildForEach2");
-        child1.ChildOf(parent).Set<CompG>(CompG{ 1 });
-        child2.ChildOf(parent).Set<CompG>(CompG{ 2 });
+        child1.ChildOf(parent).Set<CompG>(CompG{1});
+        child2.ChildOf(parent).Set<CompG>(CompG{2});
         int count = 0;
         parent.EachChild([&](duin::Entity c) {
             count++;
@@ -304,17 +376,21 @@ TEST_SUITE("Entity") {
         CHECK(count >= 2);
     }
 
-    TEST_CASE("ForEachChild") {
+    TEST_CASE("ForEachChild")
+    {
         duin::World w;
-        struct CompG { int g = 0; };
+        struct CompG
+        {
+            int g = 0;
+        };
         w.Component<CompG>();
         duin::Entity parent = w.CreateEntity("ParentForEach");
         duin::Entity child1 = w.CreateEntity("ChildForEach1");
         duin::Entity child2 = w.CreateEntity("ChildForEach2");
-        child1.ChildOf(parent).Set<CompG>(CompG{ 1 });
-        child2.ChildOf(parent).Set<CompG>(CompG{ 2 });
+        child1.ChildOf(parent).Set<CompG>(CompG{1});
+        child2.ChildOf(parent).Set<CompG>(CompG{2});
         int compCount = 0;
-        parent.ForEachChild<CompG>([&](duin::Entity c, const CompG& g) {
+        parent.ForEachChild<CompG>([&](duin::Entity c, const CompG &g) {
             compCount++;
             bool result = g.g == 1 || g.g == 2;
             CHECK(result);
@@ -322,18 +398,20 @@ TEST_SUITE("Entity") {
         CHECK(compCount >= 2);
     }
 
-    TEST_CASE("ForEachTarget") {
+    TEST_CASE("ForEachTarget")
+    {
         // TODO
-        //duin::World w;
-        //duin::Entity rel = w.CreateEntity("RelForEach");
-        //duin::Entity target = w.CreateEntity("TargetForEach");
-        //rel.ChildOf(target);
-        //int targetCount = 0;
-        //rel.ForEachTarget<duin::Entity>([&](duin::Entity t) {
+        // duin::World w;
+        // duin::Entity rel = w.CreateEntity("RelForEach");
+        // duin::Entity target = w.CreateEntity("TargetForEach");
+        // rel.ChildOf(target);
+        // int targetCount = 0;
+        // rel.ForEachTarget<duin::Entity>([&](duin::Entity t) {
         //    targetCount++;
         //    CHECK(t.IsValid());
         //});
-        //CHECK(targetCount >= 1);
-		WARN(false);
+        // CHECK(targetCount >= 1);
+        WARN(false);
     }
 }
+} // namespace TestEntity

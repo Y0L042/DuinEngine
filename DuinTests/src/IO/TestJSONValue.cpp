@@ -2,6 +2,8 @@
 #include <Duin/IO/JSONValue.h>
 #include <string>
 
+namespace TestJSONValue
+{
 TEST_SUITE("JSONValue - Construction & Type Checks") {
     TEST_CASE("Default constructor creates object") {
         duin::JSONValue v;
@@ -730,4 +732,5 @@ TEST_SUITE("JSONValue - Special Values") {
         CHECK(v.IsInt());
         CHECK(v.GetInt() == 2147483647);
     }
+}
 }

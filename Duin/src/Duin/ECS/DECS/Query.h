@@ -270,10 +270,6 @@ class Iter
     ecs_iter_t *iter_;
 };
 
-
-
-
-
 // Forward declare Query template before QueryBuilder
 template <typename... Components>
 class Query;
@@ -287,6 +283,20 @@ class QueryBuilder
   public:
     QueryBuilder(flecs::query_builder<Components...> &&builder) : flecsQueryBuilder(std::move(builder))
     {
+    }
+
+    template <typename... Comps>
+    QueryBuilder<Components...> &With()
+    {
+        flecsQueryBuilder.with<Comps...>();
+        return *this;
+    }
+
+    template <typename... Comps>
+    QueryBuilder<Components...> &Without()
+    {
+        flecsQueryBuilder.without<Comps...>();
+        return *this;
     }
 
     /**
@@ -311,10 +321,6 @@ class QueryBuilder
   private:
     flecs::query_builder<Components...> flecsQueryBuilder;
 };
-
-
-
-
 
 /**
  * @brief Wrapper for flecs::query to provide a unified query API.

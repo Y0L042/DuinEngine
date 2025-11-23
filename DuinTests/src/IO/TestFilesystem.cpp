@@ -5,6 +5,9 @@
 #include <filesystem>
 #include <Duin/Core/Debug/DNLog.h>
 
+namespace TestFilesystem
+{
+
 // Helper function to create a test file
 static void CreateTestFile(const std::string &path, const std::string &content = "test content")
 {
@@ -1219,4 +1222,6 @@ TEST_SUITE("Filesystem - Cleanup")
         bool exists = std::filesystem::exists(ARTIFACTS_DIR);
         CHECK(exists);
     }
+}
+
 }

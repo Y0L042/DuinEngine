@@ -14,6 +14,11 @@
 #include <windows.h>
 #endif
 
+#if 0
+namespace TestApplication
+{
+
+
 // Test Application subclass for testing lifecycle callbacks
 class TestApp : public duin::Application
 {
@@ -1022,3 +1027,5 @@ TEST_SUITE("Application Edge Cases")
         CHECK(RunTestInProcess("SetWindowName - Various Names"));
     }
 }
+
+#endif

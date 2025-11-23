@@ -1,4 +1,5 @@
 #pragma once
+#define DN_DISABLE_ALL_LOGGING
 
 #include <string>
 

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+namespace TestSceneDefinition
+{
 TEST_SUITE("SceneDefinition") {
     TEST_CASE("Default Constructor") {
         duin::SceneDefinition sceneDef;
@@ -107,6 +109,7 @@ TEST_SUITE("SceneDefinition") {
         CHECK(sceneDef.extScnDeps.empty());
         CHECK(sceneDef.flecsJSON.empty());
     }
+}
 }
 
 
