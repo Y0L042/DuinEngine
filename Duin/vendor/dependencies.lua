@@ -17,6 +17,7 @@ local dep_imgui = require "dep_imgui"
 local dep_rapidjson = require "dep_rapidjson"
 local dep_flecs = require "dep_flecs"
 local dep_doctest = require "dep_doctest"
+local dep_reflectcpp = require "dep_reflectcpp"
 
 local dependencies = {
     SDL3 = dep_sdl3.build,
@@ -30,7 +31,8 @@ local dependencies = {
     IMGUI = dep_imgui.build,
     RAPIDJSON = dep_rapidjson.build,
     FLECS = dep_flecs.build,
-    DOCTEST = dep_doctest.build
+    DOCTEST = dep_doctest.build,
+    REFLECTCPP = dep_reflectcpp.build
 }
 
 
@@ -43,6 +45,16 @@ for depName, dep in pairs(dependencies) do
         trigger     = depName,
         description = "Rebuild " .. depName
     }
+end
+
+-- Get list of all dependency names
+function vendorDeps.getDependencyNames()
+    local names = {}
+    for name, _ in pairs(dependencies) do
+        table.insert(names, name)
+    end
+    table.sort(names) -- Sort alphabetically for consistent display
+    return names
 end
 
 -- Process all dependencies

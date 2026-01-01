@@ -73,6 +73,7 @@ project "Duin"
         SolutionRoot .. "/%{IncludeDir.rapidjson}",
         SolutionRoot .. "/%{IncludeDir.toml11}",
 		SolutionRoot .. "/%{IncludeDir.physx}",
+        SolutionRoot .. "/%{IncludeDir.reflectcpp}",
     }
     -- libdirs(global_libdirs) 
     libdirs 
@@ -82,6 +83,7 @@ project "Duin"
 		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
         ProjectRoot .. "/vendor/toml11/build/src/Debug",
+        ProjectRoot .. "/vendor/reflectcpp/build/Release",
     }
     -- defines(global_defines)
     defines 
@@ -116,6 +118,7 @@ project "Duin"
         "PhysXPvdSDK_static_64.lib",
         "PhysXExtensions_static_64.lib",
         "PhysXCharacterKinematic_static_64.lib",
+        "reflectcpp.lib",
     }
 
     filter "action:vs*"
@@ -147,16 +150,37 @@ project "Duin"
     -- include "vendor"
 
 if _OPTIONS["deps"] then
+    local vendorDeps = require "dependencies"
+    local allDeps = vendorDeps.getDependencyNames()
+    local flaggedDeps = {}
+
+    for _, dep in ipairs(allDeps) do
+        if _OPTIONS[dep] then
+            table.insert(flaggedDeps, dep)
+        end
+    end
+
     local answer
     repeat
-       io.write("This will fetch and rebuild all dependencies, and may take a long time. \n")
-       io.write("Continue with this operation (yes/n)? ")
-       io.flush()
-       answer=io.read()
+        if #flaggedDeps > 0 then
+            io.write("This will fetch and rebuild the following dependencies:\n")
+            for _, dep in ipairs(flaggedDeps) do
+                io.write("  - " .. dep .. "\n")
+            end
+        else
+            io.write("This will fetch and rebuild ALL dependencies:\n")
+            for _, dep in ipairs(allDeps) do
+                io.write("  - " .. dep .. "\n")
+            end
+            io.write("\nThis may take a long time.\n")
+        end
+        io.write("\nContinue with this operation (yes/n)? ")
+        io.flush()
+        answer=io.read()
     until answer=="yes" or answer=="n"
+
     if answer == "yes" then
         print("Operation continued.")
-        local vendorDeps = require "dependencies"
         vendorDeps.processDependencies()
     elseif answer == "n" then
         print("Operation aborted.")

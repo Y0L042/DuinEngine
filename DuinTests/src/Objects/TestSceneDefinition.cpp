@@ -6,8 +6,10 @@
 
 namespace TestSceneDefinition
 {
-TEST_SUITE("SceneDefinition") {
-    TEST_CASE("Default Constructor") {
+TEST_SUITE("SceneDefinition")
+{
+    TEST_CASE("Default Constructor")
+    {
         duin::SceneDefinition sceneDef;
 
         CHECK(sceneDef.uuid == duin::UUID::INVALID);
@@ -16,7 +18,8 @@ TEST_SUITE("SceneDefinition") {
         CHECK(sceneDef.flecsJSON.empty());
     }
 
-    TEST_CASE("Constructor with JSONValue - Valid JSON") {
+    TEST_CASE("Constructor with JSONValue - Valid JSON")
+    {
         // Create a valid JSONValue with 64-bit UUIDs
         std::string jsonString = R"({
             "UUID": "ABCDEF1234567890",
@@ -46,7 +49,8 @@ TEST_SUITE("SceneDefinition") {
         CHECK(sceneDef.flecsJSON == "{\"key\": \"value\"}");
     }
 
-    TEST_CASE("Constructor with JSONValue - Valid JSON with Delimiters") {
+    TEST_CASE("Constructor with JSONValue - Valid JSON with Delimiters")
+    {
         // Create a valid JSONValue with 64-bit UUIDs containing dash delimiters
         std::string jsonString = R"({
             "UUID": "ABCD-EF12-3456-7890",
@@ -76,7 +80,8 @@ TEST_SUITE("SceneDefinition") {
         CHECK(sceneDef.flecsJSON == "{\"key\": \"value\"}");
     }
 
-    TEST_CASE("Constructor with JSONValue - Missing Fields") {
+    TEST_CASE("Constructor with JSONValue - Missing Fields")
+    {
         // Create a JSONValue with missing fields
         std::string jsonString = R"({
             "NAME": "PartialScene"
@@ -95,7 +100,8 @@ TEST_SUITE("SceneDefinition") {
         CHECK(sceneDef.flecsJSON.empty());
     }
 
-    TEST_CASE("Constructor with JSONValue - Invalid JSON") {
+    TEST_CASE("Constructor with JSONValue - Invalid JSON")
+    {
         // Create an invalid JSONValue
         duin::JSONValue json = duin::JSONValue::Invalid();
         REQUIRE_FALSE(json.IsValid());
@@ -110,6 +116,4 @@ TEST_SUITE("SceneDefinition") {
         CHECK(sceneDef.flecsJSON.empty());
     }
 }
-}
-
-
+} // namespace TestSceneDefinition

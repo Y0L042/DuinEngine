@@ -37,7 +37,7 @@ end
 function utils.pushDir(newDir)
     utils.prevDir = os.getcwd()
     os.chdir(newDir)
-    print(utils.colors.yellow .. "Changed dir to " ..  utils.colors.green .. newDir .. utils.colors.reset)
+    print(utils.colors.yellow .. "Pushed dir to " ..  utils.colors.green .. newDir .. utils.colors.reset)
 end
 
 function utils.popDir()

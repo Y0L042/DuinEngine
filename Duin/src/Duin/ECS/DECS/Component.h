@@ -1,11 +1,8 @@
 #pragma once
+#include <string>
+#include "Duin/IO/JSONValue.h"
 
-namespace duin {
-	struct Component
-	{
-	public:
+namespace duin
+{
 
-	private:
-
-	};
-}
+} // namespace duin

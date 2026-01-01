@@ -10,7 +10,7 @@ duin::World::World()
 duin::World::~World()
 {};
 
-duin::Entity duin::World::CreateEntity(const std::string& name)
+duin::Entity duin::World::CreateEntity(const std::string &name = "")
 {
     Entity e;
     flecs::entity flecsEntity = flecsWorld.entity(name.c_str());

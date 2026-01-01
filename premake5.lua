@@ -32,6 +32,7 @@ workspace "Duin"
     IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog"
     IncludeDir["physx"] = "Duin/vendor/PhysX/physx/include"
     IncludeDir["doctest"] = "Duin/vendor/doctest/doctest"
+    IncludeDir["reflectcpp"] = "Duin/vendor/reflectcpp/include"
 
     global_files = {}
     global_includedirs = 
@@ -56,6 +57,7 @@ workspace "Duin"
         "%{IncludeDir.rapidjson}",
         "%{IncludeDir.physx}",
         "%{IncludeDir.doctest}",
+        "%{IncludeDir.reflectcpp}",
     }
     global_libdirs = 
     {
@@ -65,6 +67,7 @@ workspace "Duin"
         "Duin/vendor/flecs/build_vs2022/Debug",	
         "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
         "Duin/vendor/toml11/build/src/Debug",
+        "Duin/vendor/reflectcpp/build/Release",
     }
     global_defines = 
     {
@@ -96,6 +99,7 @@ workspace "Duin"
         "PhysXPvdSDK_static_64.lib",
         "PhysXExtensions_static_64.lib",
         "PhysXCharacterKinematic_static_64.lib",
+        "reflectcpp.lib",
     }
 
     -- Include sub-Premake files
