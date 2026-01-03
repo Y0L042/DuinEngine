@@ -13,13 +13,13 @@ function dep_physx.build()
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tag/" .. tag .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout " .. tag .. "")
     else
         print("\t\tFetch")
         utils.changeDir(folder)
 
         utils.runCommand("git stash")
-        utils.runCommand("git checkout tag/" .. tag .. "")
+        utils.runCommand("git checkout " .. tag .. "")
 
         utils.popDir()
     end

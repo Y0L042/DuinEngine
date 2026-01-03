@@ -77,7 +77,7 @@ duin::PackedEntity duin::PackedEntity::Deserialize(const JSONValue &json)
         {
             for (auto it = tagsArray.Begin(); it != tagsArray.End(); ++it)
             {
-                pe.children.emplace_back(it.GetValue().GetInt());
+                //pe.children.emplace_back(it.GetValue().GetInt());
             }
         }
     }

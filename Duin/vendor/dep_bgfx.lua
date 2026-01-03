@@ -26,10 +26,10 @@ function dep_bgfx.build()
     end
     print("BGFX downloaded.")
 
-    utils.changeDir(bgfx)
+    utils.changeDir(folder)
     utils.runCommand("git submodule update --init --recursive")
     utils.runCommand("..\\bx\\tools\\bin\\windows\\genie vs2022")
-    utils.runCommand('.build\\projects\\vs2022 && msbuild "bgfx.sln" /p:Configuration=Debug /p:Platform=x64 /p:RuntimeLibrary=MultiThreadedDebug /p:CLCompileAdditionalOptions="/Zc:__cplusplus"')
+    utils.runCommand('cd .build\\projects\\vs2022 && msbuild "bgfx.sln" /p:Configuration=Debug /p:Platform=x64 /p:RuntimeLibrary=MultiThreadedDebug /p:CLCompileAdditionalOptions="/Zc:__cplusplus"')
     utils.popDir()
 
     print("END: BGFX")

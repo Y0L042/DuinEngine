@@ -71,7 +71,7 @@ function utils.deleteFolder(path)
 end
 
 function utils.fixVsWherePath(batchFilePath)
-    if not fileExists(batchFilePath) then
+    if not utils.fileExists(batchFilePath) then
         error("Batch file not found: " .. batchFilePath)
     end
 
@@ -94,7 +94,7 @@ function utils.runBatchScript(scriptPath, args)
     if args then
         command = command .. " " .. args
     end
-    runCommand(command)
+    utils.runCommand(command)
 end
 
 return utils
