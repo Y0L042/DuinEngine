@@ -9,6 +9,8 @@
 #include <sstream>
 #include <cstring>
 
+#define __TESTING__
+
 const char testLogDir[] = "./TestLogs";
 
 std::string getTimestampedFilename() {
