@@ -29,14 +29,17 @@ class StateMachine
         static_assert(std::is_base_of<State, T>::value, "T must derive from State");
         if (!stateStack.empty())
         {
-            if (dynamic_cast<T *>(stateStack.top().get()) == nullptr) { return nullptr; }; // Ensure top state is of type T
+            if (dynamic_cast<T *>(stateStack.top().get()) == nullptr)
+            {
+                return nullptr;
+            }; // Ensure top state is of type T
             return static_cast<T *>(stateStack.top().get());
         }
         return nullptr;
     }
 
     template <typename T>
-    void SwitchState()
+    T* SwitchState()
     {
         static_assert(std::is_base_of<State, T>::value, "T must derive from State");
         if (!stateStack.empty())
@@ -48,12 +51,15 @@ class StateMachine
             }
         }
         auto newState = std::make_unique<T>(*this);
+        T* ptr = newState.get();
         stateStack.emplace(std::move(newState));
         stateStack.top()->StateEnter();
+
+        return ptr;
     }
 
     template <typename T>
-    void FlushAndSwitchState()
+    T* FlushAndSwitchState()
     {
         static_assert(std::is_base_of<State, T>::value, "T must derive from State");
         while (!stateStack.empty())
@@ -65,19 +71,23 @@ class StateMachine
             }
         }
         auto newState = std::make_unique<T>(*this);
+        T *ptr = newState.get();
         stateStack.emplace(std::move(newState));
         stateStack.top()->StateEnter();
+
+        return ptr;
     }
 
     template <typename T>
-    T* PushState()
+    T *PushState()
     {
         static_assert(std::is_base_of<State, T>::value, "T must derive from State");
         auto newState = std::make_unique<T>(*this);
+        T *ptr = newState.get();
         stateStack.emplace(std::move(newState));
         stateStack.top()->StateEnter();
 
-        return newState.get();
+        return ptr;
     }
 
     UUID GetUUID();
@@ -119,21 +129,21 @@ class State
     virtual void Exit() {};
 
     template <typename T>
-    void SwitchState()
+    T* SwitchState()
     {
-        owner.template SwitchState<T>();
+        return owner.template SwitchState<T>();
     }
 
     template <typename T>
-    void FlushAndSwitchState()
+    T* FlushAndSwitchState()
     {
-        owner.template FlushAndSwitchState<T>();
+        return owner.template FlushAndSwitchState<T>();
     }
 
     template <typename T>
-    void PushState()
+    T* PushState()
     {
-        owner.template PushState<T>();
+        return owner.template PushState<T>();
     }
 
     void PopState();
