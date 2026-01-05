@@ -45,6 +45,12 @@ void GameObject::RemoveChildObject(std::shared_ptr<GameObject> child)
     }
 }
 
+void GameObject::TransferChildObject(std::shared_ptr<GameObject> child, std::shared_ptr<GameObject> newParent)
+{
+    RemoveChildObject(child);
+    newParent->AddChildObject(child);
+}
+
 void GameObject::SetParent(std::shared_ptr<GameObject> parent)
 {
     this->parent = parent;

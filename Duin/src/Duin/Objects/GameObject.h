@@ -38,9 +38,9 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 
     void AddChildObject(std::shared_ptr<GameObject> child);
     void RemoveChildObject(std::shared_ptr<GameObject> child);
-    void SetParent(std::shared_ptr<GameObject> parent);
+    void TransferChildObject(std::shared_ptr<GameObject> child, std::shared_ptr<GameObject> newParent);
+
     std::shared_ptr<GameObject> GetParent();
-    void ResetParent();
 
     virtual void Init();
     virtual void Ready();
@@ -64,6 +64,9 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     friend class Application;
     friend class StateMachine;
     friend class State;
+
+    void SetParent(std::shared_ptr<GameObject> parent);
+    void ResetParent();
 
     // Runs children's functions first
     void ObjectReady();
