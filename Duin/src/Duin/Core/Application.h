@@ -8,120 +8,120 @@
 #include "Duin/Core/Events/Event.h"
 #include "Duin/Objects/GameObject.h"
 
+namespace duin
+{
+std::string GetRootDirectory();
+void DebugPauseGame();
+void DebugResumeGame();
+int DebugIsGamePaused();
 
-namespace duin {
-    std::string GetRootDirectory();
-    void DebugPauseGame();
-    void DebugResumeGame();
-    int DebugIsGamePaused();
+// void SetActiveCamera3D(::Camera3D camera3d);
+// void SetBackgroundColor(::Color color);
 
-    // void SetActiveCamera3D(::Camera3D camera3d);
+void SetFramerate(int framerate);
+void DrawPhysicsFPS(float x, float y);
+void DrawRenderFPS(float x, float y);
+float GetPhysicsFPS();
+float GetPhysicsFrameTime();
+float GetRenderFPS();
+float GetRenderFrameTime();
+size_t GetPhysicsFrameCount();
+size_t GetRenderFrameCount();
+double GetTicks();
+double GetTicksMilli();
+double GetTicksNano();
+void DelayProcess(float seconds);
+void DelayProcessMilli(float milliseconds);
+int GetWindowWidth();
+int GetWindowHeight();
+
+void SetWindowResizable(bool enable);
+void MaximizeWindow();
+void MinimizeWindow();
+void SetPauseOnMinimized(bool enable);
+void SetAllowDockingInMain(bool enable);
+void SetImGuiINIPath(const std::string &newPath);
+
+::SDL_Window *GetSDLWindow();
+
+void QueuePostReadyCallback(std::function<void(void)> f);
+void QueuePostInputCallback(std::function<void(Event)> f);
+void QueuePostUpdateCallback(std::function<void(double)>);
+void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
+void QueuePostDrawCallback(std::function<void()>);
+void QueuePostDrawUICallback(std::function<void()>);
+void QueuePreFrameCallback(std::function<void()>);
+void QueuePostFrameCallback(std::function<void()>);
+void QueuePostDebugCallback(std::function<void()>);
+
+void QueueExitCallback(std::function<void()>);
+
+class StateMachine;
+class DAPI Application
+{
+  public:
+    Application();
+    virtual ~Application();
+
+    void SetWindowStartupSize(int width, int height);
     // void SetBackgroundColor(::Color color);
+    void SetWindowName(const char *string);
 
-    void SetFramerate(int framerate);
-    void DrawPhysicsFPS(float x, float y);
-    void DrawRenderFPS(float x, float y);
-	float GetPhysicsFPS();
-	float GetPhysicsFrameTime();
-	float GetRenderFPS();
-	float GetRenderFrameTime();
-	size_t GetPhysicsFrameCount();
-	size_t GetRenderFrameCount();
-    double GetTicks();
-    double GetTicksMilli();
-    double GetTicksNano();
-    void DelayProcess(float seconds);
-    void DelayProcessMilli(float milliseconds);
-    int GetWindowWidth();
-    int GetWindowHeight();
+    void Run();
 
-	void SetWindowResizable(bool enable);
-	void MaximizeWindow();
-	void MinimizeWindow();
-	void SetPauseOnMinimized(bool enable);
-	void SetAllowDockingInMain(bool enable);
-	void SetImGuiINIPath(const std::string& newPath);
+    void EngineInitialize();
+    virtual void Initialize();
 
-	::SDL_Window* GetSDLWindow();
+    void EngineReady();
+    virtual void Ready();
+    void EnginePostReady();
 
-    void QueuePostReadyCallback(std::function<void(void)> f);
-    void QueuePostInputCallback(std::function<void(::SDL_Event)> f);
-	void QueuePostUpdateCallback(std::function<void(double)>);
-	void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
-	void QueuePostDrawCallback(std::function<void()>);
-	void QueuePostDrawUICallback(std::function<void()>);
-	void QueuePreFrameCallback(std::function<void()>);
-	void QueuePostFrameCallback(std::function<void()>);
-	void QueuePostDebugCallback(std::function<void()>);
+    void EnginePreFrame();
 
-    void QueueExitCallback(std::function<void()>);
+    /** Run as callback events */
+    void EngineOnEvent(Event event);
+    virtual void OnEvent(Event event);
 
-	class DAPI Application
-	{
-	public:
-		Application();
-		virtual ~Application();
+    void EngineUpdate(double delta);
+    virtual void Update(double delta);
+    void EnginePostUpdate(double delta);
 
+    void EnginePhysicsUpdate(double delta);
+    virtual void PhysicsUpdate(double delta);
+    void EnginePostPhysicsUpdate(double delta);
 
-        void SetWindowStartupSize(int width, int height);
-		// void SetBackgroundColor(::Color color);
-		void SetWindowName(const char *string);
+    void EngineDraw();
+    virtual void Draw();
+    void EnginePostDraw();
 
+    void EngineDrawUI();
+    virtual void DrawUI();
+    void EnginePostDrawUI();
 
-		void Run();
+    void EngineDebug();
+    virtual void Debug();
+    void EnginePostDebug();
 
-		void EngineInitialize();
-		virtual void Initialize();
+    void EnginePostFrame();
 
-		void EngineReady();
-		virtual void Ready();
-        void EnginePostReady();
+    virtual void Exit();
+    void EngineExit();
 
-		void EnginePreFrame();
+    template <typename T, typename... Args>
+    std::shared_ptr<T> CreateChildObject(Args... args)
+    {
+        return rootGameObject->CreateChildObject<T>(std::forward<Args>(args)...);
+    }
+    void AddChildObject(std::shared_ptr<GameObject> child);
+    void RemoveChildObject(std::shared_ptr<GameObject> child);
 
-        /** Run as callback events */
-		void EngineOnEvent(Event event);
-		virtual void OnEvent(Event event);
+    bool ConnectStateMachine(StateMachine& sm);
 
-		void EngineUpdate(double delta);
-		virtual void Update(double delta);
-        void EnginePostUpdate(double delta);
+  private:
+    std::string windowName = "Game";
+    std::shared_ptr<GameObject> rootGameObject;
+};
 
-		void EnginePhysicsUpdate(double delta);
-		virtual void PhysicsUpdate(double delta);
-        void EnginePostPhysicsUpdate(double delta);
+Application *CreateApplication();
 
-		void EngineDraw();
-		virtual void Draw();
-        void EnginePostDraw();
-
-		void EngineDrawUI();
-		virtual void DrawUI();
-        void EnginePostDrawUI();
-
-		void EngineDebug();
-		virtual void Debug();
-        void EnginePostDebug();
-
-        void EnginePostFrame();
-
-		virtual void Exit();
-		void EngineExit();
-
-		template<typename T, typename... Args>
-		std::shared_ptr<T> CreateChildObject(Args... args)
-		{
-			return rootGameObject->CreateChildObject<T>(std::forward<Args>(args)...);
-		}
-        void AddChildObject(std::shared_ptr<GameObject> child);
-        void RemoveChildObject(std::shared_ptr<GameObject> child);
-
-	private:
-		std::string windowName = "Game";
-		std::shared_ptr<GameObject> rootGameObject;
-	};
-
-	Application* CreateApplication();
-
-}
-
+} // namespace duin
