@@ -7,6 +7,7 @@
 #include "Duin/Core/Events/Input.h"
 #include "Duin/Physics/PhysicsModule.h"
 #include "Duin/Render/Renderer.h"
+#include "Duin/Core/Utils/StateMachine.h"
 
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -62,11 +63,8 @@ static SDL_WindowFlags sdlWindowFlags = 0;
 
 const bgfx::ViewId MAIN_DISPLAY = 0;
 
-namespace duin
-{
-
 static std::vector<std::function<void(void)>> postReadyCallbacks;
-static std::vector<std::function<void(Event)>> postInputCallbacks;
+static std::vector<std::function<void(duin::Event)>> postInputCallbacks;
 static std::vector<std::function<void(double)>> postUpdateCallbacks;
 static std::vector<std::function<void(double)>> postPhysicsUpdateCallbacks;
 static std::vector<std::function<void(void)>> postDrawCallbacks;
@@ -76,23 +74,23 @@ static std::vector<std::function<void(void)>> postFrameCallbacks;
 static std::vector<std::function<void(void)>> postDebugCallbacks;
 static std::vector<std::function<void(void)>> exitCallbacks;
 
-std::string GetRootDirectory()
+std::string duin::GetRootDirectory()
 {
     std::filesystem::path currentPath = std::filesystem::current_path();
     return currentPath.string();
 }
 
-void DebugPauseGame()
+void duin::DebugPauseGame()
 {
     debugIsGamePaused_ = 1;
 }
 
-void DebugResumeGame()
+void duin::DebugResumeGame()
 {
     debugIsGamePaused_ = 0;
 }
 
-int DebugIsGamePaused()
+int duin::DebugIsGamePaused()
 {
     return debugIsGamePaused_;
 }
@@ -107,26 +105,26 @@ int DebugIsGamePaused()
 //     backgroundColor = color;
 // }
 
-void SetFramerate(int framerate)
+void duin::SetFramerate(int framerate)
 {
     TARGET_RENDER_FRAMERATE = framerate;
 }
 
-void DrawPhysicsFPS(float x, float y)
+void duin::DrawPhysicsFPS(float x, float y)
 {
     static constexpr size_t bufferSize = 60; // Buffer size (approx. 1 second at 60 FPS)
-    static std::array<float, bufferSize> physicsFPSBuffer = {};
+  static std::array<float, bufferSize> physicsFPSBuffer = {};
     static size_t bufferIndex = 0;
     static float physicsFPSAverage = 0.0f;
     static float totalFPS = 0.0f; // Running total for quick average calculation
 
     // Get current frame's physics FPS
-    float currentPhysicsFPS = GetPhysicsFPS();
+    float currentPhysicsFPS = duin::GetPhysicsFPS();
 
     // Update circular buffer
     totalFPS -= physicsFPSBuffer[bufferIndex];         // Remove old value from total
     physicsFPSBuffer[bufferIndex] = currentPhysicsFPS; // Add new value to buffer
-    totalFPS += currentPhysicsFPS;                     // Add new value to total
+ totalFPS += currentPhysicsFPS; // Add new value to total
     bufferIndex = (bufferIndex + 1) % bufferSize;      // Move to next index (circular)
 
     // Calculate average FPS
@@ -134,11 +132,11 @@ void DrawPhysicsFPS(float x, float y)
 
     // Format and draw the average
     char buffer[16];
-    std::snprintf(buffer, sizeof(buffer), "P: %.2f", physicsFPSAverage);
+  std::snprintf(buffer, sizeof(buffer), "P: %.2f", physicsFPSAverage);
     // ::DrawText(buffer, x, y, 30, ::GREEN);
 }
 
-void DrawRenderFPS(float x, float y)
+void duin::DrawRenderFPS(float x, float y)
 {
     static constexpr size_t bufferSize = 60; // Buffer size (approx. 1 second at 60 FPS)
     static std::array<float, bufferSize> renderFPSBuffer = {};
@@ -147,12 +145,12 @@ void DrawRenderFPS(float x, float y)
     static float totalFPS = 0.0f; // Running total for quick average calculation
 
     // Get current frame's render FPS
-    float currentRenderFPS = GetRenderFPS();
+    float currentRenderFPS = duin::GetRenderFPS();
 
-    // Update circular buffer
-    totalFPS -= renderFPSBuffer[bufferIndex];        // Remove old value from total
+ // Update circular buffer
+    totalFPS -= renderFPSBuffer[bufferIndex];   // Remove old value from total
     renderFPSBuffer[bufferIndex] = currentRenderFPS; // Add new value to buffer
-    totalFPS += currentRenderFPS;                    // Add new value to total
+    totalFPS += currentRenderFPS;       // Add new value to total
     bufferIndex = (bufferIndex + 1) % bufferSize;    // Move to next index (circular)
 
     // Calculate average FPS
@@ -164,181 +162,181 @@ void DrawRenderFPS(float x, float y)
     // ::DrawText(buffer, x, y, 30, ::GREEN);
 }
 
-float GetPhysicsFPS()
+float duin::GetPhysicsFPS()
 {
     float fps = 1.0f / (float)physicsFrameTime;
     return fps;
 }
 
-float GetPhysicsFrameTime()
+float duin::GetPhysicsFrameTime()
 {
     float frametime = (float)physicsFrameTime;
     return frametime;
 }
 
-float GetRenderFPS()
+float duin::GetRenderFPS()
 {
     float fps = 0.0f;
     if (renderFrameTime < 0.00001)
     {
-        fps = 9999.9f;
+      fps = 9999.9f;
     }
     else
     {
         fps = 1.0f / (float)renderFrameTime;
     }
-    return fps;
+  return fps;
 }
 
-float GetRenderFrameTime()
+float duin::GetRenderFrameTime()
 {
     float frametime = (float)renderFrameTime;
     return frametime;
 }
 
-size_t GetPhysicsFrameCount()
+size_t duin::GetPhysicsFrameCount()
 {
     return physicsFrameCount;
 }
 
-size_t GetRenderFrameCount()
+size_t duin::GetRenderFrameCount()
 {
     return renderFrameCount;
 }
 
-double GetTicks()
+double duin::GetTicks()
 {
     return ::SDL_GetTicks() / 1000.0;
 }
 
-double GetTicksMilli()
+double duin::GetTicksMilli()
 {
     return (double)::SDL_GetTicks();
 }
-double GetTicksNano()
+double duin::GetTicksNano()
 {
     return (double)::SDL_GetTicksNS();
 }
 
-void DelayProcess(float seconds)
+void duin::DelayProcess(float seconds)
 {
-    ::SDL_Delay((uint32_t)seconds * 1000);
+  ::SDL_Delay((uint32_t)seconds * 1000);
 }
-void DelayProcessMilli(float milliseconds)
+void duin::DelayProcessMilli(float milliseconds)
 {
     ::SDL_Delay((uint32_t)milliseconds);
 }
 
-int GetWindowWidth()
+int duin::GetWindowWidth()
 {
     return WINDOW_WIDTH;
 }
 
-int GetWindowHeight()
+int duin::GetWindowHeight()
 {
     return WINDOW_HEIGHT;
 }
 
-void SetWindowResizable(bool enable)
+void duin::SetWindowResizable(bool enable)
 {
     SDL_SetWindowResizable(sdlWindow, enable);
     sdlWindowFlags |= (SDL_WINDOW_RESIZABLE && enable);
 }
 
-void MaximizeWindow()
+void duin::MaximizeWindow()
 {
     SDL_MaximizeWindow(sdlWindow);
 }
 
-void MinimizeWindow()
+void duin::MinimizeWindow()
 {
     SDL_MinimizeWindow(sdlWindow);
 }
 
-void SetPauseOnMinimized(bool enable)
+void duin::SetPauseOnMinimized(bool enable)
 {
     PAUSE_ON_MINIMIZE = enable;
 }
 
-void SetAllowDockingInMain(bool enable)
+void duin::SetAllowDockingInMain(bool enable)
 {
     ALLOW_DOCKING_IN_MAIN = enable;
 }
 
-void SetImGuiINIPath(const std::string &newPath)
+void duin::SetImGuiINIPath(const std::string &newPath)
 {
-    DN_CORE_INFO("Custom ImGui INI path set: {}", newPath.c_str());
+  DN_CORE_INFO("Custom ImGui INI path set: {}", newPath.c_str());
     USE_CUSTOM_IMGUI_INI_PATH = true;
     IMGUI_INI_PATH = newPath;
     ImGui::GetIO().IniFilename = NULL;
     ImGui::LoadIniSettingsFromDisk(IMGUI_INI_PATH.c_str());
 }
 
-SDL_Window *GetSDLWindow()
+SDL_Window *duin::GetSDLWindow()
 {
     return sdlWindow;
 }
 
-void QueuePostReadyCallback(std::function<void(void)> f)
+void duin::QueuePostReadyCallback(std::function<void(void)> f)
 {
     postReadyCallbacks.push_back(f);
 }
 
-void QueuePostInputCallback(std::function<void(Event)> f)
+void duin::QueuePostInputCallback(std::function<void(Event)> f)
 {
     postInputCallbacks.push_back(f);
 }
 
-void QueuePostUpdateCallback(std::function<void(double)> f)
+void duin::QueuePostUpdateCallback(std::function<void(double)> f)
 {
     postUpdateCallbacks.push_back(f);
 }
 
-void QueuePostPhysicsUpdateCallback(std::function<void(double)> f)
+void duin::QueuePostPhysicsUpdateCallback(std::function<void(double)> f)
 {
     postPhysicsUpdateCallbacks.push_back(f);
 }
 
-void QueuePostDrawCallback(std::function<void()> f)
+void duin::QueuePostDrawCallback(std::function<void()> f)
 {
     postDrawCallbacks.push_back(f);
 }
 
-void QueuePostDrawUICallback(std::function<void()> f)
+void duin::QueuePostDrawUICallback(std::function<void()> f)
 {
     postDrawUICallbacks.push_back(f);
 }
 
-void QueuePreFrameCallback(std::function<void()> f)
+void duin::QueuePreFrameCallback(std::function<void()> f)
 {
     preFrameCallbacks.push_back(f);
 }
 
-void QueuePostFrameCallback(std::function<void()> f)
+void duin::QueuePostFrameCallback(std::function<void()> f)
 {
     postFrameCallbacks.push_back(f);
 }
 
-void QueuePostDebugCallback(std::function<void()> f)
+void duin::QueuePostDebugCallback(std::function<void()> f)
 {
     postDebugCallbacks.push_back(f);
 }
 
-void QueueExitCallback(std::function<void()> f)
+void duin::QueueExitCallback(std::function<void()> f)
 {
     exitCallbacks.push_back(f);
 }
 
-Application::Application()
+duin::Application::Application()
 {
-    rootGameObject = std::make_shared<GameObject>();
+    rootGameObject = std::make_shared<duin::GameObject>();
 }
 
-Application::~Application()
+duin::Application::~Application()
 {
 }
 
-void Application::SetWindowStartupSize(int width, int height)
+void duin::Application::SetWindowStartupSize(int width, int height)
 {
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
@@ -349,15 +347,15 @@ void Application::SetWindowStartupSize(int width, int height)
 //     backgroundColor = color;
 // }
 
-void Application::SetWindowName(const char *string)
+void duin::Application::SetWindowName(const char *string)
 {
     windowName = std::string(string);
 }
 
-void Application::Run()
+void duin::Application::Run()
 {
     const double MAX_ACCUMULATOR = 0.25;
-    double physicsCurrentTime = GetTicks();
+    double physicsCurrentTime = duin::GetTicks();
     double physicsPreviousTime = 0.0;
     double physicsDeltaTime = 0.0;
     double physicsAccumTime = 0.0;
@@ -369,7 +367,7 @@ void Application::Run()
     double deltaTime = 0.0;
 
     EngineInitialize();
-    Initialize();
+  Initialize();
 
     DN_CORE_INFO("Set render FPS {}", TARGET_RENDER_FRAMERATE);
 
@@ -379,28 +377,28 @@ void Application::Run()
     }
     else
     {
-        sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
+     sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
         if (sdlWindow == nullptr)
-        {
-            ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
-        }
+ {
+          ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
+    }
         else
         {
-            sdlSurface = ::SDL_GetWindowSurface(sdlWindow);
+ sdlSurface = ::SDL_GetWindowSurface(sdlWindow);
         }
     }
-    ::HWND hwnd = (::HWND)::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow),
-                                                   SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
+ ::HWND hwnd = (::HWND)::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow),
+       SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
     if (!hwnd)
     {
         DN_CORE_FATAL("SDL3 window handle not found!");
-    }
+ }
     bgfx::renderFrame();
     bgfx::Init bgfxInit;
     bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer
     bgfxInit.resolution.width = WINDOW_WIDTH;
     bgfxInit.resolution.height = WINDOW_HEIGHT;
-    bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
+  bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
     bgfxInit.platformData.nwh = hwnd;
     bgfx::init(bgfxInit);
     bgfx::setViewClear(MAIN_DISPLAY, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
@@ -410,8 +408,8 @@ void Application::Run()
     ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-    InitRenderer();
-    SetRenderContextAvailable(true);
+    duin::InitRenderer();
+  duin::SetRenderContextAvailable(true);
 
     EngineReady();
     Ready();
@@ -426,131 +424,131 @@ void Application::Run()
 #endif /* DN_DEBUG */
 
             /* Do not run game when minimized */
-            if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(sdlWindow) && SDL_WINDOW_MINIMIZED)
+      if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(sdlWindow) && SDL_WINDOW_MINIMIZED)
             {
-                DelayProcessMilli(100);
-                continue;
+      duin::DelayProcessMilli(100);
+     continue;
             }
 
-            frameStartTime = GetTicks();
+frameStartTime = duin::GetTicks();
 
-            EnginePreFrame();
+          EnginePreFrame();
 
             /* If custom ImGui path is set, manually save to memory/disk */
             if (USE_CUSTOM_IMGUI_INI_PATH && ImGui::GetIO().WantSaveIniSettings)
             {
-                ImGui::SaveIniSettingsToDisk(IMGUI_INI_PATH.c_str());
-            }
+        ImGui::SaveIniSettingsToDisk(IMGUI_INI_PATH.c_str());
+       }
 
-            ::SDL_Event e;
+      ::SDL_Event e;
             ::SDL_zero(e);
             while (::SDL_PollEvent(&e))
-            {
-                Input::ProcessSDLMouseEvent(e);
-                Input::ProcessSDLKeyboardEvent(e);
-                EventHandler::GetPolledEvent(e);
-                ::ImGui_ImplSDL3_ProcessEvent(&e);
-            }
-            Input::CacheCurrentKeyState();
-            Input::CacheCurrentMouseKeyState();
-            Input::UpdateMouseFrameDelta();
-            gameShouldQuit = EventHandler::Get().IsCloseRequested();
+      {
+          duin::Input::ProcessSDLMouseEvent(e);
+   duin::Input::ProcessSDLKeyboardEvent(e);
+        duin::EventHandler::GetPolledEvent(e);
+       ::ImGui_ImplSDL3_ProcessEvent(&e);
+   }
+  duin::Input::CacheCurrentKeyState();
+            duin::Input::CacheCurrentMouseKeyState();
+          duin::Input::UpdateMouseFrameDelta();
+            gameShouldQuit = duin::EventHandler::Get().IsCloseRequested();
 
-            EngineUpdate(deltaTime);
-            Update(deltaTime);
-            EnginePostUpdate(deltaTime);
+    EngineUpdate(deltaTime);
+   Update(deltaTime);
+  EnginePostUpdate(deltaTime);
 
-            physicsCurrentTime = GetTicks();
-            physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
-            physicsAccumTime += physicsDeltaTime;
-            double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
+      physicsCurrentTime = duin::GetTicks();
+  physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
+       physicsAccumTime += physicsDeltaTime;
+   double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
             while (physicsAccumTime >= physicsTimeStep)
             {
-                physicsPreviousTime = physicsCurrentTime;
-                physicsAccumTime -= physicsTimeStep;
+      physicsPreviousTime = physicsCurrentTime;
+          physicsAccumTime -= physicsTimeStep;
 
-                physicsFrameTime = physicsTimeStep;
-                ++physicsFrameCount;
+         physicsFrameTime = physicsTimeStep;
+     ++physicsFrameCount;
 
                 EnginePhysicsUpdate(physicsDeltaTime);
-                PhysicsUpdate(physicsDeltaTime);
-                EnginePostPhysicsUpdate(physicsDeltaTime);
-            } // End of Physics
+         PhysicsUpdate(physicsDeltaTime);
+         EnginePostPhysicsUpdate(physicsDeltaTime);
+        } // End of Physics
 
             /* Skip rendering when minimized */
-            if (SDL_GetWindowFlags(sdlWindow) && e.type == SDL_WINDOW_MINIMIZED)
-            {
+          if (SDL_GetWindowFlags(sdlWindow) && e.type == SDL_WINDOW_MINIMIZED)
+         {
                 ImGui::Render();
-                DelayProcessMilli(100);
-                continue;
-            }
+             duin::DelayProcessMilli(100);
+         continue;
+     }
 
             // Update render rect on window resizing
-            int displayWidth, displayHeight;
+ int displayWidth, displayHeight;
             ::SDL_GetWindowSize(sdlWindow, &displayWidth, &displayHeight);
-            /* Skip rendering if window size is 0 */
-            if (!(displayWidth && displayHeight))
-            {
-                DelayProcessMilli(100);
-                continue;
-            }
+     /* Skip rendering if window size is 0 */
+    if (!(displayWidth && displayHeight))
+   {
+          duin::DelayProcessMilli(100);
+continue;
+    }
 
-            bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
+  bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
             bgfx::setViewRect(MAIN_DISPLAY, 0, 0, bgfx::BackbufferRatio::Equal);
-            bgfx::touch(MAIN_DISPLAY);
+        bgfx::touch(MAIN_DISPLAY);
 
-            ++renderFrameCount;
+   ++renderFrameCount;
             ::ImGui_Implbgfx_NewFrame();
-            ::ImGui_ImplSDL3_NewFrame();
+       ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
 
             if (ALLOW_DOCKING_IN_MAIN)
-            {
-                const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
-                ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
+       {
+             const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+    ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
             }
 
-            BeginDraw3D(*GetActiveCamera());
+            duin::BeginDraw3D(*duin::GetActiveCamera());
 
-            EngineDraw();
-            Draw();
+       EngineDraw();
+Draw();
             EnginePostDraw();
 
-            EngineDrawUI();
-            DrawUI();
-            EnginePostDrawUI();
+          EngineDrawUI();
+          DrawUI();
+    EnginePostDrawUI();
 
-            EndDraw3D();
+            duin::EndDraw3D();
 
             ImGui::Render();
             ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
-            ExecuteRenderPipeline();
+     duin::ExecuteRenderPipeline();
 
-            EnginePostFrame();
+ EnginePostFrame();
 
-            frameEndTime = GetTicks();
-            deltaDrawTime = frameEndTime - frameStartTime;
+  frameEndTime = duin::GetTicks();
+    deltaDrawTime = frameEndTime - frameStartTime;
 
-            if (TARGET_RENDER_FRAMERATE > 0)
+        if (TARGET_RENDER_FRAMERATE > 0)
             {
-                double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
-                waitTime = targetFrameTime - deltaDrawTime;
+      double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
+           waitTime = targetFrameTime - deltaDrawTime;
 
-                // printf("Target FT:\t %.6f\n", targetFrameTime);
-                // printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
-                // printf("waittime:\t %.6f\n", waitTime);
+       // printf("Target FT:\t %.6f\n", targetFrameTime);
+           // printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
+     // printf("waittime:\t %.6f\n", waitTime);
 
-                if (waitTime > 0.0)
-                {
-                    DelayProcess((float)waitTime);
-                }
-            }
+ if (waitTime > 0.0)
+     {
+         duin::DelayProcess((float)waitTime);
+    }
+    }
 
-            deltaTime = GetTicks() - frameStartTime;
+            deltaTime = duin::GetTicks() - frameStartTime;
             renderFrameTime = deltaTime;
 
 #ifdef DN_DEBUG
-        }
+     }
         EngineDebug();
         Debug();
         EnginePostDebug();
@@ -562,7 +560,7 @@ void Application::Run()
     Exit();
 
     DN_CORE_INFO("Shutting down Rendering dependencies...");
-    SetRenderContextAvailable(false);
+  duin::SetRenderContextAvailable(false);
 
     ::ImGui_ImplSDL3_Shutdown();
     ::ImGui_Implbgfx_Shutdown();
@@ -579,65 +577,65 @@ void Application::Run()
     ::SDL_Quit();
 }
 
-void Application::EngineInitialize()
+void duin::Application::EngineInitialize()
 {
-    EventHandler::Get().RegisterInputEventListener([this](Event e) { EngineOnEvent(e); });
-    EventHandler::Get().RegisterInputEventListener([this](Event e) { OnEvent(e); });
+  duin::EventHandler::Get().RegisterInputEventListener([this](duin::Event e) { EngineOnEvent(e); });
+    duin::EventHandler::Get().RegisterInputEventListener([this](duin::Event e) { OnEvent(e); });
 }
 
-void Application::Initialize()
-{
-}
-
-void Application::EngineReady()
+void duin::Application::Initialize()
 {
 }
 
-void Application::Ready()
+void duin::Application::EngineReady()
 {
 }
 
-void Application::EnginePostReady()
+void duin::Application::Ready()
+{
+}
+
+void duin::Application::EnginePostReady()
 {
     rootGameObject->ObjectReady();
     for (auto &callback : postReadyCallbacks)
     {
-        callback();
+      callback();
     }
 }
 
-void Application::EnginePreFrame()
+void duin::Application::EnginePreFrame()
 {
-    for (auto &callback : preFrameCallbacks)
+  for (auto &callback : preFrameCallbacks)
     {
-        callback();
+  callback();
     }
 }
 
-void Application::EngineOnEvent(Event e)
+void duin::Application::EngineOnEvent(Event e)
 {
-    if (Input::IsKeyDown(DN_KEY_ESCAPE))
+    if (duin::Input::IsKeyDown(DN_KEY_ESCAPE))
     {
-        DN_CORE_INFO("Quit event called... {}", e.sdlEvent.key.key);
-        gameShouldQuit = true;
+      DN_CORE_INFO("Quit event called... {}", e.sdlEvent.key.key);
+    gameShouldQuit = true;
     }
 
     rootGameObject->ObjectOnEvent(e);
 }
 
-void Application::OnEvent(Event e)
+void duin::Application::OnEvent(Event e)
 {
 }
 
-void Application::EngineUpdate(double delta)
+void duin::Application::EngineUpdate(double delta)
 {
 }
 
-void Application::Update(double delta)
+void duin::Application::Update(double delta)
 {
 }
 
-void Application::EnginePostUpdate(double delta)
+void duin::Application::EnginePostUpdate(double delta)
 {
     rootGameObject->ObjectUpdate(delta);
     for (auto &callback : postUpdateCallbacks)
@@ -646,15 +644,15 @@ void Application::EnginePostUpdate(double delta)
     }
 }
 
-void Application::EnginePhysicsUpdate(double delta)
+void duin::Application::EnginePhysicsUpdate(double delta)
 {
 }
 
-void Application::PhysicsUpdate(double delta)
+void duin::Application::PhysicsUpdate(double delta)
 {
 }
 
-void Application::EnginePostPhysicsUpdate(double delta)
+void duin::Application::EnginePostPhysicsUpdate(double delta)
 {
     rootGameObject->ObjectPhysicsUpdate(delta);
     for (auto &callback : postPhysicsUpdateCallbacks)
@@ -662,35 +660,35 @@ void Application::EnginePostPhysicsUpdate(double delta)
         callback(delta);
     }
 
-    PhysicsServer::Get().StepPhysics(delta);
+  duin::PhysicsServer::Get().StepPhysics(delta);
 }
 
-void Application::EngineDraw()
+void duin::Application::EngineDraw()
 {
 }
 
-void Application::Draw()
+void duin::Application::Draw()
 {
 }
 
-void Application::EnginePostDraw()
+void duin::Application::EnginePostDraw()
 {
-    rootGameObject->ObjectDraw();
+ rootGameObject->ObjectDraw();
     for (auto &callback : postDrawCallbacks)
     {
-        callback();
+  callback();
     }
 }
 
-void Application::EngineDrawUI()
+void duin::Application::EngineDrawUI()
 {
 }
 
-void Application::DrawUI()
+void duin::Application::DrawUI()
 {
 }
 
-void Application::EnginePostDrawUI()
+void duin::Application::EnginePostDrawUI()
 {
     rootGameObject->ObjectDrawUI();
     for (auto &callback : postDrawUICallbacks)
@@ -699,60 +697,76 @@ void Application::EnginePostDrawUI()
     }
 }
 
-void Application::EngineDebug()
+void duin::Application::EngineDebug()
 {
 #ifdef DN_DEBUG
-    // if (IsKeyPressed(KEY_GRAVE)) {
+  // if (IsKeyPressed(KEY_GRAVE)) {
     //     if (DebugIsGamePaused()) {
-    //         DebugResumeGame();
+    //  DebugResumeGame();
     //     } else {
     //         DebugPauseGame();
-    //     }
+    //   }
     // }
 #endif /* DN_DEBUG */
 }
 
-void Application::Debug()
+void duin::Application::Debug()
 {
 }
 
-void Application::EnginePostDebug()
+void duin::Application::EnginePostDebug()
 {
     rootGameObject->ObjectDebug();
     for (auto &callback : postDebugCallbacks)
     {
         callback();
-    }
+ }
 }
 
-void Application::EnginePostFrame()
+void duin::Application::EnginePostFrame()
 {
-    for (auto &callback : postFrameCallbacks)
+  for (auto &callback : postFrameCallbacks)
     {
-        callback();
-    }
+   callback();
+ }
 }
 
-void Application::EngineExit()
+void duin::Application::EngineExit()
 {
     for (auto &callback : exitCallbacks)
-    {
+  {
         callback();
     }
 }
 
-void Application::Exit()
+void duin::Application::Exit()
 {
 }
 
-void Application::AddChildObject(std::shared_ptr<GameObject> child)
+void duin::Application::AddChildObject(std::shared_ptr<GameObject> child)
 {
     rootGameObject->AddChildObject(child);
 }
 
-void Application::RemoveChildObject(std::shared_ptr<GameObject> child)
+void duin::Application::RemoveChildObject(std::shared_ptr<GameObject> child)
 {
-    rootGameObject->RemoveChildObject(child);
+ rootGameObject->RemoveChildObject(child);
 }
 
-} // namespace duin
+/*
+void QueuePostReadyCallback(std::function<void(void)> f);
+void QueuePostInputCallback(std::function<void(Event)> f);
+void QueuePostUpdateCallback(std::function<void(double)>);
+void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
+void QueuePostDrawCallback(std::function<void()>);
+void QueuePostDrawUICallback(std::function<void()>);
+void QueuePreFrameCallback(std::function<void()>);
+void QueuePostFrameCallback(std::function<void()>);
+void QueuePostDebugCallback(std::function<void()>);
+*/
+
+bool duin::Application::ConnectStateMachine(StateMachine &sm)
+{
+
+    return false;
+}
