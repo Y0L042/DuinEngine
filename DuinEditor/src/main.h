@@ -3,6 +3,7 @@
 #include <Duin/Core/Application.h>
 #include <Duin/Core/Events/EventsModule.h>
 #include <Duin/IO/IOModule.h>
+#include <Duin/Core/Utils/StateMachine.h>
 
 class Editor : public duin::Application
 {
@@ -21,9 +22,8 @@ class Editor : public duin::Application
     void DrawUI() override;
     void Debug() override;
 
-    static void SaveProjectEditorConfig(duin::JSONValue value);
-    static duin::JSONValue LoadProjectEditorConfig();
-
   private:
     static Editor *instance;
+
+    duin::StateMachine editorSM;
 };
