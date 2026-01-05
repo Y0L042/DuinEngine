@@ -18,8 +18,8 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     GameObject();
     virtual ~GameObject();
 
-    template <typename T, typename ...Args>
-    std::shared_ptr<T> CreateChildObject(Args&&... args)
+    template <typename T, typename... Args>
+    std::shared_ptr<T> CreateChildObject(Args &&...args)
     {
         static_assert(std::is_base_of<GameObject, T>::value, "T must be a GameObject derived class");
 
