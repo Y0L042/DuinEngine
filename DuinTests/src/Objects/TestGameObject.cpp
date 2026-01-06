@@ -122,6 +122,23 @@ class LifecycleTracker : public duin::GameObject
     std::vector<std::string> callOrder;
 };
 
+// Object that tracks signal callbacks
+class SignalTrackerObject : public duin::GameObject
+{
+  public:
+    int readySignalCount = 0;
+    int eventSignalCount = 0;
+    int updateSignalCount = 0;
+    int physicsUpdateSignalCount = 0;
+    int drawSignalCount = 0;
+    int drawUISignalCount = 0;
+    int debugSignalCount = 0;
+
+    double lastUpdateDelta = 0.0;
+    double lastPhysicsUpdateDelta = 0.0;
+    duin::Event lastEvent{};
+};
+
 namespace TestGameObject
 {
 
@@ -1415,6 +1432,902 @@ TEST_SUITE("GameObject")
 
         child->SetParent(parent);
         CHECK(child->GetParent().get() == parent.get());
+    }
+
+    // ========================================================================
+    // SIGNAL CONNECTION/DISCONNECTION TESTS
+    // ========================================================================
+
+    TEST_CASE("ConnectOnObjectReady signal is invoked")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        obj->ConnectOnObjectReady([&callCount]() { callCount++; });
+
+        obj->ObjectReady();
+
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("ConnectOnObjectUpdate signal is invoked with correct delta")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        double receivedDelta = 0.0;
+        int callCount = 0;
+
+        obj->ConnectOnObjectUpdate([&receivedDelta, &callCount](double delta) {
+            receivedDelta = delta;
+            callCount++;
+        });
+
+        obj->ObjectUpdate(0.016);
+
+        CHECK(callCount == 1);
+        CHECK(receivedDelta == doctest::Approx(0.016));
+    }
+
+    TEST_CASE("ConnectOnObjectPhysicsUpdate signal is invoked with correct delta")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        double receivedDelta = 0.0;
+        int callCount = 0;
+
+        obj->ConnectOnObjectPhysicsUpdate([&receivedDelta, &callCount](double delta) {
+            receivedDelta = delta;
+            callCount++;
+        });
+
+        obj->ObjectPhysicsUpdate(0.016);
+
+        CHECK(callCount == 1);
+        CHECK(receivedDelta == doctest::Approx(0.016));
+    }
+
+    TEST_CASE("ConnectOnObjectDraw signal is invoked")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        obj->ConnectOnObjectDraw([&callCount]() { callCount++; });
+
+        obj->ObjectDraw();
+
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("ConnectOnObjectDrawUI signal is invoked")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        obj->ConnectOnObjectDrawUI([&callCount]() { callCount++; });
+
+        obj->ObjectDrawUI();
+
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("ConnectOnObjectDebug signal is invoked")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        obj->ConnectOnObjectDebug([&callCount]() { callCount++; });
+
+        obj->ObjectDebug();
+
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("ConnectOnObjectOnEvent signal is invoked with correct event")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+        duin::Event receivedEvent{};
+
+        obj->ConnectOnObjectOnEvent([&receivedEvent, &callCount](duin::Event event) {
+            receivedEvent = event;
+            callCount++;
+        });
+
+        duin::Event testEvent{};
+        SDL_Event sdl_event;
+        SDL_zero(sdl_event);
+        sdl_event.type = SDL_EVENT_USER;
+        sdl_event.user.code = 42;
+        testEvent.sdlEvent = sdl_event;
+
+        obj->ObjectOnEvent(testEvent);
+
+        CHECK(callCount == 1);
+        CHECK(receivedEvent.sdlEvent.user.code == 42);
+    }
+
+    TEST_CASE("Multiple listeners on same signal")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount1 = 0;
+        int callCount2 = 0;
+        int callCount3 = 0;
+
+        obj->ConnectOnObjectUpdate([&callCount1](double delta) { callCount1++; });
+        obj->ConnectOnObjectUpdate([&callCount2](double delta) { callCount2++; });
+        obj->ConnectOnObjectUpdate([&callCount3](double delta) { callCount3++; });
+
+        obj->ObjectUpdate(0.016);
+
+        CHECK(callCount1 == 1);
+        CHECK(callCount2 == 1);
+        CHECK(callCount3 == 1);
+    }
+
+    TEST_CASE("Signal connection returns unique UUIDs")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+
+        auto uuid1 = obj->ConnectOnObjectUpdate([](double delta) {});
+        auto uuid2 = obj->ConnectOnObjectUpdate([](double delta) {});
+        auto uuid3 = obj->ConnectOnObjectUpdate([](double delta) {});
+
+        CHECK(uuid1 != duin::UUID::INVALID);
+        CHECK(uuid2 != duin::UUID::INVALID);
+        CHECK(uuid3 != duin::UUID::INVALID);
+        CHECK(uuid1 != uuid2);
+        CHECK(uuid2 != uuid3);
+        CHECK(uuid1 != uuid3);
+    }
+
+    TEST_CASE("Signals fire multiple times on repeated calls")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        obj->ConnectOnObjectUpdate([&callCount](double delta) { callCount++; });
+
+        obj->ObjectUpdate(0.016);
+        obj->ObjectUpdate(0.016);
+        obj->ObjectUpdate(0.016);
+
+        CHECK(callCount == 3);
+    }
+
+    TEST_CASE("DisconnectOnObjectUpdate removes listener")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectUpdate([&callCount](double delta) { callCount++; });
+
+        obj->ObjectUpdate(0.016);
+        CHECK(callCount == 1);
+
+        bool disconnected = obj->DisconnectOnObjectUpdate(uuid);
+        CHECK(disconnected);
+
+        obj->ObjectUpdate(0.016);
+        CHECK(callCount == 1); // Still 1, not incremented
+    }
+
+    TEST_CASE("DisconnectOnObjectReady removes listener")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectReady([&callCount]() { callCount++; });
+
+        obj->ObjectReady();
+        CHECK(callCount == 1);
+
+        bool disconnected = obj->DisconnectOnObjectReady(uuid);
+        CHECK(disconnected);
+
+        obj->ObjectReady();
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("DisconnectOnObjectPhysicsUpdate removes listener")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectPhysicsUpdate([&callCount](double delta) { callCount++; });
+
+        obj->ObjectPhysicsUpdate(0.016);
+        CHECK(callCount == 1);
+
+        bool disconnected = obj->DisconnectOnObjectPhysicsUpdate(uuid);
+        CHECK(disconnected);
+
+        obj->ObjectPhysicsUpdate(0.016);
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("DisconnectOnObjectDraw removes listener")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectDraw([&callCount]() { callCount++; });
+
+        obj->ObjectDraw();
+        CHECK(callCount == 1);
+
+        bool disconnected = obj->DisconnectOnObjectDraw(uuid);
+        CHECK(disconnected);
+
+        obj->ObjectDraw();
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("DisconnectOnObjectDrawUI removes listener")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectDrawUI([&callCount]() { callCount++; });
+
+        obj->ObjectDrawUI();
+        CHECK(callCount == 1);
+
+        bool disconnected = obj->DisconnectOnObjectDrawUI(uuid);
+        CHECK(disconnected);
+
+        obj->ObjectDrawUI();
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("DisconnectOnObjectDebug removes listener")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectDebug([&callCount]() { callCount++; });
+
+        obj->ObjectDebug();
+        CHECK(callCount == 1);
+
+        bool disconnected = obj->DisconnectOnObjectDebug(uuid);
+        CHECK(disconnected);
+
+        obj->ObjectDebug();
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("DisconnectOnObjectOnEvent removes listener")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectOnEvent([&callCount](duin::Event event) { callCount++; });
+
+        duin::Event testEvent{};
+        obj->ObjectOnEvent(testEvent);
+        CHECK(callCount == 1);
+
+        bool disconnected = obj->DisconnectOnObjectOnEvent(uuid);
+        CHECK(disconnected);
+
+        obj->ObjectOnEvent(testEvent);
+        CHECK(callCount == 1);
+    }
+
+    TEST_CASE("Disconnect returns false for invalid UUID")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+
+        bool result = obj->DisconnectOnObjectUpdate(duin::UUID::INVALID);
+        CHECK_FALSE(result);
+    }
+
+    TEST_CASE("Disconnect returns false for non-existent UUID")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+
+        duin::UUID fakeUUID;
+        bool result = obj->DisconnectOnObjectUpdate(fakeUUID);
+        CHECK_FALSE(result);
+    }
+
+    TEST_CASE("Multiple disconnect attempts on same UUID")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        auto uuid = obj->ConnectOnObjectUpdate([&callCount](double delta) { callCount++; });
+
+        bool firstDisconnect = obj->DisconnectOnObjectUpdate(uuid);
+        CHECK(firstDisconnect);
+
+        bool secondDisconnect = obj->DisconnectOnObjectUpdate(uuid);
+        CHECK_FALSE(secondDisconnect);
+    }
+
+    TEST_CASE("Disconnect specific listener among multiple listeners")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount1 = 0;
+        int callCount2 = 0;
+        int callCount3 = 0;
+
+        auto uuid1 = obj->ConnectOnObjectUpdate([&callCount1](double delta) { callCount1++; });
+        auto uuid2 = obj->ConnectOnObjectUpdate([&callCount2](double delta) { callCount2++; });
+        auto uuid3 = obj->ConnectOnObjectUpdate([&callCount3](double delta) { callCount3++; });
+
+        obj->ObjectUpdate(0.016);
+        CHECK(callCount1 == 1);
+        CHECK(callCount2 == 1);
+        CHECK(callCount3 == 1);
+
+        obj->DisconnectOnObjectUpdate(uuid2);
+
+        obj->ObjectUpdate(0.016);
+        CHECK(callCount1 == 2);
+        CHECK(callCount2 == 1); // Still 1
+        CHECK(callCount3 == 2);
+    }
+
+    TEST_CASE("ConnectAllSignals connects all 7 signals")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int readyCount = 0;
+        int eventCount = 0;
+        int updateCount = 0;
+        int physicsCount = 0;
+        int drawCount = 0;
+        int drawUICount = 0;
+        int debugCount = 0;
+
+        auto connections = obj->ConnectAllSignals(
+            [&readyCount]() { readyCount++; }, [&eventCount](duin::Event e) { eventCount++; },
+            [&updateCount](double d) { updateCount++; }, [&physicsCount](double d) { physicsCount++; },
+            [&drawCount]() { drawCount++; }, [&drawUICount]() { drawUICount++; }, [&debugCount]() { debugCount++; });
+
+        obj->ObjectReady();
+        obj->ObjectOnEvent(duin::Event{});
+        obj->ObjectUpdate(0.016);
+        obj->ObjectPhysicsUpdate(0.016);
+        obj->ObjectDraw();
+        obj->ObjectDrawUI();
+        obj->ObjectDebug();
+
+        CHECK(readyCount == 1);
+        CHECK(eventCount == 1);
+        CHECK(updateCount == 1);
+        CHECK(physicsCount == 1);
+        CHECK(drawCount == 1);
+        CHECK(drawUICount == 1);
+        CHECK(debugCount == 1);
+    }
+
+    TEST_CASE("ConnectAllSignals returns valid UUIDs in SignalConnections")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+
+        auto connections = obj->ConnectAllSignals([]() {}, [](duin::Event e) {}, [](double d) {}, [](double d) {},
+                                                  []() {}, []() {}, []() {});
+
+        CHECK(connections.onReady != duin::UUID::INVALID);
+        CHECK(connections.onEvent != duin::UUID::INVALID);
+        CHECK(connections.onUpdate != duin::UUID::INVALID);
+        CHECK(connections.onPhysicsUpdate != duin::UUID::INVALID);
+        CHECK(connections.onDraw != duin::UUID::INVALID);
+        CHECK(connections.onDrawUI != duin::UUID::INVALID);
+        CHECK(connections.onDebug != duin::UUID::INVALID);
+
+        // All UUIDs should be unique
+        CHECK(connections.onReady != connections.onEvent);
+        CHECK(connections.onUpdate != connections.onPhysicsUpdate);
+    }
+
+    TEST_CASE("DisconnectAllSignals disconnects all 7 signals")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int readyCount = 0;
+        int eventCount = 0;
+        int updateCount = 0;
+        int physicsCount = 0;
+        int drawCount = 0;
+        int drawUICount = 0;
+        int debugCount = 0;
+
+        auto connections = obj->ConnectAllSignals(
+            [&readyCount]() { readyCount++; }, [&eventCount](duin::Event e) { eventCount++; },
+            [&updateCount](double d) { updateCount++; }, [&physicsCount](double d) { physicsCount++; },
+            [&drawCount]() { drawCount++; }, [&drawUICount]() { drawUICount++; }, [&debugCount]() { debugCount++; });
+
+        obj->ObjectReady();
+        CHECK(readyCount == 1);
+
+        obj->DisconnectAllSignals(connections);
+
+        obj->ObjectReady();
+        obj->ObjectOnEvent(duin::Event{});
+        obj->ObjectUpdate(0.016);
+        obj->ObjectPhysicsUpdate(0.016);
+        obj->ObjectDraw();
+        obj->ObjectDrawUI();
+        obj->ObjectDebug();
+
+        // All counts should still be their initial values (not incremented after disconnect)
+        CHECK(readyCount == 1);
+        CHECK(eventCount == 0);
+        CHECK(updateCount == 0);
+        CHECK(physicsCount == 0);
+        CHECK(drawCount == 0);
+        CHECK(drawUICount == 0);
+        CHECK(debugCount == 0);
+    }
+
+    // ========================================================================
+    // ENABLE/DISABLE TESTS
+    // ========================================================================
+
+    TEST_CASE("EnableUpdate controls Update execution")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        obj->ObjectUpdate(0.016);
+        CHECK(obj->updateCalls == 1);
+
+        obj->EnableUpdate(false);
+        obj->ObjectUpdate(0.016);
+        CHECK(obj->updateCalls == 1); // Still 1, not incremented
+
+        obj->EnableUpdate(true);
+        obj->ObjectUpdate(0.016);
+        CHECK(obj->updateCalls == 2);
+    }
+
+    TEST_CASE("EnablePhysicsUpdate controls PhysicsUpdate execution")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        obj->ObjectPhysicsUpdate(0.016);
+        CHECK(obj->physicsUpdateCalls == 1);
+
+        obj->EnablePhysicsUpdate(false);
+        obj->ObjectPhysicsUpdate(0.016);
+        CHECK(obj->physicsUpdateCalls == 1);
+
+        obj->EnablePhysicsUpdate(true);
+        obj->ObjectPhysicsUpdate(0.016);
+        CHECK(obj->physicsUpdateCalls == 2);
+    }
+
+    TEST_CASE("EnableDraw controls Draw execution")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        obj->ObjectDraw();
+        CHECK(obj->drawCalls == 1);
+
+        obj->EnableDraw(false);
+        obj->ObjectDraw();
+        CHECK(obj->drawCalls == 1);
+
+        obj->EnableDraw(true);
+        obj->ObjectDraw();
+        CHECK(obj->drawCalls == 2);
+    }
+
+    TEST_CASE("EnableDrawUI controls DrawUI execution")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        obj->ObjectDrawUI();
+        CHECK(obj->drawUICalls == 1);
+
+        obj->EnableDrawUI(false);
+        obj->ObjectDrawUI();
+        CHECK(obj->drawUICalls == 1);
+
+        obj->EnableDrawUI(true);
+        obj->ObjectDrawUI();
+        CHECK(obj->drawUICalls == 2);
+    }
+
+    TEST_CASE("EnableDebug controls Debug execution")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        obj->ObjectDebug();
+        CHECK(obj->debugCalls == 1);
+
+        obj->EnableDebug(false);
+        obj->ObjectDebug();
+        CHECK(obj->debugCalls == 1);
+
+        obj->EnableDebug(true);
+        obj->ObjectDebug();
+        CHECK(obj->debugCalls == 2);
+    }
+
+    TEST_CASE("EnableOnEvent controls OnEvent execution")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        duin::Event testEvent{};
+        obj->ObjectOnEvent(testEvent);
+        CHECK(obj->eventCalls == 1);
+
+        obj->EnableOnEvent(false);
+        obj->ObjectOnEvent(testEvent);
+        CHECK(obj->eventCalls == 1);
+
+        obj->EnableOnEvent(true);
+        obj->ObjectOnEvent(testEvent);
+        CHECK(obj->eventCalls == 2);
+    }
+
+    TEST_CASE("Master Enable disables all functions")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        obj->Enable(false);
+
+        duin::Event testEvent{};
+        obj->ObjectOnEvent(testEvent);
+        obj->ObjectUpdate(0.016);
+        obj->ObjectPhysicsUpdate(0.016);
+        obj->ObjectDraw();
+        obj->ObjectDrawUI();
+        obj->ObjectDebug();
+
+        CHECK(obj->eventCalls == 0);
+        CHECK(obj->updateCalls == 0);
+        CHECK(obj->physicsUpdateCalls == 0);
+        CHECK(obj->drawCalls == 0);
+        CHECK(obj->drawUICalls == 0);
+        CHECK(obj->debugCalls == 0);
+    }
+
+    TEST_CASE("Master Enable re-enables all functions")
+    {
+        auto obj = std::make_shared<TestObjectA>();
+
+        obj->Enable(false);
+        obj->Enable(true);
+
+        duin::Event testEvent{};
+        obj->ObjectOnEvent(testEvent);
+        obj->ObjectUpdate(0.016);
+        obj->ObjectPhysicsUpdate(0.016);
+        obj->ObjectDraw();
+        obj->ObjectDrawUI();
+        obj->ObjectDebug();
+
+        CHECK(obj->eventCalls == 1);
+        CHECK(obj->updateCalls == 1);
+        CHECK(obj->physicsUpdateCalls == 1);
+        CHECK(obj->drawCalls == 1);
+        CHECK(obj->drawUICalls == 1);
+        CHECK(obj->debugCalls == 1);
+    }
+
+    TEST_CASE("Disabled parent prevents children execution")
+    {
+        auto parent = std::make_shared<TestObjectA>();
+        auto child = parent->CreateChildObject<TestObjectA>();
+
+        parent->EnableUpdate(false);
+        parent->ObjectUpdate(0.016);
+
+        CHECK(parent->updateCalls == 0);
+        CHECK(child->updateCalls == 0);
+    }
+
+    TEST_CASE("Disabled child does not affect parent execution")
+    {
+        auto parent = std::make_shared<TestObjectA>();
+        auto child = parent->CreateChildObject<TestObjectA>();
+
+        child->EnableUpdate(false);
+        parent->ObjectUpdate(0.016);
+
+        CHECK(parent->updateCalls == 1);
+        CHECK(child->updateCalls == 0);
+    }
+
+    TEST_CASE("Signal does not fire when function is disabled")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int signalCount = 0;
+
+        obj->ConnectOnObjectUpdate([&signalCount](double delta) { signalCount++; });
+
+        obj->ObjectUpdate(0.016);
+        CHECK(signalCount == 1);
+
+        obj->EnableUpdate(false);
+        obj->ObjectUpdate(0.016);
+        CHECK(signalCount == 1); // Still 1, signal didn't fire
+
+        obj->EnableUpdate(true);
+        obj->ObjectUpdate(0.016);
+        CHECK(signalCount == 2);
+    }
+
+    // ========================================================================
+    // NESTED GAMEOBJECT SIGNAL TESTS
+    // ========================================================================
+
+    TEST_CASE("Signal propagation through parent-child hierarchy")
+    {
+        auto parent = std::make_shared<SignalTrackerObject>();
+        auto child = parent->CreateChildObject<SignalTrackerObject>();
+
+        int parentSignalCount = 0;
+        int childSignalCount = 0;
+
+        parent->ConnectOnObjectUpdate([&parentSignalCount](double delta) { parentSignalCount++; });
+        child->ConnectOnObjectUpdate([&childSignalCount](double delta) { childSignalCount++; });
+
+        parent->ObjectUpdate(0.016);
+
+        CHECK(parentSignalCount == 1);
+        CHECK(childSignalCount == 1);
+    }
+
+    TEST_CASE("Signal emission order - children fire before parent")
+    {
+        auto parent = std::make_shared<SignalTrackerObject>();
+        auto child = parent->CreateChildObject<SignalTrackerObject>();
+
+        std::vector<std::string> order;
+
+        parent->ConnectOnObjectUpdate([&order](double delta) { order.push_back("parent"); });
+        child->ConnectOnObjectUpdate([&order](double delta) { order.push_back("child"); });
+
+        parent->ObjectUpdate(0.016);
+
+        CHECK(order.size() == 2);
+        CHECK(order[0] == "child");
+        CHECK(order[1] == "parent");
+    }
+
+    TEST_CASE("Deep hierarchy signal propagation - 3 levels")
+    {
+        auto root = std::make_shared<SignalTrackerObject>();
+        auto child = root->CreateChildObject<SignalTrackerObject>();
+        auto grandchild = child->CreateChildObject<SignalTrackerObject>();
+
+        int rootCount = 0;
+        int childCount = 0;
+        int grandchildCount = 0;
+
+        root->ConnectOnObjectUpdate([&rootCount](double delta) { rootCount++; });
+        child->ConnectOnObjectUpdate([&childCount](double delta) { childCount++; });
+        grandchild->ConnectOnObjectUpdate([&grandchildCount](double delta) { grandchildCount++; });
+
+        root->ObjectUpdate(0.016);
+
+        CHECK(rootCount == 1);
+        CHECK(childCount == 1);
+        CHECK(grandchildCount == 1);
+    }
+
+    TEST_CASE("Deep hierarchy signal emission order")
+    {
+        auto root = std::make_shared<SignalTrackerObject>();
+        auto child = root->CreateChildObject<SignalTrackerObject>();
+        auto grandchild = child->CreateChildObject<SignalTrackerObject>();
+
+        std::vector<std::string> order;
+
+        root->ConnectOnObjectUpdate([&order](double delta) { order.push_back("root"); });
+        child->ConnectOnObjectUpdate([&order](double delta) { order.push_back("child"); });
+        grandchild->ConnectOnObjectUpdate([&order](double delta) { order.push_back("grandchild"); });
+
+        root->ObjectUpdate(0.016);
+
+        CHECK(order.size() == 3);
+        CHECK(order[0] == "grandchild");
+        CHECK(order[1] == "child");
+        CHECK(order[2] == "root");
+    }
+
+    TEST_CASE("Nested GameObjects with mixed enabled/disabled states")
+    {
+        auto parent = std::make_shared<TestObjectA>();
+        auto child1 = parent->CreateChildObject<TestObjectA>();
+        auto child2 = parent->CreateChildObject<TestObjectA>();
+
+        child1->EnableUpdate(false);
+
+        parent->ObjectUpdate(0.016);
+
+        CHECK(parent->updateCalls == 1);
+        CHECK(child1->updateCalls == 0);
+        CHECK(child2->updateCalls == 1);
+    }
+
+    TEST_CASE("Nested signals with enable/disable combination")
+    {
+        auto parent = std::make_shared<SignalTrackerObject>();
+        auto child = parent->CreateChildObject<SignalTrackerObject>();
+
+        int parentSignalCount = 0;
+        int childSignalCount = 0;
+
+        parent->ConnectOnObjectUpdate([&parentSignalCount](double delta) { parentSignalCount++; });
+        child->ConnectOnObjectUpdate([&childSignalCount](double delta) { childSignalCount++; });
+
+        parent->ObjectUpdate(0.016);
+        CHECK(parentSignalCount == 1);
+        CHECK(childSignalCount == 1);
+
+        child->EnableUpdate(false);
+        parent->ObjectUpdate(0.016);
+        CHECK(parentSignalCount == 2);
+        CHECK(childSignalCount == 1); // Child signal doesn't fire when disabled
+
+        parent->EnableUpdate(false);
+        parent->ObjectUpdate(0.016);
+        CHECK(parentSignalCount == 2); // Neither fires
+        CHECK(childSignalCount == 1);
+    }
+
+    TEST_CASE("Multiple children with signals")
+    {
+        auto parent = std::make_shared<SignalTrackerObject>();
+        auto child1 = parent->CreateChildObject<SignalTrackerObject>();
+        auto child2 = parent->CreateChildObject<SignalTrackerObject>();
+        auto child3 = parent->CreateChildObject<SignalTrackerObject>();
+
+        int parentCount = 0;
+        int child1Count = 0;
+        int child2Count = 0;
+        int child3Count = 0;
+
+        parent->ConnectOnObjectUpdate([&parentCount](double delta) { parentCount++; });
+        child1->ConnectOnObjectUpdate([&child1Count](double delta) { child1Count++; });
+        child2->ConnectOnObjectUpdate([&child2Count](double delta) { child2Count++; });
+        child3->ConnectOnObjectUpdate([&child3Count](double delta) { child3Count++; });
+
+        parent->ObjectUpdate(0.016);
+
+        CHECK(parentCount == 1);
+        CHECK(child1Count == 1);
+        CHECK(child2Count == 1);
+        CHECK(child3Count == 1);
+    }
+
+    // ========================================================================
+    // EDGE CASES AND STRESS TESTS
+    // ========================================================================
+
+    TEST_CASE("Rapid connect/disconnect operations")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int callCount = 0;
+
+        for (int i = 0; i < 100; ++i)
+        {
+            auto uuid = obj->ConnectOnObjectUpdate([&callCount](double delta) { callCount++; });
+            obj->DisconnectOnObjectUpdate(uuid);
+        }
+
+        obj->ObjectUpdate(0.016);
+        CHECK(callCount == 0); // All disconnected
+    }
+
+    TEST_CASE("Many listeners on single signal")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        std::vector<int> callCounts(100, 0);
+
+        for (int i = 0; i < 100; ++i)
+        {
+            obj->ConnectOnObjectUpdate([&callCounts, i](double delta) { callCounts[i]++; });
+        }
+
+        obj->ObjectUpdate(0.016);
+
+        for (int i = 0; i < 100; ++i)
+        {
+            CHECK(callCounts[i] == 1);
+        }
+    }
+
+    TEST_CASE("Deep nesting with signals - 50 levels")
+    {
+        auto root = std::make_shared<SignalTrackerObject>();
+        std::shared_ptr<SignalTrackerObject> current = root;
+        std::vector<int> callCounts(50, 0);
+
+        for (int i = 0; i < 50; ++i)
+        {
+            auto next = current->CreateChildObject<SignalTrackerObject>();
+            next->ConnectOnObjectUpdate([&callCounts, i](double delta) { callCounts[i]++; });
+            current = next;
+        }
+
+        root->ObjectUpdate(0.016);
+
+        for (int i = 0; i < 50; ++i)
+        {
+            CHECK(callCounts[i] == 1);
+        }
+    }
+
+    TEST_CASE("Signal with reparenting")
+    {
+        auto parent1 = std::make_shared<SignalTrackerObject>();
+        auto parent2 = std::make_shared<SignalTrackerObject>();
+        auto child = parent1->CreateChildObject<SignalTrackerObject>();
+
+        int childSignalCount = 0;
+        child->ConnectOnObjectUpdate([&childSignalCount](double delta) { childSignalCount++; });
+
+        parent1->ObjectUpdate(0.016);
+        CHECK(childSignalCount == 1);
+
+        parent1->TransferChildObject(child, parent2);
+
+        parent1->ObjectUpdate(0.016);
+        CHECK(childSignalCount == 1); // Not updated through parent1 anymore
+
+        parent2->ObjectUpdate(0.016);
+        CHECK(childSignalCount == 2); // Updated through parent2
+    }
+
+    TEST_CASE("All signals fire on nested hierarchy")
+    {
+        auto parent = std::make_shared<SignalTrackerObject>();
+        auto child = parent->CreateChildObject<SignalTrackerObject>();
+
+        int parentReady = 0, childReady = 0;
+        int parentUpdate = 0, childUpdate = 0;
+        int parentDraw = 0, childDraw = 0;
+
+        parent->ConnectOnObjectReady([&parentReady]() { parentReady++; });
+        child->ConnectOnObjectReady([&childReady]() { childReady++; });
+
+        parent->ConnectOnObjectUpdate([&parentUpdate](double d) { parentUpdate++; });
+        child->ConnectOnObjectUpdate([&childUpdate](double d) { childUpdate++; });
+
+        parent->ConnectOnObjectDraw([&parentDraw]() { parentDraw++; });
+        child->ConnectOnObjectDraw([&childDraw]() { childDraw++; });
+
+        parent->ObjectReady();
+        parent->ObjectUpdate(0.016);
+        parent->ObjectDraw();
+
+        CHECK(parentReady == 1);
+        CHECK(childReady == 1);
+        CHECK(parentUpdate == 1);
+        CHECK(childUpdate == 1);
+        CHECK(parentDraw == 1);
+        CHECK(childDraw == 1);
+    }
+
+    TEST_CASE("DisconnectAllSignals with partial manual disconnections")
+    {
+        auto obj = std::make_shared<SignalTrackerObject>();
+        int readyCount = 0, updateCount = 0, drawCount = 0;
+
+        auto connections = obj->ConnectAllSignals([&readyCount]() { readyCount++; }, [](duin::Event e) {},
+                                                  [&updateCount](double d) { updateCount++; }, [](double d) {},
+                                                  [&drawCount]() { drawCount++; }, []() {}, []() {});
+
+        obj->DisconnectOnObjectUpdate(connections.onUpdate);
+
+        obj->ObjectReady();
+        obj->ObjectUpdate(0.016);
+        obj->ObjectDraw();
+
+        CHECK(readyCount == 1);
+        CHECK(updateCount == 0); // Already disconnected
+        CHECK(drawCount == 1);
+
+        obj->DisconnectAllSignals(connections);
+
+        obj->ObjectReady();
+        obj->ObjectDraw();
+
+        CHECK(readyCount == 1); // No longer increments
+        CHECK(drawCount == 1);  // No longer increments
     }
 }
 } // namespace TestGameObject
