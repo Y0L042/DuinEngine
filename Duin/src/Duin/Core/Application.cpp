@@ -7,7 +7,6 @@
 #include "Duin/Core/Events/Input.h"
 #include "Duin/Physics/PhysicsModule.h"
 #include "Duin/Render/Renderer.h"
-#include "Duin/Core/Utils/StateMachine.h"
 
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -750,23 +749,6 @@ void duin::Application::AddChildObject(std::shared_ptr<GameObject> child)
 
 void duin::Application::RemoveChildObject(std::shared_ptr<GameObject> child)
 {
- rootGameObject->RemoveChildObject(child);
+    rootGameObject->RemoveChildObject(child);
 }
 
-/*
-void QueuePostReadyCallback(std::function<void(void)> f);
-void QueuePostInputCallback(std::function<void(Event)> f);
-void QueuePostUpdateCallback(std::function<void(double)>);
-void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
-void QueuePostDrawCallback(std::function<void()>);
-void QueuePostDrawUICallback(std::function<void()>);
-void QueuePreFrameCallback(std::function<void()>);
-void QueuePostFrameCallback(std::function<void()>);
-void QueuePostDebugCallback(std::function<void()>);
-*/
-
-bool duin::Application::ConnectStateMachine(StateMachine &sm)
-{
-
-    return false;
-}

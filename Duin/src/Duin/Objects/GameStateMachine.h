@@ -1,0 +1,246 @@
+#pragma once
+
+#include <stack>
+#include <string>
+#include <memory>
+#include <functional>
+
+#include "Duin/Core/Utils/UUID.h"
+#include "Duin/Core/Events/Event.h"
+#include "Duin/Objects/GameObject.h"
+
+#include <assert.h>
+
+namespace duin
+{
+class GameStateMachine;
+class GameState;
+
+class GameStateMachine : public GameObject
+{
+  public:
+    GameStateMachine();
+    ~GameStateMachine();
+
+    UUID GetUUID();
+
+    template <typename T>
+    T *GetActiveState()
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        if (!stateStack.empty())
+        {
+            if (dynamic_cast<T *>(stateStack.top().get()) == nullptr)
+            {
+                return nullptr;
+            }; // Ensure top state is of type T
+            return static_cast<T *>(stateStack.top().get());
+        }
+        return nullptr;
+    }
+
+    template <typename T>
+    T *SwitchState()
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        if (!stateStack.empty())
+        {
+            stateStack.top()->StateExit();
+            if (!stateStack.empty())
+            {
+                stateStack.pop();
+            }
+        }
+        auto newState = std::make_unique<T>(*this);
+        T *ptr = newState.get();
+        stateStack.emplace(std::move(newState));
+        stateStack.top()->StateEnter();
+
+        return ptr;
+    }
+
+    template <typename T>
+    T *FlushAndSwitchState()
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        while (!stateStack.empty())
+        {
+            stateStack.top()->StateExit();
+            if (!stateStack.empty())
+            {
+                stateStack.pop();
+            }
+        }
+        auto newState = std::make_unique<T>(*this);
+        T *ptr = newState.get();
+        stateStack.emplace(std::move(newState));
+        stateStack.top()->StateEnter();
+
+        return ptr;
+    }
+
+    template <typename T>
+    T *PushState()
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        if (!stateStack.empty())
+        {
+            stateStack.top()->StateSetPause();
+        }
+
+        auto newState = std::make_unique<T>(*this);
+        T *ptr = newState.get();
+        stateStack.emplace(std::move(newState));
+        stateStack.top()->StateEnter();
+
+        return ptr;
+    }
+
+    void PopState();
+
+    void FlushStack();
+    std::stack<std::unique_ptr<GameState>> &GetStateStack();
+
+    virtual void Init() override;
+    virtual void Ready() override;
+    virtual void OnEvent(Event e) override;
+    virtual void Update(double delta) override;
+    virtual void PhysicsUpdate(double delta) override;
+    virtual void Draw() override;
+    virtual void DrawUI() override;
+    virtual void Debug() override;
+
+  private:
+    std::stack<std::unique_ptr<GameState>> stateStack;
+};
+
+class GameState
+{
+  public:
+    GameState(GameStateMachine &owner);
+    virtual ~GameState() = default;
+
+    void StateEnter();
+    void StateOnEvent(Event e);
+    void StateUpdate(double delta);
+    void StatePhysicsUpdate(double delta);
+    void StateDraw();
+    void StateDrawUI();
+    void StateExit();
+
+    void StateSetPause();
+    void StateSetUnpause();
+
+    virtual void Enter() {};
+    virtual void OnEvent(Event e) {};
+    virtual void Update(double delta) {};
+    virtual void PhysicsUpdate(double delta) {};
+    virtual void Draw() {};
+    virtual void DrawUI() {};
+    virtual void Exit() {};
+
+    virtual void SetPause() {};
+    virtual void SetUnpause() {};
+
+    template <typename T>
+    T *SwitchState()
+    {
+        return owner.template SwitchState<T>();
+    }
+
+    template <typename T>
+    T *FlushAndSwitchState()
+    {
+        return owner.template FlushAndSwitchState<T>();
+    }
+
+    template <typename T>
+    T *PushState()
+    {
+        return owner.template PushState<T>();
+    }
+
+    void PopState();
+    void FlushStack();
+
+    bool IsEqualTo(GameState *other);
+
+    template <typename T, typename... Args>
+    std::shared_ptr<T> CreateChildObject(Args... args)
+    {
+        return stateGameObject->template CreateChildObject<T>(std::forward<Args>(args)...);
+    }
+    void AddChildObject(std::shared_ptr<GameObject> child);
+    void RemoveChildObject(std::shared_ptr<GameObject> child);
+
+    // Signal connection functions
+    UUID ConnectOnStateEnter(std::function<void()> callback);
+    UUID ConnectOnStateOnEvent(std::function<void(Event)> callback);
+    UUID ConnectOnStateUpdate(std::function<void(double)> callback);
+    UUID ConnectOnStatePhysicsUpdate(std::function<void(double)> callback);
+    UUID ConnectOnStateDraw(std::function<void()> callback);
+    UUID ConnectOnStateDrawUI(std::function<void()> callback);
+    UUID ConnectOnStateExit(std::function<void()> callback);
+
+    // Signal disconnection functions
+    bool DisconnectOnStateEnter(UUID uuid);
+    bool DisconnectOnStateOnEvent(UUID uuid);
+    bool DisconnectOnStateUpdate(UUID uuid);
+    bool DisconnectOnStatePhysicsUpdate(UUID uuid);
+    bool DisconnectOnStateDraw(UUID uuid);
+    bool DisconnectOnStateDrawUI(UUID uuid);
+    bool DisconnectOnStateExit(UUID uuid);
+
+    SignalConnections ConnectAllSignals(std::function<void()> onEnter, std::function<void(Event)> onEvent,
+                                        std::function<void(double)> onUpdate,
+                                        std::function<void(double)> onPhysicsUpdate, std::function<void()> onDraw,
+                                        std::function<void()> onDrawUI, std::function<void()> onExit);
+
+    void DisconnectAllSignals(const SignalConnections &connections);
+
+    void Enable(bool enable);
+    void EnableOnEvent(bool enable);
+    void EnableUpdate(bool enable);
+    void EnablePhysicsUpdate(bool enable);
+    void EnableDraw(bool enable);
+    void EnableDrawUI(bool enable);
+
+    UUID GetUUID();
+    GameStateMachine &GetOwner();
+
+    const std::string GetName();
+
+    bool operator==(const GameState &state) const
+    {
+        return this->uuid == state.uuid;
+    }
+
+    bool operator!=(const GameState &state) const
+    {
+        return this->uuid != state.uuid;
+    }
+
+  protected:
+    UUID uuid;
+    std::string stateName;
+    GameStateMachine &owner;
+    std::shared_ptr<GameObject> stateGameObject;
+
+    // Signals emit after main functions called
+    Signal<> OnStateEnter;
+    Signal<Event> OnStateOnEvent;
+    Signal<double> OnStateUpdate;
+    Signal<double> OnStatePhysicsUpdate;
+    Signal<> OnStateDraw;
+    Signal<> OnStateDrawUI;
+    Signal<> OnStateExit;
+
+  private:
+    bool onEventEnabled = true;
+    bool updateEnabled = true;
+    bool physicsUpdateEnabled = true;
+    bool drawEnabled = true;
+    bool drawUIEnabled = true;
+};
+
+} // namespace duin

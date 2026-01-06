@@ -8,4 +8,3 @@
 #include "UUID.h"
 #include "SerialisationManager.h"
 #include "LookupVector.h"
-#include "StateMachine.h"

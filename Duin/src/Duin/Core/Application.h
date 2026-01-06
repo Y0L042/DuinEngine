@@ -7,6 +7,7 @@
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Events/Event.h"
 #include "Duin/Objects/GameObject.h"
+#include "Duin/Core/Signals/SignalsModule.h"
 
 namespace duin
 {
@@ -56,7 +57,6 @@ void QueuePostDebugCallback(std::function<void()>);
 
 void QueueExitCallback(std::function<void()>);
 
-class StateMachine;
 class DAPI Application
 {
   public:
@@ -114,8 +114,6 @@ class DAPI Application
     }
     void AddChildObject(std::shared_ptr<GameObject> child);
     void RemoveChildObject(std::shared_ptr<GameObject> child);
-
-    bool ConnectStateMachine(StateMachine& sm);
 
   private:
     std::string windowName = "Game";

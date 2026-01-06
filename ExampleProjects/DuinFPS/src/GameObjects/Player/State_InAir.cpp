@@ -10,7 +10,7 @@
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
-duin::StateMachine inAirStateMachine;
+duin::GameStateMachine inAirStateMachine;
 
 void State_InAir::Enter()
 {

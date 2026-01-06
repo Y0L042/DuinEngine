@@ -3,11 +3,11 @@
 #include <Duin/Core/Utils/StateMachine.h>
 #include <Duin/Core/Events/EventsModule.h>
 
-class State_OnGround : public duin::State
+class State_OnGround : public duin::GameState
 {
     public:
-		State_OnGround(duin::StateMachine& owner)
-			: State(owner)
+		State_OnGround(duin::GameStateMachine& owner)
+			: GameState(owner)
 		{
 			stateName = "State_OnGround";
 		}

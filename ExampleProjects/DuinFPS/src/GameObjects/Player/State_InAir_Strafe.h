@@ -3,11 +3,11 @@
 #include <Duin/Core/Utils/StateMachine.h>
 #include <Duin/Core/Events/EventsModule.h>
 
-class State_InAir_Strafe : public duin::State
+class State_InAir_Strafe : public duin::GameState
 {
     public:
-		State_InAir_Strafe(duin::StateMachine& owner)
-			: State(owner)
+		State_InAir_Strafe(duin::GameStateMachine& owner)
+			: GameState(owner)
 		{
 			stateName = "State_InAir_Strafe";
 		}

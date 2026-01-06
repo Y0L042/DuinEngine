@@ -10,7 +10,7 @@
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
-duin::StateMachine onGroundStateMachine;
+duin::GameStateMachine onGroundStateMachine;
 
 void State_OnGround::Enter()
 {

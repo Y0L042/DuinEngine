@@ -13,7 +13,7 @@ flecs::entity cameraRoot;
 flecs::entity playerCamera;
 
 flecs::ref<duin::Camera> cameraRef;
-duin::StateMachine playerStateMachine;
+duin::GameStateMachine playerStateMachine;
 
 void Player::Ready()
 {

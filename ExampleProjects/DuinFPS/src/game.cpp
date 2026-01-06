@@ -16,7 +16,7 @@ duin::Application *duin::CreateApplication()
 duin::DebugConsole debugConsole;
 duin::DebugWatchlist debugWatchlist;
 
-duin::StateMachine mainStateMachine;
+duin::GameStateMachine mainStateMachine;
 
 void Game::Initialize()
 {

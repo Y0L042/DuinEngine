@@ -2,6 +2,7 @@
 
 #include "Duin/Core/Utils/UUID.h"
 #include "Duin/Core/Events/Event.h"
+#include "Duin/Core/Signals/SignalsModule.h"
 
 #include <vector>
 #include <memory>
@@ -11,6 +12,7 @@
 
 namespace duin
 {
+class GameStateMachine;
 class ObjectManager;
 class GameObject : public std::enable_shared_from_this<GameObject>
 {
@@ -42,6 +44,31 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 
     std::shared_ptr<GameObject> GetParent();
 
+    // Signal connection functions
+    UUID ConnectOnObjectReady(std::function<void()> callback);
+    UUID ConnectOnObjectOnEvent(std::function<void(Event)> callback);
+    UUID ConnectOnObjectUpdate(std::function<void(double)> callback);
+    UUID ConnectOnObjectPhysicsUpdate(std::function<void(double)> callback);
+    UUID ConnectOnObjectDraw(std::function<void()> callback);
+    UUID ConnectOnObjectDrawUI(std::function<void()> callback);
+    UUID ConnectOnObjectDebug(std::function<void()> callback);
+
+    // Signal disconnection functions
+    bool DisconnectOnObjectReady(UUID uuid);
+    bool DisconnectOnObjectOnEvent(UUID uuid);
+    bool DisconnectOnObjectUpdate(UUID uuid);
+    bool DisconnectOnObjectPhysicsUpdate(UUID uuid);
+    bool DisconnectOnObjectDraw(UUID uuid);
+    bool DisconnectOnObjectDrawUI(UUID uuid);
+    bool DisconnectOnObjectDebug(UUID uuid);
+
+    SignalConnections ConnectAllSignals(std::function<void()> onReady, std::function<void(Event)> onEvent,
+                                        std::function<void(double)> onUpdate,
+                                        std::function<void(double)> onPhysicsUpdate, std::function<void()> onDraw,
+                                        std::function<void()> onDrawUI, std::function<void()> onDebug);
+
+    void DisconnectAllSignals(const SignalConnections &connections);
+
     virtual void Init();
     virtual void Ready();
     virtual void OnEvent(Event e);
@@ -50,6 +77,14 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     virtual void Draw();
     virtual void DrawUI();
     virtual void Debug();
+
+    void Enable(bool enable);
+    void EnableOnEvent(bool enable);
+    void EnableUpdate(bool enable);
+    void EnablePhysicsUpdate(bool enable);
+    void EnableDraw(bool enable);
+    void EnableDrawUI(bool enable);
+    void EnableDebug(bool enable);
 
     UUID GetUUID() const;
 
@@ -62,8 +97,17 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 
     friend class ObjectManager;
     friend class Application;
-    friend class StateMachine;
-    friend class State;
+    friend class GameStateMachine;
+    friend class GameState;
+
+    // Signals emit after main functions called: Child functions -> Main functions -> Signal functions
+    Signal<> OnObjectReady;
+    Signal<Event> OnObjectOnEvent;
+    Signal<double> OnObjectUpdate;
+    Signal<double> OnObjectPhysicsUpdate;
+    Signal<> OnObjectDraw;
+    Signal<> OnObjectDrawUI;
+    Signal<> OnObjectDebug;
 
     void SetParent(std::shared_ptr<GameObject> parent);
     void ResetParent();
@@ -81,5 +125,11 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     UUID uuid;
     std::shared_ptr<GameObject> parent;
     std::vector<std::shared_ptr<GameObject>> children;
+    bool onEventEnabled = true;
+    bool updateEnabled = true;
+    bool physicsUpdateEnabled = true;
+    bool drawEnabled = true;
+    bool drawUIEnabled = true;
+    bool debugEnabled = true;
 };
 } // namespace duin
