@@ -2,7 +2,8 @@ local utils = require "utils"
 local dep_sdl3 = {}
 
 local repo = "https://github.com/libsdl-org/SDL"
-local tag = "release-3.2.8"
+-- local tag = "release-3.2.8"
+local tag = "release-3.4.0"
 local folder = "sdl"
 
 function dep_sdl3.build()
