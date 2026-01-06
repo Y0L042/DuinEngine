@@ -4,4 +4,5 @@
  * Signals Module
  */
 
+#include "SignalConnections.h"
 #include "Signal.h"
