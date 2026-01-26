@@ -3,22 +3,19 @@
 
 #define VALIDATE_SM_STACK (!stateStack.empty() && stateStack.top())
 
-namespace duin
-{
-
-GameState::GameState(GameStateMachine &owner) : owner(owner)
+duin::GameState::GameState(GameStateMachine &owner) : owner(owner)
 {
     stateGameObject = std::make_shared<GameObject>();
 }
 
-void GameState::StateEnter()
+void duin::GameState::StateEnter()
 {
     Enter();
     stateGameObject->ObjectReady();
     OnStateEnter.Emit();
 }
 
-void GameState::StateOnEvent(Event e)
+void duin::GameState::StateOnEvent(Event e)
 {
     if (!onEventEnabled)
         return;
@@ -28,7 +25,7 @@ void GameState::StateOnEvent(Event e)
     OnStateOnEvent.Emit(e);
 }
 
-void GameState::StateUpdate(double delta)
+void duin::GameState::StateUpdate(double delta)
 {
     if (!updateEnabled)
         return;
@@ -38,7 +35,7 @@ void GameState::StateUpdate(double delta)
     OnStateUpdate.Emit(delta);
 }
 
-void GameState::StatePhysicsUpdate(double delta)
+void duin::GameState::StatePhysicsUpdate(double delta)
 {
     if (!physicsUpdateEnabled)
         return;
@@ -48,7 +45,7 @@ void GameState::StatePhysicsUpdate(double delta)
     OnStatePhysicsUpdate.Emit(delta);
 }
 
-void GameState::StateDraw()
+void duin::GameState::StateDraw()
 {
     if (!drawEnabled)
         return;
@@ -58,7 +55,7 @@ void GameState::StateDraw()
     OnStateDraw.Emit();
 }
 
-void GameState::StateDrawUI()
+void duin::GameState::StateDrawUI()
 {
     if (!drawUIEnabled)
         return;
@@ -68,119 +65,120 @@ void GameState::StateDrawUI()
     OnStateDrawUI.Emit();
 }
 
-void GameState::StateExit()
+void duin::GameState::StateExit()
 {
     Exit();
     OnStateExit.Emit();
 }
 
-void GameState::StateSetPause()
+void duin::GameState::StateSetPause()
 {
     SetPause();
 }
 
-void GameState::StateSetUnpause()
+void duin::GameState::StateSetUnpause()
 {
     SetUnpause();
 }
 
-void GameState::PopState()
+void duin::GameState::PopState()
 {
     owner.PopState();
 }
 
-void GameState::FlushStack()
+void duin::GameState::FlushStack()
 {
     owner.FlushStack();
 }
 
-void GameState::AddChildObject(std::shared_ptr<GameObject> child)
+void duin::GameState::AddChildObject(std::shared_ptr<GameObject> child)
 {
     stateGameObject->AddChildObject(child);
 }
 
-void GameState::RemoveChildObject(std::shared_ptr<GameObject> child)
+void duin::GameState::RemoveChildObject(std::shared_ptr<GameObject> child)
 {
     stateGameObject->RemoveChildObject(child);
 }
 
 // Signal connection functions
-UUID GameState::ConnectOnStateEnter(std::function<void()> callback)
+duin::UUID duin::GameState::ConnectOnStateEnter(std::function<void()> callback)
 {
     return OnStateEnter.Connect(callback);
 }
 
-UUID GameState::ConnectOnStateOnEvent(std::function<void(Event)> callback)
+duin::UUID duin::GameState::ConnectOnStateOnEvent(std::function<void(Event)> callback)
 {
     return OnStateOnEvent.Connect(callback);
 }
 
-UUID GameState::ConnectOnStateUpdate(std::function<void(double)> callback)
+duin::UUID duin::GameState::ConnectOnStateUpdate(std::function<void(double)> callback)
 {
     return OnStateUpdate.Connect(callback);
 }
 
-UUID GameState::ConnectOnStatePhysicsUpdate(std::function<void(double)> callback)
+duin::UUID duin::GameState::ConnectOnStatePhysicsUpdate(std::function<void(double)> callback)
 {
     return OnStatePhysicsUpdate.Connect(callback);
 }
 
-UUID GameState::ConnectOnStateDraw(std::function<void()> callback)
+duin::UUID duin::GameState::ConnectOnStateDraw(std::function<void()> callback)
 {
     return OnStateDraw.Connect(callback);
 }
 
-UUID GameState::ConnectOnStateDrawUI(std::function<void()> callback)
+duin::UUID duin::GameState::ConnectOnStateDrawUI(std::function<void()> callback)
 {
     return OnStateDrawUI.Connect(callback);
 }
 
-UUID GameState::ConnectOnStateExit(std::function<void()> callback)
+duin::UUID duin::GameState::ConnectOnStateExit(std::function<void()> callback)
 {
     return OnStateExit.Connect(callback);
 }
 
 // Signal disconnection functions
-bool GameState::DisconnectOnStateEnter(UUID uuid)
+bool duin::GameState::DisconnectOnStateEnter(UUID uuid)
 {
     return OnStateEnter.Disconnect(uuid);
 }
 
-bool GameState::DisconnectOnStateOnEvent(UUID uuid)
+bool duin::GameState::DisconnectOnStateOnEvent(UUID uuid)
 {
     return OnStateOnEvent.Disconnect(uuid);
 }
 
-bool GameState::DisconnectOnStateUpdate(UUID uuid)
+bool duin::GameState::DisconnectOnStateUpdate(UUID uuid)
 {
     return OnStateUpdate.Disconnect(uuid);
 }
 
-bool GameState::DisconnectOnStatePhysicsUpdate(UUID uuid)
+bool duin::GameState::DisconnectOnStatePhysicsUpdate(UUID uuid)
 {
     return OnStatePhysicsUpdate.Disconnect(uuid);
 }
 
-bool GameState::DisconnectOnStateDraw(UUID uuid)
+bool duin::GameState::DisconnectOnStateDraw(UUID uuid)
 {
     return OnStateDraw.Disconnect(uuid);
 }
 
-bool GameState::DisconnectOnStateDrawUI(UUID uuid)
+bool duin::GameState::DisconnectOnStateDrawUI(UUID uuid)
 {
     return OnStateDrawUI.Disconnect(uuid);
 }
 
-bool GameState::DisconnectOnStateExit(UUID uuid)
+bool duin::GameState::DisconnectOnStateExit(UUID uuid)
 {
     return OnStateExit.Disconnect(uuid);
 }
 
-SignalConnections GameState::ConnectAllSignals(std::function<void()> onEnter, std::function<void(Event)> onEvent,
-                                               std::function<void(double)> onUpdate,
-                                               std::function<void(double)> onPhysicsUpdate,
-                                               std::function<void()> onDraw, std::function<void()> onDrawUI,
-                                               std::function<void()> onExit)
+duin::SignalConnections duin::GameState::ConnectAllSignals(std::function<void()> onEnter,
+                                                           std::function<void(Event)> onEvent,
+                                                           std::function<void(double)> onUpdate,
+                                                           std::function<void(double)> onPhysicsUpdate,
+                                                           std::function<void()> onDraw, std::function<void()> onDrawUI,
+                                                           std::function<void()> onExit)
 {
     SignalConnections connections;
     connections.onEnter = ConnectOnStateEnter(onEnter);
@@ -193,7 +191,7 @@ SignalConnections GameState::ConnectAllSignals(std::function<void()> onEnter, st
     return connections;
 }
 
-void GameState::DisconnectAllSignals(const SignalConnections &connections)
+void duin::GameState::DisconnectAllSignals(const SignalConnections &connections)
 {
     DisconnectOnStateEnter(connections.onEnter);
     DisconnectOnStateOnEvent(connections.onEvent);
@@ -205,7 +203,7 @@ void GameState::DisconnectAllSignals(const SignalConnections &connections)
 }
 
 // Enable functions
-void GameState::Enable(bool enable)
+void duin::GameState::Enable(bool enable)
 {
     onEventEnabled = enable;
     updateEnabled = enable;
@@ -214,69 +212,65 @@ void GameState::Enable(bool enable)
     drawUIEnabled = enable;
 }
 
-void GameState::EnableOnEvent(bool enable)
+void duin::GameState::EnableOnEvent(bool enable)
 {
     onEventEnabled = enable;
 }
 
-void GameState::EnableUpdate(bool enable)
+void duin::GameState::EnableUpdate(bool enable)
 {
     updateEnabled = enable;
 }
 
-void GameState::EnablePhysicsUpdate(bool enable)
+void duin::GameState::EnablePhysicsUpdate(bool enable)
 {
     physicsUpdateEnabled = enable;
 }
 
-void GameState::EnableDraw(bool enable)
+void duin::GameState::EnableDraw(bool enable)
 {
     drawEnabled = enable;
 }
 
-void GameState::EnableDrawUI(bool enable)
+void duin::GameState::EnableDrawUI(bool enable)
 {
     drawUIEnabled = enable;
 }
 
-bool GameState::IsEqualTo(GameState* other)
+bool duin::GameState::IsEqualTo(GameState *other)
 {
     return (this->uuid == other->uuid);
 }
 
-UUID GameState::GetUUID()
+duin::UUID duin::GameState::GetUUID()
 {
     return uuid;
 }
 
-GameStateMachine &GameState::GetOwner()
+duin::GameStateMachine &duin::GameState::GetOwner()
 {
     return owner;
 }
 
-const std::string GameState::GetName()
+const std::string duin::GameState::GetName()
 {
     return stateName;
 }
 
-} // namespace duin
-
-namespace duin
-{
-GameStateMachine::GameStateMachine()
+duin::GameStateMachine::GameStateMachine()
 {
 }
 
-GameStateMachine::~GameStateMachine()
+duin::GameStateMachine::~GameStateMachine()
 {
 }
 
-UUID GameStateMachine::GetUUID()
+duin::UUID duin::GameStateMachine::GetUUID()
 {
     return uuid;
 }
 
-void GameStateMachine::PopState()
+void duin::GameStateMachine::PopState()
 {
     if (!VALIDATE_SM_STACK)
     {
@@ -296,7 +290,7 @@ void GameStateMachine::PopState()
     }
 }
 
-void GameStateMachine::FlushStack()
+void duin::GameStateMachine::FlushStack()
 {
     if (!VALIDATE_SM_STACK)
     {
@@ -309,20 +303,20 @@ void GameStateMachine::FlushStack()
     }
 }
 
-std::stack<std::unique_ptr<GameState>> &GameStateMachine::GetStateStack()
+std::stack<std::unique_ptr<duin::GameState>> &duin::GameStateMachine::GetStateStack()
 {
     return stateStack;
 }
 
-void GameStateMachine::Init()
+void duin::GameStateMachine::Init()
 {
 }
 
-void GameStateMachine::Ready()
+void duin::GameStateMachine::Ready()
 {
 }
 
-void GameStateMachine::OnEvent(Event e)
+void duin::GameStateMachine::OnEvent(Event e)
 {
     if (!VALIDATE_SM_STACK)
     {
@@ -336,7 +330,7 @@ void GameStateMachine::OnEvent(Event e)
     stateStack.top()->StateOnEvent(e);
 }
 
-void GameStateMachine::Update(double delta)
+void duin::GameStateMachine::Update(double delta)
 {
     if (!VALIDATE_SM_STACK)
     {
@@ -350,7 +344,7 @@ void GameStateMachine::Update(double delta)
     stateStack.top()->StateUpdate(delta);
 }
 
-void GameStateMachine::PhysicsUpdate(double delta)
+void duin::GameStateMachine::PhysicsUpdate(double delta)
 {
     if (!VALIDATE_SM_STACK)
     {
@@ -364,7 +358,7 @@ void GameStateMachine::PhysicsUpdate(double delta)
     stateStack.top()->StatePhysicsUpdate(delta);
 }
 
-void GameStateMachine::Draw()
+void duin::GameStateMachine::Draw()
 {
     if (!VALIDATE_SM_STACK)
     {
@@ -378,7 +372,7 @@ void GameStateMachine::Draw()
     stateStack.top()->StateDraw();
 }
 
-void GameStateMachine::DrawUI()
+void duin::GameStateMachine::DrawUI()
 {
     if (!VALIDATE_SM_STACK)
     {
@@ -392,8 +386,6 @@ void GameStateMachine::DrawUI()
     stateStack.top()->StateDrawUI();
 }
 
-void GameStateMachine::Debug()
+void duin::GameStateMachine::Debug()
 {
 }
-
-} // namespace duin

@@ -276,8 +276,7 @@ TEST_SUITE("GameStateMachine")
         auto *newState = sm.GetActiveState<TestStateA>();
         CHECK(newState != nullptr);
         CHECK(newState->enterCalled);
-        //CHECK(newState->GetUUID() != oldStateAUUID);
-        CHECK(!newState->IsEqualTo(oldState))
+        CHECK(!newState->IsEqualTo(oldStateA));
     }
 
     TEST_CASE("FlushStack removes all states")
