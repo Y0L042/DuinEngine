@@ -2,12 +2,18 @@
 
 #include <DuinMeta.h>
 #include <Duin/EntryPoint.h>
+#include <Duin/Objects/GameStateMachine.h>
+
+#include "EditorStates/State_SelectProject.h"
+
+#include <memory>
 
 #ifndef DEBUG
-    #define DEBUG
+#define DEBUG
 #endif
 
 Editor *Editor::instance = nullptr;
+std::shared_ptr<duin::GameStateMachine> sm;
 
 duin::Application *duin::CreateApplication()
 {
@@ -31,6 +37,9 @@ void Editor::Initialize()
 void Editor::Ready()
 {
     duin::SetWindowResizable(true);
+
+    sm = CreateChildObject<duin::GameStateMachine>();
+    sm->SwitchState<State_SelectProject>();
 }
 
 void Editor::OnEvent(duin::Event event)

@@ -112,7 +112,7 @@ void duin::SetFramerate(int framerate)
 void duin::DrawPhysicsFPS(float x, float y)
 {
     static constexpr size_t bufferSize = 60; // Buffer size (approx. 1 second at 60 FPS)
-  static std::array<float, bufferSize> physicsFPSBuffer = {};
+    static std::array<float, bufferSize> physicsFPSBuffer = {};
     static size_t bufferIndex = 0;
     static float physicsFPSAverage = 0.0f;
     static float totalFPS = 0.0f; // Running total for quick average calculation
@@ -123,7 +123,7 @@ void duin::DrawPhysicsFPS(float x, float y)
     // Update circular buffer
     totalFPS -= physicsFPSBuffer[bufferIndex];         // Remove old value from total
     physicsFPSBuffer[bufferIndex] = currentPhysicsFPS; // Add new value to buffer
- totalFPS += currentPhysicsFPS; // Add new value to total
+    totalFPS += currentPhysicsFPS;                     // Add new value to total
     bufferIndex = (bufferIndex + 1) % bufferSize;      // Move to next index (circular)
 
     // Calculate average FPS
@@ -131,7 +131,7 @@ void duin::DrawPhysicsFPS(float x, float y)
 
     // Format and draw the average
     char buffer[16];
-  std::snprintf(buffer, sizeof(buffer), "P: %.2f", physicsFPSAverage);
+    std::snprintf(buffer, sizeof(buffer), "P: %.2f", physicsFPSAverage);
     // ::DrawText(buffer, x, y, 30, ::GREEN);
 }
 
@@ -146,10 +146,10 @@ void duin::DrawRenderFPS(float x, float y)
     // Get current frame's render FPS
     float currentRenderFPS = duin::GetRenderFPS();
 
- // Update circular buffer
-    totalFPS -= renderFPSBuffer[bufferIndex];   // Remove old value from total
+    // Update circular buffer
+    totalFPS -= renderFPSBuffer[bufferIndex];        // Remove old value from total
     renderFPSBuffer[bufferIndex] = currentRenderFPS; // Add new value to buffer
-    totalFPS += currentRenderFPS;       // Add new value to total
+    totalFPS += currentRenderFPS;                    // Add new value to total
     bufferIndex = (bufferIndex + 1) % bufferSize;    // Move to next index (circular)
 
     // Calculate average FPS
@@ -178,13 +178,13 @@ float duin::GetRenderFPS()
     float fps = 0.0f;
     if (renderFrameTime < 0.00001)
     {
-      fps = 9999.9f;
+        fps = 9999.9f;
     }
     else
     {
         fps = 1.0f / (float)renderFrameTime;
     }
-  return fps;
+    return fps;
 }
 
 float duin::GetRenderFrameTime()
@@ -219,7 +219,7 @@ double duin::GetTicksNano()
 
 void duin::DelayProcess(float seconds)
 {
-  ::SDL_Delay((uint32_t)seconds * 1000);
+    ::SDL_Delay((uint32_t)seconds * 1000);
 }
 void duin::DelayProcessMilli(float milliseconds)
 {
@@ -264,7 +264,7 @@ void duin::SetAllowDockingInMain(bool enable)
 
 void duin::SetImGuiINIPath(const std::string &newPath)
 {
-  DN_CORE_INFO("Custom ImGui INI path set: {}", newPath.c_str());
+    DN_CORE_INFO("Custom ImGui INI path set: {}", newPath.c_str());
     USE_CUSTOM_IMGUI_INI_PATH = true;
     IMGUI_INI_PATH = newPath;
     ImGui::GetIO().IniFilename = NULL;
@@ -366,7 +366,7 @@ void duin::Application::Run()
     double deltaTime = 0.0;
 
     EngineInitialize();
-  Initialize();
+    Initialize();
 
     DN_CORE_INFO("Set render FPS {}", TARGET_RENDER_FRAMERATE);
 
@@ -376,28 +376,28 @@ void duin::Application::Run()
     }
     else
     {
-     sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
+        sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
         if (sdlWindow == nullptr)
- {
-          ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
-    }
+        {
+            ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
+        }
         else
         {
- sdlSurface = ::SDL_GetWindowSurface(sdlWindow);
+            sdlSurface = ::SDL_GetWindowSurface(sdlWindow);
         }
     }
- ::HWND hwnd = (::HWND)::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow),
-       SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
+    ::HWND hwnd = (::HWND)::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow),
+                                                   SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
     if (!hwnd)
     {
         DN_CORE_FATAL("SDL3 window handle not found!");
- }
+    }
     bgfx::renderFrame();
     bgfx::Init bgfxInit;
     bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer
     bgfxInit.resolution.width = WINDOW_WIDTH;
     bgfxInit.resolution.height = WINDOW_HEIGHT;
-  bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
+    bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
     bgfxInit.platformData.nwh = hwnd;
     bgfx::init(bgfxInit);
     bgfx::setViewClear(MAIN_DISPLAY, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
@@ -408,7 +408,7 @@ void duin::Application::Run()
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     duin::InitRenderer();
-  duin::SetRenderContextAvailable(true);
+    duin::SetRenderContextAvailable(true);
 
     EngineReady();
     Ready();
@@ -423,131 +423,131 @@ void duin::Application::Run()
 #endif /* DN_DEBUG */
 
             /* Do not run game when minimized */
-      if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(sdlWindow) && SDL_WINDOW_MINIMIZED)
+            if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(sdlWindow) && SDL_WINDOW_MINIMIZED)
             {
-      duin::DelayProcessMilli(100);
-     continue;
+                duin::DelayProcessMilli(100);
+                continue;
             }
 
-frameStartTime = duin::GetTicks();
+            frameStartTime = duin::GetTicks();
 
-          EnginePreFrame();
+            EnginePreFrame();
 
             /* If custom ImGui path is set, manually save to memory/disk */
             if (USE_CUSTOM_IMGUI_INI_PATH && ImGui::GetIO().WantSaveIniSettings)
             {
-        ImGui::SaveIniSettingsToDisk(IMGUI_INI_PATH.c_str());
-       }
+                ImGui::SaveIniSettingsToDisk(IMGUI_INI_PATH.c_str());
+            }
 
-      ::SDL_Event e;
+            ::SDL_Event e;
             ::SDL_zero(e);
             while (::SDL_PollEvent(&e))
-      {
-          duin::Input::ProcessSDLMouseEvent(e);
-   duin::Input::ProcessSDLKeyboardEvent(e);
-        duin::EventHandler::GetPolledEvent(e);
-       ::ImGui_ImplSDL3_ProcessEvent(&e);
-   }
-  duin::Input::CacheCurrentKeyState();
+            {
+                duin::Input::ProcessSDLMouseEvent(e);
+                duin::Input::ProcessSDLKeyboardEvent(e);
+                duin::EventHandler::GetPolledEvent(e);
+                ::ImGui_ImplSDL3_ProcessEvent(&e);
+            }
+            duin::Input::CacheCurrentKeyState();
             duin::Input::CacheCurrentMouseKeyState();
-          duin::Input::UpdateMouseFrameDelta();
+            duin::Input::UpdateMouseFrameDelta();
             gameShouldQuit = duin::EventHandler::Get().IsCloseRequested();
 
-    EngineUpdate(deltaTime);
-   Update(deltaTime);
-  EnginePostUpdate(deltaTime);
+            EngineUpdate(deltaTime);
+            Update(deltaTime);
+            EnginePostUpdate(deltaTime);
 
-      physicsCurrentTime = duin::GetTicks();
-  physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
-       physicsAccumTime += physicsDeltaTime;
-   double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
+            physicsCurrentTime = duin::GetTicks();
+            physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
+            physicsAccumTime += physicsDeltaTime;
+            double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
             while (physicsAccumTime >= physicsTimeStep)
             {
-      physicsPreviousTime = physicsCurrentTime;
-          physicsAccumTime -= physicsTimeStep;
+                physicsPreviousTime = physicsCurrentTime;
+                physicsAccumTime -= physicsTimeStep;
 
-         physicsFrameTime = physicsTimeStep;
-     ++physicsFrameCount;
+                physicsFrameTime = physicsTimeStep;
+                ++physicsFrameCount;
 
                 EnginePhysicsUpdate(physicsDeltaTime);
-         PhysicsUpdate(physicsDeltaTime);
-         EnginePostPhysicsUpdate(physicsDeltaTime);
-        } // End of Physics
+                PhysicsUpdate(physicsDeltaTime);
+                EnginePostPhysicsUpdate(physicsDeltaTime);
+            } // End of Physics
 
             /* Skip rendering when minimized */
-          if (SDL_GetWindowFlags(sdlWindow) && e.type == SDL_WINDOW_MINIMIZED)
-         {
+            if (SDL_GetWindowFlags(sdlWindow) && e.type == SDL_WINDOW_MINIMIZED)
+            {
                 ImGui::Render();
-             duin::DelayProcessMilli(100);
-         continue;
-     }
+                duin::DelayProcessMilli(100);
+                continue;
+            }
 
             // Update render rect on window resizing
- int displayWidth, displayHeight;
+            int displayWidth, displayHeight;
             ::SDL_GetWindowSize(sdlWindow, &displayWidth, &displayHeight);
-     /* Skip rendering if window size is 0 */
-    if (!(displayWidth && displayHeight))
-   {
-          duin::DelayProcessMilli(100);
-continue;
-    }
+            /* Skip rendering if window size is 0 */
+            if (!(displayWidth && displayHeight))
+            {
+                duin::DelayProcessMilli(100);
+                continue;
+            }
 
-  bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
+            bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
             bgfx::setViewRect(MAIN_DISPLAY, 0, 0, bgfx::BackbufferRatio::Equal);
-        bgfx::touch(MAIN_DISPLAY);
+            bgfx::touch(MAIN_DISPLAY);
 
-   ++renderFrameCount;
+            ++renderFrameCount;
             ::ImGui_Implbgfx_NewFrame();
-       ::ImGui_ImplSDL3_NewFrame();
+            ::ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
 
             if (ALLOW_DOCKING_IN_MAIN)
-       {
-             const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
-    ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
+            {
+                const ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+                ImGui::DockSpaceOverViewport(0, nullptr, dockspace_flags);
             }
 
             duin::BeginDraw3D(*duin::GetActiveCamera());
 
-       EngineDraw();
-Draw();
+            EngineDraw();
+            Draw();
             EnginePostDraw();
 
-          EngineDrawUI();
-          DrawUI();
-    EnginePostDrawUI();
+            EngineDrawUI();
+            DrawUI();
+            EnginePostDrawUI();
 
             duin::EndDraw3D();
 
             ImGui::Render();
             ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
-     duin::ExecuteRenderPipeline();
+            duin::ExecuteRenderPipeline();
 
- EnginePostFrame();
+            EnginePostFrame();
 
-  frameEndTime = duin::GetTicks();
-    deltaDrawTime = frameEndTime - frameStartTime;
+            frameEndTime = duin::GetTicks();
+            deltaDrawTime = frameEndTime - frameStartTime;
 
-        if (TARGET_RENDER_FRAMERATE > 0)
+            if (TARGET_RENDER_FRAMERATE > 0)
             {
-      double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
-           waitTime = targetFrameTime - deltaDrawTime;
+                double targetFrameTime = 1.0 / (double)TARGET_RENDER_FRAMERATE;
+                waitTime = targetFrameTime - deltaDrawTime;
 
-       // printf("Target FT:\t %.6f\n", targetFrameTime);
-           // printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
-     // printf("waittime:\t %.6f\n", waitTime);
+                // printf("Target FT:\t %.6f\n", targetFrameTime);
+                // printf("deltaDrawTime:\t %.6f\n", deltaDrawTime);
+                // printf("waittime:\t %.6f\n", waitTime);
 
- if (waitTime > 0.0)
-     {
-         duin::DelayProcess((float)waitTime);
-    }
-    }
+                if (waitTime > 0.0)
+                {
+                    duin::DelayProcess((float)waitTime);
+                }
+            }
 
             deltaTime = duin::GetTicks() - frameStartTime;
             renderFrameTime = deltaTime;
 
 #ifdef DN_DEBUG
-     }
+        }
         EngineDebug();
         Debug();
         EnginePostDebug();
@@ -559,7 +559,7 @@ Draw();
     Exit();
 
     DN_CORE_INFO("Shutting down Rendering dependencies...");
-  duin::SetRenderContextAvailable(false);
+    duin::SetRenderContextAvailable(false);
 
     ::ImGui_ImplSDL3_Shutdown();
     ::ImGui_Implbgfx_Shutdown();
@@ -578,7 +578,7 @@ Draw();
 
 void duin::Application::EngineInitialize()
 {
-  duin::EventHandler::Get().RegisterInputEventListener([this](duin::Event e) { EngineOnEvent(e); });
+    duin::EventHandler::Get().RegisterInputEventListener([this](duin::Event e) { EngineOnEvent(e); });
     duin::EventHandler::Get().RegisterInputEventListener([this](duin::Event e) { OnEvent(e); });
 }
 
@@ -599,15 +599,15 @@ void duin::Application::EnginePostReady()
     rootGameObject->ObjectReady();
     for (auto &callback : postReadyCallbacks)
     {
-      callback();
+        callback();
     }
 }
 
 void duin::Application::EnginePreFrame()
 {
-  for (auto &callback : preFrameCallbacks)
+    for (auto &callback : preFrameCallbacks)
     {
-  callback();
+        callback();
     }
 }
 
@@ -615,8 +615,8 @@ void duin::Application::EngineOnEvent(Event e)
 {
     if (duin::Input::IsKeyDown(DN_KEY_ESCAPE))
     {
-      DN_CORE_INFO("Quit event called... {}", e.sdlEvent.key.key);
-    gameShouldQuit = true;
+        DN_CORE_INFO("Quit event called... {}", e.sdlEvent.key.key);
+        gameShouldQuit = true;
     }
 
     rootGameObject->ObjectOnEvent(e);
@@ -659,7 +659,7 @@ void duin::Application::EnginePostPhysicsUpdate(double delta)
         callback(delta);
     }
 
-  duin::PhysicsServer::Get().StepPhysics(delta);
+    duin::PhysicsServer::Get().StepPhysics(delta);
 }
 
 void duin::Application::EngineDraw()
@@ -672,10 +672,10 @@ void duin::Application::Draw()
 
 void duin::Application::EnginePostDraw()
 {
- rootGameObject->ObjectDraw();
+    rootGameObject->ObjectDraw();
     for (auto &callback : postDrawCallbacks)
     {
-  callback();
+        callback();
     }
 }
 
@@ -699,7 +699,7 @@ void duin::Application::EnginePostDrawUI()
 void duin::Application::EngineDebug()
 {
 #ifdef DN_DEBUG
-  // if (IsKeyPressed(KEY_GRAVE)) {
+    // if (IsKeyPressed(KEY_GRAVE)) {
     //     if (DebugIsGamePaused()) {
     //  DebugResumeGame();
     //     } else {
@@ -719,21 +719,21 @@ void duin::Application::EnginePostDebug()
     for (auto &callback : postDebugCallbacks)
     {
         callback();
- }
+    }
 }
 
 void duin::Application::EnginePostFrame()
 {
-  for (auto &callback : postFrameCallbacks)
+    for (auto &callback : postFrameCallbacks)
     {
-   callback();
- }
+        callback();
+    }
 }
 
 void duin::Application::EngineExit()
 {
     for (auto &callback : exitCallbacks)
-  {
+    {
         callback();
     }
 }
@@ -751,4 +751,3 @@ void duin::Application::RemoveChildObject(std::shared_ptr<GameObject> child)
 {
     rootGameObject->RemoveChildObject(child);
 }
-

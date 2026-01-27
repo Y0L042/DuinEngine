@@ -10,8 +10,12 @@ class Editor : public duin::Application
   public:
     static Editor &Get();
 
-    Editor(){}
-    ~Editor(){}
+    Editor()
+    {
+    }
+    ~Editor()
+    {
+    }
 
     void Initialize() override;
     void Ready() override;
