@@ -111,16 +111,21 @@ $(document).ready(function(){initNavTree('classduin_1_1GameStateMachine.html',''
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classduin_1_1GameStateMachine-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::GameStateMachine Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::GameStateMachine Class Reference<div class="ingroups"><a class="el" href="group__Objects.html">Objects Module</a> &raquo; <a class="el" href="group__Objects__StateMachine.html">State Machine</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Stack-based state manager.  
+ <a href="classduin_1_1GameStateMachine.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for duin::GameStateMachine:</div>
 <div class="dyncontent">
 <div class="center"><img src="classduin_1_1GameStateMachine__coll__graph.png" border="0" usemap="#aduin_1_1GameStateMachine_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1GameStateMachine_coll__map" id="aduin_1_1GameStateMachine_coll__map">
-<area shape="rect" title=" " alt="" coords="605,119,792,145"/>
-<area shape="rect" href="classduin_1_1GameObject.html" title=" " alt="" coords="417,119,556,145"/>
+<area shape="rect" title="Stack&#45;based state manager." alt="" coords="605,119,792,145"/>
+<area shape="rect" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="417,119,556,145"/>
 <area shape="poly" title=" " alt="" coords="570,129,605,129,605,135,570,135"/>
 <area shape="rect" title=" " alt="" coords="5,5,208,45"/>
 <area shape="poly" title=" " alt="" coords="222,14,308,20,352,30,394,44,421,60,444,79,478,117,474,120,441,83,418,64,392,49,351,35,307,26,222,19"/>
@@ -139,21 +144,28 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7ba1ab218864fd29c00bf8fee5959f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd1bede4446b7b6f889b6717571e4fa6" id="r_acd1bede4446b7b6f889b6717571e4fa6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:acd1bede4446b7b6f889b6717571e4fa6"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#acd1bede4446b7b6f889b6717571e4fa6">GetActiveState</a> ()</td></tr>
+<tr class="memdesc:acd1bede4446b7b6f889b6717571e4fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the active state cast to type T.  <br /></td></tr>
 <tr class="separator:acd1bede4446b7b6f889b6717571e4fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af38da22c2d87b9df8ee50da8e3d8d45c" id="r_af38da22c2d87b9df8ee50da8e3d8d45c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af38da22c2d87b9df8ee50da8e3d8d45c"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#af38da22c2d87b9df8ee50da8e3d8d45c">SwitchState</a> ()</td></tr>
+<tr class="memdesc:af38da22c2d87b9df8ee50da8e3d8d45c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits current state and enters a new one.  <br /></td></tr>
 <tr class="separator:af38da22c2d87b9df8ee50da8e3d8d45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc85786c887f4b546fec63ade4d9b027" id="r_acc85786c887f4b546fec63ade4d9b027"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:acc85786c887f4b546fec63ade4d9b027"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#acc85786c887f4b546fec63ade4d9b027">FlushAndSwitchState</a> ()</td></tr>
+<tr class="memdesc:acc85786c887f4b546fec63ade4d9b027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits all states and enters a new one.  <br /></td></tr>
 <tr class="separator:acc85786c887f4b546fec63ade4d9b027"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2ed1c9402257e1646ee7775a0d3686c" id="r_aa2ed1c9402257e1646ee7775a0d3686c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aa2ed1c9402257e1646ee7775a0d3686c"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#aa2ed1c9402257e1646ee7775a0d3686c">PushState</a> ()</td></tr>
+<tr class="memdesc:aa2ed1c9402257e1646ee7775a0d3686c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses current state and pushes a new one.  <br /></td></tr>
 <tr class="separator:aa2ed1c9402257e1646ee7775a0d3686c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a045b22b2414f922bf8c4aa148986d5fa" id="r_a045b22b2414f922bf8c4aa148986d5fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a045b22b2414f922bf8c4aa148986d5fa">PopState</a> ()</td></tr>
+<tr class="memdesc:a045b22b2414f922bf8c4aa148986d5fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pops the current state and resumes the previous one.  <br /></td></tr>
 <tr class="separator:a045b22b2414f922bf8c4aa148986d5fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70c34c19eb98b61dbb26d8dfff2e301a" id="r_a70c34c19eb98b61dbb26d8dfff2e301a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a70c34c19eb98b61dbb26d8dfff2e301a">FlushStack</a> ()</td></tr>
+<tr class="memdesc:a70c34c19eb98b61dbb26d8dfff2e301a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits and removes all states from the stack.  <br /></td></tr>
 <tr class="separator:a70c34c19eb98b61dbb26d8dfff2e301a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1455c5a8b4fe4b1926c7c8f7706956a" id="r_ae1455c5a8b4fe4b1926c7c8f7706956a"><td class="memItemLeft" align="right" valign="top">std::stack&lt; std::unique_ptr&lt; <a class="el" href="classduin_1_1GameState.html">GameState</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#ae1455c5a8b4fe4b1926c7c8f7706956a">GetStateStack</a> ()</td></tr>
+<tr class="memdesc:ae1455c5a8b4fe4b1926c7c8f7706956a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to the internal state stack.  <br /></td></tr>
 <tr class="separator:ae1455c5a8b4fe4b1926c7c8f7706956a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac937e106c3833ee19846ad8c5afeedaa" id="r_ac937e106c3833ee19846ad8c5afeedaa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#ac937e106c3833ee19846ad8c5afeedaa">Init</a> () override</td></tr>
 <tr class="separator:ac937e106c3833ee19846ad8c5afeedaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,18 +186,55 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classduin_1_1GameObject"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classduin_1_1GameObject')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a></td></tr>
 <tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe inherit pub_methods_classduin_1_1GameObject" id="r_ad95ae2a5c75925c02085b3fce76c21fe"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe inherit pub_methods_classduin_1_1GameObject"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe">CreateChildObject</a> (Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:ad95ae2a5c75925c02085b3fce76c21fe inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and adds a child object.  <br /></td></tr>
 <tr class="separator:ad95ae2a5c75925c02085b3fce76c21fe inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90a010d59d0519af6b0aefb1d1abb54a inherit pub_methods_classduin_1_1GameObject" id="r_a90a010d59d0519af6b0aefb1d1abb54a"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:a90a010d59d0519af6b0aefb1d1abb54a inherit pub_methods_classduin_1_1GameObject"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a90a010d59d0519af6b0aefb1d1abb54a">GetSharedPointer</a> ()</td></tr>
+<tr class="memdesc:a90a010d59d0519af6b0aefb1d1abb54a inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this object as a shared pointer of derived type.  <br /></td></tr>
 <tr class="separator:a90a010d59d0519af6b0aefb1d1abb54a inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c0a2398a7cc491d24b655908e27a4e2 inherit pub_methods_classduin_1_1GameObject" id="r_a9c0a2398a7cc491d24b655908e27a4e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2">AddChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
+<tr class="memdesc:a9c0a2398a7cc491d24b655908e27a4e2 inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an existing object as a child.  <br /></td></tr>
 <tr class="separator:a9c0a2398a7cc491d24b655908e27a4e2 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b585504b0737a16fd05688ca8116ae4 inherit pub_methods_classduin_1_1GameObject" id="r_a3b585504b0737a16fd05688ca8116ae4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4">RemoveChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
+<tr class="memdesc:a3b585504b0737a16fd05688ca8116ae4 inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a child from this object.  <br /></td></tr>
 <tr class="separator:a3b585504b0737a16fd05688ca8116ae4 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad924d34dc3f30a0be10b680327d6168d inherit pub_methods_classduin_1_1GameObject" id="r_ad924d34dc3f30a0be10b680327d6168d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad924d34dc3f30a0be10b680327d6168d">TransferChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child, std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; newParent)</td></tr>
+<tr class="memdesc:ad924d34dc3f30a0be10b680327d6168d inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a child to a new parent.  <br /></td></tr>
 <tr class="separator:ad924d34dc3f30a0be10b680327d6168d inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3403b712b50b9c17f32fb9445c42756c inherit pub_methods_classduin_1_1GameObject" id="r_a3403b712b50b9c17f32fb9445c42756c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c">GetParent</a> ()</td></tr>
+<tr class="memdesc:a3403b712b50b9c17f32fb9445c42756c inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent object, or nullptr if root.  <br /></td></tr>
 <tr class="separator:a3403b712b50b9c17f32fb9445c42756c inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject" id="r_acc88e71a32dc1a84322601bf599bb7d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">ConnectAllSignals</a> (std::function&lt; void()&gt; onReady, std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; onEvent, std::function&lt; void(double)&gt; onUpdate, std::function&lt; void(double)&gt; onPhysicsUpdate, std::function&lt; void()&gt; onDraw, std::function&lt; void()&gt; onDrawUI, std::function&lt; void()&gt; onDebug)</td></tr>
+<tr class="memdesc:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects all lifecycle signals at once.  <br /></td></tr>
+<tr class="separator:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab269640f8a3d5b2f9608559791acf9d2 inherit pub_methods_classduin_1_1GameObject" id="r_ab269640f8a3d5b2f9608559791acf9d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2">DisconnectAllSignals</a> (const <a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a> &amp;connections)</td></tr>
+<tr class="memdesc:ab269640f8a3d5b2f9608559791acf9d2 inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects all signals from a <a class="el" href="structduin_1_1SignalConnections.html" title="Holds UUIDs for signal connections to lifecycle events.">SignalConnections</a> bundle.  <br /></td></tr>
+<tr class="separator:ab269640f8a3d5b2f9608559791acf9d2 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9434e5fecafe0fab58dd915ef22c7b37 inherit pub_methods_classduin_1_1GameObject" id="r_a9434e5fecafe0fab58dd915ef22c7b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">GetUUID</a> () const</td></tr>
+<tr class="memdesc:a9434e5fecafe0fab58dd915ef22c7b37 inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this object's unique identifier.  <br /></td></tr>
+<tr class="separator:a9434e5fecafe0fab58dd915ef22c7b37 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56c34bc14d4072cc3277f8d10b473489 inherit pub_methods_classduin_1_1GameObject" id="r_a56c34bc14d4072cc3277f8d10b473489"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a56c34bc14d4072cc3277f8d10b473489">operator==</a> (const <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &amp;other) const</td></tr>
+<tr class="separator:a56c34bc14d4072cc3277f8d10b473489 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08f3b9b9edc611cc78feb5447767ab0b inherit pub_methods_classduin_1_1GameObject" id="r_a08f3b9b9edc611cc78feb5447767ab0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a08f3b9b9edc611cc78feb5447767ab0b">operator!=</a> (const <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &amp;other) const</td></tr>
+<tr class="separator:a08f3b9b9edc611cc78feb5447767ab0b inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5da7b56f195430cf7c3eaf579649583 inherit pub_methods_classduin_1_1GameObject" id="r_aa5da7b56f195430cf7c3eaf579649583"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aa5da7b56f195430cf7c3eaf579649583">SetParent</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; parent)</td></tr>
+<tr class="separator:aa5da7b56f195430cf7c3eaf579649583 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2b56e461f84269f33d6e20af4e7df85 inherit pub_methods_classduin_1_1GameObject" id="r_ac2b56e461f84269f33d6e20af4e7df85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ac2b56e461f84269f33d6e20af4e7df85">ResetParent</a> ()</td></tr>
+<tr class="separator:ac2b56e461f84269f33d6e20af4e7df85 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab489f25b320dd545bff88170c71c48c inherit pub_methods_classduin_1_1GameObject" id="r_aab489f25b320dd545bff88170c71c48c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aab489f25b320dd545bff88170c71c48c">ObjectReady</a> ()</td></tr>
+<tr class="separator:aab489f25b320dd545bff88170c71c48c inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb00f50872d1195ababb31491baa8bd3 inherit pub_methods_classduin_1_1GameObject" id="r_abb00f50872d1195ababb31491baa8bd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#abb00f50872d1195ababb31491baa8bd3">ObjectOnEvent</a> (<a class="el" href="classduin_1_1Event.html">Event</a> event)</td></tr>
+<tr class="separator:abb00f50872d1195ababb31491baa8bd3 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a241d9d6dbe9c9073be1d82f634dd5574 inherit pub_methods_classduin_1_1GameObject" id="r_a241d9d6dbe9c9073be1d82f634dd5574"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a241d9d6dbe9c9073be1d82f634dd5574">ObjectUpdate</a> (double delta)</td></tr>
+<tr class="separator:a241d9d6dbe9c9073be1d82f634dd5574 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83193dcc6f1e50a58362e1f45b17f8ef inherit pub_methods_classduin_1_1GameObject" id="r_a83193dcc6f1e50a58362e1f45b17f8ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a83193dcc6f1e50a58362e1f45b17f8ef">ObjectPhysicsUpdate</a> (double delta)</td></tr>
+<tr class="separator:a83193dcc6f1e50a58362e1f45b17f8ef inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad88fe6be281f72a4b446cf870cba3796 inherit pub_methods_classduin_1_1GameObject" id="r_ad88fe6be281f72a4b446cf870cba3796"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad88fe6be281f72a4b446cf870cba3796">ObjectDraw</a> ()</td></tr>
+<tr class="separator:ad88fe6be281f72a4b446cf870cba3796 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acedf45bf8ada7014b5b6f4aec03282d8 inherit pub_methods_classduin_1_1GameObject" id="r_acedf45bf8ada7014b5b6f4aec03282d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acedf45bf8ada7014b5b6f4aec03282d8">ObjectDrawUI</a> ()</td></tr>
+<tr class="separator:acedf45bf8ada7014b5b6f4aec03282d8 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a049ced2d522422fc0d3c37e540b61587 inherit pub_methods_classduin_1_1GameObject" id="r_a049ced2d522422fc0d3c37e540b61587"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a049ced2d522422fc0d3c37e540b61587">ObjectDebug</a> ()</td></tr>
+<tr class="separator:a049ced2d522422fc0d3c37e540b61587 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4725a8b8a2a6418ae5fe40873ac27909 inherit pub_methods_classduin_1_1GameObject" id="r_a4725a8b8a2a6418ae5fe40873ac27909"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4725a8b8a2a6418ae5fe40873ac27909">ConnectOnObjectReady</a> (std::function&lt; void()&gt; callback)</td></tr>
 <tr class="separator:a4725a8b8a2a6418ae5fe40873ac27909 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a513a39da5b3b363b4ace17e3f58280bf inherit pub_methods_classduin_1_1GameObject" id="r_a513a39da5b3b363b4ace17e3f58280bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a513a39da5b3b363b4ace17e3f58280bf">ConnectOnObjectOnEvent</a> (std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; callback)</td></tr>
@@ -214,10 +263,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1df4ec7753612a0a7b9b2ed2fe99dc1f inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c8429dd31c4968924b36698e4eb3449 inherit pub_methods_classduin_1_1GameObject" id="r_a8c8429dd31c4968924b36698e4eb3449"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a8c8429dd31c4968924b36698e4eb3449">DisconnectOnObjectDebug</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
 <tr class="separator:a8c8429dd31c4968924b36698e4eb3449 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject" id="r_acc88e71a32dc1a84322601bf599bb7d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">ConnectAllSignals</a> (std::function&lt; void()&gt; onReady, std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; onEvent, std::function&lt; void(double)&gt; onUpdate, std::function&lt; void(double)&gt; onPhysicsUpdate, std::function&lt; void()&gt; onDraw, std::function&lt; void()&gt; onDrawUI, std::function&lt; void()&gt; onDebug)</td></tr>
-<tr class="separator:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab269640f8a3d5b2f9608559791acf9d2 inherit pub_methods_classduin_1_1GameObject" id="r_ab269640f8a3d5b2f9608559791acf9d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2">DisconnectAllSignals</a> (const <a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a> &amp;connections)</td></tr>
-<tr class="separator:ab269640f8a3d5b2f9608559791acf9d2 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca08622442dd73f85e0a3478578a23ed inherit pub_methods_classduin_1_1GameObject" id="r_aca08622442dd73f85e0a3478578a23ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aca08622442dd73f85e0a3478578a23ed">Enable</a> (bool enable)</td></tr>
 <tr class="separator:aca08622442dd73f85e0a3478578a23ed inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2eec717e59df7aa5e09015ab28f4b10e inherit pub_methods_classduin_1_1GameObject" id="r_a2eec717e59df7aa5e09015ab28f4b10e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a2eec717e59df7aa5e09015ab28f4b10e">EnableOnEvent</a> (bool enable)</td></tr>
@@ -232,30 +277,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a42ae805d326e0beadc25d8e37dff7699 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ad333fc114074ffea4d8d535e1f4037 inherit pub_methods_classduin_1_1GameObject" id="r_a4ad333fc114074ffea4d8d535e1f4037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4ad333fc114074ffea4d8d535e1f4037">EnableDebug</a> (bool enable)</td></tr>
 <tr class="separator:a4ad333fc114074ffea4d8d535e1f4037 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9434e5fecafe0fab58dd915ef22c7b37 inherit pub_methods_classduin_1_1GameObject" id="r_a9434e5fecafe0fab58dd915ef22c7b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">GetUUID</a> () const</td></tr>
-<tr class="separator:a9434e5fecafe0fab58dd915ef22c7b37 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56c34bc14d4072cc3277f8d10b473489 inherit pub_methods_classduin_1_1GameObject" id="r_a56c34bc14d4072cc3277f8d10b473489"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a56c34bc14d4072cc3277f8d10b473489">operator==</a> (const <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &amp;other) const</td></tr>
-<tr class="separator:a56c34bc14d4072cc3277f8d10b473489 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08f3b9b9edc611cc78feb5447767ab0b inherit pub_methods_classduin_1_1GameObject" id="r_a08f3b9b9edc611cc78feb5447767ab0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a08f3b9b9edc611cc78feb5447767ab0b">operator!=</a> (const <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &amp;other) const</td></tr>
-<tr class="separator:a08f3b9b9edc611cc78feb5447767ab0b inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5da7b56f195430cf7c3eaf579649583 inherit pub_methods_classduin_1_1GameObject" id="r_aa5da7b56f195430cf7c3eaf579649583"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aa5da7b56f195430cf7c3eaf579649583">SetParent</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; parent)</td></tr>
-<tr class="separator:aa5da7b56f195430cf7c3eaf579649583 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2b56e461f84269f33d6e20af4e7df85 inherit pub_methods_classduin_1_1GameObject" id="r_ac2b56e461f84269f33d6e20af4e7df85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ac2b56e461f84269f33d6e20af4e7df85">ResetParent</a> ()</td></tr>
-<tr class="separator:ac2b56e461f84269f33d6e20af4e7df85 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab489f25b320dd545bff88170c71c48c inherit pub_methods_classduin_1_1GameObject" id="r_aab489f25b320dd545bff88170c71c48c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aab489f25b320dd545bff88170c71c48c">ObjectReady</a> ()</td></tr>
-<tr class="separator:aab489f25b320dd545bff88170c71c48c inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb00f50872d1195ababb31491baa8bd3 inherit pub_methods_classduin_1_1GameObject" id="r_abb00f50872d1195ababb31491baa8bd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#abb00f50872d1195ababb31491baa8bd3">ObjectOnEvent</a> (<a class="el" href="classduin_1_1Event.html">Event</a> event)</td></tr>
-<tr class="separator:abb00f50872d1195ababb31491baa8bd3 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a241d9d6dbe9c9073be1d82f634dd5574 inherit pub_methods_classduin_1_1GameObject" id="r_a241d9d6dbe9c9073be1d82f634dd5574"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a241d9d6dbe9c9073be1d82f634dd5574">ObjectUpdate</a> (double delta)</td></tr>
-<tr class="separator:a241d9d6dbe9c9073be1d82f634dd5574 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83193dcc6f1e50a58362e1f45b17f8ef inherit pub_methods_classduin_1_1GameObject" id="r_a83193dcc6f1e50a58362e1f45b17f8ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a83193dcc6f1e50a58362e1f45b17f8ef">ObjectPhysicsUpdate</a> (double delta)</td></tr>
-<tr class="separator:a83193dcc6f1e50a58362e1f45b17f8ef inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad88fe6be281f72a4b446cf870cba3796 inherit pub_methods_classduin_1_1GameObject" id="r_ad88fe6be281f72a4b446cf870cba3796"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad88fe6be281f72a4b446cf870cba3796">ObjectDraw</a> ()</td></tr>
-<tr class="separator:ad88fe6be281f72a4b446cf870cba3796 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acedf45bf8ada7014b5b6f4aec03282d8 inherit pub_methods_classduin_1_1GameObject" id="r_acedf45bf8ada7014b5b6f4aec03282d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acedf45bf8ada7014b5b6f4aec03282d8">ObjectDrawUI</a> ()</td></tr>
-<tr class="separator:acedf45bf8ada7014b5b6f4aec03282d8 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a049ced2d522422fc0d3c37e540b61587 inherit pub_methods_classduin_1_1GameObject" id="r_a049ced2d522422fc0d3c37e540b61587"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a049ced2d522422fc0d3c37e540b61587">ObjectDebug</a> ()</td></tr>
-<tr class="separator:a049ced2d522422fc0d3c37e540b61587 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -276,8 +297,13 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a35dc79f68567e3392423ee0b0e0581de inherit pub_attribs_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00019">19</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<div class="textblock"><p>Stack-based state manager. </p>
+<p>Manages a stack of <a class="el" href="classduin_1_1GameState.html" title="Base class for application states.">GameState</a> objects. The top state receives lifecycle callbacks. States can be pushed (pausing current), popped, or switched.</p>
+<div class="fragment"><div class="line">stateMachine.PushState&lt;MenuState&gt;();</div>
+<div class="line"><span class="comment">// Later...</span></div>
+<div class="line">stateMachine.SwitchState&lt;GameplayState&gt;();</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00043">43</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a40b39016455f0d50039fc379435974d2" name="a40b39016455f0d50039fc379435974d2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a40b39016455f0d50039fc379435974d2">&#9670;&#160;</a></span>GameStateMachine()</h2>
@@ -430,7 +456,16 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00063">63</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p>Exits all states and enters a new one. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>New state type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new state. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00102">102</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -448,6 +483,8 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Exits and removes all states from the stack. </p>
 
 <p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00293">293</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
@@ -478,7 +515,16 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00028">28</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p>Returns the active state cast to type T. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Expected state type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to state, or nullptr if wrong type or empty. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00057">57</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -496,6 +542,8 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns reference to the internal state stack. </p>
 
 <p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00306">306</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
@@ -624,6 +672,8 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Pops the current state and resumes the previous one. </p>
+
 <p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00273">273</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
@@ -653,7 +703,16 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00083">83</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p>Pauses current state and pushes a new one. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>New state type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new state. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00127">127</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -711,7 +770,16 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00043">43</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p>Exits current state and enters a new one. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>New state type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new state. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00077">77</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>

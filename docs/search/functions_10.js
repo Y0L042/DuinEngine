@@ -1,17 +1,17 @@
 var searchData=
 [
-  ['set_0',['set',['../classduin_1_1Entity.html#ab4f974c7a169d9ecb1ae29d68b8ed548',1,'duin::Entity::Set(T &amp;&amp;value)'],['../classduin_1_1Entity.html#a471c5755bca0422b83c6cbfe9b50cb6b',1,'duin::Entity::Set(Args &amp;&amp;...args)'],['../classduin_1_1Entity.html#a8b0ab45f7102206d6d68cd58e90c727d',1,'duin::Entity::Set(const T1 &amp;val1, const T2 &amp;val2, const Rest &amp;...rest)'],['../classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89',1,'duin::Entity::Set(const T &amp;value)']]],
-  ['setarray_1',['SetArray',['../classduin_1_1JSONValue.html#a7b18e340800be47780f66b3d35f3b199',1,'duin::JSONValue']]],
-  ['setautooverride_2',['setautooverride',['../classduin_1_1Entity.html#ae56ccc425472abba6fe50d40fe413811',1,'duin::Entity::SetAutoOverride(const T &amp;value)'],['../classduin_1_1Entity.html#a37e5a4c1912a3ad8cedbf02b6cf103c3',1,'duin::Entity::SetAutoOverride(T &amp;&amp;value)']]],
-  ['setbool_3',['SetBool',['../classduin_1_1JSONValue.html#abc259cffaacdd6fd00e0e12bf92f25d1',1,'duin::JSONValue']]],
-  ['setdouble_4',['SetDouble',['../classduin_1_1JSONValue.html#a019574f05864f377e04981ab12152cb5',1,'duin::JSONValue']]],
-  ['setint_5',['SetInt',['../classduin_1_1JSONValue.html#affc117289bde1197a2169e51bab2728d',1,'duin::JSONValue']]],
-  ['setname_6',['SetName',['../classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9',1,'duin::Entity']]],
-  ['setobject_7',['SetObject',['../classduin_1_1JSONValue.html#a09520cb59b0af14d6a50ebef2a24f368',1,'duin::JSONValue']]],
-  ['setpair_8',['setpair',['../classduin_1_1Entity.html#a981fcde082afa3b58bc037559c57d572',1,'duin::Entity::SetPair(const Second &amp;value)'],['../classduin_1_1Entity.html#a6f7127c7f1bc686638eb9657a745a571',1,'duin::Entity::SetPair(Second &amp;&amp;value)']]],
-  ['setprefpath_9',['SetPrefPath',['../namespaceduin_1_1fs.html#ab850f1508d5e66f30104b06ae772d064',1,'duin::fs']]],
-  ['setstring_10',['SetString',['../classduin_1_1JSONValue.html#ae0b554a53bfc88b523ab70be03220fe6',1,'duin::JSONValue']]],
-  ['setversion_11',['SetVersion',['../classduin_1_1World.html#a836de3d15c9a49fde1c665e8a8d555c9',1,'duin::World']]],
-  ['size_12',['Size',['../classduin_1_1Iter.html#abce113016082365e3781612b7e2d363c',1,'duin::Iter']]],
-  ['skip_13',['Skip',['../classduin_1_1Iter.html#ac9ff7bf0039724f6563561777e5db50d',1,'duin::Iter']]]
+  ['ready_0',['Ready',['../classduin_1_1Application.html#ad1509250d55438ec832e886d0a6caa89',1,'duin::Application']]],
+  ['registerinputeventlistener_1',['RegisterInputEventListener',['../classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727',1,'duin::EventHandler']]],
+  ['release_2',['Release',['../classduin_1_1World.html#a8af88ebe2e1ac521e250b4a69d0d1930',1,'duin::World']]],
+  ['remove_3',['remove',['../classduin_1_1LookupVector.html#ae9ebdbf0b9eec2a89bc1ca4eaf3070bf',1,'duin::LookupVector::Remove()'],['../classduin_1_1Entity.html#a9276a935d07319ec303fa5974fe99edb',1,'duin::Entity::Remove()']]],
+  ['removeall_4',['removeall',['../classduin_1_1World.html#ac1ab2ec052397515d1798d2408ebaa86',1,'duin::World::RemoveAll()'],['../classduin_1_1World.html#a02e8e39cdd6d1fe77cc443b526e31772',1,'duin::World::RemoveAll(uint64_t id)'],['../classduin_1_1World.html#aa4d6f1aca7e06b4197ad3a9ab6330aa6',1,'duin::World::RemoveAll(uint64_t first, uint64_t second)']]],
+  ['removechildobject_5',['removechildobject',['../classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954',1,'duin::Application::RemoveChildObject()'],['../classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4',1,'duin::GameObject::RemoveChildObject()']]],
+  ['removeinputaction_6',['RemoveInputAction',['../InputActions_8h.html#affe28f9c6c33af84c4a9e69e7182fde3',1,'duin']]],
+  ['removeinputactionbinding_7',['removeinputactionbinding',['../InputActions_8h.html#a30a9bd65045c69bc524518ddbc8d7d6d',1,'duin::RemoveInputActionBinding(const std::string &amp;actionName, const InputBinding &amp;binding)'],['../InputActions_8h.html#a2d781a5ba00168c4cd1d0dd32ad3b062',1,'duin::RemoveInputActionBinding(const std::string &amp;actionName, std::shared_ptr&lt; InputDevice &gt; device, DN_Keycode key, Input::KeyEvent event)']]],
+  ['removemember_8',['RemoveMember',['../classduin_1_1JSONValue.html#a8aa0cad63ed5e5b1cc959b307ebf87aa',1,'duin::JSONValue']]],
+  ['removepair_9',['removepair',['../classduin_1_1Entity.html#a643a4e4c6af9a2fec6b10e5ea51a38b4',1,'duin::Entity::RemovePair(uint64_t first, uint64_t second)'],['../classduin_1_1Entity.html#a1d53d86bf68acdc6523e51746bf16aba',1,'duin::Entity::RemovePair()']]],
+  ['removepath_10',['RemovePath',['../namespaceduin_1_1fs.html#a926a05ceadabd252b36ef1e9ec636ff2',1,'duin::fs']]],
+  ['renamepath_11',['RenamePath',['../namespaceduin_1_1fs.html#a96dee00fab2e90a1c516607d6295dc17',1,'duin::fs']]],
+  ['rendertexture_12',['RenderTexture',['../structduin_1_1RenderTexture.html#aed6e70d630aacc05bea37019f057d123',1,'duin::RenderTexture']]],
+  ['run_13',['run',['../classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522',1,'duin::Application::Run()'],['../classduin_1_1Query.html#ae82330032f4703b9b9b69a521748cf9e',1,'duin::Query::Run()']]]
 ];

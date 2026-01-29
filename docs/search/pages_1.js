@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readme_0',['ReadMe',['../index.html',1,'']]]
+  ['list_0',['Deprecated List',['../deprecated.html',1,'']]]
 ];

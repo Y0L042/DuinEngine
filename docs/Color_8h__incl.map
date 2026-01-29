@@ -1,0 +1,9 @@
+<map id="Color.h" name="Color.h">
+<area shape="rect" id="Node000001" title="RGBA color representation." alt="" coords="91,5,157,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,72,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,33,65,72,61,68,109,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,79,152,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="127,31,127,65,121,65,121,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="176,79,261,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="141,29,194,68,191,72,138,33"/>
+</map>

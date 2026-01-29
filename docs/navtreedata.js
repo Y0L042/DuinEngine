@@ -25,13 +25,16 @@
 var NAVTREE =
 [
   [ "Duin", "index.html", [
-    [ "ReadMe", "index.html", null ],
     [ "Physics", "page_Physics.html", null ],
+    [ "Deprecated List", "deprecated.html", null ],
+    [ "Categories", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ]
+        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Enumerations", "namespacemembers_enum.html", null ],
+        [ "Enumerator", "namespacemembers_eval.html", null ]
       ] ]
     ] ],
     [ "Classes", "annotated.html", [
@@ -59,9 +62,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"classduin_1_1Iter.html#ab7455bdac286fe80088ec01ad2eae019",
-"functions_u.html",
-"structduin_1_1ECSTag_1_1ActiveCamera.html"
+"classduin_1_1Entity.html#accaf463151fb3d312495a62a775b9350",
+"docs_2examples_2JSONValue_8cpp.html#a14d40ee8485125ef1d8ed5db244d36f7",
+"structImGuiSelectionExternalStorage.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -117,7 +117,7 @@ $(document).ready(function(){initNavTree('GameStateMachine_8cpp_source.html','')
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;GameStateMachine.h&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="GameStateMachine_8h.html">GameStateMachine.h</a>&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#define VALIDATE_SM_STACK (!stateStack.empty() &amp;&amp; stateStack.top())</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
@@ -299,7 +299,7 @@ $(document).ready(function(){initNavTree('GameStateMachine_8cpp_source.html','')
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                                                           std::function&lt;<span class="keywordtype">void</span>()&gt; onExit)</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>{</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    SignalConnections connections;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    connections.onEnter = ConnectOnStateEnter(onEnter);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#ae4b429af47a36bd9f63d49a6c759ec2a">onEnter</a> = ConnectOnStateEnter(onEnter);</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    connections.onEvent = ConnectOnStateOnEvent(onEvent);</div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    connections.onUpdate = ConnectOnStateUpdate(onUpdate);</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    connections.onPhysicsUpdate = ConnectOnStatePhysicsUpdate(onPhysicsUpdate);</div>
@@ -388,7 +388,8 @@ $(document).ready(function(){initNavTree('GameStateMachine_8cpp_source.html','')
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordflow">return</span> uuid;</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>}</div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span><span class="keywordtype">void</span> duin::GameStateMachine::PopState()</div>
+<div class="foldopen" id="foldopen00273" data-start="{" data-end="}">
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno"><a class="line" href="classduin_1_1GameStateMachine.html#a045b22b2414f922bf8c4aa148986d5fa">  273</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameStateMachine.html#a045b22b2414f922bf8c4aa148986d5fa">duin::GameStateMachine::PopState</a>()</div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>{</div>
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <span class="keywordflow">if</span> (!VALIDATE_SM_STACK)</div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    {</div>
@@ -407,8 +408,10 @@ $(document).ready(function(){initNavTree('GameStateMachine_8cpp_source.html','')
 <div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        stateStack.top()-&gt;StateSetUnpause();</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    }</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>}</div>
+</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="keywordtype">void</span> duin::GameStateMachine::FlushStack()</div>
+<div class="foldopen" id="foldopen00293" data-start="{" data-end="}">
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno"><a class="line" href="classduin_1_1GameStateMachine.html#a70c34c19eb98b61dbb26d8dfff2e301a">  293</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameStateMachine.html#a70c34c19eb98b61dbb26d8dfff2e301a">duin::GameStateMachine::FlushStack</a>()</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>{</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    <span class="keywordflow">if</span> (!VALIDATE_SM_STACK)</div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    {</div>
@@ -420,11 +423,14 @@ $(document).ready(function(){initNavTree('GameStateMachine_8cpp_source.html','')
 <div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        PopState();</div>
 <div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    }</div>
 <div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>}</div>
+</div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>std::stack&lt;std::unique_ptr&lt;duin::GameState&gt;&gt; &amp;duin::GameStateMachine::GetStateStack()</div>
+<div class="foldopen" id="foldopen00306" data-start="{" data-end="}">
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno"><a class="line" href="classduin_1_1GameStateMachine.html#ae1455c5a8b4fe4b1926c7c8f7706956a">  306</a></span>std::stack&lt;std::unique_ptr&lt;duin::GameState&gt;&gt; &amp;<a class="code hl_function" href="classduin_1_1GameStateMachine.html#ae1455c5a8b4fe4b1926c7c8f7706956a">duin::GameStateMachine::GetStateStack</a>()</div>
 <div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>{</div>
 <div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    <span class="keywordflow">return</span> stateStack;</div>
 <div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>}</div>
+</div>
 <div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
 <div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span><span class="keywordtype">void</span> duin::GameStateMachine::Init()</div>
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>{</div>
@@ -507,11 +513,16 @@ $(document).ready(function(){initNavTree('GameStateMachine_8cpp_source.html','')
 <div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span><span class="keywordtype">void</span> duin::GameStateMachine::Debug()</div>
 <div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>{</div>
 <div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>}</div>
-<div class="ttc" id="aclassduin_1_1GameStateMachine_html"><div class="ttname"><a href="classduin_1_1GameStateMachine.html">duin::GameStateMachine</a></div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00019">GameStateMachine.h:20</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_af0d3d6e3a9efebc1bc61d15b500a35b6"><div class="ttname"><a href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">duin::Signal::Emit</a></div><div class="ttdeci">void Emit(types... args)</div><div class="ttdoc">Emits the signal to all connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00083">Signal.h:83</a></div></div>
-<div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00056">UUID.h:57</a></div></div>
-<div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00016">uuid.h:16</a></div></div>
-<div class="ttc" id="astructduin_1_1SignalConnections_html"><div class="ttname"><a href="structduin_1_1SignalConnections.html">duin::SignalConnections</a></div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00007">SignalConnections.h:8</a></div></div>
+<div class="ttc" id="aGameStateMachine_8h_html"><div class="ttname"><a href="GameStateMachine_8h.html">GameStateMachine.h</a></div><div class="ttdoc">Stack-based state machine for application states.</div></div>
+<div class="ttc" id="aclassduin_1_1GameStateMachine_html"><div class="ttname"><a href="classduin_1_1GameStateMachine.html">duin::GameStateMachine</a></div><div class="ttdoc">Stack-based state manager.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00043">GameStateMachine.h:44</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameStateMachine_html_a045b22b2414f922bf8c4aa148986d5fa"><div class="ttname"><a href="classduin_1_1GameStateMachine.html#a045b22b2414f922bf8c4aa148986d5fa">duin::GameStateMachine::PopState</a></div><div class="ttdeci">void PopState()</div><div class="ttdoc">Pops the current state and resumes the previous one.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8cpp_source.html#l00273">GameStateMachine.cpp:273</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameStateMachine_html_a70c34c19eb98b61dbb26d8dfff2e301a"><div class="ttname"><a href="classduin_1_1GameStateMachine.html#a70c34c19eb98b61dbb26d8dfff2e301a">duin::GameStateMachine::FlushStack</a></div><div class="ttdeci">void FlushStack()</div><div class="ttdoc">Exits and removes all states from the stack.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8cpp_source.html#l00293">GameStateMachine.cpp:293</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameStateMachine_html_ae1455c5a8b4fe4b1926c7c8f7706956a"><div class="ttname"><a href="classduin_1_1GameStateMachine.html#ae1455c5a8b4fe4b1926c7c8f7706956a">duin::GameStateMachine::GetStateStack</a></div><div class="ttdeci">std::stack&lt; std::unique_ptr&lt; GameState &gt; &gt; &amp; GetStateStack()</div><div class="ttdoc">Returns reference to the internal state stack.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8cpp_source.html#l00306">GameStateMachine.cpp:306</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_af0d3d6e3a9efebc1bc61d15b500a35b6"><div class="ttname"><a href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">duin::Signal::Emit</a></div><div class="ttdeci">void Emit(types... args)</div><div class="ttdoc">Emits the signal to all connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00084">Signal.h:84</a></div></div>
+<div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00057">UUID.h:58</a></div></div>
+<div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html"><div class="ttname"><a href="structduin_1_1SignalConnections.html">duin::SignalConnections</a></div><div class="ttdoc">Holds UUIDs for signal connections to lifecycle events.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00023">SignalConnections.h:24</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_ae4b429af47a36bd9f63d49a6c759ec2a"><div class="ttname"><a href="structduin_1_1SignalConnections.html#ae4b429af47a36bd9f63d49a6c759ec2a">duin::SignalConnections::onEnter</a></div><div class="ttdeci">UUID onEnter</div><div class="ttdoc">Connection to state enter signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00032">SignalConnections.h:32</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -117,43 +117,62 @@ $(document).ready(function(){initNavTree('Process_8cpp_source.html',''); initRes
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;Process.h&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="Process_8h.html">Process.h</a>&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>std::shared_ptr&lt;duin::Process&gt; duin::CreateProcess(<span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">const</span> *args, <span class="keywordtype">bool</span> pipe_stdio)</div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="}">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="Process_8h.html#a66aa7e632561ba16e7089d64c2732760">    4</a></span>std::shared_ptr&lt;duin::Process&gt; <a class="code hl_function" href="Process_8h.html#a66aa7e632561ba16e7089d64c2732760">duin::CreateProcess</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">const</span> *args, <span class="keywordtype">bool</span> pipe_stdio)</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    std::shared_ptr&lt;Process&gt; proc = std::make_shared&lt;Process&gt;();</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    proc-&gt;sdlProcess = SDL_CreateProcess(args, pipe_stdio);</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keywordflow">return</span> proc;</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>}</div>
+</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keywordtype">void</span> duin::DestroyProcessObject(std::shared_ptr&lt;Process&gt; process)</div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="}">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="Process_8h.html#a292447f87798ed59cfa41af0f93f8eaa">   12</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="Process_8h.html#a292447f87798ed59cfa41af0f93f8eaa">duin::DestroyProcessObject</a>(std::shared_ptr&lt;Process&gt; process)</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    process-&gt;hasBeenDestroyed = <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    SDL_DestroyProcess(process-&gt;sdlProcess);</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
+</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">bool</span> duin::KillProcess(std::shared_ptr&lt;Process&gt; process, <span class="keywordtype">bool</span> force)</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="}">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="Process_8h.html#a85b680e4477174e43d8a275c56d7969d">   18</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="Process_8h.html#a85b680e4477174e43d8a275c56d7969d">duin::KillProcess</a>(std::shared_ptr&lt;Process&gt; process, <span class="keywordtype">bool</span> force)</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">bool</span> res = SDL_KillProcess(process-&gt;sdlProcess, force);</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">return</span> res;</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>}</div>
+</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keywordtype">bool</span> duin::Process::IsAlive()</div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="}">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structduin_1_1Process.html#a95979bc0b00ac76ad4b46f01477381a0">   25</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Process.html#a95979bc0b00ac76ad4b46f01477381a0">duin::Process::IsAlive</a>()</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}</div>
+</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">bool</span> duin::Process::IsBackground()</div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="}">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structduin_1_1Process.html#accf10f9e520b9ed02de541869603852d">   30</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Process.html#accf10f9e520b9ed02de541869603852d">duin::Process::IsBackground</a>()</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
+</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">int</span> duin::Process::GetExitcode()</div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structduin_1_1Process.html#a124d0409bd95d93375dbd72dd0e46508">   35</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="structduin_1_1Process.html#a124d0409bd95d93375dbd72dd0e46508">duin::Process::GetExitcode</a>()</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>{</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>}</div>
+</div>
+<div class="ttc" id="aProcess_8h_html"><div class="ttname"><a href="Process_8h.html">Process.h</a></div><div class="ttdoc">External process management.</div></div>
+<div class="ttc" id="aProcess_8h_html_a292447f87798ed59cfa41af0f93f8eaa"><div class="ttname"><a href="Process_8h.html#a292447f87798ed59cfa41af0f93f8eaa">duin::DestroyProcessObject</a></div><div class="ttdeci">void DestroyProcessObject(std::shared_ptr&lt; Process &gt; process)</div><div class="ttdoc">Releases process resources.</div><div class="ttdef"><b>Definition</b> <a href="Process_8cpp_source.html#l00012">Process.cpp:12</a></div></div>
+<div class="ttc" id="aProcess_8h_html_a66aa7e632561ba16e7089d64c2732760"><div class="ttname"><a href="Process_8h.html#a66aa7e632561ba16e7089d64c2732760">duin::CreateProcess</a></div><div class="ttdeci">std::shared_ptr&lt; Process &gt; CreateProcess(const char *const *args, bool pipe_stdio)</div><div class="ttdoc">Spawns an external process.</div><div class="ttdef"><b>Definition</b> <a href="Process_8cpp_source.html#l00004">Process.cpp:4</a></div></div>
+<div class="ttc" id="aProcess_8h_html_a85b680e4477174e43d8a275c56d7969d"><div class="ttname"><a href="Process_8h.html#a85b680e4477174e43d8a275c56d7969d">duin::KillProcess</a></div><div class="ttdeci">bool KillProcess(std::shared_ptr&lt; Process &gt; process, bool force)</div><div class="ttdoc">Terminates a running process.</div><div class="ttdef"><b>Definition</b> <a href="Process_8cpp_source.html#l00018">Process.cpp:18</a></div></div>
+<div class="ttc" id="astructduin_1_1Process_html_a124d0409bd95d93375dbd72dd0e46508"><div class="ttname"><a href="structduin_1_1Process.html#a124d0409bd95d93375dbd72dd0e46508">duin::Process::GetExitcode</a></div><div class="ttdeci">int GetExitcode()</div><div class="ttdoc">Returns the exit code (valid only after process terminates).</div><div class="ttdef"><b>Definition</b> <a href="Process_8cpp_source.html#l00035">Process.cpp:35</a></div></div>
+<div class="ttc" id="astructduin_1_1Process_html_a95979bc0b00ac76ad4b46f01477381a0"><div class="ttname"><a href="structduin_1_1Process.html#a95979bc0b00ac76ad4b46f01477381a0">duin::Process::IsAlive</a></div><div class="ttdeci">bool IsAlive()</div><div class="ttdoc">Returns true if the process is still running.</div><div class="ttdef"><b>Definition</b> <a href="Process_8cpp_source.html#l00025">Process.cpp:25</a></div></div>
+<div class="ttc" id="astructduin_1_1Process_html_accf10f9e520b9ed02de541869603852d"><div class="ttname"><a href="structduin_1_1Process.html#accf10f9e520b9ed02de541869603852d">duin::Process::IsBackground</a></div><div class="ttdeci">bool IsBackground()</div><div class="ttdoc">Returns true if process was spawned in background mode.</div><div class="ttdef"><b>Definition</b> <a href="Process_8cpp_source.html#l00030">Process.cpp:30</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

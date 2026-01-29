@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Duin: duin::Camera Class Reference</title>
+<title>Duin: duin::Camera Struct Reference</title>
 <!--BEGIN PROJECT_ICON-->
 <link rel="icon" href="$projecticon" type="image/x-icon" />
 <!--END PROJECT_ICON-->
@@ -112,11 +112,11 @@ $(document).ready(function(){initNavTree('structduin_1_1Camera.html',''); initRe
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structduin_1_1Camera-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::Camera Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::Camera Struct Reference<div class="ingroups"><a class="el" href="group__Render.html">Render Module</a> &raquo; <a class="el" href="group__Render__Camera.html">Camera</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>The struct for the primitive camera. The camera uses an orthogonal axis system of FORWARD, RIGHT, UP. FORWARD is gotten from $target - position$. RIGHT is derived from the cross-product of FORWARD and a user-given global up reference. UP is derived from the cross-product of FORWARD and RIGHT.  
+<p>3D camera with position, target, and orientation.  
  <a href="structduin_1_1Camera.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Camera_8h_source.html">Camera.h</a>&gt;</code></p>
@@ -125,7 +125,7 @@ Collaboration diagram for duin::Camera:</div>
 <div class="dyncontent">
 <div class="center"><img src="structduin_1_1Camera__coll__graph.png" border="0" usemap="#aduin_1_1Camera_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1Camera_coll__map" id="aduin_1_1Camera_coll__map">
-<area shape="rect" title="The struct for the primitive camera. The camera uses an orthogonal axis system of FORWARD,..." alt="" coords="99,259,209,284"/>
+<area shape="rect" title="3D camera with position, target, and orientation." alt="" coords="99,259,209,284"/>
 <area shape="rect" href="classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="5,73,97,99"/>
 <area shape="poly" title=" " alt="" coords="67,109,150,257,145,260,62,112"/>
 <area shape="poly" title=" " alt="" coords="76,64,92,60,108,62,120,71,124,86,118,103,103,111,83,111,63,101,66,96,84,105,101,106,114,100,119,86,115,74,106,67,93,65,77,69"/>
@@ -160,10 +160,15 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ad8045c6a106adbcec481cbfd115625f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The struct for the primitive camera. The camera uses an orthogonal axis system of FORWARD, RIGHT, UP. FORWARD is gotten from $target - position$. RIGHT is derived from the cross-product of FORWARD and a user-given global up reference. UP is derived from the cross-product of FORWARD and RIGHT. </p>
-<p>The world axis orientation use the right-hand rule, with positive Z pointing "out of" the screen, similar to Godot. </p>
+<div class="textblock"><p>3D camera with position, target, and orientation. </p>
+<p>Uses an orthogonal axis system derived from position, target, and up reference:</p><ul>
+<li>FORWARD = normalize(target - position)</li>
+<li>RIGHT = normalize(FORWARD × up_reference)</li>
+<li>UP = normalize(RIGHT × FORWARD)</li>
+</ul>
+<p>Coordinate system: Right-hand rule, +Z toward viewer (same as Godot). </p>
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00020">20</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00029">29</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a878cf8fb55cbf778ed7fe73ae718cdf7" name="a878cf8fb55cbf778ed7fe73ae718cdf7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a878cf8fb55cbf778ed7fe73ae718cdf7">&#9670;&#160;</a></span>Camera() <span class="overload">[1/3]</span></h2>
@@ -188,7 +193,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00028">28</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00038">38</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -244,7 +249,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00029">29</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00041">41</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -272,7 +277,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00037">37</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00049">49</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -300,7 +305,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00047">47</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00061">61</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -344,7 +349,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00038">38</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00052">52</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -361,7 +366,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00026">26</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00036">36</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -377,7 +382,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00022">22</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00032">32</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -393,7 +398,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00023">23</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00033">33</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +414,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00025">25</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00035">35</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
@@ -425,11 +430,11 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00021">21</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Camera_8h_source.html#l00031">31</a> of file <a class="el" href="Camera_8h_source.html">Camera.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="Camera_8h_source.html">Camera.h</a></li>
 </ul>
 </div><!-- contents -->

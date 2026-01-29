@@ -111,15 +111,20 @@ $(document).ready(function(){initNavTree('structduin_1_1InputAction.html',''); i
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structduin_1_1InputAction-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::InputAction Struct Reference</div></div>
+  <div class="headertitle"><div class="title">duin::InputAction Struct Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Module</a> &raquo; <a class="el" href="group__Core__Events.html">Events</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Named action with multiple input bindings.  
+ <a href="structduin_1_1InputAction.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="InputActions_8h_source.html">InputActions.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for duin::InputAction:</div>
 <div class="dyncontent">
 <div class="center"><img src="structduin_1_1InputAction__coll__graph.png" border="0" usemap="#aduin_1_1InputAction_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1InputAction_coll__map" id="aduin_1_1InputAction_coll__map">
-<area shape="rect" title=" " alt="" coords="5,93,137,119"/>
+<area shape="rect" title="Named action with multiple input bindings." alt="" coords="5,93,137,119"/>
 <area shape="rect" href="classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="25,5,117,31"/>
 <area shape="poly" title=" " alt="" coords="74,45,74,93,69,93,69,45"/>
 <area shape="poly" title=" " alt="" coords="132,9,144,18,136,26,118,29,117,23,133,21,139,18,129,14"/>
@@ -129,15 +134,20 @@ Collaboration diagram for duin::InputAction:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a6b261fe14f2962cc68d89c5837548f5d" id="r_a6b261fe14f2962cc68d89c5837548f5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1InputAction.html#a6b261fe14f2962cc68d89c5837548f5d">uuid</a></td></tr>
+<tr class="memdesc:a6b261fe14f2962cc68d89c5837548f5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique identifier.  <br /></td></tr>
 <tr class="separator:a6b261fe14f2962cc68d89c5837548f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6015aa2f6f06b6669ac906332673dd96" id="r_a6015aa2f6f06b6669ac906332673dd96"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1InputAction.html#a6015aa2f6f06b6669ac906332673dd96">name</a></td></tr>
+<tr class="memdesc:a6015aa2f6f06b6669ac906332673dd96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Action name for lookup.  <br /></td></tr>
 <tr class="separator:a6015aa2f6f06b6669ac906332673dd96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26f171155babdd8d3731a21bbc99279e" id="r_a26f171155babdd8d3731a21bbc99279e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structduin_1_1InputBinding.html">InputBinding</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1InputAction.html#a26f171155babdd8d3731a21bbc99279e">inputBindings</a></td></tr>
+<tr class="memdesc:a26f171155babdd8d3731a21bbc99279e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associated input bindings.  <br /></td></tr>
 <tr class="separator:a26f171155babdd8d3731a21bbc99279e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00047">47</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
+<div class="textblock"><p>Named action with multiple input bindings. </p>
+<p>An action represents a game concept (e.g., "jump", "fire") that can be triggered by any of its associated bindings. </p>
+
+<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00109">109</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a26f171155babdd8d3731a21bbc99279e" name="a26f171155babdd8d3731a21bbc99279e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a26f171155babdd8d3731a21bbc99279e">&#9670;&#160;</a></span>inputBindings</h2>
@@ -151,7 +161,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00050">50</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
+<p>Associated input bindings. </p>
+
+<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00113">113</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
 
 </div>
 </div>
@@ -167,7 +179,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00049">49</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
+<p>Action name for lookup. </p>
+
+<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00112">112</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
 
 </div>
 </div>
@@ -183,7 +197,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00048">48</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
+<p>Unique identifier. </p>
+
+<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00111">111</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
 
 </div>
 </div>

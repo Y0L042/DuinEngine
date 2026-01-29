@@ -113,13 +113,19 @@ $(document).ready(function(){initNavTree('classduin_1_1Event.html',''); initResi
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classduin_1_1Event-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::Event Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::Event Class Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Module</a> &raquo; <a class="el" href="group__Core__Events.html">Events</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base wrapper for SDL events.  
+ <a href="classduin_1_1Event.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Event_8h_source.html">Event.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a0acf12d5fc855664d832a310cfcabad9" id="r_a0acf12d5fc855664d832a310cfcabad9"><td class="memItemLeft" align="right" valign="top">::SDL_Event&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Event.html#a0acf12d5fc855664d832a310cfcabad9">sdlEvent</a></td></tr>
+<tr class="memdesc:a0acf12d5fc855664d832a310cfcabad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying SDL event data.  <br /></td></tr>
 <tr class="separator:a0acf12d5fc855664d832a310cfcabad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
@@ -133,8 +139,10 @@ Friends</h2></td></tr>
 <tr class="separator:a0b257358246ba8f9c2f228c35e4f3e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Event_8h_source.html#l00008">8</a> of file <a class="el" href="Event_8h_source.html">Event.h</a>.</p>
+<div class="textblock"><p>Base wrapper for SDL events. </p>
+<p>Wraps an SDL_Event for use in the engine's event system. Derived classes provide type-specific query methods. </p>
+
+<p class="definition">Definition at line <a class="el" href="Event_8h_source.html#l00025">25</a> of file <a class="el" href="Event_8h_source.html">Event.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a4a1fddbe70aa05e89dd8a811efe1bb88" name="a4a1fddbe70aa05e89dd8a811efe1bb88"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4a1fddbe70aa05e89dd8a811efe1bb88">&#9670;&#160;</a></span>SetSDLEvent()</h2>
@@ -160,7 +168,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Event_8cpp_source.html#l00005">5</a> of file <a class="el" href="Event_8cpp_source.html">Event.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Event_8cpp_source.html#l00006">6</a> of file <a class="el" href="Event_8cpp_source.html">Event.cpp</a>.</p>
 
 </div>
 </div>
@@ -185,7 +193,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Event_8h_source.html#l00014">14</a> of file <a class="el" href="Event_8h_source.html">Event.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Event_8h_source.html#l00031">31</a> of file <a class="el" href="Event_8h_source.html">Event.h</a>.</p>
 
 </div>
 </div>
@@ -202,7 +210,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Event_8h_source.html#l00011">11</a> of file <a class="el" href="Event_8h_source.html">Event.h</a>.</p>
+<p>The underlying SDL event data. </p>
+
+<p class="definition">Definition at line <a class="el" href="Event_8h_source.html#l00028">28</a> of file <a class="el" href="Event_8h_source.html">Event.h</a>.</p>
 
 </div>
 </div>

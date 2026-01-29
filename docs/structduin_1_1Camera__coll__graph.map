@@ -1,5 +1,5 @@
 <map id="duin::Camera" name="duin::Camera">
-<area shape="rect" id="Node000001" title="The struct for the primitive camera. The camera uses an orthogonal axis system of FORWARD,..." alt="" coords="99,259,209,284"/>
+<area shape="rect" id="Node000001" title="3D camera with position, target, and orientation." alt="" coords="99,259,209,284"/>
 <area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="5,73,97,99"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="67,109,150,257,145,260,62,112"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="76,64,92,60,108,62,120,71,124,86,118,103,103,111,83,111,63,101,66,96,84,105,101,106,114,100,119,86,115,74,106,67,93,65,77,69"/>

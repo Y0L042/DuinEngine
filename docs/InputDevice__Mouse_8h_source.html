@@ -116,54 +116,68 @@ $(document).ready(function(){initNavTree('InputDevice__Mouse_8h_source.html','')
   <div class="headertitle"><div class="title">InputDevice_Mouse.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;Input.h&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;InputActions.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>duin {</div>
-<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="structduin_1_1InputDevice__Mouse.html">    7</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1InputDevice__Mouse.html">InputDevice_Mouse</a> : <span class="keyword">public</span> <a class="code hl_struct" href="structduin_1_1InputDevice.html">InputDevice</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <a class="code hl_struct" href="structduin_1_1InputDevice__Mouse.html">InputDevice_Mouse</a>()</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>            : <a class="code hl_struct" href="structduin_1_1InputDevice.html">InputDevice</a>() {}</div>
+<a href="InputDevice__Mouse_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="Input_8h.html">Input.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="InputActions_8h.html">InputActions.h</a>&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="keywordtype">bool</span> GetEvent(DN_Keycode key, Input::KeyEvent event)<span class="keyword"> override</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            <span class="keywordflow">switch</span> (event) {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>                <span class="keywordflow">case</span> Input::KeyEvent::HELD:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>                    <span class="keywordflow">return</span> Input::IsMouseButtonDown(key);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>                <span class="keywordflow">case</span> Input::KeyEvent::IDLE:</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                    <span class="keywordflow">return</span> Input::IsMouseButtonUp(key);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                <span class="keywordflow">case</span> Input::KeyEvent::PRESSED:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                    <span class="keywordflow">return</span> Input::IsMouseButtonPressed(key);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                <span class="keywordflow">case</span> Input::KeyEvent::PRESSED_REPEATED:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                    <span class="keywordflow">return</span> Input::IsMouseButtonPressed(key);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                <span class="keywordflow">case</span> Input::KeyEvent::RELEASED:</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                    <span class="keywordflow">return</span> Input::IsMouseButtonReleased(key);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                <span class="keywordflow">default</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            }</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        };</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    };</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>duin</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structduin_1_1InputDevice__Mouse.html">   23</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1InputDevice__Mouse.html">InputDevice_Mouse</a> : <span class="keyword">public</span> <a class="code hl_struct" href="structduin_1_1InputDevice.html">InputDevice</a></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_struct" href="structduin_1_1InputDevice__Mouse.html">InputDevice_Mouse</a>() : <a class="code hl_struct" href="structduin_1_1InputDevice.html">InputDevice</a>()</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="structduin_1_1InputDevice__Mouse.html#a7719ceccc0344904749de20b45d2f3f2">   29</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1InputDevice__Mouse.html#a7719ceccc0344904749de20b45d2f3f2">GetEvent</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> key, <a class="code hl_enumeration" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434f">Input::KeyEvent</a> event)<span class="keyword"> override</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">switch</span> (event)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa75d0bb08d162d1a8c6e1c784b24b94c3">Input::KeyEvent::HELD</a>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a56b012ed2b366b5b89110020745fd9d7">Input::IsMouseButtonDown</a>(key);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa9d7cad9abc3c5879a2fa4abe8ce5bddc">Input::KeyEvent::IDLE</a>:</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#ad8dc3b16ac35ccaa5ac814a19d3a2604">Input::IsMouseButtonUp</a>(key);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa5c3599a8fb127004e682dc79f2ba73b5">Input::KeyEvent::PRESSED</a>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#aba7c0d7708d5c7eb542d11380dafdd87">Input::IsMouseButtonPressed</a>(key);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fae37eeb7fbd44d63ae022941dfd3b0904">Input::KeyEvent::PRESSED_REPEATED</a>:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#aba7c0d7708d5c7eb542d11380dafdd87">Input::IsMouseButtonPressed</a>(key);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa1c302a4a4d7160390e7c7437cf5ca810">Input::KeyEvent::RELEASED</a>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#aec12cb0a0f95b799792cc5a663c2d79c">Input::IsMouseButtonReleased</a>(key);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        }</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
 </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>}</div>
-<div class="ttc" id="astructduin_1_1InputDevice__Mouse_html"><div class="ttname"><a href="structduin_1_1InputDevice__Mouse.html">duin::InputDevice_Mouse</a></div><div class="ttdef"><b>Definition</b> <a href="InputDevice__Mouse_8h_source.html#l00007">InputDevice_Mouse.h:8</a></div></div>
-<div class="ttc" id="astructduin_1_1InputDevice_html"><div class="ttname"><a href="structduin_1_1InputDevice.html">duin::InputDevice</a></div><div class="ttdef"><b>Definition</b> <a href="InputActions_8h_source.html#l00011">InputActions.h:11</a></div></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>} <span class="comment">// namespace duin</span></div>
+<div class="ttc" id="aEvent_8h_html_aeadd8af7c6834ea8e206fb9365a066e9"><div class="ttname"><a href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">duin::DN_Keycode</a></div><div class="ttdeci">Uint32 DN_Keycode</div><div class="ttdoc">Key code type (SDL scancode).</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00015">Event.h:15</a></div></div>
+<div class="ttc" id="aInputActions_8h_html"><div class="ttname"><a href="InputActions_8h.html">InputActions.h</a></div><div class="ttdoc">Action-based input system.</div></div>
+<div class="ttc" id="aInput_8h_html"><div class="ttname"><a href="Input_8h.html">Input.h</a></div><div class="ttdoc">Low-level input query functions.</div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4440e583f86b08250aa4074302c9434f"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434f">duin::Input::KeyEvent</a></div><div class="ttdeci">KeyEvent</div><div class="ttdoc">Types of key/button events.</div><div class="ttdef"><b>Definition</b> <a href="Input_8h_source.html#l00042">Input.h:43</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4440e583f86b08250aa4074302c9434fa1c302a4a4d7160390e7c7437cf5ca810"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa1c302a4a4d7160390e7c7437cf5ca810">duin::Input::RELEASED</a></div><div class="ttdeci">@ RELEASED</div><div class="ttdoc">Key was just released this frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8h_source.html#l00047">Input.h:47</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4440e583f86b08250aa4074302c9434fa5c3599a8fb127004e682dc79f2ba73b5"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa5c3599a8fb127004e682dc79f2ba73b5">duin::Input::PRESSED</a></div><div class="ttdeci">@ PRESSED</div><div class="ttdoc">Key was just pressed this frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8h_source.html#l00044">Input.h:44</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4440e583f86b08250aa4074302c9434fa75d0bb08d162d1a8c6e1c784b24b94c3"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa75d0bb08d162d1a8c6e1c784b24b94c3">duin::Input::HELD</a></div><div class="ttdeci">@ HELD</div><div class="ttdoc">Key is currently held down.</div><div class="ttdef"><b>Definition</b> <a href="Input_8h_source.html#l00046">Input.h:46</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4440e583f86b08250aa4074302c9434fa9d7cad9abc3c5879a2fa4abe8ce5bddc"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa9d7cad9abc3c5879a2fa4abe8ce5bddc">duin::Input::IDLE</a></div><div class="ttdeci">@ IDLE</div><div class="ttdoc">Key is not pressed.</div><div class="ttdef"><b>Definition</b> <a href="Input_8h_source.html#l00049">Input.h:48</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4440e583f86b08250aa4074302c9434fae37eeb7fbd44d63ae022941dfd3b0904"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fae37eeb7fbd44d63ae022941dfd3b0904">duin::Input::PRESSED_REPEATED</a></div><div class="ttdeci">@ PRESSED_REPEATED</div><div class="ttdoc">Key is repeating (held down, OS repeat).</div><div class="ttdef"><b>Definition</b> <a href="Input_8h_source.html#l00045">Input.h:45</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a56b012ed2b366b5b89110020745fd9d7"><div class="ttname"><a href="namespaceduin_1_1Input.html#a56b012ed2b366b5b89110020745fd9d7">duin::Input::IsMouseButtonDown</a></div><div class="ttdeci">int IsMouseButtonDown(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button is held down.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00205">Input.cpp:205</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_aba7c0d7708d5c7eb542d11380dafdd87"><div class="ttname"><a href="namespaceduin_1_1Input.html#aba7c0d7708d5c7eb542d11380dafdd87">duin::Input::IsMouseButtonPressed</a></div><div class="ttdeci">int IsMouseButtonPressed(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button was pressed this frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00200">Input.cpp:200</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_ad8dc3b16ac35ccaa5ac814a19d3a2604"><div class="ttname"><a href="namespaceduin_1_1Input.html#ad8dc3b16ac35ccaa5ac814a19d3a2604">duin::Input::IsMouseButtonUp</a></div><div class="ttdeci">int IsMouseButtonUp(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button is not pressed.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00215">Input.cpp:215</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_aec12cb0a0f95b799792cc5a663c2d79c"><div class="ttname"><a href="namespaceduin_1_1Input.html#aec12cb0a0f95b799792cc5a663c2d79c">duin::Input::IsMouseButtonReleased</a></div><div class="ttdeci">int IsMouseButtonReleased(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button was released this frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00210">Input.cpp:210</a></div></div>
+<div class="ttc" id="astructduin_1_1InputDevice__Mouse_html"><div class="ttname"><a href="structduin_1_1InputDevice__Mouse.html">duin::InputDevice_Mouse</a></div><div class="ttdoc">Mouse implementation of InputDevice.</div><div class="ttdef"><b>Definition</b> <a href="InputDevice__Mouse_8h_source.html#l00023">InputDevice_Mouse.h:24</a></div></div>
+<div class="ttc" id="astructduin_1_1InputDevice__Mouse_html_a7719ceccc0344904749de20b45d2f3f2"><div class="ttname"><a href="structduin_1_1InputDevice__Mouse.html#a7719ceccc0344904749de20b45d2f3f2">duin::InputDevice_Mouse::GetEvent</a></div><div class="ttdeci">bool GetEvent(DN_Keycode key, Input::KeyEvent event) override</div><div class="ttdoc">Queries the device for a specific input state.</div><div class="ttdef"><b>Definition</b> <a href="InputDevice__Mouse_8h_source.html#l00029">InputDevice_Mouse.h:29</a></div></div>
+<div class="ttc" id="astructduin_1_1InputDevice_html"><div class="ttname"><a href="structduin_1_1InputDevice.html">duin::InputDevice</a></div><div class="ttdoc">Base interface for input devices.</div><div class="ttdef"><b>Definition</b> <a href="InputActions_8h_source.html#l00042">InputActions.h:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0265bf50e0ea2445a73dc7360c887a9e.html">Duin</a></li><li class="navelem"><a class="el" href="dir_e929981daf984fe98eaef57e7e1c872f.html">Core</a></li><li class="navelem"><a class="el" href="dir_06228a9601ec3fb28510acbf085a4907.html">Events</a></li><li class="navelem"><b>InputDevice_Mouse.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0265bf50e0ea2445a73dc7360c887a9e.html">Duin</a></li><li class="navelem"><a class="el" href="dir_e929981daf984fe98eaef57e7e1c872f.html">Core</a></li><li class="navelem"><a class="el" href="dir_06228a9601ec3fb28510acbf085a4907.html">Events</a></li><li class="navelem"><a class="el" href="InputDevice__Mouse_8h.html">InputDevice_Mouse.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

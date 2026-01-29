@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['_7eentity_0',['~Entity',['../classduin_1_1Entity.html#a8ed57407b083c48309d557dd94db5ac9',1,'duin::Entity']]],
-  ['_7equery_1',['~Query',['../classduin_1_1Query.html#a6db31c88bb80d0f3c2d973d1f2a24f3e',1,'duin::Query']]],
-  ['_7euuid_2',['~UUID',['../classduin_1_1UUID.html#a9898c2cb05549289bf45bcb7331fba0a',1,'duin::UUID']]],
-  ['_7eworld_3',['~World',['../classduin_1_1World.html#ac2ea76616131c376b7ab78d3d070c8b7',1,'duin::World']]]
+  ['withcomponent_0',['WithComponent',['../classduin_1_1Entity.html#a3d621a2d7e6f12c53315dac5c318ac59',1,'duin::Entity']]],
+  ['withscope_1',['WithScope',['../classduin_1_1Entity.html#a672a996d240bdf7c7d51590b80b8427b',1,'duin::Entity']]],
+  ['world_2',['World',['../classduin_1_1World.html#a5671bad8729f782406f211f7d00d3201',1,'duin::World']]],
+  ['write_3',['write',['../classduin_1_1JSONValue.html#a206fe64381885c12007f922de21c4589',1,'duin::JSONValue::Write(const JSONValue &amp;value, bool prettyWrite=false)'],['../classduin_1_1JSONValue.html#a0bf71097ed1b6134f83514997f02d935',1,'duin::JSONValue::Write() const']]]
 ];

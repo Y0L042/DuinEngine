@@ -1,0 +1,11 @@
+<map id="Process.h" name="Process.h">
+<area shape="rect" id="Node000001" title="External process management." alt="" coords="82,5,166,31"/>
+<area shape="rect" id="Node000002" href="$Process_8cpp_source.html" title=" " alt="" coords="5,79,104,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,43,68,80,64,77,101,39"/>
+<area shape="rect" id="Node000003" href="$ProcessModule_8h_source.html" title=" " alt="" coords="129,79,261,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="147,39,185,77,181,80,143,43"/>
+<area shape="rect" id="Node000004" href="$Duin_8h_source.html" title=" " alt="" coords="163,152,227,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="197,118,197,152,192,152,192,118"/>
+<area shape="rect" id="Node000005" href="$Duin_8cpp_source.html" title=" " alt="" coords="155,225,234,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="197,191,197,225,192,225,192,191"/>
+</map>

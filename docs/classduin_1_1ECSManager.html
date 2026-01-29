@@ -112,36 +112,52 @@ $(document).ready(function(){initNavTree('classduin_1_1ECSManager.html',''); ini
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classduin_1_1ECSManager-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::ECSManager Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::ECSManager Class Reference<div class="ingroups"><a class="el" href="group__ECS.html">Entity Component System</a> &raquo; <a class="el" href="group__ECS__Manager.html">Manager</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Central ECS world manager.  
+ <a href="classduin_1_1ECSManager.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="ECSManager_8h_source.html">ECSManager.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad4c0044b3f6eb5b6300dc1421e1f4e56" id="r_ad4c0044b3f6eb5b6300dc1421e1f4e56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#ad4c0044b3f6eb5b6300dc1421e1f4e56">Initialize</a> ()</td></tr>
+<tr class="memdesc:ad4c0044b3f6eb5b6300dc1421e1f4e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the ECS world and registers components.  <br /></td></tr>
 <tr class="separator:ad4c0044b3f6eb5b6300dc1421e1f4e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1268fa6f425a1f39316fdc757e5e706e" id="r_a1268fa6f425a1f39316fdc757e5e706e"><td class="memItemLeft" align="right" valign="top">flecs::entity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a1268fa6f425a1f39316fdc757e5e706e">CreateEntityFromJSON</a> (<a class="el" href="classduin_1_1JSONMember.html">JSONMember</a> &amp;member)</td></tr>
+<tr class="memdesc:a1268fa6f425a1f39316fdc757e5e706e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates entity from JSON data.  <br /></td></tr>
 <tr class="separator:a1268fa6f425a1f39316fdc757e5e706e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a80ca8e1a43168194925b40c3a76af7" id="r_a0a80ca8e1a43168194925b40c3a76af7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a0a80ca8e1a43168194925b40c3a76af7">ActivateCameraEntity</a> (flecs::entity entity)</td></tr>
+<tr class="memdesc:a0a80ca8e1a43168194925b40c3a76af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the given entity as the active camera.  <br /></td></tr>
 <tr class="separator:a0a80ca8e1a43168194925b40c3a76af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd46c0ac5cf06d856dc9fe2a6516e946" id="r_acd46c0ac5cf06d856dc9fe2a6516e946"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#acd46c0ac5cf06d856dc9fe2a6516e946">PostUpdateQueryExecution</a> (double delta)</td></tr>
+<tr class="memdesc:acd46c0ac5cf06d856dc9fe2a6516e946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs post-update queries. Called by engine.  <br /></td></tr>
 <tr class="separator:acd46c0ac5cf06d856dc9fe2a6516e946"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a3ff0734747b98bf7c458087b9d99c3" id="r_a4a3ff0734747b98bf7c458087b9d99c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a4a3ff0734747b98bf7c458087b9d99c3">PostPhysicsUpdateQueryExecution</a> (double delta)</td></tr>
+<tr class="memdesc:a4a3ff0734747b98bf7c458087b9d99c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs post-physics queries. Called by engine.  <br /></td></tr>
 <tr class="separator:a4a3ff0734747b98bf7c458087b9d99c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab78d79de8ed5c09f341e3d1523410548" id="r_ab78d79de8ed5c09f341e3d1523410548"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#ab78d79de8ed5c09f341e3d1523410548">PostDrawQueryExecution</a> ()</td></tr>
+<tr class="memdesc:ab78d79de8ed5c09f341e3d1523410548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs post-draw queries. Called by engine.  <br /></td></tr>
 <tr class="separator:ab78d79de8ed5c09f341e3d1523410548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa11cad89fbe873589f093d5d69e412b4" id="r_aa11cad89fbe873589f093d5d69e412b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#aa11cad89fbe873589f093d5d69e412b4">PostDrawUIQueryExecution</a> ()</td></tr>
+<tr class="memdesc:aa11cad89fbe873589f093d5d69e412b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs post-draw-UI queries. Called by engine.  <br /></td></tr>
 <tr class="separator:aa11cad89fbe873589f093d5d69e412b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a597d35a44d4363e5c53ca81665346fec" id="r_a597d35a44d4363e5c53ca81665346fec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a597d35a44d4363e5c53ca81665346fec">Clear</a> ()</td></tr>
+<tr class="memdesc:a597d35a44d4363e5c53ca81665346fec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all entities from the world.  <br /></td></tr>
 <tr class="separator:a597d35a44d4363e5c53ca81665346fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa54869c664fdf4a2a0258d065282eed3" id="r_aa54869c664fdf4a2a0258d065282eed3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#aa54869c664fdf4a2a0258d065282eed3">ExecuteQuerySetCameraAsActive</a> ()</td></tr>
+<tr class="memdesc:aa54869c664fdf4a2a0258d065282eed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes camera activation requests.  <br /></td></tr>
+<tr class="separator:aa54869c664fdf4a2a0258d065282eed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Transform Queries</div></td></tr>
 <tr class="memitem:a198cee8406ff92e127be72c0ab8e1e75" id="r_a198cee8406ff92e127be72c0ab8e1e75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a198cee8406ff92e127be72c0ab8e1e75">ExecuteQueryTransform3DHierarchicalUpdate</a> ()</td></tr>
 <tr class="separator:a198cee8406ff92e127be72c0ab8e1e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cc8ae1ef9db0b95982af940927bccc5" id="r_a2cc8ae1ef9db0b95982af940927bccc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a2cc8ae1ef9db0b95982af940927bccc5">ExecuteQueryCharacterBody3DUpdateTransform</a> ()</td></tr>
 <tr class="separator:a2cc8ae1ef9db0b95982af940927bccc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64e10b7d13bc7bb6eee03216cadab4de" id="r_a64e10b7d13bc7bb6eee03216cadab4de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a64e10b7d13bc7bb6eee03216cadab4de">ExecuteQuerySyncDynamicBody3DTransform</a> ()</td></tr>
 <tr class="separator:a64e10b7d13bc7bb6eee03216cadab4de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa54869c664fdf4a2a0258d065282eed3" id="r_aa54869c664fdf4a2a0258d065282eed3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#aa54869c664fdf4a2a0258d065282eed3">ExecuteQuerySetCameraAsActive</a> ()</td></tr>
-<tr class="separator:aa54869c664fdf4a2a0258d065282eed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Render Queries</div></td></tr>
 <tr class="memitem:a96ea9f7b44960ed00124affc7f1efa14" id="r_a96ea9f7b44960ed00124affc7f1efa14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a96ea9f7b44960ed00124affc7f1efa14">ExecuteQueryControlCamera</a> ()</td></tr>
 <tr class="separator:a96ea9f7b44960ed00124affc7f1efa14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad99c873cabd1440ab6dfa0f2b35d3e4f" id="r_ad99c873cabd1440ab6dfa0f2b35d3e4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#ad99c873cabd1440ab6dfa0f2b35d3e4f">ExecuteQueryDrawCube</a> ()</td></tr>
@@ -154,11 +170,24 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a404235aea8778cc12bfd1e8307ca7c21" id="r_a404235aea8778cc12bfd1e8307ca7c21"><td class="memItemLeft" align="right" valign="top">flecs::world&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ECSManager.html#a404235aea8778cc12bfd1e8307ca7c21">world</a></td></tr>
+<tr class="memdesc:a404235aea8778cc12bfd1e8307ca7c21"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FLECS world instance.  <br /></td></tr>
 <tr class="separator:a404235aea8778cc12bfd1e8307ca7c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="ECSManager_8h_source.html#l00817">817</a> of file <a class="el" href="ECSManager_8h_source.html">ECSManager.h</a>.</p>
+<div class="textblock"><p>Central ECS world manager. </p>
+<p>Owns the FLECS world and provides methods for entity creation, component registration, and query execution. Each scene/tab in the editor has its own <a class="el" href="classduin_1_1ECSManager.html" title="Central ECS world manager.">ECSManager</a> instance.</p>
+<div class="fragment"><div class="line"><a class="code hl_class" href="classduin_1_1ECSManager.html">ECSManager</a> ecs;</div>
+<div class="line">ecs.<a class="code hl_function" href="classduin_1_1ECSManager.html#ad4c0044b3f6eb5b6300dc1421e1f4e56">Initialize</a>();</div>
+<div class="line"> </div>
+<div class="line">flecs::entity e = ecs.<a class="code hl_variable" href="classduin_1_1ECSManager.html#a404235aea8778cc12bfd1e8307ca7c21">world</a>.entity()</div>
+<div class="line">    .is_a(ECSPrefab::Node3D)</div>
+<div class="line">    .set&lt;<a class="code hl_struct" href="structduin_1_1ECSComponent_1_1Transform3D.html">ECSComponent::Transform3D</a>&gt;({position});</div>
+<div class="ttc" id="aclassduin_1_1ECSManager_html"><div class="ttname"><a href="classduin_1_1ECSManager.html">duin::ECSManager</a></div><div class="ttdoc">Central ECS world manager.</div><div class="ttdef"><b>Definition</b> <a href="ECSManager_8h_source.html#l01063">ECSManager.h:1064</a></div></div>
+<div class="ttc" id="aclassduin_1_1ECSManager_html_a404235aea8778cc12bfd1e8307ca7c21"><div class="ttname"><a href="classduin_1_1ECSManager.html#a404235aea8778cc12bfd1e8307ca7c21">duin::ECSManager::world</a></div><div class="ttdeci">flecs::world world</div><div class="ttdoc">The FLECS world instance.</div><div class="ttdef"><b>Definition</b> <a href="ECSManager_8h_source.html#l01066">ECSManager.h:1066</a></div></div>
+<div class="ttc" id="aclassduin_1_1ECSManager_html_ad4c0044b3f6eb5b6300dc1421e1f4e56"><div class="ttname"><a href="classduin_1_1ECSManager.html#ad4c0044b3f6eb5b6300dc1421e1f4e56">duin::ECSManager::Initialize</a></div><div class="ttdeci">void Initialize()</div><div class="ttdoc">Initializes the ECS world and registers components.</div><div class="ttdef"><b>Definition</b> <a href="ECSManager_8cpp_source.html#l00202">ECSManager.cpp:202</a></div></div>
+<div class="ttc" id="astructduin_1_1ECSComponent_1_1Transform3D_html"><div class="ttname"><a href="structduin_1_1ECSComponent_1_1Transform3D.html">duin::ECSComponent::Transform3D</a></div><div class="ttdoc">Hierarchical 3D transform with caching.</div><div class="ttdef"><b>Definition</b> <a href="ECSManager_8h_source.html#l00289">ECSManager.h:290</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="ECSManager_8h_source.html#l01063">1063</a> of file <a class="el" href="ECSManager_8h_source.html">ECSManager.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0a80ca8e1a43168194925b40c3a76af7" name="a0a80ca8e1a43168194925b40c3a76af7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0a80ca8e1a43168194925b40c3a76af7">&#9670;&#160;</a></span>ActivateCameraEntity()</h2>
@@ -176,7 +205,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00251">251</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Sets the given entity as the active camera. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00228">228</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -195,7 +226,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00290">290</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Clears all entities from the world. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00265">265</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -215,7 +248,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00243">243</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Creates entity from JSON data. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>Use SceneBuilder. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00220">220</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -234,7 +270,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00302">302</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00277">277</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -253,7 +289,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00394">394</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00352">352</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -272,7 +308,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00422">422</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00370">370</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -291,7 +327,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00447">447</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00395">395</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -310,7 +346,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00473">473</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00421">421</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -329,7 +365,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00499">499</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Processes camera activation requests. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00447">447</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -348,7 +386,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00342">342</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00311">311</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -367,7 +405,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00363">363</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00325">325</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -386,7 +424,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00226">226</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Initializes the ECS world and registers components. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00202">202</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -405,7 +445,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00279">279</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Runs post-draw queries. Called by engine. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00254">254</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -424,7 +466,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00286">286</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Runs post-draw-UI queries. Called by engine. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00261">261</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -444,7 +488,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00268">268</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Runs post-physics queries. Called by engine. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00243">243</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -464,7 +510,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00263">263</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
+<p>Runs post-update queries. Called by engine. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8cpp_source.html#l00239">239</a> of file <a class="el" href="ECSManager_8cpp_source.html">ECSManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -481,7 +529,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ECSManager_8h_source.html#l00820">820</a> of file <a class="el" href="ECSManager_8h_source.html">ECSManager.h</a>.</p>
+<p>The FLECS world instance. </p>
+
+<p class="definition">Definition at line <a class="el" href="ECSManager_8h_source.html#l01066">1066</a> of file <a class="el" href="ECSManager_8h_source.html">ECSManager.h</a>.</p>
 
 </div>
 </div>

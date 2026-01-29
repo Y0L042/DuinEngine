@@ -141,7 +141,7 @@ Include dependency graph for JSONValue.h:</div>
 <area shape="poly" title=" " alt="" coords="328,106,267,147,264,142,325,102"/>
 <area shape="rect" href="DebugTools_8h_source.html" title=" " alt="" coords="381,152,490,177"/>
 <area shape="poly" title=" " alt="" coords="360,102,411,141,408,146,356,106"/>
-<area shape="rect" href="DNLog_8h_source.html" title=" " alt="" coords="109,225,186,251"/>
+<area shape="rect" href="DNLog_8h.html" title="Logging system and macros." alt="" coords="109,225,186,251"/>
 <area shape="poly" title=" " alt="" coords="346,105,340,141,332,161,320,179,300,193,270,205,200,227,199,222,268,200,297,188,316,175,328,159,335,139,340,104"/>
 <area shape="rect" href="Assert_8h_source.html" title=" " alt="" coords="69,152,143,177"/>
 <area shape="poly" title=" " alt="" coords="306,107,158,151,156,146,304,101"/>
@@ -176,7 +176,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="poly" title=" " alt="" coords="543,44,543,79,538,79,538,44"/>
 <area shape="rect" href="SceneBuilder_8cpp_source.html" title=" " alt="" coords="433,152,566,177"/>
 <area shape="poly" title=" " alt="" coords="576,36,594,50,610,66,618,85,614,105,600,122,583,136,545,154,543,150,580,132,596,119,609,103,613,86,605,69,591,54,572,40"/>
-<area shape="rect" href="SceneBuilder_8h_source.html" title=" " alt="" coords="199,79,317,104"/>
+<area shape="rect" href="SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="199,79,317,104"/>
 <area shape="poly" title=" " alt="" coords="483,37,304,81,303,76,481,31"/>
 <area shape="rect" href="SceneDefinition_8h_source.html" title=" " alt="" coords="729,79,865,104"/>
 <area shape="poly" title=" " alt="" coords="595,32,756,76,755,81,594,37"/>
@@ -223,9 +223,9 @@ Classes</h2></td></tr>
 <p>This file provides the JSONValue class, a wrapper around RapidJSON's Document and Value types, enabling convenient and type-safe manipulation of JSON objects, arrays, and primitive values. It also provides iterator classes for traversing JSON arrays and objects.</p>
 <p>Usage example: </p><div class="fragment"><div class="line"><a class="code hl_class" href="classduin_1_1JSONValue.html">duin::JSONValue</a> json = <a class="code hl_function" href="classduin_1_1JSONValue.html#a22303fd30f552de6048c4e305a17d219">duin::JSONValue::Parse</a>(<span class="stringliteral">&quot;{\&quot;key\&quot;: 42}&quot;</span>);</div>
 <div class="line"><span class="keywordtype">int</span> value = json[<span class="stringliteral">&quot;key&quot;</span>].<a class="code hl_function" href="classduin_1_1JSONValue.html#ab92b04c14a9cc7193b302133cebb45cf">GetInt</a>();</div>
-<div class="ttc" id="aclassduin_1_1JSONValue_html"><div class="ttname"><a href="classduin_1_1JSONValue.html">duin::JSONValue</a></div><div class="ttdoc">Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.</div><div class="ttdef"><b>Definition</b> <a href="JSONValue_8h_source.html#l00066">JSONValue.h:67</a></div></div>
-<div class="ttc" id="aclassduin_1_1JSONValue_html_a22303fd30f552de6048c4e305a17d219"><div class="ttname"><a href="classduin_1_1JSONValue.html#a22303fd30f552de6048c4e305a17d219">duin::JSONValue::Parse</a></div><div class="ttdeci">static JSONValue Parse(const std::string &amp;string)</div><div class="ttdoc">Parses a JSON string into a JSONValue object.</div><div class="ttdef"><b>Definition</b> <a href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00053">src/Duin/IO/JSONValue.cpp:53</a></div></div>
-<div class="ttc" id="aclassduin_1_1JSONValue_html_ab92b04c14a9cc7193b302133cebb45cf"><div class="ttname"><a href="classduin_1_1JSONValue.html#ab92b04c14a9cc7193b302133cebb45cf">duin::JSONValue::GetInt</a></div><div class="ttdeci">int GetInt() const</div><div class="ttdoc">Gets the integer value.</div><div class="ttdef"><b>Definition</b> <a href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00475">src/Duin/IO/JSONValue.cpp:475</a></div></div>
+<div class="ttc" id="aclassduin_1_1JSONValue_html"><div class="ttname"><a href="classduin_1_1JSONValue.html">duin::JSONValue</a></div><div class="ttdoc">Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.</div><div class="ttdef"><b>Definition</b> <a href="JSONValue_8h_source.html#l00067">JSONValue.h:68</a></div></div>
+<div class="ttc" id="aclassduin_1_1JSONValue_html_a22303fd30f552de6048c4e305a17d219"><div class="ttname"><a href="classduin_1_1JSONValue.html#a22303fd30f552de6048c4e305a17d219">duin::JSONValue::Parse</a></div><div class="ttdeci">static JSONValue Parse(const std::string &amp;string)</div><div class="ttdoc">Parses a JSON string into a JSONValue object.</div><div class="ttdef"><b>Definition</b> <a href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00055">src/Duin/IO/JSONValue.cpp:55</a></div></div>
+<div class="ttc" id="aclassduin_1_1JSONValue_html_ab92b04c14a9cc7193b302133cebb45cf"><div class="ttname"><a href="classduin_1_1JSONValue.html#ab92b04c14a9cc7193b302133cebb45cf">duin::JSONValue::GetInt</a></div><div class="ttdeci">int GetInt() const</div><div class="ttdoc">Gets the integer value.</div><div class="ttdef"><b>Definition</b> <a href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00514">src/Duin/IO/JSONValue.cpp:514</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition in file <a class="el" href="JSONValue_8h_source.html">JSONValue.h</a>.</p>
 </div></div><!-- contents -->

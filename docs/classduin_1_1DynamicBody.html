@@ -112,18 +112,23 @@ $(document).ready(function(){initNavTree('classduin_1_1DynamicBody.html',''); in
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classduin_1_1DynamicBody-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::DynamicBody Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::DynamicBody Class Reference<div class="ingroups"><a class="el" href="group__Physics.html">Physics Module</a> &raquo; <a class="el" href="group__Physics__Bodies.html">Bodies</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A fully physics-simulated rigid body.  
+ <a href="classduin_1_1DynamicBody.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="DynamicBody_8h_source.html">DynamicBody.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for duin::DynamicBody:</div>
 <div class="dyncontent">
 <div class="center"><img src="classduin_1_1DynamicBody__coll__graph.png" border="0" usemap="#aduin_1_1DynamicBody_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1DynamicBody_coll__map" id="aduin_1_1DynamicBody_coll__map">
-<area shape="rect" title=" " alt="" coords="9,152,158,177"/>
+<area shape="rect" title="A fully physics&#45;simulated rigid body." alt="" coords="9,152,158,177"/>
 <area shape="rect" href="classduin_1_1PhysicsObject.html" title=" " alt="" coords="9,79,158,104"/>
 <area shape="poly" title=" " alt="" coords="86,118,86,152,81,152,81,118"/>
-<area shape="rect" href="classduin_1_1CollisionObject.html" title=" " alt="" coords="5,5,161,31"/>
+<area shape="rect" href="classduin_1_1CollisionObject.html" title="Base class for objects participating in collision detection." alt="" coords="5,5,161,31"/>
 <area shape="poly" title=" " alt="" coords="86,44,86,79,81,79,81,44"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -132,38 +137,51 @@ Collaboration diagram for duin::DynamicBody:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acff12308b3bba83baa53ac2e8a71af67" id="r_acff12308b3bba83baa53ac2e8a71af67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#acff12308b3bba83baa53ac2e8a71af67">DynamicBody</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> collisionShape)</td></tr>
 <tr class="separator:acff12308b3bba83baa53ac2e8a71af67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a332e58ab64055d1473caca31239483ba" id="r_a332e58ab64055d1473caca31239483ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a332e58ab64055d1473caca31239483ba">DynamicBody</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, CollisionGeometryVariant geometry, <a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a> material)</td></tr>
+<tr class="memitem:a332e58ab64055d1473caca31239483ba" id="r_a332e58ab64055d1473caca31239483ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a332e58ab64055d1473caca31239483ba">DynamicBody</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, <a class="el" href="group__Physics__Collision.html#ga4408f3577d4052de176268bc5b7f3b53">CollisionGeometryVariant</a> geometry, <a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a> material)</td></tr>
 <tr class="separator:a332e58ab64055d1473caca31239483ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0ca8d947dc501bc2647580f9d9fc88d" id="r_ad0ca8d947dc501bc2647580f9d9fc88d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#ad0ca8d947dc501bc2647580f9d9fc88d">GetPosition</a> () override</td></tr>
+<tr class="memdesc:ad0ca8d947dc501bc2647580f9d9fc88d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns current world position.  <br /></td></tr>
 <tr class="separator:ad0ca8d947dc501bc2647580f9d9fc88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4647ba167bfe9aace314b2b883b44c15" id="r_a4647ba167bfe9aace314b2b883b44c15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1Vector4.html">Quaternion</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a4647ba167bfe9aace314b2b883b44c15">GetRotation</a> ()</td></tr>
+<tr class="memdesc:a4647ba167bfe9aace314b2b883b44c15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns current world rotation.  <br /></td></tr>
 <tr class="separator:a4647ba167bfe9aace314b2b883b44c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classduin_1_1CollisionObject"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classduin_1_1CollisionObject')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classduin_1_1CollisionObject.html">duin::CollisionObject</a></td></tr>
 <tr class="memitem:af99a5a0b31d6267adbdc5814bc9898bc inherit pub_methods_classduin_1_1CollisionObject" id="r_af99a5a0b31d6267adbdc5814bc9898bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#af99a5a0b31d6267adbdc5814bc9898bc">SetCollisionShape</a> ()</td></tr>
 <tr class="separator:af99a5a0b31d6267adbdc5814bc9898bc inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab86c6209327f16321b476c8d3b7bb5c9 inherit pub_methods_classduin_1_1CollisionObject" id="r_ab86c6209327f16321b476c8d3b7bb5c9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#ab86c6209327f16321b476c8d3b7bb5c9">GetUUID</a> ()</td></tr>
+<tr class="memdesc:ab86c6209327f16321b476c8d3b7bb5c9 inherit pub_methods_classduin_1_1CollisionObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this object's unique identifier.  <br /></td></tr>
 <tr class="separator:ab86c6209327f16321b476c8d3b7bb5c9 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8139a9c6f5d5d619800cd1a612a45c61 inherit pub_methods_classduin_1_1CollisionObject" id="r_a8139a9c6f5d5d619800cd1a612a45c61"><td class="memItemLeft" align="right" valign="top">CollisionLayer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a8139a9c6f5d5d619800cd1a612a45c61">GetCollisionLayer</a> ()</td></tr>
+<tr class="memitem:a8139a9c6f5d5d619800cd1a612a45c61 inherit pub_methods_classduin_1_1CollisionObject" id="r_a8139a9c6f5d5d619800cd1a612a45c61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="CollisionMeta_8h.html#a31801cc6d3547d585f932ac7e7c74fb5">CollisionLayer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a8139a9c6f5d5d619800cd1a612a45c61">GetCollisionLayer</a> ()</td></tr>
+<tr class="memdesc:a8139a9c6f5d5d619800cd1a612a45c61 inherit pub_methods_classduin_1_1CollisionObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the collision layer bits.  <br /></td></tr>
 <tr class="separator:a8139a9c6f5d5d619800cd1a612a45c61 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bee2e6c8f30757878e130468d568e17 inherit pub_methods_classduin_1_1CollisionObject" id="r_a9bee2e6c8f30757878e130468d568e17"><td class="memItemLeft" align="right" valign="top">CollisionMask&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a9bee2e6c8f30757878e130468d568e17">GetCollisionMask</a> ()</td></tr>
+<tr class="memitem:a9bee2e6c8f30757878e130468d568e17 inherit pub_methods_classduin_1_1CollisionObject" id="r_a9bee2e6c8f30757878e130468d568e17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="CollisionMeta_8h.html#af5f9cf571d5f1ef2555be3b54d053213">CollisionMask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a9bee2e6c8f30757878e130468d568e17">GetCollisionMask</a> ()</td></tr>
+<tr class="memdesc:a9bee2e6c8f30757878e130468d568e17 inherit pub_methods_classduin_1_1CollisionObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the collision mask bits.  <br /></td></tr>
 <tr class="separator:a9bee2e6c8f30757878e130468d568e17 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21d9f630f10aa732bfd0d9e7f2a072a7 inherit pub_methods_classduin_1_1CollisionObject" id="r_a21d9f630f10aa732bfd0d9e7f2a072a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a21d9f630f10aa732bfd0d9e7f2a072a7">SetCollisionLayer</a> (CollisionLayer bits)</td></tr>
+<tr class="memitem:a21d9f630f10aa732bfd0d9e7f2a072a7 inherit pub_methods_classduin_1_1CollisionObject" id="r_a21d9f630f10aa732bfd0d9e7f2a072a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a21d9f630f10aa732bfd0d9e7f2a072a7">SetCollisionLayer</a> (<a class="el" href="CollisionMeta_8h.html#a31801cc6d3547d585f932ac7e7c74fb5">CollisionLayer</a> bits)</td></tr>
+<tr class="memdesc:a21d9f630f10aa732bfd0d9e7f2a072a7 inherit pub_methods_classduin_1_1CollisionObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets which layer this object belongs to.  <br /></td></tr>
 <tr class="separator:a21d9f630f10aa732bfd0d9e7f2a072a7 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b47846381bbca7160d87d39096a66b0 inherit pub_methods_classduin_1_1CollisionObject" id="r_a7b47846381bbca7160d87d39096a66b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a7b47846381bbca7160d87d39096a66b0">SetCollisionMask</a> (CollisionMask bits)</td></tr>
+<tr class="memitem:a7b47846381bbca7160d87d39096a66b0 inherit pub_methods_classduin_1_1CollisionObject" id="r_a7b47846381bbca7160d87d39096a66b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#a7b47846381bbca7160d87d39096a66b0">SetCollisionMask</a> (<a class="el" href="CollisionMeta_8h.html#af5f9cf571d5f1ef2555be3b54d053213">CollisionMask</a> bits)</td></tr>
+<tr class="memdesc:a7b47846381bbca7160d87d39096a66b0 inherit pub_methods_classduin_1_1CollisionObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets which layers this object can collide with.  <br /></td></tr>
 <tr class="separator:a7b47846381bbca7160d87d39096a66b0 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add1d287aa7e7b291e0d2bf5116a00536 inherit pub_methods_classduin_1_1CollisionObject" id="r_add1d287aa7e7b291e0d2bf5116a00536"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1PhysicsServer.html">PhysicsServer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1CollisionObject.html#add1d287aa7e7b291e0d2bf5116a00536">GetPhysicsServer</a> ()</td></tr>
+<tr class="memdesc:add1d287aa7e7b291e0d2bf5116a00536 inherit pub_methods_classduin_1_1CollisionObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to the physics server.  <br /></td></tr>
 <tr class="separator:add1d287aa7e7b291e0d2bf5116a00536 inherit pub_methods_classduin_1_1CollisionObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a725e86c58a4fa273431b8815ced4c8bf" id="r_a725e86c58a4fa273431b8815ced4c8bf"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1DynamicBody.html">DynamicBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a725e86c58a4fa273431b8815ced4c8bf">Create</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, <a class="el" href="classduin_1_1CollisionShape.html">CollisionShape</a> collisionShape)</td></tr>
+<tr class="memdesc:a725e86c58a4fa273431b8815ced4c8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a dynamic body with a collision shape.  <br /></td></tr>
 <tr class="separator:a725e86c58a4fa273431b8815ced4c8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95bb71f093b91dd25846140dd0edf66a" id="r_a95bb71f093b91dd25846140dd0edf66a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1DynamicBody.html">DynamicBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a95bb71f093b91dd25846140dd0edf66a">Create</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, CollisionGeometryVariant geometry, <a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a> material)</td></tr>
+<tr class="memitem:a95bb71f093b91dd25846140dd0edf66a" id="r_a95bb71f093b91dd25846140dd0edf66a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1DynamicBody.html">DynamicBody</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1DynamicBody.html#a95bb71f093b91dd25846140dd0edf66a">Create</a> (<a class="el" href="structduin_1_1Transform3D.html">Transform3D</a> transform, <a class="el" href="group__Physics__Collision.html#ga4408f3577d4052de176268bc5b7f3b53">CollisionGeometryVariant</a> geometry, <a class="el" href="classduin_1_1PhysicsMaterial.html">PhysicsMaterial</a> material)</td></tr>
+<tr class="memdesc:a95bb71f093b91dd25846140dd0edf66a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a dynamic body with geometry and material.  <br /></td></tr>
 <tr class="separator:a95bb71f093b91dd25846140dd0edf66a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8h_source.html#l00014">14</a> of file <a class="el" href="DynamicBody_8h_source.html">DynamicBody.h</a>.</p>
+<div class="textblock"><p>A fully physics-simulated rigid body. </p>
+<p>Dynamic bodies respond to forces, gravity, and collisions. Their position and rotation are controlled by the physics simulation.</p>
+<p>Use <a class="el" href="classduin_1_1DynamicBody.html#a725e86c58a4fa273431b8815ced4c8bf" title="Creates a dynamic body with a collision shape.">Create()</a> factory methods for proper initialization. </p>
+
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8h_source.html#l00032">32</a> of file <a class="el" href="DynamicBody_8h_source.html">DynamicBody.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acff12308b3bba83baa53ac2e8a71af67" name="acff12308b3bba83baa53ac2e8a71af67"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acff12308b3bba83baa53ac2e8a71af67">&#9670;&#160;</a></span>DynamicBody() <span class="overload">[1/2]</span></h2>
@@ -191,7 +209,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00021">21</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00023">23</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -210,7 +228,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CollisionGeometryVariant&#160;</td>
+          <td class="paramtype"><a class="el" href="group__Physics__Collision.html#ga4408f3577d4052de176268bc5b7f3b53">CollisionGeometryVariant</a>&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -227,7 +245,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00034">34</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00035">35</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -246,7 +264,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00046">46</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00047">47</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -269,7 +287,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CollisionGeometryVariant&#160;</td>
+          <td class="paramtype"><a class="el" href="group__Physics__Collision.html#ga4408f3577d4052de176268bc5b7f3b53">CollisionGeometryVariant</a>&#160;</td>
           <td class="paramname"><em>geometry</em>, </td>
         </tr>
         <tr>
@@ -291,7 +309,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00016">16</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p>Creates a dynamic body with geometry and material. </p>
+
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00017">17</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -329,7 +349,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00011">11</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p>Creates a dynamic body with a collision shape. </p>
+
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00012">12</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -356,9 +378,11 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns current world position. </p>
+
 <p>Implements <a class="el" href="classduin_1_1PhysicsObject.html">duin::PhysicsObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00054">54</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00055">55</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>
@@ -377,7 +401,9 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00059">59</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
+<p>Returns current world rotation. </p>
+
+<p class="definition">Definition at line <a class="el" href="DynamicBody_8cpp_source.html#l00060">60</a> of file <a class="el" href="DynamicBody_8cpp_source.html">DynamicBody.cpp</a>.</p>
 
 </div>
 </div>

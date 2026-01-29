@@ -111,22 +111,32 @@ $(document).ready(function(){initNavTree('classduin_1_1Log.html',''); initResiza
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classduin_1_1Log-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::Log Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::Log Class Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Module</a> &raquo; <a class="el" href="group__Core__Debug.html">Debugging</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Logging system manager.  
+ <a href="classduin_1_1Log.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="DNLog_8h_source.html">DNLog.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:afb090b3f767bb798a8303b8fcf5ec18b" id="r_afb090b3f767bb798a8303b8fcf5ec18b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b">Init</a> ()</td></tr>
+<tr class="memdesc:afb090b3f767bb798a8303b8fcf5ec18b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the logging system. Called automatically.  <br /></td></tr>
 <tr class="separator:afb090b3f767bb798a8303b8fcf5ec18b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9727e187ce70288d3907a575ceeddf8f" id="r_a9727e187ce70288d3907a575ceeddf8f"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; spdlog::logger &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Log.html#a9727e187ce70288d3907a575ceeddf8f">GetCoreLogger</a> ()</td></tr>
+<tr class="memdesc:a9727e187ce70288d3907a575ceeddf8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the engine/core logger.  <br /></td></tr>
 <tr class="separator:a9727e187ce70288d3907a575ceeddf8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cd570ed897c5c3ada2cc4c3e4c72682" id="r_a5cd570ed897c5c3ada2cc4c3e4c72682"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; spdlog::logger &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Log.html#a5cd570ed897c5c3ada2cc4c3e4c72682">GetClientLogger</a> ()</td></tr>
+<tr class="memdesc:a5cd570ed897c5c3ada2cc4c3e4c72682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the client/application logger.  <br /></td></tr>
 <tr class="separator:a5cd570ed897c5c3ada2cc4c3e4c72682"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="DNLog_8h_source.html#l00010">10</a> of file <a class="el" href="DNLog_8h_source.html">DNLog.h</a>.</p>
+<div class="textblock"><p>Logging system manager. </p>
+<p>Initializes and provides access to spdlog loggers. The engine calls <a class="el" href="classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b" title="Initializes the logging system. Called automatically.">Init()</a> automatically; user code should use the DN_* macros. </p>
+
+<p class="definition">Definition at line <a class="el" href="DNLog_8h_source.html#l00037">37</a> of file <a class="el" href="DNLog_8h_source.html">DNLog.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5cd570ed897c5c3ada2cc4c3e4c72682" name="a5cd570ed897c5c3ada2cc4c3e4c72682"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5cd570ed897c5c3ada2cc4c3e4c72682">&#9670;&#160;</a></span>GetClientLogger()</h2>
@@ -151,7 +161,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNLog_8h_source.html#l00026">26</a> of file <a class="el" href="DNLog_8h_source.html">DNLog.h</a>.</p>
+<p>Returns the client/application logger. </p>
+
+<p class="definition">Definition at line <a class="el" href="DNLog_8h_source.html#l00055">55</a> of file <a class="el" href="DNLog_8h_source.html">DNLog.h</a>.</p>
 
 </div>
 </div>
@@ -178,7 +190,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNLog_8h_source.html#l00015">15</a> of file <a class="el" href="DNLog_8h_source.html">DNLog.h</a>.</p>
+<p>Returns the engine/core logger. </p>
+
+<p class="definition">Definition at line <a class="el" href="DNLog_8h_source.html#l00044">44</a> of file <a class="el" href="DNLog_8h_source.html">DNLog.h</a>.</p>
 
 </div>
 </div>
@@ -205,7 +219,9 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNLog_8cpp_source.html#l00038">38</a> of file <a class="el" href="DNLog_8cpp_source.html">DNLog.cpp</a>.</p>
+<p>Initializes the logging system. Called automatically. </p>
+
+<p class="definition">Definition at line <a class="el" href="DNLog_8cpp_source.html#l00042">42</a> of file <a class="el" href="DNLog_8cpp_source.html">DNLog.cpp</a>.</p>
 
 </div>
 </div>

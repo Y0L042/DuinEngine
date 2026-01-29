@@ -1,0 +1,6 @@
+<map id="Input/Output Module" name="Input/Output Module">
+<area shape="rect" id="Node000001" title="File I/O, JSON, and configuration." alt="" coords="5,55,160,80"/>
+<area shape="rect" id="Node000004" href="$group__IO__Config.html" title="Configuration value handling." alt="" coords="208,5,317,31"/>
+<area shape="rect" id="Node000003" href="$group__IO__Filesystem.html" title="File and path operations." alt="" coords="216,55,309,80"/>
+<area shape="rect" id="Node000002" href="$group__IO__JSON.html" title="JSON parsing and serialization." alt="" coords="235,104,290,129"/>
+</map>

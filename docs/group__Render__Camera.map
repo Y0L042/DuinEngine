@@ -1,0 +1,4 @@
+<map id="Camera" name="Camera">
+<area shape="rect" id="Node000002" href="$group__Render.html" title="BGFX&#45;based rendering system." alt="" coords="5,5,125,31"/>
+<area shape="rect" id="Node000001" title="Camera management." alt="" coords="173,5,247,31"/>
+</map>

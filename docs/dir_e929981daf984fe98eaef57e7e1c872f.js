@@ -7,6 +7,6 @@ var dir_e929981daf984fe98eaef57e7e1c872f =
     [ "Signals", "dir_c34c609d9da628c697ec828c63f68857.html", "dir_c34c609d9da628c697ec828c63f68857" ],
     [ "Utils", "dir_cd463a93d1524e455358c0c423bc7a1b.html", "dir_cd463a93d1524e455358c0c423bc7a1b" ],
     [ "Application.cpp", "Application_8cpp_source.html", null ],
-    [ "Application.h", "Application_8h_source.html", null ],
+    [ "Application.h", "Application_8h.html", "Application_8h" ],
     [ "Core.h", "Core_8h_source.html", null ]
 ];

@@ -1,0 +1,11 @@
+<map id="GameStateMachine.h" name="GameStateMachine.h">
+<area shape="rect" id="Node000001" title="Stack&#45;based state machine for application states." alt="" coords="99,5,262,31"/>
+<area shape="rect" id="Node000002" href="$GameStateMachine_8cpp_source.html" title=" " alt="" coords="5,79,183,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,41,110,81,106,76,155,37"/>
+<area shape="rect" id="Node000003" href="$ObjectModule_8h_source.html" title=" " alt="" coords="207,79,331,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,37,256,76,253,81,204,41"/>
+<area shape="rect" id="Node000004" href="$Duin_8h_source.html" title=" " alt="" coords="237,152,301,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="271,118,271,152,266,152,266,118"/>
+<area shape="rect" id="Node000005" href="$Duin_8cpp_source.html" title=" " alt="" coords="229,225,308,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="271,191,271,225,266,225,266,191"/>
+</map>

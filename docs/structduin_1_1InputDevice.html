@@ -112,15 +112,20 @@ $(document).ready(function(){initNavTree('structduin_1_1InputDevice.html',''); i
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structduin_1_1InputDevice-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::InputDevice Struct Reference</div></div>
+  <div class="headertitle"><div class="title">duin::InputDevice Struct Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Module</a> &raquo; <a class="el" href="group__Core__Events.html">Events</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base interface for input devices.  
+ <a href="structduin_1_1InputDevice.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="InputActions_8h_source.html">InputActions.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for duin::InputDevice:</div>
 <div class="dyncontent">
 <div class="center"><img src="structduin_1_1InputDevice__coll__graph.png" border="0" usemap="#aduin_1_1InputDevice_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1InputDevice_coll__map" id="aduin_1_1InputDevice_coll__map">
-<area shape="rect" title=" " alt="" coords="5,93,141,119"/>
+<area shape="rect" title="Base interface for input devices." alt="" coords="5,93,141,119"/>
 <area shape="rect" href="classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="27,5,119,31"/>
 <area shape="poly" title=" " alt="" coords="76,45,76,93,71,93,71,45"/>
 <area shape="poly" title=" " alt="" coords="134,9,146,18,138,26,120,29,119,23,135,21,141,18,131,14"/>
@@ -129,17 +134,21 @@ Collaboration diagram for duin::InputDevice:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9aaed59e5658b755debca78d5f459aa6" id="r_a9aaed59e5658b755debca78d5f459aa6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1InputDevice.html#a9aaed59e5658b755debca78d5f459aa6">GetEvent</a> (DN_Keycode key, Input::KeyEvent event)</td></tr>
+<tr class="memitem:a9aaed59e5658b755debca78d5f459aa6" id="r_a9aaed59e5658b755debca78d5f459aa6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1InputDevice.html#a9aaed59e5658b755debca78d5f459aa6">GetEvent</a> (<a class="el" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> key, <a class="el" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434f">Input::KeyEvent</a> event)</td></tr>
+<tr class="memdesc:a9aaed59e5658b755debca78d5f459aa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queries the device for a specific input state.  <br /></td></tr>
 <tr class="separator:a9aaed59e5658b755debca78d5f459aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a6f880ddc136b797821ffcd86637caed0" id="r_a6f880ddc136b797821ffcd86637caed0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1InputDevice.html#a6f880ddc136b797821ffcd86637caed0">uuid</a></td></tr>
+<tr class="memdesc:a6f880ddc136b797821ffcd86637caed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique identifier for this device instance.  <br /></td></tr>
 <tr class="separator:a6f880ddc136b797821ffcd86637caed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00011">11</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
+<div class="textblock"><p>Base interface for input devices. </p>
+<p>Represents an input source (keyboard, mouse, gamepad). Derived classes implement <a class="el" href="structduin_1_1InputDevice.html#a9aaed59e5658b755debca78d5f459aa6" title="Queries the device for a specific input state.">GetEvent()</a> to report device state. </p>
+
+<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00042">42</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9aaed59e5658b755debca78d5f459aa6" name="a9aaed59e5658b755debca78d5f459aa6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9aaed59e5658b755debca78d5f459aa6">&#9670;&#160;</a></span>GetEvent()</h2>
@@ -153,13 +162,13 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual bool duin::InputDevice::GetEvent </td>
           <td>(</td>
-          <td class="paramtype">DN_Keycode&#160;</td>
+          <td class="paramtype"><a class="el" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a>&#160;</td>
           <td class="paramname"><em>key</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Input::KeyEvent&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434f">Input::KeyEvent</a>&#160;</td>
           <td class="paramname"><em>event</em>&#160;</td>
         </tr>
         <tr>
@@ -175,7 +184,19 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00014">14</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
+<p>Queries the device for a specific input state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key/button code. </td></tr>
+    <tr><td class="paramname">event</td><td>The event type to check (pressed, released, held). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the condition is met. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="structduin_1_1InputDevice__Keyboard.html#a67c78d52818421af45f8f244e21e4027">duin::InputDevice_Keyboard</a>, and <a class="el" href="structduin_1_1InputDevice__Mouse.html#a7719ceccc0344904749de20b45d2f3f2">duin::InputDevice_Mouse</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00052">52</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
 
 </div>
 </div>
@@ -192,7 +213,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00012">12</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
+<p>Unique identifier for this device instance. </p>
+
+<p class="definition">Definition at line <a class="el" href="InputActions_8h_source.html#l00044">44</a> of file <a class="el" href="InputActions_8h_source.html">InputActions.h</a>.</p>
 
 </div>
 </div>

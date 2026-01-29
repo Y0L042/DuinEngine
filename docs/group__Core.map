@@ -1,0 +1,9 @@
+<map id="Core Module" name="Core Module">
+<area shape="rect" id="Node000001" title="Application lifecycle, events, signals, utilities, and mathematics." alt="" coords="5,129,109,155"/>
+<area shape="rect" id="Node000002" href="$group__Core__Application.html" title="Main application class and lifecycle management." alt="" coords="163,5,258,31"/>
+<area shape="rect" id="Node000007" href="$group__Core__Debug.html" title="Logging, assertions, and debug utilities." alt="" coords="165,55,257,80"/>
+<area shape="rect" id="Node000003" href="$group__Core__Events.html" title="Event handling and input system." alt="" coords="177,104,244,129"/>
+<area shape="rect" id="Node000006" href="$group__Core__Math.html" title="Mathematical types and functions." alt="" coords="157,153,264,179"/>
+<area shape="rect" id="Node000004" href="$group__Core__Signals.html" title="Type&#45;safe signal/slot event system." alt="" coords="176,203,245,228"/>
+<area shape="rect" id="Node000005" href="$group__Core__Utils.html" title="General&#45;purpose utility classes." alt="" coords="174,252,247,277"/>
+</map>

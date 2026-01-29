@@ -1,5 +1,5 @@
 <map id="duin::SignalConnections" name="duin::SignalConnections">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,217,184,242"/>
+<area shape="rect" id="Node000001" title="Holds UUIDs for signal connections to lifecycle events." alt="" coords="5,217,184,242"/>
 <area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="49,12,141,37"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,51,97,217,92,217,92,51"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="125,4,140,3,154,5,163,13,167,25,162,38,148,45,130,45,111,40,113,35,131,40,147,40,158,35,162,24,159,16,151,10,140,8,126,10"/>

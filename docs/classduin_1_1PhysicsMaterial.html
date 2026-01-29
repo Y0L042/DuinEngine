@@ -113,24 +113,34 @@ $(document).ready(function(){initNavTree('classduin_1_1PhysicsMaterial.html','')
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classduin_1_1PhysicsMaterial-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::PhysicsMaterial Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::PhysicsMaterial Class Reference<div class="ingroups"><a class="el" href="group__Physics.html">Physics Module</a> &raquo; <a class="el" href="group__Physics__Collision.html">Collision</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Defines surface properties for physics simulation.  
+ <a href="classduin_1_1PhysicsMaterial.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2fc17281db639a204072980163e11c92" id="r_a2fc17281db639a204072980163e11c92"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsMaterial.html#a2fc17281db639a204072980163e11c92">PhysicsMaterial</a> (float staticFriction=1.0f, float dynamicFriction=1.0f, float restitutionCoeff=1.0f)</td></tr>
+<tr class="memitem:a2fc17281db639a204072980163e11c92" id="r_a2fc17281db639a204072980163e11c92"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsMaterial.html#a2fc17281db639a204072980163e11c92">PhysicsMaterial</a> (float <a class="el" href="classduin_1_1PhysicsMaterial.html#a4f91757d1b5bf554c6d244d849dbacde">staticFriction</a>=1.0f, float <a class="el" href="classduin_1_1PhysicsMaterial.html#ae7fa3ccbe732bc96cbbf7bdedeca5ddf">dynamicFriction</a>=1.0f, float <a class="el" href="classduin_1_1PhysicsMaterial.html#abb612d607bd1f7bb9e9f1d7c0cf43598">restitutionCoeff</a>=1.0f)</td></tr>
+<tr class="memdesc:a2fc17281db639a204072980163e11c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a physics material.  <br /></td></tr>
 <tr class="separator:a2fc17281db639a204072980163e11c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a4f91757d1b5bf554c6d244d849dbacde" id="r_a4f91757d1b5bf554c6d244d849dbacde"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsMaterial.html#a4f91757d1b5bf554c6d244d849dbacde">staticFriction</a></td></tr>
+<tr class="memdesc:a4f91757d1b5bf554c6d244d849dbacde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Friction when stationary (0.0 - 1.0+).  <br /></td></tr>
 <tr class="separator:a4f91757d1b5bf554c6d244d849dbacde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7fa3ccbe732bc96cbbf7bdedeca5ddf" id="r_ae7fa3ccbe732bc96cbbf7bdedeca5ddf"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsMaterial.html#ae7fa3ccbe732bc96cbbf7bdedeca5ddf">dynamicFriction</a></td></tr>
+<tr class="memdesc:ae7fa3ccbe732bc96cbbf7bdedeca5ddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Friction when moving (0.0 - 1.0+).  <br /></td></tr>
 <tr class="separator:ae7fa3ccbe732bc96cbbf7bdedeca5ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb612d607bd1f7bb9e9f1d7c0cf43598" id="r_abb612d607bd1f7bb9e9f1d7c0cf43598"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsMaterial.html#abb612d607bd1f7bb9e9f1d7c0cf43598">restitutionCoeff</a></td></tr>
+<tr class="memdesc:abb612d607bd1f7bb9e9f1d7c0cf43598"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bounciness (0.0 = no bounce, 1.0 = full bounce).  <br /></td></tr>
 <tr class="separator:abb612d607bd1f7bb9e9f1d7c0cf43598"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c0c07b12f5d2511d12d005064ce845c" id="r_a8c0c07b12f5d2511d12d005064ce845c"><td class="memItemLeft" align="right" valign="top">physx::PxMaterial *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1PhysicsMaterial.html#a8c0c07b12f5d2511d12d005064ce845c">pxMaterial</a> = nullptr</td></tr>
+<tr class="memdesc:a8c0c07b12f5d2511d12d005064ce845c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Underlying PhysX material.  <br /></td></tr>
 <tr class="separator:a8c0c07b12f5d2511d12d005064ce845c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
@@ -139,8 +149,10 @@ Friends</h2></td></tr>
 <tr class="separator:a48036d5da8960e434614f56d611c6c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00006">6</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<div class="textblock"><p>Defines surface properties for physics simulation. </p>
+<p>Controls friction and bounciness of physics bodies. </p>
+
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00021">21</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2fc17281db639a204072980163e11c92" name="a2fc17281db639a204072980163e11c92"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2fc17281db639a204072980163e11c92">&#9670;&#160;</a></span>PhysicsMaterial()</h2>
@@ -174,7 +186,17 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8cpp_source.html#l00007">7</a> of file <a class="el" href="PhysicsMaterial_8cpp_source.html">PhysicsMaterial.cpp</a>.</p>
+<p>Constructs a physics material. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">staticFriction</td><td>Friction coefficient when object is at rest. </td></tr>
+    <tr><td class="paramname">dynamicFriction</td><td>Friction coefficient when object is moving. </td></tr>
+    <tr><td class="paramname">restitutionCoeff</td><td>Coefficient of restitution (bounciness). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8cpp_source.html#l00008">8</a> of file <a class="el" href="PhysicsMaterial_8cpp_source.html">PhysicsMaterial.cpp</a>.</p>
 
 </div>
 </div>
@@ -199,7 +221,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00020">20</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00040">40</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
 
 </div>
 </div>
@@ -223,7 +245,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00021">21</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00041">41</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +262,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00010">10</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p>Friction when moving (0.0 - 1.0+). </p>
+
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00025">25</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
 
 </div>
 </div>
@@ -256,7 +280,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00017">17</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p>Underlying PhysX material. </p>
+
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00036">36</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
 
 </div>
 </div>
@@ -272,7 +298,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00011">11</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p>Bounciness (0.0 = no bounce, 1.0 = full bounce). </p>
+
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00026">26</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
 
 </div>
 </div>
@@ -288,7 +316,9 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00009">9</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
+<p>Friction when stationary (0.0 - 1.0+). </p>
+
+<p class="definition">Definition at line <a class="el" href="PhysicsMaterial_8h_source.html#l00024">24</a> of file <a class="el" href="PhysicsMaterial_8h_source.html">PhysicsMaterial.h</a>.</p>
 
 </div>
 </div>

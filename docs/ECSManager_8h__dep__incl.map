@@ -1,0 +1,17 @@
+<map id="ECSManager.h" name="ECSManager.h">
+<area shape="rect" id="Node000001" title="Entity Component System manager and component definitions." alt="" coords="164,5,279,31"/>
+<area shape="rect" id="Node000002" href="$ECSManager_8cpp_source.html" title=" " alt="" coords="5,79,136,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,39,96,81,94,76,184,34"/>
+<area shape="rect" id="Node000003" href="$ECSModule_8h_source.html" title=" " alt="" coords="145,152,252,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,44,201,79,198,119,200,152,195,152,193,119,196,78,207,42"/>
+<area shape="rect" id="Node000006" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="288,152,421,177"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="282,33,315,51,343,77,353,96,358,116,359,152,353,152,353,117,348,98,339,80,312,55,279,38"/>
+<area shape="rect" id="Node000007" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="211,79,330,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="239,41,265,77,260,80,235,44"/>
+<area shape="rect" id="Node000004" href="$Duin_8h_source.html" title=" " alt="" coords="167,225,231,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="201,191,201,225,196,225,196,191"/>
+<area shape="rect" id="Node000005" href="$Duin_8cpp_source.html" title=" " alt="" coords="159,299,238,324"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="201,264,201,299,196,299,196,264"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="251,116,212,154,208,150,247,112"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="296,111,343,150,339,154,293,115"/>
+</map>

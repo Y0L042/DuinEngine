@@ -117,7 +117,7 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;GameObject.h&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="GameObject_8h.html">GameObject.h</a>&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;ObjectManager.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
@@ -129,7 +129,8 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>}</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keywordtype">void</span> duin::GameObject::AddChildObject(std::shared_ptr&lt;GameObject&gt; child)</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="}">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2">   14</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2">duin::GameObject::AddChildObject</a>(std::shared_ptr&lt;GameObject&gt; child)</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordflow">if</span> (child)</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {</div>
@@ -149,8 +150,10 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        }</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    }</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
+</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">void</span> duin::GameObject::RemoveChildObject(std::shared_ptr&lt;GameObject&gt; child)</div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4">   35</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4">duin::GameObject::RemoveChildObject</a>(std::shared_ptr&lt;GameObject&gt; child)</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>{</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">if</span> (child)</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    {</div>
@@ -159,22 +162,27 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        child-&gt;ResetParent();</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    }</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
+</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">void</span> duin::GameObject::TransferChildObject(std::shared_ptr&lt;GameObject&gt; child, std::shared_ptr&lt;GameObject&gt; newParent)</div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classduin_1_1GameObject.html#ad924d34dc3f30a0be10b680327d6168d">   45</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameObject.html#ad924d34dc3f30a0be10b680327d6168d">duin::GameObject::TransferChildObject</a>(std::shared_ptr&lt;GameObject&gt; child, std::shared_ptr&lt;GameObject&gt; newParent)</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>{</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    RemoveChildObject(child);</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    newParent-&gt;AddChildObject(child);</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keywordtype">void</span> duin::GameObject::SetParent(std::shared_ptr&lt;GameObject&gt; parent)</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>{</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    this-&gt;parent = parent;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>std::shared_ptr&lt;duin::GameObject&gt; duin::GameObject::GetParent()</div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c">   56</a></span>std::shared_ptr&lt;duin::GameObject&gt; <a class="code hl_function" href="classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c">duin::GameObject::GetParent</a>()</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>{</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> parent;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
+</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keywordtype">void</span> duin::GameObject::ResetParent()</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>{</div>
@@ -254,33 +262,37 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>}</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment">// Connect all signals at once</span></div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><a class="code hl_struct" href="structduin_1_1SignalConnections.html">duin::SignalConnections</a> duin::GameObject::ConnectAllSignals(</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    std::function&lt;<span class="keywordtype">void</span>()&gt; onReady, std::function&lt;<span class="keywordtype">void</span>(Event)&gt; onEvent, std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; onUpdate,</div>
+<div class="foldopen" id="foldopen00139" data-start="{" data-end="}">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">  139</a></span><a class="code hl_struct" href="structduin_1_1SignalConnections.html">duin::SignalConnections</a> <a class="code hl_function" href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">duin::GameObject::ConnectAllSignals</a>(</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    std::function&lt;<span class="keywordtype">void</span>()&gt; onReady, std::function&lt;<span class="keywordtype">void</span>(<a class="code hl_class" href="classduin_1_1Event.html">Event</a>)&gt; onEvent, std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; onUpdate,</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; onPhysicsUpdate, std::function&lt;<span class="keywordtype">void</span>()&gt; onDraw, std::function&lt;<span class="keywordtype">void</span>()&gt; onDrawUI,</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    std::function&lt;<span class="keywordtype">void</span>()&gt; onDebug)</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>{</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    SignalConnections connections;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    connections.onReady = OnObjectReady.Connect(onReady);</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    connections.onEvent = OnObjectOnEvent.Connect(onEvent);</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    connections.onUpdate = OnObjectUpdate.Connect(onUpdate);</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    connections.onPhysicsUpdate = OnObjectPhysicsUpdate.Connect(onPhysicsUpdate);</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    connections.onDraw = OnObjectDraw.Connect(onDraw);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    connections.onDrawUI = OnObjectDrawUI.Connect(onDrawUI);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    connections.onDebug = OnObjectDebug.Connect(onDebug);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <a class="code hl_struct" href="structduin_1_1SignalConnections.html">SignalConnections</a> connections;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#aeddbe9c1f0badc6aad3d4c0f38ba3511">onReady</a> = OnObjectReady.Connect(onReady);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#adbab4bb5f175ec1fbeed56ad86ceedfc">onEvent</a> = OnObjectOnEvent.Connect(onEvent);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#aaaaac0c22db2a32e3283655429887b58">onUpdate</a> = OnObjectUpdate.Connect(onUpdate);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#a3e7588a71b2ab02e03dff563847f02bd">onPhysicsUpdate</a> = OnObjectPhysicsUpdate.Connect(onPhysicsUpdate);</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#a46b2caaf3eefc3830c2cbd7cc2dcd008">onDraw</a> = OnObjectDraw.Connect(onDraw);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#ac0da608b0870ae1eafb0f8db4cbaa2a4">onDrawUI</a> = OnObjectDrawUI.Connect(onDrawUI);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#a52dcdac29e3a9bfb580749ed42ccfcfb">onDebug</a> = OnObjectDebug.Connect(onDebug);</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordflow">return</span> connections;</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>}</div>
+</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="comment">// Disconnect all signals at once</span></div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="keywordtype">void</span> duin::GameObject::DisconnectAllSignals(<span class="keyword">const</span> SignalConnections &amp;connections)</div>
+<div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2">  156</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2">duin::GameObject::DisconnectAllSignals</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1SignalConnections.html">SignalConnections</a> &amp;connections)</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>{</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    OnObjectReady.Disconnect(connections.onReady);</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    OnObjectOnEvent.Disconnect(connections.onEvent);</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    OnObjectUpdate.Disconnect(connections.onUpdate);</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    OnObjectPhysicsUpdate.Disconnect(connections.onPhysicsUpdate);</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    OnObjectDraw.Disconnect(connections.onDraw);</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    OnObjectDrawUI.Disconnect(connections.onDrawUI);</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    OnObjectDebug.Disconnect(connections.onDebug);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    OnObjectReady.Disconnect(connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#aeddbe9c1f0badc6aad3d4c0f38ba3511">onReady</a>);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    OnObjectOnEvent.Disconnect(connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#adbab4bb5f175ec1fbeed56ad86ceedfc">onEvent</a>);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    OnObjectUpdate.Disconnect(connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#aaaaac0c22db2a32e3283655429887b58">onUpdate</a>);</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    OnObjectPhysicsUpdate.Disconnect(connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#a3e7588a71b2ab02e03dff563847f02bd">onPhysicsUpdate</a>);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    OnObjectDraw.Disconnect(connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#a46b2caaf3eefc3830c2cbd7cc2dcd008">onDraw</a>);</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    OnObjectDrawUI.Disconnect(connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#ac0da608b0870ae1eafb0f8db4cbaa2a4">onDrawUI</a>);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    OnObjectDebug.Disconnect(connections.<a class="code hl_variable" href="structduin_1_1SignalConnections.html#a52dcdac29e3a9bfb580749ed42ccfcfb">onDebug</a>);</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>}</div>
+</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keywordtype">void</span> duin::GameObject::Init()</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>{</div>
@@ -354,14 +366,16 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    debugEnabled = enable;</div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>}</div>
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><a class="code hl_class" href="classduin_1_1UUID.html">duin::UUID</a> duin::GameObject::GetUUID()<span class="keyword"> const</span></div>
+<div class="foldopen" id="foldopen00239" data-start="{" data-end="}">
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">  239</a></span><a class="code hl_class" href="classduin_1_1UUID.html">duin::UUID</a> <a class="code hl_function" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">duin::GameObject::GetUUID</a>()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="keyword"></span>{</div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordflow">return</span> uuid;</div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>}</div>
+</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><span class="keywordtype">bool</span> duin::GameObject::operator==(<span class="keyword">const</span> GameObject &amp;other)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><span class="keywordtype">bool</span> duin::GameObject::operator==(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1GameObject.html">GameObject</a> &amp;other)<span class="keyword"> const</span></div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keywordflow">return</span> this-&gt;GetUUID() == other.GetUUID();</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keywordflow">return</span> this-&gt;GetUUID() == other.<a class="code hl_function" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">GetUUID</a>();</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>}</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="keywordtype">bool</span> duin::GameObject::operator!=(<span class="keyword">const</span> GameObject &amp;other)<span class="keyword"> const</span></div>
@@ -463,9 +477,26 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    Debug();</div>
 <div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    OnObjectDebug.Emit();</div>
 <div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>}</div>
-<div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00056">UUID.h:57</a></div></div>
-<div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00016">uuid.h:16</a></div></div>
-<div class="ttc" id="astructduin_1_1SignalConnections_html"><div class="ttname"><a href="structduin_1_1SignalConnections.html">duin::SignalConnections</a></div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00007">SignalConnections.h:8</a></div></div>
+<div class="ttc" id="aGameObject_8h_html"><div class="ttname"><a href="GameObject_8h.html">GameObject.h</a></div><div class="ttdoc">Scene graph node with lifecycle callbacks.</div></div>
+<div class="ttc" id="aclassduin_1_1Event_html"><div class="ttname"><a href="classduin_1_1Event.html">duin::Event</a></div><div class="ttdoc">Base wrapper for SDL events.</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00025">Event.h:26</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html"><div class="ttname"><a href="classduin_1_1GameObject.html">duin::GameObject</a></div><div class="ttdoc">Base class for objects in the scene hierarchy.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8h_source.html#l00052">GameObject.h:53</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html_a3403b712b50b9c17f32fb9445c42756c"><div class="ttname"><a href="classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c">duin::GameObject::GetParent</a></div><div class="ttdeci">std::shared_ptr&lt; GameObject &gt; GetParent()</div><div class="ttdoc">Returns the parent object, or nullptr if root.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8cpp_source.html#l00056">GameObject.cpp:56</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html_a3b585504b0737a16fd05688ca8116ae4"><div class="ttname"><a href="classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4">duin::GameObject::RemoveChildObject</a></div><div class="ttdeci">void RemoveChildObject(std::shared_ptr&lt; GameObject &gt; child)</div><div class="ttdoc">Removes a child from this object.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8cpp_source.html#l00035">GameObject.cpp:35</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html_a9434e5fecafe0fab58dd915ef22c7b37"><div class="ttname"><a href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">duin::GameObject::GetUUID</a></div><div class="ttdeci">UUID GetUUID() const</div><div class="ttdoc">Returns this object's unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8cpp_source.html#l00239">GameObject.cpp:239</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html_a9c0a2398a7cc491d24b655908e27a4e2"><div class="ttname"><a href="classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2">duin::GameObject::AddChildObject</a></div><div class="ttdeci">void AddChildObject(std::shared_ptr&lt; GameObject &gt; child)</div><div class="ttdoc">Adds an existing object as a child.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8cpp_source.html#l00014">GameObject.cpp:14</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html_ab269640f8a3d5b2f9608559791acf9d2"><div class="ttname"><a href="classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2">duin::GameObject::DisconnectAllSignals</a></div><div class="ttdeci">void DisconnectAllSignals(const SignalConnections &amp;connections)</div><div class="ttdoc">Disconnects all signals from a SignalConnections bundle.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8cpp_source.html#l00156">GameObject.cpp:156</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html_acc88e71a32dc1a84322601bf599bb7d5"><div class="ttname"><a href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">duin::GameObject::ConnectAllSignals</a></div><div class="ttdeci">SignalConnections ConnectAllSignals(std::function&lt; void()&gt; onReady, std::function&lt; void(Event)&gt; onEvent, std::function&lt; void(double)&gt; onUpdate, std::function&lt; void(double)&gt; onPhysicsUpdate, std::function&lt; void()&gt; onDraw, std::function&lt; void()&gt; onDrawUI, std::function&lt; void()&gt; onDebug)</div><div class="ttdoc">Connects all lifecycle signals at once.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8cpp_source.html#l00139">GameObject.cpp:139</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html_ad924d34dc3f30a0be10b680327d6168d"><div class="ttname"><a href="classduin_1_1GameObject.html#ad924d34dc3f30a0be10b680327d6168d">duin::GameObject::TransferChildObject</a></div><div class="ttdeci">void TransferChildObject(std::shared_ptr&lt; GameObject &gt; child, std::shared_ptr&lt; GameObject &gt; newParent)</div><div class="ttdoc">Moves a child to a new parent.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8cpp_source.html#l00045">GameObject.cpp:45</a></div></div>
+<div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00057">UUID.h:58</a></div></div>
+<div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html"><div class="ttname"><a href="structduin_1_1SignalConnections.html">duin::SignalConnections</a></div><div class="ttdoc">Holds UUIDs for signal connections to lifecycle events.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00023">SignalConnections.h:24</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_a3e7588a71b2ab02e03dff563847f02bd"><div class="ttname"><a href="structduin_1_1SignalConnections.html#a3e7588a71b2ab02e03dff563847f02bd">duin::SignalConnections::onPhysicsUpdate</a></div><div class="ttdeci">UUID onPhysicsUpdate</div><div class="ttdoc">Connection to physics update signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00028">SignalConnections.h:28</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_a46b2caaf3eefc3830c2cbd7cc2dcd008"><div class="ttname"><a href="structduin_1_1SignalConnections.html#a46b2caaf3eefc3830c2cbd7cc2dcd008">duin::SignalConnections::onDraw</a></div><div class="ttdeci">UUID onDraw</div><div class="ttdoc">Connection to draw signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00029">SignalConnections.h:29</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_a52dcdac29e3a9bfb580749ed42ccfcfb"><div class="ttname"><a href="structduin_1_1SignalConnections.html#a52dcdac29e3a9bfb580749ed42ccfcfb">duin::SignalConnections::onDebug</a></div><div class="ttdeci">UUID onDebug</div><div class="ttdoc">Connection to debug signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00031">SignalConnections.h:31</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_aaaaac0c22db2a32e3283655429887b58"><div class="ttname"><a href="structduin_1_1SignalConnections.html#aaaaac0c22db2a32e3283655429887b58">duin::SignalConnections::onUpdate</a></div><div class="ttdeci">UUID onUpdate</div><div class="ttdoc">Connection to update signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00027">SignalConnections.h:27</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_ac0da608b0870ae1eafb0f8db4cbaa2a4"><div class="ttname"><a href="structduin_1_1SignalConnections.html#ac0da608b0870ae1eafb0f8db4cbaa2a4">duin::SignalConnections::onDrawUI</a></div><div class="ttdeci">UUID onDrawUI</div><div class="ttdoc">Connection to draw UI signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00030">SignalConnections.h:30</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_adbab4bb5f175ec1fbeed56ad86ceedfc"><div class="ttname"><a href="structduin_1_1SignalConnections.html#adbab4bb5f175ec1fbeed56ad86ceedfc">duin::SignalConnections::onEvent</a></div><div class="ttdeci">UUID onEvent</div><div class="ttdoc">Connection to event signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00026">SignalConnections.h:26</a></div></div>
+<div class="ttc" id="astructduin_1_1SignalConnections_html_aeddbe9c1f0badc6aad3d4c0f38ba3511"><div class="ttname"><a href="structduin_1_1SignalConnections.html#aeddbe9c1f0badc6aad3d4c0f38ba3511">duin::SignalConnections::onReady</a></div><div class="ttdeci">UUID onReady</div><div class="ttdoc">Connection to ready signal.</div><div class="ttdef"><b>Definition</b> <a href="SignalConnections_8h_source.html#l00025">SignalConnections.h:25</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

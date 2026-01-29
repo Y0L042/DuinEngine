@@ -126,48 +126,46 @@ $(document).ready(function(){initNavTree('SceneDefinition_8h_source.html',''); i
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>duin</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">class </span>ExternalSceneDependency;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">class </span>ExternalSceneDependency;</div>
 <div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classduin_1_1SceneDefinition.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1JSONValue.html">JSONValue</a>&amp; json);</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classduin_1_1SceneDefinition.html">   12</a></span><span class="keyword">class </span><a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1JSONValue.html">JSONValue</a> &amp;json);</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid = UUID::INVALID;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        std::string name = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        std::vector&lt;ExternalSceneDependency&gt; extScnDeps;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        std::string flecsJSON = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    };</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid = UUID::INVALID;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    std::string name = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    std::vector&lt;ExternalSceneDependency&gt; extScnDeps;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    std::string flecsJSON = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>};</div>
 </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="foldopen" id="foldopen00029" data-start="{" data-end="};">
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classduin_1_1ExternalSceneDependency.html">   29</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1JSONValue.html">JSONValue</a>&amp; json);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> exDepUUID = UUID::INVALID;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        uint64_t localParent = 0;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        std::string type = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    };</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classduin_1_1ExternalSceneDependency.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_class" href="classduin_1_1ExternalSceneDependency.html">ExternalSceneDependency</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1JSONValue.html">JSONValue</a> &amp;json);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> exDepUUID = UUID::INVALID;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    uint64_t localParent = 0;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    std::string type = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classduin_1_1SceneDefinition.html">SceneDefinition</a>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
 </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aJSONValue_8h_html"><div class="ttname"><a href="JSONValue_8h.html">JSONValue.h</a></div><div class="ttdoc">Defines the duin::JSONValue class for manipulating JSON data using RapidJSON.</div></div>
 <div class="ttc" id="aUUID_8h_html"><div class="ttname"><a href="UUID_8h.html">UUID.h</a></div><div class="ttdoc">Defines the UUID class for generating and managing unique identifiers.</div></div>
-<div class="ttc" id="aclassduin_1_1ExternalSceneDependency_html"><div class="ttname"><a href="classduin_1_1ExternalSceneDependency.html">duin::ExternalSceneDependency</a></div><div class="ttdef"><b>Definition</b> <a href="SceneDefinition_8h_source.html#l00029">SceneDefinition.h:30</a></div></div>
-<div class="ttc" id="aclassduin_1_1JSONValue_html"><div class="ttname"><a href="classduin_1_1JSONValue.html">duin::JSONValue</a></div><div class="ttdoc">Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.</div><div class="ttdef"><b>Definition</b> <a href="JSONValue_8h_source.html#l00066">JSONValue.h:67</a></div></div>
+<div class="ttc" id="aclassduin_1_1ExternalSceneDependency_html"><div class="ttname"><a href="classduin_1_1ExternalSceneDependency.html">duin::ExternalSceneDependency</a></div><div class="ttdef"><b>Definition</b> <a href="SceneDefinition_8h_source.html#l00027">SceneDefinition.h:28</a></div></div>
+<div class="ttc" id="aclassduin_1_1JSONValue_html"><div class="ttname"><a href="classduin_1_1JSONValue.html">duin::JSONValue</a></div><div class="ttdoc">Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.</div><div class="ttdef"><b>Definition</b> <a href="JSONValue_8h_source.html#l00067">JSONValue.h:68</a></div></div>
 <div class="ttc" id="aclassduin_1_1SceneDefinition_html"><div class="ttname"><a href="classduin_1_1SceneDefinition.html">duin::SceneDefinition</a></div><div class="ttdef"><b>Definition</b> <a href="SceneDefinition_8h_source.html#l00012">SceneDefinition.h:13</a></div></div>
-<div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00056">UUID.h:57</a></div></div>
+<div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00057">UUID.h:58</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

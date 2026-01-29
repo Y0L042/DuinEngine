@@ -1,0 +1,50 @@
+<map id="PhysicsMaterial.h" name="PhysicsMaterial.h">
+<area shape="rect" id="Node000001" title="Physical material properties for collision." alt="" coords="351,5,489,31"/>
+<area shape="rect" id="Node000002" href="$CollisionShape_8h.html" title="Collision shape combining geometry and material." alt="" coords="355,79,485,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="423,44,423,79,417,79,417,44"/>
+<area shape="rect" id="Node000006" href="$PhysicsIncludes_8h_source.html" title=" " alt="" coords="277,225,414,251"/>
+<area shape="poly" id="edge26_Node000001_Node000006" title=" " alt="" coords="349,37,299,53,247,77,200,110,179,130,162,153,158,165,162,176,180,190,211,203,286,223,284,228,209,208,178,194,158,179,153,165,158,151,175,127,196,106,245,72,297,48,347,32"/>
+<area shape="rect" id="Node000021" href="$PhysicsMaterial_8cpp_source.html" title=" " alt="" coords="509,79,661,104"/>
+<area shape="poly" id="edge27_Node000001_Node000021" title=" " alt="" coords="460,34,559,76,557,81,458,38"/>
+<area shape="rect" id="Node000003" href="$CollisionShape_8cpp_source.html" title=" " alt="" coords="514,152,659,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="460,107,560,149,558,154,458,112"/>
+<area shape="rect" id="Node000004" href="$DynamicBody_8h.html" title="Fully simulated rigid body." alt="" coords="684,152,807,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="486,104,693,149,692,154,485,110"/>
+<area shape="poly" id="edge21_Node000002_Node000006" title=" " alt="" coords="383,113,359,130,341,153,336,171,336,191,343,224,338,226,330,191,330,171,336,151,355,126,379,109"/>
+<area shape="rect" id="Node000016" href="$KinematicBody_8h_source.html" title=" " alt="" coords="831,152,961,177"/>
+<area shape="poly" id="edge18_Node000002_Node000016" title=" " alt="" coords="499,102,831,151,830,156,499,107"/>
+<area shape="rect" id="Node000018" href="$PhysicsServer_8cpp_source.html" title=" " alt="" coords="351,152,489,177"/>
+<area shape="poly" id="edge22_Node000002_Node000018" title=" " alt="" coords="423,118,423,152,417,152,417,118"/>
+<area shape="rect" id="Node000019" href="$StaticBody_8h_source.html" title=" " alt="" coords="173,152,275,177"/>
+<area shape="poly" id="edge23_Node000002_Node000019" title=" " alt="" coords="377,111,257,154,255,149,375,106"/>
+<area shape="rect" id="Node000005" href="$DynamicBody_8cpp_source.html" title=" " alt="" coords="668,225,807,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="745,191,741,226,736,225,740,191"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="671,182,410,228,409,223,670,177"/>
+<area shape="rect" id="Node000007" href="$ECSManager_8h.html" title="Entity Component System manager and component definitions." alt="" coords="213,299,328,324"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="325,262,285,300,281,297,322,258"/>
+<area shape="rect" id="Node000014" href="$PhysicsModule_8h_source.html" title=" " alt="" coords="353,299,484,324"/>
+<area shape="poly" id="edge15_Node000006_Node000014" title=" " alt="" coords="369,258,409,297,405,300,365,262"/>
+<area shape="rect" id="Node000008" href="$ECSManager_8cpp_source.html" title=" " alt="" coords="5,372,136,397"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="226,331,104,374,102,369,225,326"/>
+<area shape="rect" id="Node000009" href="$ECSModule_8h_source.html" title=" " alt="" coords="275,445,381,471"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="306,329,328,347,345,371,350,391,348,412,337,446,332,444,343,411,345,392,340,373,324,351,303,333"/>
+<area shape="rect" id="Node000012" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="112,445,245,471"/>
+<area shape="poly" id="edge11_Node000007_Node000012" title=" " alt="" coords="241,334,220,352,202,373,187,411,182,445,177,444,182,410,198,371,216,348,238,330"/>
+<area shape="rect" id="Node000013" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="211,372,330,397"/>
+<area shape="poly" id="edge12_Node000007_Node000013" title=" " alt="" coords="273,338,273,372,268,372,268,338"/>
+<area shape="rect" id="Node000010" href="$Duin_8h_source.html" title=" " alt="" coords="341,519,405,544"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="345,481,368,517,364,520,341,484"/>
+<area shape="rect" id="Node000011" href="$Duin_8cpp_source.html" title=" " alt="" coords="334,592,413,617"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="376,558,376,592,371,592,371,558"/>
+<area shape="poly" id="edge13_Node000013_Node000009" title=" " alt="" coords="291,406,321,444,317,447,286,410"/>
+<area shape="poly" id="edge14_Node000013_Node000012" title=" " alt="" coords="247,408,195,447,192,443,244,403"/>
+<area shape="poly" id="edge17_Node000014_Node000010" title=" " alt="" coords="419,338,410,399,396,471,380,519,375,518,391,470,405,398,413,337"/>
+<area shape="rect" id="Node000015" href="$Application_8cpp_source.html" title=" " alt="" coords="456,372,579,397"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="447,330,503,370,500,374,444,334"/>
+<area shape="poly" id="edge20_Node000016_Node000006" title=" " alt="" coords="818,180,415,231,414,226,817,175"/>
+<area shape="rect" id="Node000017" href="$KinematicBody_8cpp_source.html" title=" " alt="" coords="831,225,977,251"/>
+<area shape="poly" id="edge19_Node000016_Node000017" title=" " alt="" coords="901,191,905,225,900,226,896,191"/>
+<area shape="poly" id="edge24_Node000019_Node000006" title=" " alt="" coords="257,182,327,223,324,227,254,187"/>
+<area shape="rect" id="Node000020" href="$StaticBody_8cpp_source.html" title=" " alt="" coords="135,225,252,251"/>
+<area shape="poly" id="edge25_Node000019_Node000020" title=" " alt="" coords="216,191,201,226,196,224,211,189"/>
+</map>

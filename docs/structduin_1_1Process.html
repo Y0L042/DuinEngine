@@ -112,29 +112,41 @@ $(document).ready(function(){initNavTree('structduin_1_1Process.html',''); initR
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structduin_1_1Process-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::Process Struct Reference</div></div>
+  <div class="headertitle"><div class="title">duin::Process Struct Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Module</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Handle to an external process.  
+ <a href="structduin_1_1Process.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Process_8h_source.html">Process.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a95979bc0b00ac76ad4b46f01477381a0" id="r_a95979bc0b00ac76ad4b46f01477381a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1Process.html#a95979bc0b00ac76ad4b46f01477381a0">IsAlive</a> ()</td></tr>
+<tr class="memdesc:a95979bc0b00ac76ad4b46f01477381a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the process is still running.  <br /></td></tr>
 <tr class="separator:a95979bc0b00ac76ad4b46f01477381a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accf10f9e520b9ed02de541869603852d" id="r_accf10f9e520b9ed02de541869603852d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1Process.html#accf10f9e520b9ed02de541869603852d">IsBackground</a> ()</td></tr>
+<tr class="memdesc:accf10f9e520b9ed02de541869603852d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if process was spawned in background mode.  <br /></td></tr>
 <tr class="separator:accf10f9e520b9ed02de541869603852d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a124d0409bd95d93375dbd72dd0e46508" id="r_a124d0409bd95d93375dbd72dd0e46508"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1Process.html#a124d0409bd95d93375dbd72dd0e46508">GetExitcode</a> ()</td></tr>
+<tr class="memdesc:a124d0409bd95d93375dbd72dd0e46508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the exit code (valid only after process terminates).  <br /></td></tr>
 <tr class="separator:a124d0409bd95d93375dbd72dd0e46508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ac66f5d4da514a0d52540d5caf27136b4" id="r_ac66f5d4da514a0d52540d5caf27136b4"><td class="memItemLeft" align="right" valign="top">SDL_Process *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1Process.html#ac66f5d4da514a0d52540d5caf27136b4">sdlProcess</a></td></tr>
+<tr class="memdesc:ac66f5d4da514a0d52540d5caf27136b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Underlying SDL process handle.  <br /></td></tr>
 <tr class="separator:ac66f5d4da514a0d52540d5caf27136b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42e88dc924726c43680dc5bc16a7090c" id="r_a42e88dc924726c43680dc5bc16a7090c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1Process.html#a42e88dc924726c43680dc5bc16a7090c">hasBeenDestroyed</a> = false</td></tr>
+<tr class="memdesc:a42e88dc924726c43680dc5bc16a7090c"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if DestroyProcessObject was called.  <br /></td></tr>
 <tr class="separator:a42e88dc924726c43680dc5bc16a7090c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Process_8h_source.html#l00009">9</a> of file <a class="el" href="Process_8h_source.html">Process.h</a>.</p>
+<div class="textblock"><p>Handle to an external process. </p>
+<p>Represents a spawned external process. <a class="el" href="classduin_1_1Query.html" title="Wrapper for flecs::query to provide a unified query API.">Query</a> state with <a class="el" href="structduin_1_1Process.html#a95979bc0b00ac76ad4b46f01477381a0" title="Returns true if the process is still running.">IsAlive()</a>, and retrieve exit code after termination with <a class="el" href="structduin_1_1Process.html#a124d0409bd95d93375dbd72dd0e46508" title="Returns the exit code (valid only after process terminates).">GetExitcode()</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="Process_8h_source.html#l00027">27</a> of file <a class="el" href="Process_8h_source.html">Process.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a124d0409bd95d93375dbd72dd0e46508" name="a124d0409bd95d93375dbd72dd0e46508"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a124d0409bd95d93375dbd72dd0e46508">&#9670;&#160;</a></span>GetExitcode()</h2>
@@ -150,6 +162,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the exit code (valid only after process terminates). </p>
 
 <p class="definition">Definition at line <a class="el" href="Process_8cpp_source.html#l00035">35</a> of file <a class="el" href="Process_8cpp_source.html">Process.cpp</a>.</p>
 
@@ -170,6 +184,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns true if the process is still running. </p>
+
 <p class="definition">Definition at line <a class="el" href="Process_8cpp_source.html#l00025">25</a> of file <a class="el" href="Process_8cpp_source.html">Process.cpp</a>.</p>
 
 </div>
@@ -189,6 +205,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns true if process was spawned in background mode. </p>
+
 <p class="definition">Definition at line <a class="el" href="Process_8cpp_source.html#l00030">30</a> of file <a class="el" href="Process_8cpp_source.html">Process.cpp</a>.</p>
 
 </div>
@@ -206,7 +224,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Process_8h_source.html#l00015">15</a> of file <a class="el" href="Process_8h_source.html">Process.h</a>.</p>
+<p>True if DestroyProcessObject was called. </p>
+
+<p class="definition">Definition at line <a class="el" href="Process_8h_source.html#l00037">37</a> of file <a class="el" href="Process_8h_source.html">Process.h</a>.</p>
 
 </div>
 </div>
@@ -222,7 +242,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Process_8h_source.html#l00014">14</a> of file <a class="el" href="Process_8h_source.html">Process.h</a>.</p>
+<p>Underlying SDL process handle. </p>
+
+<p class="definition">Definition at line <a class="el" href="Process_8h_source.html#l00036">36</a> of file <a class="el" href="Process_8h_source.html">Process.h</a>.</p>
 
 </div>
 </div>

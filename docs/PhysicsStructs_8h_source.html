@@ -122,27 +122,24 @@ $(document).ready(function(){initNavTree('PhysicsStructs_8h_source.html',''); in
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;PxPhysicsAPI.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>duin {</div>
-<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="structduin_1_1Transform3D.html">    8</a></span>    <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1Transform3D.html">Transform3D</a> {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> translation;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        <a class="code hl_struct" href="structduin_1_1Vector4.html">Quaternion</a> rotation;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        physx::PxTransformT&lt;float&gt; ToPhysX()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            <span class="keywordflow">return</span> physx::PxTransformT&lt;float&gt;(</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>                                              translation.x,</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>                                              translation.y,</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>                                              translation.z,</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>                                              rotation.ToPhysXQuaternion()</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                                              );</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        }</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    } <a class="code hl_struct" href="structduin_1_1Transform3D.html">Transform3D</a>;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>duin</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
+<div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="structduin_1_1Transform3D.html">    9</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structduin_1_1Transform3D.html">Transform3D</a></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_struct" href="structduin_1_1Vector3.html">Vector3</a> translation;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <a class="code hl_struct" href="structduin_1_1Vector4.html">Quaternion</a> rotation;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    physx::PxTransformT&lt;float&gt; ToPhysX()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordflow">return</span> physx::PxTransformT&lt;float&gt;(translation.x, translation.y, translation.z, rotation.ToPhysXQuaternion());</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    }</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>} <a class="code hl_struct" href="structduin_1_1Transform3D.html">Transform3D</a>;</div>
 </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
-<div class="ttc" id="astructduin_1_1Transform3D_html"><div class="ttname"><a href="structduin_1_1Transform3D.html">duin::Transform3D</a></div><div class="ttdef"><b>Definition</b> <a href="PhysicsStructs_8h_source.html#l00008">PhysicsStructs.h:8</a></div></div>
-<div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00158">DuinMaths.h:158</a></div></div>
-<div class="ttc" id="astructduin_1_1Vector4_html"><div class="ttname"><a href="structduin_1_1Vector4.html">duin::Vector4</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00208">DuinMaths.h:208</a></div></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>} <span class="comment">// namespace duin</span></div>
+<div class="ttc" id="astructduin_1_1Transform3D_html"><div class="ttname"><a href="structduin_1_1Transform3D.html">duin::Transform3D</a></div><div class="ttdef"><b>Definition</b> <a href="PhysicsStructs_8h_source.html#l00009">PhysicsStructs.h:10</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00162">DuinMaths.h:163</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector4_html"><div class="ttname"><a href="structduin_1_1Vector4.html">duin::Vector4</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00218">DuinMaths.h:219</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

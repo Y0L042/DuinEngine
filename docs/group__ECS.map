@@ -1,0 +1,8 @@
+<map id="Entity Component System" name="Entity Component System">
+<area shape="rect" id="Node000001" title="FLECS&#45;based entity component system." alt="" coords="5,104,197,129"/>
+<area shape="rect" id="Node000003" href="$group__ECS__Components.html" title="ECS component definitions." alt="" coords="267,5,371,31"/>
+<area shape="rect" id="Node000002" href="$group__ECS__Manager.html" title="Central ECS management." alt="" coords="279,55,358,80"/>
+<area shape="rect" id="Node000005" href="$group__ECS__Prefabs.html" title="Entity prefab definitions." alt="" coords="283,104,354,129"/>
+<area shape="rect" id="Node000006" href="$group__ECS__Scene.html" title="Scene loading and saving." alt="" coords="245,153,392,179"/>
+<area shape="rect" id="Node000004" href="$group__ECS__Tags.html" title="ECS tag definitions." alt="" coords="293,203,344,228"/>
+</map>

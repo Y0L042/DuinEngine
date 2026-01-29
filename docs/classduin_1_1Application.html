@@ -111,25 +111,36 @@ $(document).ready(function(){initNavTree('classduin_1_1Application.html',''); in
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classduin_1_1Application-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::Application Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::Application Class Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Module</a> &raquo; <a class="el" href="group__Core__Application.html">Application</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base class for Duin applications.  
+ <a href="classduin_1_1Application.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Application_8h_source.html">Application.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac39d5885beb8dba6e1fc22ac9ad07257" id="r_ac39d5885beb8dba6e1fc22ac9ad07257"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ac39d5885beb8dba6e1fc22ac9ad07257">SetWindowStartupSize</a> (int width, int height)</td></tr>
+<tr class="memdesc:ac39d5885beb8dba6e1fc22ac9ad07257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets initial window dimensions before <a class="el" href="classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522" title="Starts the main loop. Call once after configuration.">Run()</a>.  <br /></td></tr>
 <tr class="separator:ac39d5885beb8dba6e1fc22ac9ad07257"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abab5d7d437975459a1d4d16e6e5d1255" id="r_abab5d7d437975459a1d4d16e6e5d1255"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#abab5d7d437975459a1d4d16e6e5d1255">SetWindowName</a> (const char *string)</td></tr>
+<tr class="memdesc:abab5d7d437975459a1d4d16e6e5d1255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the window title.  <br /></td></tr>
 <tr class="separator:abab5d7d437975459a1d4d16e6e5d1255"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b0b785b01aa16b43dc3506716aaa522" id="r_a5b0b785b01aa16b43dc3506716aaa522"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522">Run</a> ()</td></tr>
+<tr class="memdesc:a5b0b785b01aa16b43dc3506716aaa522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the main loop. Call once after configuration.  <br /></td></tr>
 <tr class="separator:a5b0b785b01aa16b43dc3506716aaa522"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c485974f6ba4ebacdf2d24d930bdb34" id="r_a5c485974f6ba4ebacdf2d24d930bdb34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a5c485974f6ba4ebacdf2d24d930bdb34">EngineInitialize</a> ()</td></tr>
+<tr class="memdesc:a5c485974f6ba4ebacdf2d24d930bdb34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal engine initialization. Do not call directly.  <br /></td></tr>
 <tr class="separator:a5c485974f6ba4ebacdf2d24d930bdb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfda04cdbdd2923dc25f509f2c285dd8" id="r_adfda04cdbdd2923dc25f509f2c285dd8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#adfda04cdbdd2923dc25f509f2c285dd8">Initialize</a> ()</td></tr>
+<tr class="memdesc:adfda04cdbdd2923dc25f509f2c285dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override to perform one-time setup. Called before <a class="el" href="classduin_1_1Application.html#ad1509250d55438ec832e886d0a6caa89" title="Override to perform setup after all systems are initialized.">Ready()</a>.  <br /></td></tr>
 <tr class="separator:adfda04cdbdd2923dc25f509f2c285dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bc9559c09ed86530b3e27a527ffddb9" id="r_a2bc9559c09ed86530b3e27a527ffddb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a2bc9559c09ed86530b3e27a527ffddb9">EngineReady</a> ()</td></tr>
 <tr class="separator:a2bc9559c09ed86530b3e27a527ffddb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1509250d55438ec832e886d0a6caa89" id="r_ad1509250d55438ec832e886d0a6caa89"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ad1509250d55438ec832e886d0a6caa89">Ready</a> ()</td></tr>
+<tr class="memdesc:ad1509250d55438ec832e886d0a6caa89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override to perform setup after all systems are initialized.  <br /></td></tr>
 <tr class="separator:ad1509250d55438ec832e886d0a6caa89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afde2d24999ca0ee558169ca148839e49" id="r_afde2d24999ca0ee558169ca148839e49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#afde2d24999ca0ee558169ca148839e49">EnginePostReady</a> ()</td></tr>
 <tr class="separator:afde2d24999ca0ee558169ca148839e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,54 +149,95 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f30aa58a92eef323440f56880e8d0cf" id="r_a1f30aa58a92eef323440f56880e8d0cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a1f30aa58a92eef323440f56880e8d0cf">EngineOnEvent</a> (<a class="el" href="classduin_1_1Event.html">Event</a> event)</td></tr>
 <tr class="separator:a1f30aa58a92eef323440f56880e8d0cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf554167ffd21e5a9213f1bd585f977c" id="r_adf554167ffd21e5a9213f1bd585f977c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c">OnEvent</a> (<a class="el" href="classduin_1_1Event.html">Event</a> event)</td></tr>
+<tr class="memdesc:adf554167ffd21e5a9213f1bd585f977c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override to handle input events.  <br /></td></tr>
 <tr class="separator:adf554167ffd21e5a9213f1bd585f977c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdd9ff39d702dba895119700d4c82c88" id="r_abdd9ff39d702dba895119700d4c82c88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#abdd9ff39d702dba895119700d4c82c88">EngineUpdate</a> (double delta)</td></tr>
 <tr class="separator:abdd9ff39d702dba895119700d4c82c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd6937e69d6e0cde5dff4f5787a17f16" id="r_afd6937e69d6e0cde5dff4f5787a17f16"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16">Update</a> (double delta)</td></tr>
+<tr class="memdesc:afd6937e69d6e0cde5dff4f5787a17f16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override for per-frame logic.  <br /></td></tr>
 <tr class="separator:afd6937e69d6e0cde5dff4f5787a17f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b441ee0423e861e8b18b193de7cb80d" id="r_a2b441ee0423e861e8b18b193de7cb80d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a2b441ee0423e861e8b18b193de7cb80d">EnginePostUpdate</a> (double delta)</td></tr>
 <tr class="separator:a2b441ee0423e861e8b18b193de7cb80d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7ed8ec2877d074339dd18ff85cf0041" id="r_ab7ed8ec2877d074339dd18ff85cf0041"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ab7ed8ec2877d074339dd18ff85cf0041">EnginePhysicsUpdate</a> (double delta)</td></tr>
 <tr class="separator:ab7ed8ec2877d074339dd18ff85cf0041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28b881c1330c89e598136a631a12536a" id="r_a28b881c1330c89e598136a631a12536a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a">PhysicsUpdate</a> (double delta)</td></tr>
+<tr class="memdesc:a28b881c1330c89e598136a631a12536a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override for fixed-timestep physics logic.  <br /></td></tr>
 <tr class="separator:a28b881c1330c89e598136a631a12536a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af35932c0718856b87954c858763d4f79" id="r_af35932c0718856b87954c858763d4f79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#af35932c0718856b87954c858763d4f79">EnginePostPhysicsUpdate</a> (double delta)</td></tr>
 <tr class="separator:af35932c0718856b87954c858763d4f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1bd130dd94bb6afbfac0bbdc7fb6f49" id="r_ab1bd130dd94bb6afbfac0bbdc7fb6f49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ab1bd130dd94bb6afbfac0bbdc7fb6f49">EngineDraw</a> ()</td></tr>
 <tr class="separator:ab1bd130dd94bb6afbfac0bbdc7fb6f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78b6fbf25fa86f5852d16ba8c1fa40b9" id="r_a78b6fbf25fa86f5852d16ba8c1fa40b9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9">Draw</a> ()</td></tr>
+<tr class="memdesc:a78b6fbf25fa86f5852d16ba8c1fa40b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override for 3D rendering.  <br /></td></tr>
 <tr class="separator:a78b6fbf25fa86f5852d16ba8c1fa40b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16bd4fffb366e030c7ad34a18a05a08e" id="r_a16bd4fffb366e030c7ad34a18a05a08e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a16bd4fffb366e030c7ad34a18a05a08e">EnginePostDraw</a> ()</td></tr>
 <tr class="separator:a16bd4fffb366e030c7ad34a18a05a08e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3287dc204fc2dfb87855980716507db1" id="r_a3287dc204fc2dfb87855980716507db1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a3287dc204fc2dfb87855980716507db1">EngineDrawUI</a> ()</td></tr>
 <tr class="separator:a3287dc204fc2dfb87855980716507db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89ca5b444c0dbbaf1d0cbe6436d9d440" id="r_a89ca5b444c0dbbaf1d0cbe6436d9d440"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440">DrawUI</a> ()</td></tr>
+<tr class="memdesc:a89ca5b444c0dbbaf1d0cbe6436d9d440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override for ImGui UI rendering.  <br /></td></tr>
 <tr class="separator:a89ca5b444c0dbbaf1d0cbe6436d9d440"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e01c0fb89f70ba71cda1a4fc10f6c59" id="r_a4e01c0fb89f70ba71cda1a4fc10f6c59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a4e01c0fb89f70ba71cda1a4fc10f6c59">EnginePostDrawUI</a> ()</td></tr>
 <tr class="separator:a4e01c0fb89f70ba71cda1a4fc10f6c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a561cbbc8db7c933f3695e76bffbd031b" id="r_a561cbbc8db7c933f3695e76bffbd031b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a561cbbc8db7c933f3695e76bffbd031b">EngineDebug</a> ()</td></tr>
 <tr class="separator:a561cbbc8db7c933f3695e76bffbd031b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30d7def0ba4af5c30c4a60d9d71a2190" id="r_a30d7def0ba4af5c30c4a60d9d71a2190"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190">Debug</a> ()</td></tr>
+<tr class="memdesc:a30d7def0ba4af5c30c4a60d9d71a2190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override for debug rendering and logic.  <br /></td></tr>
 <tr class="separator:a30d7def0ba4af5c30c4a60d9d71a2190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a901a30267911ba3f42a34f5a7f082848" id="r_a901a30267911ba3f42a34f5a7f082848"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a901a30267911ba3f42a34f5a7f082848">EnginePostDebug</a> ()</td></tr>
 <tr class="separator:a901a30267911ba3f42a34f5a7f082848"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2932511d9ab3b83cf567ebe509e598ff" id="r_a2932511d9ab3b83cf567ebe509e598ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#a2932511d9ab3b83cf567ebe509e598ff">EnginePostFrame</a> ()</td></tr>
 <tr class="separator:a2932511d9ab3b83cf567ebe509e598ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace06bcd04c322681914235e800c782e6" id="r_ace06bcd04c322681914235e800c782e6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6">Exit</a> ()</td></tr>
+<tr class="memdesc:ace06bcd04c322681914235e800c782e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override for cleanup before shutdown.  <br /></td></tr>
 <tr class="separator:ace06bcd04c322681914235e800c782e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6d7c6c73846ffcb7bd949ac3f84a3e2" id="r_ab6d7c6c73846ffcb7bd949ac3f84a3e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ab6d7c6c73846ffcb7bd949ac3f84a3e2">EngineExit</a> ()</td></tr>
 <tr class="separator:ab6d7c6c73846ffcb7bd949ac3f84a3e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0801824608dece0311e089d4999cb63" id="r_ad0801824608dece0311e089d4999cb63"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:ad0801824608dece0311e089d4999cb63"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ad0801824608dece0311e089d4999cb63">CreateChildObject</a> (Args... args)</td></tr>
+<tr class="memdesc:ad0801824608dece0311e089d4999cb63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a child <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> attached to the root.  <br /></td></tr>
 <tr class="separator:ad0801824608dece0311e089d4999cb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af61542473b27e8b2310686b8c16daa8b" id="r_af61542473b27e8b2310686b8c16daa8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b">AddChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
+<tr class="memdesc:af61542473b27e8b2310686b8c16daa8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an existing <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> as a child of the root.  <br /></td></tr>
 <tr class="separator:af61542473b27e8b2310686b8c16daa8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2fdd5e8818eece60d84960591f57954" id="r_ad2fdd5e8818eece60d84960591f57954"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">RemoveChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
+<tr class="memdesc:ad2fdd5e8818eece60d84960591f57954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a child <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> from the root.  <br /></td></tr>
 <tr class="separator:ad2fdd5e8818eece60d84960591f57954"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00060">60</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
+<div class="textblock"><p>Base class for Duin applications. </p>
+<p><a class="el" href="classduin_1_1Application.html" title="Base class for Duin applications.">Application</a> manages the engine's main loop, window creation, and subsystem coordination. User applications inherit from this class and override virtual methods to implement game logic.</p>
+<p>Lifecycle order:</p><ol type="1">
+<li><a class="el" href="classduin_1_1Application.html#adfda04cdbdd2923dc25f509f2c285dd8" title="Override to perform one-time setup. Called before Ready().">Initialize()</a> - one-time setup</li>
+<li><a class="el" href="classduin_1_1Application.html#ad1509250d55438ec832e886d0a6caa89" title="Override to perform setup after all systems are initialized.">Ready()</a> - called after all systems initialized</li>
+<li>Main loop:<ul>
+<li><a class="el" href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c" title="Override to handle input events.">OnEvent()</a> - input events</li>
+<li><a class="el" href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16" title="Override for per-frame logic.">Update()</a> - per-frame logic (variable timestep)</li>
+<li><a class="el" href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a" title="Override for fixed-timestep physics logic.">PhysicsUpdate()</a> - fixed timestep (60 Hz default)</li>
+<li><a class="el" href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9" title="Override for 3D rendering.">Draw()</a> - 3D rendering</li>
+<li><a class="el" href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440" title="Override for ImGui UI rendering.">DrawUI()</a> - ImGui rendering</li>
+</ul>
+</li>
+<li><a class="el" href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6" title="Override for cleanup before shutdown.">Exit()</a> - cleanup</li>
+</ol>
+<div class="fragment"><div class="line"><span class="keyword">class </span>MyGame : <span class="keyword">public</span> <a class="code hl_class" href="classduin_1_1Application.html">duin::Application</a> {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <span class="keywordtype">void</span> Initialize()<span class="keyword"> override </span>{</div>
+<div class="line">        SetWindowName(<span class="stringliteral">&quot;My Game&quot;</span>);</div>
+<div class="line">        SetWindowStartupSize(1280, 720);</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordtype">void</span> Update(<span class="keywordtype">double</span> delta)<span class="keyword"> override </span>{</div>
+<div class="line">        <span class="comment">// Game logic</span></div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_class" href="classduin_1_1Application.html">duin::Application</a>* <a class="code hl_function" href="Application_8h.html#a9b4b304a3d35f01eae8e2f4b067cc4eb">duin::CreateApplication</a>() {</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">new</span> MyGame();</div>
+<div class="line">}</div>
+<div class="ttc" id="aApplication_8h_html_a9b4b304a3d35f01eae8e2f4b067cc4eb"><div class="ttname"><a href="Application_8h.html#a9b4b304a3d35f01eae8e2f4b067cc4eb">duin::CreateApplication</a></div><div class="ttdeci">Application * CreateApplication()</div><div class="ttdoc">User-defined factory function for the application.</div></div>
+<div class="ttc" id="aclassduin_1_1Application_html"><div class="ttname"><a href="classduin_1_1Application.html">duin::Application</a></div><div class="ttdoc">Base class for Duin applications.</div><div class="ttdef"><b>Definition</b> <a href="Application_8h_source.html#l00139">Application.h:140</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00139">139</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adc213d08308816aa92f34e71ae40e092" name="adc213d08308816aa92f34e71ae40e092"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc213d08308816aa92f34e71ae40e092">&#9670;&#160;</a></span>Application()</h2>
@@ -250,6 +302,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Adds an existing <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> as a child of the root. </p>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00745">745</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -280,7 +334,23 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00111">111</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
+<p>Creates a child <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> attached to the root. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>GameObject-derived type to create. </td></tr>
+    <tr><td class="paramname">Args</td><td>Constructor argument types. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>Arguments forwarded to T's constructor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to the created object. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00208">208</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
 
 </div>
 </div>
@@ -306,6 +376,8 @@ template&lt;typename T , typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Override for debug rendering and logic. </p>
 
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00712">712</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
@@ -334,6 +406,8 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Override for 3D rendering. </p>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00669">669</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -360,6 +434,8 @@ template&lt;typename T , typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Override for ImGui UI rendering. </p>
 
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00686">686</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
@@ -456,6 +532,8 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Internal engine initialization. Do not call directly. </p>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00579">579</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -475,7 +553,6 @@ template&lt;typename T , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Run as callback events </p>
 
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00614">614</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
@@ -717,6 +794,8 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Override for cleanup before shutdown. </p>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00741">741</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -743,6 +822,8 @@ template&lt;typename T , typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Override to perform one-time setup. Called before <a class="el" href="classduin_1_1Application.html#ad1509250d55438ec832e886d0a6caa89" title="Override to perform setup after all systems are initialized.">Ready()</a>. </p>
 
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00585">585</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
@@ -772,6 +853,14 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Override to handle input events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The input event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00625">625</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -800,6 +889,14 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Override for fixed-timestep physics logic. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delta</td><td>Fixed timestep in seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00650">650</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -827,6 +924,8 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Override to perform setup after all systems are initialized. </p>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00593">593</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -847,6 +946,8 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Removes a child <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> from the root. </p>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00750">750</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -865,6 +966,8 @@ template&lt;typename T , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Starts the main loop. Call once after configuration. </p>
 
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00354">354</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
@@ -885,6 +988,8 @@ template&lt;typename T , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the window title. </p>
 
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00349">349</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
@@ -916,6 +1021,8 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Sets initial window dimensions before <a class="el" href="classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522" title="Starts the main loop. Call once after configuration.">Run()</a>. </p>
+
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00338">338</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
@@ -943,6 +1050,14 @@ template&lt;typename T , typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Override for per-frame logic. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delta</td><td>Time since last frame in seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00633">633</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 

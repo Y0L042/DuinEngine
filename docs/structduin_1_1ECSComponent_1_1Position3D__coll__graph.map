@@ -1,6 +1,6 @@
 <map id="duin::ECSComponent::Position3D" name="duin::ECSComponent::Position3D">
-<area shape="rect" id="Node000001" title=" " alt="" coords="27,229,185,269"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1ECSComponent_1_1Serialisable.html" title=" " alt="" coords="5,66,164,106"/>
+<area shape="rect" id="Node000001" title="3D position component." alt="" coords="27,229,185,269"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1ECSComponent_1_1Serialisable.html" title="Base interface for serializable components." alt="" coords="5,66,164,106"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,119,106,229,101,229,86,120"/>
 <area shape="rect" id="Node000003" href="$structduin_1_1Vector3.html" title=" " alt="" coords="189,73,295,99"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,111,179,168,125,230,121,227,175,165,222,107"/>

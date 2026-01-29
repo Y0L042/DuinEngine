@@ -113,15 +113,20 @@ $(document).ready(function(){initNavTree('classduin_1_1GameObject.html',''); ini
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classduin_1_1GameObject-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::GameObject Class Reference</div></div>
+  <div class="headertitle"><div class="title">duin::GameObject Class Reference<div class="ingroups"><a class="el" href="group__Objects.html">Objects Module</a> &raquo; <a class="el" href="group__Objects__GameObject.html">GameObject</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base class for objects in the scene hierarchy.  
+ <a href="classduin_1_1GameObject.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="GameObject_8h_source.html">GameObject.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for duin::GameObject:</div>
 <div class="dyncontent">
 <div class="center"><img src="classduin_1_1GameObject__coll__graph.png" border="0" usemap="#aduin_1_1GameObject_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1GameObject_coll__map" id="aduin_1_1GameObject_coll__map">
-<area shape="rect" title=" " alt="" coords="417,119,556,145"/>
+<area shape="rect" title="Base class for objects in the scene hierarchy." alt="" coords="417,119,556,145"/>
 <area shape="rect" title=" " alt="" coords="5,5,208,45"/>
 <area shape="poly" title=" " alt="" coords="222,14,308,20,352,30,394,44,421,60,444,79,478,117,474,120,441,83,418,64,392,49,351,35,307,26,222,19"/>
 <area shape="rect" href="classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="25,86,189,111"/>
@@ -137,81 +142,32 @@ Collaboration diagram for duin::GameObject:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe" id="r_ad95ae2a5c75925c02085b3fce76c21fe"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe">CreateChildObject</a> (Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:ad95ae2a5c75925c02085b3fce76c21fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and adds a child object.  <br /></td></tr>
 <tr class="separator:ad95ae2a5c75925c02085b3fce76c21fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90a010d59d0519af6b0aefb1d1abb54a" id="r_a90a010d59d0519af6b0aefb1d1abb54a"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:a90a010d59d0519af6b0aefb1d1abb54a"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a90a010d59d0519af6b0aefb1d1abb54a">GetSharedPointer</a> ()</td></tr>
+<tr class="memdesc:a90a010d59d0519af6b0aefb1d1abb54a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this object as a shared pointer of derived type.  <br /></td></tr>
 <tr class="separator:a90a010d59d0519af6b0aefb1d1abb54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c0a2398a7cc491d24b655908e27a4e2" id="r_a9c0a2398a7cc491d24b655908e27a4e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2">AddChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
+<tr class="memdesc:a9c0a2398a7cc491d24b655908e27a4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an existing object as a child.  <br /></td></tr>
 <tr class="separator:a9c0a2398a7cc491d24b655908e27a4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b585504b0737a16fd05688ca8116ae4" id="r_a3b585504b0737a16fd05688ca8116ae4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4">RemoveChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
+<tr class="memdesc:a3b585504b0737a16fd05688ca8116ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a child from this object.  <br /></td></tr>
 <tr class="separator:a3b585504b0737a16fd05688ca8116ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad924d34dc3f30a0be10b680327d6168d" id="r_ad924d34dc3f30a0be10b680327d6168d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad924d34dc3f30a0be10b680327d6168d">TransferChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child, std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; newParent)</td></tr>
+<tr class="memdesc:ad924d34dc3f30a0be10b680327d6168d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a child to a new parent.  <br /></td></tr>
 <tr class="separator:ad924d34dc3f30a0be10b680327d6168d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3403b712b50b9c17f32fb9445c42756c" id="r_a3403b712b50b9c17f32fb9445c42756c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c">GetParent</a> ()</td></tr>
+<tr class="memdesc:a3403b712b50b9c17f32fb9445c42756c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent object, or nullptr if root.  <br /></td></tr>
 <tr class="separator:a3403b712b50b9c17f32fb9445c42756c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4725a8b8a2a6418ae5fe40873ac27909" id="r_a4725a8b8a2a6418ae5fe40873ac27909"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4725a8b8a2a6418ae5fe40873ac27909">ConnectOnObjectReady</a> (std::function&lt; void()&gt; callback)</td></tr>
-<tr class="separator:a4725a8b8a2a6418ae5fe40873ac27909"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a513a39da5b3b363b4ace17e3f58280bf" id="r_a513a39da5b3b363b4ace17e3f58280bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a513a39da5b3b363b4ace17e3f58280bf">ConnectOnObjectOnEvent</a> (std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; callback)</td></tr>
-<tr class="separator:a513a39da5b3b363b4ace17e3f58280bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5195fa430b3b978d8f13876b20976b9f" id="r_a5195fa430b3b978d8f13876b20976b9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a5195fa430b3b978d8f13876b20976b9f">ConnectOnObjectUpdate</a> (std::function&lt; void(double)&gt; callback)</td></tr>
-<tr class="separator:a5195fa430b3b978d8f13876b20976b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a582ed20084bbc4544467d7ce4c73e07e" id="r_a582ed20084bbc4544467d7ce4c73e07e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a582ed20084bbc4544467d7ce4c73e07e">ConnectOnObjectPhysicsUpdate</a> (std::function&lt; void(double)&gt; callback)</td></tr>
-<tr class="separator:a582ed20084bbc4544467d7ce4c73e07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a032eafa0685036d9cc3cfe7b0371272b" id="r_a032eafa0685036d9cc3cfe7b0371272b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a032eafa0685036d9cc3cfe7b0371272b">ConnectOnObjectDraw</a> (std::function&lt; void()&gt; callback)</td></tr>
-<tr class="separator:a032eafa0685036d9cc3cfe7b0371272b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ddef3f09e19997c1b1ebd2f319e6acb" id="r_a8ddef3f09e19997c1b1ebd2f319e6acb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a8ddef3f09e19997c1b1ebd2f319e6acb">ConnectOnObjectDrawUI</a> (std::function&lt; void()&gt; callback)</td></tr>
-<tr class="separator:a8ddef3f09e19997c1b1ebd2f319e6acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22b853ed47721a8458bad6412195bf13" id="r_a22b853ed47721a8458bad6412195bf13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a22b853ed47721a8458bad6412195bf13">ConnectOnObjectDebug</a> (std::function&lt; void()&gt; callback)</td></tr>
-<tr class="separator:a22b853ed47721a8458bad6412195bf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a221dbe0db6e70b0fd73abfba543d56e6" id="r_a221dbe0db6e70b0fd73abfba543d56e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a221dbe0db6e70b0fd73abfba543d56e6">DisconnectOnObjectReady</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="separator:a221dbe0db6e70b0fd73abfba543d56e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92c0d3da437c9d58c84a65f3cd4b33cb" id="r_a92c0d3da437c9d58c84a65f3cd4b33cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a92c0d3da437c9d58c84a65f3cd4b33cb">DisconnectOnObjectOnEvent</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="separator:a92c0d3da437c9d58c84a65f3cd4b33cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb0bb36530c9dec08abd9ca5efa6de87" id="r_aeb0bb36530c9dec08abd9ca5efa6de87"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aeb0bb36530c9dec08abd9ca5efa6de87">DisconnectOnObjectUpdate</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="separator:aeb0bb36530c9dec08abd9ca5efa6de87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3275cdafabe9294d05a2ec8c83d3a0a7" id="r_a3275cdafabe9294d05a2ec8c83d3a0a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a3275cdafabe9294d05a2ec8c83d3a0a7">DisconnectOnObjectPhysicsUpdate</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="separator:a3275cdafabe9294d05a2ec8c83d3a0a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad957c3bfa616255293edccae585f307f" id="r_ad957c3bfa616255293edccae585f307f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad957c3bfa616255293edccae585f307f">DisconnectOnObjectDraw</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="separator:ad957c3bfa616255293edccae585f307f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1df4ec7753612a0a7b9b2ed2fe99dc1f" id="r_a1df4ec7753612a0a7b9b2ed2fe99dc1f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a1df4ec7753612a0a7b9b2ed2fe99dc1f">DisconnectOnObjectDrawUI</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="separator:a1df4ec7753612a0a7b9b2ed2fe99dc1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c8429dd31c4968924b36698e4eb3449" id="r_a8c8429dd31c4968924b36698e4eb3449"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a8c8429dd31c4968924b36698e4eb3449">DisconnectOnObjectDebug</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="separator:a8c8429dd31c4968924b36698e4eb3449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc88e71a32dc1a84322601bf599bb7d5" id="r_acc88e71a32dc1a84322601bf599bb7d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">ConnectAllSignals</a> (std::function&lt; void()&gt; onReady, std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; onEvent, std::function&lt; void(double)&gt; onUpdate, std::function&lt; void(double)&gt; onPhysicsUpdate, std::function&lt; void()&gt; onDraw, std::function&lt; void()&gt; onDrawUI, std::function&lt; void()&gt; onDebug)</td></tr>
+<tr class="memdesc:acc88e71a32dc1a84322601bf599bb7d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects all lifecycle signals at once.  <br /></td></tr>
 <tr class="separator:acc88e71a32dc1a84322601bf599bb7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab269640f8a3d5b2f9608559791acf9d2" id="r_ab269640f8a3d5b2f9608559791acf9d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2">DisconnectAllSignals</a> (const <a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a> &amp;connections)</td></tr>
+<tr class="memdesc:ab269640f8a3d5b2f9608559791acf9d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects all signals from a <a class="el" href="structduin_1_1SignalConnections.html" title="Holds UUIDs for signal connections to lifecycle events.">SignalConnections</a> bundle.  <br /></td></tr>
 <tr class="separator:ab269640f8a3d5b2f9608559791acf9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7927451fe3f7bdf4874b72a51f6e77ad" id="r_a7927451fe3f7bdf4874b72a51f6e77ad"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a7927451fe3f7bdf4874b72a51f6e77ad">Init</a> ()</td></tr>
-<tr class="separator:a7927451fe3f7bdf4874b72a51f6e77ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e24cb5c8c4ccf347476b671cb5e95c3" id="r_a7e24cb5c8c4ccf347476b671cb5e95c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a7e24cb5c8c4ccf347476b671cb5e95c3">Ready</a> ()</td></tr>
-<tr class="separator:a7e24cb5c8c4ccf347476b671cb5e95c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54954d1df9aa7c09a019f89fdf834c90" id="r_a54954d1df9aa7c09a019f89fdf834c90"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a54954d1df9aa7c09a019f89fdf834c90">OnEvent</a> (<a class="el" href="classduin_1_1Event.html">Event</a> e)</td></tr>
-<tr class="separator:a54954d1df9aa7c09a019f89fdf834c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e2d1aaa8fc1baf731527644b57c5d29" id="r_a2e2d1aaa8fc1baf731527644b57c5d29"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a2e2d1aaa8fc1baf731527644b57c5d29">Update</a> (double delta)</td></tr>
-<tr class="separator:a2e2d1aaa8fc1baf731527644b57c5d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a838be6987b8a6abb431beb4d1a3c7d" id="r_a6a838be6987b8a6abb431beb4d1a3c7d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a6a838be6987b8a6abb431beb4d1a3c7d">PhysicsUpdate</a> (double delta)</td></tr>
-<tr class="separator:a6a838be6987b8a6abb431beb4d1a3c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac29e5f8a7db9a82da60fef5661e20189" id="r_ac29e5f8a7db9a82da60fef5661e20189"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ac29e5f8a7db9a82da60fef5661e20189">Draw</a> ()</td></tr>
-<tr class="separator:ac29e5f8a7db9a82da60fef5661e20189"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a419f744d9ae16322b4b1911c68af7950" id="r_a419f744d9ae16322b4b1911c68af7950"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a419f744d9ae16322b4b1911c68af7950">DrawUI</a> ()</td></tr>
-<tr class="separator:a419f744d9ae16322b4b1911c68af7950"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ce17fafc2a87e41f610489c72b48867" id="r_a0ce17fafc2a87e41f610489c72b48867"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a0ce17fafc2a87e41f610489c72b48867">Debug</a> ()</td></tr>
-<tr class="separator:a0ce17fafc2a87e41f610489c72b48867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca08622442dd73f85e0a3478578a23ed" id="r_aca08622442dd73f85e0a3478578a23ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aca08622442dd73f85e0a3478578a23ed">Enable</a> (bool enable)</td></tr>
-<tr class="separator:aca08622442dd73f85e0a3478578a23ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2eec717e59df7aa5e09015ab28f4b10e" id="r_a2eec717e59df7aa5e09015ab28f4b10e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a2eec717e59df7aa5e09015ab28f4b10e">EnableOnEvent</a> (bool enable)</td></tr>
-<tr class="separator:a2eec717e59df7aa5e09015ab28f4b10e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b8553bba06bf56235102c48fc92cbfe" id="r_a7b8553bba06bf56235102c48fc92cbfe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a7b8553bba06bf56235102c48fc92cbfe">EnableUpdate</a> (bool enable)</td></tr>
-<tr class="separator:a7b8553bba06bf56235102c48fc92cbfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7f3e8690d2125c8d918b5ad6f89a11d" id="r_ad7f3e8690d2125c8d918b5ad6f89a11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad7f3e8690d2125c8d918b5ad6f89a11d">EnablePhysicsUpdate</a> (bool enable)</td></tr>
-<tr class="separator:ad7f3e8690d2125c8d918b5ad6f89a11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f2b8ea4081154ab41537464164f1ae8" id="r_a5f2b8ea4081154ab41537464164f1ae8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a5f2b8ea4081154ab41537464164f1ae8">EnableDraw</a> (bool enable)</td></tr>
-<tr class="separator:a5f2b8ea4081154ab41537464164f1ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42ae805d326e0beadc25d8e37dff7699" id="r_a42ae805d326e0beadc25d8e37dff7699"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a42ae805d326e0beadc25d8e37dff7699">EnableDrawUI</a> (bool enable)</td></tr>
-<tr class="separator:a42ae805d326e0beadc25d8e37dff7699"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ad333fc114074ffea4d8d535e1f4037" id="r_a4ad333fc114074ffea4d8d535e1f4037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4ad333fc114074ffea4d8d535e1f4037">EnableDebug</a> (bool enable)</td></tr>
-<tr class="separator:a4ad333fc114074ffea4d8d535e1f4037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9434e5fecafe0fab58dd915ef22c7b37" id="r_a9434e5fecafe0fab58dd915ef22c7b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">GetUUID</a> () const</td></tr>
+<tr class="memdesc:a9434e5fecafe0fab58dd915ef22c7b37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this object's unique identifier.  <br /></td></tr>
 <tr class="separator:a9434e5fecafe0fab58dd915ef22c7b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56c34bc14d4072cc3277f8d10b473489" id="r_a56c34bc14d4072cc3277f8d10b473489"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a56c34bc14d4072cc3277f8d10b473489">operator==</a> (const <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &amp;other) const</td></tr>
 <tr class="separator:a56c34bc14d4072cc3277f8d10b473489"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,6 +191,74 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acedf45bf8ada7014b5b6f4aec03282d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a049ced2d522422fc0d3c37e540b61587" id="r_a049ced2d522422fc0d3c37e540b61587"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a049ced2d522422fc0d3c37e540b61587">ObjectDebug</a> ()</td></tr>
 <tr class="separator:a049ced2d522422fc0d3c37e540b61587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Signal Connections</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Connect callbacks to lifecycle signals. </p>
+</div></td></tr>
+<tr class="memitem:a4725a8b8a2a6418ae5fe40873ac27909" id="r_a4725a8b8a2a6418ae5fe40873ac27909"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4725a8b8a2a6418ae5fe40873ac27909">ConnectOnObjectReady</a> (std::function&lt; void()&gt; callback)</td></tr>
+<tr class="separator:a4725a8b8a2a6418ae5fe40873ac27909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513a39da5b3b363b4ace17e3f58280bf" id="r_a513a39da5b3b363b4ace17e3f58280bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a513a39da5b3b363b4ace17e3f58280bf">ConnectOnObjectOnEvent</a> (std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; callback)</td></tr>
+<tr class="separator:a513a39da5b3b363b4ace17e3f58280bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5195fa430b3b978d8f13876b20976b9f" id="r_a5195fa430b3b978d8f13876b20976b9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a5195fa430b3b978d8f13876b20976b9f">ConnectOnObjectUpdate</a> (std::function&lt; void(double)&gt; callback)</td></tr>
+<tr class="separator:a5195fa430b3b978d8f13876b20976b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582ed20084bbc4544467d7ce4c73e07e" id="r_a582ed20084bbc4544467d7ce4c73e07e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a582ed20084bbc4544467d7ce4c73e07e">ConnectOnObjectPhysicsUpdate</a> (std::function&lt; void(double)&gt; callback)</td></tr>
+<tr class="separator:a582ed20084bbc4544467d7ce4c73e07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a032eafa0685036d9cc3cfe7b0371272b" id="r_a032eafa0685036d9cc3cfe7b0371272b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a032eafa0685036d9cc3cfe7b0371272b">ConnectOnObjectDraw</a> (std::function&lt; void()&gt; callback)</td></tr>
+<tr class="separator:a032eafa0685036d9cc3cfe7b0371272b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ddef3f09e19997c1b1ebd2f319e6acb" id="r_a8ddef3f09e19997c1b1ebd2f319e6acb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a8ddef3f09e19997c1b1ebd2f319e6acb">ConnectOnObjectDrawUI</a> (std::function&lt; void()&gt; callback)</td></tr>
+<tr class="separator:a8ddef3f09e19997c1b1ebd2f319e6acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22b853ed47721a8458bad6412195bf13" id="r_a22b853ed47721a8458bad6412195bf13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a22b853ed47721a8458bad6412195bf13">ConnectOnObjectDebug</a> (std::function&lt; void()&gt; callback)</td></tr>
+<tr class="separator:a22b853ed47721a8458bad6412195bf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Signal Disconnections</div></td></tr>
+<tr class="memitem:a221dbe0db6e70b0fd73abfba543d56e6" id="r_a221dbe0db6e70b0fd73abfba543d56e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a221dbe0db6e70b0fd73abfba543d56e6">DisconnectOnObjectReady</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:a221dbe0db6e70b0fd73abfba543d56e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92c0d3da437c9d58c84a65f3cd4b33cb" id="r_a92c0d3da437c9d58c84a65f3cd4b33cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a92c0d3da437c9d58c84a65f3cd4b33cb">DisconnectOnObjectOnEvent</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:a92c0d3da437c9d58c84a65f3cd4b33cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb0bb36530c9dec08abd9ca5efa6de87" id="r_aeb0bb36530c9dec08abd9ca5efa6de87"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aeb0bb36530c9dec08abd9ca5efa6de87">DisconnectOnObjectUpdate</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:aeb0bb36530c9dec08abd9ca5efa6de87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3275cdafabe9294d05a2ec8c83d3a0a7" id="r_a3275cdafabe9294d05a2ec8c83d3a0a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a3275cdafabe9294d05a2ec8c83d3a0a7">DisconnectOnObjectPhysicsUpdate</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:a3275cdafabe9294d05a2ec8c83d3a0a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad957c3bfa616255293edccae585f307f" id="r_ad957c3bfa616255293edccae585f307f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad957c3bfa616255293edccae585f307f">DisconnectOnObjectDraw</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:ad957c3bfa616255293edccae585f307f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1df4ec7753612a0a7b9b2ed2fe99dc1f" id="r_a1df4ec7753612a0a7b9b2ed2fe99dc1f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a1df4ec7753612a0a7b9b2ed2fe99dc1f">DisconnectOnObjectDrawUI</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:a1df4ec7753612a0a7b9b2ed2fe99dc1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c8429dd31c4968924b36698e4eb3449" id="r_a8c8429dd31c4968924b36698e4eb3449"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a8c8429dd31c4968924b36698e4eb3449">DisconnectOnObjectDebug</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="separator:a8c8429dd31c4968924b36698e4eb3449"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Lifecycle Callbacks</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Override these in derived classes. </p>
+</div></td></tr>
+<tr class="memitem:a7927451fe3f7bdf4874b72a51f6e77ad" id="r_a7927451fe3f7bdf4874b72a51f6e77ad"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a7927451fe3f7bdf4874b72a51f6e77ad">Init</a> ()</td></tr>
+<tr class="separator:a7927451fe3f7bdf4874b72a51f6e77ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e24cb5c8c4ccf347476b671cb5e95c3" id="r_a7e24cb5c8c4ccf347476b671cb5e95c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a7e24cb5c8c4ccf347476b671cb5e95c3">Ready</a> ()</td></tr>
+<tr class="separator:a7e24cb5c8c4ccf347476b671cb5e95c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54954d1df9aa7c09a019f89fdf834c90" id="r_a54954d1df9aa7c09a019f89fdf834c90"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a54954d1df9aa7c09a019f89fdf834c90">OnEvent</a> (<a class="el" href="classduin_1_1Event.html">Event</a> e)</td></tr>
+<tr class="separator:a54954d1df9aa7c09a019f89fdf834c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e2d1aaa8fc1baf731527644b57c5d29" id="r_a2e2d1aaa8fc1baf731527644b57c5d29"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a2e2d1aaa8fc1baf731527644b57c5d29">Update</a> (double delta)</td></tr>
+<tr class="separator:a2e2d1aaa8fc1baf731527644b57c5d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a838be6987b8a6abb431beb4d1a3c7d" id="r_a6a838be6987b8a6abb431beb4d1a3c7d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a6a838be6987b8a6abb431beb4d1a3c7d">PhysicsUpdate</a> (double delta)</td></tr>
+<tr class="separator:a6a838be6987b8a6abb431beb4d1a3c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac29e5f8a7db9a82da60fef5661e20189" id="r_ac29e5f8a7db9a82da60fef5661e20189"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ac29e5f8a7db9a82da60fef5661e20189">Draw</a> ()</td></tr>
+<tr class="separator:ac29e5f8a7db9a82da60fef5661e20189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a419f744d9ae16322b4b1911c68af7950" id="r_a419f744d9ae16322b4b1911c68af7950"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a419f744d9ae16322b4b1911c68af7950">DrawUI</a> ()</td></tr>
+<tr class="separator:a419f744d9ae16322b4b1911c68af7950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ce17fafc2a87e41f610489c72b48867" id="r_a0ce17fafc2a87e41f610489c72b48867"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a0ce17fafc2a87e41f610489c72b48867">Debug</a> ()</td></tr>
+<tr class="separator:a0ce17fafc2a87e41f610489c72b48867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Enable/Disable Callbacks</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Control which callbacks are active. </p>
+</div></td></tr>
+<tr class="memitem:aca08622442dd73f85e0a3478578a23ed" id="r_aca08622442dd73f85e0a3478578a23ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aca08622442dd73f85e0a3478578a23ed">Enable</a> (bool enable)</td></tr>
+<tr class="separator:aca08622442dd73f85e0a3478578a23ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eec717e59df7aa5e09015ab28f4b10e" id="r_a2eec717e59df7aa5e09015ab28f4b10e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a2eec717e59df7aa5e09015ab28f4b10e">EnableOnEvent</a> (bool enable)</td></tr>
+<tr class="separator:a2eec717e59df7aa5e09015ab28f4b10e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b8553bba06bf56235102c48fc92cbfe" id="r_a7b8553bba06bf56235102c48fc92cbfe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a7b8553bba06bf56235102c48fc92cbfe">EnableUpdate</a> (bool enable)</td></tr>
+<tr class="separator:a7b8553bba06bf56235102c48fc92cbfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7f3e8690d2125c8d918b5ad6f89a11d" id="r_ad7f3e8690d2125c8d918b5ad6f89a11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad7f3e8690d2125c8d918b5ad6f89a11d">EnablePhysicsUpdate</a> (bool enable)</td></tr>
+<tr class="separator:ad7f3e8690d2125c8d918b5ad6f89a11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f2b8ea4081154ab41537464164f1ae8" id="r_a5f2b8ea4081154ab41537464164f1ae8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a5f2b8ea4081154ab41537464164f1ae8">EnableDraw</a> (bool enable)</td></tr>
+<tr class="separator:a5f2b8ea4081154ab41537464164f1ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42ae805d326e0beadc25d8e37dff7699" id="r_a42ae805d326e0beadc25d8e37dff7699"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a42ae805d326e0beadc25d8e37dff7699">EnableDrawUI</a> (bool enable)</td></tr>
+<tr class="separator:a42ae805d326e0beadc25d8e37dff7699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad333fc114074ffea4d8d535e1f4037" id="r_a4ad333fc114074ffea4d8d535e1f4037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4ad333fc114074ffea4d8d535e1f4037">EnableDebug</a> (bool enable)</td></tr>
+<tr class="separator:a4ad333fc114074ffea4d8d535e1f4037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -265,8 +289,25 @@ Friends</h2></td></tr>
 <tr class="separator:aefef8d7a397219a28f7808dc064e03c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00017">17</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<div class="textblock"><p>Base class for objects in the scene hierarchy. </p>
+<p>GameObjects form a parent-child tree structure. Each object receives lifecycle callbacks (Init, Ready, Update, etc.) that propagate through the hierarchy. Objects can connect to signals for decoupled communication.</p>
+<p>Lifecycle order:</p><ol type="1">
+<li>Init() - called once after construction</li>
+<li>Ready() - called after all children are ready</li>
+<li>Per-frame: OnEvent(), Update(), PhysicsUpdate(), Draw(), DrawUI(), Debug()</li>
+</ol>
+<p>Children are processed before parents for all callbacks.</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>Player : <span class="keyword">public</span> <a class="code hl_class" href="classduin_1_1GameObject.html">duin::GameObject</a> {</div>
+<div class="line">    <span class="keywordtype">void</span> Ready()<span class="keyword"> override </span>{</div>
+<div class="line">        <span class="comment">// Setup code</span></div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordtype">void</span> Update(<span class="keywordtype">double</span> delta)<span class="keyword"> override </span>{</div>
+<div class="line">        <span class="comment">// Per-frame logic</span></div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="ttc" id="aclassduin_1_1GameObject_html"><div class="ttname"><a href="classduin_1_1GameObject.html">duin::GameObject</a></div><div class="ttdoc">Base class for objects in the scene hierarchy.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8h_source.html#l00052">GameObject.h:53</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00052">52</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aba76996e7d861a146ce03d0b219665f5" name="aba76996e7d861a146ce03d0b219665f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba76996e7d861a146ce03d0b219665f5">&#9670;&#160;</a></span>GameObject()</h2>
@@ -331,6 +372,8 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Adds an existing object as a child. </p>
+
 <p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00014">14</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
@@ -390,6 +433,8 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Connects all lifecycle signals at once. </p>
 
 <p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00139">139</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
@@ -561,7 +606,23 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00024">24</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p>Creates and adds a child object. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>GameObject-derived type. </td></tr>
+    <tr><td class="paramname">Args</td><td>Constructor argument types. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>Arguments forwarded to T's constructor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to the new child. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00066">66</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -607,6 +668,8 @@ template&lt;typename T , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disconnects all signals from a <a class="el" href="structduin_1_1SignalConnections.html" title="Holds UUIDs for signal connections to lifecycle events.">SignalConnections</a> bundle. </p>
 
 <p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00156">156</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
@@ -961,6 +1024,8 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the parent object, or nullptr if root. </p>
+
 <p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00056">56</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
@@ -990,7 +1055,15 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00035">35</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p>Returns this object as a shared pointer of derived type. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The derived type to cast to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00081">81</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1008,6 +1081,8 @@ template&lt;typename T , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns this object's unique identifier. </p>
 
 <p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00239">239</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
@@ -1315,6 +1390,8 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Removes a child from this object. </p>
+
 <p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00035">35</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
@@ -1384,6 +1461,8 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Moves a child to a new parent. </p>
+
 <p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00045">45</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
@@ -1437,7 +1516,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00099">99</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00173">173</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1461,7 +1540,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00101">101</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00175">175</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1485,7 +1564,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00100">100</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00174">174</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1509,7 +1588,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00098">98</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00172">172</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1526,7 +1605,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00110">110</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00184">184</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1542,7 +1621,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00108">108</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00182">182</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1558,7 +1637,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00109">109</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00183">183</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1574,7 +1653,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00105">105</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00179">179</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1590,7 +1669,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00107">107</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00181">181</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1606,7 +1685,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00104">104</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00178">178</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1622,7 +1701,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00106">106</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00180">180</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>

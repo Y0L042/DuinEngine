@@ -112,15 +112,20 @@ $(document).ready(function(){initNavTree('structduin_1_1RenderTexture.html','');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structduin_1_1RenderTexture-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">duin::RenderTexture Struct Reference</div></div>
+  <div class="headertitle"><div class="title">duin::RenderTexture Struct Reference<div class="ingroups"><a class="el" href="group__Render.html">Render Module</a> &raquo; <a class="el" href="group__Render__Core.html">Core Rendering</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Offscreen render target.  
+ <a href="structduin_1_1RenderTexture.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Renderer_8h_source.html">Renderer.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for duin::RenderTexture:</div>
 <div class="dyncontent">
 <div class="center"><img src="structduin_1_1RenderTexture__coll__graph.png" border="0" usemap="#aduin_1_1RenderTexture_coll__map" alt="Collaboration graph"/></div>
 <map name="aduin_1_1RenderTexture_coll__map" id="aduin_1_1RenderTexture_coll__map">
-<area shape="rect" title=" " alt="" coords="5,93,157,119"/>
+<area shape="rect" title="Offscreen render target." alt="" coords="5,93,157,119"/>
 <area shape="rect" href="classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="35,5,127,31"/>
 <area shape="poly" title=" " alt="" coords="84,45,84,93,79,93,79,45"/>
 <area shape="poly" title=" " alt="" coords="142,9,154,18,146,26,128,29,127,23,143,21,149,18,139,14"/>
@@ -130,10 +135,13 @@ Collaboration diagram for duin::RenderTexture:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aed6e70d630aacc05bea37019f057d123" id="r_aed6e70d630aacc05bea37019f057d123"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#aed6e70d630aacc05bea37019f057d123">RenderTexture</a> (int width_, int height_, <a class="el" href="classduin_1_1UUID.html">UUID</a> textureUUID_)</td></tr>
+<tr class="memdesc:aed6e70d630aacc05bea37019f057d123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a render texture.  <br /></td></tr>
 <tr class="separator:aed6e70d630aacc05bea37019f057d123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a289a927fcbeaa152db213b1fb807d6f1" id="r_a289a927fcbeaa152db213b1fb807d6f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#a289a927fcbeaa152db213b1fb807d6f1">IsValid</a> ()</td></tr>
+<tr class="memdesc:a289a927fcbeaa152db213b1fb807d6f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if texture handles are valid and dimensions &gt; 0.  <br /></td></tr>
 <tr class="separator:a289a927fcbeaa152db213b1fb807d6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6404a8cfe5eb25af31c00cd815b0deaf" id="r_a6404a8cfe5eb25af31c00cd815b0deaf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#a6404a8cfe5eb25af31c00cd815b0deaf">Destroy</a> ()</td></tr>
+<tr class="memdesc:a6404a8cfe5eb25af31c00cd815b0deaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases BGFX resources.  <br /></td></tr>
 <tr class="separator:a6404a8cfe5eb25af31c00cd815b0deaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -141,19 +149,26 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a254bfd819a7ea64ab6b4cf5336a288ae" id="r_a254bfd819a7ea64ab6b4cf5336a288ae"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#a254bfd819a7ea64ab6b4cf5336a288ae">width</a></td></tr>
 <tr class="separator:a254bfd819a7ea64ab6b4cf5336a288ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae010bc0093135723c33c4e56ec0fb6fb" id="r_ae010bc0093135723c33c4e56ec0fb6fb"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#ae010bc0093135723c33c4e56ec0fb6fb">height</a></td></tr>
+<tr class="memdesc:ae010bc0093135723c33c4e56ec0fb6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture dimensions.  <br /></td></tr>
 <tr class="separator:ae010bc0093135723c33c4e56ec0fb6fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a012a83f9dd1e68a3a5d46ff8ff5bbe56" id="r_a012a83f9dd1e68a3a5d46ff8ff5bbe56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#a012a83f9dd1e68a3a5d46ff8ff5bbe56">textureUUID</a></td></tr>
+<tr class="memdesc:a012a83f9dd1e68a3a5d46ff8ff5bbe56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique identifier.  <br /></td></tr>
 <tr class="separator:a012a83f9dd1e68a3a5d46ff8ff5bbe56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79b17e2faca645f6f9d91e731de5caca" id="r_a79b17e2faca645f6f9d91e731de5caca"><td class="memItemLeft" align="right" valign="top">bgfx::ViewId&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#a79b17e2faca645f6f9d91e731de5caca">viewID</a> = 0</td></tr>
+<tr class="memdesc:a79b17e2faca645f6f9d91e731de5caca"><td class="mdescLeft">&#160;</td><td class="mdescRight">BGFX view ID.  <br /></td></tr>
 <tr class="separator:a79b17e2faca645f6f9d91e731de5caca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dd98c6929bb6ba6f5d5db9adc1bb068" id="r_a5dd98c6929bb6ba6f5d5db9adc1bb068"><td class="memItemLeft" align="right" valign="top">bgfx::TextureHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#a5dd98c6929bb6ba6f5d5db9adc1bb068">texture</a></td></tr>
+<tr class="memdesc:a5dd98c6929bb6ba6f5d5db9adc1bb068"><td class="mdescLeft">&#160;</td><td class="mdescRight">BGFX texture handle.  <br /></td></tr>
 <tr class="separator:a5dd98c6929bb6ba6f5d5db9adc1bb068"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cd388fe23249891b422feef4510d410" id="r_a6cd388fe23249891b422feef4510d410"><td class="memItemLeft" align="right" valign="top">bgfx::FrameBufferHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1RenderTexture.html#a6cd388fe23249891b422feef4510d410">frameBuffer</a></td></tr>
+<tr class="memdesc:a6cd388fe23249891b422feef4510d410"><td class="mdescLeft">&#160;</td><td class="mdescRight">BGFX framebuffer handle.  <br /></td></tr>
 <tr class="separator:a6cd388fe23249891b422feef4510d410"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00046">46</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<div class="textblock"><p>Offscreen render target. </p>
+<p>A texture that can be rendered to. Useful for viewports, post-processing, and ImGui texture display. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00082">82</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aed6e70d630aacc05bea37019f057d123" name="aed6e70d630aacc05bea37019f057d123"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed6e70d630aacc05bea37019f057d123">&#9670;&#160;</a></span>RenderTexture()</h2>
@@ -195,7 +210,17 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00054">54</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>Creates a render texture. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width_</td><td>Width in pixels. </td></tr>
+    <tr><td class="paramname">height_</td><td>Height in pixels. </td></tr>
+    <tr><td class="paramname">textureUUID_</td><td>Unique identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00098">98</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -223,7 +248,9 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00085">85</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>Releases BGFX resources. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00122">122</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -250,7 +277,9 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00077">77</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>Returns true if texture handles are valid and dimensions &gt; 0. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00113">113</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -267,7 +296,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00051">51</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>BGFX framebuffer handle. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00088">88</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -283,7 +314,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00047">47</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>Texture dimensions. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00084">84</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -299,7 +332,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00050">50</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>BGFX texture handle. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00087">87</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -315,7 +350,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00048">48</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>Unique identifier. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00085">85</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -331,7 +368,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00049">49</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p>BGFX view ID. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00086">86</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>
@@ -347,7 +386,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00047">47</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8h_source.html#l00084">84</a> of file <a class="el" href="Renderer_8h_source.html">Renderer.h</a>.</p>
 
 </div>
 </div>

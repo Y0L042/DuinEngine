@@ -10,7 +10,7 @@
 <area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="543,44,543,79,538,79,538,44"/>
 <area shape="rect" id="Node000013" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="433,152,566,177"/>
 <area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="576,36,594,50,610,66,618,85,614,105,600,122,583,136,545,154,543,150,580,132,596,119,609,103,613,86,605,69,591,54,572,40"/>
-<area shape="rect" id="Node000014" href="$SceneBuilder_8h_source.html" title=" " alt="" coords="199,79,317,104"/>
+<area shape="rect" id="Node000014" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="199,79,317,104"/>
 <area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="483,37,304,81,303,76,481,31"/>
 <area shape="rect" id="Node000015" href="$SceneDefinition_8h_source.html" title=" " alt="" coords="729,79,865,104"/>
 <area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="595,32,756,76,755,81,594,37"/>

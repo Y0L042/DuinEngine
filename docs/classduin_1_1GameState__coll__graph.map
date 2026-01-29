@@ -1,11 +1,11 @@
 <map id="duin::GameState" name="duin::GameState">
-<area shape="rect" id="Node000001" title=" " alt="" coords="1037,145,1168,171"/>
+<area shape="rect" id="Node000001" title="Base class for application states." alt="" coords="1037,145,1168,171"/>
 <area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="805,44,897,69"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="911,60,962,70,1014,88,1058,115,1091,143,1087,147,1055,119,1012,92,961,75,910,65"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="823,29,831,21,851,17,867,20,877,26,879,36,874,45,870,43,874,35,872,29,865,25,851,23,834,26,827,33"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1GameStateMachine.html" title=" " alt="" coords="757,232,944,257"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1GameStateMachine.html" title="Stack&#45;based state manager." alt="" coords="757,232,944,257"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="904,225,1012,189,1068,168,1070,173,1014,194,906,230"/>
-<area shape="rect" id="Node000004" href="$classduin_1_1GameObject.html" title=" " alt="" coords="417,269,556,295"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="417,269,556,295"/>
 <area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="569,271,757,252,757,257,570,276"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="5,306,208,346"/>
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="222,321,306,316,393,305,445,292,446,297,394,310,306,321,222,327"/>

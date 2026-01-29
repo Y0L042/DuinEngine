@@ -121,15 +121,15 @@ $(document).ready(function(){initNavTree('EntryPoint_8h_source.html',''); initRe
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#ifdef DN_PLATFORM_WINDOWS</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">extern</span> <a class="code hl_class" href="classduin_1_1Application.html">duin::Application</a>* duin::CreateApplication();</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">extern</span> <a class="code hl_class" href="classduin_1_1Application.html">duin::Application</a> *<a class="code hl_function" href="Application_8h.html#a9b4b304a3d35f01eae8e2f4b067cc4eb">duin::CreateApplication</a>();</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    duin::Log::Init();</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <a class="code hl_function" href="classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b">duin::Log::Init</a>();</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    DN_CORE_WARN(<span class="stringliteral">&quot;Initialized Log.&quot;</span>);</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    DN_INFO(<span class="stringliteral">&quot;Initialized Log.&quot;</span>);</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">auto</span> app = duin::CreateApplication();</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">auto</span> app = <a class="code hl_function" href="Application_8h.html#a9b4b304a3d35f01eae8e2f4b067cc4eb">duin::CreateApplication</a>();</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    app-&gt;Run();</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">delete</span> app;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
@@ -139,7 +139,9 @@ $(document).ready(function(){initNavTree('EntryPoint_8h_source.html',''); initRe
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif </span><span class="comment">/* ENTRYPOINT_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="aclassduin_1_1Application_html"><div class="ttname"><a href="classduin_1_1Application.html">duin::Application</a></div><div class="ttdef"><b>Definition</b> <a href="Application_8h_source.html#l00060">Application.h:61</a></div></div>
+<div class="ttc" id="aApplication_8h_html_a9b4b304a3d35f01eae8e2f4b067cc4eb"><div class="ttname"><a href="Application_8h.html#a9b4b304a3d35f01eae8e2f4b067cc4eb">duin::CreateApplication</a></div><div class="ttdeci">Application * CreateApplication()</div><div class="ttdoc">User-defined factory function for the application.</div></div>
+<div class="ttc" id="aclassduin_1_1Application_html"><div class="ttname"><a href="classduin_1_1Application.html">duin::Application</a></div><div class="ttdoc">Base class for Duin applications.</div><div class="ttdef"><b>Definition</b> <a href="Application_8h_source.html#l00139">Application.h:140</a></div></div>
+<div class="ttc" id="aclassduin_1_1Log_html_afb090b3f767bb798a8303b8fcf5ec18b"><div class="ttname"><a href="classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b">duin::Log::Init</a></div><div class="ttdeci">static void Init()</div><div class="ttdoc">Initializes the logging system. Called automatically.</div><div class="ttdef"><b>Definition</b> <a href="DNLog_8cpp_source.html#l00042">DNLog.cpp:42</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

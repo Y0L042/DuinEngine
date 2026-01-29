@@ -118,10 +118,10 @@ $(document).ready(function(){initNavTree('Input_8cpp_source.html',''); initResiz
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;EngineInput.h&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;Input.h&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="Input_8h.html">Input.h</a>&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Duin/Core/Maths/DuinMaths.h&quot;</span> <span class="comment">// for inputvector</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Duin/Core/Debug/DNLog.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Duin/Core/Application.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="DNLog_8h.html">Duin/Core/Debug/DNLog.h</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="Application_8h.html">Duin/Core/Application.h</a>&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;deque&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
@@ -130,238 +130,329 @@ $(document).ready(function(){initNavTree('Input_8cpp_source.html',''); initResiz
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define EVENT_IS_KEYBOARD(event) (event &gt;= 0x300 &amp;&amp; event &lt; 0x400)</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#define EVENT_IS_MOUSE(event) (event &gt;= 0x400 &amp;&amp; event &lt; 0x600)</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span>duin::Input {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">enum</span> KeyState{</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        UP = 0,</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        DOWN = 1</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    };</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="comment">//enum KeyEvent {</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">//    PRESSED,</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="comment">//    PRESSED_REPEATED,</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="comment">//    HELD,</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">//    RELEASED,</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="comment">//    IDLE</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="comment">//};</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="comment">// TODO move these to device struct, to allow multiple input devices</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">static</span> KeyState previousKeyState[MAX_KEYS]; </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">static</span> KeyState currentKeyState[MAX_KEYS]; </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MAX_MOUSE_KEYS = DN_MOUSE_BUTTON_CNT;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">static</span> KeyState previousMouseKeyState[MAX_MOUSE_KEYS];</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">static</span> KeyState currentMouseKeyState[MAX_MOUSE_KEYS];</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">static</span> Vector2 previousMouseLocalPos;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">static</span> Vector2 currentMouseLocalPos;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">static</span> Vector2 mouseFrameDelta;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">static</span> Vector2 mouseScrollDelta;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordtype">void</span> CacheCurrentKeyState()</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="comment">// Called in Application.cpp run</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        memcpy(previousKeyState, currentKeyState, <span class="keyword">sizeof</span>(previousKeyState));</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">void</span> ClearCurrentKeyState()</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        memset(currentKeyState, 0, <span class="keyword">sizeof</span>(currentKeyState));</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    }</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordtype">void</span> CacheCurrentMouseKeyState()</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="comment">// Called in Application.cpp run</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        memcpy(previousMouseKeyState, currentMouseKeyState, <span class="keyword">sizeof</span>(previousMouseKeyState));</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordtype">void</span> ClearCurrentMouseKeyState()</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        memset(currentMouseKeyState, 0, <span class="keyword">sizeof</span>(currentMouseKeyState));</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    }</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">void</span> ProcessSDLKeyboardEvent(::SDL_Event e)</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">if</span> (!EVENT_IS_KEYBOARD(e.type)) { <span class="keywordflow">return</span>; }</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="comment">// Set current key state</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        ::SDL_Scancode code = e.key.scancode;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">if</span> (code &gt; 511 || code &lt; 0) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            DN_CORE_WARN(<span class="stringliteral">&quot;Keyboard event out of bounds {}!&quot;</span>, (<span class="keywordtype">int</span>)code);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        KeyState state = KeyState::UP;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">if</span> (e.type == SDL_EVENT_KEY_DOWN) { state = KeyState::DOWN; }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">if</span> (e.type == SDL_EVENT_KEY_UP) { state = KeyState::UP; }</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        currentKeyState[code] = state;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordtype">int</span> IsKeyPressed(DN_Keycode code)</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    {</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="comment">// Review modstate param</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">return</span> (currentKeyState[scanCode] &amp;&amp; !previousKeyState[scanCode]);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceduin_1_1Input.html">duin::Input</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">enum</span> KeyState</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    UP = 0,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    DOWN = 1</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">// enum KeyEvent {</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">//     PRESSED,</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">//     PRESSED_REPEATED,</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">//     HELD,</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">//     RELEASED,</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">//     IDLE</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">// };</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// TODO move these to device struct, to allow multiple input devices</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">static</span> KeyState previousKeyState[MAX_KEYS];</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">static</span> KeyState currentKeyState[MAX_KEYS];</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MAX_MOUSE_KEYS = DN_MOUSE_BUTTON_CNT;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">static</span> KeyState previousMouseKeyState[MAX_MOUSE_KEYS];</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">static</span> KeyState currentMouseKeyState[MAX_MOUSE_KEYS];</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">static</span> Vector2 previousMouseLocalPos;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">static</span> Vector2 currentMouseLocalPos;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">static</span> Vector2 mouseFrameDelta;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">static</span> Vector2 mouseScrollDelta;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> CacheCurrentKeyState()</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="comment">// Called in Application.cpp run</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    memcpy(previousKeyState, currentKeyState, <span class="keyword">sizeof</span>(previousKeyState));</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keywordtype">void</span> ClearCurrentKeyState()</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>{</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    memset(currentKeyState, 0, <span class="keyword">sizeof</span>(currentKeyState));</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keywordtype">void</span> CacheCurrentMouseKeyState()</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>{</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="comment">// Called in Application.cpp run</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    memcpy(previousMouseKeyState, currentMouseKeyState, <span class="keyword">sizeof</span>(previousMouseKeyState));</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keywordtype">void</span> ClearCurrentMouseKeyState()</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>{</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    memset(currentMouseKeyState, 0, <span class="keyword">sizeof</span>(currentMouseKeyState));</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="foldopen" id="foldopen00071" data-start="{" data-end="}">
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a161ffb71e8fc5f3aa18fbafeb61a7889">   71</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a161ffb71e8fc5f3aa18fbafeb61a7889">ProcessSDLKeyboardEvent</a>(::SDL_Event e)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>{</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordflow">if</span> (!EVENT_IS_KEYBOARD(e.type))</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="comment">// Set current key state</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    ::SDL_Scancode code = e.key.scancode;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">if</span> (code &gt; 511 || code &lt; 0)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        DN_CORE_WARN(<span class="stringliteral">&quot;Keyboard event out of bounds {}!&quot;</span>, (<span class="keywordtype">int</span>)code);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    KeyState state = KeyState::UP;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordflow">if</span> (e.type == SDL_EVENT_KEY_DOWN)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        state = KeyState::DOWN;</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    }</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keywordtype">int</span> IsKeyPressedAgain(DN_Keycode code)</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    {</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="comment">// TODO</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    }</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordtype">int</span> IsKeyReleased(DN_Keycode code)</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    {</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="comment">// Review modstate param</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">return</span> (!currentKeyState[scanCode] &amp;&amp; previousKeyState[scanCode]);</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    }</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>     </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">int</span> IsKeyDown(DN_Keycode code)</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="comment">// Review modstate param</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordflow">return</span> currentKeyState[scanCode];</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    }</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>             </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordtype">int</span> IsKeyUp(DN_Keycode code)</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    {</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="comment">// Review modstate param</span></div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">return</span> !currentKeyState[scanCode];</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    }</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">int</span> IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    {</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordflow">return</span> (IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right));</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    }</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    {</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keywordflow">return</span> Vector2NormalizeF(Vector2((<span class="keywordtype">float</span>)(IsKeyDown(left) - IsKeyDown(right)), (<span class="keywordtype">float</span>)(IsKeyDown(down) - IsKeyDown(up))));</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    }</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>               </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>         </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    DN_Keycode GetKeyPressed()</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    {</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="comment">// TODO</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    }</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keywordtype">void</span> ProcessSDLMouseEvent(::SDL_Event e)</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    {</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        previousMouseLocalPos = currentMouseLocalPos;</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_MOTION) {</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keywordtype">float</span> x, y = 0;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            ::SDL_GetMouseState(&amp;x, &amp;y);</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            currentMouseLocalPos = Vector2(x, y);</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        }</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        KeyState state = KeyState::UP;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            state = KeyState::DOWN;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            DN_MouseButtonFlags btnIdx = e.button.button - 1;</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            currentMouseKeyState[btnIdx] = state;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        }</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            state = KeyState::UP;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            DN_MouseButtonFlags btnIdx = e.button.button - 1;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            currentMouseKeyState[btnIdx] = state;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        }</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        mouseScrollDelta = Vector2();</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_WHEEL) {</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            DN_CORE_INFO(<span class="stringliteral">&quot;MOUSE_WHEEL {} {}&quot;</span>, e.wheel.x, e.wheel.y);</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            mouseScrollDelta.x = e.wheel.x;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            mouseScrollDelta.y = e.wheel.y;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        }</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    }</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keywordtype">void</span> UpdateMouseFrameDelta()</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="keywordtype">float</span> x, y = 0;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        ::SDL_GetRelativeMouseState(&amp;x, &amp;y);</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        mouseFrameDelta = Vector2(-x, y); <span class="comment">// Invert x-axis</span></div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    }</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <span class="keywordtype">void</span> CaptureMouse(<span class="keywordtype">int</span> enable)</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    {</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        ::SDL_SetWindowRelativeMouseMode(GetSDLWindow(), enable);</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    }</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keywordtype">int</span> IsMouseButtonPressed(DN_MouseButtonFlags button)</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    {</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        <span class="keywordflow">return</span> (currentMouseKeyState[button-1] &amp;&amp; !previousMouseKeyState[button-1]);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keywordflow">if</span> (e.type == SDL_EVENT_KEY_UP)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        state = KeyState::UP;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    currentKeyState[code] = state;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
+</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="foldopen" id="foldopen00097" data-start="{" data-end="}">
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a5d2a40334bf310b1569f066c0b55b8d9">   97</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a5d2a40334bf310b1569f066c0b55b8d9">IsKeyPressed</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> code)</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>{</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="comment">// Review modstate param</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordflow">return</span> (currentKeyState[scanCode] &amp;&amp; !previousKeyState[scanCode]);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}</div>
+</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="foldopen" id="foldopen00104" data-start="{" data-end="}">
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a438a08f45c6c24241169dfabac44647c">  104</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a438a08f45c6c24241169dfabac44647c">IsKeyPressedAgain</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> code)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>{</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="comment">// TODO</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>}</div>
+</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="foldopen" id="foldopen00111" data-start="{" data-end="}">
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a02f16714e9d47f506f135dd83dfd26e3">  111</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a02f16714e9d47f506f135dd83dfd26e3">IsKeyReleased</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> code)</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>{</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="comment">// Review modstate param</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordflow">return</span> (!currentKeyState[scanCode] &amp;&amp; previousKeyState[scanCode]);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
+</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="foldopen" id="foldopen00118" data-start="{" data-end="}">
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">  118</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> code)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>{</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="comment">// Review modstate param</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordflow">return</span> currentKeyState[scanCode];</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
+</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="foldopen" id="foldopen00125" data-start="{" data-end="}">
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#adcfcebb4c1957610ddcd9fa8ee7330d2">  125</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#adcfcebb4c1957610ddcd9fa8ee7330d2">IsKeyUp</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> code)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>{</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="comment">// Review modstate param</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keywordflow">return</span> !currentKeyState[scanCode];</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>}</div>
+</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="foldopen" id="foldopen00132" data-start="{" data-end="}">
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a4b9057b81bc73625069bc42a85db0b90">  132</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a4b9057b81bc73625069bc42a85db0b90">IsInputVectorPressed</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> up, <a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> down, <a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> left, <a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> right)</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>{</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keywordflow">return</span> (<a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(up) || <a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(down) || <a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(left) || <a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(right));</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>}</div>
+</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="foldopen" id="foldopen00137" data-start="{" data-end="}">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a0fb28052967a3ce464629769db24f954">  137</a></span><a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a> <a class="code hl_function" href="namespaceduin_1_1Input.html#a0fb28052967a3ce464629769db24f954">GetInputVector</a>(<a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> up, <a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> down, <a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> left, <a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> right)</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>{</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordflow">return</span> Vector2NormalizeF(</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a>((<span class="keywordtype">float</span>)(<a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(left) - <a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(right)), (<span class="keywordtype">float</span>)(<a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(down) - <a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">IsKeyDown</a>(up))));</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>}</div>
+</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="foldopen" id="foldopen00143" data-start="{" data-end="}">
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a964cf48d82226e5f1726868c37f3a4de">  143</a></span><a class="code hl_typedef" href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">DN_Keycode</a> <a class="code hl_function" href="namespaceduin_1_1Input.html#a964cf48d82226e5f1726868c37f3a4de">GetKeyPressed</a>()</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>{</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="comment">// TODO</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>}</div>
+</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="foldopen" id="foldopen00154" data-start="{" data-end="}">
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">  154</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">ProcessSDLMouseEvent</a>(::SDL_Event e)</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>{</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    previousMouseLocalPos = currentMouseLocalPos;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_MOTION)</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordtype">float</span> x, y = 0;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        ::SDL_GetMouseState(&amp;x, &amp;y);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        currentMouseLocalPos = <a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a>(x, y);</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    KeyState state = KeyState::UP;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN)</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        state = KeyState::DOWN;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        DN_MouseButtonFlags btnIdx = e.button.button - 1;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        currentMouseKeyState[btnIdx] = state;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    }</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_BUTTON_UP)</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    {</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        state = KeyState::UP;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        DN_MouseButtonFlags btnIdx = e.button.button - 1;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        currentMouseKeyState[btnIdx] = state;</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    mouseScrollDelta = <a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a>();</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordflow">if</span> (e.type == SDL_EVENT_MOUSE_WHEEL)</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    {</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        DN_CORE_INFO(<span class="stringliteral">&quot;MOUSE_WHEEL {} {}&quot;</span>, e.wheel.x, e.wheel.y);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        mouseScrollDelta.x = e.wheel.x;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        mouseScrollDelta.y = e.wheel.y;</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    }</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordtype">int</span> IsMouseButtonDown(DN_MouseButtonFlags button)</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keywordflow">return</span> currentMouseKeyState[button-1];</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    }</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                     </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keywordtype">int</span> IsMouseButtonReleased(DN_MouseButtonFlags button)</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    {</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keywordflow">return</span> (!currentMouseKeyState[button-1] &amp;&amp; previousMouseKeyState[button-1]);</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    }</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                 </div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="keywordtype">int</span> IsMouseButtonUp(DN_MouseButtonFlags button)</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    {</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordflow">return</span> !currentMouseKeyState[button-1];</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    }</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                       </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    Vector2 GetMouseGlobalPosition(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    {</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordtype">float</span> x, y = 0;</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        ::SDL_GetGlobalMouseState(&amp;x, &amp;y);</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordflow">return</span> Vector2(x, y);</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>}</div>
+</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="keywordtype">void</span> UpdateMouseFrameDelta()</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>{</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keywordtype">float</span> x, y = 0;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    ::SDL_GetRelativeMouseState(&amp;x, &amp;y);</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    mouseFrameDelta = <a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a>(-x, y); <span class="comment">// Invert x-axis</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>}</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="foldopen" id="foldopen00195" data-start="{" data-end="}">
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#abb44090b33cbcfb4b27326da213f4e7e">  195</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#abb44090b33cbcfb4b27326da213f4e7e">CaptureMouse</a>(<span class="keywordtype">int</span> enable)</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>{</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    ::SDL_SetWindowRelativeMouseMode(<a class="code hl_function" href="Application_8h.html#a06c682bea80e996d1f3e4ae1202b9f1c">GetSDLWindow</a>(), enable);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>}</div>
+</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="foldopen" id="foldopen00200" data-start="{" data-end="}">
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#aba7c0d7708d5c7eb542d11380dafdd87">  200</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#aba7c0d7708d5c7eb542d11380dafdd87">IsMouseButtonPressed</a>(DN_MouseButtonFlags button)</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>{</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordflow">return</span> (currentMouseKeyState[button - 1] &amp;&amp; !previousMouseKeyState[button - 1]);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>}</div>
+</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="foldopen" id="foldopen00205" data-start="{" data-end="}">
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a56b012ed2b366b5b89110020745fd9d7">  205</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a56b012ed2b366b5b89110020745fd9d7">IsMouseButtonDown</a>(DN_MouseButtonFlags button)</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>{</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="keywordflow">return</span> currentMouseKeyState[button - 1];</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>}</div>
+</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    Vector2 GetMousePosition(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    {</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keywordtype">float</span> x, y = 0;</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        ::SDL_GetMouseState(&amp;x, &amp;y);</div>
+<div class="foldopen" id="foldopen00210" data-start="{" data-end="}">
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#aec12cb0a0f95b799792cc5a663c2d79c">  210</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#aec12cb0a0f95b799792cc5a663c2d79c">IsMouseButtonReleased</a>(DN_MouseButtonFlags button)</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>{</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="keywordflow">return</span> (!currentMouseKeyState[button - 1] &amp;&amp; previousMouseKeyState[button - 1]);</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>}</div>
+</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        <span class="keywordflow">return</span> Vector2(x, y);</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    }</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                        </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    Vector2 GetMouseDelta(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    {</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="keywordflow">return</span> mouseFrameDelta;</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    }</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                           </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="keywordtype">void</span> SetMousePosition(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y)</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    {</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    }</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                   </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordtype">void</span> SetMouseOffset(<span class="keywordtype">int</span> offsetX, <span class="keywordtype">int</span> offsetY)</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    {</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    }</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>         </div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="keywordtype">void</span> SetMouseScale(<span class="keywordtype">float</span> scaleX, <span class="keywordtype">float</span> scaleY)</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    {</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    }</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keywordtype">float</span> GetMouseWheelMove(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    {</div>
+<div class="foldopen" id="foldopen00215" data-start="{" data-end="}">
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#ad8dc3b16ac35ccaa5ac814a19d3a2604">  215</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#ad8dc3b16ac35ccaa5ac814a19d3a2604">IsMouseButtonUp</a>(DN_MouseButtonFlags button)</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>{</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <span class="keywordflow">return</span> !currentMouseKeyState[button - 1];</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>}</div>
+</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="foldopen" id="foldopen00220" data-start="{" data-end="}">
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a3f99a08cbba6a6fcbe7e5b57761a2361">  220</a></span><a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a> <a class="code hl_function" href="namespaceduin_1_1Input.html#a3f99a08cbba6a6fcbe7e5b57761a2361">GetMouseGlobalPosition</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>{</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="keywordtype">float</span> x, y = 0;</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    ::SDL_GetGlobalMouseState(&amp;x, &amp;y);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a>(x, y);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>}</div>
+</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="foldopen" id="foldopen00228" data-start="{" data-end="}">
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a06ad8aa101aa49b2d488b5ff479f22ef">  228</a></span><a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a> <a class="code hl_function" href="namespaceduin_1_1Input.html#a06ad8aa101aa49b2d488b5ff479f22ef">GetMousePosition</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>{</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keywordtype">float</span> x, y = 0;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    ::SDL_GetMouseState(&amp;x, &amp;y);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a>(x, y);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>}</div>
+</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="foldopen" id="foldopen00236" data-start="{" data-end="}">
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a338bfd0bdb930df1699caa1f7596292c">  236</a></span><a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a> <a class="code hl_function" href="namespaceduin_1_1Input.html#a338bfd0bdb930df1699caa1f7596292c">GetMouseDelta</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>{</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keywordflow">return</span> mouseFrameDelta;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>}</div>
+</div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        <span class="keywordflow">return</span> mouseScrollDelta.y;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    }</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                         </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    Vector2 GetMouseWheelMoveV(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    {</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <span class="keywordflow">return</span> mouseScrollDelta;</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    }</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                      </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordtype">void</span> SetMouseCursor(<span class="keywordtype">int</span> cursor)</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    {</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    </div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    }</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                       </div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>}</div>
+<div class="foldopen" id="foldopen00241" data-start="{" data-end="}">
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a47287c43b5d00b5355b20e47ddcce93a">  241</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a47287c43b5d00b5355b20e47ddcce93a">SetMousePosition</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y)</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>{</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>}</div>
+</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="foldopen" id="foldopen00245" data-start="{" data-end="}">
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a393850076d5278397edcc12fd3b2836f">  245</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a393850076d5278397edcc12fd3b2836f">SetMouseOffset</a>(<span class="keywordtype">int</span> offsetX, <span class="keywordtype">int</span> offsetY)</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>{</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>}</div>
+</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
+<div class="foldopen" id="foldopen00249" data-start="{" data-end="}">
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a14e9b1731645f19b9708900ff52bb70f">  249</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a14e9b1731645f19b9708900ff52bb70f">SetMouseScale</a>(<span class="keywordtype">float</span> scaleX, <span class="keywordtype">float</span> scaleY)</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>{</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>}</div>
+</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
+<div class="foldopen" id="foldopen00253" data-start="{" data-end="}">
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#ad6d77af63eb2f0db65245c2e91cdb008">  253</a></span><span class="keywordtype">float</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#ad6d77af63eb2f0db65245c2e91cdb008">GetMouseWheelMove</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>{</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keywordflow">return</span> mouseScrollDelta.y;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>}</div>
+</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
+<div class="foldopen" id="foldopen00259" data-start="{" data-end="}">
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a6cc044cfe1a6e27bc35e8d5ae6f3a4f9">  259</a></span><a class="code hl_struct" href="structduin_1_1Vector2.html">Vector2</a> <a class="code hl_function" href="namespaceduin_1_1Input.html#a6cc044cfe1a6e27bc35e8d5ae6f3a4f9">GetMouseWheelMoveV</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>{</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <span class="keywordflow">return</span> mouseScrollDelta;</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>}</div>
+</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="foldopen" id="foldopen00264" data-start="{" data-end="}">
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="namespaceduin_1_1Input.html#a8a2303ac21b7eceabeeb06539935324a">  264</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a8a2303ac21b7eceabeeb06539935324a">SetMouseCursor</a>(<span class="keywordtype">int</span> cursor)</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>{</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>}</div>
+</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>} <span class="comment">// namespace duin::Input</span></div>
+<div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
+<div class="ttc" id="aApplication_8h_html_a06c682bea80e996d1f3e4ae1202b9f1c"><div class="ttname"><a href="Application_8h.html#a06c682bea80e996d1f3e4ae1202b9f1c">duin::GetSDLWindow</a></div><div class="ttdeci">::SDL_Window * GetSDLWindow()</div><div class="ttdoc">Returns the underlying SDL window handle.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00274">Application.cpp:274</a></div></div>
+<div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
+<div class="ttc" id="aEvent_8h_html_aeadd8af7c6834ea8e206fb9365a066e9"><div class="ttname"><a href="Event_8h.html#aeadd8af7c6834ea8e206fb9365a066e9">duin::DN_Keycode</a></div><div class="ttdeci">Uint32 DN_Keycode</div><div class="ttdoc">Key code type (SDL scancode).</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00015">Event.h:15</a></div></div>
+<div class="ttc" id="aInput_8h_html"><div class="ttname"><a href="Input_8h.html">Input.h</a></div><div class="ttdoc">Low-level input query functions.</div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html"><div class="ttname"><a href="namespaceduin_1_1Input.html">duin::Input</a></div><div class="ttdoc">Low-level input state queries.</div><div class="ttdef"><b>Definition</b> <a href="EngineInput_8h_source.html#l00005">EngineInput.h:6</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a02f16714e9d47f506f135dd83dfd26e3"><div class="ttname"><a href="namespaceduin_1_1Input.html#a02f16714e9d47f506f135dd83dfd26e3">duin::Input::IsKeyReleased</a></div><div class="ttdeci">int IsKeyReleased(DN_Keycode code)</div><div class="ttdoc">Checks if key was released this frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00111">Input.cpp:111</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a06ad8aa101aa49b2d488b5ff479f22ef"><div class="ttname"><a href="namespaceduin_1_1Input.html#a06ad8aa101aa49b2d488b5ff479f22ef">duin::Input::GetMousePosition</a></div><div class="ttdeci">Vector2 GetMousePosition(void)</div><div class="ttdoc">Returns mouse position relative to game window.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00228">Input.cpp:228</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a0fb28052967a3ce464629769db24f954"><div class="ttname"><a href="namespaceduin_1_1Input.html#a0fb28052967a3ce464629769db24f954">duin::Input::GetInputVector</a></div><div class="ttdeci">Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)</div><div class="ttdoc">Returns normalized direction vector from WASD-style keys.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00137">Input.cpp:137</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a14e9b1731645f19b9708900ff52bb70f"><div class="ttname"><a href="namespaceduin_1_1Input.html#a14e9b1731645f19b9708900ff52bb70f">duin::Input::SetMouseScale</a></div><div class="ttdeci">void SetMouseScale(float scaleX, float scaleY)</div><div class="ttdoc">Sets mouse position scaling.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00249">Input.cpp:249</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a161ffb71e8fc5f3aa18fbafeb61a7889"><div class="ttname"><a href="namespaceduin_1_1Input.html#a161ffb71e8fc5f3aa18fbafeb61a7889">duin::Input::ProcessSDLKeyboardEvent</a></div><div class="ttdeci">void ProcessSDLKeyboardEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a keyboard event, then process the event. This function is called ...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00071">Input.cpp:71</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a338bfd0bdb930df1699caa1f7596292c"><div class="ttname"><a href="namespaceduin_1_1Input.html#a338bfd0bdb930df1699caa1f7596292c">duin::Input::GetMouseDelta</a></div><div class="ttdeci">Vector2 GetMouseDelta(void)</div><div class="ttdoc">Returns mouse movement since last frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00236">Input.cpp:236</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a393850076d5278397edcc12fd3b2836f"><div class="ttname"><a href="namespaceduin_1_1Input.html#a393850076d5278397edcc12fd3b2836f">duin::Input::SetMouseOffset</a></div><div class="ttdeci">void SetMouseOffset(int offsetX, int offsetY)</div><div class="ttdoc">Sets mouse position offset for calculations.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00245">Input.cpp:245</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a3f99a08cbba6a6fcbe7e5b57761a2361"><div class="ttname"><a href="namespaceduin_1_1Input.html#a3f99a08cbba6a6fcbe7e5b57761a2361">duin::Input::GetMouseGlobalPosition</a></div><div class="ttdeci">Vector2 GetMouseGlobalPosition(void)</div><div class="ttdoc">Returns mouse position relative to screen.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00220">Input.cpp:220</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a438a08f45c6c24241169dfabac44647c"><div class="ttname"><a href="namespaceduin_1_1Input.html#a438a08f45c6c24241169dfabac44647c">duin::Input::IsKeyPressedAgain</a></div><div class="ttdeci">int IsKeyPressedAgain(DN_Keycode code)</div><div class="ttdoc">Checks if key was pressed again (repeat).</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00104">Input.cpp:104</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a47287c43b5d00b5355b20e47ddcce93a"><div class="ttname"><a href="namespaceduin_1_1Input.html#a47287c43b5d00b5355b20e47ddcce93a">duin::Input::SetMousePosition</a></div><div class="ttdeci">void SetMousePosition(int x, int y)</div><div class="ttdoc">Sets mouse cursor position.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00241">Input.cpp:241</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4ad600a8fc36f8a1b98966126326cea6"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">duin::Input::ProcessSDLMouseEvent</a></div><div class="ttdeci">void ProcessSDLMouseEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a mouse event, then process the event. This function is called fro...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00154">Input.cpp:154</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4b9057b81bc73625069bc42a85db0b90"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4b9057b81bc73625069bc42a85db0b90">duin::Input::IsInputVectorPressed</a></div><div class="ttdeci">int IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)</div><div class="ttdoc">Checks if any directional key is pressed.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00132">Input.cpp:132</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a5250c280ea0d2cead62882bdc9400a87"><div class="ttname"><a href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">duin::Input::IsKeyDown</a></div><div class="ttdeci">int IsKeyDown(DN_Keycode code)</div><div class="ttdoc">Checks if key is currently held down.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00118">Input.cpp:118</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a56b012ed2b366b5b89110020745fd9d7"><div class="ttname"><a href="namespaceduin_1_1Input.html#a56b012ed2b366b5b89110020745fd9d7">duin::Input::IsMouseButtonDown</a></div><div class="ttdeci">int IsMouseButtonDown(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button is held down.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00205">Input.cpp:205</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a5d2a40334bf310b1569f066c0b55b8d9"><div class="ttname"><a href="namespaceduin_1_1Input.html#a5d2a40334bf310b1569f066c0b55b8d9">duin::Input::IsKeyPressed</a></div><div class="ttdeci">int IsKeyPressed(DN_Keycode code)</div><div class="ttdoc">Checks if key was pressed this frame (not held).</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00097">Input.cpp:97</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a6cc044cfe1a6e27bc35e8d5ae6f3a4f9"><div class="ttname"><a href="namespaceduin_1_1Input.html#a6cc044cfe1a6e27bc35e8d5ae6f3a4f9">duin::Input::GetMouseWheelMoveV</a></div><div class="ttdeci">Vector2 GetMouseWheelMoveV(void)</div><div class="ttdoc">Returns scroll wheel movement as 2D vector.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00259">Input.cpp:259</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a8a2303ac21b7eceabeeb06539935324a"><div class="ttname"><a href="namespaceduin_1_1Input.html#a8a2303ac21b7eceabeeb06539935324a">duin::Input::SetMouseCursor</a></div><div class="ttdeci">void SetMouseCursor(int cursor)</div><div class="ttdoc">Sets the mouse cursor style.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00264">Input.cpp:264</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a964cf48d82226e5f1726868c37f3a4de"><div class="ttname"><a href="namespaceduin_1_1Input.html#a964cf48d82226e5f1726868c37f3a4de">duin::Input::GetKeyPressed</a></div><div class="ttdeci">DN_Keycode GetKeyPressed()</div><div class="ttdoc">Returns next pressed key code (0 when queue empty).</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00143">Input.cpp:143</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_aba7c0d7708d5c7eb542d11380dafdd87"><div class="ttname"><a href="namespaceduin_1_1Input.html#aba7c0d7708d5c7eb542d11380dafdd87">duin::Input::IsMouseButtonPressed</a></div><div class="ttdeci">int IsMouseButtonPressed(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button was pressed this frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00200">Input.cpp:200</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_abb44090b33cbcfb4b27326da213f4e7e"><div class="ttname"><a href="namespaceduin_1_1Input.html#abb44090b33cbcfb4b27326da213f4e7e">duin::Input::CaptureMouse</a></div><div class="ttdeci">void CaptureMouse(int enable)</div><div class="ttdoc">Locks mouse cursor to window.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00195">Input.cpp:195</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_ad6d77af63eb2f0db65245c2e91cdb008"><div class="ttname"><a href="namespaceduin_1_1Input.html#ad6d77af63eb2f0db65245c2e91cdb008">duin::Input::GetMouseWheelMove</a></div><div class="ttdeci">float GetMouseWheelMove(void)</div><div class="ttdoc">Returns scroll wheel movement (max of X or Y).</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00253">Input.cpp:253</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_ad8dc3b16ac35ccaa5ac814a19d3a2604"><div class="ttname"><a href="namespaceduin_1_1Input.html#ad8dc3b16ac35ccaa5ac814a19d3a2604">duin::Input::IsMouseButtonUp</a></div><div class="ttdeci">int IsMouseButtonUp(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button is not pressed.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00215">Input.cpp:215</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_adcfcebb4c1957610ddcd9fa8ee7330d2"><div class="ttname"><a href="namespaceduin_1_1Input.html#adcfcebb4c1957610ddcd9fa8ee7330d2">duin::Input::IsKeyUp</a></div><div class="ttdeci">int IsKeyUp(DN_Keycode code)</div><div class="ttdoc">Checks if key is not held down.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00125">Input.cpp:125</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_aec12cb0a0f95b799792cc5a663c2d79c"><div class="ttname"><a href="namespaceduin_1_1Input.html#aec12cb0a0f95b799792cc5a663c2d79c">duin::Input::IsMouseButtonReleased</a></div><div class="ttdeci">int IsMouseButtonReleased(DN_MouseButtonFlags button)</div><div class="ttdoc">Checks if mouse button was released this frame.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00210">Input.cpp:210</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector2_html"><div class="ttname"><a href="structduin_1_1Vector2.html">duin::Vector2</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00125">DuinMaths.h:126</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

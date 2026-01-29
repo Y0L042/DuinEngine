@@ -1,0 +1,7 @@
+<map id="Render Module" name="Render Module">
+<area shape="rect" id="Node000001" title="BGFX&#45;based rendering system." alt="" coords="5,80,125,105"/>
+<area shape="rect" id="Node000003" href="$group__Render__Camera.html" title="Camera management." alt="" coords="198,5,271,31"/>
+<area shape="rect" id="Node000002" href="$group__Render__Core.html" title="Main rendering interface." alt="" coords="173,55,296,80"/>
+<area shape="rect" id="Node000004" href="$group__Render__Geometry.html" title="Renderable geometry types." alt="" coords="191,104,278,129"/>
+<area shape="rect" id="Node000005" href="$group__Render__Shader.html" title="Shader program management." alt="" coords="197,153,272,179"/>
+</map>

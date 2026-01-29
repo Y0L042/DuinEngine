@@ -1,5 +1,5 @@
 <map id="duin::GameObject" name="duin::GameObject">
-<area shape="rect" id="Node000001" title=" " alt="" coords="417,119,556,145"/>
+<area shape="rect" id="Node000001" title="Base class for objects in the scene hierarchy." alt="" coords="417,119,556,145"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,5,208,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,14,308,20,352,30,394,44,421,60,444,79,478,117,474,120,441,83,418,64,392,49,351,35,307,26,222,19"/>
 <area shape="rect" id="Node000003" href="$classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="25,86,189,111"/>
