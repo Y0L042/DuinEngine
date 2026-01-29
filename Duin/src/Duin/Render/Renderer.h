@@ -214,4 +214,21 @@ unsigned int DrawIMGUITexture(RenderTexture &texture, Vector2 targetSize);
 /** @brief Destroys a render texture and frees its resources. */
 void DestroyRenderTexture(RenderTexture &texture);
 
+/**
+ * @name Test Accessors
+ * Functions for testing render state without GPU context.
+ * @{
+ */
+/** @brief Returns a copy of the current render state (for testing). */
+RenderState GetCurrentRenderState();
+/** @brief Returns the current render state stack depth (for testing). */
+size_t GetRenderStateStackDepth();
+/** @brief Resets render state to defaults without GPU calls (for testing). */
+void ResetRenderStateForTesting();
+/** @brief Simulates BeginTextureMode state changes without GPU calls (for testing). */
+void BeginTextureModeForTesting(RenderTexture &target);
+/** @brief Simulates EndTextureMode state changes without GPU calls (for testing). */
+void EndTextureModeForTesting();
+/** @} */
+
 } // namespace duin

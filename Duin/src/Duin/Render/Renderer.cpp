@@ -394,4 +394,48 @@ static BGFXBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type)
         break;
     }
 }
+
+// Test accessor implementations
+RenderState GetCurrentRenderState()
+{
+    return globalRenderState;
+}
+
+size_t GetRenderStateStackDepth()
+{
+    return globalRenderStateStack.size();
+}
+
+void ResetRenderStateForTesting()
+{
+    globalRenderStateStack.clear();
+    globalRenderState = RenderState();
+}
+
+void BeginTextureModeForTesting(RenderTexture &target)
+{
+    // Push current state to stack
+    globalRenderStateStack.push_back(globalRenderState);
+
+    // Set new texture rendering state (same logic as BeginTextureMode, without GPU calls)
+    globalRenderState.inTextureMode = true;
+    globalRenderState.in3DMode = false;
+    globalRenderState.target = &target;
+    globalRenderState.viewID = target.viewID;
+}
+
+void EndTextureModeForTesting()
+{
+    // Same logic as EndTextureMode, without GPU calls
+    if (!globalRenderStateStack.empty())
+    {
+        globalRenderState = globalRenderStateStack.back();
+        globalRenderStateStack.pop_back();
+    }
+    else
+    {
+        globalRenderState = RenderState();
+    }
+}
+
 } // namespace duin
