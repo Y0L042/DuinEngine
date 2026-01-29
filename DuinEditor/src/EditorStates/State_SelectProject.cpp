@@ -13,6 +13,7 @@
 #include "FileManager.h"
 #include "Project.h"
 #include "Singleton.h"
+#include "States.h"
 
 void State_SelectProject::Enter()
 {
@@ -140,7 +141,7 @@ void State_SelectProject::LoadSelectedProject()
                 fileManager.SetRootPath(projectPath.string());
                 duin::SetImGuiINIPath(projectPath.string() + "/imgui.ini"); // Set per-project imgui ini
 
-                // SwitchState<EditorState_GameEditor>();
+                SwitchState<State_SceneEditor>();
                 DN_INFO("Switching to Editor State");
                 break;
             }
