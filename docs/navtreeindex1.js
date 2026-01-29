@@ -134,7 +134,7 @@ var NAVTREEINDEX1 =
 "classduin_1_1JSONValue_1_1DataIterator.html#ac4a22e0b0a8af8ba50ae793b219958fc":[4,0,0,47,1,0],
 "classduin_1_1JSONValue_1_1DataIterator.html#ac4ee40686baf8284d17836b07a6295e0":[4,0,0,47,1,1],
 "classduin_1_1KinematicBody.html":[4,0,0,48],
-"classduin_1_1Log.html":[2,0,5,1],
+"classduin_1_1Log.html":[2,0,5,2],
 "classduin_1_1LookupVector.html":[4,0,0,50],
 "classduin_1_1LookupVector.html#a81a17a655a540734d31b02460b612915":[4,0,0,50,0],
 "classduin_1_1LookupVector.html#ac64d8aa6cbea33af79813152a25db5d7":[4,0,0,50,3],

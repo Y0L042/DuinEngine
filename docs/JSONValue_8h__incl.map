@@ -1,34 +1,36 @@
 <map id="JSONValue.h" name="JSONValue.h">
-<area shape="rect" id="Node000001" title="Defines the duin::JSONValue class for manipulating JSON data using RapidJSON." alt="" coords="593,5,696,31"/>
-<area shape="rect" id="Node000002" href="$DebugModule_8h_source.html" title=" " alt="" coords="224,79,463,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="597,33,406,78,405,73,596,28"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="498,225,557,251"/>
-<area shape="poly" id="edge16_Node000001_Node000007" title=" " alt="" coords="616,33,583,52,568,65,555,80,539,113,531,148,528,212,523,211,526,148,534,111,550,77,564,61,580,48,614,28"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="565,79,724,104"/>
-<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="647,31,647,65,642,65,642,31"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="749,79,911,104"/>
-<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="675,28,788,71,786,76,673,33"/>
-<area shape="rect" id="Node000015" title=" " alt="" coords="935,79,1013,104"/>
-<area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="697,28,922,76,921,81,696,33"/>
-<area shape="rect" id="Node000003" href="$DebugCodeUtils_8h_source.html" title=" " alt="" coords="167,152,306,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="328,106,267,147,264,142,325,102"/>
-<area shape="rect" id="Node000004" href="$DebugTools_8h_source.html" title=" " alt="" coords="381,152,490,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="360,102,411,141,408,146,356,106"/>
-<area shape="rect" id="Node000009" href="$DNLog_8h.html" title="Logging system and macros." alt="" coords="109,225,186,251"/>
-<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="346,105,340,141,332,161,320,179,300,193,270,205,200,227,199,222,268,200,297,188,316,175,328,159,335,139,340,104"/>
-<area shape="rect" id="Node000012" href="$Assert_8h_source.html" title=" " alt="" coords="69,152,143,177"/>
-<area shape="poly" id="edge12_Node000002_Node000012" title=" " alt="" coords="306,107,158,151,156,146,304,101"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="299,225,423,251"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="425,179,385,218,381,214,422,175"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="369,299,432,324"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="440,178,441,211,437,251,419,288,414,286,431,250,436,211,434,178"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="452,175,503,215,500,219,448,179"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="210,225,274,251"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="405,180,287,223,285,218,403,175"/>
-<area shape="poly" id="edge11_Node000009_Node000006" title=" " alt="" coords="187,248,357,295,355,300,186,253"/>
-<area shape="rect" id="Node000010" href="$Core_8h_source.html" title=" " alt="" coords="5,299,137,324"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="137,253,96,291,92,287,133,249"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="161,299,285,324"/>
-<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="161,249,203,287,199,291,158,253"/>
-<area shape="poly" id="edge13_Node000012_Node000009" title=" " alt="" coords="115,176,136,212,131,215,111,179"/>
+<area shape="rect" id="Node000001" title="Defines the duin::JSONValue class for manipulating JSON data using RapidJSON." alt="" coords="474,5,577,31"/>
+<area shape="rect" id="Node000002" href="$DebugModule_8h_source.html" title=" " alt="" coords="183,79,422,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="490,33,352,77,351,72,489,28"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,225,64,251"/>
+<area shape="poly" id="edge17_Node000001_Node000007" title=" " alt="" coords="474,22,411,25,333,34,251,52,172,81,130,109,96,145,68,182,49,215,44,212,64,179,91,141,127,105,169,76,249,47,333,29,410,20,474,17"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="446,79,605,104"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="528,31,528,65,523,65,523,31"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="629,79,792,104"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="556,28,669,71,667,76,554,33"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="816,79,893,104"/>
+<area shape="poly" id="edge18_Node000001_Node000016" title=" " alt="" coords="577,28,803,76,802,81,576,33"/>
+<area shape="rect" id="Node000003" href="$DebugCodeUtils_8h_source.html" title=" " alt="" coords="233,152,372,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="305,104,305,138,300,138,300,104"/>
+<area shape="rect" id="Node000004" href="$DebugTools_8h_source.html" title=" " alt="" coords="100,152,209,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="280,106,192,148,190,144,278,102"/>
+<area shape="rect" id="Node000009" href="$DNLog_8h.html" title="Logging system and macros." alt="" coords="376,225,453,251"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="327,102,357,122,386,150,403,181,412,211,407,213,398,183,382,154,354,126,324,106"/>
+<area shape="rect" id="Node000012" href="$DNAssert_8h.html" title="Assertion macros for debugging and error checking." alt="" coords="447,152,542,177"/>
+<area shape="poly" id="edge12_Node000002_Node000012" title=" " alt="" coords="334,102,451,144,449,149,333,107"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="89,225,213,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="157,178,155,212,149,212,151,178"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="242,299,305,324"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="173,175,199,196,226,224,248,255,265,285,260,287,243,258,222,227,195,200,169,179"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="137,180,68,220,65,216,134,175"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="288,225,352,251"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="182,175,282,217,279,222,180,180"/>
+<area shape="poly" id="edge11_Node000009_Node000006" title=" " alt="" coords="393,253,310,295,307,290,391,248"/>
+<area shape="rect" id="Node000010" href="$Core_8h_source.html" title=" " alt="" coords="489,299,621,324"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="438,248,521,290,519,295,436,253"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="341,299,465,324"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="415,251,410,286,404,285,410,251"/>
+<area shape="poly" id="edge13_Node000012_Node000009" title=" " alt="" coords="484,179,440,218,436,214,480,175"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="478,225,546,251"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="500,177,509,212,503,213,495,178"/>
 </map>
