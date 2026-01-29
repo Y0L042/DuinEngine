@@ -4,7 +4,7 @@
 #include <Duin/EntryPoint.h>
 #include <Duin/Objects/GameStateMachine.h>
 
-#include "EditorStates/State_SelectProject.h"
+#include "EditorStates/States.h"
 
 #include <memory>
 
