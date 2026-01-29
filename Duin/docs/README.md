@@ -1,46 +1,95 @@
-@mainpage ReadMe
-@{
+/**
+@mainpage Duin Engine
 
-Duin Engine is small C++ game engine. It is based on an ECS design.
+@section intro Introduction
 
-## Features
+Duin is a C++20 game engine built on an Entity Component System (ECS) architecture.
+It combines FLECS for data-oriented entity management with a traditional GameObject
+hierarchy for scene organization.
 
-- FLECS ECS-based entity management
-- PhysX physics
-- raylib functionality
+@section features Features
 
-Currently it is only available for Windows (x64). Sorry about that.
+- **FLECS ECS** - Entity/component data storage and system queries
+- **PhysX Physics** - NVIDIA PhysX for rigid body dynamics and collision
+- **BGFX Rendering** - Cross-platform graphics (D3D11/12, OpenGL, Vulkan, Metal)
+- **SDL3** - Window management and input handling
+- **ImGui** - Immediate mode GUI for tools and debugging
 
-## Generating Project Files
+@section arch Architecture Overview
 
-Currently the engine is super early in development. As such, a proper build
-system and project configuration has not been set up yet.
+The engine combines two organizational patterns:
 
-### Requirements
+@subsection arch_ecs ECS (Data-Oriented)
 
- - Visual Studio 2022
- - CMake (for dependencies)
- - Python 3
- - Git
+Entities are identifiers with attached components (pure data). Systems query
+entities by component patterns and process them efficiently.
 
-To build the dependencies, run:
+@code{.cpp}
+// Create entity with components
+flecs::entity e = ecsManager.GetWorld().entity()
+    .set<ECSComponent::Position3D>({0, 0, 0})
+    .set<ECSComponent::Rotation3D>({})
+    .add<ECSTag::PxDynamic>();
+@endcode
 
-```bash
-vendor/bin/premake/premake5 vs2022 --deps
-```
+@subsection arch_gameobject GameObject (Object-Oriented)
 
-Specific dependencies can be built with ``--deps --[DEP]``
+GameObjects form parent-child hierarchies with lifecycle callbacks (Init, Ready,
+Update, Draw). Useful for logical organization and behavior.
 
-To just generate the project files, run:
+@code{.cpp}
+class Player : public duin::GameObject {
+    void Update(double delta) override {
+        // Per-frame logic
+    }
+};
+@endcode
 
-```bash
-vendor/bin/premake/premake5 vs2022
-```
+@section modules Modules
 
-To create a new project, currently one has to add the project to the bottom of
-the root ``premake5.lua``, and then use one of the ``ExampleProject``s as a
-template for your own project. This will be fixed in the future.
+- @ref Core - Application lifecycle, events, signals, math, utilities
+- @ref ECS - Entity Component System (FLECS wrapper)
+- @ref Physics - PhysX integration
+- @ref Render - BGFX rendering
+- @ref Objects - GameObject hierarchy and state machine
+- @ref IO - File I/O, JSON, configuration
+- @ref Assets - Asset management
 
-See [ToDo](TODO.md) for planned features.
+@section building Building
 
-@}
+Duin uses Premake5 for project generation.
+
+@subsection building_gen Generate Project Files
+
+@code{.bash}
+# Windows (Visual Studio 2022)
+vendor\bin\premake\premake5.exe vs2022
+
+# Linux/macOS
+vendor/bin/premake/premake5 gmake2
+@endcode
+
+@subsection building_build Build
+
+@code{.bash}
+# MSBuild (Windows)
+msbuild Duin.sln -property:Configuration=Debug -property:Platform=x64
+
+# Or open Duin.sln in Visual Studio 2022
+@endcode
+
+@subsection building_deps Dependencies (First Time)
+
+@code{.bash}
+vendor\bin\premake\premake5.exe --deps vs2022
+@endcode
+
+@section coord Coordinate System
+
+Right-hand rule with +Z toward the viewer (same convention as Godot).
+
+@section status Status
+
+Early development. API may change between versions.
+
+*/

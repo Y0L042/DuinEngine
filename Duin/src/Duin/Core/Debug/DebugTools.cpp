@@ -3,25 +3,28 @@
 
 #include <chrono>
 #include <external/imgui.h>
-#include "Duin/Core/Debug/DNLog.h" 
+#include "Duin/Core/Debug/DNLog.h"
 
-
-
-namespace duin {
+namespace duin
+{
 
 DebugConsole::DebugConsole()
 {
     startTime = std::chrono::steady_clock::now();
 }
 
-DebugConsole::~DebugConsole() {}
+DebugConsole::~DebugConsole()
+{
+}
 
-void DebugConsole::Clear() {
+void DebugConsole::Clear()
+{
     std::lock_guard<std::mutex> lock(mutex_);
     logMessages_.clear();
 }
 
-void DebugConsole::Log(const char* format, ...) {
+void DebugConsole::Log(const char *format, ...)
+{
     std::lock_guard<std::mutex> lock(mutex_);
 
     // Buffer to store the formatted string
@@ -49,7 +52,7 @@ void DebugConsole::Log(const char* format, ...) {
     newMessageAdded = 1;
 }
 
-void DebugConsole::Draw(const char* title) 
+void DebugConsole::Draw(const char *title)
 {
     ImGuiWindowFlags windowFlags;
     // TODO
@@ -57,10 +60,14 @@ void DebugConsole::Draw(const char* title)
     //     ToggleEditing();
     //     DN_CORE_INFO("DebugConsoleEditing {}", enableEditing);
     // }
-    if (!enableEditing && enableSilent) {
+    if (!enableEditing && enableSilent)
+    {
         ImGui::SetWindowFocus(NULL);
-        windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
-    } else {
+        windowFlags =
+            ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
+    }
+    else
+    {
         windowFlags = ImGuiWindowFlags_MenuBar;
     }
     // Set semitransparent background for the entire console window
@@ -73,19 +80,24 @@ void DebugConsole::Draw(const char* title)
     ImGui::Begin(title, nullptr, windowFlags);
 
     // Title bar menu with dropdown for AutoScroll, Copy, and Clear
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Options")) {
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Options"))
+        {
 
             // AutoScroll toggle
-            if (ImGui::MenuItem("AutoScroll", nullptr, scrollToBottom_)) {
+            if (ImGui::MenuItem("AutoScroll", nullptr, scrollToBottom_))
+            {
                 scrollToBottom_ = !scrollToBottom_;
             }
 
             // Copy to Clipboard
             ImGui::Separator();
-            if (ImGui::MenuItem("Copy")) {
+            if (ImGui::MenuItem("Copy"))
+            {
                 std::string clipboardContent;
-                for (const auto& message : logMessages_) {
+                for (const auto &message : logMessages_)
+                {
                     clipboardContent += message + "\n";
                 }
                 ImGui::SetClipboardText(clipboardContent.c_str());
@@ -93,7 +105,8 @@ void DebugConsole::Draw(const char* title)
 
             // Clear log
             ImGui::Separator();
-            if (ImGui::MenuItem("Clear")) {
+            if (ImGui::MenuItem("Clear"))
+            {
                 Clear();
             }
 
@@ -106,15 +119,14 @@ void DebugConsole::Draw(const char* title)
     ImGui::Separator();
     ImGui::BeginChild("ScrollRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
-
-    
     // Define alternating background colors for rows
-    ImVec4 color1 = ImVec4(0.2f, 0.2f, 0.2f, linesAlpha); // Light gray
+    ImVec4 color1 = ImVec4(0.2f, 0.2f, 0.2f, linesAlpha);    // Light gray
     ImVec4 color2 = ImVec4(0.15f, 0.15f, 0.15f, linesAlpha); // Darker gray
     bool alternateColor = false;
 
     // Display each log message with an alternating row background
-    for (const auto& message : logMessages_) {
+    for (const auto &message : logMessages_)
+    {
         // Calculate the position and size of each row
         ImVec2 cursorPos = ImGui::GetCursorScreenPos();
         ImVec2 textSize = ImGui::CalcTextSize(message.c_str());
@@ -130,10 +142,10 @@ void DebugConsole::Draw(const char* title)
         // Toggle background color for the next row
         alternateColor = !alternateColor;
     }
-   
 
     // Scroll to bottom if new messages are added
-    if (scrollToBottom_ && newMessageAdded) {
+    if (scrollToBottom_ && newMessageAdded)
+    {
         ImGui::SetScrollHereY(1.0f);
         newMessageAdded = false;
     }
@@ -148,20 +160,22 @@ void DebugConsole::ToggleEditing()
     enableEditing = !enableEditing;
 }
 
+void DebugConsole::SetScrollToBottom()
+{
+    scrollToBottom_ = true;
+}
 
-void DebugConsole::SetScrollToBottom() { scrollToBottom_ = true; }
-
-
-void DebugConsole::LogEx(LogLevel level, const char* format, ...) {
+void DebugConsole::LogEx(LogLevel level, const char *format, ...)
+{
     char buffer[1024];
     va_list args;
     va_start(args, format);
     vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
-   
 
     // Log to the main console logger
-    switch (level) {
+    switch (level)
+    {
     case LogLevel::Fatal:
         DN_FATAL("{0}", buffer);
         break;
@@ -181,14 +195,17 @@ void DebugConsole::LogEx(LogLevel level, const char* format, ...) {
     this->Log("%s", buffer);
 }
 
+} // namespace duin
+
+namespace duin
+{
+DebugWatchlist::DebugWatchlist()
+{
 }
 
-namespace duin {
-DebugWatchlist::DebugWatchlist()
-{}
-
 DebugWatchlist::~DebugWatchlist()
-{}
+{
+}
 
 void DebugWatchlist::Clear()
 {
@@ -208,12 +225,12 @@ void DebugWatchlist::Post(const std::string description, const std::string forma
 
     // Estimate required buffer size
     // +1 for null terminator
-    int size = std::vsnprintf(nullptr, 0, format.c_str(), args) + 1; 
+    int size = std::vsnprintf(nullptr, 0, format.c_str(), args) + 1;
     va_end(args); // End args before restarting
 
     std::vector<char> buffer(size);
     // Restart args for actual formatting
-    va_start(args, format); 
+    va_start(args, format);
     std::vsnprintf(buffer.data(), buffer.size(), format.c_str(), args);
     va_end(args);
     // End variadic arguments
@@ -221,27 +238,33 @@ void DebugWatchlist::Post(const std::string description, const std::string forma
     // Convert buffer to std::string
     std::string value(buffer.data());
 
-    if (watchlist.find(description) == watchlist.end()) {
+    if (watchlist.find(description) == watchlist.end())
+    {
         watchlist[description] = value;
         order.push_back(description);
-    } else {
+    }
+    else
+    {
         watchlist[description] = value;
     }
-
 }
 
 void DebugWatchlist::Draw(const char *title)
 {
     ImGuiWindowFlags windowFlags;
-	// TODO
-    //if(IsKeyPressed(KEY_O)) {
-    //    ToggleEditing();
-    //    DN_CORE_INFO("DebugWatchlistEditing {}", enableEditing);
-    //}
-    if (!enableEditing && enableSilent) {
+    // TODO
+    // if(IsKeyPressed(KEY_O)) {
+    //     ToggleEditing();
+    //     DN_CORE_INFO("DebugWatchlistEditing {}", enableEditing);
+    // }
+    if (!enableEditing && enableSilent)
+    {
         ImGui::SetWindowFocus(NULL);
-        windowFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
-    } else {
+        windowFlags =
+            ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoMove;
+    }
+    else
+    {
         windowFlags = ImGuiWindowFlags_MenuBar;
     }
 
@@ -252,14 +275,18 @@ void DebugWatchlist::Draw(const char *title)
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, bgAlpha));
     // if ( ImGui::Begin(title, nullptr, ImGuiWindowFlags_MenuBar)) {
 
-    if (ImGui::Begin(title, nullptr, windowFlags)) {
+    if (ImGui::Begin(title, nullptr, windowFlags))
+    {
 
         // Title bar menu with dropdown for AutoScroll, Copy, and Clear
-        if (ImGui::BeginMenuBar()) {
-            if (ImGui::BeginMenu("Options")) {
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("Options"))
+            {
 
                 // Clear log
-                if (ImGui::MenuItem("Clear")) {
+                if (ImGui::MenuItem("Clear"))
+                {
                     Clear();
                 }
                 ImGui::Separator();
@@ -270,15 +297,17 @@ void DebugWatchlist::Draw(const char *title)
         }
 
         // Begin a two-column table for the description-value pairs
-        if (ImGui::BeginTable("WatchlistTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+        if (ImGui::BeginTable("WatchlistTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+        {
             ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_WidthStretch);
             ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
             ImGui::TableHeadersRow();
 
             // Iterate over `order` to preserve insertion order
-            for (const auto& key : order) {
+            for (const auto &key : order)
+            {
                 // Fetch the value from `watchlist`
-                const std::string& value = watchlist[key];
+                const std::string &value = watchlist[key];
 
                 // Start a new row
                 ImGui::TableNextRow();
@@ -305,4 +334,4 @@ void DebugWatchlist::ToggleEditing()
     enableEditing = !enableEditing;
 }
 
-}
+} // namespace duin

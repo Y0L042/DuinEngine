@@ -1,3 +1,12 @@
+/**
+ * @file GameStateMachine.h
+ * @brief Stack-based state machine for application states.
+ * @ingroup Objects_StateMachine
+ *
+ * Manages game states (menu, gameplay, pause, etc.) with push/pop/switch
+ * operations. Each state has its own lifecycle and GameObject hierarchy.
+ */
+
 #pragma once
 
 #include <stack>
@@ -13,9 +22,24 @@
 
 namespace duin
 {
+
 class GameStateMachine;
 class GameState;
 
+/**
+ * @class GameStateMachine
+ * @brief Stack-based state manager.
+ * @ingroup Objects_StateMachine
+ *
+ * Manages a stack of GameState objects. The top state receives lifecycle
+ * callbacks. States can be pushed (pausing current), popped, or switched.
+ *
+ * @code
+ * stateMachine.PushState<MenuState>();
+ * // Later...
+ * stateMachine.SwitchState<GameplayState>();
+ * @endcode
+ */
 class GameStateMachine : public GameObject
 {
   public:
@@ -24,6 +48,11 @@ class GameStateMachine : public GameObject
 
     UUID GetUUID();
 
+    /**
+     * @brief Returns the active state cast to type T.
+     * @tparam T Expected state type.
+     * @return Pointer to state, or nullptr if wrong type or empty.
+     */
     template <typename T>
     T *GetActiveState()
     {
@@ -33,12 +62,17 @@ class GameStateMachine : public GameObject
             if (dynamic_cast<T *>(stateStack.top().get()) == nullptr)
             {
                 return nullptr;
-            }; // Ensure top state is of type T
+            }
             return static_cast<T *>(stateStack.top().get());
         }
         return nullptr;
     }
 
+    /**
+     * @brief Exits current state and enters a new one.
+     * @tparam T New state type.
+     * @return Pointer to the new state.
+     */
     template <typename T>
     T *SwitchState()
     {
@@ -59,6 +93,11 @@ class GameStateMachine : public GameObject
         return ptr;
     }
 
+    /**
+     * @brief Exits all states and enters a new one.
+     * @tparam T New state type.
+     * @return Pointer to the new state.
+     */
     template <typename T>
     T *FlushAndSwitchState()
     {
@@ -79,6 +118,11 @@ class GameStateMachine : public GameObject
         return ptr;
     }
 
+    /**
+     * @brief Pauses current state and pushes a new one.
+     * @tparam T New state type.
+     * @return Pointer to the new state.
+     */
     template <typename T>
     T *PushState()
     {
@@ -96,9 +140,12 @@ class GameStateMachine : public GameObject
         return ptr;
     }
 
+    /** @brief Pops the current state and resumes the previous one. */
     void PopState();
 
+    /** @brief Exits and removes all states from the stack. */
     void FlushStack();
+    /** @brief Returns reference to the internal state stack. */
     std::stack<std::unique_ptr<GameState>> &GetStateStack();
 
     virtual void Init() override;
@@ -114,12 +161,34 @@ class GameStateMachine : public GameObject
     std::stack<std::unique_ptr<GameState>> stateStack;
 };
 
+/**
+ * @class GameState
+ * @brief Base class for application states.
+ * @ingroup Objects_StateMachine
+ *
+ * Represents a single state in the state machine (e.g., menu, gameplay).
+ * Override lifecycle methods to implement state behavior. Each state has
+ * its own GameObject hierarchy via stateGameObject.
+ *
+ * @code
+ * class MenuState : public duin::GameState {
+ * public:
+ *     MenuState(GameStateMachine& owner) : GameState(owner) {}
+ *     void Enter() override { // Setup menu UI }
+ *     void Update(double delta) override { // Handle menu input }
+ *     void Exit() override { // Cleanup }
+ * };
+ * @endcode
+ */
 class GameState
 {
   public:
     GameState(GameStateMachine &owner);
     virtual ~GameState() = default;
 
+    /** @name Internal State Methods (called by GameStateMachine)
+     * @{
+     */
     void StateEnter();
     void StateOnEvent(Event e);
     void StateUpdate(double delta);
@@ -127,10 +196,15 @@ class GameState
     void StateDraw();
     void StateDrawUI();
     void StateExit();
-
     void StateSetPause();
     void StateSetUnpause();
+    /** @} */
 
+    /**
+     * @name Lifecycle Callbacks
+     * Override these in derived classes.
+     * @{
+     */
     virtual void Enter() {};
     virtual void OnEvent(Event e) {};
     virtual void Update(double delta) {};
@@ -138,9 +212,9 @@ class GameState
     virtual void Draw() {};
     virtual void DrawUI() {};
     virtual void Exit() {};
-
     virtual void SetPause() {};
     virtual void SetUnpause() {};
+    /** @} */
 
     template <typename T>
     T *SwitchState()

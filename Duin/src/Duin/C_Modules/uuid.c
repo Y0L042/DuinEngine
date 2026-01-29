@@ -9,12 +9,14 @@ UUID uuid_create_random()
     UUID uuid;
 
     static int seeded = 0;
-    if (!seeded) {
+    if (!seeded)
+    {
         srand((unsigned int)time(NULL));
         seeded = 1;
     }
 
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 16; i++)
+    {
         uuid.bytes[i] = (uint8_t)rand();
     }
 
@@ -23,4 +25,3 @@ UUID uuid_create_random()
 
     return uuid;
 }
-

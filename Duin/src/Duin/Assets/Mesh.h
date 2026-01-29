@@ -1,5 +1,6 @@
 #pragma once
 
-namespace duin {
+namespace duin
+{
 
 }

@@ -3,12 +3,9 @@
 #include "Entity.h"
 #include "Query.h"
 
-duin::World::World()
-    : flecsWorld(flecs::world())
-{};
+duin::World::World() : flecsWorld(flecs::world()) {};
 
-duin::World::~World()
-{};
+duin::World::~World() {};
 
 duin::Entity duin::World::CreateEntity(const std::string &name = "")
 {
@@ -24,7 +21,7 @@ void duin::World::DeleteEntity(uint64_t id)
     flecsWorld.entity(id).destruct();
 }
 
-void duin::World::DeleteEntity(const Entity& entity)
+void duin::World::DeleteEntity(const Entity &entity)
 {
     flecsWorld.entity(entity.GetID()).destruct();
 }

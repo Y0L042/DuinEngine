@@ -2,10 +2,11 @@
 
 #include "CollisionObject.h"
 
-namespace duin {
-    class Area : public CollisionObject
-    {
-        public:
-        private:
-    };
-}
+namespace duin
+{
+class Area : public CollisionObject
+{
+  public:
+  private:
+};
+} // namespace duin

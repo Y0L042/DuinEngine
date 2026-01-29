@@ -4,13 +4,13 @@
 
 class EntityManager
 {
-public:
+  public:
     EntityManager(std::string i_entityDefsPath);
     ~EntityManager() = default;
 
     void PreloadEntities();
     flecs::entity CreateEntity(std::string entityName, flecs::world *world);
 
-private:
+  private:
     std::string entityDefsPath;
 };

@@ -10,21 +10,23 @@
 
 #include <PxPhysicsAPI.h>
 
-namespace duin {
-    class KinematicBody : public PhysicsObject
-    {
-        public:
-            static std::shared_ptr<KinematicBody> Create(Transform3D transform, CollisionShape collisionShape);
-            static std::shared_ptr<KinematicBody> Create(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material);
+namespace duin
+{
+class KinematicBody : public PhysicsObject
+{
+  public:
+    static std::shared_ptr<KinematicBody> Create(Transform3D transform, CollisionShape collisionShape);
+    static std::shared_ptr<KinematicBody> Create(Transform3D transform, CollisionGeometryVariant geometry,
+                                                 PhysicsMaterial material);
 
-            KinematicBody(Transform3D transform, CollisionShape collisionShape);
-            KinematicBody(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material);
-            ~KinematicBody();
+    KinematicBody(Transform3D transform, CollisionShape collisionShape);
+    KinematicBody(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material);
+    ~KinematicBody();
 
-            Vector3 GetPosition() override;
+    Vector3 GetPosition() override;
 
-        private:
-            CollisionShape collisionShape;
-            physx::PxRigidDynamic *actor = nullptr;
-    };
-}
+  private:
+    CollisionShape collisionShape;
+    physx::PxRigidDynamic *actor = nullptr;
+};
+} // namespace duin

@@ -149,11 +149,11 @@ bool RunTestInProcess(const char* testName)
     if (executablePath.empty())
     {
         // On Windows, we can get the executable path directly
-        #ifdef _WIN32
+#ifdef _WIN32
         char buffer[MAX_PATH];
         GetModuleFileNameA(NULL, buffer, MAX_PATH);
         executablePath = buffer;
-        #else
+#else
         // On other platforms, try SDL_GetBasePath
         char* basePath = SDL_GetBasePath();
         if (basePath)
@@ -165,7 +165,7 @@ bool RunTestInProcess(const char* testName)
         {
             executablePath = "./DuinTests";
         }
-        #endif
+#endif
     }
 
     // Setup arguments: executable path, --run-test-isolated, test name, NULL terminator

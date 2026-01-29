@@ -7,11 +7,9 @@
 
 namespace fs = std::filesystem;
 
-
-
 struct FSNode
 {
-public:
+  public:
     ArcheType type;
     std::string path;
 
@@ -20,7 +18,7 @@ public:
     std::string name;
     std::string fileExtension;
 
-    std::vector<FSNode*> subNodes;
+    std::vector<FSNode *> subNodes;
 
     FSNode() = default;
     FSNode(std::string path);
@@ -28,22 +26,22 @@ public:
     void Traverse();
     void SetFileType();
 
-private:
+  private:
 };
 
 class FileManager
 {
-public:
-    static FileManager& Get();
-	FileManager() = default;
+  public:
+    static FileManager &Get();
+    FileManager() = default;
     FileManager(std::string rootPath);
 
     void BuildFileSystemTree();
-	void SetRootPath(const std::string& rootPath);
-    FSNode& GetRootNode();
+    void SetRootPath(const std::string &rootPath);
+    FSNode &GetRootNode();
     void PrintTree();
 
-private:
+  private:
     fs::path rootPath;
     FSNode rootNode;
 };

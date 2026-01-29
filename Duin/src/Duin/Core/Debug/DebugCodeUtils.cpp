@@ -2,5 +2,6 @@
 
 #include "DebugCodeUtils.h"
 
-namespace duin {
+namespace duin
+{
 }

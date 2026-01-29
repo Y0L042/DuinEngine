@@ -16,7 +16,7 @@
 #endif
 
 // PackedComponent
-duin::PackedComponent duin::PackedComponent::Deserialize(const JSONValue& json)
+duin::PackedComponent duin::PackedComponent::Deserialize(const JSONValue &json)
 {
     PackedComponent pc;
 
@@ -28,7 +28,7 @@ duin::PackedComponent duin::PackedComponent::Deserialize(const JSONValue& json)
     return pc;
 }
 
-duin::JSONValue duin::PackedComponent::Serialize(const PackedComponent& pComp)
+duin::JSONValue duin::PackedComponent::Serialize(const PackedComponent &pComp)
 {
     JSONValue json;
     json.SetObject();
@@ -77,7 +77,7 @@ duin::PackedEntity duin::PackedEntity::Deserialize(const JSONValue &json)
         {
             for (auto it = tagsArray.Begin(); it != tagsArray.End(); ++it)
             {
-                //pe.children.emplace_back(it.GetValue().GetInt());
+                // pe.children.emplace_back(it.GetValue().GetInt());
             }
         }
     }
@@ -274,7 +274,7 @@ duin::JSONValue duin::PackedScene::Serialize(const PackedScene &scene)
 
 void duin::PackedScene::Instantiate(World &world)
 {
-    for (PackedEntity& pEntity : entities)
+    for (PackedEntity &pEntity : entities)
     {
         Entity e = world.CreateEntity(pEntity.name);
     }
@@ -287,7 +287,7 @@ static void UnpackEntities(duin::World &world, std::vector<duin::PackedEntity> &
         duin::Entity e = world.CreateEntity(pEntity.name);
         if (parent.IsValid())
             e.ChildOf(parent);
-        
+
         UnpackEntities(world, pEntity.children, e);
     }
 }

@@ -1224,4 +1224,4 @@ TEST_SUITE("Filesystem - Cleanup")
     }
 }
 
-}
+} // namespace TestFilesystem

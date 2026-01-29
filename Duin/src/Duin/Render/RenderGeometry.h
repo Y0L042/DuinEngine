@@ -4,132 +4,166 @@
 
 #include <bgfx/bgfx.h>
 
+namespace duin
+{
+namespace RenderGeometryType
+{
+typedef enum Type
+{
+    BOX = 0,
+    SPHERE,
+    CAPSULE,
+    PLANE,
+    CONE,
+    CYLINDER,
+    DISK,
+    TRIANGLE,
+    TRIANGLEMESH,
+    NONE,
+    Count
+} Type;
+}; // namespace RenderGeometryType
 
-namespace duin {
-    namespace RenderGeometryType {
-        typedef enum Type {
-            BOX = 0,
-            SPHERE,
-            CAPSULE,
-            PLANE,
-            CONE,
-            CYLINDER,
-            DISK,
-            TRIANGLE,
-            TRIANGLEMESH,
-            NONE,
-            Count
-        } Type;
+struct PosColorVertex
+{
+    float x, y, z;
+    uint32_t abgr;
+
+    static void init()
+    {
+        ms_layout.begin()
+            .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
+            .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
+            .end();
     };
 
-    struct PosColorVertex {
-        float x, y, z;
-        uint32_t abgr;
+    static bgfx::VertexLayout ms_layout;
+};
 
-        static void init()
-        {
-            ms_layout
-                .begin()
-                .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
-                .add(bgfx::Attrib::Color0,   4, bgfx::AttribType::Uint8, true)
-                .end();
-        };
+struct RenderGeometry
+{
+    UUID uuid;
+    RenderGeometryType::Type type;
 
-        static bgfx::VertexLayout ms_layout;
-    };
+    RenderGeometry() : type(RenderGeometryType::NONE)
+    {
+    }
+    RenderGeometry(RenderGeometryType::Type t) : type(t)
+    {
+    }
+};
 
-    struct RenderGeometry {
-        UUID uuid;
-        RenderGeometryType::Type type;
+struct BoxRenderGeometry : public RenderGeometry
+{
+    float width, height, depth = 1.0f;
 
-        RenderGeometry() : type(RenderGeometryType::NONE) {}
-        RenderGeometry(RenderGeometryType::Type t) 
-            : type(t) {}
-    };
+    BoxRenderGeometry();
+    BoxRenderGeometry(float width, float height, float depth);
 
-    struct BoxRenderGeometry : public RenderGeometry {
-        float width, height, depth = 1.0f;
+    static const int VERT_SIZE = 8;
+    static const int TRI_SIZE = 36;
 
-        BoxRenderGeometry();
-        BoxRenderGeometry(float width, float height, float depth);
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t *GetIdentityTriList();
+    static size_t VertSize()
+    {
+        return VERT_SIZE;
+    }
+    static size_t TriSize()
+    {
+        return TRI_SIZE;
+    }
+};
 
-        static const int VERT_SIZE = 8;
-        static const int TRI_SIZE = 36;
+struct SphereRenderGeometry : public RenderGeometry
+{
+    float radius = 0.5f;
+    ;
 
-        static PosColorVertex *GetIdentityVertices();
-        static uint16_t *GetIdentityTriList();
-        static size_t VertSize() { return VERT_SIZE; }
-        static size_t TriSize() { return TRI_SIZE; }
-    };
+    SphereRenderGeometry();
+    SphereRenderGeometry(float radius);
 
-    struct SphereRenderGeometry : public RenderGeometry {
-        float radius = 0.5f;;
+    static const int VERT_SIZE = 8;
+    static const int TRI_SIZE = 36;
 
-        SphereRenderGeometry();
-		SphereRenderGeometry(float radius);
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t *GetIdentityTriList();
+    static size_t VertSize()
+    {
+        return VERT_SIZE;
+    }
+    static size_t TriSize()
+    {
+        return TRI_SIZE;
+    }
+};
 
-        static const int VERT_SIZE = 8;
-        static const int TRI_SIZE = 36;
+struct CapsuleRenderGeometry : public RenderGeometry
+{
+    float radius = 0.5f;
+    float height = 1.0f;
 
-        static PosColorVertex* GetIdentityVertices();
-        static uint16_t* GetIdentityTriList();
-        static size_t VertSize() { return VERT_SIZE; }
-        static size_t TriSize() { return TRI_SIZE; }
-    };
+    CapsuleRenderGeometry();
+    CapsuleRenderGeometry(float radius, float height);
+};
 
-    struct CapsuleRenderGeometry : public RenderGeometry {
-        float radius = 0.5f;
-        float height = 1.0f;
+struct PlaneRenderGeometry : public RenderGeometry
+{
+    PlaneRenderGeometry();
 
-        CapsuleRenderGeometry();
-		CapsuleRenderGeometry(float radius, float height);
-    };
+    static const int VERT_SIZE = 4;
+    static const int TRI_SIZE = 6;
 
-    struct PlaneRenderGeometry : public RenderGeometry {
-        PlaneRenderGeometry();
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t *GetIdentityTriList();
+    static size_t VertSize()
+    {
+        return VERT_SIZE;
+    }
+    static size_t TriSize()
+    {
+        return TRI_SIZE;
+    }
+};
 
-        static const int VERT_SIZE = 4;
-        static const int TRI_SIZE = 6;
+struct ConeRenderGeometry : public RenderGeometry
+{
+    float radius = 0.5f;
+    float height = 1.0f;
 
-        static PosColorVertex* GetIdentityVertices();
-        static uint16_t* GetIdentityTriList();
-        static size_t VertSize() { return VERT_SIZE; }
-        static size_t TriSize() { return TRI_SIZE; }
-    };
+    ConeRenderGeometry();
+    ConeRenderGeometry(float radius, float height);
+};
 
-    struct ConeRenderGeometry : public RenderGeometry {
-        float radius = 0.5f;
-        float height = 1.0f;
+struct CylinderRenderGeometry : public RenderGeometry
+{
+    float radius = 0.5f;
+    float height = 1.0f;
 
-		ConeRenderGeometry();
-		ConeRenderGeometry(float radius, float height);
-    };
+    CylinderRenderGeometry();
+    CylinderRenderGeometry(float radius, float height);
+};
 
-    struct CylinderRenderGeometry : public RenderGeometry {
-        float radius = 0.5f;
-        float height = 1.0f;
+struct DiskRenderGeometry : public RenderGeometry
+{
+    float radius = 0.5f;
 
-		CylinderRenderGeometry();
-		CylinderRenderGeometry(float radius, float height);
-    };
+    DiskRenderGeometry();
+    DiskRenderGeometry(float radius);
+};
 
-    struct DiskRenderGeometry : public RenderGeometry {
-        float radius = 0.5f;
+struct TriangleRenderGeometry : public RenderGeometry
+{
+    float a, b, c = 1.0f;
 
-		DiskRenderGeometry();
-		DiskRenderGeometry(float radius);
-    };
+    TriangleRenderGeometry();
+    TriangleRenderGeometry(float a, float b, float c);
+};
 
-    struct TriangleRenderGeometry : public RenderGeometry {
-        float a, b, c = 1.0f;
+struct TriangleMeshRenderGeometry : public RenderGeometry
+{
+    // std::array<float> vertices; // TODO
 
-		TriangleRenderGeometry();
-		TriangleRenderGeometry(float a, float b, float c);
-    };
-
-    struct TriangleMeshRenderGeometry : public RenderGeometry {
-        //std::array<float> vertices; // TODO
-
-        TriangleMeshRenderGeometry();
-    };
-}
+    TriangleMeshRenderGeometry();
+};
+} // namespace duin

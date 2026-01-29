@@ -1,22 +1,22 @@
 #pragma once
 #include "Duin/Core/Utils/UUID.h"
 
-namespace duin {
+namespace duin
+{
 
-    class UUID;
-    class AssetManager
-    {
-        public:
-            AssetManager();
-            ~AssetManager();
+class UUID;
+class AssetManager
+{
+  public:
+    AssetManager();
+    ~AssetManager();
 
-            UUID GetUUID();
+    UUID GetUUID();
 
-            // Generate and share meshes
+    // Generate and share meshes
 
-        private:
-            UUID uuid;
+  private:
+    UUID uuid;
+};
 
-    };
-
-}
+} // namespace duin

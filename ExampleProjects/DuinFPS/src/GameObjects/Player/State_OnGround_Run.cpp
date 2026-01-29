@@ -12,7 +12,7 @@ using namespace duin::ECSTag;
 
 void State_OnGround_Run::Enter()
 {
-	debugConsole.Log("State_OnGround_Run: Entering State_OnGround_Run");
+    debugConsole.Log("State_OnGround_Run: Entering State_OnGround_Run");
 
     player.add<RunTag>();
 }
@@ -27,18 +27,22 @@ void State_OnGround_Run::Update(double delta)
 
 void State_OnGround_Run::PhysicsUpdate(double delta)
 {
-    if (!duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
+    if (!duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D))
+    {
         SwitchState<State_OnGround_Idle>();
     }
 
     duin::Vector2 input = duin::Input::GetInputVector(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D);
-    player.set<PlayerMovementInputVec3>({ { input.x, 0.0f, input.y } });
+    player.set<PlayerMovementInputVec3>({{input.x, 0.0f, input.y}});
 
-    if (!duin::Vector2Equals(input, duin::Vector2Zero())) {
-        if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT) || duin::Input::IsKeyDown(DN_KEY_MOD_LSHIFT)) {
+    if (!duin::Vector2Equals(input, duin::Vector2Zero()))
+    {
+        if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT) || duin::Input::IsKeyDown(DN_KEY_MOD_LSHIFT))
+        {
             // owner.SwitchState<PlayerStateOnGroundSprint>();
         }
-        else {
+        else
+        {
             player.add<RunTag>();
         }
     }
@@ -58,4 +62,3 @@ void State_OnGround_Run::Exit()
     player.remove<RunTag>();
     debugWatchlist.Post("PlayerState", "");
 }
-

@@ -12,243 +12,257 @@
 #define EVENT_IS_KEYBOARD(event) (event >= 0x300 && event < 0x400)
 #define EVENT_IS_MOUSE(event) (event >= 0x400 && event < 0x600)
 
-namespace duin::Input {
-    enum KeyState{
-        UP = 0,
-        DOWN = 1
-    };
-    //enum KeyEvent {
-    //    PRESSED,
-    //    PRESSED_REPEATED,
-    //    HELD,
-    //    RELEASED,
-    //    IDLE
-    //};
+namespace duin::Input
+{
+enum KeyState
+{
+    UP = 0,
+    DOWN = 1
+};
+// enum KeyEvent {
+//     PRESSED,
+//     PRESSED_REPEATED,
+//     HELD,
+//     RELEASED,
+//     IDLE
+// };
 
-    // TODO move these to device struct, to allow multiple input devices
-    static const int MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;
-    static KeyState previousKeyState[MAX_KEYS]; 
-    static KeyState currentKeyState[MAX_KEYS]; 
+// TODO move these to device struct, to allow multiple input devices
+static const int MAX_KEYS = ::SDL_Scancode::SDL_SCANCODE_COUNT;
+static KeyState previousKeyState[MAX_KEYS];
+static KeyState currentKeyState[MAX_KEYS];
 
-    static const int MAX_MOUSE_KEYS = DN_MOUSE_BUTTON_CNT;
-    static KeyState previousMouseKeyState[MAX_MOUSE_KEYS];
-    static KeyState currentMouseKeyState[MAX_MOUSE_KEYS];
+static const int MAX_MOUSE_KEYS = DN_MOUSE_BUTTON_CNT;
+static KeyState previousMouseKeyState[MAX_MOUSE_KEYS];
+static KeyState currentMouseKeyState[MAX_MOUSE_KEYS];
 
-    static Vector2 previousMouseLocalPos;
-    static Vector2 currentMouseLocalPos;
-    static Vector2 mouseFrameDelta;
-    static Vector2 mouseScrollDelta;
+static Vector2 previousMouseLocalPos;
+static Vector2 currentMouseLocalPos;
+static Vector2 mouseFrameDelta;
+static Vector2 mouseScrollDelta;
 
-    void CacheCurrentKeyState()
+void CacheCurrentKeyState()
+{
+    // Called in Application.cpp run
+    memcpy(previousKeyState, currentKeyState, sizeof(previousKeyState));
+}
+
+void ClearCurrentKeyState()
+{
+    memset(currentKeyState, 0, sizeof(currentKeyState));
+}
+
+void CacheCurrentMouseKeyState()
+{
+    // Called in Application.cpp run
+    memcpy(previousMouseKeyState, currentMouseKeyState, sizeof(previousMouseKeyState));
+}
+
+void ClearCurrentMouseKeyState()
+{
+    memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
+}
+
+/**
+ * @brief Test the SDL event to see if it is a keyboard event, then process the event. This function is called from
+ * Application.Run().
+ * @param e
+ */
+void ProcessSDLKeyboardEvent(::SDL_Event e)
+{
+    if (!EVENT_IS_KEYBOARD(e.type))
     {
-        // Called in Application.cpp run
-        memcpy(previousKeyState, currentKeyState, sizeof(previousKeyState));
+        return;
+    }
+    // Set current key state
+    ::SDL_Scancode code = e.key.scancode;
+    if (code > 511 || code < 0)
+    {
+        DN_CORE_WARN("Keyboard event out of bounds {}!", (int)code);
+        return;
     }
 
-    void ClearCurrentKeyState()
+    KeyState state = KeyState::UP;
+    if (e.type == SDL_EVENT_KEY_DOWN)
     {
-        memset(currentKeyState, 0, sizeof(currentKeyState));
+        state = KeyState::DOWN;
     }
-
-    void CacheCurrentMouseKeyState()
+    if (e.type == SDL_EVENT_KEY_UP)
     {
-        // Called in Application.cpp run
-        memcpy(previousMouseKeyState, currentMouseKeyState, sizeof(previousMouseKeyState));
+        state = KeyState::UP;
     }
+    currentKeyState[code] = state;
+}
 
-    void ClearCurrentMouseKeyState()
+int IsKeyPressed(DN_Keycode code)
+{
+    // Review modstate param
+    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
+    return (currentKeyState[scanCode] && !previousKeyState[scanCode]);
+}
+
+int IsKeyPressedAgain(DN_Keycode code)
+{
+    // TODO
+
+    return 0;
+}
+
+int IsKeyReleased(DN_Keycode code)
+{
+    // Review modstate param
+    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
+    return (!currentKeyState[scanCode] && previousKeyState[scanCode]);
+}
+
+int IsKeyDown(DN_Keycode code)
+{
+    // Review modstate param
+    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
+    return currentKeyState[scanCode];
+}
+
+int IsKeyUp(DN_Keycode code)
+{
+    // Review modstate param
+    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
+    return !currentKeyState[scanCode];
+}
+
+int IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
+{
+    return (IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right));
+}
+
+Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
+{
+    return Vector2NormalizeF(
+        Vector2((float)(IsKeyDown(left) - IsKeyDown(right)), (float)(IsKeyDown(down) - IsKeyDown(up))));
+}
+
+DN_Keycode GetKeyPressed()
+{
+    // TODO
+    return 0;
+}
+
+/**
+ * @brief Test the SDL event to see if it is a mouse event, then process the event. This function is called from
+ * Application.Run().
+ * @param e
+ */
+void ProcessSDLMouseEvent(::SDL_Event e)
+{
+    previousMouseLocalPos = currentMouseLocalPos;
+
+    if (e.type == SDL_EVENT_MOUSE_MOTION)
     {
-        memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
-    }
-
-    /**
-     * @brief Test the SDL event to see if it is a keyboard event, then process the event. This function is called from Application.Run().
-     * @param e
-     */
-    void ProcessSDLKeyboardEvent(::SDL_Event e)
-    {
-        if (!EVENT_IS_KEYBOARD(e.type)) { return; }
-        // Set current key state
-        ::SDL_Scancode code = e.key.scancode;
-        if (code > 511 || code < 0) {
-            DN_CORE_WARN("Keyboard event out of bounds {}!", (int)code);
-            return;
-        }
-
-        KeyState state = KeyState::UP;
-        if (e.type == SDL_EVENT_KEY_DOWN) { state = KeyState::DOWN; }
-        if (e.type == SDL_EVENT_KEY_UP) { state = KeyState::UP; }
-        currentKeyState[code] = state;
-    }
-
-    int IsKeyPressed(DN_Keycode code)
-    {
-        // Review modstate param
-        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-        return (currentKeyState[scanCode] && !previousKeyState[scanCode]);
-    }
-
-    int IsKeyPressedAgain(DN_Keycode code)
-	{
-        // TODO
-
-        return 0;
-	}
-
-    int IsKeyReleased(DN_Keycode code)
-	{
-        // Review modstate param
-        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-        return (!currentKeyState[scanCode] && previousKeyState[scanCode]);
-	}
-     
-    int IsKeyDown(DN_Keycode code)
-	{
-        // Review modstate param
-        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-        return currentKeyState[scanCode];
-	}
-             
-    int IsKeyUp(DN_Keycode code)
-	{
-        // Review modstate param
-        ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-        return !currentKeyState[scanCode];
-	}
-
-    int IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
-    {
-        return (IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right));
-    }
-
-    Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
-    {
-        return Vector2NormalizeF(Vector2((float)(IsKeyDown(left) - IsKeyDown(right)), (float)(IsKeyDown(down) - IsKeyDown(up))));
-    }
-               
-         
-    DN_Keycode GetKeyPressed()
-	{
-        // TODO
-		return 0;
-	}
-
-    /**
-     * @brief Test the SDL event to see if it is a mouse event, then process the event. This function is called from Application.Run().
-     * @param e 
-     */
-    void ProcessSDLMouseEvent(::SDL_Event e)
-    {
-        previousMouseLocalPos = currentMouseLocalPos;
-
-        if (e.type == SDL_EVENT_MOUSE_MOTION) {
-            float x, y = 0;
-            ::SDL_GetMouseState(&x, &y);
-            currentMouseLocalPos = Vector2(x, y);
-        }
-
-        KeyState state = KeyState::UP;
-        if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-            state = KeyState::DOWN;
-            DN_MouseButtonFlags btnIdx = e.button.button - 1;
-            currentMouseKeyState[btnIdx] = state;
-        }
-        if (e.type == SDL_EVENT_MOUSE_BUTTON_UP) {
-            state = KeyState::UP;
-            DN_MouseButtonFlags btnIdx = e.button.button - 1;
-            currentMouseKeyState[btnIdx] = state;
-        }
-
-        mouseScrollDelta = Vector2();
-        if (e.type == SDL_EVENT_MOUSE_WHEEL) {
-            DN_CORE_INFO("MOUSE_WHEEL {} {}", e.wheel.x, e.wheel.y);
-            mouseScrollDelta.x = e.wheel.x;
-            mouseScrollDelta.y = e.wheel.y;
-        }
-    }
-
-    void UpdateMouseFrameDelta()
-    {
-        float x, y = 0;
-        ::SDL_GetRelativeMouseState(&x, &y);
-		mouseFrameDelta = Vector2(-x, y); // Invert x-axis
-    }
-
-    void CaptureMouse(int enable)
-    {
-        ::SDL_SetWindowRelativeMouseMode(GetSDLWindow(), enable);
-    }
-
-    int IsMouseButtonPressed(DN_MouseButtonFlags button)
-    {
-        return (currentMouseKeyState[button-1] && !previousMouseKeyState[button-1]);
-    }
-
-    int IsMouseButtonDown(DN_MouseButtonFlags button)
-	{
-        return currentMouseKeyState[button-1];
-	}
-                     
-    int IsMouseButtonReleased(DN_MouseButtonFlags button)
-	{
-        return (!currentMouseKeyState[button-1] && previousMouseKeyState[button-1]);
-	}
-                 
-    int IsMouseButtonUp(DN_MouseButtonFlags button)
-	{
-        return !currentMouseKeyState[button-1];
-	}
-                       
-    Vector2 GetMouseGlobalPosition(void)
-	{
-        float x, y = 0;
-        ::SDL_GetGlobalMouseState(&x, &y);
-
-        return Vector2(x, y);
-	}
-
-    Vector2 GetMousePosition(void)
-	{
         float x, y = 0;
         ::SDL_GetMouseState(&x, &y);
+        currentMouseLocalPos = Vector2(x, y);
+    }
 
-        return Vector2(x, y);
-	}
-                        
-    Vector2 GetMouseDelta(void)
-	{
-        return mouseFrameDelta;
-	}
-                           
-    void SetMousePosition(int x, int y)
-	{
-	
-	}
-                   
-    void SetMouseOffset(int offsetX, int offsetY)
-	{
-	
-	}
-         
-    void SetMouseScale(float scaleX, float scaleY)
-	{
-	
-	}
-        
-    float GetMouseWheelMove(void)
-	{
+    KeyState state = KeyState::UP;
+    if (e.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+    {
+        state = KeyState::DOWN;
+        DN_MouseButtonFlags btnIdx = e.button.button - 1;
+        currentMouseKeyState[btnIdx] = state;
+    }
+    if (e.type == SDL_EVENT_MOUSE_BUTTON_UP)
+    {
+        state = KeyState::UP;
+        DN_MouseButtonFlags btnIdx = e.button.button - 1;
+        currentMouseKeyState[btnIdx] = state;
+    }
 
-        return mouseScrollDelta.y;
-	}
-                         
-    Vector2 GetMouseWheelMoveV(void)
-	{
-        return mouseScrollDelta;
-	}
-                      
-    void SetMouseCursor(int cursor)
-	{
-	
-	}
-                       
+    mouseScrollDelta = Vector2();
+    if (e.type == SDL_EVENT_MOUSE_WHEEL)
+    {
+        DN_CORE_INFO("MOUSE_WHEEL {} {}", e.wheel.x, e.wheel.y);
+        mouseScrollDelta.x = e.wheel.x;
+        mouseScrollDelta.y = e.wheel.y;
+    }
 }
+
+void UpdateMouseFrameDelta()
+{
+    float x, y = 0;
+    ::SDL_GetRelativeMouseState(&x, &y);
+    mouseFrameDelta = Vector2(-x, y); // Invert x-axis
+}
+
+void CaptureMouse(int enable)
+{
+    ::SDL_SetWindowRelativeMouseMode(GetSDLWindow(), enable);
+}
+
+int IsMouseButtonPressed(DN_MouseButtonFlags button)
+{
+    return (currentMouseKeyState[button - 1] && !previousMouseKeyState[button - 1]);
+}
+
+int IsMouseButtonDown(DN_MouseButtonFlags button)
+{
+    return currentMouseKeyState[button - 1];
+}
+
+int IsMouseButtonReleased(DN_MouseButtonFlags button)
+{
+    return (!currentMouseKeyState[button - 1] && previousMouseKeyState[button - 1]);
+}
+
+int IsMouseButtonUp(DN_MouseButtonFlags button)
+{
+    return !currentMouseKeyState[button - 1];
+}
+
+Vector2 GetMouseGlobalPosition(void)
+{
+    float x, y = 0;
+    ::SDL_GetGlobalMouseState(&x, &y);
+
+    return Vector2(x, y);
+}
+
+Vector2 GetMousePosition(void)
+{
+    float x, y = 0;
+    ::SDL_GetMouseState(&x, &y);
+
+    return Vector2(x, y);
+}
+
+Vector2 GetMouseDelta(void)
+{
+    return mouseFrameDelta;
+}
+
+void SetMousePosition(int x, int y)
+{
+}
+
+void SetMouseOffset(int offsetX, int offsetY)
+{
+}
+
+void SetMouseScale(float scaleX, float scaleY)
+{
+}
+
+float GetMouseWheelMove(void)
+{
+
+    return mouseScrollDelta.y;
+}
+
+Vector2 GetMouseWheelMoveV(void)
+{
+    return mouseScrollDelta;
+}
+
+void SetMouseCursor(int cursor)
+{
+}
+
+} // namespace duin::Input

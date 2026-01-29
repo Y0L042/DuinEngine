@@ -1,0 +1,293 @@
+/**
+ * @file modules.dox
+ * @brief Doxygen module/group definitions for the Duin Engine.
+ *
+ * This file defines the documentation structure for all Duin Engine modules.
+ * It contains no code, only Doxygen group definitions.
+ */
+
+/**
+ * @defgroup Core Core Module
+ * @brief Application lifecycle, events, signals, utilities, and mathematics.
+ *
+ * The Core module provides the foundation for the Duin Engine:
+ * - Application management and main loop
+ * - Event handling and input processing
+ * - Signal/slot communication system
+ * - Math types and functions
+ * - Logging and debugging utilities
+ * - Process management
+ */
+
+/**
+ * @defgroup Core_Application Application
+ * @ingroup Core
+ * @brief Main application class and lifecycle management.
+ *
+ * The Application class manages the engine's main loop, window creation,
+ * and coordinates all subsystems. User applications inherit from this class
+ * to implement game logic through virtual callback methods.
+ */
+
+/**
+ * @defgroup Core_Events Events
+ * @ingroup Core
+ * @brief Event handling and input system.
+ *
+ * Provides event polling via SDL3 and an action-based input system.
+ * Input actions map device inputs (keyboard, mouse) to named actions
+ * for flexible input configuration.
+ */
+
+/**
+ * @defgroup Core_Signals Signals
+ * @ingroup Core
+ * @brief Type-safe signal/slot event system.
+ *
+ * A template-based observer pattern implementation. Signals can be connected
+ * to callable objects and emit events to all connected listeners.
+ * Connections are managed via UUID for safe disconnection.
+ */
+
+/**
+ * @defgroup Core_Utils Utilities
+ * @ingroup Core
+ * @brief General-purpose utility classes.
+ *
+ * Includes UUID generation, timers, serialization helpers, and
+ * container types like LookupVector.
+ */
+
+/**
+ * @defgroup Core_Math Mathematics
+ * @ingroup Core
+ * @brief Mathematical types and functions.
+ *
+ * Vector, matrix, and quaternion types along with associated operations.
+ * Based on raymath with additional conversion functions for BGFX and PhysX.
+ */
+
+/**
+ * @defgroup Core_Debug Debugging
+ * @ingroup Core
+ * @brief Logging, assertions, and debug utilities.
+ *
+ * Built on spdlog for logging. Provides separate loggers for engine (core)
+ * and application (client) code. Debug-only assertion macros included.
+ */
+
+/**
+ * @defgroup ECS Entity Component System
+ * @brief FLECS-based entity component system.
+ *
+ * The ECS module implements the engine's data-oriented architecture using FLECS.
+ * Entities are composed of components (data) and processed by systems (queries).
+ *
+ * Key concepts:
+ * - **Entity**: A unique identifier that can have components attached
+ * - **Component**: Pure data structures attached to entities
+ * - **Tag**: Empty components used as markers/flags
+ * - **Prefab**: Entity templates for instantiation
+ * - **Query**: Efficient iteration over entities matching component patterns
+ */
+
+/**
+ * @defgroup ECS_Manager Manager
+ * @ingroup ECS
+ * @brief Central ECS management.
+ *
+ * ECSManager owns the FLECS world and provides the interface for
+ * entity creation, component management, and query execution.
+ */
+
+/**
+ * @defgroup ECS_Components Components
+ * @ingroup ECS
+ * @brief ECS component definitions.
+ *
+ * Data structures that can be attached to entities. Includes transform,
+ * physics, visual, and debug components.
+ */
+
+/**
+ * @defgroup ECS_Tags Tags
+ * @ingroup ECS
+ * @brief ECS tag definitions.
+ *
+ * Empty structs used as markers on entities. Tags indicate state or
+ * category without storing data (e.g., physics body type, camera state).
+ */
+
+/**
+ * @defgroup ECS_Prefabs Prefabs
+ * @ingroup ECS
+ * @brief Entity prefab definitions.
+ *
+ * Pre-configured entity templates. Instantiating a prefab creates
+ * an entity with a predefined set of components.
+ */
+
+/**
+ * @defgroup ECS_Scene Scene Serialization
+ * @ingroup ECS
+ * @brief Scene loading and saving.
+ *
+ * SceneBuilder handles conversion between ECS world state and JSON
+ * representation. Supports hierarchical entity structures.
+ */
+
+/**
+ * @defgroup Physics Physics Module
+ * @brief PhysX-based physics simulation.
+ *
+ * The Physics module integrates NVIDIA PhysX for rigid body dynamics
+ * and collision detection. Physics bodies are represented as ECS components
+ * attached to entities with Transform3D.
+ *
+ * Coordinate system: Right-hand rule, +Z toward viewer (same as Godot).
+ */
+
+/**
+ * @defgroup Physics_Server Server
+ * @ingroup Physics
+ * @brief Physics world management.
+ *
+ * PhysicsServer is a singleton that owns the PhysX scene and manages
+ * simulation stepping. Supports connection to PhysX Visual Debugger.
+ */
+
+/**
+ * @defgroup Physics_Bodies Bodies
+ * @ingroup Physics
+ * @brief Physics body types.
+ *
+ * - **StaticBody**: Immovable collision geometry
+ * - **KinematicBody**: Script-controlled movement, affects dynamics
+ * - **DynamicBody**: Fully simulated rigid body
+ * - **CharacterBody**: Capsule-based character controller
+ */
+
+/**
+ * @defgroup Physics_Collision Collision
+ * @ingroup Physics
+ * @brief Collision shapes and filtering.
+ *
+ * Collision shapes define geometry for physics bodies. CollisionMeta
+ * provides layer/mask filtering for selective collision detection.
+ */
+
+/**
+ * @defgroup Render Render Module
+ * @brief BGFX-based rendering system.
+ *
+ * The Render module handles all graphics output using BGFX as the
+ * backend abstraction layer. Supports multiple rendering APIs
+ * (Direct3D, OpenGL, Vulkan, Metal) through BGFX.
+ */
+
+/**
+ * @defgroup Render_Core Core Rendering
+ * @ingroup Render
+ * @brief Main rendering interface.
+ *
+ * Renderer manages render state, view configuration, and frame submission.
+ * RenderTexture provides offscreen rendering targets.
+ */
+
+/**
+ * @defgroup Render_Camera Camera
+ * @ingroup Render
+ * @brief Camera management.
+ *
+ * Camera defines view parameters (position, target, FOV). The active
+ * camera determines the viewpoint for rendering.
+ */
+
+/**
+ * @defgroup Render_Geometry Geometry
+ * @ingroup Render
+ * @brief Renderable geometry types.
+ *
+ * RenderGeometry and derived classes define vertex/index data for
+ * rendering primitives like boxes, spheres, and meshes.
+ */
+
+/**
+ * @defgroup Render_Shader Shaders
+ * @ingroup Render
+ * @brief Shader program management.
+ *
+ * Shader and ShaderProgram handle loading and binding of BGFX shaders.
+ */
+
+/**
+ * @defgroup Objects Objects Module
+ * @brief GameObject hierarchy and state machine.
+ *
+ * The Objects module provides a traditional scene graph alongside the ECS.
+ * GameObjects form parent-child hierarchies and receive lifecycle callbacks.
+ * GameStateMachine manages application states (menu, gameplay, pause, etc.).
+ */
+
+/**
+ * @defgroup Objects_GameObject GameObject
+ * @ingroup Objects
+ * @brief Scene graph nodes.
+ *
+ * GameObject is the base class for objects in the scene hierarchy.
+ * Supports parent-child relationships and lifecycle callbacks
+ * (Init, Ready, Update, PhysicsUpdate, Draw, DrawUI).
+ */
+
+/**
+ * @defgroup Objects_StateMachine State Machine
+ * @ingroup Objects
+ * @brief Application state management.
+ *
+ * GameStateMachine implements a stack-based state machine. States can
+ * be pushed, popped, or switched. Each state manages its own GameObject
+ * hierarchy and receives lifecycle callbacks when active.
+ */
+
+/**
+ * @defgroup IO Input/Output Module
+ * @brief File I/O, JSON, and configuration.
+ *
+ * The IO module handles file operations, JSON parsing/writing, and
+ * configuration value management. Includes a virtual filesystem with
+ * path prefixes (bin://, app://, usr://).
+ */
+
+/**
+ * @defgroup IO_JSON JSON
+ * @ingroup IO
+ * @brief JSON parsing and serialization.
+ *
+ * JSONValue wraps RapidJSON for convenient JSON manipulation.
+ * Supports parsing, writing, and type-safe value access.
+ */
+
+/**
+ * @defgroup IO_Filesystem Filesystem
+ * @ingroup IO
+ * @brief File and path operations.
+ *
+ * The duin::fs namespace provides cross-platform filesystem utilities.
+ * Virtual paths (bin://, app://, usr://) map to platform-specific locations.
+ */
+
+/**
+ * @defgroup IO_Config Configuration
+ * @ingroup IO
+ * @brief Configuration value handling.
+ *
+ * ConfigValue provides type-safe configuration storage and retrieval.
+ */
+
+/**
+ * @defgroup Assets Assets Module
+ * @brief Asset loading and management.
+ *
+ * The Assets module handles loading, caching, and sharing of game assets
+ * like meshes, textures, and other resources.
+ */

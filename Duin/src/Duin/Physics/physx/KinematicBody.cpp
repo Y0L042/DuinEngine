@@ -7,51 +7,53 @@
 
 #include <PxPhysicsAPI.h>
 
-namespace duin {
-    std::shared_ptr<KinematicBody> KinematicBody::Create(Transform3D transform, CollisionShape collisionShape)
-    {
-        return std::make_shared<KinematicBody>(transform, collisionShape);
-    }
+namespace duin
+{
+std::shared_ptr<KinematicBody> KinematicBody::Create(Transform3D transform, CollisionShape collisionShape)
+{
+    return std::make_shared<KinematicBody>(transform, collisionShape);
+}
 
-    std::shared_ptr<KinematicBody> KinematicBody::Create(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material)
-    {
-        return std::make_shared<KinematicBody>(transform, geometry, material);
-    }
+std::shared_ptr<KinematicBody> KinematicBody::Create(Transform3D transform, CollisionGeometryVariant geometry,
+                                                     PhysicsMaterial material)
+{
+    return std::make_shared<KinematicBody>(transform, geometry, material);
+}
 
-    KinematicBody::KinematicBody(Transform3D transform, CollisionShape collisionShape)
-        : collisionShape(collisionShape)
-    {
-        PhysicsServer& server = PhysicsServer::Get();
-        physx::PxPhysics *pxPhysics = server.pxPhysics;
+KinematicBody::KinematicBody(Transform3D transform, CollisionShape collisionShape) : collisionShape(collisionShape)
+{
+    PhysicsServer &server = PhysicsServer::Get();
+    physx::PxPhysics *pxPhysics = server.pxPhysics;
 
-        actor = pxPhysics->createRigidDynamic(transform.ToPhysX());
-        actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-        physx::PxShape *shape = collisionShape.pxShape;
-        actor->attachShape(*shape);
-        server.pxScene->addActor(*actor);
-    }
-    KinematicBody::KinematicBody(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material)
-        : collisionShape(CollisionShape(geometry, material))
-    {
-        PhysicsServer& server = PhysicsServer::Get();
-        physx::PxPhysics *pxPhysics = server.pxPhysics;
+    actor = pxPhysics->createRigidDynamic(transform.ToPhysX());
+    actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+    physx::PxShape *shape = collisionShape.pxShape;
+    actor->attachShape(*shape);
+    server.pxScene->addActor(*actor);
+}
+KinematicBody::KinematicBody(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material)
+    : collisionShape(CollisionShape(geometry, material))
+{
+    PhysicsServer &server = PhysicsServer::Get();
+    physx::PxPhysics *pxPhysics = server.pxPhysics;
 
-        actor = pxPhysics->createRigidDynamic(transform.ToPhysX());
-        actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-        physx::PxShape *shape = collisionShape.pxShape;
-        actor->attachShape(*shape);
-        server.pxScene->addActor(*actor);
-    }
+    actor = pxPhysics->createRigidDynamic(transform.ToPhysX());
+    actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+    physx::PxShape *shape = collisionShape.pxShape;
+    actor->attachShape(*shape);
+    server.pxScene->addActor(*actor);
+}
 
-    KinematicBody::~KinematicBody()
+KinematicBody::~KinematicBody()
+{
+    if (actor)
     {
-        if (actor) {
-            actor->release();
-            actor = nullptr;
-        }
-    }
-    Vector3 KinematicBody::GetPosition()
-    {
-        return Vector3();
+        actor->release();
+        actor = nullptr;
     }
 }
+Vector3 KinematicBody::GetPosition()
+{
+    return Vector3();
+}
+} // namespace duin

@@ -6,18 +6,15 @@
 #include "Singletons.h"
 #include "GameObjects/Player/Player.h"
 
-
-
 class Player : public duin::GameObject
 {
-    public:
-        void Ready() override;
-        void OnEvent(duin::Event e) override;
-        void PhysicsUpdate(double delta) override;
-        void DrawUI() override;
+  public:
+    void Ready() override;
+    void OnEvent(duin::Event e) override;
+    void PhysicsUpdate(double delta) override;
+    void DrawUI() override;
 
-    private:
-
+  private:
 };
 
 extern flecs::entity player;

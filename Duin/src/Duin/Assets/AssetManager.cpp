@@ -1,19 +1,19 @@
 #include "dnpch.h"
 #include "AssetManager.h"
 
-namespace duin {
+namespace duin
+{
 
-    AssetManager::AssetManager()
-    {
-    }
-
-    AssetManager::~AssetManager()
-    {
-    }
-
-    UUID AssetManager::GetUUID()
-    {
-        return uuid;
-    }
+AssetManager::AssetManager()
+{
 }
 
+AssetManager::~AssetManager()
+{
+}
+
+UUID AssetManager::GetUUID()
+{
+    return uuid;
+}
+} // namespace duin

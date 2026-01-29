@@ -14,7 +14,7 @@ duin::GameStateMachine inAirStateMachine;
 
 void State_InAir::Enter()
 {
-	debugConsole.Log("State_InAir: Entering State_InAir");
+    debugConsole.Log("State_InAir: Entering State_InAir");
 
     player.add<InAirTag>();
     player.add<CanGravity>();
@@ -36,11 +36,13 @@ void State_InAir::PhysicsUpdate(double delta)
     int isOnFloor = 0;
 
     const CharacterBodyComponent *bodyComponent = player.try_get<CharacterBodyComponent>();
-    if (bodyComponent) {
+    if (bodyComponent)
+    {
         isOnFloor = bodyComponent->body->IsOnFloor();
     }
-    
-    if (isOnFloor) {
+
+    if (isOnFloor)
+    {
         SwitchState<State_OnGround>();
         return;
     }
@@ -61,10 +63,9 @@ void State_InAir::DrawUI()
 }
 
 void State_InAir::Exit()
-{   
-	debugConsole.Log("State_InAir: Exiting State_InAir");
+{
+    debugConsole.Log("State_InAir: Exiting State_InAir");
 
     player.remove<InAirTag>();
     inAirStateMachine.FlushStack();
 }
-

@@ -9,7 +9,7 @@ class Entity;
 template <typename... Components>
 class QueryBuilder;
 
-    class World
+class World
 {
   public:
     /**

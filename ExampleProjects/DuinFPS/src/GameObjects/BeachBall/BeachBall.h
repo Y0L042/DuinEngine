@@ -5,18 +5,15 @@
 
 #include "Singletons.h"
 
-
-
 class BeachBall : public duin::GameObject
 {
-    public:
-        void Ready() override;
-        void PhysicsUpdate(double delta) override;
-        void Draw() override;
-        void DrawUI() override;
+  public:
+    void Ready() override;
+    void PhysicsUpdate(double delta) override;
+    void Draw() override;
+    void DrawUI() override;
 
-    private:
-        flecs::entity entity;
-        std::shared_ptr<duin::DynamicBody> body;
-
+  private:
+    flecs::entity entity;
+    std::shared_ptr<duin::DynamicBody> body;
 };

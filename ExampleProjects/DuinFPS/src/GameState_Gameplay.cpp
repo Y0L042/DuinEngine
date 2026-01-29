@@ -15,22 +15,20 @@ duin::World world;
 
 void GameState_Gameplay::Enter()
 {
-	debugConsole.Log("GameState_Gameplay: Entering GameState_Gameplay");
+    debugConsole.Log("GameState_Gameplay: Entering GameState_Gameplay");
     duin::Input::CaptureMouse(true);
     ecs.Initialize();
     RegisterComponents(ecs.world);
 
-	playerObj = CreateChildObject<Player>();
+    playerObj = CreateChildObject<Player>();
 
     duin::Quaternion groundDir = duin::Vector3ToQuaternion(duin::Vector3::UP);
     duin::Vector3 groundPos = duin::Vector3::UP;
 
-    static duin::StaticBody ground({groundPos, groundDir} /* Tx3D */,  
-                                   duin::PlaneGeometry(), 
+    static duin::StaticBody ground({groundPos, groundDir} /* Tx3D */, duin::PlaneGeometry(),
                                    duin::PhysicsMaterial(0.4f, 0.4f, 0.5f));
 
     static std::shared_ptr<BeachBall> ball = CreateChildObject<BeachBall>();
-
 }
 
 void GameState_Gameplay::OnEvent(duin::Event e)
@@ -63,8 +61,8 @@ void GameState_Gameplay::PhysicsUpdate(double delta)
 
 void GameState_Gameplay::Draw()
 {
-    //duin::DrawPlane({20.0f, 0.0f, 20.0f});
-	//duin::DrawBox({ 0.0f, -20.0f, 0.0f }, duin::QuaternionIdentity(), {40.0f, 40.0f, 40.0f});
+    // duin::DrawPlane({20.0f, 0.0f, 20.0f});
+    // duin::DrawBox({ 0.0f, -20.0f, 0.0f }, duin::QuaternionIdentity(), {40.0f, 40.0f, 40.0f});
     duin::DrawGrid();
 }
 

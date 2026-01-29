@@ -17,7 +17,7 @@ duin::GameStateMachine playerStateMachine;
 
 void Player::Ready()
 {
-	debugConsole.Log("Player: Ready");
+    debugConsole.Log("Player: Ready");
 
     float playerHeight = 1.75f;
     duin::Vector3 playerPosition(0.0f, 50.0f, 5.0f);
@@ -33,47 +33,39 @@ void Player::Ready()
     duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
     std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
     player = ecs.world.entity()
-        .is_a(duin::ECSPrefab::PhysicsCharacterBody)
-        .set<duin::ECSComponent::Transform3D>({ playerPosition })
-        .set<Mass>({ .value = 80.0f })
-        .set<CanRunComponent>({ .speed = 10.0f })
-        .set<CanSprintComponent>({ .speed = 17.5f })
-        .set<CanJumpComponent>({ .impulse = 625.0f })
-        .set<duin::ECSComponent::CharacterBodyComponent >({ playerBody })
-        .add<InputVelocities>()
-        .add<InputForces>()
-        .add<PlayerMovementInputVec3>()
-        .add<InputVelocityDirection>()
-        .add<MouseInputVec2>()
-        .add<CameraYawComponent>()
-        .add<GravityComponent>()
-        .add<CanGravity>()
-        .add<OnGroundTag>()
-        ;
+                 .is_a(duin::ECSPrefab::PhysicsCharacterBody)
+                 .set<duin::ECSComponent::Transform3D>({playerPosition})
+                 .set<Mass>({.value = 80.0f})
+                 .set<CanRunComponent>({.speed = 10.0f})
+                 .set<CanSprintComponent>({.speed = 17.5f})
+                 .set<CanJumpComponent>({.impulse = 625.0f})
+                 .set<duin::ECSComponent::CharacterBodyComponent>({playerBody})
+                 .add<InputVelocities>()
+                 .add<InputForces>()
+                 .add<PlayerMovementInputVec3>()
+                 .add<InputVelocityDirection>()
+                 .add<MouseInputVec2>()
+                 .add<CameraYawComponent>()
+                 .add<GravityComponent>()
+                 .add<CanGravity>()
+                 .add<OnGroundTag>();
     cameraRoot = ecs.world.entity()
-        .is_a(duin::ECSPrefab::Node3D)
-        .child_of(player)
-        .set<duin::ECSComponent::Transform3D>({ { 0.0f, playerHeight, 0.0f } })
-        .add<MouseInputVec2>()
-        .add<CameraPitchComponent>()
-        ;
+                     .is_a(duin::ECSPrefab::Node3D)
+                     .child_of(player)
+                     .set<duin::ECSComponent::Transform3D>({{0.0f, playerHeight, 0.0f}})
+                     .add<MouseInputVec2>()
+                     .add<CameraPitchComponent>();
     playerCamera = ecs.world.entity()
-        .is_a(duin::ECSPrefab::Camera3D)
-        .child_of(cameraRoot)
-        .set<duin::ECSComponent::Transform3D>({ { 0.0f, 0.0f, 0.0f } })
-        .set<duin::Camera>(duin::Camera{
-		       duin::UUID(),
-               { 0.0f, 0.0f, 0.0f },
-               { 0.0f, 0.0f, 0.0f },
-               { 0.0f, 1.0f, 0.0f },
-               72.0f
-           })
-        .set<VelocityBob>({ 10.0f, 1.0f })
-        .add<duin::ECSTag::ActiveCamera>()
-        ;
+                       .is_a(duin::ECSPrefab::Camera3D)
+                       .child_of(cameraRoot)
+                       .set<duin::ECSComponent::Transform3D>({{0.0f, 0.0f, 0.0f}})
+                       .set<duin::Camera>(duin::Camera{
+                           duin::UUID(), {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, 72.0f})
+                       .set<VelocityBob>({10.0f, 1.0f})
+                       .add<duin::ECSTag::ActiveCamera>();
 
-	//cameraRef = flecs::ref<duin::Camera>(ecs.world, playerCamera);
-	//duin::Camera* cam = cameraRef.get();    
+    // cameraRef = flecs::ref<duin::Camera>(ecs.world, playerCamera);
+    // duin::Camera* cam = cameraRef.get();
 
     playerStateMachine.SwitchState<State_OnGround>();
 }
@@ -85,8 +77,8 @@ void Player::OnEvent(duin::Event e)
 void Player::PhysicsUpdate(double delta)
 {
     duin::Vector2 mouseInput(duin::Input::GetMouseDelta());
-    player.set<MouseInputVec2>({ { mouseInput } });
-    cameraRoot.set<MouseInputVec2>({ { mouseInput } });
+    player.set<MouseInputVec2>({{mouseInput}});
+    cameraRoot.set<MouseInputVec2>({{mouseInput}});
 
     playerStateMachine.ExecutePhysicsUpdate(delta);
 }
@@ -95,4 +87,3 @@ void Player::DrawUI()
 {
     playerStateMachine.ExecuteDrawUI();
 }
-

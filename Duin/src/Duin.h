@@ -11,24 +11,14 @@
 #include "Duin/Core/Events/Input.h"
 #include "Duin/Core/Events/Keys.h"
 
-
-
-
-
 /* ---------- Render ----------- */
 #include "Duin/Render/RenderModule.h"
-
-
 
 /* ---------- ECS ----------- */
 #include "Duin/ECS/ECSModule.h"
 
-
-
 /* ---------- Physics ----------- */
 #include "Duin/Physics/PhysicsModule.h"
-
-
 
 /* ---------- Objects ----------- */
 #include "Duin/Objects/ObjectModule.h"
@@ -38,12 +28,8 @@
 
 #include "Duin/Core/Process/ProcessModule.h"
 
-
-
 /* ---------- C_Modules ----------- */
 // #include "Duin/C_Modules/c_modules.h"
-
-
 
 /* ---------- Externals ----------- */
 // #include <flecs.h>

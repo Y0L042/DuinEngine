@@ -3,19 +3,19 @@
 
 #ifdef DN_PLATFORM_WINDOWS
 
-extern duin::Application* duin::CreateApplication();
+extern duin::Application *duin::CreateApplication();
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-	duin::Log::Init();
-	DN_CORE_WARN("Initialized Log.");
-	DN_INFO("Initialized Log.");
+    duin::Log::Init();
+    DN_CORE_WARN("Initialized Log.");
+    DN_INFO("Initialized Log.");
 
     auto app = duin::CreateApplication();
-	app->Run();
-	delete app;
+    app->Run();
+    delete app;
 
-	return 0;
+    return 0;
 }
 
 #endif

@@ -12,11 +12,10 @@
 #include "./uuid.h"
 #include "./statemachine.h"
 
-
 #if defined(__cplusplus)
-extern "C" {            // Prevents name mangling of functions
+extern "C"
+{ // Prevents name mangling of functions
 #endif
-
 
 #if defined(__cplusplus)
 }

@@ -12,7 +12,7 @@ using namespace duin::ECSTag;
 
 void State_OnGround_Idle::Enter()
 {
-	debugConsole.Log("State_OnGround_Idle: Entering State_OnGround_Idle");
+    debugConsole.Log("State_OnGround_Idle: Entering State_OnGround_Idle");
 
     player.add<IdleTag>();
 }
@@ -27,12 +27,13 @@ void State_OnGround_Idle::Update(double delta)
 
 void State_OnGround_Idle::PhysicsUpdate(double delta)
 {
-    if (duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D)) {
-       // if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT)) {
-       //     owner.SwitchState<PlayerStateOnGroundSprint>();
-       // } else {
-           SwitchState<State_OnGround_Run>();
-       // }
+    if (duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D))
+    {
+        // if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT)) {
+        //     owner.SwitchState<PlayerStateOnGroundSprint>();
+        // } else {
+        SwitchState<State_OnGround_Run>();
+        // }
     }
 }
 
@@ -50,4 +51,3 @@ void State_OnGround_Idle::Exit()
     player.remove<IdleTag>();
     debugWatchlist.Post("PlayerState", "");
 }
-

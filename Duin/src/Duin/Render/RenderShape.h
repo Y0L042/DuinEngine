@@ -12,56 +12,60 @@
 #include <memory>
 #include <vector>
 
-namespace duin {
+namespace duin
+{
 
+namespace RenderShapeType
+{
+typedef enum Type
+{
+    SPHERE,
+    BOX,
+    CAPSULE,
+    PLANE,
+    CONE,
+    CYLINDER,
+    DISK,
+    TRIANGLE,
+    TRIANGLEMESH,
+    NONE,
+    Count
+} Type;
+}; // namespace RenderShapeType
 
-    namespace RenderShapeType {
-        typedef enum Type {
-            SPHERE,
-            BOX,
-            CAPSULE,
-            PLANE,
-            CONE,
-            CYLINDER,
-            DISK,
-            TRIANGLE,
-            TRIANGLEMESH,
-            NONE,
-            Count
-        } Type;
-    };
-
-    class RenderShape
+class RenderShape
+{
+  public:
+    RenderShape() : geometry(RenderGeometry())
     {
-        public:
-            RenderShape() : geometry(RenderGeometry()) {}
-            UUID GetUUID();
-            RenderShapeType::Type GetType();
+    }
+    UUID GetUUID();
+    RenderShapeType::Type GetType();
 
-        protected:
-            UUID uuid;
-            RenderGeometry geometry;
-            RenderShapeType::Type type = RenderShapeType::NONE; 
-    };
+  protected:
+    UUID uuid;
+    RenderGeometry geometry;
+    RenderShapeType::Type type = RenderShapeType::NONE;
+};
 
-    class BoxRenderShape : public RenderShape
-    {
-        public:
-            BoxRenderShape();
-            BoxRenderShape(BoxRenderGeometry boxRenderGeometry);
+class BoxRenderShape : public RenderShape
+{
+  public:
+    BoxRenderShape();
+    BoxRenderShape(BoxRenderGeometry boxRenderGeometry);
 
-            Vector3 GetPosition();
-            void SetPosition(Vector3 newPosition);
-            Quaternion GetRotation();
-            void SetRotation(Quaternion newRotation);
+    Vector3 GetPosition();
+    void SetPosition(Vector3 newPosition);
+    Quaternion GetRotation();
+    void SetRotation(Quaternion newRotation);
 
-            void GenerateVertices();
+    void GenerateVertices();
 
-            BoxRenderGeometry geometry;
+    BoxRenderGeometry geometry;
 
-            Vector3 position;
-            Quaternion rotation;
+    Vector3 position;
+    Quaternion rotation;
 
-        private:
-    };
-}
+  private:
+};
+} // namespace duin

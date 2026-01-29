@@ -4,12 +4,13 @@
 
 #include "Duin/Core/Maths/DuinMaths.h"
 
-namespace duin {
-    class PhysicsObject : public CollisionObject
-    {
-        public:
-            virtual Vector3 GetPosition() = 0;
+namespace duin
+{
+class PhysicsObject : public CollisionObject
+{
+  public:
+    virtual Vector3 GetPosition() = 0;
 
-        private:
-    };
-}
+  private:
+};
+} // namespace duin
