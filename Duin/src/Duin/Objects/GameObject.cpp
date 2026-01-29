@@ -1,7 +1,7 @@
 #include "dnpch.h"
 #include "GameObject.h"
-
 #include "ObjectManager.h"
+#include <Duin/Core/Debug/DebugModule.h>
 
 duin::GameObject::GameObject()
 {
@@ -15,6 +15,12 @@ void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
 {
     if (child)
     {
+        // Guard: Ensure this object is managed by a shared_ptr before calling shared_from_this()
+        // This prevents std::bad_weak_ptr when AddChildObject/CreateChildObject is called from a constructor
+        DN_CORE_DEBUG_ASSERT(!weak_from_this().expired(),
+                  "Cannot add child object: parent is not yet managed by a shared_ptr. Move CreateChildObject() calls from the constructor to Init() or Ready()"
+        );
+
         // Check if the child is already present by comparing UUIDs
         auto it =
             std::find_if(children.begin(), children.end(), [&child](const std::shared_ptr<GameObject> &existingChild) {
