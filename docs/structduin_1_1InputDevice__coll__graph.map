@@ -1,6 +1,6 @@
 <map id="duin::InputDevice" name="duin::InputDevice">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,93,141,119"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title=" " alt="" coords="27,5,119,31"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="27,5,119,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,45,76,93,71,93,71,45"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="134,9,146,18,138,26,120,29,119,23,135,21,141,18,131,14"/>
 </map>

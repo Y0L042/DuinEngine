@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['setarray_0',['SetArray',['../classduin_1_1JSONValue.html#a7b18e340800be47780f66b3d35f3b199',1,'duin::JSONValue']]],
-  ['setbool_1',['SetBool',['../classduin_1_1JSONValue.html#abc259cffaacdd6fd00e0e12bf92f25d1',1,'duin::JSONValue']]],
-  ['setdouble_2',['SetDouble',['../classduin_1_1JSONValue.html#a019574f05864f377e04981ab12152cb5',1,'duin::JSONValue']]],
-  ['setint_3',['SetInt',['../classduin_1_1JSONValue.html#affc117289bde1197a2169e51bab2728d',1,'duin::JSONValue']]],
-  ['setobject_4',['SetObject',['../classduin_1_1JSONValue.html#a09520cb59b0af14d6a50ebef2a24f368',1,'duin::JSONValue']]],
-  ['setstring_5',['SetString',['../classduin_1_1JSONValue.html#ae0b554a53bfc88b523ab70be03220fe6',1,'duin::JSONValue']]]
+  ['query_0',['query',['../classduin_1_1Query.html#a65c02fc2cbd71dc4fd6dc1c883c556d9',1,'duin::Query::Query()=delete'],['../classduin_1_1Query.html#a1286c4e72a928e41f3de17c058ae4df0',1,'duin::Query::Query(flecs::query&lt; Components... &gt; &amp;&amp;other)'],['../classduin_1_1Query.html#a7b2dfa7e664823204ab68ecf70a5d747',1,'duin::Query::Query(const flecs::query&lt; Components... &gt; &amp;other)']]],
+  ['quit_1',['Quit',['../classduin_1_1World.html#ab75a1ae0712f0e82f0ec2ec52b0a9446',1,'duin::World']]]
 ];

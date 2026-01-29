@@ -116,12 +116,12 @@ $(document).ready(function(){initNavTree('DNLog_8h_source.html',''); initResizab
   <div class="headertitle"><div class="title">DNLog.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef DN_LOG_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define DN_LOG_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Duin/Core/Core.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;spdlog/spdlog.h&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;Duin/Core/Core.h&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;spdlog/spdlog.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>duin</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
@@ -159,22 +159,37 @@ $(document).ready(function(){initNavTree('DNLog_8h_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#ifdef DN_DISABLE_ALL_LOGGING</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">// Core log macros</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#define DN_CORE_FATAL(...) SPDLOG_LOGGER_CRITICAL(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#define DN_CORE_ERROR(...) SPDLOG_LOGGER_ERROR(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#define DN_CORE_WARN(...)  SPDLOG_LOGGER_WARN(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#define DN_CORE_INFO(...)  SPDLOG_LOGGER_INFO(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#define DN_CORE_TRACE(...) SPDLOG_LOGGER_TRACE(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#define DN_CORE_FATAL(...)</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#define DN_CORE_ERROR(...)</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#define DN_CORE_WARN(...)</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#define DN_CORE_INFO(...)</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#define DN_CORE_TRACE(...)</span></div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">// Client log macros</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#define DN_FATAL(...)      SPDLOG_LOGGER_CRITICAL(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#define DN_ERROR(...)      SPDLOG_LOGGER_ERROR(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#define DN_WARN(...)       SPDLOG_LOGGER_WARN(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#define DN_INFO(...)       SPDLOG_LOGGER_INFO(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#define DN_TRACE(...)      SPDLOG_LOGGER_TRACE(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#define DN_FATAL(...)</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#define DN_ERROR(...)</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#define DN_WARN(...)</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#define DN_INFO(...)</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#define DN_TRACE(...)</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif </span><span class="comment">/* DN_LOG_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="comment">// Core log macros</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#define DN_CORE_FATAL(...) SPDLOG_LOGGER_CRITICAL(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#define DN_CORE_ERROR(...) SPDLOG_LOGGER_ERROR(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#define DN_CORE_WARN(...)  SPDLOG_LOGGER_WARN(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#define DN_CORE_INFO(...)  SPDLOG_LOGGER_INFO(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#define DN_CORE_TRACE(...) SPDLOG_LOGGER_TRACE(::duin::Log::GetCoreLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment">// Client log macros</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#define DN_FATAL(...)      SPDLOG_LOGGER_CRITICAL(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#define DN_ERROR(...)      SPDLOG_LOGGER_ERROR(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#define DN_WARN(...)       SPDLOG_LOGGER_WARN(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#define DN_INFO(...)       SPDLOG_LOGGER_INFO(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#define DN_TRACE(...)      SPDLOG_LOGGER_TRACE(::duin::Log::GetClientLogger(), __VA_ARGS__)</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassduin_1_1Log_html"><div class="ttname"><a href="classduin_1_1Log.html">duin::Log</a></div><div class="ttdef"><b>Definition</b> <a href="DNLog_8h_source.html#l00010">DNLog.h:11</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

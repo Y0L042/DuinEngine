@@ -1,0 +1,13 @@
+<map id="duin::GameStateMachine" name="duin::GameStateMachine">
+<area shape="rect" id="Node000001" title=" " alt="" coords="605,119,792,145"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1GameObject.html" title=" " alt="" coords="417,119,556,145"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="570,129,605,129,605,135,570,135"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,208,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="222,14,308,20,352,30,394,44,421,60,444,79,478,117,474,120,441,83,418,64,392,49,351,35,307,26,222,19"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="25,86,189,111"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="203,104,417,123,417,129,202,110"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1Signal.html" title=" " alt="" coords="36,136,177,176"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="191,154,288,152,393,145,419,142,419,147,394,151,288,158,191,159"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1Signal.html" title=" " alt="" coords="21,202,193,227"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="207,216,298,210,346,202,392,190,436,168,469,143,473,147,438,172,394,194,347,207,299,215,207,221"/>
+</map>

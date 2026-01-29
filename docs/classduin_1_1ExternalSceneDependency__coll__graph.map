@@ -1,6 +1,6 @@
 <map id="duin::ExternalSceneDependency" name="duin::ExternalSceneDependency">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,93,237,119"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title=" " alt="" coords="75,5,167,31"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="75,5,167,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,45,124,93,119,93,119,45"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="182,9,194,18,186,26,168,29,167,23,183,21,189,18,179,14"/>
 </map>

@@ -58,8 +58,11 @@ var hierarchy =
     [ "duin::ECSComponent::DynamicBodyComponent", "structduin_1_1ECSComponent_1_1DynamicBodyComponent.html", null ],
     [ "duin::ECSManager", "classduin_1_1ECSManager.html", null ],
     [ "std::enable_shared_from_this", null, [
-      [ "duin::GameObject", "classduin_1_1GameObject.html", null ]
+      [ "duin::GameObject", "classduin_1_1GameObject.html", [
+        [ "duin::GameStateMachine", "classduin_1_1GameStateMachine.html", null ]
+      ] ]
     ] ],
+    [ "duin::Entity", "classduin_1_1Entity.html", null ],
     [ "duin::Event", "classduin_1_1Event.html", [
       [ "duin::InputEvent", "classduin_1_1InputEvent.html", null ],
       [ "duin::WindowEvent", "classduin_1_1WindowEvent.html", null ]
@@ -74,11 +77,11 @@ var hierarchy =
     [ "ExampleDualListBox", "structExampleDualListBox.html", null ],
     [ "ExampleMemberInfo", "structExampleMemberInfo.html", null ],
     [ "ExampleTreeNode", "structExampleTreeNode.html", null ],
-    [ "duin::Scene::ExDep", "structduin_1_1Scene_1_1ExDep.html", null ],
     [ "duin::ExternalSceneDependency", "classduin_1_1ExternalSceneDependency.html", null ],
     [ "duin::FileUtils", "classduin_1_1FileUtils.html", null ],
     [ "duin::float16", "structduin_1_1float16.html", null ],
     [ "duin::float3", "structduin_1_1float3.html", null ],
+    [ "duin::GameState", "classduin_1_1GameState.html", null ],
     [ "GeometryT< MaxHandlesT >::Geometry", "structGeometryT_1_1Geometry.html", null ],
     [ "GeometryHandle", "structGeometryHandle.html", null ],
     [ "GeometryT< MaxHandlesT >", "structGeometryT.html", null ],
@@ -309,6 +312,7 @@ var hierarchy =
       [ "duin::InputDevice_Mouse", "structduin_1_1InputDevice__Mouse.html", null ]
     ] ],
     [ "InputVector2DKeys", "structInputVector2DKeys.html", null ],
+    [ "duin::Iter", "classduin_1_1Iter.html", null ],
     [ "duin::JSONDocument", "classduin_1_1JSONDocument.html", null ],
     [ "duin::JSONMember", "classduin_1_1JSONMember.html", null ],
     [ "duin::JSONValue", "classduin_1_1JSONValue.html", null ],
@@ -320,15 +324,24 @@ var hierarchy =
     [ "DebugDrawEncoderImpl::MatrixStack", "structDebugDrawEncoderImpl_1_1MatrixStack.html", null ],
     [ "MyDocument", "structMyDocument.html", null ],
     [ "duin::ECSTag::NonPx", "structduin_1_1ECSTag_1_1NonPx.html", null ],
+    [ "duin::ObjectManager", "classduin_1_1ObjectManager.html", null ],
+    [ "duin::PackedComponent", "structduin_1_1PackedComponent.html", null ],
+    [ "duin::PackedEntity", "structduin_1_1PackedEntity.html", null ],
+    [ "duin::PackedExternalDependency", "structduin_1_1PackedExternalDependency.html", null ],
+    [ "duin::PackedScene", "structduin_1_1PackedScene.html", null ],
+    [ "duin::PackedSceneMetadata", "structduin_1_1PackedSceneMetadata.html", null ],
     [ "duin::PhysicsMaterial", "classduin_1_1PhysicsMaterial.html", null ],
     [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", null ],
     [ "duin::ECSComponent::PhysicsStaticCubeComponent", "structduin_1_1ECSComponent_1_1PhysicsStaticCubeComponent.html", null ],
     [ "duin::PosColorVertex", "structduin_1_1PosColorVertex.html", null ],
     [ "duin::ECSComponent::Position2D", "structduin_1_1ECSComponent_1_1Position2D.html", null ],
+    [ "duin::Process", "structduin_1_1Process.html", null ],
     [ "Program", "structProgram.html", null ],
     [ "duin::ECSTag::PxDynamic", "structduin_1_1ECSTag_1_1PxDynamic.html", null ],
     [ "duin::ECSTag::PxKinematic", "structduin_1_1ECSTag_1_1PxKinematic.html", null ],
     [ "duin::ECSTag::PxStatic", "structduin_1_1ECSTag_1_1PxStatic.html", null ],
+    [ "duin::Query< Components >", "classduin_1_1Query.html", null ],
+    [ "duin::QueryBuilder< Components >", "classduin_1_1QueryBuilder.html", null ],
     [ "RENDERDOC_API_1_6_0", "structRENDERDOC__API__1__6__0.html", null ],
     [ "duin::RenderGeometry", "structduin_1_1RenderGeometry.html", [
       [ "duin::BoxRenderGeometry", "structduin_1_1BoxRenderGeometry.html", null ],
@@ -350,24 +363,22 @@ var hierarchy =
     [ "duin::ECSComponent::Rotation3D", "structduin_1_1ECSComponent_1_1Rotation3D.html", null ],
     [ "duin::ECSComponent::Scale2D", "structduin_1_1ECSComponent_1_1Scale2D.html", null ],
     [ "duin::ECSComponent::Scale3D", "structduin_1_1ECSComponent_1_1Scale3D.html", null ],
-    [ "duin::Scene", "structduin_1_1Scene.html", null ],
-    [ "duin::SceneBuilder", "classduin_1_1SceneBuilder.html", null ],
     [ "duin::SceneDefinition", "classduin_1_1SceneDefinition.html", null ],
-    [ "duin::SceneManager", "classduin_1_1SceneManager.html", null ],
     [ "duin::ECSComponent::Serialisable", "structduin_1_1ECSComponent_1_1Serialisable.html", [
       [ "duin::ECSComponent::Position3D", "structduin_1_1ECSComponent_1_1Position3D.html", null ]
     ] ],
     [ "duin::ECSTag::SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ],
     [ "duin::ShaderProgram", "structduin_1_1ShaderProgram.html", null ],
     [ "duin::Signal< types >", "classduin_1_1Signal.html", null ],
+    [ "duin::Signal< double >", "classduin_1_1Signal.html", null ],
+    [ "duin::Signal< duin::Event >", "classduin_1_1Signal.html", null ],
+    [ "duin::SignalConnections", "structduin_1_1SignalConnections.html", null ],
     [ "SM_Machine", "structSM__Machine.html", null ],
     [ "SM_State", "structSM__State.html", null ],
     [ "SpriteHandle", "structSpriteHandle.html", null ],
     [ "SpriteT< MaxHandlesT, TextureSizeT >", "structSpriteT.html", null ],
     [ "SpriteT< 256, SPRITE_TEXTURE_SIZE >", "structSpriteT.html", null ],
     [ "DebugDrawEncoderImpl::State", "structDebugDrawEncoderImpl_1_1State.html", null ],
-    [ "duin::State", "classduin_1_1State.html", null ],
-    [ "duin::StateMachine", "classduin_1_1StateMachine.html", null ],
     [ "duin::ECSComponent::StaticBodyComponent", "structduin_1_1ECSComponent_1_1StaticBodyComponent.html", null ],
     [ "STB_TexteditState", "structSTB__TexteditState.html", null ],
     [ "stbrp_context", "structstbrp__context.html", null ],
@@ -396,5 +407,6 @@ var hierarchy =
     [ "duin::Vector3", "structduin_1_1Vector3.html", null ],
     [ "duin::Vector4", "structduin_1_1Vector4.html", null ],
     [ "duin::ECSComponent::Velocity2D", "structduin_1_1ECSComponent_1_1Velocity2D.html", null ],
-    [ "duin::ECSComponent::Velocity3D", "structduin_1_1ECSComponent_1_1Velocity3D.html", null ]
+    [ "duin::ECSComponent::Velocity3D", "structduin_1_1ECSComponent_1_1Velocity3D.html", null ],
+    [ "duin::World", "classduin_1_1World.html", null ]
 ];

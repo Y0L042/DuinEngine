@@ -1,4 +1,10 @@
 var searchData=
 [
-  ['write_0',['write',['../classduin_1_1JSONValue.html#a206fe64381885c12007f922de21c4589',1,'duin::JSONValue::Write(const JSONValue &amp;value, bool prettyWrite=false)'],['../classduin_1_1JSONValue.html#a0bf71097ed1b6134f83514997f02d935',1,'duin::JSONValue::Write() const']]]
+  ['tobytearray_0',['ToByteArray',['../structduin_1_1Color.html#a03588f5b73db910c3038d4a45c67a82f',1,'duin::Color']]],
+  ['tofloatarray_1',['ToFloatArray',['../structduin_1_1Color.html#ae70202688063c0f354410698cac9de3f',1,'duin::Color']]],
+  ['tostringdec_2',['ToStringDec',['../classduin_1_1UUID.html#ac29335c4d03a825b3974ef1224aa5a14',1,'duin::UUID']]],
+  ['tostringhex_3',['ToStringHex',['../classduin_1_1UUID.html#ab2a1fb40d47fd40cf38d5c6c3500219b',1,'duin::UUID']]],
+  ['tryget_4',['TryGet',['../classduin_1_1Entity.html#a7e3a75743f37a731e81ba64400920f5e',1,'duin::Entity']]],
+  ['trygetmut_5',['TryGetMut',['../classduin_1_1Entity.html#a9119f6121cf475a11c2bbce0daa4e4a1',1,'duin::Entity']]],
+  ['trygetpair_6',['TryGetPair',['../classduin_1_1Entity.html#ac3c7c31e01ea4211a200a943695914dd',1,'duin::Entity']]]
 ];
