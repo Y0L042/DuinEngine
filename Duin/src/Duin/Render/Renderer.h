@@ -30,6 +30,8 @@ struct RenderState;
 struct ShaderProgram;
 struct DebugDrawState;
 
+const bgfx::ViewId RENDER_MAIN_DISPLAY_VIEWID = 0;
+
 /** @brief Initializes the BGFX rendering system. */
 void InitRenderer();
 /** @brief Shuts down the rendering system. */
@@ -68,7 +70,7 @@ struct RenderState
     Matrix viewMatrix;
     Matrix projectionMatrix;
     UUID stateUUID;
-    size_t viewID = 0;
+    size_t viewID = RENDER_MAIN_DISPLAY_VIEWID;
 };
 
 /**
