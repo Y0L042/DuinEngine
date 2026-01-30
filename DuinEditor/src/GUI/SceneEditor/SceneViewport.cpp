@@ -6,8 +6,6 @@
 SceneViewport::SceneViewport()
 {
     m_windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
-    renderTarget = duin::RenderTexture(duin::GetWindowWidth(), duin::GetWindowHeight(), 0);
-    renderTarget.viewID = 1;
 }
 
 SceneViewport::~SceneViewport()
@@ -16,6 +14,7 @@ SceneViewport::~SceneViewport()
 
 void SceneViewport::Init()
 {
+    renderTarget = duin::RenderTexture(duin::GetWindowWidth(), duin::GetWindowHeight(), 0);
     mainCamera = CreateChildObject<EditorCamera>();
     mainCamera->Enable(true);
     mainCamera->UpdateTarget({0.0f, 0.0f, 0.0f});
@@ -59,7 +58,7 @@ void SceneViewport::DrawUI()
 void SceneViewport::RenderToTexture()
 {
     duin::BeginTextureMode(renderTarget);
-    duin::ClearBackground(duin::GRAY, renderTarget.viewID);
+    duin::ClearBackground(duin::GRAY);
 
     duin::DrawGrid(100.0f);
     duin::DrawDebugSphere({ 15, 0, 0 }, 1);
