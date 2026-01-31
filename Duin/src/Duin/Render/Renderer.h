@@ -31,6 +31,7 @@ struct ShaderProgram;
 struct DebugDrawState;
 
 const bgfx::ViewId RENDER_3D_VIEWID = 0;
+const bgfx::ViewId RENDER_3D_RENDERTEXTURE_VIEWID = 1;
 
 /** @brief Initializes the BGFX rendering system. */
 void InitRenderer();
@@ -85,7 +86,7 @@ struct RenderTexture
 {
     uint16_t width, height;                 ///< Texture dimensions.
     UUID textureUUID;                       ///< Unique identifier.
-    bgfx::ViewId viewID = RENDER_3D_VIEWID; ///< BGFX view ID.
+    bgfx::ViewId viewID = RENDER_3D_RENDERTEXTURE_VIEWID; ///< BGFX view ID.
     bgfx::TextureHandle texture;            ///< BGFX texture handle.
     bgfx::FrameBufferHandle frameBuffer;    ///< BGFX framebuffer handle.
 

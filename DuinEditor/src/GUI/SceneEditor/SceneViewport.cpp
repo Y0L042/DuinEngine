@@ -15,7 +15,6 @@ SceneViewport::~SceneViewport()
 void SceneViewport::Init()
 {
     renderTarget = duin::RenderTexture(duin::GetWindowWidth(), duin::GetWindowHeight(), 0);
-    renderTarget.viewID = 1;
     mainCamera = CreateChildObject<EditorCamera>();
     mainCamera->Enable(true);
     mainCamera->UpdateTarget({0.0f, 0.0f, 0.0f});
