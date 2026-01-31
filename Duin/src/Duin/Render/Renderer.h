@@ -30,7 +30,7 @@ struct RenderState;
 struct ShaderProgram;
 struct DebugDrawState;
 
-const bgfx::ViewId RENDER_MAIN_DISPLAY_VIEWID = 0;
+const bgfx::ViewId RENDER_3D_VIEWID = 0;
 
 /** @brief Initializes the BGFX rendering system. */
 void InitRenderer();
@@ -70,7 +70,7 @@ struct RenderState
     Matrix viewMatrix;
     Matrix projectionMatrix;
     UUID stateUUID;
-    size_t viewID = RENDER_MAIN_DISPLAY_VIEWID;
+    size_t viewID = RENDER_3D_VIEWID;
 };
 
 /**
@@ -83,11 +83,11 @@ struct RenderState
  */
 struct RenderTexture
 {
-    uint16_t width, height;              ///< Texture dimensions.
-    UUID textureUUID;                    ///< Unique identifier.
-    bgfx::ViewId viewID = 0;             ///< BGFX view ID.
-    bgfx::TextureHandle texture;         ///< BGFX texture handle.
-    bgfx::FrameBufferHandle frameBuffer; ///< BGFX framebuffer handle.
+    uint16_t width, height;                 ///< Texture dimensions.
+    UUID textureUUID;                       ///< Unique identifier.
+    bgfx::ViewId viewID = RENDER_3D_VIEWID; ///< BGFX view ID.
+    bgfx::TextureHandle texture;            ///< BGFX texture handle.
+    bgfx::FrameBufferHandle frameBuffer;    ///< BGFX framebuffer handle.
 
     RenderTexture() = default;
 
@@ -193,7 +193,7 @@ void EmptyRenderStack();
 /** @} */
 
 /** @brief Clears the background to a solid color. */
-void ClearBackground(Color color = Color(0x443355FF), int win = 0);
+void ClearBackground(Color color = Color(0x443355FF));
 
 /**
  * @name Draw Functions
@@ -215,5 +215,9 @@ void DrawDebugSphere(Vector3 position, float radius);
 unsigned int DrawIMGUITexture(RenderTexture &texture, Vector2 targetSize);
 /** @brief Destroys a render texture and frees its resources. */
 void DestroyRenderTexture(RenderTexture &texture);
+
+
+
+RenderState GetGlobalRenderState();
 
 } // namespace duin

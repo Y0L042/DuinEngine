@@ -87,8 +87,9 @@ void SetRenderContextAvailable(bool available)
 void BeginDraw3D(Camera &camera)
 {
     // DN_CORE_INFO("BeginDraw3D");
-    globalRenderStateStack.clear();
-    const bgfx::ViewId viewID = 0;
+    //globalRenderStateStack.clear();
+    globalRenderStateStack.push_back(globalRenderState);
+    const bgfx::ViewId viewID = RENDER_3D_VIEWID;
 
     // Get camera matrices
     Matrix viewMtx = GetCameraViewMatrix(&camera);
@@ -104,6 +105,7 @@ void BeginDraw3D(Camera &camera)
     bgfx::setViewClear(viewID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
 
     // Set new 3D rendering state
+    globalRenderState = RenderState();
     globalRenderState.in3DMode = true;
     globalRenderState.inTextureMode = false;
     globalRenderState.camera = &camera;
@@ -111,7 +113,7 @@ void BeginDraw3D(Camera &camera)
     globalRenderState.projectionMatrix = projMtx;
 
     // Push current state to stack
-    globalRenderStateStack.push_back(globalRenderState);
+    //globalRenderStateStack.push_back(globalRenderState);
 
     encoder = bgfx::begin(false);
     BeginDebugDraw();
@@ -133,7 +135,7 @@ void EndDraw3D()
             static float proj[16];
             MatrixAsArray(globalRenderState.viewMatrix, view);
             MatrixAsArray(globalRenderState.projectionMatrix, proj);
-            bgfx::setViewTransform(0, view, proj);
+            bgfx::setViewTransform(RENDER_3D_VIEWID, view, proj);
         }
     }
     else
@@ -147,14 +149,20 @@ void EndDraw3D()
 
 void BeginTextureMode(RenderTexture &target)
 {
+    dde.end();
+
     // Push current state to stack
     globalRenderStateStack.push_back(globalRenderState);
 
+    Camera *activeCamera = GetActiveCamera();
+
     // Set new texture rendering state
+    globalRenderState = RenderState();
     globalRenderState.inTextureMode = true;
     globalRenderState.in3DMode = false;
     globalRenderState.target = &target;
     globalRenderState.viewID = target.viewID;
+    globalRenderState.camera = activeCamera;
 
     // Set view to render to texture
     if (!target.IsValid())
@@ -166,11 +174,28 @@ void BeginTextureMode(RenderTexture &target)
         bgfx::setViewFrameBuffer(target.viewID, target.frameBuffer);
         bgfx::setViewRect(target.viewID, 0, 0, target.width, target.height); // Clear render texture
         bgfx::setViewClear(target.viewID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x00000000, 1.0f, 0);
+
+        if (activeCamera)
+        {
+            Matrix viewMtx = GetCameraViewMatrix(activeCamera);
+            Matrix projMtx = GetCameraProjectionMatrix(activeCamera);
+            globalRenderState.viewMatrix = viewMtx;
+            globalRenderState.projectionMatrix = projMtx;
+
+            static float view[16];
+            static float proj[16];
+            MatrixAsArray(viewMtx, view);
+            MatrixAsArray(projMtx, proj);
+            bgfx::setViewTransform(target.viewID, view, proj);
+        }
     }
+
+    dde.begin(globalRenderState.viewID, true, encoder);
 }
 
 void EndTextureMode()
 {
+    dde.end();
     if (!globalRenderStateStack.empty())
     {
         // Restore previous state
@@ -182,11 +207,12 @@ void EndTextureMode()
         // Reset to default state
         globalRenderState = RenderState();
     }
+    dde.begin(globalRenderState.viewID, true, encoder);
 }
 
 void BeginDebugDraw()
 {
-    dde.begin(0, true, encoder);
+    dde.begin(globalRenderState.viewID, true, encoder);
     // DN_CORE_TRACE("Debug draw started");
 }
 
@@ -200,6 +226,7 @@ void QueueRender(RenderGeometryType::Type type)
 {
     // DN_CORE_INFO("Shape queued for rendering");
 
+    bgfx::ViewId targetViewID = globalRenderState.viewID;
     bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
     bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
     bgfx::ProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
@@ -214,7 +241,7 @@ void QueueRender(RenderGeometryType::Type type)
 
     encoder->setVertexBuffer(0, vbh);
     encoder->setIndexBuffer(ibh);
-    encoder->submit(0, program);
+    encoder->submit(targetViewID, program);
 }
 
 void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size)
@@ -223,6 +250,7 @@ void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rot
 
     Vector3 eulerRotation = QuaternionToEuler(rotation);
 
+    bgfx::ViewId targetViewID = globalRenderState.viewID;
     bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
     bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
     bgfx::ProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
@@ -248,7 +276,7 @@ void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rot
     encoder->setTransform(mtx);
     encoder->setVertexBuffer(0, vbh);
     encoder->setIndexBuffer(ibh);
-    encoder->submit(0, program);
+    encoder->submit(targetViewID, program);
 }
 
 void ExecuteRenderPipeline()
@@ -267,7 +295,7 @@ void ExecuteRenderPipeline()
         static float proj[16];
         MatrixAsArray(globalRenderState.viewMatrix, view);
         MatrixAsArray(globalRenderState.projectionMatrix, proj);
-        bgfx::setViewTransform(0, view, proj);
+        bgfx::setViewTransform(globalRenderState.viewID, view, proj);
     }
 
     bgfx::frame();
@@ -280,10 +308,10 @@ void EmptyRenderStack()
     DN_CORE_INFO("Cleared render stack.");
 }
 
-void ClearBackground(Color color, int win)
+void ClearBackground(Color color)
 {
-    bgfx::setViewClear(win, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, color.PackedABGR(), 1.0f, 0);
-    bgfx::touch(win);
+    bgfx::setViewClear(globalRenderState.viewID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, color.PackedABGR(), 1.0f, 0);
+    bgfx::touch(globalRenderState.viewID);
 }
 
 unsigned int DrawIMGUITexture(RenderTexture &renderTexture, Vector2 targetSize)
@@ -292,12 +320,17 @@ unsigned int DrawIMGUITexture(RenderTexture &renderTexture, Vector2 targetSize)
     ::ImVec2 size{targetSize.x, targetSize.y};
     ImGui::Image(img, size, ::ImVec2{1, 0}, ::ImVec2{0, 1});
 
-    return 0;
+    return renderTexture.texture.idx;
 }
 
 void DestroyRenderTexture(RenderTexture &texture)
 {
     texture.Destroy();
+}
+
+RenderState GetGlobalRenderState()
+{
+    return globalRenderState;
 }
 
 void DrawBox(Vector3 position, Quaternion rotation, Vector3 size)
