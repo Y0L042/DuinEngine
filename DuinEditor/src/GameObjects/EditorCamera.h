@@ -10,6 +10,8 @@ class EditorCamera : public duin::GameObject
     duin::Camera camera;
 
     EditorCamera(duin::Vector3 pos = {0.0f, 5.0f, 5.0f}, duin::Vector3 target = {0.0f, 0.0f, 0.0f});
+    
+    void PhysicsUpdate(double delta) override;
 
     void Render();
 
@@ -23,7 +25,6 @@ class EditorCamera : public duin::GameObject
 
     void MovePosition(double delta);
 
-    void PhysicsUpdate(double delta) override;
 
   private:
     void SetupInput();

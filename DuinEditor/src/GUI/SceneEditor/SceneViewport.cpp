@@ -15,6 +15,7 @@ SceneViewport::~SceneViewport()
 void SceneViewport::Init()
 {
     renderTarget = duin::RenderTexture(duin::GetWindowWidth(), duin::GetWindowHeight(), 0);
+    renderTarget.viewID = 1;
     mainCamera = CreateChildObject<EditorCamera>();
     mainCamera->Enable(true);
     mainCamera->UpdateTarget({0.0f, 0.0f, 0.0f});
@@ -40,7 +41,8 @@ void SceneViewport::DrawUI()
     int windowX = avail.x;
     int windowY = avail.y;
 
-    float dispW, dispH = 0.0f;
+    float dispW = 0.0f;
+    float dispH = 0.0f;
     dispH = avail.y;
     dispW = avail.x;
 
