@@ -398,8 +398,8 @@ void duin::Application::Run()
     bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
     bgfxInit.platformData.nwh = hwnd;
     bgfx::init(bgfxInit);
-    bgfx::setViewClear(RENDER_MAIN_DISPLAY_VIEWID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
-    bgfx::setViewRect(RENDER_MAIN_DISPLAY_VIEWID, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    bgfx::setViewClear(RENDER_3D_VIEWID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
+    bgfx::setViewRect(RENDER_3D_VIEWID, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     ImGui::CreateContext();
     ::ImGui_Implbgfx_Init(255);
     ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
@@ -490,9 +490,12 @@ void duin::Application::Run()
                 continue;
             }
 
+            WINDOW_WIDTH = displayWidth;
+            WINDOW_HEIGHT = displayHeight;
+
             bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
-            bgfx::setViewRect(RENDER_MAIN_DISPLAY_VIEWID, 0, 0, bgfx::BackbufferRatio::Equal);
-            bgfx::touch(RENDER_MAIN_DISPLAY_VIEWID);
+            bgfx::setViewRect(RENDER_3D_VIEWID, 0, 0, bgfx::BackbufferRatio::Equal);
+            bgfx::touch(RENDER_3D_VIEWID);
 
             ++renderFrameCount;
             ::ImGui_Implbgfx_NewFrame();
