@@ -3,8 +3,10 @@
 #include <Duin/Objects/GameStateMachine.h>
 
 // GUI elements
-#include "../GUI/SceneEditor/SceneViewport.h"
+#include "../GUI/SceneEditor/SceneTabs.h"
 #include "../GUI/SceneEditor/SceneTree.h"
+#include "../GUI/SceneEditor/SceneViewport.h"
+#include "../GUI/SceneEditor/FileTree.h"
 
 class State_SceneEditor : public duin::GameState
 {
@@ -21,6 +23,8 @@ class State_SceneEditor : public duin::GameState
     void Exit() override;
 
   private:
-    std::shared_ptr<SceneViewport> sceneViewport;
+    std::shared_ptr<SceneTabs> sceneTabs;
     std::shared_ptr<SceneTree> sceneTree;
+    std::shared_ptr<SceneViewport> sceneViewport;
+    std::shared_ptr<FileTree> fileTree;
 };

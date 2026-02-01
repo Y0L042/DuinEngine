@@ -2,8 +2,10 @@
 
 void State_SceneEditor::Enter()
 {
-    sceneViewport = CreateChildObject<SceneViewport>();
+    sceneTabs = CreateChildObject<SceneTabs>();
     sceneTree = CreateChildObject<SceneTree>();
+    sceneViewport = CreateChildObject<SceneViewport>();
+    fileTree = CreateChildObject<FileTree>();
 }
 
 void State_SceneEditor::OnEvent(duin::Event e)
