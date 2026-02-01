@@ -4,6 +4,7 @@
 
 // GUI elements
 #include "../GUI/SceneEditor/SceneViewport.h"
+#include "../GUI/SceneEditor/SceneTree.h"
 
 class State_SceneEditor : public duin::GameState
 {
@@ -21,4 +22,5 @@ class State_SceneEditor : public duin::GameState
 
   private:
     std::shared_ptr<SceneViewport> sceneViewport;
+    std::shared_ptr<SceneTree> sceneTree;
 };

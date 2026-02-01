@@ -3,6 +3,7 @@
 void State_SceneEditor::Enter()
 {
     sceneViewport = CreateChildObject<SceneViewport>();
+    sceneTree = CreateChildObject<SceneTree>();
 }
 
 void State_SceneEditor::OnEvent(duin::Event e)
