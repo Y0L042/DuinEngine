@@ -5,7 +5,6 @@
 #include <GameObjects/EditorCamera.h>
 #include <memory>
 
-
 class SceneViewport : public duin::GameObject
 {
   public:
@@ -22,5 +21,5 @@ class SceneViewport : public duin::GameObject
   private:
     std::shared_ptr<EditorCamera> mainCamera;
     duin::RenderTexture renderTarget;
-    ImGuiWindowFlags m_windowFlags;
+    ImGuiWindowFlags imguiWindowFlags;
 };

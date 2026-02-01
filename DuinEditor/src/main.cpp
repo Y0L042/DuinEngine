@@ -32,6 +32,7 @@ void Editor::Initialize()
     duin::SetFramerate(244);
     SetWindowStartupSize(1600, 900);
     SetWindowName("DuinEditor");
+    duin::SetAllowDockingInMain(true);
 }
 
 void Editor::Ready()

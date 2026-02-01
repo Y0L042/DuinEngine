@@ -5,7 +5,6 @@
 
 SceneViewport::SceneViewport()
 {
-    m_windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
 }
 
 SceneViewport::~SceneViewport()
@@ -18,6 +17,7 @@ void SceneViewport::Init()
     mainCamera = CreateChildObject<EditorCamera>();
     mainCamera->Enable(true);
     mainCamera->UpdateTarget({0.0f, 0.0f, 0.0f});
+    imguiWindowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
     DN_INFO("SceneViewport initialized.");
 }
 
@@ -32,7 +32,7 @@ void SceneViewport::Draw()
 
 void SceneViewport::DrawUI()
 {
-    ImGui::Begin("SceneViewport");
+    ImGui::Begin("SceneViewport", nullptr, imguiWindowFlags);
 
     ImGui::Text("This is my custom Viewport window content!");
 
@@ -62,9 +62,9 @@ void SceneViewport::RenderToTexture()
     duin::ClearBackground(duin::GRAY);
 
     duin::DrawGrid(100.0f);
-    duin::DrawDebugSphere({ 15, 0, 0 }, 1);
-    duin::DrawDebugSphere({ 0, 15, 0 }, 2);
-    duin::DrawDebugSphere({ 0, 0, 15 }, 4);
+    duin::DrawDebugSphere({15, 0, 0}, 1);
+    duin::DrawDebugSphere({0, 15, 0}, 2);
+    duin::DrawDebugSphere({0, 0, 15}, 4);
 
     mainCamera->Render();
 
