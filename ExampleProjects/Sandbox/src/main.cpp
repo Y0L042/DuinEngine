@@ -2,9 +2,16 @@
 
 #include <Duin.h>
 #include <Duin/EntryPoint.h>
+#include <memory>
+#include <Duin/Objects/GameStateMachine.h>
+#include "Sandboxes/Scenes/SandboxScene.h"
 
-duin::Application* duin::CreateApplication() { return new Game(); }
+duin::Application *duin::CreateApplication()
+{
+    return new Game();
+}
 
+std::shared_ptr<duin::GameStateMachine> sm;
 
 void Game::Initialize()
 {
@@ -13,9 +20,11 @@ void Game::Initialize()
 
 void Game::Ready()
 {
+    sm = CreateChildObject<duin::GameStateMachine>();
+    sm->SwitchState<SandboxScene>();
 }
 
-void Game::HandleInputs()
+void Game::OnEvent(duin::Event e)
 {
 }
 
@@ -30,4 +39,3 @@ void Game::PhysicsUpdate(double pDelta)
 void Game::Draw()
 {
 }
-

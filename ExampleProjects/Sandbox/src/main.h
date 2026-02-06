@@ -13,7 +13,7 @@ public:
 
 	void Initialize() override;
 	void Ready() override;
-	void HandleInputs() override;
+	void OnEvent(duin::Event e) override;
 	void Update(double rDelta) override;
 	void PhysicsUpdate(double pDelta) override;
 	void Draw() override;
