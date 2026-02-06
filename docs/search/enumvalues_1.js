@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['idle_0',['IDLE',['../namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa9d7cad9abc3c5879a2fa4abe8ce5bddc',1,'duin::Input']]]
+  ['held_0',['HELD',['../namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa75d0bb08d162d1a8c6e1c784b24b94c3',1,'duin::Input']]]
 ];

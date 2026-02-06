@@ -1,0 +1,5 @@
+<map id="duin::CollisionShape" name="duin::CollisionShape">
+<area shape="rect" id="Node000001" title="Combines geometry and material for physics collision." alt="" coords="9,93,163,119"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1PhysicsMaterial.html" title="Defines surface properties for physics simulation." alt="" coords="5,5,167,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,45,89,93,83,93,83,45"/>
+</map>

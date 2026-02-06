@@ -12,7 +12,6 @@ var ECSManager_8h =
     [ "duin::ECSTag::SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ],
     [ "duin::ECSTag::CameraIsActive", "structduin_1_1ECSTag_1_1CameraIsActive.html", null ],
     [ "duin::ECSTag::ActiveCamera", "structduin_1_1ECSTag_1_1ActiveCamera.html", null ],
-    [ "duin::ECSComponent::Serialisable", "structduin_1_1ECSComponent_1_1Serialisable.html", null ],
     [ "duin::ECSComponent::Position2D", "structduin_1_1ECSComponent_1_1Position2D.html", null ],
     [ "duin::ECSComponent::Rotation2D", "structduin_1_1ECSComponent_1_1Rotation2D.html", null ],
     [ "duin::ECSComponent::Scale2D", "structduin_1_1ECSComponent_1_1Scale2D.html", null ],

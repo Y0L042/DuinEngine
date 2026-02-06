@@ -15,7 +15,6 @@ var annotated_dup =
         [ "Rotation3D", "structduin_1_1ECSComponent_1_1Rotation3D.html", null ],
         [ "Scale2D", "structduin_1_1ECSComponent_1_1Scale2D.html", null ],
         [ "Scale3D", "structduin_1_1ECSComponent_1_1Scale3D.html", null ],
-        [ "Serialisable", "structduin_1_1ECSComponent_1_1Serialisable.html", null ],
         [ "StaticBodyComponent", "structduin_1_1ECSComponent_1_1StaticBodyComponent.html", null ],
         [ "Transform2D", "structduin_1_1ECSComponent_1_1Transform2D.html", null ],
         [ "Transform3D", "structduin_1_1ECSComponent_1_1Transform3D.html", null ],
@@ -36,6 +35,9 @@ var annotated_dup =
         [ "PxStatic", "structduin_1_1ECSTag_1_1PxStatic.html", null ],
         [ "SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ]
       ] ],
+      [ "fs", "namespaceduin_1_1fs.html", [
+        [ "DirCallbackWrapper", "structduin_1_1fs_1_1DirCallbackWrapper.html", "structduin_1_1fs_1_1DirCallbackWrapper" ]
+      ] ],
       [ "Application", "classduin_1_1Application.html", "classduin_1_1Application" ],
       [ "Area", "classduin_1_1Area.html", null ],
       [ "AssetManager", "classduin_1_1AssetManager.html", null ],
@@ -52,6 +54,8 @@ var annotated_dup =
       [ "CollisionObject", "classduin_1_1CollisionObject.html", "classduin_1_1CollisionObject" ],
       [ "CollisionShape", "classduin_1_1CollisionShape.html", "classduin_1_1CollisionShape" ],
       [ "Color", "structduin_1_1Color.html", "structduin_1_1Color" ],
+      [ "ComponentData", "structduin_1_1ComponentData.html", null ],
+      [ "ComponentSerializer", "classduin_1_1ComponentSerializer.html", null ],
       [ "ConeRenderGeometry", "structduin_1_1ConeRenderGeometry.html", null ],
       [ "ConfigValue", "classduin_1_1ConfigValue.html", null ],
       [ "ConvexMeshGeometry", "classduin_1_1ConvexMeshGeometry.html", null ],
@@ -62,6 +66,7 @@ var annotated_dup =
       [ "DynamicBody", "classduin_1_1DynamicBody.html", "classduin_1_1DynamicBody" ],
       [ "ECSManager", "classduin_1_1ECSManager.html", "classduin_1_1ECSManager" ],
       [ "Entity", "classduin_1_1Entity.html", "classduin_1_1Entity" ],
+      [ "EntityData", "structduin_1_1EntityData.html", null ],
       [ "Event", "classduin_1_1Event.html", "classduin_1_1Event" ],
       [ "EventHandler", "classduin_1_1EventHandler.html", "classduin_1_1EventHandler" ],
       [ "ExternalSceneDependency", "classduin_1_1ExternalSceneDependency.html", null ],
@@ -105,6 +110,7 @@ var annotated_dup =
       [ "RenderShape", "classduin_1_1RenderShape.html", null ],
       [ "RenderState", "structduin_1_1RenderState.html", "structduin_1_1RenderState" ],
       [ "RenderTexture", "structduin_1_1RenderTexture.html", "structduin_1_1RenderTexture" ],
+      [ "Scene", "structduin_1_1Scene.html", null ],
       [ "SceneDefinition", "classduin_1_1SceneDefinition.html", null ],
       [ "ShaderProgram", "structduin_1_1ShaderProgram.html", "structduin_1_1ShaderProgram" ],
       [ "Signal", "classduin_1_1Signal.html", "classduin_1_1Signal" ],

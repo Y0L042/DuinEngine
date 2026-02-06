@@ -68,5 +68,7 @@ var searchData=
   ['getvar_65',['getvar',['../classduin_1_1Iter.html#a605380cbbde0f206b4cd4301d34ee778',1,'duin::Iter::GetVar(const char *name) const'],['../classduin_1_1Iter.html#ad91d5c77084ab65941e79e08f8c49fb1',1,'duin::Iter::GetVar(int varId) const']]],
   ['getwindowheight_66',['GetWindowHeight',['../Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4',1,'duin']]],
   ['getwindowwidth_67',['GetWindowWidth',['../Application_8h.html#a62446673e5e806e310ac470542c2ace9',1,'duin']]],
-  ['getworld_68',['GetWorld',['../classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4',1,'duin::Entity']]]
+  ['getworld_68',['GetWorld',['../classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4',1,'duin::Entity']]],
+  ['getworldentity_69',['GetWorldEntity',['../classduin_1_1World.html#a57713d20670fcc10b30a35a0f67812ca',1,'duin::World']]],
+  ['globdirectory_70',['GlobDirectory',['../namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586',1,'duin::fs']]]
 ];

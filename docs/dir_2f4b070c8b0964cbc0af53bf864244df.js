@@ -6,7 +6,5 @@ var dir_2f4b070c8b0964cbc0af53bf864244df =
     [ "GameStateMachine.h", "GameStateMachine_8h.html", null ],
     [ "ObjectManager.cpp", "ObjectManager_8cpp_source.html", null ],
     [ "ObjectManager.h", "ObjectManager_8h_source.html", null ],
-    [ "ObjectModule.h", "ObjectModule_8h_source.html", null ],
-    [ "SceneDefinition.cpp", "SceneDefinition_8cpp_source.html", null ],
-    [ "SceneDefinition.h", "SceneDefinition_8h_source.html", null ]
+    [ "ObjectModule.h", "ObjectModule_8h_source.html", null ]
 ];

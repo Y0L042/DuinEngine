@@ -283,7 +283,11 @@ $(document).ready(function(){initNavTree('CharacterBody_8cpp_source.html',''); i
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordflow">return</span> onFloor;</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>}</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keyword">const</span> CharacterBodyDesc CharacterBody::GetDescriptor()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keywordflow">return</span> desc;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>}</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
 <div class="ttc" id="aApplication_8h_html_a2e3492e29447c56ec3ea3d00173cde1d"><div class="ttname"><a href="Application_8h.html#a2e3492e29447c56ec3ea3d00173cde1d">duin::GetTicksMilli</a></div><div class="ttdeci">double GetTicksMilli()</div><div class="ttdoc">Returns elapsed time in milliseconds since SDL init.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00209">Application.cpp:209</a></div></div>
 <div class="ttc" id="aPhysicsServer_8h_html"><div class="ttname"><a href="PhysicsServer_8h.html">PhysicsServer.h</a></div><div class="ttdoc">Central physics world manager.</div></div>

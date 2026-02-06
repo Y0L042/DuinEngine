@@ -2,8 +2,8 @@ var searchData=
 [
   ['scale2d_0',['Scale2D',['../structduin_1_1ECSComponent_1_1Scale2D.html',1,'duin::ECSComponent']]],
   ['scale3d_1',['Scale3D',['../structduin_1_1ECSComponent_1_1Scale3D.html',1,'duin::ECSComponent']]],
-  ['scenedefinition_2',['SceneDefinition',['../classduin_1_1SceneDefinition.html',1,'duin']]],
-  ['serialisable_3',['Serialisable',['../structduin_1_1ECSComponent_1_1Serialisable.html',1,'duin::ECSComponent']]],
+  ['scene_2',['Scene',['../structduin_1_1Scene.html',1,'duin']]],
+  ['scenedefinition_3',['SceneDefinition',['../classduin_1_1SceneDefinition.html',1,'duin']]],
   ['setcameraasactive_4',['SetCameraAsActive',['../structduin_1_1ECSTag_1_1SetCameraAsActive.html',1,'duin::ECSTag']]],
   ['shaderprogram_5',['ShaderProgram',['../structduin_1_1ShaderProgram.html',1,'duin']]],
   ['signal_6',['Signal',['../classduin_1_1Signal.html',1,'duin']]],

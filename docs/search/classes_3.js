@@ -16,7 +16,8 @@ var searchData=
   ['debuguvvertex_13',['DebugUvVertex',['../structDebugUvVertex.html',1,'']]],
   ['debugvertex_14',['DebugVertex',['../structDebugVertex.html',1,'']]],
   ['deleteexternalref_15',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
-  ['diskrendergeometry_16',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
-  ['dynamicbody_17',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
-  ['dynamicbodycomponent_18',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]]
+  ['dircallbackwrapper_16',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
+  ['diskrendergeometry_17',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
+  ['dynamicbody_18',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
+  ['dynamicbodycomponent_19',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]]
 ];

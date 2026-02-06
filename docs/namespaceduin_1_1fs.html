@@ -109,6 +109,9 @@ $(document).ready(function(){initNavTree('namespaceduin_1_1fs.html',''); initRes
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">duin::fs Namespace Reference</div></div>
 </div><!--header-->
@@ -117,6 +120,33 @@ $(document).ready(function(){initNavTree('namespaceduin_1_1fs.html',''); initRes
 <p>Filesystem utilities for file and directory operations.  
 <a href="namespaceduin_1_1fs.html#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1fs_1_1DirCallbackWrapper.html">DirCallbackWrapper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal wrapper structure for bridging custom callbacks to SDL callbacks.  <a href="structduin_1_1fs_1_1DirCallbackWrapper.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a88d57552ca003d619334fc90704292de" id="r_a88d57552ca003d619334fc90704292de"><td class="memItemLeft" align="right" valign="top">typedef Uint32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#a88d57552ca003d619334fc90704292de">GlobFlags</a></td></tr>
+<tr class="memdesc:a88d57552ca003d619334fc90704292de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags for controlling glob directory behavior.  <br /></td></tr>
+<tr class="separator:a88d57552ca003d619334fc90704292de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac42cf782ae1ef2706077dc422ee1f837" id="r_ac42cf782ae1ef2706077dc422ee1f837"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">duin::fs::EnumerationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#ac42cf782ae1ef2706077dc422ee1f837">EnumerationResult</a></td></tr>
+<tr class="memdesc:ac42cf782ae1ef2706077dc422ee1f837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return values for directory enumeration callbacks.  <br /></td></tr>
+<tr class="separator:ac42cf782ae1ef2706077dc422ee1f837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed46d3f9f264e72ab0a3665d24e03871" id="r_aed46d3f9f264e72ab0a3665d24e03871"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">EnumerationResult</a>(_cdecl *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#aed46d3f9f264e72ab0a3665d24e03871">EnumerateDirectoryCallback</a>) (void *userdata, const char *dirname, const char *fname)</td></tr>
+<tr class="memdesc:aed46d3f9f264e72ab0a3665d24e03871"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function signature for directory enumeration.  <br /></td></tr>
+<tr class="separator:aed46d3f9f264e72ab0a3665d24e03871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:af1d9c3469ee0d51bd768b4226bc9a6b7" id="r_af1d9c3469ee0d51bd768b4226bc9a6b7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">EnumerationResult</a> { <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844">DNFS_ENUM_CONTINUE</a>
+, <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7a2627bacb9b58bff9b44749683b2e438f">DNFS_ENUM_SUCCESS</a>
+, <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7a92784e7972d33c3299a473232e7c891d">DNFS_ENUM_FAILURE</a>
+ }</td></tr>
+<tr class="memdesc:af1d9c3469ee0d51bd768b4226bc9a6b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return values for directory enumeration callbacks.  <a href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">More...</a><br /></td></tr>
+<tr class="separator:af1d9c3469ee0d51bd768b4226bc9a6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad2518903d0f32057af18b0409be168e9" id="r_ad2518903d0f32057af18b0409be168e9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#ad2518903d0f32057af18b0409be168e9">GetFileName</a> (const std::string &amp;path)</td></tr>
@@ -158,6 +188,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a17fd6691c1dc6c88412a73e29cd0f12c" id="r_a17fd6691c1dc6c88412a73e29cd0f12c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">MapVirtualToSystemPath</a> (const std::string &amp;path)</td></tr>
 <tr class="memdesc:a17fd6691c1dc6c88412a73e29cd0f12c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map a virtual path to an absolute system path.  <br /></td></tr>
 <tr class="separator:a17fd6691c1dc6c88412a73e29cd0f12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5da0e36c95e9ec24c41d77ee3c975586" id="r_a5da0e36c95e9ec24c41d77ee3c975586"><td class="memItemLeft" align="right" valign="top">char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586">GlobDirectory</a> (const std::string &amp;path, const std::string &amp;pattern, <a class="el" href="namespaceduin_1_1fs.html#a88d57552ca003d619334fc90704292de">GlobFlags</a> flags, int *count)</td></tr>
+<tr class="memdesc:a5da0e36c95e9ec24c41d77ee3c975586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for files matching a pattern in a directory tree.  <br /></td></tr>
+<tr class="separator:a5da0e36c95e9ec24c41d77ee3c975586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d87bfc1b1996e671a6c036c7808344b" id="r_a3d87bfc1b1996e671a6c036c7808344b"><td class="memItemLeft" align="right" valign="top">SDL_EnumerationResult&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#a3d87bfc1b1996e671a6c036c7808344b">AdapterDirCallback</a> (void *userdata, const char *dirname, const char *fname)</td></tr>
+<tr class="memdesc:a3d87bfc1b1996e671a6c036c7808344b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adapter function that bridges Duin callbacks to SDL callbacks.  <br /></td></tr>
+<tr class="separator:a3d87bfc1b1996e671a6c036c7808344b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6a15102ae9e7ac7987e2a60be5c295c" id="r_ac6a15102ae9e7ac7987e2a60be5c295c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c">EnumerateDirectory</a> (const char *path, <a class="el" href="namespaceduin_1_1fs.html#aed46d3f9f264e72ab0a3665d24e03871">EnumerateDirectoryCallback</a> callback, void *userdata)</td></tr>
+<tr class="memdesc:ac6a15102ae9e7ac7987e2a60be5c295c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerate directory contents through a callback function.  <br /></td></tr>
+<tr class="separator:ac6a15102ae9e7ac7987e2a60be5c295c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Filesystem utilities for file and directory operations. </p>
@@ -168,7 +207,163 @@ Functions</h2></td></tr>
 <li>Use <a class="el" href="namespaceduin_1_1fs.html#af0a7c673b411e7583d3e377a67f42b61" title="Check if a path string represents an invalid/error state.">IsPathInvalid()</a> to check if a path string is valid</li>
 </ul>
 <dl class="section see"><dt>See also</dt><dd><a href="https://wiki.libsdl.org/SDL3/CategoryFilesystem">https://wiki.libsdl.org/SDL3/CategoryFilesystem</a> </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="aed46d3f9f264e72ab0a3665d24e03871" name="aed46d3f9f264e72ab0a3665d24e03871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed46d3f9f264e72ab0a3665d24e03871">&#9670;&#160;</a></span>EnumerateDirectoryCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">EnumerationResult</a>(_cdecl * duin::fs::EnumerateDirectoryCallback) (void *userdata, const char *dirname, const char *fname)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Callback function signature for directory enumeration. </p>
+<p>This callback is invoked once for each entry in the directory being enumerated. The callback can control enumeration flow by returning appropriate EnumerationResult values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">userdata</td><td>User-provided pointer passed through from <a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c" title="Enumerate directory contents through a callback function.">EnumerateDirectory()</a> </td></tr>
+    <tr><td class="paramname">dirname</td><td>The directory path being enumerated </td></tr>
+    <tr><td class="paramname">fname</td><td>The name of the current file or directory entry </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EnumerationResult indicating whether to continue, succeed, or fail</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Return DNFS_ENUM_CONTINUE to process all entries </dd>
+<dd>
+Return DNFS_ENUM_SUCCESS to stop early without error </dd>
+<dd>
+Return DNFS_ENUM_FAILURE to stop with error</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c" title="Enumerate directory contents through a callback function.">EnumerateDirectory()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00497">497</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+
+</div>
+</div>
+<a id="ac42cf782ae1ef2706077dc422ee1f837" name="ac42cf782ae1ef2706077dc422ee1f837"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac42cf782ae1ef2706077dc422ee1f837">&#9670;&#160;</a></span>EnumerationResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">duin::fs::EnumerationResult</a> <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">duin::fs::EnumerationResult</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return values for directory enumeration callbacks. </p>
+<p>These values control the enumeration flow when returned from an EnumerateDirectoryCallback function. </p>
+
+</div>
+</div>
+<a id="a88d57552ca003d619334fc90704292de" name="a88d57552ca003d619334fc90704292de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88d57552ca003d619334fc90704292de">&#9670;&#160;</a></span>GlobFlags</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef Uint32 <a class="el" href="namespaceduin_1_1fs.html#a88d57552ca003d619334fc90704292de">duin::fs::GlobFlags</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flags for controlling glob directory behavior. </p>
+<p>These flags are passed directly to SDL_GlobDirectory to control matching behavior. Currently supported flags:</p><ul>
+<li>SDL_GLOB_CASEINSENSITIVE: Make pattern matching case-insensitive</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586" title="Search for files matching a pattern in a directory tree.">GlobDirectory()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00422">422</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="af1d9c3469ee0d51bd768b4226bc9a6b7" name="af1d9c3469ee0d51bd768b4226bc9a6b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1d9c3469ee0d51bd768b4226bc9a6b7">&#9670;&#160;</a></span>EnumerationResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">duin::fs::EnumerationResult</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return values for directory enumeration callbacks. </p>
+<p>These values control the enumeration flow when returned from an EnumerateDirectoryCallback function. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844" name="af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844"></a>DNFS_ENUM_CONTINUE&#160;</td><td class="fielddoc"><p>Continue enumeration - process next entry </p>
+</td></tr>
+<tr><td class="fieldname"><a id="af1d9c3469ee0d51bd768b4226bc9a6b7a2627bacb9b58bff9b44749683b2e438f" name="af1d9c3469ee0d51bd768b4226bc9a6b7a2627bacb9b58bff9b44749683b2e438f"></a>DNFS_ENUM_SUCCESS&#160;</td><td class="fielddoc"><p>Stop enumeration successfully - no error occurred </p>
+</td></tr>
+<tr><td class="fieldname"><a id="af1d9c3469ee0d51bd768b4226bc9a6b7a92784e7972d33c3299a473232e7c891d" name="af1d9c3469ee0d51bd768b4226bc9a6b7a92784e7972d33c3299a473232e7c891d"></a>DNFS_ENUM_FAILURE&#160;</td><td class="fielddoc"><p>Stop enumeration with failure - an error occurred </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00473">473</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a3d87bfc1b1996e671a6c036c7808344b" name="a3d87bfc1b1996e671a6c036c7808344b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d87bfc1b1996e671a6c036c7808344b">&#9670;&#160;</a></span>AdapterDirCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_EnumerationResult duin::fs::AdapterDirCallback </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>dirname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>fname</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adapter function that bridges Duin callbacks to SDL callbacks. </p>
+<p>This internal function converts between Duin's EnumerationResult enum and SDL's SDL_EnumerationResult enum, enabling seamless integration with SDL3's directory enumeration API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">userdata</td><td>Pointer to a <a class="el" href="structduin_1_1fs_1_1DirCallbackWrapper.html" title="Internal wrapper structure for bridging custom callbacks to SDL callbacks.">DirCallbackWrapper</a> containing the actual callback </td></tr>
+    <tr><td class="paramname">dirname</td><td>The directory being enumerated </td></tr>
+    <tr><td class="paramname">fname</td><td>The current file/directory name </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SDL_EnumerationResult corresponding to the callback's return value</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Internal function - users should call <a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c" title="Enumerate directory contents through a callback function.">EnumerateDirectory()</a> instead </dd>
+<dd>
+Performs type conversion: DNFS_ENUM_* -&gt; SDL_ENUM_*</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c" title="Enumerate directory contents through a callback function.">EnumerateDirectory()</a> </dd>
+<dd>
+<a class="el" href="structduin_1_1fs_1_1DirCallbackWrapper.html" title="Internal wrapper structure for bridging custom callbacks to SDL callbacks.">DirCallbackWrapper</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00194">194</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a08310e525fc80e8d8f652941344677de" name="a08310e525fc80e8d8f652941344677de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08310e525fc80e8d8f652941344677de">&#9670;&#160;</a></span>CreateDir()</h2>
 
@@ -262,6 +457,81 @@ Works with UNC paths: "\\\\server\\share" becomes "//server/share"</dd></dl>
 <div class="ttc" id="anamespaceduin_1_1fs_html_a34824b1612a2df17c4382d1a40d67c25"><div class="ttname"><a href="namespaceduin_1_1fs.html#a34824b1612a2df17c4382d1a40d67c25">duin::fs::EnsureUnixPath</a></div><div class="ttdeci">std::string EnsureUnixPath(const std::string &amp;path)</div><div class="ttdoc">Convert Windows-style paths to Unix-style paths.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00144">Filesystem.cpp:144</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00144">144</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac6a15102ae9e7ac7987e2a60be5c295c" name="ac6a15102ae9e7ac7987e2a60be5c295c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6a15102ae9e7ac7987e2a60be5c295c">&#9670;&#160;</a></span>EnumerateDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::fs::EnumerateDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceduin_1_1fs.html#aed46d3f9f264e72ab0a3665d24e03871">EnumerateDirectoryCallback</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userdata</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enumerate directory contents through a callback function. </p>
+<p>Iterates over all entries in a directory, invoking the provided callback function for each file or subdirectory found. The callback can control enumeration flow by returning appropriate EnumerationResult values.</p>
+<p>Callback return values:</p><ul>
+<li>DNFS_ENUM_CONTINUE: Continue processing remaining entries</li>
+<li>DNFS_ENUM_SUCCESS: Stop enumeration successfully (no error)</li>
+<li>DNFS_ENUM_FAILURE: Stop enumeration with failure</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The directory path to enumerate </td></tr>
+    <tr><td class="paramname">callback</td><td>Function to call for each directory entry </td></tr>
+    <tr><td class="paramname">userdata</td><td>User-defined pointer passed to each callback invocation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if enumeration completed or callback returned DNFS_ENUM_SUCCESS, false if there was a system error or callback returned DNFS_ENUM_FAILURE</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Uses SDL_EnumerateDirectory internally </dd>
+<dd>
+The callback is invoked once per directory entry </dd>
+<dd>
+Enumeration stops immediately when callback returns non-CONTINUE value </dd>
+<dd>
+Thread-safe </dd>
+<dd>
+Unlike <a class="el" href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586" title="Search for files matching a pattern in a directory tree.">GlobDirectory()</a>, this function does not allocate memory</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://wiki.libsdl.org/SDL3/SDL_EnumerateDirectory">https://wiki.libsdl.org/SDL3/SDL_EnumerateDirectory</a> </dd>
+<dd>
+<a class="el" href="namespaceduin_1_1fs.html#aed46d3f9f264e72ab0a3665d24e03871" title="Callback function signature for directory enumeration.">EnumerateDirectoryCallback</a> </dd>
+<dd>
+<a class="el" href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586" title="Search for files matching a pattern in a directory tree.">GlobDirectory()</a></dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> callback = [](<span class="keywordtype">void</span>* userdata, <span class="keyword">const</span> <span class="keywordtype">char</span>* dirname, <span class="keyword">const</span> <span class="keywordtype">char</span>* fname) {</div>
+<div class="line">    DN_INFO(<span class="stringliteral">&quot;Found: {}&quot;</span>, fname);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844">duin::fs::DNFS_ENUM_CONTINUE</a>;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">bool</span> success = <a class="code hl_function" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c">duin::fs::EnumerateDirectory</a>(<span class="stringliteral">&quot;./data&quot;</span>, callback, <span class="keyword">nullptr</span>);</div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_ac6a15102ae9e7ac7987e2a60be5c295c"><div class="ttname"><a href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c">duin::fs::EnumerateDirectory</a></div><div class="ttdeci">bool EnumerateDirectory(const char *path, EnumerateDirectoryCallback callback, void *userdata)</div><div class="ttdoc">Enumerate directory contents through a callback function.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00200">Filesystem.cpp:200</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844"><div class="ttname"><a href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844">duin::fs::DNFS_ENUM_CONTINUE</a></div><div class="ttdeci">@ DNFS_ENUM_CONTINUE</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8h_source.html#l00475">Filesystem.h:475</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00200">200</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -531,6 +801,87 @@ The path is guaranteed to be writable by the user</dd></dl>
 <div class="ttc" id="anamespaceduin_1_1fs_html_a66aa2c0cbab3dfa4bf220b1d8d6282fb"><div class="ttname"><a href="namespaceduin_1_1fs.html#a66aa2c0cbab3dfa4bf220b1d8d6282fb">duin::fs::GetPrefPath</a></div><div class="ttdeci">std::string GetPrefPath(const std::string &amp;org, const std::string &amp;app)</div><div class="ttdoc">Get the user's preference/settings directory for the application.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00099">Filesystem.cpp:99</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00099">99</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5da0e36c95e9ec24c41d77ee3c975586" name="a5da0e36c95e9ec24c41d77ee3c975586"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5da0e36c95e9ec24c41d77ee3c975586">&#9670;&#160;</a></span>GlobDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char ** duin::fs::GlobDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>pattern</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceduin_1_1fs.html#a88d57552ca003d619334fc90704292de">GlobFlags</a>&#160;</td>
+          <td class="paramname"><em>flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Search for files matching a pattern in a directory tree. </p>
+<p>Enumerates files in a directory that match a wildcard pattern and returns an array of matching file paths. The search is filtered by the pattern, which can contain wildcard characters.</p>
+<p>Wildcard patterns:</p><ul>
+<li><code>*</code> - Matches any sequence of characters (except path separators)</li>
+<li><code>?</code> - Matches exactly one character (except path separators)</li>
+<li>Wildcards never match the path separator <code>/</code></li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The directory path to search </td></tr>
+    <tr><td class="paramname">pattern</td><td>The wildcard pattern to match (e.g., "*.txt", "test_*") Pass NULL to return all files without filtering </td></tr>
+    <tr><td class="paramname">flags</td><td>SDL_GlobFlags controlling search behavior (e.g., SDL_GLOB_CASEINSENSITIVE) </td></tr>
+    <tr><td class="paramname">count</td><td>Output parameter that receives the number of matching files (can be NULL) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Array of C-strings containing matching file paths, NULL-terminated Returns NULL on failure. Must be freed with SDL_free() when done.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Uses SDL_GlobDirectory internally </dd>
+<dd>
+The returned array is NULL-terminated for convenient iteration </dd>
+<dd>
+Subdirectories are specified with <code>/</code> separator </dd>
+<dd>
+Pattern matching is case-sensitive by default (use SDL_GLOB_CASEINSENSITIVE flag) </dd>
+<dd>
+Thread-safe</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://wiki.libsdl.org/SDL3/SDL_GlobDirectory">https://wiki.libsdl.org/SDL3/SDL_GlobDirectory</a> </dd>
+<dd>
+<a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c" title="Enumerate directory contents through a callback function.">EnumerateDirectory()</a></dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keywordtype">int</span> count = 0;</div>
+<div class="line"><span class="keywordtype">char</span> **results = <a class="code hl_function" href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586">duin::fs::GlobDirectory</a>(<span class="stringliteral">&quot;./data&quot;</span>, <span class="stringliteral">&quot;*.json&quot;</span>, 0, &amp;count);</div>
+<div class="line"><span class="keywordflow">if</span> (results) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; count; i++) {</div>
+<div class="line">        DN_INFO(<span class="stringliteral">&quot;Found: {}&quot;</span>, results[i]);</div>
+<div class="line">    }</div>
+<div class="line">    SDL_free(results);</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a5da0e36c95e9ec24c41d77ee3c975586"><div class="ttname"><a href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586">duin::fs::GlobDirectory</a></div><div class="ttdeci">char ** GlobDirectory(const std::string &amp;path, const std::string &amp;pattern, GlobFlags flags, int *count)</div><div class="ttdoc">Search for files matching a pattern in a directory tree.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00189">Filesystem.cpp:189</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00189">189</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>

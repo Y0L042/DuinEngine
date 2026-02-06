@@ -30,6 +30,8 @@ var hierarchy =
     ] ],
     [ "duin::CollisionShape", "classduin_1_1CollisionShape.html", null ],
     [ "duin::Color", "structduin_1_1Color.html", null ],
+    [ "duin::ComponentData", "structduin_1_1ComponentData.html", null ],
+    [ "duin::ComponentSerializer", "classduin_1_1ComponentSerializer.html", null ],
     [ "duin::ConfigValue", "classduin_1_1ConfigValue.html", null ],
     [ "ConstDataIterator", "classConstDataIterator.html", null ],
     [ "duin::JSONValue::ConstDataIterator", "classduin_1_1JSONValue_1_1ConstDataIterator.html", null ],
@@ -55,6 +57,7 @@ var hierarchy =
     [ "DebugUvVertex", "structDebugUvVertex.html", null ],
     [ "DebugVertex", "structDebugVertex.html", null ],
     [ "duin::ECSTag::DeleteExternalRef", "structduin_1_1ECSTag_1_1DeleteExternalRef.html", null ],
+    [ "duin::fs::DirCallbackWrapper", "structduin_1_1fs_1_1DirCallbackWrapper.html", null ],
     [ "duin::ECSComponent::DynamicBodyComponent", "structduin_1_1ECSComponent_1_1DynamicBodyComponent.html", null ],
     [ "duin::ECSManager", "classduin_1_1ECSManager.html", null ],
     [ "std::enable_shared_from_this", null, [
@@ -63,6 +66,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "duin::Entity", "classduin_1_1Entity.html", null ],
+    [ "duin::EntityData", "structduin_1_1EntityData.html", null ],
     [ "duin::Event", "classduin_1_1Event.html", [
       [ "duin::InputEvent", "classduin_1_1InputEvent.html", null ],
       [ "duin::WindowEvent", "classduin_1_1WindowEvent.html", null ]
@@ -335,6 +339,7 @@ var hierarchy =
     [ "duin::ECSComponent::PhysicsStaticCubeComponent", "structduin_1_1ECSComponent_1_1PhysicsStaticCubeComponent.html", null ],
     [ "duin::PosColorVertex", "structduin_1_1PosColorVertex.html", null ],
     [ "duin::ECSComponent::Position2D", "structduin_1_1ECSComponent_1_1Position2D.html", null ],
+    [ "duin::ECSComponent::Position3D", "structduin_1_1ECSComponent_1_1Position3D.html", null ],
     [ "duin::Process", "structduin_1_1Process.html", null ],
     [ "Program", "structProgram.html", null ],
     [ "duin::ECSTag::PxDynamic", "structduin_1_1ECSTag_1_1PxDynamic.html", null ],
@@ -363,10 +368,8 @@ var hierarchy =
     [ "duin::ECSComponent::Rotation3D", "structduin_1_1ECSComponent_1_1Rotation3D.html", null ],
     [ "duin::ECSComponent::Scale2D", "structduin_1_1ECSComponent_1_1Scale2D.html", null ],
     [ "duin::ECSComponent::Scale3D", "structduin_1_1ECSComponent_1_1Scale3D.html", null ],
+    [ "duin::Scene", "structduin_1_1Scene.html", null ],
     [ "duin::SceneDefinition", "classduin_1_1SceneDefinition.html", null ],
-    [ "duin::ECSComponent::Serialisable", "structduin_1_1ECSComponent_1_1Serialisable.html", [
-      [ "duin::ECSComponent::Position3D", "structduin_1_1ECSComponent_1_1Position3D.html", null ]
-    ] ],
     [ "duin::ECSTag::SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ],
     [ "duin::ShaderProgram", "structduin_1_1ShaderProgram.html", null ],
     [ "duin::Signal< types >", "classduin_1_1Signal.html", null ],

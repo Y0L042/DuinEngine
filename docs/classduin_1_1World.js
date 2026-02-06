@@ -2,8 +2,8 @@ var classduin_1_1World =
 [
     [ "World", "classduin_1_1World.html#a5671bad8729f782406f211f7d00d3201", null ],
     [ "~World", "classduin_1_1World.html#ac2ea76616131c376b7ab78d3d070c8b7", null ],
-    [ "Component", "classduin_1_1World.html#abb21ae62756ee2f7676208667a2e82d2", null ],
-    [ "CreateEntity", "classduin_1_1World.html#ae6e5226edb0a8d0e318fed45dbefcef2", null ],
+    [ "Component", "classduin_1_1World.html#aa110e80c9d0963701eb9ed784d118802", null ],
+    [ "CreateEntity", "classduin_1_1World.html#a654cf2c828a2fbf955739cf31add3876", null ],
     [ "Defer", "classduin_1_1World.html#a3a8d661c83d637671e28ff341806dc98", null ],
     [ "DeferBegin", "classduin_1_1World.html#a475f2d4b926dafc8dbffc49b8f928a87", null ],
     [ "DeferEnd", "classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a", null ],
@@ -12,6 +12,7 @@ var classduin_1_1World =
     [ "DeleteWith", "classduin_1_1World.html#a233e74dcebf1c77fffac169056ba95ff", null ],
     [ "DeleteWith", "classduin_1_1World.html#ae257698b1a693e83ce3b3040396b0adb", null ],
     [ "DeleteWith", "classduin_1_1World.html#ae55aaaf75442844fb0883c554685f4fe", null ],
+    [ "GetWorldEntity", "classduin_1_1World.html#a57713d20670fcc10b30a35a0f67812ca", null ],
     [ "IsAlive", "classduin_1_1World.html#aa0d9964391cedfd38a85466dfabde49a", null ],
     [ "IsDeferred", "classduin_1_1World.html#a53417b177bde457d39d578c660299028", null ],
     [ "IsValid", "classduin_1_1World.html#a1edc0c919ab3fb24b50c98ec02c9c253", null ],

@@ -9,7 +9,7 @@ var searchData=
   ['clone_6',['clone',['../classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d',1,'duin::Entity::Clone()'],['../classduin_1_1JSONValue.html#ad0452d11bf60219d89c177929bd47e15',1,'duin::JSONValue::Clone()']]],
   ['collisionshape_7',['CollisionShape',['../classduin_1_1CollisionShape.html#a6aa804363ecb98861dce849988faf6f0',1,'duin::CollisionShape']]],
   ['color_8',['color',['../structduin_1_1Color.html#a7ca20fca4e115e00ffb21a3ee62de958',1,'duin::Color::Color(float _r, float _g, float _b, float _a=1.0f)'],['../structduin_1_1Color.html#a45ded110b62a62e2933eed8635bb9b78',1,'duin::Color::Color(int _r, int _g, int _b, int _a=255)'],['../structduin_1_1Color.html#a5a2004e658f0ee5a2893c2a8fda676dc',1,'duin::Color::Color(uint32_t hex)']]],
-  ['component_9',['Component',['../classduin_1_1World.html#abb21ae62756ee2f7676208667a2e82d2',1,'duin::World']]],
+  ['component_9',['Component',['../classduin_1_1World.html#aa110e80c9d0963701eb9ed784d118802',1,'duin::World']]],
   ['connect_10',['Connect',['../classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944',1,'duin::Signal']]],
   ['connectallsignals_11',['ConnectAllSignals',['../classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5',1,'duin::GameObject']]],
   ['constdataiterator_12',['ConstDataIterator',['../classduin_1_1JSONValue_1_1ConstDataIterator.html#a28c647e730087dc242294392d803d31c',1,'duin::JSONValue::ConstDataIterator']]],
@@ -19,7 +19,7 @@ var searchData=
   ['createapplication_16',['CreateApplication',['../Application_8h.html#a9b4b304a3d35f01eae8e2f4b067cc4eb',1,'duin']]],
   ['createchildobject_17',['createchildobject',['../classduin_1_1Application.html#ad0801824608dece0311e089d4999cb63',1,'duin::Application::CreateChildObject()'],['../classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe',1,'duin::GameObject::CreateChildObject()']]],
   ['createdir_18',['CreateDir',['../namespaceduin_1_1fs.html#a08310e525fc80e8d8f652941344677de',1,'duin::fs']]],
-  ['createentity_19',['CreateEntity',['../classduin_1_1World.html#ae6e5226edb0a8d0e318fed45dbefcef2',1,'duin::World']]],
+  ['createentity_19',['CreateEntity',['../classduin_1_1World.html#a654cf2c828a2fbf955739cf31add3876',1,'duin::World']]],
   ['createentityfromjson_20',['CreateEntityFromJSON',['../classduin_1_1ECSManager.html#a1268fa6f425a1f39316fdc757e5e706e',1,'duin::ECSManager']]],
   ['createinputaction_21',['CreateInputAction',['../InputActions_8h.html#af245978b85d96ad56dc36dc6fd8850b1',1,'duin']]],
   ['createprocess_22',['CreateProcess',['../Process_8h.html#a66aa7e632561ba16e7089d64c2732760',1,'duin']]]

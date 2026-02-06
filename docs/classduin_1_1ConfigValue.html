@@ -145,11 +145,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a29e492374cdd5ac05e275077de9201ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada63b2984132bddb215d61578a72d0b1" id="r_ada63b2984132bddb215d61578a72d0b1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classduin_1_1ConfigValue.html">ConfigValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ConfigValue.html#ada63b2984132bddb215d61578a72d0b1">operator[]</a> (const std::string &amp;key) const</td></tr>
 <tr class="separator:ada63b2984132bddb215d61578a72d0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad70f11fd5ffa982174b16220e30484f0" id="r_ad70f11fd5ffa982174b16220e30484f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ConfigValue.html#ad70f11fd5ffa982174b16220e30484f0">ConfigValue</a> (const toml::value &amp;value)</td></tr>
+<tr class="separator:ad70f11fd5ffa982174b16220e30484f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a461924a1fdce91d60e2a3364b3bd78a1" id="r_a461924a1fdce91d60e2a3364b3bd78a1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1ConfigValue.html">ConfigValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ConfigValue.html#a461924a1fdce91d60e2a3364b3bd78a1">Parse</a> (const std::string &amp;data)</td></tr>
-<tr class="separator:a461924a1fdce91d60e2a3364b3bd78a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09b9e49adaa5241e5871887d94367648" id="r_a09b9e49adaa5241e5871887d94367648"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1ConfigValue.html">ConfigValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ConfigValue.html#a09b9e49adaa5241e5871887d94367648">Parse</a> (const std::string &amp;string)</td></tr>
+<tr class="separator:a09b9e49adaa5241e5871887d94367648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e3a3d19c4f8189e0cb7661fda309cb0" id="r_a3e3a3d19c4f8189e0cb7661fda309cb0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1ConfigValue.html">ConfigValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ConfigValue.html#a3e3a3d19c4f8189e0cb7661fda309cb0">ParseFile</a> (const std::string &amp;data)</td></tr>
+<tr class="separator:a3e3a3d19c4f8189e0cb7661fda309cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81185e2f34203338e7ff409f87098597" id="r_a81185e2f34203338e7ff409f87098597"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1ConfigValue.html#a81185e2f34203338e7ff409f87098597">Format</a> (const <a class="el" href="classduin_1_1ConfigValue.html">ConfigValue</a> &amp;value)</td></tr>
 <tr class="separator:a81185e2f34203338e7ff409f87098597"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93cc5e0c6410708d47155fa72fd0ff12" id="r_a93cc5e0c6410708d47155fa72fd0ff12"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
@@ -161,7 +165,7 @@ Static Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="ConfigValue_8h_source.html#l00009">9</a> of file <a class="el" href="ConfigValue_8h_source.html">ConfigValue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a63dda413cd42d6100a77f0cdc00453c8" name="a63dda413cd42d6100a77f0cdc00453c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63dda413cd42d6100a77f0cdc00453c8">&#9670;&#160;</a></span>ConfigValue()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a63dda413cd42d6100a77f0cdc00453c8">&#9670;&#160;</a></span>ConfigValue() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -175,7 +179,27 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00028">28</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00044">44</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad70f11fd5ffa982174b16220e30484f0" name="ad70f11fd5ffa982174b16220e30484f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad70f11fd5ffa982174b16220e30484f0">&#9670;&#160;</a></span>ConfigValue() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">duin::ConfigValue::ConfigValue </td>
+          <td>(</td>
+          <td class="paramtype">const toml::value &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00059">59</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -205,7 +229,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8h_source.html#l00047">47</a> of file <a class="el" href="ConfigValue_8h_source.html">ConfigValue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8h_source.html#l00061">61</a> of file <a class="el" href="ConfigValue_8h_source.html">ConfigValue.h</a>.</p>
 
 </div>
 </div>
@@ -224,7 +248,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00067">67</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00085">85</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -243,7 +267,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00062">62</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00080">80</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -263,7 +287,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00057">57</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00075">75</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -283,7 +307,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00052">52</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00068">68</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -341,7 +365,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00022">22</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00037">37</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -371,7 +395,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8h_source.html#l00061">61</a> of file <a class="el" href="ConfigValue_8h_source.html">ConfigValue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8h_source.html#l00075">75</a> of file <a class="el" href="ConfigValue_8h_source.html">ConfigValue.h</a>.</p>
 
 </div>
 </div>
@@ -390,7 +414,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00032">32</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00048">48</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -409,7 +433,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00077">77</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00095">95</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -428,7 +452,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00037">37</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00053">53</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -447,7 +471,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00072">72</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00090">90</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -467,12 +491,12 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00082">82</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00100">100</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a461924a1fdce91d60e2a3364b3bd78a1" name="a461924a1fdce91d60e2a3364b3bd78a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a461924a1fdce91d60e2a3364b3bd78a1">&#9670;&#160;</a></span>Parse()</h2>
+<a id="a09b9e49adaa5241e5871887d94367648" name="a09b9e49adaa5241e5871887d94367648"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09b9e49adaa5241e5871887d94367648">&#9670;&#160;</a></span>Parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -482,6 +506,34 @@ template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classduin_1_1ConfigValue.html">ConfigValue</a> duin::ConfigValue::Parse </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>string</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00010">10</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3e3a3d19c4f8189e0cb7661fda309cb0" name="a3e3a3d19c4f8189e0cb7661fda309cb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e3a3d19c4f8189e0cb7661fda309cb0">&#9670;&#160;</a></span>ParseFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classduin_1_1ConfigValue.html">ConfigValue</a> duin::ConfigValue::ParseFile </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -495,7 +547,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00010">10</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8cpp_source.html#l00025">25</a> of file <a class="el" href="ConfigValue_8cpp_source.html">ConfigValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -535,7 +587,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ConfigValue_8h_source.html#l00067">67</a> of file <a class="el" href="ConfigValue_8h_source.html">ConfigValue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ConfigValue_8h_source.html#l00081">81</a> of file <a class="el" href="ConfigValue_8h_source.html">ConfigValue.h</a>.</p>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keyevent_0',['KeyEvent',['../namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434f',1,'duin::Input']]]
+  ['enumerationresult_0',['EnumerationResult',['../namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7',1,'duin::fs']]]
 ];

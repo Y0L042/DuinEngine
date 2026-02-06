@@ -25,7 +25,7 @@ var searchData=
   ['getdouble_22',['GetDouble',['../classduin_1_1JSONValue.html#a49c8e95be8708f8f3855c2451479146f',1,'duin::JSONValue']]],
   ['getelementcount_23',['GetElementCount',['../classduin_1_1LookupVector.html#aff88cbc2f8825230df5fb5d7f2594b66',1,'duin::LookupVector']]],
   ['getentityid_24',['GetEntityId',['../classduin_1_1Iter.html#ab34b636ad0867e1a764bdba61e44a60a',1,'duin::Iter']]],
-  ['getevent_25',['getevent',['../structduin_1_1InputDevice__Mouse.html#a7719ceccc0344904749de20b45d2f3f2',1,'duin::InputDevice_Mouse::GetEvent()'],['../structduin_1_1InputDevice.html#a9aaed59e5658b755debca78d5f459aa6',1,'duin::InputDevice::GetEvent()'],['../structduin_1_1InputDevice__Keyboard.html#a67c78d52818421af45f8f244e21e4027',1,'duin::InputDevice_Keyboard::GetEvent()']]],
+  ['getevent_25',['getevent',['../structduin_1_1InputDevice.html#a9aaed59e5658b755debca78d5f459aa6',1,'duin::InputDevice::GetEvent()'],['../structduin_1_1InputDevice__Keyboard.html#a67c78d52818421af45f8f244e21e4027',1,'duin::InputDevice_Keyboard::GetEvent()'],['../structduin_1_1InputDevice__Mouse.html#a7719ceccc0344904749de20b45d2f3f2',1,'duin::InputDevice_Mouse::GetEvent()']]],
   ['getexitcode_26',['GetExitcode',['../structduin_1_1Process.html#a124d0409bd95d93375dbd72dd0e46508',1,'duin::Process']]],
   ['getfieldid_27',['GetFieldId',['../classduin_1_1Iter.html#abdbed478e7ac54b8a0db4be5ef1f4efa',1,'duin::Iter']]],
   ['getfileextension_28',['GetFileExtension',['../namespaceduin_1_1fs.html#a6d693d2c74b67cb771e9c1eec7a33bca',1,'duin::fs']]],
@@ -74,11 +74,14 @@ var searchData=
   ['getticks_71',['GetTicks',['../Application_8h.html#a523caab0292b7a9380423c1f6510913f',1,'duin']]],
   ['getticksmilli_72',['GetTicksMilli',['../Application_8h.html#a2e3492e29447c56ec3ea3d00173cde1d',1,'duin']]],
   ['getticksnano_73',['GetTicksNano',['../Application_8h.html#a56daf91a3353537ae8b8a81def736cb3',1,'duin']]],
-  ['getuuid_74',['getuuid',['../classduin_1_1CollisionObject.html#ab86c6209327f16321b476c8d3b7bb5c9',1,'duin::CollisionObject::GetUUID()'],['../classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37',1,'duin::GameObject::GetUUID()'],['../classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a',1,'duin::Signal::GetUUID()']]],
+  ['getuuid_74',['getuuid',['../classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a',1,'duin::Signal::GetUUID()'],['../classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37',1,'duin::GameObject::GetUUID()'],['../classduin_1_1CollisionObject.html#ab86c6209327f16321b476c8d3b7bb5c9',1,'duin::CollisionObject::GetUUID()']]],
   ['getvalue_75',['getvalue',['../classduin_1_1JSONValue_1_1ConstDataIterator.html#a118620bec332988b2d781a30e20461e8',1,'duin::JSONValue::ConstDataIterator::GetValue()'],['../classduin_1_1JSONValue_1_1DataIterator.html#ac4ee40686baf8284d17836b07a6295e0',1,'duin::JSONValue::DataIterator::GetValue()'],['../classduin_1_1LookupVector.html#aeb3e47bc4e73a8e647595b95f72b551f',1,'duin::LookupVector::GetValue()']]],
   ['getvar_76',['getvar',['../classduin_1_1Iter.html#a605380cbbde0f206b4cd4301d34ee778',1,'duin::Iter::GetVar(const char *name) const'],['../classduin_1_1Iter.html#ad91d5c77084ab65941e79e08f8c49fb1',1,'duin::Iter::GetVar(int varId) const']]],
   ['getwindowheight_77',['GetWindowHeight',['../Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4',1,'duin']]],
   ['getwindowwidth_78',['GetWindowWidth',['../Application_8h.html#a62446673e5e806e310ac470542c2ace9',1,'duin']]],
   ['getworld_79',['GetWorld',['../classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4',1,'duin::Entity']]],
-  ['global_80',['Global',['../structduin_1_1ECSTag_1_1Global.html',1,'duin::ECSTag']]]
+  ['getworldentity_80',['GetWorldEntity',['../classduin_1_1World.html#a57713d20670fcc10b30a35a0f67812ca',1,'duin::World']]],
+  ['global_81',['Global',['../structduin_1_1ECSTag_1_1Global.html',1,'duin::ECSTag']]],
+  ['globdirectory_82',['GlobDirectory',['../namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586',1,'duin::fs']]],
+  ['globflags_83',['GlobFlags',['../namespaceduin_1_1fs.html#a88d57552ca003d619334fc90704292de',1,'duin::fs']]]
 ];

@@ -1,8 +1,6 @@
 <map id="duin::ECSComponent::Position3D" name="duin::ECSComponent::Position3D">
-<area shape="rect" id="Node000001" title="3D position component." alt="" coords="27,229,185,269"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1ECSComponent_1_1Serialisable.html" title="Base interface for serializable components." alt="" coords="5,66,164,106"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,119,106,229,101,229,86,120"/>
-<area shape="rect" id="Node000003" href="$structduin_1_1Vector3.html" title=" " alt="" coords="189,73,295,99"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,111,179,168,125,230,121,227,175,165,222,107"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="271,65,289,62,305,65,317,72,322,86,316,101,300,109,279,109,258,101,260,96,280,103,298,104,312,98,317,86,313,76,303,70,289,68,272,71"/>
+<area shape="rect" id="Node000001" title="3D position component." alt="" coords="5,229,164,269"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1Vector3.html" title=" " alt="" coords="31,73,138,99"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,112,87,229,82,229,82,112"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="114,65,132,62,148,65,160,72,165,86,158,101,142,109,122,109,100,101,102,96,123,103,141,104,154,98,159,86,156,76,146,70,132,68,115,71"/>
 </map>
