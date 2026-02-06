@@ -1213,6 +1213,470 @@ TEST_SUITE("Filesystem - Edge Cases")
     }
 }
 
+/**
+ * @brief Test suite for GlobDirectory function.
+ *
+ * GlobDirectory searches for files matching a pattern in a directory.
+ * It wraps SDL_GlobDirectory and returns an array of matching file paths.
+ *
+ * Key behaviors tested:
+ * - Wildcard pattern matching ("*", "*.txt", "test_*")
+ * - Non-recursive directory search (does not search subdirectories)
+ * - Empty directories return 0 count
+ * - Non-existent directories are handled gracefully
+ * - Results must be freed with SDL_free()
+ */
+TEST_SUITE("Filesystem - GlobDirectory")
+{
+    TEST_CASE("Glob all files in directory")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Create test files with different extensions
+        std::string dir = ARTIFACTS_DIR + "/glob_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/file1.txt", "text file 1");
+        CreateTestFile(dir + "/file2.txt", "text file 2");
+        CreateTestFile(dir + "/data.json", "json file");
+        CreateTestFile(dir + "/config.ini", "ini file");
+
+        int count = 0;
+        char **results = duin::fs::GlobDirectory(dir.c_str(), "*", 0, &count);
+
+        // Should find all 4 files
+        CHECK(results != nullptr);
+        CHECK(count == 4);
+
+        // Cleanup
+        if (results != nullptr)
+        {
+            SDL_free(results);
+        }
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Glob with wildcard pattern - *.txt")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        std::string dir = ARTIFACTS_DIR + "/glob_pattern_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/file1.txt", "text file 1");
+        CreateTestFile(dir + "/file2.txt", "text file 2");
+        CreateTestFile(dir + "/data.json", "json file");
+        CreateTestFile(dir + "/readme.md", "markdown file");
+
+        int count = 0;
+        char **results = duin::fs::GlobDirectory(dir.c_str(), "*.txt", 0, &count);
+
+        // Should find only 2 .txt files
+        CHECK(results != nullptr);
+        CHECK(count == 2);
+
+        // Cleanup
+        if (results != nullptr)
+        {
+            SDL_free(results);
+        }
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Glob with specific filename pattern")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        std::string dir = ARTIFACTS_DIR + "/glob_specific_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/test_file1.txt", "test 1");
+        CreateTestFile(dir + "/test_file2.txt", "test 2");
+        CreateTestFile(dir + "/other_file.txt", "other");
+        CreateTestFile(dir + "/data.json", "json");
+
+        int count = 0;
+        char **results = duin::fs::GlobDirectory(dir.c_str(), "test_*", 0, &count);
+
+        // Should find only files starting with "test_"
+        CHECK(results != nullptr);
+        CHECK(count == 2);
+
+        // Cleanup
+        if (results != nullptr)
+        {
+            SDL_free(results);
+        }
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Glob empty directory")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        std::string dir = ARTIFACTS_DIR + "/glob_empty_test";
+        std::filesystem::create_directories(dir);
+
+        int count = 0;
+        char **results = duin::fs::GlobDirectory(dir.c_str(), "*", 0, &count);
+
+        // Should return 0 files
+        CHECK(count == 0);
+
+        // Cleanup
+        if (results != nullptr)
+        {
+            SDL_free(results);
+        }
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Glob non-existent directory")
+    {
+        std::string dir = ARTIFACTS_DIR + "/nonexistent_glob_dir";
+
+        int count = 0;
+        char **results = duin::fs::GlobDirectory(dir.c_str(), "*", 0, &count);
+
+        // Should handle gracefully - likely return null or 0 count
+        CHECK((results == nullptr || count == 0));
+
+        // Cleanup
+        if (results != nullptr)
+        {
+            SDL_free(results);
+        }
+    }
+
+    TEST_CASE("Glob with multiple file types")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        std::string dir = ARTIFACTS_DIR + "/glob_multi_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/image1.png", "png image");
+        CreateTestFile(dir + "/image2.jpg", "jpg image");
+        CreateTestFile(dir + "/document.pdf", "pdf doc");
+        CreateTestFile(dir + "/data.txt", "text");
+
+        int count = 0;
+        char **results = duin::fs::GlobDirectory(dir.c_str(), "*.png", 0, &count);
+
+        // Should find only .png files
+        CHECK(results != nullptr);
+        CHECK(count == 1);
+
+        // Cleanup
+        if (results != nullptr)
+        {
+            SDL_free(results);
+        }
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Glob with nested directories - no recursion")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        std::string dir = ARTIFACTS_DIR + "/glob_nested_test";
+        std::string subdir = dir + "/subdir";
+        std::filesystem::create_directories(dir);
+        std::filesystem::create_directories(subdir);
+
+        // Create file in root directory and subdirectory
+        CreateTestFile(dir + "/root_file.txt", "root");
+        CreateTestFile(subdir + "/nested_file.txt", "nested");
+
+        int count = 0;
+        char **results = duin::fs::GlobDirectory(dir.c_str(), "*.txt", 0, &count);
+
+        // Should find only root level file (SDL_GlobDirectory is not recursive by default)
+        // The file in the subdirectory should NOT be found
+        CHECK(results != nullptr);
+        CHECK(count == 1);
+
+        // Cleanup
+        if (results != nullptr)
+        {
+            SDL_free(results);
+        }
+        std::filesystem::remove_all(dir);
+    }
+}
+
+/**
+ * @brief Test suite for EnumerateDirectory function.
+ *
+ * EnumerateDirectory iterates over directory contents and invokes a callback
+ * for each file/directory found. It wraps SDL_EnumerateDirectory.
+ *
+ * Key behaviors tested:
+ * - Callback invocation for each directory entry
+ * - Userdata passing to callbacks
+ * - Early termination via DNFS_ENUM_SUCCESS
+ * - Error handling via DNFS_ENUM_FAILURE
+ * - Empty directory handling
+ * - Non-existent directory error handling
+ * - File name collection through callbacks
+ *
+ * Enumeration results:
+ * - DNFS_ENUM_CONTINUE: Continue enumerating
+ * - DNFS_ENUM_SUCCESS: Stop enumeration successfully
+ * - DNFS_ENUM_FAILURE: Stop enumeration with failure
+ */
+TEST_SUITE("Filesystem - EnumerateDirectory")
+{
+    // Helper function to count enumerated items
+    static int enumeratedCount;
+    static std::vector<std::string> enumeratedFiles;
+
+    // Callback that counts all enumerated items and collects filenames
+    static duin::fs::EnumerationResult CountCallback(void *userdata, const char *dirname, const char *fname)
+    {
+        enumeratedCount++;
+        if (fname != nullptr)
+        {
+            enumeratedFiles.push_back(fname);
+        }
+        return duin::fs::DNFS_ENUM_CONTINUE;
+    }
+
+    // Callback that stops enumeration after 3 items (tests DNFS_ENUM_SUCCESS)
+    static duin::fs::EnumerationResult StopAfterThreeCallback(void *userdata, const char *dirname, const char *fname)
+    {
+        enumeratedCount++;
+        if (fname != nullptr)
+        {
+            enumeratedFiles.push_back(fname);
+        }
+        // Stop after 3 items
+        if (enumeratedCount >= 3)
+        {
+            return duin::fs::DNFS_ENUM_SUCCESS;
+        }
+        return duin::fs::DNFS_ENUM_CONTINUE;
+    }
+
+    // Callback that fails immediately (tests DNFS_ENUM_FAILURE)
+    static duin::fs::EnumerationResult FailImmediatelyCallback(void *userdata, const char *dirname, const char *fname)
+    {
+        enumeratedCount++;
+        return duin::fs::DNFS_ENUM_FAILURE;
+    }
+
+    TEST_CASE("Enumerate all files in directory")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/enum_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/file1.txt", "text 1");
+        CreateTestFile(dir + "/file2.txt", "text 2");
+        CreateTestFile(dir + "/data.json", "json");
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), CountCallback, nullptr);
+
+        // Should enumerate all files
+        CHECK(result == true);
+        CHECK(enumeratedCount == 3);
+        CHECK(enumeratedFiles.size() == 3);
+
+        // Cleanup
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Enumerate empty directory")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/enum_empty_test";
+        std::filesystem::create_directories(dir);
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), CountCallback, nullptr);
+
+        // Should succeed but enumerate nothing
+        CHECK(result == true);
+        CHECK(enumeratedCount == 0);
+
+        // Cleanup
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Enumerate with early stop (DNFS_ENUM_SUCCESS)")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/enum_stop_test";
+        std::filesystem::create_directories(dir);
+
+        // Create 5 files
+        for (int i = 0; i < 5; i++)
+        {
+            CreateTestFile(dir + "/file" + std::to_string(i) + ".txt", "content");
+        }
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), StopAfterThreeCallback, nullptr);
+
+        // Should stop after 3 files
+        CHECK(result == true);
+        CHECK(enumeratedCount == 3);
+
+        // Cleanup
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Enumerate with failure (DNFS_ENUM_FAILURE)")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/enum_fail_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/file1.txt", "text 1");
+        CreateTestFile(dir + "/file2.txt", "text 2");
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), FailImmediatelyCallback, nullptr);
+
+        // Should fail immediately
+        CHECK(result == false);
+        CHECK(enumeratedCount == 1); // Only first callback executed
+
+        // Cleanup
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Enumerate non-existent directory")
+    {
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/nonexistent_enum_dir";
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), CountCallback, nullptr);
+
+        // Should fail gracefully
+        CHECK(result == false);
+        CHECK(enumeratedCount == 0);
+    }
+
+    TEST_CASE("Enumerate with userdata passing")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/enum_userdata_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/file1.txt", "text 1");
+        CreateTestFile(dir + "/file2.txt", "text 2");
+
+        // Custom callback that uses userdata
+        // This tests that userdata is correctly passed through the adapter layer
+        int customCounter = 0;
+        auto customCallback = [](void *userdata, const char *dirname,
+                                 const char *fname) -> duin::fs::EnumerationResult {
+            int *counter = static_cast<int *>(userdata);
+            if (counter != nullptr)
+            {
+                (*counter)++;
+            }
+            return duin::fs::DNFS_ENUM_CONTINUE;
+        };
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), customCallback, &customCounter);
+
+        // Should pass userdata correctly through the callback
+        CHECK(result == true);
+        CHECK(customCounter == 2);
+
+        // Cleanup
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Enumerate directory with subdirectories")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/enum_subdir_test";
+        std::string subdir = dir + "/subdir";
+        std::filesystem::create_directories(dir);
+        std::filesystem::create_directories(subdir);
+
+        CreateTestFile(dir + "/file1.txt", "text 1");
+        CreateTestFile(subdir + "/file2.txt", "text 2");
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), CountCallback, nullptr);
+
+        // Should enumerate files and subdirectories at root level
+        // Note: Behavior depends on SDL3 implementation
+        CHECK(result == true);
+        CHECK(enumeratedCount >= 1); // At least the root file
+
+        // Cleanup
+        std::filesystem::remove_all(dir);
+    }
+
+    TEST_CASE("Enumerate and collect filenames")
+    {
+        std::filesystem::create_directories(ARTIFACTS_DIR);
+
+        // Reset counters
+        enumeratedCount = 0;
+        enumeratedFiles.clear();
+
+        std::string dir = ARTIFACTS_DIR + "/enum_collect_test";
+        std::filesystem::create_directories(dir);
+
+        CreateTestFile(dir + "/alpha.txt", "a");
+        CreateTestFile(dir + "/beta.txt", "b");
+        CreateTestFile(dir + "/gamma.txt", "c");
+
+        bool result = duin::fs::EnumerateDirectory(dir.c_str(), CountCallback, nullptr);
+
+        // Should collect all filenames
+        CHECK(result == true);
+        CHECK(enumeratedFiles.size() == 3);
+
+        // Check that all expected files are present (order may vary)
+        bool hasAlpha = std::find(enumeratedFiles.begin(), enumeratedFiles.end(), "alpha.txt") != enumeratedFiles.end();
+        bool hasBeta = std::find(enumeratedFiles.begin(), enumeratedFiles.end(), "beta.txt") != enumeratedFiles.end();
+        bool hasGamma = std::find(enumeratedFiles.begin(), enumeratedFiles.end(), "gamma.txt") != enumeratedFiles.end();
+
+        CHECK(hasAlpha);
+        CHECK(hasBeta);
+        CHECK(hasGamma);
+
+        // Cleanup
+        std::filesystem::remove_all(dir);
+    }
+}
+
 // Cleanup test - ensure artifacts directory is present but empty at the end
 TEST_SUITE("Filesystem - Cleanup")
 {

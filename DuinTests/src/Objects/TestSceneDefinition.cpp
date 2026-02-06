@@ -1,5 +1,5 @@
 #include <doctest.h>
-#include <Duin/Objects/SceneDefinition.h>
+#include <Duin/Scene/SceneDefinition.h>
 #include <Duin/IO/JSONValue.h>
 #include <string>
 #include <vector>

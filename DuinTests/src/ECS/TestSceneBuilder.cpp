@@ -1,6 +1,6 @@
 #include "TestConfig.h"
 #include <doctest.h>
-#include <Duin/ECS/SceneBuilder.h>
+#include <Duin/Scene/SceneBuilder.h>
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/IO/JSONValue.h>
 #include <Duin/IO/FileUtils.h>
