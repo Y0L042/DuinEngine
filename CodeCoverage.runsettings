@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0">
+        <Configuration>
+          <CodeCoverage>
+            <!-- Only include DuinTests.exe -->
+            <ModulePaths>
+              <Include>
+                <ModulePath>.*\\DuinTests\.exe$</ModulePath>
+              </Include>
+            </ModulePaths>
+            
+            <!-- Filter by namespace - only duin::* -->
+            <Functions>
+              <Include>
+                <Function>^duin::.*</Function>
+              </Include>
+              <Exclude>
+                <Function>^fmt::.*</Function>
+                <Function>^spdlog::.*</Function>
+                <Function>^doctest::.*</Function>
+                <Function>^std::.*</Function>
+                <Function>^rapidjson::.*</Function>
+                <Function>^toml::.*</Function>
+                <Function>^flecs::.*</Function>
+                <Function>^physx::.*</Function>
+                <Function>.*DOCTEST_ANON.*</Function>
+              </Exclude>
+            </Functions>
+            
+            <!-- Exclude vendor source files -->
+            <Sources>
+              <Exclude>
+                <Source>.*\\vendor\\.*</Source>
+              </Exclude>
+              <Include>
+                <Source>.*\\Duin\\src\\Duin\\.*</Source>
+                <Source>.*\\DuinTests\\src\\.*</Source>
+              </Include>
+            </Sources>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

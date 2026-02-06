@@ -1,7 +1,7 @@
-SolutionRoot = ".."
+SolutionRoot = "../.."
 ProjectRoot = "."
 
-project "DuinTests"
+project "Sandbox"
     location ""
     kind "ConsoleApp"
     language "C++"
@@ -17,9 +17,10 @@ project "DuinTests"
 
     files 
     {
-        "./src/**.h",
-        "./src/**.hpp",
-        "./src/**.cpp",
+		"./src/**.h",
+		"./src/**.hpp",
+		"./src/**.c",
+		"./src/**.cpp",
     }
 
     includedirs(prependRoot(SolutionRoot, global_includedirs))
@@ -28,44 +29,33 @@ project "DuinTests"
         ProjectRoot .. "/src",
     }
 
-    LocalIncludeDir = {}
     externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
 	externalincludedirs
 	{
 	}
 
     libdirs(prependRoot(SolutionRoot, global_libdirs))
-	libdirs
-	{
-	}
 
     defines(global_defines)
 
     links(global_links)
-	links
-	{
-	}
 
     filter "system:windows"
         buildoptions { "/openmp" }
         cppdialect "C++20"
-
+    
     filter "action:vs*"
         buildoptions { 
             "/utf-8", 
             '/Zc:__cplusplus', 
             '/Zc:preprocessor' ,
-        }
+        }  -- Changed: Added /utf-8 flag for Unicode support
         flags { "MultiProcessorCompile" }
     filter {}
 
     filter "configurations:Debug"
         defines "DN_DEBUG"
         symbols "On"
-        -- Enable code coverage for Debug builds
-        buildoptions { "/Z7" }  -- Full symbolic debug information
-        linkoptions { "/PROFILE" }  -- Enable profiling/coverage
-        flags { "NoIncrementalLink" }  -- Required for /PROFILE
 
     filter "configurations:Release"
         defines "DN_RELEASE"

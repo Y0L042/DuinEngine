@@ -83,7 +83,7 @@ project "Duin"
 		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
         ProjectRoot .. "/vendor/toml11/build/src/Debug",
-        ProjectRoot .. "/vendor/reflectcpp/build/Release",
+        ProjectRoot .. "/vendor/reflectcpp/build/Debug",
     }
     -- defines(global_defines)
     defines 
@@ -138,6 +138,10 @@ project "Duin"
     filter "configurations:Debug"
         defines { "DN_DEBUG", "_DEBUG" }
         symbols "On"
+        -- Enable code coverage for Debug builds
+        -- buildoptions { "/Z7" }  -- Full symbolic debug information
+        -- linkoptions { "/PROFILE" }  -- Enable profiling/coverage
+        -- flags { "NoIncrementalLink" }  -- Required for /PROFILE
 
     filter "configurations:Release"
         defines { "DN_RELEASE", "NDEBUG" }

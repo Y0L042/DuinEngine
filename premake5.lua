@@ -67,7 +67,7 @@ workspace "Duin"
         "Duin/vendor/flecs/build_vs2022/Debug",	
         "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
         "Duin/vendor/toml11/build/src/Debug",
-        "Duin/vendor/reflectcpp/build/Release",
+        "Duin/vendor/reflectcpp/build/Debug",
     }
     global_defines = 
     {
@@ -107,4 +107,4 @@ workspace "Duin"
     include "DuinTests"
     include "DuinEditor"
     include "ExampleProjects/DuinFPS"
-    -- include "ExampleProjects/Sandbox"
+    include "ExampleProjects/Sandbox"
