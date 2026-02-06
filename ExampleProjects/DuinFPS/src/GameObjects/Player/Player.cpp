@@ -5,7 +5,7 @@
 
 #include <Duin.h>
 
-#include <Duin/ECS/SceneBuilder.h>
+#include <Duin/Scene/SceneBuilder.h>
 #include <Duin/IO/IOModule.h>
 
 flecs::entity player;
@@ -13,7 +13,7 @@ flecs::entity cameraRoot;
 flecs::entity playerCamera;
 
 flecs::ref<duin::Camera> cameraRef;
-duin::GameStateMachine playerStateMachine;
+std::shared_ptr<duin::GameStateMachine> playerStateMachine;
 
 void Player::Ready()
 {
@@ -66,12 +66,12 @@ void Player::Ready()
 
     // cameraRef = flecs::ref<duin::Camera>(ecs.world, playerCamera);
     // duin::Camera* cam = cameraRef.get();
-
-    playerStateMachine.SwitchState<State_OnGround>();
+    
+    playerStateMachine = CreateChildObject<duin::GameStateMachine>();
+    playerStateMachine->SwitchState<State_OnGround>();
 }
 void Player::OnEvent(duin::Event e)
 {
-    playerStateMachine.ExecuteOnEvent(e);
 }
 
 void Player::PhysicsUpdate(double delta)
@@ -79,11 +79,8 @@ void Player::PhysicsUpdate(double delta)
     duin::Vector2 mouseInput(duin::Input::GetMouseDelta());
     player.set<MouseInputVec2>({{mouseInput}});
     cameraRoot.set<MouseInputVec2>({{mouseInput}});
-
-    playerStateMachine.ExecutePhysicsUpdate(delta);
 }
 
 void Player::DrawUI()
 {
-    playerStateMachine.ExecuteDrawUI();
 }

@@ -16,7 +16,7 @@ duin::Application *duin::CreateApplication()
 duin::DebugConsole debugConsole;
 duin::DebugWatchlist debugWatchlist;
 
-duin::GameStateMachine mainStateMachine;
+std::shared_ptr<duin::GameStateMachine> mainStateMachine;
 
 void Game::Initialize()
 {
@@ -27,33 +27,28 @@ void Game::Initialize()
 void Game::Ready()
 {
     debugConsole.Log("Game is ready!");
-    mainStateMachine.SwitchState<GameState_Gameplay>();
+    mainStateMachine = CreateChildObject<duin::GameStateMachine>();
+    mainStateMachine->SwitchState<GameState_Gameplay>();
 }
 
 void Game::OnEvent(duin::Event event)
 {
-    mainStateMachine.ExecuteOnEvent(event);
 }
 
 void Game::Update(double rDelta)
 {
-    mainStateMachine.ExecuteUpdate(rDelta);
 }
 
 void Game::PhysicsUpdate(double pDelta)
 {
-    mainStateMachine.ExecutePhysicsUpdate(pDelta);
 }
 
 void Game::Draw()
 {
-    mainStateMachine.ExecuteDraw();
 }
 
 void Game::DrawUI()
 {
-    mainStateMachine.ExecuteDrawUI();
-
     debugWatchlist.Draw("Watchlist");
     debugConsole.Draw("Console");
 }

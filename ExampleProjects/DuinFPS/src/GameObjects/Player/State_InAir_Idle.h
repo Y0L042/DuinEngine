@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Duin/Core/Utils/StateMachine.h>
+#include <Duin/Objects/GameStateMachine.h>
 #include <Duin/Core/Events/EventsModule.h>
 
 class State_InAir_Idle : public duin::GameState

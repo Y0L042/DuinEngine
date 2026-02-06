@@ -6,6 +6,8 @@
 #include "Singletons.h"
 #include "GameObjects/Player/Player.h"
 
+#include <memory>
+
 class Player : public duin::GameObject
 {
   public:
@@ -20,4 +22,4 @@ class Player : public duin::GameObject
 extern flecs::entity player;
 extern flecs::entity cameraRoot;
 extern flecs::entity playerCamera;
-extern duin::GameStateMachine playerStateMachine;
+extern std::shared_ptr<duin::GameStateMachine> playerStateMachine;

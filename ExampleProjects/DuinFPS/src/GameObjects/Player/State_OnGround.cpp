@@ -10,7 +10,7 @@
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
-duin::GameStateMachine onGroundStateMachine;
+std::shared_ptr<duin::GameStateMachine> onGroundStateMachine;
 
 void State_OnGround::Enter()
 {
@@ -18,7 +18,8 @@ void State_OnGround::Enter()
 
     player.add<OnGroundTag>();
     player.remove<CanGravity>();
-    onGroundStateMachine.SwitchState<State_OnGround_Idle>();
+    onGroundStateMachine = CreateChildObject<duin::GameStateMachine>();
+    onGroundStateMachine->SwitchState<State_OnGround_Idle>();
 }
 
 void State_OnGround::OnEvent(duin::Event e)
@@ -28,12 +29,10 @@ void State_OnGround::OnEvent(duin::Event e)
         player.add<JumpTag>();
     }
 
-    onGroundStateMachine.ExecuteOnEvent(e);
 }
 
 void State_OnGround::Update(double delta)
 {
-    onGroundStateMachine.ExecuteUpdate(delta);
 }
 
 void State_OnGround::PhysicsUpdate(double delta)
@@ -49,23 +48,18 @@ void State_OnGround::PhysicsUpdate(double delta)
         }
     }
 
-    onGroundStateMachine.ExecutePhysicsUpdate(delta);
 }
 
 void State_OnGround::Draw()
 {
-    onGroundStateMachine.ExecuteDraw();
 }
 
 void State_OnGround::DrawUI()
 {
     debugWatchlist.Post("PlayerIsOnFloor: ", "%d", 1);
-
-    onGroundStateMachine.ExecuteDrawUI();
 }
 
 void State_OnGround::Exit()
 {
     player.remove<OnGroundTag>();
-    onGroundStateMachine.FlushStack();
 }
