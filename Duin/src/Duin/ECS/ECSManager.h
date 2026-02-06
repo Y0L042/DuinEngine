@@ -15,6 +15,7 @@
 #include <memory.h>
 
 #include <flecs.h>
+#include <rfl.hpp>
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Debug/DNLog.h"
 #include "Duin/Core/Utils/UUID.h"
@@ -98,24 +99,6 @@ struct ActiveCamera
  */
 namespace ECSComponent
 {
-/**
- * @struct Serialisable
- * @brief Base interface for serializable components.
- */
-struct Serialisable
-{
-    virtual std::string GetName()
-    {
-        return std::string();
-    }
-    virtual std::string SerialiseToText()
-    {
-        return std::string();
-    }
-    virtual void DeserialiseFromText(const std::string &data)
-    {
-    }
-};
 
 /**
  * @name 2D Components
@@ -139,6 +122,18 @@ struct Position2D
     Position2D(float x, float y) : value(x, y)
     {
     }
+
+    using ReflectionType = struct
+    {
+        Vector2 v;
+    };
+    Position2D(const ReflectionType &impl) : value(impl.v)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{value};
+    }
 };
 
 /** @brief 2D rotation component (angle in radians). */
@@ -152,6 +147,18 @@ struct Rotation2D
 
     Rotation2D(float r) : value(r)
     {
+    }
+
+    using ReflectionType = struct
+    {
+        float v;
+    };
+    Rotation2D(const ReflectionType &impl) : value(impl.v)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{value};
     }
 };
 
@@ -170,6 +177,18 @@ struct Scale2D
 
     Scale2D(float x, float y) : value(x, y)
     {
+    }
+
+    using ReflectionType = struct
+    {
+        Vector2 v;
+    };
+    Scale2D(const ReflectionType &impl) : value(impl.v)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{value};
     }
 };
 
@@ -198,6 +217,18 @@ struct Velocity2D
     Velocity2D(float x, float y) : value(x, y)
     {
     }
+
+    using ReflectionType = struct
+    {
+        Vector2 v;
+    };
+    Velocity2D(const ReflectionType &impl) : value(impl.v)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{value};
+    }
 };
 
 /**
@@ -207,7 +238,7 @@ struct Velocity2D
  */
 
 /** @brief 3D position component. */
-struct Position3D : public Serialisable
+struct Position3D
 {
     Vector3 value;
 
@@ -223,19 +254,16 @@ struct Position3D : public Serialisable
     {
     }
 
-    std::string GetName() override
+    using ReflectionType = struct
     {
-        return "Position3D";
+        Vector3 v;
+    };
+    Position3D(const ReflectionType &impl) : value(impl.v)
+    {
     }
-
-    std::string SerialiseToText() override
+    const ReflectionType &reflection() const
     {
-
-        return std::string();
-    }
-
-    void DeserialiseFromText(const std::string &data) override
-    {
+        return ReflectionType{value};
     }
 };
 
@@ -255,6 +283,18 @@ struct Rotation3D
     Rotation3D(float x, float y, float z, float w) : value(x, y, z, w)
     {
     }
+
+    using ReflectionType = struct
+    {
+        Quaternion v;
+    };
+    Rotation3D(const ReflectionType &impl) : value(impl.v)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{value};
+    }
 };
 
 /** @brief 3D scale component. */
@@ -272,6 +312,18 @@ struct Scale3D
 
     Scale3D(float x, float y, float z) : value(x, y, z)
     {
+    }
+
+    using ReflectionType = struct
+    {
+        Vector3 v;
+    };
+    Scale3D(const ReflectionType &impl) : value(impl.v)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{value};
     }
 };
 
@@ -740,6 +792,20 @@ struct Transform3D
         return GetGlobalRotation(entity_);
     }
 
+    using ReflectionType = struct
+    {
+        Vector3 pos;
+        Vector3 scale;
+        Quaternion rot;
+    };
+    Transform3D(const ReflectionType &impl) : position_(impl.pos), scale_(impl.scale), rotation_(impl.rot)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{position_, scale_, rotation_};
+    }
+
   private:
     Vector3 position_;
     Vector3 scale_;
@@ -906,6 +972,18 @@ struct Velocity3D
     Velocity3D(float x, float y, float z) : value(x, y, z)
     {
     }
+
+    using ReflectionType = struct
+    {
+        Vector3 v;
+    };
+    Velocity3D(const ReflectionType &impl) : value(impl.v)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{value};
+    }
 };
 
 /**
@@ -941,6 +1019,19 @@ struct CharacterBodyComponent
     CharacterBodyComponent(std::shared_ptr<CharacterBody> cb) : body(cb)
     {
     }
+
+    using ReflectionType = struct
+    {
+        CharacterBodyDesc v;
+    };
+    // TODO should it create the body directly, or should the body be seen as a resource?
+    CharacterBodyComponent(const ReflectionType &impl) : body(CharacterBody::Create(impl.v))
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{body->GetDescriptor()};
+    }
 };
 
 /** @brief Static physics body component. */
@@ -954,6 +1045,19 @@ struct StaticBodyComponent
 
     StaticBodyComponent(std::shared_ptr<StaticBody> sb) : body(sb)
     {
+    }
+
+    // TODO
+    using ReflectionType = struct
+    {
+        void *v;
+    };
+    StaticBodyComponent(const ReflectionType &impl) : body(nullptr)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{nullptr};
     }
 };
 
@@ -969,6 +1073,19 @@ struct KinematicBodyComponent
     KinematicBodyComponent(std::shared_ptr<KinematicBody> kb) : body(kb)
     {
     }
+
+    // TODO
+    using ReflectionType = struct
+    {
+        void *v;
+    };
+    KinematicBodyComponent(const ReflectionType &impl) : body(nullptr)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{nullptr};
+    }
 };
 
 /** @brief Dynamic (fully simulated) physics body component. */
@@ -982,6 +1099,19 @@ struct DynamicBodyComponent
 
     DynamicBodyComponent(std::shared_ptr<DynamicBody> db) : body(db)
     {
+    }
+
+    // TODO
+    using ReflectionType = struct
+    {
+        void *v;
+    };
+    DynamicBodyComponent(const ReflectionType &impl) : body(nullptr)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{nullptr};
     }
 };
 

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <flecs.h>
+#include "../ComponentSerializer.h"
 #include "Query.h"
+#include "Entity.h"
 
 namespace duin
 {
@@ -26,7 +28,7 @@ class World
      * @param name Optional name for the entity.
      * @return The created Entity object.
      */
-    Entity CreateEntity(const std::string &name);
+    Entity CreateEntity(const std::string &name = "");
     /**
      * @brief Delete an entity by its ID.
      * @param id The ID of the entity to delete.
@@ -167,15 +169,36 @@ class World
      * @tparam T The component type.
      */
     template <typename T>
-    void Component()
+    Entity Component()
     {
-        flecsWorld.component<T>();
+        flecs::entity typeEntity = flecsWorld.component<T>();
+
+        Entity e;
+        e.SetFlecsEntity(typeEntity);
+        e.SetWorld(this);
+
+        auto &si = ComponentSerializer::Get();
+        si.RegisterComponent<T>(flecsWorld, typeEntity);
+
+        return e;
     }
 
     template <typename... Comps>
     duin::QueryBuilder<Comps...> QueryBuilder() const
     {
         return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>());
+    }
+
+    /**
+     * @brief Get the world as an entity.
+     * @return Entity representing the world itself.
+     */
+    Entity GetWorldEntity()
+    {
+        Entity e;
+        e.SetWorld(this);
+        e.SetFlecsEntity(flecsWorld.entity());
+        return e;
     }
 
     flecs::world GetFlecsWorld();

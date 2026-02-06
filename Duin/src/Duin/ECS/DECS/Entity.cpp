@@ -11,7 +11,16 @@ duin::Entity duin::Entity::GetTarget(uint64_t relationship, int32_t index) const
     return Entity(flecsEntity.target(relationship, index));
 }
 
+flecs::entity duin::Entity::GetFlecsEntity() const
+{
+    return flecsEntity;
+}
+
 duin::Entity::Entity(const flecs::entity &entity) : flecsEntity(entity)
+{
+}
+
+duin::Entity::Entity(const flecs::entity &entity, World *world) : flecsEntity(entity), world(world)
 {
 }
 

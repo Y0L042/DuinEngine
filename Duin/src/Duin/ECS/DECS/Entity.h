@@ -338,6 +338,13 @@ class Entity
         return flecsEntity.get<T>();
     }
 
+    const void* Get(Entity e)
+    {
+        return flecsEntity.get(e.GetID());
+    }
+
+
+
     /**
      * @brief Try to get a const pointer to a component.
      * @tparam T The component type.
@@ -383,6 +390,10 @@ class Entity
     {
         flecsEntity.set<T>(std::move(value));
         return flecsEntity.get_mut<T>();
+    }
+
+    void IterateEachComponent()
+    {
     }
 
     // ========== UNIFIED PAIR API ==========
@@ -744,6 +755,19 @@ class Entity
         assert(false);
     }
 
+    template <typename Func>
+    void ForEachComponent(Func &&func) const
+    {
+        flecsEntity.each([&](flecs::id id) {
+            // id represents the component type
+            // You can get type information and invoke the callback
+            flecs::entity fe = id.entity();
+            Entity e(fe, world);
+
+            func(e);
+        });
+    }
+
     /**
      * @brief Get the target entity for a relationship.
      * @param relationship The relationship ID.
@@ -751,6 +775,8 @@ class Entity
      * @return The target entity.
      */
     Entity GetTarget(uint64_t relationship, int32_t index = 0) const;
+
+    flecs::entity GetFlecsEntity() const;
 
   private:
     friend class World;
@@ -765,11 +791,20 @@ class Entity
      * @param entity The flecs entity.
      */
     Entity(const flecs::entity &entity);
+
+    /**
+     * @brief Construct an entity from a flecs entity, and a world.
+     * @param entity The flecs entity.
+     * @param world The World.
+     */
+    Entity(const flecs::entity &entity, World *world);
+
     /**
      * @brief Set the world pointer for this entity.
      * @param world The world pointer.
      */
     void SetWorld(World *world);
+
     /**
      * @brief Set the internal flecs entity handle.
      * @param entity The flecs entity.
