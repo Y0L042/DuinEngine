@@ -52,7 +52,7 @@ void State_SelectProject::InitProjectList()
 
     // Read editor config
 
-    duin::ConfigValue file = duin::ConfigValue::Parse(EDITOR_CFG_PATH);
+    duin::ConfigValue file = duin::ConfigValue::ParseFile(EDITOR_CFG_PATH);
     if (file.IsEmpty())
     {
         DN_WARN("EditorConfig empty. Select project root.");
@@ -134,15 +134,13 @@ void State_SelectProject::LoadSelectedProject()
                 DN_INFO("Project loaded: {0}, File found: {1}", projectPath.string(), entry.path().string());
 
                 Project activeProject(entry.path());
-                activeProject.projectDir = entry.path();
-                DN_INFO("Project loaded: {0}", activeProject.projectDir.string());
                 Singleton::SetActiveProject(activeProject);
 
                 fileManager.SetRootPath(projectPath.string());
                 duin::SetImGuiINIPath(projectPath.string() + "/imgui.ini"); // Set per-project imgui ini
 
-                SwitchState<State_SceneEditor>();
                 DN_INFO("Switching to Editor State");
+                SwitchState<State_SceneEditor>();
                 break;
             }
         }
