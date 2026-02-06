@@ -7,22 +7,38 @@
 
 namespace duin
 {
-ConfigValue ConfigValue::Parse(const std::string &data)
+ConfigValue ConfigValue::Parse(const std::string &string)
 {
-    const auto input = toml::try_parse(data.c_str());
+    if (string.empty())
+        return ConfigValue();
+    try
+    {
+        return ConfigValue(toml::parse_str(string));
+    }
+    catch (const std::exception &e)
+    {
+        DN_CORE_WARN("ConfigValue::Parse failed: {}", e.what());
+        return ConfigValue();
+    }
+}
+
+ConfigValue ConfigValue::ParseFile(const std::string &file)
+{
+    const auto input = toml::try_parse(file.c_str());
     if (input.is_ok())
     {
         ConfigValue value(input.unwrap());
         return value;
     }
-    DN_CORE_ERROR("ConfigValue failed to parse {}", data);
+    DN_CORE_ERROR("ConfigValue failed to parse {}", file);
     return ConfigValue();
 }
 
 std::string ConfigValue::Format(const ConfigValue &value)
 {
-    std::string out = toml::format(value.modValue_);
-    return out;
+    if (value.IsEmpty())
+        return "";
+    return toml::format(value.modValue_);
 }
 
 ConfigValue::ConfigValue()
@@ -51,6 +67,8 @@ ConfigValue::ConfigValue(std::initializer_list<std::pair<const std::string, toml
 
 bool ConfigValue::Contains(const std::string &key)
 {
+    if (!modValue_.is_table())
+        return false;
     return modValue_.contains(key);
 }
 
@@ -71,19 +89,19 @@ int ConfigValue::AsInteger() const
 
 bool ConfigValue::IsTable() const
 {
-    return false;
+    return modValue_.is_table();
 }
 
 bool ConfigValue::IsArray() const
 {
-    return false;
+    return modValue_.is_array();
 }
 
 const ConfigValue ConfigValue::operator[](const std::string &key) const
 {
-    if (!modValue_.contains(key))
+    if (!modValue_.is_table() || !modValue_.contains(key))
     {
-        return ConfigValue(); // Return empty value or throw
+        return ConfigValue();
     }
     return ConfigValue(modValue_.at(key));
 }
