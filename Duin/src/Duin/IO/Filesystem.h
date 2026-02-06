@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <stdint.h>
+#include <SDL3/SDL_filesystem.h>
 
 /**
  * @namespace duin::fs
@@ -408,10 +410,171 @@ std::string EnsureUnixPath(const std::string &path);
  */
 std::string MapVirtualToSystemPath(const std::string &path);
 
-// TODO:
-// EnumerateDirectory
-// GetPathInfo
-// GetUserFolder
-// GlobDirectory
+/**
+ * @brief Flags for controlling glob directory behavior.
+ *
+ * These flags are passed directly to SDL_GlobDirectory to control matching behavior.
+ * Currently supported flags:
+ * - SDL_GLOB_CASEINSENSITIVE: Make pattern matching case-insensitive
+ *
+ * @see GlobDirectory()
+ */
+typedef Uint32 GlobFlags;
+
+/**
+ * @brief Search for files matching a pattern in a directory tree.
+ *
+ * Enumerates files in a directory that match a wildcard pattern and returns
+ * an array of matching file paths. The search is filtered by the pattern,
+ * which can contain wildcard characters.
+ *
+ * Wildcard patterns:
+ * - `*` - Matches any sequence of characters (except path separators)
+ * - `?` - Matches exactly one character (except path separators)
+ * - Wildcards never match the path separator `/`
+ *
+ * @param path The directory path to search
+ * @param pattern The wildcard pattern to match (e.g., "*.txt", "test_*")
+ *                Pass NULL to return all files without filtering
+ * @param flags SDL_GlobFlags controlling search behavior (e.g., SDL_GLOB_CASEINSENSITIVE)
+ * @param count Output parameter that receives the number of matching files (can be NULL)
+ * @return Array of C-strings containing matching file paths, NULL-terminated
+ *         Returns NULL on failure. Must be freed with SDL_free() when done.
+ *
+ * @note Uses SDL_GlobDirectory internally
+ * @note The returned array is NULL-terminated for convenient iteration
+ * @note Subdirectories are specified with `/` separator
+ * @note Pattern matching is case-sensitive by default (use SDL_GLOB_CASEINSENSITIVE flag)
+ * @note Thread-safe
+ *
+ * @see https://wiki.libsdl.org/SDL3/SDL_GlobDirectory
+ * @see EnumerateDirectory()
+ *
+ * Example:
+ * @code
+ * int count = 0;
+ * char **results = duin::fs::GlobDirectory("./data", "*.json", 0, &count);
+ * if (results) {
+ *     for (int i = 0; i < count; i++) {
+ *         DN_INFO("Found: {}", results[i]);
+ *     }
+ *     SDL_free(results);
+ * }
+ * @endcode
+ */
+char **GlobDirectory(const std::string &path, const std::string &pattern, GlobFlags flags, int *count);
+
+/**
+ * @brief Return values for directory enumeration callbacks.
+ *
+ * These values control the enumeration flow when returned from an
+ * EnumerateDirectoryCallback function.
+ */
+typedef enum EnumerationResult
+{
+    DNFS_ENUM_CONTINUE, /**< Continue enumeration - process next entry */
+    DNFS_ENUM_SUCCESS,  /**< Stop enumeration successfully - no error occurred */
+    DNFS_ENUM_FAILURE   /**< Stop enumeration with failure - an error occurred */
+} EnumerationResult;
+
+/**
+ * @brief Callback function signature for directory enumeration.
+ *
+ * This callback is invoked once for each entry in the directory being enumerated.
+ * The callback can control enumeration flow by returning appropriate EnumerationResult values.
+ *
+ * @param userdata User-provided pointer passed through from EnumerateDirectory()
+ * @param dirname The directory path being enumerated
+ * @param fname The name of the current file or directory entry
+ * @return EnumerationResult indicating whether to continue, succeed, or fail
+ *
+ * @note Return DNFS_ENUM_CONTINUE to process all entries
+ * @note Return DNFS_ENUM_SUCCESS to stop early without error
+ * @note Return DNFS_ENUM_FAILURE to stop with error
+ *
+ * @see EnumerateDirectory()
+ */
+typedef EnumerationResult(_cdecl *EnumerateDirectoryCallback)(void *userdata, const char *dirname, const char *fname);
+
+/**
+ * @brief Internal wrapper structure for bridging custom callbacks to SDL callbacks.
+ *
+ * This structure holds both the user's callback function and their userdata pointer,
+ * allowing AdapterDirCallback() to properly forward calls to the user's callback
+ * while translating between Duin's EnumerationResult and SDL's SDL_EnumerationResult.
+ *
+ * @note This is an implementation detail and should not be used directly
+ * @see AdapterDirCallback()
+ * @see EnumerateDirectory()
+ */
+struct DirCallbackWrapper
+{
+    EnumerateDirectoryCallback callback; /**< User's callback function */
+    void *userdata;                      /**< User's data pointer */
+};
+
+/**
+ * @brief Adapter function that bridges Duin callbacks to SDL callbacks.
+ *
+ * This internal function converts between Duin's EnumerationResult enum and
+ * SDL's SDL_EnumerationResult enum, enabling seamless integration with SDL3's
+ * directory enumeration API.
+ *
+ * @param userdata Pointer to a DirCallbackWrapper containing the actual callback
+ * @param dirname The directory being enumerated
+ * @param fname The current file/directory name
+ * @return SDL_EnumerationResult corresponding to the callback's return value
+ *
+ * @note Internal function - users should call EnumerateDirectory() instead
+ * @note Performs type conversion: DNFS_ENUM_* -> SDL_ENUM_*
+ *
+ * @see EnumerateDirectory()
+ * @see DirCallbackWrapper
+ */
+SDL_EnumerationResult AdapterDirCallback(void *userdata, const char *dirname, const char *fname);
+
+/**
+ * @brief Enumerate directory contents through a callback function.
+ *
+ * Iterates over all entries in a directory, invoking the provided callback
+ * function for each file or subdirectory found. The callback can control
+ * enumeration flow by returning appropriate EnumerationResult values.
+ *
+ * Callback return values:
+ * - DNFS_ENUM_CONTINUE: Continue processing remaining entries
+ * - DNFS_ENUM_SUCCESS: Stop enumeration successfully (no error)
+ * - DNFS_ENUM_FAILURE: Stop enumeration with failure
+ *
+ * @param path The directory path to enumerate
+ * @param callback Function to call for each directory entry
+ * @param userdata User-defined pointer passed to each callback invocation
+ * @return true if enumeration completed or callback returned DNFS_ENUM_SUCCESS,
+ *         false if there was a system error or callback returned DNFS_ENUM_FAILURE
+ *
+ * @note Uses SDL_EnumerateDirectory internally
+ * @note The callback is invoked once per directory entry
+ * @note Enumeration stops immediately when callback returns non-CONTINUE value
+ * @note Thread-safe
+ * @note Unlike GlobDirectory(), this function does not allocate memory
+ *
+ * @see https://wiki.libsdl.org/SDL3/SDL_EnumerateDirectory
+ * @see EnumerateDirectoryCallback
+ * @see GlobDirectory()
+ *
+ * Example:
+ * @code
+ * auto callback = [](void* userdata, const char* dirname, const char* fname) {
+ *     DN_INFO("Found: {}", fname);
+ *     return duin::fs::DNFS_ENUM_CONTINUE;
+ * };
+ *
+ * bool success = duin::fs::EnumerateDirectory("./data", callback, nullptr);
+ * @endcode
+ */
+bool EnumerateDirectory(const char *path, EnumerateDirectoryCallback callback, void *userdata);
+
+// TODO: Future SDL3 filesystem functions to wrap:
+// GetPathInfo - Get information about a filesystem path
+// GetUserFolder - Get a specific user folder (Documents, Downloads, etc.)
 
 } // namespace duin::fs

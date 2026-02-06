@@ -185,3 +185,20 @@ std::string duin::fs::MapVirtualToSystemPath(const std::string &path)
 
     return sysPath;
 }
+
+char **duin::fs::GlobDirectory(const std::string &path, const std::string& pattern, GlobFlags flags, int *count)
+{
+    return ::SDL_GlobDirectory(path.c_str(), pattern.c_str(), flags, count);
+}
+
+SDL_EnumerationResult duin::fs::AdapterDirCallback(void *userdata, const char *dirname, const char *fname)
+{
+    auto *wrapper = static_cast<DirCallbackWrapper *>(userdata);
+    return static_cast<SDL_EnumerationResult>(wrapper->callback(wrapper->userdata, dirname, fname));
+}
+
+bool duin::fs::EnumerateDirectory(const char *path, EnumerateDirectoryCallback callback, void *userdata)
+{
+    DirCallbackWrapper wrapper{callback, userdata};
+    return ::SDL_EnumerateDirectory(path, AdapterDirCallback, &wrapper);
+}
