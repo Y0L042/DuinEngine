@@ -1,15 +1,14 @@
 #pragma once
 #include <string>
 
-typedef enum ArcheType
-{
+
+typedef enum ArcheType {
     P_DIRECTORY,
     P_FILE,
     P_INVALID
 } ArcheType;
 
-typedef enum FileType
-{
+typedef enum FileType {
     INVALID_EXT,
     IMAGE_EXT,
     AUDIO_EXT,
@@ -18,8 +17,7 @@ typedef enum FileType
     TEXT_EXT
 } FileType;
 
-typedef enum FileExt
-{
+typedef enum FileExt {
     FILEEXT_NULL,
 
     // Image Extensions
@@ -82,8 +80,8 @@ typedef enum FileExt
     FILEEXT_ECST
 } FileExt;
 
-ArcheType GetArcheType(const std::string &path);
-FileType GetFileType(const std::string &extension);
+ArcheType GetArcheType(const std::string& path);
+FileType GetFileType(const std::string& extension);
 
 struct FileExtension
 {

@@ -11,6 +11,8 @@
 #include <memory>
 #include <string>
 
+#include "Singleton.h"
+
 FSNode::FSNode(std::string path) : path(path), fileType(FileType::INVALID_EXT), fileExt(FileExt::FILEEXT_NULL)
 {
     if (fs::is_directory(path))
@@ -27,8 +29,6 @@ FSNode::FSNode(std::string path) : path(path), fileType(FileType::INVALID_EXT), 
 
 void FSNode::Traverse()
 {
-    // if (fs::is_empty(path)) { return; }
-
     try
     {
         for (const auto &dirEntry : fs::directory_iterator(path))
@@ -63,6 +63,10 @@ void FSNode::SetFileType()
             break;
         }
     }
+}
+
+void FSNode::Recurse()
+{
 }
 
 FileManager &FileManager::Get()
@@ -101,28 +105,35 @@ FSNode &FileManager::GetRootNode()
     return rootNode;
 }
 
-static void RecurseTree(FSNode *node);
+std::vector<std::string> FileManager::GetFilesByExt(const std::string &ext)
+{
+    int count = 0;
+    char **array = duin::fs::GlobDirectory(Singleton::GetActiveProject().GetPathAsString(), ext, 0, &count);
+    return std::vector<std::string>(array, array + count);
+}
+
+static void RecurseTreePrint(FSNode *node);
 void FileManager::PrintTree()
 {
     std::string depth = "";
     DN_INFO("File Tree:");
     DN_INFO("{}", rootNode.name);
-    RecurseTree(&rootNode);
+    RecurseTreePrint(&rootNode);
 }
 
-static void RecurseTree(FSNode *node)
+static void RecurseTreePrint(FSNode *node)
 {
     for (FSNode *nodePtr : node->subNodes)
     {
         if (nodePtr->type == ArcheType::P_DIRECTORY)
         {
             DN_INFO("{}/", nodePtr->path);
-            RecurseTree(nodePtr);
+            RecurseTreePrint(nodePtr);
         }
         else
         {
             DN_INFO(" - {}", nodePtr->name);
-            RecurseTree(nodePtr);
+            RecurseTreePrint(nodePtr);
         }
     }
 }

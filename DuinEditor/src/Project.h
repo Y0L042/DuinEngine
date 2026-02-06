@@ -8,12 +8,13 @@ class Project
 {
   public:
     int valid = 0;
-    std::string projectTitle;
+    fs::path projectCfg;
     fs::path projectDir;
+    std::string projectTitle;
 
     Project() = default;
-    Project(std::string projectDir);
-    Project(fs::path projectDir);
+    Project(std::string projectCfg);
+    Project(fs::path projectCfg);
 
     std::string GetPathAsString();
 

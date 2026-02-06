@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <filesystem>
+#include <Duin/IO/IOModule.h>
 #include "FileTypes.h"
 
 namespace fs = std::filesystem;
@@ -23,10 +24,12 @@ struct FSNode
     FSNode() = default;
     FSNode(std::string path);
 
-    void Traverse();
     void SetFileType();
+    void Recurse();
 
   private:
+    friend class FileManager;
+    void Traverse();
 };
 
 class FileManager
@@ -40,6 +43,8 @@ class FileManager
     void SetRootPath(const std::string &rootPath);
     FSNode &GetRootNode();
     void PrintTree();
+
+    std::vector<std::string> GetFilesByExt(const std::string &ext);
 
   private:
     fs::path rootPath;

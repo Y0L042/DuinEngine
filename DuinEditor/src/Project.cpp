@@ -3,24 +3,25 @@
 
 #include <string>
 
-Project::Project(fs::path projectDir)
+Project::Project(fs::path projectCfg)
 {
-    DN_INFO("Selected project path {}", projectDir.string());
-    this->projectDir = projectDir;
-    if (this->projectDir.has_filename())
-    {
-        projectTitle = this->projectDir.parent_path().filename().string();
-    }
-    else
-    {
-        fs::path::iterator it = this->projectDir.end();
-        --it; // skip trailing slash
-        --it; // get last folder
-        projectTitle = *it->c_str();
-    }
+    this->projectCfg = projectCfg;
+    projectTitle = this->projectCfg.parent_path().filename().string();
+    projectDir = this->projectCfg.parent_path();
+    // if (this->projectCfg.has_filename())
+    //{
+    // }
+    // else
+    //{
+    //     fs::path::iterator it = this->projectCfg.end();
+    //     --it; // skip trailing slash
+    //     --it; // get last folder
+    //     projectTitle = *it->c_str();
+    //     projectDir = it->parent_path();
+    // }
 }
 
-Project::Project(std::string projectDir) : Project(fs::path(projectDir))
+Project::Project(std::string projectCfg) : Project(fs::path(projectCfg))
 {
 }
 
