@@ -7,6 +7,7 @@
 #pragma once
 
 #include <PxPhysicsAPI.h>
+#include <rfl.hpp>
 
 namespace duin
 {
@@ -34,6 +35,19 @@ class PhysicsMaterial
     PhysicsMaterial(float staticFriction = 1.0f, float dynamicFriction = 1.0f, float restitutionCoeff = 1.0f);
 
     physx::PxMaterial *pxMaterial = nullptr; ///< Underlying PhysX material.
+
+    using ReflectionType = struct
+    {
+        float staticFriction, dynamicFriction, restitutionCoeff;
+    };
+    PhysicsMaterial(const ReflectionType &impl)
+        : PhysicsMaterial(impl.staticFriction, impl.dynamicFriction, impl.restitutionCoeff)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{staticFriction, dynamicFriction, restitutionCoeff};
+    }
 
   private:
     class CollisionShape;

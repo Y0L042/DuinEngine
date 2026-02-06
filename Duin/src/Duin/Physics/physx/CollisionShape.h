@@ -12,6 +12,7 @@
 
 #include "PhysicsMaterial.h"
 #include "CollisionGeometry.h"
+#include <rfl.hpp>
 
 namespace duin
 {
@@ -44,6 +45,19 @@ class CollisionShape
 
     /** @brief Returns the geometry variant. */
     CollisionGeometryVariant &GetGeometryVariant();
+
+    using ReflectionType = struct
+    {
+        CollisionGeometryVariant cgVar;
+        PhysicsMaterial pmat;
+    };
+    CollisionShape(const ReflectionType &impl) : CollisionShape(impl.cgVar, impl.pmat)
+    {
+    }
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{geometryVariant, physicsMaterial};
+    }
 
   private:
     friend class StaticBody;

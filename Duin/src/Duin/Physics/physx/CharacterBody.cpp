@@ -165,4 +165,8 @@ int CharacterBody::OnFloorShapeCast(double delta)
 
     return onFloor;
 }
+const CharacterBodyDesc CharacterBody::GetDescriptor() const
+{
+    return desc;
+}
 } // namespace duin
