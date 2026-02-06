@@ -54,6 +54,8 @@
 #ifndef DUIN_MATHS_H
 #define DUIN_MATHS_H
 
+#include <rfl.hpp>
+
 // PhysX dependencies
 #include <foundation/PxVec2.h>
 #include <foundation/PxVec3.h>
@@ -124,6 +126,19 @@ namespace duin
 // Vector2 type
 typedef struct Vector2
 {
+    using ReflectionType = struct
+    {
+        float x, y;
+    };
+    Vector2(const ReflectionType &impl) : x(impl.x), y(impl.y)
+    {
+    }
+
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{x, y};
+    }
+
     float x;
     float y;
 
@@ -161,6 +176,19 @@ typedef struct Vector2
 // Vector3 type
 typedef struct Vector3
 {
+    using ReflectionType = struct
+    {
+        float x, y, z;
+    };
+    Vector3(const ReflectionType &impl) : x(impl.x), y(impl.y), z(impl.z)
+    {
+    }
+
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{x, y, z};
+    }
+
     float x;
     float y;
     float z;
@@ -217,6 +245,19 @@ typedef struct Vector3
 // Vector4 type
 typedef struct Vector4
 {
+    using ReflectionType = struct
+    {
+        float x, y, z, w;
+    };
+    Vector4(const ReflectionType &impl) : x(impl.x), y(impl.y), z(impl.z), w(impl.w)
+    {
+    }
+
+    const ReflectionType &reflection() const
+    {
+        return ReflectionType{x, y, z, w};
+    }
+
     float x;
     float y;
     float z;
@@ -276,6 +317,25 @@ typedef Vector4 Quaternion;
 // Matrix type (OpenGL style 4x4 - right handed, column major)
 typedef struct Matrix
 {
+    using ReflectionType = struct
+    {
+        float m0, m4, m8, m12;
+        float m1, m5, m9, m13;
+        float m2, m6, m10, m14;
+        float m3, m7, m11, m15;
+    };
+
+    Matrix(const ReflectionType &impl)
+        : m0(impl.m0), m4(impl.m4), m8(impl.m8), m12(impl.m12), m1(impl.m1), m5(impl.m5), m9(impl.m9), m13(impl.m13),
+          m2(impl.m2), m6(impl.m6), m10(impl.m10), m14(impl.m14), m3(impl.m3), m7(impl.m7), m11(impl.m11), m15(impl.m15)
+    {
+    }
+
+    ReflectionType reflection() const
+    {
+        return ReflectionType{m0, m4, m8, m12, m1, m5, m9, m13, m2, m6, m10, m14, m3, m7, m11, m15};
+    }
+
     float m0, m4, m8, m12;  // Matrix first row (4 components)
     float m1, m5, m9, m13;  // Matrix second row (4 components)
     float m2, m6, m10, m14; // Matrix third row (4 components)
