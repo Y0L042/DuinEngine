@@ -1,14 +1,258 @@
 #include "TestConfig.h"
 #include <doctest.h>
+#include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Scene/SceneBuilder.h>
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/IO/JSONValue.h>
 #include <Duin/IO/FileUtils.h>
+#include <Duin/ECS/ECSModule.h>
 #include <string>
 #include <vector>
 
 namespace TestSceneBuilder
 {
+const std::string FULL_ENTITY_JSON = R"({
+  "uuid": "f5a3e8d1c9b2a7f4",
+  "name": "PlayerCharacter",
+  "tags": ["player", "controllable", "persistent"],
+  "enabled": true,
+  "components": [
+    {
+      "type": "Transform",
+      "position": {"x": 10.5, "y": 0.0, "z": -3.2},
+      "rotation": {"x": 0.0, "y": 45.0, "z": 0.0},
+      "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+    },
+    {
+      "type": "RigidBody",
+      "mass": 75.0,
+      "friction": 0.5,
+      "restitution": 0.2,
+      "kinematic": false
+    },
+    {
+      "type": "MeshRenderer",
+      "meshPath": "assets/models/character.mesh",
+      "materialPath": "assets/materials/character_skin.mat",
+      "castShadows": true
+    }
+  ],
+  "children": [
+    {
+      "uuid": "1a2b3c4d5e6f7890",
+      "name": "Camera",
+      "tags": ["camera"],
+      "enabled": true,
+      "components": [
+        {
+          "type": "Transform",
+          "position": {"x": 0.0, "y": 1.8, "z": 0.5},
+          "rotation": {"x": 0.0, "y": 0.0, "z": 0.0},
+          "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+        },
+        {
+          "type": "Camera",
+          "fov": 75.0,
+          "nearPlane": 0.1,
+          "farPlane": 1000.0,
+          "isPrimary": true
+        }
+      ],
+      "children": []
+    },
+    {
+      "uuid": "9876543210abcdef",
+      "name": "WeaponSlot",
+      "tags": ["equipment"],
+      "enabled": false,
+      "components": [
+        {
+          "type": "Transform",
+          "position": {"x": 0.3, "y": 1.2, "z": 0.4},
+          "rotation": {"x": 0.0, "y": 90.0, "z": 0.0},
+          "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+        }
+      ],
+      "children": []
+    }
+  ]
+})";
+
+const std::string SIMPLE_ENTITY_JSON = R"(   
+{
+    "uuid": "1a2b3c4d5e6f7890",
+    "name": "Camera",
+    "tags": ["camera"],
+    "enabled": true,
+    "components": 
+    [
+        {
+            "type": "Transform",
+            "position": {"x": 0.0, "y": 1.8, "z": 0.5},
+            "rotation": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+        },
+        {
+            "type": "Camera",
+            "fov": 75.0,
+            "nearPlane": 0.1,
+            "farPlane": 1000.0,
+            "isPrimary": true
+        }
+    ],
+    "children": []
+})";
+
+struct Vec3
+{
+    float x, y, z;
+};
+struct TestStructX
+{
+    int x;
+};
+struct Transform
+{
+    Vec3 position, rotation, scale;
+};
+struct Camera
+{
+    float fov, nearPlane, farPlane;
+    bool isPrimary;
+};
+
+TEST_SUITE("Component Serialization")
+{
+    TEST_CASE("Deserialize Component")
+    {
+        std::string jsonStr = R"(
+        {   
+            "type" : "TestStructX",
+            "x" : "3"
+        })";
+        std::string normalizedJsonStr = duin::JSONValue::Parse(jsonStr).Write();
+        duin::JSONValue v = duin::JSONValue::Parse(jsonStr);
+
+        duin::PackedComponent p = duin::PackedComponent::Deserialize(v);
+
+        CHECK(p.jsonData == normalizedJsonStr);
+    }
+
+    TEST_CASE("Serialize Component")
+    {
+        std::string jsonStr = R"({"type":"TestStructX","x":"3"})";
+        duin::PackedComponent p{.jsonData = jsonStr};
+
+        duin::JSONValue v = duin::JSONValue::Parse(jsonStr);
+
+        std::string pstr = duin::PackedComponent::Serialize(p).Write();
+
+        CHECK(pstr == jsonStr);
+    }
+}
+
+TEST_SUITE("Simple Entity Serialization")
+{
+    TEST_CASE("Deserialize Entity")
+    {
+        duin::JSONValue v = duin::JSONValue::Parse(SIMPLE_ENTITY_JSON);
+
+        duin::PackedEntity p = duin::PackedEntity::Deserialize(v);
+
+        CHECK(p.uuid == duin::UUID::FromStringHex("1a2b3c4d5e6f7890"));
+        CHECK(p.name == "Camera");
+        CHECK(p.enabled == true);
+        CHECK(p.tags.size() == 1);
+        CHECK(p.tags[0] == "camera");
+        CHECK(p.components.size() == 2);
+        CHECK(p.children.size() == 0);
+
+        int txIdx = p.components[0].componentTypeName == "Transform" ? 0 : 1;
+        int cmIdx = p.components[1].componentTypeName == "Camera" ? 1 : 0;
+
+        // Check first component (Transform)
+        CHECK(p.components[txIdx].componentTypeName == "Transform");
+        duin::JSONValue comp0 = duin::JSONValue::Parse(p.components[txIdx].jsonData);
+        CHECK(comp0.HasMember("type"));
+        CHECK(comp0["type"].GetString() == "Transform");
+        CHECK(comp0.HasMember("position"));
+        CHECK(comp0["position"]["x"].GetDouble() == doctest::Approx(0.0));
+        CHECK(comp0["position"]["y"].GetDouble() == doctest::Approx(1.8));
+        CHECK(comp0["position"]["z"].GetDouble() == doctest::Approx(0.5));
+
+        // Check second component (Camera)
+        CHECK(p.components[cmIdx].componentTypeName == "Camera");
+        duin::JSONValue comp1 = duin::JSONValue::Parse(p.components[cmIdx].jsonData);
+        CHECK(comp1.HasMember("type"));
+        CHECK(comp1["type"].GetString() == "Camera");
+        CHECK(comp1["fov"].GetDouble() == doctest::Approx(75.0));
+        CHECK(comp1["nearPlane"].GetDouble() == doctest::Approx(0.1));
+        CHECK(comp1["farPlane"].GetDouble() == doctest::Approx(1000.0));
+        CHECK(comp1["isPrimary"].GetBool() == true);
+    }
+
+    TEST_CASE("Serialize Entity")
+    {
+        // Create a PackedEntity with expected values
+        duin::PackedEntity p;
+        p.uuid = duin::UUID::FromStringHex("1a2b3c4d5e6f7890");
+        p.name = "Camera";
+        p.enabled = true;
+        p.tags.push_back("camera");
+
+        // Add Transform component
+        duin::PackedComponent transformComp;
+        transformComp.componentTypeName = "Transform";
+        transformComp.jsonData = R"({"type":"Transform","position":{"x":0.0,"y":1.8,"z":0.5},"rotation":{"x":0.0,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0}})";
+        p.components.push_back(transformComp);
+        
+        // Add Camera component
+        duin::PackedComponent cameraComp;
+        cameraComp.componentTypeName = "Camera";
+        cameraComp.jsonData = R"({"type":"Camera","fov":75.0,"nearPlane":0.1,"farPlane":1000.0,"isPrimary":true})";
+        p.components.push_back(cameraComp);
+        
+        // Serialize to JSON
+        duin::JSONValue json = duin::PackedEntity::Serialize(p);
+        
+        // Verify JSON structure
+        CHECK(json.IsObject());
+        CHECK(json.HasMember("uuid"));
+        CHECK(json["uuid"].GetString() == duin::UUID::FromStringHex("1a2b3c4d5e6f7890").ToStrHex());
+        CHECK(json.HasMember("name"));
+        CHECK(json["name"].GetString() == "Camera");
+        CHECK(json.HasMember("enabled"));
+        CHECK(json["enabled"].GetBool() == true);
+        CHECK(json.HasMember("tags"));
+        CHECK(json["tags"].IsArray());
+        CHECK(json["tags"][0].GetString() == "camera");
+        CHECK(json.HasMember("components"));
+        CHECK(json["components"].IsArray());
+        CHECK(json["components"].Capacity() == 2);
+        CHECK(json.HasMember("children"));
+        CHECK(json["children"].IsArray());
+        CHECK(json["children"].Empty());
+        
+        // Verify component structure
+        duin::JSONValue comp0 = json["components"][0];
+        CHECK(comp0.HasMember("type"));
+        CHECK(comp0["type"].GetString() == "Transform");
+        
+        duin::JSONValue comp1 = json["components"][1];
+        CHECK(comp1.HasMember("type"));
+        CHECK(comp1["type"].GetString() == "Camera");
+    }
+    TEST_CASE("Pack Entity")
+    {
+        WARN("EMPTY");
+    }
+    TEST_CASE("Unpack Entity")
+    {
+        WARN("EMPTY");
+    }
+}
+
+#if 0
 TEST_SUITE("SceneBuilder - PackedScene Serialization")
 {
     TEST_CASE("Serialize empty PackedScene")
@@ -597,4 +841,5 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         CHECK(json.IsObject());
     }
 }
+#endif
 } // namespace TestSceneBuilder

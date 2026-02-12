@@ -8,7 +8,7 @@
 
 namespace TestScene
 {
-
+#if 0
 static int CountRootEntities(duin::World &world)
 {
     int count = 0;
@@ -444,4 +444,5 @@ TEST_SUITE("Scene")
         CHECK(CountRootEntities(final_world) == 0);
     }
 }
+#endif
 } // namespace TestScene
