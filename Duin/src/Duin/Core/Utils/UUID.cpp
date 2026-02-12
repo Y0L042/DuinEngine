@@ -19,8 +19,6 @@
 #include <iomanip>
 #include <stdexcept>
 
-namespace duin
-{
 /// Random device for seeding the random number generator
 static std::random_device randomDevice;
 
@@ -30,21 +28,21 @@ static std::mt19937_64 engine(randomDevice());
 /// Uniform distribution for generating random uint64_t values
 static std::uniform_int_distribution<uint64_t> uniformDistribution;
 
-const UUID UUID::INVALID = 0;
+const duin::UUID duin::UUID::INVALID = 0;
 
-UUID::UUID() : uuid_(uniformDistribution(engine))
+duin::UUID::UUID() : uuid_(uniformDistribution(engine))
 {
 }
 
-UUID::UUID(uint64_t uuid) : uuid_(uuid)
+duin::UUID::UUID(uint64_t uuid) : uuid_(uuid)
 {
 }
 
-UUID::~UUID()
+duin::UUID::~UUID()
 {
 }
 
-std::string UUID::ToStringDec(UUID uuid)
+std::string duin::UUID::ToStringDec(UUID uuid)
 {
     std::stringstream ss_dec;
     ss_dec << uuid;
@@ -53,7 +51,7 @@ std::string UUID::ToStringDec(UUID uuid)
     return decimal_str;
 }
 
-UUID UUID::FromStringDec(const std::string &string)
+duin::UUID duin::UUID::FromStringDec(const std::string &string)
 {
     uint64_t value = 0;
     try
@@ -72,7 +70,7 @@ UUID UUID::FromStringDec(const std::string &string)
     return UUID(value);
 }
 
-std::string UUID::ToStringHex(UUID uuid)
+std::string duin::UUID::ToStringHex(UUID uuid)
 {
     std::stringstream ss_hex_upper;
     ss_hex_upper << "0x" << std::uppercase << std::hex << uuid;
@@ -81,7 +79,7 @@ std::string UUID::ToStringHex(UUID uuid)
     return hex_str_upper;
 }
 
-UUID UUID::FromStringHex(const std::string &string)
+duin::UUID duin::UUID::FromStringHex(const std::string &string)
 {
     uint64_t value = INVALID;
     std::string str = string;
@@ -149,4 +147,13 @@ UUID UUID::FromStringHex(const std::string &string)
 
     return UUID(value);
 }
-} // namespace duin
+
+std::string duin::UUID::ToStrDec()
+{
+    return UUID::ToStringDec(*this);
+}
+
+std::string duin::UUID::ToStrHex()
+{
+    return UUID::ToStringHex(*this);
+}
