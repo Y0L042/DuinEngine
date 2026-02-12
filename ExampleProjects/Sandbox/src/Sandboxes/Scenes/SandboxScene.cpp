@@ -3,6 +3,7 @@
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Scene/SceneBuilder.h>
 #include <Duin/ECS/ECSModule.h>
+#include <Duin/IO/JSONValue.h>
 
 duin::ECSManager ecs;
 duin::World world;
@@ -36,6 +37,7 @@ void SandboxScene::Enter()
     world.Component<Y>();
     world.Component<Z>();
 
+
     duin::Entity e = world.CreateEntity().Set<X>(1).Set<Y>(2).Set<Z>(3);
 
     // duin::PackedScene pscn = duin::PackedScene::Pack(e);
@@ -50,12 +52,16 @@ void SandboxScene::Enter()
     duin::Entity e2 = world.CreateEntity();
     for (auto& str : sercomVec)
     {
-        //void *data = duin::ComponentSerializer::Get().Deserialize(rfl)
+        duin::JSONValue v = duin::JSONValue::Parse(str);
+        void *data = nullptr;
+        duin::ComponentSerializer::Get().Deserialize(e2, v["type"].GetString(), data, str);
+
     }
+
+
     e2.ForEachComponent([&](duin::Entity &ent) {
-        std::string sercom = duin::ComponentSerializer::Get().Serialize(ent.GetName(), e.Get(ent));
-        sercomVec.push_back(sercom);
-        DN_INFO("SERCOM: {}", sercom);
+        std::string desercom = duin::ComponentSerializer::Get().Serialize(ent.GetName(), e2.Get(ent));
+        DN_INFO("DESERCOM: {}", desercom);
     });
 }
 
