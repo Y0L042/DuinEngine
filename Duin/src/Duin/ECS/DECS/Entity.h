@@ -326,6 +326,8 @@ class Entity
         return *this;
     }
 
+    //Entity &Set(id, void* data);
+
     // ========== UNIFIED GET API ==========
     /**
      * @brief Get a const reference to a component.

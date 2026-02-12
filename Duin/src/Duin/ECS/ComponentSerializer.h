@@ -2,14 +2,15 @@
 #include <flecs.h>
 #include <rfl.hpp>
 #include <rfl/json.hpp>
+#include <rfl/type_name_t.hpp>
 #include <unordered_map>
 #include <functional>
 #include <string>
 #include "./DECS/World.h"
+#include "./DECS/Entity.h"
 
 namespace duin
 {
-
 class ComponentSerializer
 {
   public:
@@ -20,7 +21,7 @@ class ComponentSerializer
     }
 
     using SerializeFn = std::function<std::string(const void *component_ptr)>;
-    using DeserializeFn = std::function<void(void *component_ptr, const std::string &json)>;
+    using DeserializeFn = std::function<void(Entity e, void *component_ptr, const std::string &json)>;
 
     template <typename T>
     void RegisterComponent(flecs::world &world, flecs::entity typeEntity)
@@ -30,16 +31,18 @@ class ComponentSerializer
         // Serialize function
         serializers_[typeName] = [](const void *ptr) -> std::string {
             const T *typed_ptr = static_cast<const T *>(ptr);
-            return rfl::json::write(*typed_ptr);
+            return rfl::json::write<rfl::AddStructName<"type">>(*typed_ptr);
         };
 
         // Deserialize function
-        deserializers_[typeName] = [](void *ptr, const std::string &json) {
+        deserializers_[typeName] = [](Entity e, void *ptr, const std::string &json) {
             T *typed_ptr = static_cast<T *>(ptr);
             auto result = rfl::json::read<T>(json);
             if (result)
             {
+                typed_ptr = new T;
                 *typed_ptr = result.value();
+                e.Set<T>(*typed_ptr);
             }
         };
     }
@@ -54,12 +57,12 @@ class ComponentSerializer
         return "{}";
     }
 
-    void Deserialize(const std::string &typeName, void *componentPtr, const std::string &json)
+    void Deserialize(Entity e, const std::string &typeName, void *componentPtr, const std::string &json)
     {
         auto it = deserializers_.find(typeName);
         if (it != deserializers_.end())
         {
-            it->second(componentPtr, json);
+            it->second(e, componentPtr, json);
         }
     }
 
