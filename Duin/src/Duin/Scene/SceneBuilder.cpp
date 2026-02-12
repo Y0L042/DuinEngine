@@ -44,21 +44,15 @@ const std::string duin::PackedScene::TAG_ENTITIES = "entities";
 duin::PackedComponent duin::PackedComponent::Deserialize(const JSONValue &json)
 {
     PackedComponent pc;
-
-    if (json.HasMember(pc.TAG_JSON))
-    {
-        pc.json = UUID::FromStringHex(json.GetMember(pc.TAG_JSON).GetString());
-    }
+    pc.componentTypeName = json.GetMember("type").GetString();
+    pc.jsonData = json.Write();
 
     return pc;
 }
 
 duin::JSONValue duin::PackedComponent::Serialize(const PackedComponent &pComp)
 {
-    JSONValue json;
-    json.SetObject();
-
-    json.AddMember(pComp.TAG_JSON, json);
+    JSONValue json = JSONValue::Parse(pComp.jsonData);
 
     return json;
 }
@@ -102,7 +96,9 @@ duin::PackedEntity duin::PackedEntity::Deserialize(const JSONValue &json)
         {
             for (auto it = tagsArray.Begin(); it != tagsArray.End(); ++it)
             {
-                // pe.children.emplace_back(it.GetValue().GetInt());
+                JSONValue eJSON(it.GetValue());
+                PackedEntity e = PackedEntity::Deserialize(eJSON);
+                pe.children.push_back(e);
             }
         }
     }
@@ -112,8 +108,17 @@ duin::PackedEntity duin::PackedEntity::Deserialize(const JSONValue &json)
         JSONValue componentsArray = json.GetMember(pe.TAG_COMPONENTS);
         if (componentsArray.IsArray())
         {
-            // TODO: Deserialize components when PackedComponent is implemented
+            for (auto it = componentsArray.Begin(); it != componentsArray.End(); ++it)
+            {
+                JSONValue cmpJSON(it.GetValue());
+                PackedComponent cmp = PackedComponent::Deserialize(cmpJSON);
+                pe.components.push_back(cmp);
+            }
         }
+    }
+    else
+    {
+        DN_CORE_INFO("No components found!");
     }
 
     return pe;
@@ -137,11 +142,21 @@ duin::JSONValue duin::PackedEntity::Serialize(const PackedEntity &entity)
     }
     json.AddMember(entity.TAG_TAGS, tagsArray);
 
+    JSONValue childrenArray;
+    childrenArray.SetArray();
+    for (const auto &child : entity.children)
+    {
+        JSONValue eJSON = PackedEntity::Serialize(child);
+        childrenArray.PushBack(eJSON);
+    }
+    json.AddMember(entity.TAG_CHILDREN, childrenArray);
+
     JSONValue componentsArray;
     componentsArray.SetArray();
     for (const auto &component : entity.components)
     {
-        // TODO: Serialize components when PackedComponent is implemented
+        JSONValue cmpJSON = PackedComponent::Serialize(component);
+        componentsArray.PushBack(cmpJSON);
     }
     json.AddMember(entity.TAG_COMPONENTS, componentsArray);
 
@@ -307,9 +322,11 @@ void duin::PackedScene::Instantiate(const Entity &e)
 duin::PackedScene duin::PackedScene::Pack(Entity &e)
 {
     PackedScene packedScene;
-    DN_CORE_INFO("Entity: {}", static_cast<std::string>(e.GetFlecsEntity().to_json()));
-    e.ForEachComponent([&](Entity ent) {
-        std::string sercom = ComponentSerializer::Get().Serialize(ent.GetName(), e.Get(ent));
+
+    std::vector<std::string> sercomVec;
+    e.ForEachComponent([&](duin::Entity &ent) {
+        std::string sercom = duin::ComponentSerializer::Get().Serialize(ent.GetName(), e.Get(ent));
+        sercomVec.push_back(sercom);
         DN_INFO("SERCOM: {}", sercom);
     });
 

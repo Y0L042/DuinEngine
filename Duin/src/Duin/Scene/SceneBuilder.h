@@ -25,16 +25,21 @@ namespace duin
 
 /**
  * @struct PackedComponent
- * @brief Serialized component data.
+ * @brief Serialized component data. {"type":"TestStructX","x":"3"}
  * @ingroup ECS_Scene
  */
 struct PackedComponent
 {
     static const std::string TAG_JSON;
-    std::string json; ///< JSON representation of component data.
+
+    std::string componentTypeName;
+    std::string jsonData;
 
     static PackedComponent Deserialize(const JSONValue &Comp);
     static JSONValue Serialize(const PackedComponent &pComp);
+
+    // Pack (Instance to PackedComponent)
+    // Unpack (PackedComponent to Instance)
 };
 
 /**
