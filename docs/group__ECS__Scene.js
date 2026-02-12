@@ -1,9 +1,7 @@
 var group__ECS__Scene =
 [
     [ "SceneBuilder.h", "SceneBuilder_8h.html", null ],
-    [ "duin::PackedComponent", "structduin_1_1PackedComponent.html", [
-      [ "json", "structduin_1_1PackedComponent.html#abd7eb099104021c3163f7fe87f7f1a6f", null ]
-    ] ],
+    [ "duin::PackedComponent", "structduin_1_1PackedComponent.html", null ],
     [ "duin::PackedEntity", "structduin_1_1PackedEntity.html", [
       [ "children", "structduin_1_1PackedEntity.html#adbc68a52ac47361812029634cebfae23", null ],
       [ "components", "structduin_1_1PackedEntity.html#a56ba9abc181ae2b339523c02be44a9b3", null ],

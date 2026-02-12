@@ -120,6 +120,8 @@ var NAVTREEINDEX0 =
 "Scene_8h_source.html":[5,0,1,0,8,1],
 "SerialisationManager_8cpp_source.html":[5,0,1,0,2,5,2],
 "SerialisationManager_8h_source.html":[5,0,1,0,2,5,3],
+"Serializer_8cpp_source.html":[5,0,1,0,4,11],
+"Serializer_8h_source.html":[5,0,1,0,4,12],
 "Shader_8cpp_source.html":[5,0,1,0,7,11],
 "Shader_8h_source.html":[5,0,1,0,7,12],
 "SignalConnections_8h.html":[2,0,2,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classduin_1_1Entity.html#aa4573c6ecff5395f51a9d8e3d1654f41":[4,0,0,30,17],
 "classduin_1_1Entity.html#aadbb57cad9331333e22c3a783155bf68":[4,0,0,30,41],
 "classduin_1_1Entity.html#ab104a4cfc2fbd5faaf1a395b616f3824":[4,0,0,30,6],
-"classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54":[4,0,0,30,0],
-"classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca":[4,0,0,30,10],
-"classduin_1_1Entity.html#ab4f974c7a169d9ecb1ae29d68b8ed548":[4,0,0,30,55]
+"classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54":[4,0,0,30,0]
 };

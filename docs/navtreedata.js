@@ -63,9 +63,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"classduin_1_1Entity.html#abaaa98b371b87a6500ea11b641096b54",
-"dir_cd463a93d1524e455358c0c423bc7a1b.html",
-"structImGuiPlatformMonitor.html"
+"classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca",
+"dir_c34c609d9da628c697ec828c63f68857.html",
+"structImGuiPayload.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

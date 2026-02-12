@@ -10,5 +10,7 @@ var dir_1609e9defd7e02c5db55177a9543350a =
     [ "FileUtils.h", "FileUtils_8h_source.html", null ],
     [ "IOModule.h", "IOModule_8h_source.html", null ],
     [ "src/Duin/IO/JSONValue.cpp", "src_2Duin_2IO_2JSONValue_8cpp_source.html", null ],
-    [ "JSONValue.h", "JSONValue_8h.html", "JSONValue_8h" ]
+    [ "JSONValue.h", "JSONValue_8h.html", "JSONValue_8h" ],
+    [ "Serializer.cpp", "Serializer_8cpp_source.html", null ],
+    [ "Serializer.h", "Serializer_8h_source.html", null ]
 ];

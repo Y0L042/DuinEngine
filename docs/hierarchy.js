@@ -370,6 +370,7 @@ var hierarchy =
     [ "duin::ECSComponent::Scale3D", "structduin_1_1ECSComponent_1_1Scale3D.html", null ],
     [ "duin::Scene", "structduin_1_1Scene.html", null ],
     [ "duin::SceneDefinition", "classduin_1_1SceneDefinition.html", null ],
+    [ "duin::Serializer", "classduin_1_1Serializer.html", null ],
     [ "duin::ECSTag::SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ],
     [ "duin::ShaderProgram", "structduin_1_1ShaderProgram.html", null ],
     [ "duin::Signal< types >", "classduin_1_1Signal.html", null ],

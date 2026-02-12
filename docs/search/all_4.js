@@ -15,7 +15,7 @@ var searchData=
   ['enable_12',['Enable',['../classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2',1,'duin::Entity']]],
   ['enablecomponent_13',['EnableComponent',['../classduin_1_1Entity.html#a69667913ef257f525f393d7e5ee0727d',1,'duin::Entity']]],
   ['enabled_14',['enabled',['../structduin_1_1PackedEntity.html#ab11fcd7fe41ce56cb22e66d57b9743ac',1,'duin::PackedEntity']]],
-  ['end_15',['end',['../classduin_1_1Iter.html#a411d5ddd67f86345e957d2e6503141ab',1,'duin::Iter::end()'],['../classduin_1_1JSONValue.html#aa5a7c1e4b2fe8a425c435d8e70c2a219',1,'duin::JSONValue::end() const'],['../classduin_1_1JSONValue.html#a509122295d931e69643c525ee3b10588',1,'duin::JSONValue::End()'],['../classduin_1_1JSONValue.html#ac6fd79b0fe9642c6e5cec53d34f8472e',1,'duin::JSONValue::end()']]],
+  ['end_15',['end',['../classduin_1_1JSONValue.html#a509122295d931e69643c525ee3b10588',1,'duin::JSONValue::End()'],['../classduin_1_1JSONValue.html#ac6fd79b0fe9642c6e5cec53d34f8472e',1,'duin::JSONValue::end()'],['../classduin_1_1JSONValue.html#aa5a7c1e4b2fe8a425c435d8e70c2a219',1,'duin::JSONValue::end() const'],['../classduin_1_1Iter.html#a411d5ddd67f86345e957d2e6503141ab',1,'duin::Iter::end()']]],
   ['engineinitialize_16',['EngineInitialize',['../classduin_1_1Application.html#a5c485974f6ba4ebacdf2d24d930bdb34',1,'duin::Application']]],
   ['engineversion_17',['engineVersion',['../structduin_1_1PackedSceneMetadata.html#a890e0009cd6a4a26775a3a64090b77f6',1,'duin::PackedSceneMetadata']]],
   ['ensure_18',['Ensure',['../classduin_1_1Entity.html#a234751dd79e5f68f6cab1e8316d41119',1,'duin::Entity']]],

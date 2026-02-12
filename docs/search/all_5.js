@@ -19,7 +19,7 @@ var searchData=
   ['foreachtarget_16',['ForEachTarget',['../classduin_1_1Entity.html#a69d0294a656d3568eacea95c49838e8f',1,'duin::Entity']]],
   ['framebuffer_17',['frameBuffer',['../structduin_1_1RenderTexture.html#a6cd388fe23249891b422feef4510d410',1,'duin::RenderTexture']]],
   ['framecountformatter_18',['FrameCountFormatter',['../classduin_1_1FrameCountFormatter.html',1,'duin']]],
-  ['fromstringdec_19',['FromStringDec',['../classduin_1_1UUID.html#a05f5aa763a0b78020b37dde4ad98b335',1,'duin::UUID']]],
-  ['fromstringhex_20',['FromStringHex',['../classduin_1_1UUID.html#ae531761f9eff5ad3b4768d9d76f44583',1,'duin::UUID']]],
+  ['fromstringdec_19',['FromStringDec',['../classduin_1_1UUID.html#a303e0b3f53dd1264ac45754b4998c063',1,'duin::UUID']]],
+  ['fromstringhex_20',['FromStringHex',['../classduin_1_1UUID.html#abaea49c9c6d7c80714ff489652b95ca4',1,'duin::UUID']]],
   ['fsh_21',['fsh',['../structduin_1_1ShaderProgram.html#a2a81c00aaac60d1c45248744b28d0381',1,'duin::ShaderProgram']]]
 ];

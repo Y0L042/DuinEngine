@@ -9,6 +9,6 @@ var searchData=
   ['flushstack_6',['FlushStack',['../classduin_1_1GameStateMachine.html#a70c34c19eb98b61dbb26d8dfff2e301a',1,'duin::GameStateMachine']]],
   ['foreachchild_7',['ForEachChild',['../classduin_1_1Entity.html#a06ba7f10dbebb2e544407744f7595a92',1,'duin::Entity']]],
   ['foreachtarget_8',['ForEachTarget',['../classduin_1_1Entity.html#a69d0294a656d3568eacea95c49838e8f',1,'duin::Entity']]],
-  ['fromstringdec_9',['FromStringDec',['../classduin_1_1UUID.html#a05f5aa763a0b78020b37dde4ad98b335',1,'duin::UUID']]],
-  ['fromstringhex_10',['FromStringHex',['../classduin_1_1UUID.html#ae531761f9eff5ad3b4768d9d76f44583',1,'duin::UUID']]]
+  ['fromstringdec_9',['FromStringDec',['../classduin_1_1UUID.html#a303e0b3f53dd1264ac45754b4998c063',1,'duin::UUID']]],
+  ['fromstringhex_10',['FromStringHex',['../classduin_1_1UUID.html#abaea49c9c6d7c80714ff489652b95ca4',1,'duin::UUID']]]
 ];
