@@ -10,15 +10,17 @@
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
-std::shared_ptr<duin::GameStateMachine> inAirStateMachine;
+std::shared_ptr<PlayerStateMachine> inAirStateMachine;
 
 void State_InAir::Enter()
 {
     debugConsole.Log("State_InAir: Entering State_InAir");
 
-    player.add<InAirTag>();
-    player.add<CanGravity>();
-    inAirStateMachine = CreateChildObject<duin::GameStateMachine>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Add<InAirTag>();
+    player.Add<CanGravity>();
+    inAirStateMachine = CreateChildObject<PlayerStateMachine>(GetBlackboard());
     inAirStateMachine->SwitchState<State_InAir_Idle>();
 }
 
@@ -32,9 +34,11 @@ void State_InAir::Update(double delta)
 
 void State_InAir::PhysicsUpdate(double delta)
 {
+    duin::Entity& player = *GetBlackboard()->player;
+
     int isOnFloor = 0;
 
-    const CharacterBodyComponent *bodyComponent = player.try_get<CharacterBodyComponent>();
+    const CharacterBodyComponent *bodyComponent = player.TryGet<CharacterBodyComponent>();
     if (bodyComponent)
     {
         isOnFloor = bodyComponent->body->IsOnFloor();
@@ -62,5 +66,7 @@ void State_InAir::Exit()
 {
     debugConsole.Log("State_InAir: Exiting State_InAir");
 
-    player.remove<InAirTag>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Remove<InAirTag>();
 }

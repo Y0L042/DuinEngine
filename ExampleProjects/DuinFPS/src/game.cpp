@@ -16,6 +16,7 @@ duin::Application *duin::CreateApplication()
 duin::DebugConsole debugConsole;
 duin::DebugWatchlist debugWatchlist;
 
+
 std::shared_ptr<duin::GameStateMachine> mainStateMachine;
 
 void Game::Initialize()

@@ -9,9 +9,9 @@ void EntityManager::PreloadEntities()
 {
 }
 
-flecs::entity EntityManager::CreateEntity(std::string entityName, flecs::world *world)
+duin::Entity EntityManager::CreateEntity(std::string entityName, duin::World *world)
 {
-    flecs::entity e;
+    duin::Entity e;
 
     return e;
 }

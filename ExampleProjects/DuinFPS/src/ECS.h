@@ -119,21 +119,21 @@ struct InAirTag
 {
 };
 
-void RegisterComponents(flecs::world &world);
+void RegisterComponents(duin::World &world);
 
-void ExecuteQueryUpdatePlayerYaw(flecs::world &world);
-void ExecuteQueryUpdateCameraPitch(flecs::world &world);
-void ExecuteQueryComputePlayerInputVelocity(flecs::world &world);
-void ExecuteQueryGravity(flecs::world &world);
-void ExecuteQueryDebugCameraTarget(flecs::world &world);
-void ExecuteQueryVelocityBob(flecs::world &world);
+void ExecuteQueryUpdatePlayerYaw(duin::World &world);
+void ExecuteQueryUpdateCameraPitch(duin::World &world);
+void ExecuteQueryComputePlayerInputVelocity(duin::World &world);
+void ExecuteQueryGravity(duin::World &world);
+void ExecuteQueryDebugCameraTarget(duin::World &world);
+void ExecuteQueryVelocityBob(duin::World &world);
 
-void ExecuteQueryMoveDebugCamera(flecs::world &world);
+void ExecuteQueryMoveDebugCamera(duin::World &world);
 
-void ExecuteQueryIdle(flecs::world &world);
-void ExecuteQueryRun(flecs::world &world);
-void ExecuteQuerySprint(flecs::world &world);
-void ExecuteQueryOnGroundJump(flecs::world &world);
+void ExecuteQueryIdle(duin::World &world);
+void ExecuteQueryRun(duin::World &world);
+void ExecuteQuerySprint(duin::World &world);
+void ExecuteQueryOnGroundJump(duin::World &world);
 
-void ExecuteQueryResolveInputVelocities(flecs::world &world);
-void ExecuteQueryResolveInputForces(flecs::world &world);
+void ExecuteQueryResolveInputVelocities(duin::World &world);
+void ExecuteQueryResolveInputForces(duin::World &world);

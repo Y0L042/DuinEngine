@@ -10,23 +10,27 @@
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
-std::shared_ptr<duin::GameStateMachine> onGroundStateMachine;
+std::shared_ptr<PlayerStateMachine> onGroundStateMachine;
 
 void State_OnGround::Enter()
 {
     debugConsole.Log("State_OnGround: Entering State_OnGround");
 
-    player.add<OnGroundTag>();
-    player.remove<CanGravity>();
-    onGroundStateMachine = CreateChildObject<duin::GameStateMachine>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Add<OnGroundTag>();
+    player.Remove<CanGravity>();
+    onGroundStateMachine = CreateChildObject<PlayerStateMachine>(GetBlackboard());
     onGroundStateMachine->SwitchState<State_OnGround_Idle>();
 }
 
 void State_OnGround::OnEvent(duin::Event e)
 {
+    duin::Entity& player = *GetBlackboard()->player;
+
     if (duin::Input::IsKeyPressed(DN_KEY_SPACE))
     {
-        player.add<JumpTag>();
+        player.Add<JumpTag>();
     }
 
 }
@@ -37,8 +41,10 @@ void State_OnGround::Update(double delta)
 
 void State_OnGround::PhysicsUpdate(double delta)
 {
-    const CharacterBodyComponent *cbc = player.try_get<CharacterBodyComponent>();
-    if (cbc)
+    duin::Entity& player = *GetBlackboard()->player;
+
+    const CharacterBodyComponent *cbc = player.TryGet<CharacterBodyComponent>();
+    if (cbc && cbc->body)
     {
         int isOnFloor = cbc->body->IsOnFloor();
         if (!isOnFloor)
@@ -61,5 +67,7 @@ void State_OnGround::DrawUI()
 
 void State_OnGround::Exit()
 {
-    player.remove<OnGroundTag>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Remove<OnGroundTag>();
 }

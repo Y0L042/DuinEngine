@@ -14,6 +14,6 @@ class BeachBall : public duin::GameObject
     void DrawUI() override;
 
   private:
-    flecs::entity entity;
+    duin::Entity entity;
     std::shared_ptr<duin::DynamicBody> body;
 };

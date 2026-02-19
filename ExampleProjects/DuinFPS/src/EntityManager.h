@@ -9,7 +9,7 @@ class EntityManager
     ~EntityManager() = default;
 
     void PreloadEntities();
-    flecs::entity CreateEntity(std::string entityName, flecs::world *world);
+    duin::Entity CreateEntity(std::string entityName, duin::World *world);
 
   private:
     std::string entityDefsPath;

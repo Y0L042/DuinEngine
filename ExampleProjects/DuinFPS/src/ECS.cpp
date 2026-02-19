@@ -11,49 +11,49 @@ using namespace duin::ECSTag;
 
 const duin::Vector2 MOUSE_SENSITIVITY = {0.001f, 0.001f};
 
-void RegisterComponents(flecs::world &world)
+void RegisterComponents(duin::World &world)
 {
-    world.component<PlayerMovementInputVec3>();
-    world.component<GravityComponent>();
-    world.component<DebugCameraTarget>();
-    world.component<DebugCameraTag>();
-    world.component<MouseInputVec2>();
-    world.component<CameraPitchComponent>();
-    world.component<CameraYawComponent>();
-    world.component<InputVelocities>();
-    world.component<Movement3DInput>();
-    world.component<InputForces>();
-    world.component<InputVelocityDirection>();
-    world.component<Mass>();
-    world.component<GroundFriction>();
-    world.component<AirFriction>();
-    world.component<IdleTag>();
-    world.component<VelocityBob>();
+    world.Component<PlayerMovementInputVec3>();
+    world.Component<GravityComponent>();
+    world.Component<DebugCameraTarget>();
+    world.Component<DebugCameraTag>();
+    world.Component<MouseInputVec2>();
+    world.Component<CameraPitchComponent>();
+    world.Component<CameraYawComponent>();
+    world.Component<InputVelocities>();
+    world.Component<Movement3DInput>();
+    world.Component<InputForces>();
+    world.Component<InputVelocityDirection>();
+    world.Component<Mass>();
+    world.Component<GroundFriction>();
+    world.Component<AirFriction>();
+    world.Component<IdleTag>();
+    world.Component<VelocityBob>();
 
-    world.component<CanRunComponent>();
-    world.component<RunTag>();
-    world.component<CanJumpComponent>();
-    world.component<JumpTag>();
-    world.component<CanSprintComponent>();
-    world.component<SprintTag>();
-    world.component<OnGroundTag>();
-    world.component<InAirTag>();
-    world.component<CanGravity>();
+    world.Component<CanRunComponent>();
+    world.Component<RunTag>();
+    world.Component<CanJumpComponent>();
+    world.Component<JumpTag>();
+    world.Component<CanSprintComponent>();
+    world.Component<SprintTag>();
+    world.Component<OnGroundTag>();
+    world.Component<InAirTag>();
+    world.Component<CanGravity>();
 }
 
-void ExecuteQueryComputePlayerInputVelocity(flecs::world &world)
+void ExecuteQueryComputePlayerInputVelocity(duin::World &world)
 {
-    static flecs::query q =
-        world.query_builder<PlayerMovementInputVec3, InputVelocityDirection, const Transform3D>().cached().build();
+    static auto q =
+        world.QueryBuilder<PlayerMovementInputVec3, InputVelocityDirection, const Transform3D>().Cached().Build();
 
-    q.each([](flecs::entity e, PlayerMovementInputVec3 &input, InputVelocityDirection &iDir, const Transform3D &tx) {
-        duin::Quaternion r = Transform3D::GetGlobalRotation(e);
+    q.Each([](duin::Entity e, PlayerMovementInputVec3 &input, InputVelocityDirection &iDir, const Transform3D &tx) {
+        duin::Quaternion r = Transform3D::GetGlobalRotation(e.GetFlecsEntity());
         duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r);
         iDir.value = duin::Vector3(alignedInput.x, 0.0f, alignedInput.z);
     });
 }
 
-void ExecuteQueryDebugCameraTarget(flecs::world &world)
+void ExecuteQueryDebugCameraTarget(duin::World &world)
 {
     // static flecs::query q = world.query_builder<
     //     Camera3D,
@@ -70,12 +70,12 @@ void ExecuteQueryDebugCameraTarget(flecs::world &world)
     //     });
 }
 
-void ExecuteQueryUpdatePlayerYaw(flecs::world &world)
+void ExecuteQueryUpdatePlayerYaw(duin::World &world)
 {
-    static flecs::query q =
-        world.query_builder<Transform3D, CameraYawComponent, const MouseInputVec2>().cached().build();
+    static auto q =
+        world.QueryBuilder<Transform3D, CameraYawComponent, const MouseInputVec2>().Cached().Build();
 
-    q.each([](Transform3D &tx, CameraYawComponent &yaw, const MouseInputVec2 &mouseDelta) {
+    q.Each([](duin::Entity e, Transform3D &tx, CameraYawComponent &yaw, const MouseInputVec2 &mouseDelta) {
         const float sensitivity = MOUSE_SENSITIVITY.x;
 
         float deltaYaw = -mouseDelta.value.x * sensitivity;
@@ -97,17 +97,17 @@ void ExecuteQueryUpdatePlayerYaw(flecs::world &world)
     });
 }
 
-void ExecuteQueryUpdateCameraPitch(flecs::world &world)
+void ExecuteQueryUpdateCameraPitch(duin::World &world)
 {
-    static flecs::query q = world
-                                .query_builder<
+    static duin::Query q = world
+                                .QueryBuilder<
                                     // Rotation3D,
                                     Transform3D, CameraPitchComponent, const MouseInputVec2>()
                                 // .term_at(0).second<Local>()
-                                .cached()
-                                .build();
+                                .Cached()
+                                .Build();
 
-    q.each([](
+    q.Each([](duin::Entity e,
                // Rotation3D& r,
                Transform3D &tx, CameraPitchComponent &pitch, const MouseInputVec2 &mouseDelta) {
         const float sensitivity = MOUSE_SENSITIVITY.y;
@@ -135,10 +135,11 @@ void ExecuteQueryUpdateCameraPitch(flecs::world &world)
     });
 }
 
-void ExecuteQueryGravity(flecs::world &world)
+void ExecuteQueryGravity(duin::World &world)
 {
+    flecs::world &flecsWorld = world.GetFlecsWorld();
     static flecs::query q =
-        world.query_builder<InputVelocities, const CharacterBodyComponent, const GravityComponent, const Mass>()
+        flecsWorld.query_builder<InputVelocities, const CharacterBodyComponent, const GravityComponent, const Mass>()
             .with<CanGravity>()
             // .cached()
             .build();
@@ -151,21 +152,23 @@ void ExecuteQueryGravity(flecs::world &world)
 }
 
 // UNUSED
-void ExecuteQueryFriction(flecs::world &world)
+void ExecuteQueryFriction(duin::World &world)
 {
+    flecs::world &flecsWorld = world.GetFlecsWorld();
     static flecs::query q =
-        world.query_builder<InputVelocities, const GroundFriction, const Mass>().with<CanGravity>().cached().build();
+        flecsWorld.query_builder<InputVelocities, const GroundFriction, const Mass>().with<CanGravity>().cached().build();
 
     q.each([](InputVelocities &inputVelocities, const GroundFriction &friction, const Mass &mass) {
 
     });
 }
 
-void ExecuteQueryIdle(flecs::world &world)
+void ExecuteQueryIdle(duin::World &world)
 {
-    static flecs::query q = world.query_builder<InputVelocities, const Velocity3D>().with<IdleTag>().build();
+    flecs::world &flecsWorld = world.GetFlecsWorld();
+    static flecs::query q = flecsWorld.query_builder<InputVelocities, const Velocity3D>().with<IdleTag>().build();
 
-    world.defer_begin();
+    flecsWorld.defer_begin();
     q.each([](flecs::entity e, InputVelocities &inputVels, const Velocity3D &velocity) {
         double delta = duin::GetPhysicsFrameTime();
 
@@ -196,27 +199,27 @@ void ExecuteQueryIdle(flecs::world &world)
 
         inputVels.vec.push_back(outputVel);
     });
-    world.defer_end();
+    flecsWorld.defer_end();
 }
 
-void ExecuteQueryRun(flecs::world &world)
+void ExecuteQueryRun(duin::World &world)
 {
-    static flecs::query q =
-        world.query_builder<InputVelocities, InputVelocityDirection, const CanRunComponent, const Velocity3D>()
-            .with<RunTag>()
-            .build();
+    static duin::Query q =
+        world.QueryBuilder<InputVelocities, InputVelocityDirection, const CanRunComponent, const Velocity3D>()
+            .With<RunTag>()
+            .Build();
 
-    world.defer_begin();
-    q.each([](flecs::entity e, InputVelocities &inputVels, InputVelocityDirection &iDir,
+    world.DeferBegin();
+    q.Each([](duin::Entity e, InputVelocities &inputVels, InputVelocityDirection &iDir,
               const CanRunComponent &moveSpeed, const Velocity3D &velocity) {
         float acceleration = 1.0f;
         float targetSpeed = moveSpeed.speed;
 
-        if (e.has<OnGroundTag>())
+        if (e.Has<OnGroundTag>())
         {
             acceleration = 1.0f;
         }
-        else if (e.has<InAirTag>())
+        else if (e.Has<InAirTag>())
         {
             constexpr float airSpeedFactor = 0.65f;
             acceleration = 0.25f;
@@ -245,19 +248,20 @@ void ExecuteQueryRun(flecs::world &world)
 
         inputVels.vec.push_back(outputVel);
     });
-    world.defer_end();
+    world.DeferEnd();
 }
 
-void ExecuteQuerySprint(flecs::world &world)
+void ExecuteQuerySprint(duin::World &world)
 {
-    static flecs::query q = world
+    flecs::world &flecsWorld = world.GetFlecsWorld();
+    static flecs::query q = flecsWorld
                                 .query_builder<InputVelocities, InputVelocityDirection, const CanRunComponent,
                                                const CanSprintComponent, const Velocity3D>()
                                 .with<SprintTag>()
                                 .with<OnGroundTag>()
                                 .build();
 
-    world.defer_begin();
+    flecsWorld.defer_begin();
     q.each([](flecs::entity e, InputVelocities &inputVels, InputVelocityDirection &iDir,
               const CanRunComponent &runSpeed, const CanSprintComponent &moveSpeed, const Velocity3D &velocity) {
         double delta = duin::GetPhysicsFrameTime();
@@ -282,12 +286,12 @@ void ExecuteQuerySprint(flecs::world &world)
 
         inputVels.vec.push_back(outputVel);
     });
-    world.defer_end();
+    flecsWorld.defer_end();
 }
 
-void ExecuteQueryVelocityBob(flecs::world &world)
+void ExecuteQueryVelocityBob(duin::World &world)
 {
-    static flecs::query q = world
+    static flecs::query q = world.GetFlecsWorld()
                                 .query_builder<VelocityBob,
                                                // Position3D,
                                                Transform3D, const Velocity3D *>()
@@ -299,7 +303,7 @@ void ExecuteQueryVelocityBob(flecs::world &world)
                                 .cached()
                                 .build();
 
-    world.defer_begin();
+    world.DeferBegin();
     q.each([](flecs::entity e, VelocityBob &bob,
               // Position3D& localPos,
               Transform3D &tx, const Velocity3D *velocity) {
@@ -312,12 +316,13 @@ void ExecuteQueryVelocityBob(flecs::world &world)
         //     duin::GetPhysicsFPS(), bobEffectY * duin::GetPhysicsFPS(), txPos.z });
         // }
     });
-    world.defer_end();
+    world.DeferEnd();
 }
 
-void ExecuteQueryMoveDebugCamera(flecs::world &world)
+void ExecuteQueryMoveDebugCamera(duin::World &world)
 {
-    static flecs::query q = world
+    flecs::world &flecsWorld = world.GetFlecsWorld();
+    static flecs::query q = flecsWorld
                                 .query_builder<Movement3DInput,
                                                // Position3D
                                                Transform3D>()
@@ -325,7 +330,7 @@ void ExecuteQueryMoveDebugCamera(flecs::world &world)
                                 .with<DebugCameraTag>()
                                 .build();
 
-    world.defer_begin();
+    flecsWorld.defer_begin();
     q.each([](flecs::entity e, Movement3DInput &input,
               // Position3D& gPos
               Transform3D &tx) {
@@ -339,29 +344,30 @@ void ExecuteQueryMoveDebugCamera(flecs::world &world)
         input.y = 0.0f;
         input.z = 0.0f;
     });
-    world.defer_end();
+    flecsWorld.defer_end();
 }
 
-void ExecuteQueryOnGroundJump(flecs::world &world)
+void ExecuteQueryOnGroundJump(duin::World &world)
 {
+    flecs::world &flecsWorld = world.GetFlecsWorld();
     static flecs::query q =
-        world.query_builder<InputForces, const CanJumpComponent>().with<JumpTag>().with<OnGroundTag>().build();
+        flecsWorld.query_builder<InputForces, const CanJumpComponent>().with<JumpTag>().with<OnGroundTag>().build();
 
-    world.defer_begin();
+    flecsWorld.defer_begin();
     q.each([](flecs::entity e, InputForces &inputForces, const CanJumpComponent &moveSpeed) {
         debugConsole.Log("Jumping!");
         duin::Vector3 iForce(0.0f, moveSpeed.impulse, 0.0f);
         inputForces.vec.push_back(iForce);
         e.remove<JumpTag>();
     });
-    world.defer_end();
+    flecsWorld.defer_end();
 }
 
-void ExecuteQueryResolveInputVelocities(flecs::world &world)
+void ExecuteQueryResolveInputVelocities(duin::World &world)
 {
-    static flecs::query q = world.query_builder<InputVelocities, Velocity3D>().cached().build();
+    static auto q = world.QueryBuilder<InputVelocities, Velocity3D>().Cached().Build();
 
-    q.each([](InputVelocities &inputVels, Velocity3D &velocity) {
+    q.Each([](duin::Entity e, InputVelocities &inputVels, Velocity3D &velocity) {
         duin::Vector3 accumVel = duin::Vector3Zero();
         for (duin::Vector3 &vec : inputVels.vec)
         {
@@ -376,12 +382,12 @@ void ExecuteQueryResolveInputVelocities(flecs::world &world)
     });
 }
 
-void ExecuteQueryResolveInputForces(flecs::world &world)
+void ExecuteQueryResolveInputForces(duin::World &world)
 {
-    static flecs::query q =
-        world.query_builder<InputForces, InputVelocities, Velocity3D, const Mass>().cached().build();
+    static duin::Query q =
+        world.QueryBuilder<InputForces, InputVelocities, Velocity3D, const Mass>().Cached().Build();
 
-    q.each([](InputForces &inputForces, InputVelocities &inputVelocities, Velocity3D &velocity, const Mass &mass) {
+    q.Each([](duin::Entity e, InputForces &inputForces, InputVelocities &inputVelocities, Velocity3D &velocity, const Mass &mass) {
         duin::Vector3 netForce = duin::Vector3Zero();
         for (duin::Vector3 &vec : inputForces.vec)
         {

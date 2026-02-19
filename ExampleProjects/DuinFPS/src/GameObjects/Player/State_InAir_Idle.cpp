@@ -14,7 +14,9 @@ void State_InAir_Idle::Enter()
 {
     debugConsole.Log("State_InAir_Idle: Entering State_InAir_Idle");
 
-    player.add<IdleTag>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Add<IdleTag>();
 }
 
 void State_InAir_Idle::OnEvent(duin::Event e)
@@ -46,6 +48,8 @@ void State_InAir_Idle::Exit()
 {
     debugConsole.Log("State_InAir_Idle: Exiting State_InAir_Idle");
 
-    player.remove<IdleTag>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Remove<IdleTag>();
     debugWatchlist.Post("PlayerState", "");
 }

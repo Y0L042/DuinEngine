@@ -14,7 +14,9 @@ void State_OnGround_Idle::Enter()
 {
     debugConsole.Log("State_OnGround_Idle: Entering State_OnGround_Idle");
 
-    player.add<IdleTag>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Add<IdleTag>();
 }
 
 void State_OnGround_Idle::OnEvent(duin::Event e)
@@ -48,6 +50,8 @@ void State_OnGround_Idle::DrawUI()
 
 void State_OnGround_Idle::Exit()
 {
-    player.remove<IdleTag>();
+    duin::Entity& player = *GetBlackboard()->player;
+
+    player.Remove<IdleTag>();
     debugWatchlist.Post("PlayerState", "");
 }

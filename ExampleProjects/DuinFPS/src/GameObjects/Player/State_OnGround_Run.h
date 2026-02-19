@@ -2,6 +2,8 @@
 
 #include <Duin/Objects/GameStateMachine.h>
 #include <Duin/Core/Events/EventsModule.h>
+#include "PlayerStateMachine.h"
+#include "PlayerBlackboard.h"
 
 class State_OnGround_Run : public duin::GameState
 {
@@ -21,4 +23,5 @@ class State_OnGround_Run : public duin::GameState
     void Exit() override;
 
   private:
+    PlayerBlackboard* GetBlackboard() { return static_cast<PlayerStateMachine*>(&owner)->GetBlackboard(); }
 };

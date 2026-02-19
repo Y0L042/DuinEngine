@@ -7,18 +7,17 @@
 
 #include <Duin.h>
 #include <Duin/ECS/ECSModule.h>
+#include <Duin/Scene/SceneBuilder.h>
 
 duin::ECSManager ecs;
 std::shared_ptr<Player> playerObj;
-
-duin::World world;
 
 void GameState_Gameplay::Enter()
 {
     debugConsole.Log("GameState_Gameplay: Entering GameState_Gameplay");
     duin::Input::CaptureMouse(true);
     ecs.Initialize();
-    RegisterComponents(ecs.world);
+    RegisterComponents(*ecs.world);
 
     playerObj = CreateChildObject<Player>();
 
@@ -29,6 +28,7 @@ void GameState_Gameplay::Enter()
                                    duin::PhysicsMaterial(0.4f, 0.4f, 0.5f));
 
     static std::shared_ptr<BeachBall> ball = CreateChildObject<BeachBall>();
+
 }
 
 void GameState_Gameplay::OnEvent(duin::Event e)
@@ -41,22 +41,22 @@ void GameState_Gameplay::Update(double delta)
 
 void GameState_Gameplay::PhysicsUpdate(double delta)
 {
-    ExecuteQueryUpdatePlayerYaw(ecs.world);
-    ExecuteQueryUpdateCameraPitch(ecs.world);
-    ExecuteQueryComputePlayerInputVelocity(ecs.world);
-    ExecuteQueryGravity(ecs.world);
-    ExecuteQueryDebugCameraTarget(ecs.world);
-    ExecuteQueryVelocityBob(ecs.world);
+    ExecuteQueryUpdatePlayerYaw(*ecs.world);
+    ExecuteQueryUpdateCameraPitch(*ecs.world);
+    ExecuteQueryComputePlayerInputVelocity(*ecs.world);
+    ExecuteQueryGravity(*ecs.world);
+    ExecuteQueryDebugCameraTarget(*ecs.world);
+    ExecuteQueryVelocityBob(*ecs.world);
 
-    ExecuteQueryMoveDebugCamera(ecs.world);
+    ExecuteQueryMoveDebugCamera(*ecs.world);
 
-    ExecuteQueryIdle(ecs.world);
-    ExecuteQueryRun(ecs.world);
-    ExecuteQuerySprint(ecs.world);
-    ExecuteQueryOnGroundJump(ecs.world);
+    ExecuteQueryIdle(*ecs.world);
+    ExecuteQueryRun(*ecs.world);
+    ExecuteQuerySprint(*ecs.world);
+    ExecuteQueryOnGroundJump(*ecs.world);
 
-    ExecuteQueryResolveInputVelocities(ecs.world);
-    ExecuteQueryResolveInputForces(ecs.world);
+    ExecuteQueryResolveInputVelocities(*ecs.world);
+    ExecuteQueryResolveInputForces(*ecs.world);
 }
 
 void GameState_Gameplay::Draw()

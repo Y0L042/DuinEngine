@@ -7,5 +7,6 @@ extern duin::DebugConsole debugConsole;
 extern duin::DebugWatchlist debugWatchlist;
 
 extern duin::ECSManager ecs;
+extern duin::World world;
 
-extern flecs::entity player;
+extern duin::Entity player;
