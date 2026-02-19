@@ -10,7 +10,7 @@ workspace "Duin"
     architecture "x64"
     startproject "DuinFPS"
 
-    configurations { "Debug", "Release", "Dist", "Archive" }
+    configurations { "Debug", "DebugCoverage", "Release", "Dist", "Archive" }
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
     staticruntime "On"
