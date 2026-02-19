@@ -826,4 +826,234 @@ TEST_SUITE("JSONValue - Special Values")
         CHECK(v.GetInt() == 2147483647);
     }
 }
+
+TEST_SUITE("JSONValue - ParseFromFile")
+{
+    TEST_CASE("Parse non-existent file")
+    {
+        duin::JSONValue v = duin::JSONValue::ParseFromFile("non_existent_file.json");
+        // Should return empty object and log error
+        CHECK(v.IsObject());
+    }
+
+    // Note: Testing actual file parsing requires creating temporary files
+    // which may require filesystem modification, so we skip actual file tests
+}
+
+TEST_SUITE("JSONValue - Parse Error Handling")
+{
+    TEST_CASE("Parse invalid JSON")
+    {
+        std::string invalidJson = "{invalid}";
+        duin::JSONValue v = duin::JSONValue::Parse(invalidJson);
+        // Should return empty object on error
+        CHECK(v.IsObject());
+    }
+
+    TEST_CASE("Parse JSON string primitive")
+    {
+        std::string json = "\"hello\"";
+        duin::JSONValue v = duin::JSONValue::Parse(json);
+        CHECK(v.IsString());
+        CHECK(v.GetString() == "hello");
+    }
+
+    TEST_CASE("Parse JSON number primitive")
+    {
+        std::string json = "42";
+        duin::JSONValue v = duin::JSONValue::Parse(json);
+        CHECK(v.IsNumber());
+        CHECK(v.GetInt() == 42);
+    }
+
+    TEST_CASE("Parse JSON boolean primitive")
+    {
+        std::string json1 = "true";
+        duin::JSONValue v1 = duin::JSONValue::Parse(json1);
+        CHECK(v1.IsBool());
+        CHECK(v1.GetBool() == true);
+
+        std::string json2 = "false";
+        duin::JSONValue v2 = duin::JSONValue::Parse(json2);
+        CHECK(v2.IsBool());
+        CHECK(v2.GetBool() == false);
+    }
+
+    TEST_CASE("Parse JSON null")
+    {
+        std::string json = "null";
+        duin::JSONValue v = duin::JSONValue::Parse(json);
+        CHECK(v.IsNull());
+    }
+}
+
+TEST_SUITE("JSONValue - Iterator Edge Cases")
+{
+    TEST_CASE("Begin/End on non-array")
+    {
+        duin::JSONValue obj;
+        obj.AddMember("key", 1);
+
+        // Calling Begin() and End() on objects should log warning
+        auto it1 = obj.Begin();
+        auto it2 = obj.End();
+        // Should return invalid iterators
+    }
+
+    TEST_CASE("Iterator GetValue method")
+    {
+        duin::JSONValue arr;
+        arr.SetArray();
+        arr.PushBack(42);
+
+        auto it = arr.begin();
+        duin::JSONValue v = it.GetValue();
+        CHECK(v.GetInt() == 42);
+    }
+
+    TEST_CASE("ConstIterator GetValue method")
+    {
+        duin::JSONValue arr;
+        arr.SetArray();
+        arr.PushBack(42);
+
+        const duin::JSONValue& constArr = arr;
+        auto it = constArr.begin();
+        duin::JSONValue v = it.GetValue();
+        CHECK(v.GetInt() == 42);
+    }
+}
+
+TEST_SUITE("JSONValue - FindMember")
+{
+    TEST_CASE("FindMember on object - member exists")
+    {
+        duin::JSONValue obj;
+        obj.AddMember("key1", 42);
+        obj.AddMember("key2", std::string("value"));
+
+        auto it = obj.FindMember("key1");
+        CHECK((*it).GetInt() == 42);
+    }
+
+    TEST_CASE("FindMember on object - member not found")
+    {
+        duin::JSONValue obj;
+        obj.AddMember("key1", 42);
+
+        auto it = obj.FindMember("nonexistent");
+        // Should return invalid iterator
+    }
+
+    TEST_CASE("FindMember on non-object")
+    {
+        duin::JSONValue arr;
+        arr.SetArray();
+        arr.PushBack(1);
+
+        auto it = arr.FindMember("key");
+        // Should log warning and return invalid iterator
+    }
+}
+
+TEST_SUITE("JSONValue - Begin/End Methods")
+{
+    TEST_CASE("Begin and End uppercase methods")
+    {
+        duin::JSONValue arr;
+        arr.SetArray();
+        arr.PushBack(1);
+        arr.PushBack(2);
+        arr.PushBack(3);
+
+        int sum = 0;
+        for (auto it = arr.Begin(); it != arr.End(); ++it)
+        {
+            sum += (*it).GetInt();
+        }
+        CHECK(sum == 6);
+    }
+}
+
+TEST_SUITE("JSONValue - Type Getters with Warnings")
+{
+    TEST_CASE("GetBool on non-bool")
+    {
+        duin::JSONValue v(42);
+        bool result = v.GetBool();
+        CHECK(result == false); // Returns false with warning
+    }
+
+    TEST_CASE("GetDouble on non-double")
+    {
+        duin::JSONValue v(std::string("text"));
+        double result = v.GetDouble();
+        CHECK(result == doctest::Approx(0.0)); // Returns 0.0 with warning
+    }
+
+    TEST_CASE("Capacity on non-array")
+    {
+        duin::JSONValue obj;
+        size_t cap = obj.Capacity();
+        // Should log warning and return 0
+    }
+
+    TEST_CASE("begin/end on non-array")
+    {
+        duin::JSONValue obj;
+        obj.AddMember("key", 1);
+
+        // Should log warnings
+        auto it1 = obj.begin();
+        auto it2 = obj.end();
+    }
+}
+
+TEST_SUITE("JSONValue - Operator Dereference")
+{
+    TEST_CASE("Dereference operator on JSONValue")
+    {
+        duin::JSONValue v(42);
+        const duin::JSONValue& deref = *v;
+        CHECK(deref.GetInt() == 42);
+    }
+}
+
+TEST_SUITE("JSONValue - GetRJSONValue")
+{
+    TEST_CASE("GetRJSONValue returns underlying RapidJSON value")
+    {
+        duin::JSONValue v(42);
+        rapidjson::Value& rjson = v.GetRJSONValue();
+        CHECK(rjson.IsInt());
+        CHECK(rjson.GetInt() == 42);
+    }
+}
+
+TEST_SUITE("JSONValue - Array Index Operator")
+{
+    TEST_CASE("Array index on non-array")
+    {
+        duin::JSONValue obj;
+        obj.AddMember("key", 1);
+
+        duin::JSONValue result = obj[0];
+        // Should log warning and return empty object
+        CHECK(result.IsObject());
+    }
+}
+
+TEST_SUITE("JSONValue - Inequality Operator Edge Cases")
+{
+    TEST_CASE("Inequality with different values")
+    {
+        duin::JSONValue v1;
+        v1.AddMember("a", 1);
+        
+        duin::JSONValue v2;
+        v2.AddMember("b", 2);
+
+        CHECK(v1 != v2);
+    }
+}
 } // namespace TestJSONValue

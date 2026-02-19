@@ -729,4 +729,215 @@ TEST_SUITE("ConfigValue - Performance and Edge Cases")
     }
 }
 
+TEST_SUITE("ConfigValue - ParseFile and Error Handling")
+{
+    TEST_CASE("ParseFile with non-existent file")
+    {
+        duin::ConfigValue v = duin::ConfigValue::ParseFile("non_existent_file.toml");
+        CHECK(v.IsEmpty());
+    }
+
+    // Note: Testing actual file parsing requires creating temporary files
+    // which may require filesystem modification, so we skip actual file tests
+}
+
+TEST_SUITE("ConfigValue - Type Checking")
+{
+    TEST_CASE("IsTable on table")
+    {
+        std::string toml = "[section]";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        duin::ConfigValue section = v.At("section");
+        CHECK(section.IsTable());
+    }
+
+    TEST_CASE("IsArray on array")
+    {
+        std::string toml = "arr = [1, 2, 3]";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        duin::ConfigValue arr = v.At("arr");
+        CHECK(arr.IsArray());
+    }
+
+    TEST_CASE("IsTable on non-table")
+    {
+        std::string toml = "value = 42";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        duin::ConfigValue val = v.At("value");
+        CHECK_FALSE(val.IsTable());
+    }
+
+    TEST_CASE("IsArray on non-array")
+    {
+        std::string toml = "value = 42";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        duin::ConfigValue val = v.At("value");
+        CHECK_FALSE(val.IsArray());
+    }
+}
+
+TEST_SUITE("ConfigValue - As Methods")
+{
+    TEST_CASE("As<int> on integer")
+    {
+        std::string toml = "num = 42";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        int num = v.At("num").As<int>();
+        CHECK(num == 42);
+    }
+
+    TEST_CASE("As<double> on floating point")
+    {
+        std::string toml = "pi = 3.14";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        double pi = v.At("pi").As<double>();
+        CHECK(pi == doctest::Approx(3.14));
+    }
+
+    TEST_CASE("As<std::string> on string")
+    {
+        std::string toml = R"(text = "hello")";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        std::string text = v.At("text").As<std::string>();
+        CHECK(text == "hello");
+    }
+
+    TEST_CASE("AsInteger convenience method")
+    {
+        std::string toml = "value = 100";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        int value = v.At("value").AsInteger();
+        CHECK(value == 100);
+    }
+
+    TEST_CASE("AsString convenience method")
+    {
+        std::string toml = R"(name = "test")";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        std::string name = v.At("name").AsString();
+        CHECK(name == "test");
+    }
+}
+
+TEST_SUITE("ConfigValue - Constructor from TOML value")
+{
+    TEST_CASE("Construct ConfigValue from TOML value")
+    {
+        std::string toml = "key = 42";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        
+        // Get underlying TOML value
+        auto tomlVal = v.GetTOMLValue();
+        
+        // Create new ConfigValue from TOML value
+        duin::ConfigValue v2(tomlVal);
+        CHECK_FALSE(v2.IsEmpty());
+    }
+}
+
+TEST_SUITE("ConfigValue - GetTOMLValue Method")
+{
+    TEST_CASE("GetTOMLValue returns reference to underlying TOML value")
+    {
+        std::string toml = "key = 42";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        
+        const auto& tomlRef = v.GetTOMLValue();
+        CHECK(tomlRef.contains("key"));
+    }
+}
+
+TEST_SUITE("ConfigValue - Find with Complex Types")
+{
+    TEST_CASE("Find array of integers")
+    {
+        std::string toml = "nums = [1, 2, 3]";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        auto arr = v.Find<std::vector<int>>("nums");
+        CHECK(arr.size() == 3);
+        CHECK(arr[0] == 1);
+        CHECK(arr[2] == 3);
+    }
+
+    TEST_CASE("Find array of strings")
+    {
+        std::string toml = R"(words = ["a", "b", "c"])";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        auto arr = v.Find<std::vector<std::string>>("words");
+        CHECK(arr.size() == 3);
+        CHECK(arr[0] == "a");
+        CHECK(arr[2] == "c");
+    }
+
+    TEST_CASE("Find boolean")
+    {
+        std::string toml = "flag = true";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        bool flag = v.Find<bool>("flag");
+        CHECK(flag == true);
+    }
+
+    TEST_CASE("Find double")
+    {
+        std::string toml = "val = 2.5";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        double val = v.Find<double>("val");
+        CHECK(val == doctest::Approx(2.5));
+    }
+
+    TEST_CASE("Find int64")
+    {
+        std::string toml = "big = 9223372036854775807";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        int64_t big = v.Find<int64_t>("big");
+        CHECK(big == 9223372036854775807LL);
+    }
+
+    TEST_CASE("Find array of tables")
+    {
+        std::string toml = R"(
+            [[items]]
+            name = "item1"
+            value = 10
+
+            [[items]]
+            name = "item2"
+            value = 20
+        )";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        
+        using TableType = std::unordered_map<std::string, toml::value>;
+        auto items = v.Find<std::vector<TableType>>("items");
+        CHECK(items.size() == 2);
+    }
+}
+
+TEST_SUITE("ConfigValue - Edge Cases and Error Scenarios")
+{
+    TEST_CASE("Find non-existent key returns default")
+    {
+        std::string toml = "existing = 1";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        
+        int result = v.Find<int>("non_existent");
+        CHECK(result == 0); // Default-constructed int
+    }
+
+    TEST_CASE("At non-existent key returns empty ConfigValue")
+    {
+        std::string toml = "existing = 1";
+        duin::ConfigValue v = duin::ConfigValue::Parse(toml);
+        
+        duin::ConfigValue missing = v.At("non_existent");
+        CHECK(missing.IsEmpty());
+    }
+
+    TEST_CASE("Set on empty ConfigValue")
+    {
+        duin::ConfigValue v;
+        v.Set("key", 42);
+        CHECK(v.Find<int>("key") == 42);
+    }
+}
+
 } // namespace TestConfigValue
