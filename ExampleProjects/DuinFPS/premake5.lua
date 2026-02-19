@@ -57,6 +57,10 @@ project "DuinFPS"
         defines "DN_DEBUG"
         symbols "On"
 
+    filter "configurations:DebugCoverage"
+        defines "DN_DEBUG"
+        symbols "On"
+
     filter "configurations:Release"
         defines "DN_RELEASE"
         optimize "On"

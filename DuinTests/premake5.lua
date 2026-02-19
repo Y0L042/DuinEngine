@@ -67,6 +67,14 @@ project "DuinTests"
         -- linkoptions { "/PROFILE" }  -- Enable profiling/coverage
         -- flags { "NoIncrementalLink" }  -- Required for /PROFILE
 
+    filter "configurations:DebugCoverage"
+        defines "DN_DEBUG"
+        symbols "On"
+        -- Enable code coverage for Debug builds
+        buildoptions { "/Z7" }  -- Full symbolic debug information
+        linkoptions { "/PROFILE" }  -- Enable profiling/coverage
+        flags { "NoIncrementalLink" }  -- Required for /PROFILE
+
     filter "configurations:Release"
         defines "DN_RELEASE"
         optimize "On"
