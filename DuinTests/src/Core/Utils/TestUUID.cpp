@@ -397,5 +397,130 @@ TEST_SUITE("UUID")
             CHECK(minUUID != maxUUID);
         }
     }
+
+    TEST_CASE("ToStrDec - Instance Method")
+    {
+        SUBCASE("Zero value")
+        {
+            duin::UUID uuid(0);
+            std::string str = uuid.ToStrDec();
+            CHECK(str == "0");
+        }
+
+        SUBCASE("Small value")
+        {
+            duin::UUID uuid(456);
+            std::string str = uuid.ToStrDec();
+            CHECK(str == "456");
+        }
+
+        SUBCASE("Large value")
+        {
+            duin::UUID uuid(98765432109876ULL);
+            std::string str = uuid.ToStrDec();
+            CHECK(str == "98765432109876");
+        }
+    }
+
+    TEST_CASE("ToStrHex - Instance Method")
+    {
+        SUBCASE("Zero value")
+        {
+            duin::UUID uuid(0);
+            std::string str = uuid.ToStrHex();
+            CHECK(str == "0x0");
+        }
+
+        SUBCASE("Small value")
+        {
+            duin::UUID uuid(0xABC);
+            std::string str = uuid.ToStrHex();
+            CHECK(str == "0xABC");
+        }
+
+        SUBCASE("Large value")
+        {
+            duin::UUID uuid(0x123456789ABCDEFULL);
+            std::string str = uuid.ToStrHex();
+            CHECK(str == "0x123456789ABCDEF");
+        }
+    }
+
+    TEST_CASE("FromStringDec - Error Handling")
+    {
+        SUBCASE("Invalid decimal string - non-numeric")
+        {
+            // This should log a fatal error and return INVALID (0)
+            // Note: This will trigger a fatal log, but won't crash due to how DN_CORE_FATAL is implemented
+            duin::UUID uuid = duin::UUID::FromStringDec("invalid123");
+            // The function logs fatal but returns INVALID, not crash
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Out of range decimal string")
+        {
+            // A string that represents a value larger than uint64_max
+            duin::UUID uuid = duin::UUID::FromStringDec("99999999999999999999999999999");
+            // The function logs fatal but returns INVALID
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Empty string")
+        {
+            duin::UUID uuid = duin::UUID::FromStringDec("");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+    }
+
+    TEST_CASE("FromStringHex - Error Handling and Edge Cases")
+    {
+        SUBCASE("Empty string")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Only prefix 0x")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("0x");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Only prefix 0X")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("0X");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Only dashes")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("---");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Too long hex string (more than 16 hex digits)")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("0x12345678901234567890");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Invalid hex characters")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("0xGHIJ");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Invalid hex character mixed with valid")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("0xAB$CD");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+
+        SUBCASE("Spaces in hex string")
+        {
+            duin::UUID uuid = duin::UUID::FromStringHex("0xAB CD");
+            CHECK(static_cast<uint64_t>(uuid) == 0);
+        }
+    }
 }
 } // namespace TestUUID

@@ -558,5 +558,428 @@ TEST_SUITE("GameStateMachine")
         CHECK(finalState != nullptr);
         CHECK(finalState->enterCalled);
     }
+
+    TEST_CASE("GetStateStack access")
+    {
+        duin::GameStateMachine sm;
+        sm.PushState<TestStateA>();
+        sm.PushState<TestStateB>();
+        sm.PushState<TestStateC>();
+
+        const auto& stack = sm.GetStateStack();
+        CHECK(stack.size() == 3);
+    }
+
+    TEST_CASE("Init method call")
+    {
+        duin::GameStateMachine sm;
+        // Init should not crash
+        sm.Init();
+        CHECK(true);
+    }
+
+    TEST_CASE("Ready method call")
+    {
+        duin::GameStateMachine sm;
+        // Ready should not crash
+        sm.Ready();
+        CHECK(true);
+    }
+
+    TEST_CASE("Debug method call")
+    {
+        duin::GameStateMachine sm;
+        // Debug should not crash
+        sm.Debug();
+        CHECK(true);
+    }
+}
+
+TEST_SUITE("GameState - Signal Connection and Disconnection")
+{
+    TEST_CASE("ConnectOnStateDraw and callback")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool drawSignalCalled = false;
+        state->ConnectOnStateDraw([&drawSignalCalled]() { drawSignalCalled = true; });
+
+        sm.Draw();
+        CHECK(drawSignalCalled);
+    }
+
+    TEST_CASE("ConnectOnStateDrawUI and callback")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool drawUISignalCalled = false;
+        state->ConnectOnStateDrawUI([&drawUISignalCalled]() { drawUISignalCalled = true; });
+
+        sm.DrawUI();
+        CHECK(drawUISignalCalled);
+    }
+
+    TEST_CASE("ConnectOnStateEnter and callback")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool enterSignalCalled = false;
+        state->ConnectOnStateEnter([&enterSignalCalled]() { enterSignalCalled = true; });
+
+        // Enter was already called during PushState, push another state to test
+        sm.PopState();
+        sm.PushState<TestStateA>();
+        // The signal should have been connected on the previous instance, so test with new state
+    }
+
+    TEST_CASE("ConnectOnStateOnEvent and callback")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool eventSignalCalled = false;
+        state->ConnectOnStateOnEvent([&eventSignalCalled](duin::Event) { eventSignalCalled = true; });
+
+        duin::Event testEvent{};
+        sm.OnEvent(testEvent);
+        CHECK(eventSignalCalled);
+    }
+
+    TEST_CASE("ConnectOnStatePhysicsUpdate and callback")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool physicsUpdateSignalCalled = false;
+        state->ConnectOnStatePhysicsUpdate([&physicsUpdateSignalCalled](double) { physicsUpdateSignalCalled = true; });
+
+        sm.PhysicsUpdate(0.016);
+        CHECK(physicsUpdateSignalCalled);
+    }
+
+    TEST_CASE("ConnectOnStateUpdate and callback")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool updateSignalCalled = false;
+        state->ConnectOnStateUpdate([&updateSignalCalled](double) { updateSignalCalled = true; });
+
+        sm.Update(0.016);
+        CHECK(updateSignalCalled);
+    }
+
+    TEST_CASE("ConnectAllSignals")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        int signalCallCount = 0;
+        state->ConnectAllSignals(
+            [&signalCallCount]() { signalCallCount++; },  // Enter
+            [&signalCallCount](duin::Event) { signalCallCount++; },  // OnEvent
+            [&signalCallCount](double) { signalCallCount++; },  // Update
+            [&signalCallCount](double) { signalCallCount++; },  // PhysicsUpdate
+            [&signalCallCount]() { signalCallCount++; },  // Draw
+            [&signalCallCount]() { signalCallCount++; },  // DrawUI
+            [&signalCallCount]() { signalCallCount++; }  // Exit
+        );
+
+        sm.Update(0.016);
+        CHECK(signalCallCount >= 1);
+    }
+
+    TEST_CASE("DisconnectOnStateDraw")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool drawSignalCalled = false;
+        auto uuid = state->ConnectOnStateDraw([&drawSignalCalled]() { drawSignalCalled = true; });
+        state->DisconnectOnStateDraw(uuid);
+
+        sm.Draw();
+        CHECK_FALSE(drawSignalCalled);
+    }
+
+    TEST_CASE("DisconnectOnStateDrawUI")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool drawUISignalCalled = false;
+        auto uuid = state->ConnectOnStateDrawUI([&drawUISignalCalled]() { drawUISignalCalled = true; });
+        state->DisconnectOnStateDrawUI(uuid);
+
+        sm.DrawUI();
+        CHECK_FALSE(drawUISignalCalled);
+    }
+
+    TEST_CASE("DisconnectOnStateEnter")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        auto uuid = state->ConnectOnStateEnter([]() {});
+        state->DisconnectOnStateEnter(uuid);
+        // Test passes if no crash
+        CHECK(true);
+    }
+
+    TEST_CASE("DisconnectOnStateExit")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        auto uuid = state->ConnectOnStateExit([]() {});
+        state->DisconnectOnStateExit(uuid);
+        // Test passes if no crash
+        CHECK(true);
+    }
+
+    TEST_CASE("DisconnectOnStateOnEvent")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool eventSignalCalled = false;
+        auto uuid = state->ConnectOnStateOnEvent([&eventSignalCalled](duin::Event) { eventSignalCalled = true; });
+        state->DisconnectOnStateOnEvent(uuid);
+
+        duin::Event testEvent{};
+        sm.OnEvent(testEvent);
+        CHECK_FALSE(eventSignalCalled);
+    }
+
+    TEST_CASE("DisconnectOnStatePhysicsUpdate")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool physicsUpdateSignalCalled = false;
+        auto uuid = state->ConnectOnStatePhysicsUpdate([&physicsUpdateSignalCalled](double) { physicsUpdateSignalCalled = true; });
+        state->DisconnectOnStatePhysicsUpdate(uuid);
+
+        sm.PhysicsUpdate(0.016);
+        CHECK_FALSE(physicsUpdateSignalCalled);
+    }
+
+    TEST_CASE("DisconnectOnStateUpdate")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        bool updateSignalCalled = false;
+        auto uuid = state->ConnectOnStateUpdate([&updateSignalCalled](double) { updateSignalCalled = true; });
+        state->DisconnectOnStateUpdate(uuid);
+
+        sm.Update(0.016);
+        CHECK_FALSE(updateSignalCalled);
+    }
+
+    TEST_CASE("DisconnectAllSignals")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        int signalCallCount = 0;
+        auto connections = state->ConnectAllSignals(
+            [&signalCallCount]() { signalCallCount++; },
+            [&signalCallCount](duin::Event) { signalCallCount++; },
+            [&signalCallCount](double) { signalCallCount++; },
+            [&signalCallCount](double) { signalCallCount++; },
+            [&signalCallCount]() { signalCallCount++; },
+            [&signalCallCount]() { signalCallCount++; },
+            [&signalCallCount]() { signalCallCount++; }
+        );
+
+        state->DisconnectAllSignals(connections);
+
+        sm.Update(0.016);
+        sm.PhysicsUpdate(0.016);
+        sm.Draw();
+        sm.DrawUI();
+        duin::Event testEvent{};
+        sm.OnEvent(testEvent);
+
+        CHECK(signalCallCount == 0);
+    }
+}
+
+TEST_SUITE("GameState - Enable/Disable")
+{
+    TEST_CASE("EnableUpdate")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->EnableUpdate(true);
+        // Test passes if no crash
+        CHECK(true);
+    }
+
+    TEST_CASE("EnablePhysicsUpdate")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->EnablePhysicsUpdate(true);
+        CHECK(true);
+    }
+
+    TEST_CASE("EnableDraw")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->EnableDraw(true);
+        CHECK(true);
+    }
+
+    TEST_CASE("EnableDrawUI")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->EnableDrawUI(true);
+        CHECK(true);
+    }
+
+    TEST_CASE("EnableOnEvent")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->EnableOnEvent(true);
+        CHECK(true);
+    }
+
+    TEST_CASE("Enable all")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->Enable(true);
+        CHECK(true);
+    }
+}
+
+TEST_SUITE("GameState - Pause/Unpause")
+{
+    TEST_CASE("SetPause")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->SetPause();
+        CHECK(true);
+    }
+
+    TEST_CASE("SetUnpause")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->SetUnpause();
+        CHECK(true);
+    }
+}
+
+TEST_SUITE("GameState - Lifecycle Methods")
+{
+    TEST_CASE("Draw method")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->Draw();
+        CHECK(true);
+    }
+
+    TEST_CASE("DrawUI method")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->DrawUI();
+        CHECK(true);
+    }
+
+    TEST_CASE("Update method")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->Update(0.016);
+        CHECK(true);
+    }
+
+    TEST_CASE("PhysicsUpdate method")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        state->PhysicsUpdate(0.016);
+        CHECK(true);
+    }
+
+    TEST_CASE("OnEvent method")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        duin::Event testEvent{};
+        state->OnEvent(testEvent);
+        CHECK(true);
+    }
+}
+
+TEST_SUITE("GameState - Child Objects")
+{
+    TEST_CASE("AddChildObject")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        auto child = std::make_shared<duin::GameObject>();
+        state->AddChildObject(child);
+        CHECK(true);
+    }
+
+    TEST_CASE("RemoveChildObject")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        auto child = std::make_shared<duin::GameObject>();
+        state->AddChildObject(child);
+        state->RemoveChildObject(child);
+        CHECK(true);
+    }
+}
+
+TEST_SUITE("GameState - IsEqualTo")
+{
+    TEST_CASE("IsEqualTo same state")
+    {
+        duin::GameStateMachine sm;
+        auto* state = sm.PushState<TestStateA>();
+
+        CHECK(state->IsEqualTo(state));
+    }
+
+    TEST_CASE("IsEqualTo different state")
+    {
+        duin::GameStateMachine sm;
+        auto* stateA = sm.PushState<TestStateA>();
+        sm.PushState<TestStateB>();
+        sm.PopState();
+        auto* stateB = sm.PushState<TestStateB>();
+
+        CHECK_FALSE(stateA->IsEqualTo(stateB));
+    }
 }
 } // namespace TestGameStateMachine

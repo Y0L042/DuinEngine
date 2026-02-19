@@ -214,5 +214,131 @@ TEST_SUITE("Signal")
         CHECK(structReceived == testData);
         CHECK(mapReceived == testMap);
     }
+
+    TEST_CASE("Disconnect with invalid UUID returns false - comprehensive")
+    {
+        duin::Signal<int> sig;
+        sig.Connect([](int) {});
+
+        // Try disconnecting with completely fake UUID
+        duin::UUID fakeId1(9999999);
+        duin::UUID fakeId2(0);
+        duin::UUID fakeId3;
+
+        CHECK_FALSE(sig.Disconnect(fakeId1));
+        CHECK_FALSE(sig.Disconnect(fakeId2));
+        CHECK_FALSE(sig.Disconnect(fakeId3));
+    }
+
+    TEST_CASE("Multiple disconnects on same UUID")
+    {
+        duin::Signal<> sig;
+        duin::UUID id = sig.Connect([]() {});
+
+        CHECK(sig.Disconnect(id)); // First disconnect succeeds
+        CHECK_FALSE(sig.Disconnect(id)); // Second disconnect fails
+    }
+
+    TEST_CASE("GetListenerCount accuracy")
+    {
+        duin::Signal<int> sig;
+        CHECK(sig.GetListenerCount() == 0);
+
+        auto id1 = sig.Connect([](int) {});
+        CHECK(sig.GetListenerCount() == 1);
+
+        auto id2 = sig.Connect([](int) {});
+        CHECK(sig.GetListenerCount() == 2);
+
+        auto id3 = sig.Connect([](int) {});
+        CHECK(sig.GetListenerCount() == 3);
+
+        sig.Disconnect(id2);
+        CHECK(sig.GetListenerCount() == 2);
+
+        sig.Disconnect(id1);
+        CHECK(sig.GetListenerCount() == 1);
+
+        sig.Disconnect(id3);
+        CHECK(sig.GetListenerCount() == 0);
+    }
+
+    TEST_CASE("Signal with no parameters")
+    {
+        duin::Signal<> sig;
+        int callCount = 0;
+        sig.Connect([&]() { callCount++; });
+        sig.Connect([&]() { callCount++; });
+
+        sig.Emit();
+        CHECK(callCount == 2);
+
+        sig.Emit();
+        CHECK(callCount == 4);
+    }
+
+    TEST_CASE("Connect and immediate disconnect")
+    {
+        duin::Signal<int> sig;
+        auto id = sig.Connect([](int) {});
+        CHECK(sig.GetListenerCount() == 1);
+        sig.Disconnect(id);
+        CHECK(sig.GetListenerCount() == 0);
+    }
+
+    TEST_CASE("Emit with reference types")
+    {
+        duin::Signal<std::string&> sig;
+        std::string result;
+        sig.Connect([&](std::string& s) { result = s; });
+
+        std::string test = "reference";
+        sig.Emit(test);
+        CHECK(result == "reference");
+    }
+
+    TEST_CASE("Emit with const reference types")
+    {
+        duin::Signal<const std::string&> sig;
+        std::string result;
+        sig.Connect([&](const std::string& s) { result = s; });
+
+        std::string test = "const_reference";
+        sig.Emit(test);
+        CHECK(result == "const_reference");
+    }
+
+    TEST_CASE("Connect multiple times with same lambda")
+    {
+        duin::Signal<int> sig;
+        int count = 0;
+        auto lambda = [&](int v) { count += v; };
+
+        auto id1 = sig.Connect(lambda);
+        auto id2 = sig.Connect(lambda);
+
+        CHECK(id1 != id2);
+        CHECK(sig.GetListenerCount() == 2);
+
+        sig.Emit(1);
+        CHECK(count == 2); // Called twice
+    }
+
+    TEST_CASE("Listener order preservation")
+    {
+        duin::Signal<int> sig;
+        std::vector<int> order;
+
+        sig.Connect([&](int) { order.push_back(1); });
+        sig.Connect([&](int) { order.push_back(2); });
+        sig.Connect([&](int) { order.push_back(3); });
+
+        sig.Emit(0);
+
+        CHECK(order.size() == 3);
+        CHECK(order[0] == 1);
+        CHECK(order[1] == 2);
+        CHECK(order[2] == 3);
+    }
 }
 } // namespace TestSignal
