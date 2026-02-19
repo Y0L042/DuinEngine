@@ -1,15 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classduin_1_1CollisionGeometry.html" title=" " alt="" coords="5,129,184,155"/>
-<area shape="rect" id="Node000001" href="$classduin_1_1BoxGeometry.html" title=" " alt="" coords="263,5,411,31"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="118,118,168,78,231,40,263,28,264,33,233,44,171,82,121,122"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1CapsuleGeometry.html" title=" " alt="" coords="249,55,424,80"/>
-<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="139,122,231,89,274,77,276,83,233,94,140,127"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1ConvexMeshGeometry.html" title=" " alt="" coords="233,104,440,129"/>
-<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="197,129,233,125,234,130,198,134"/>
-<area shape="rect" id="Node000004" href="$classduin_1_1PlaneGeometry.html" title=" " alt="" coords="257,153,416,179"/>
-<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="198,150,258,156,257,161,197,155"/>
-<area shape="rect" id="Node000005" href="$classduin_1_1SphereGeometry.html" title=" " alt="" coords="253,203,421,228"/>
-<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="143,157,233,187,280,200,279,205,231,193,141,162"/>
-<area shape="rect" id="Node000006" href="$classduin_1_1TriangleMeshGeometry.html" title=" " alt="" coords="232,252,441,277"/>
-<area shape="poly" id="edge6_Node000000_Node000006" title=" " alt="" coords="122,162,171,200,233,237,268,249,266,254,231,242,168,205,119,166"/>
+<area shape="rect" id="Node000000" href="$structduin_1_1CharacterBodyDesc.html" title=" " alt="" coords="5,5,192,31"/>
 </map>

@@ -20,7 +20,8 @@ var searchData=
   ['createchildobject_17',['createchildobject',['../classduin_1_1Application.html#ad0801824608dece0311e089d4999cb63',1,'duin::Application::CreateChildObject()'],['../classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe',1,'duin::GameObject::CreateChildObject()']]],
   ['createdir_18',['CreateDir',['../namespaceduin_1_1fs.html#a08310e525fc80e8d8f652941344677de',1,'duin::fs']]],
   ['createentity_19',['CreateEntity',['../classduin_1_1World.html#a654cf2c828a2fbf955739cf31add3876',1,'duin::World']]],
-  ['createentityfromjson_20',['CreateEntityFromJSON',['../classduin_1_1ECSManager.html#a1268fa6f425a1f39316fdc757e5e706e',1,'duin::ECSManager']]],
+  ['createentityfromjson_20',['CreateEntityFromJSON',['../classduin_1_1ECSManager.html#ad47fb40f56ed9452d579e4a0c0daa2d8',1,'duin::ECSManager']]],
   ['createinputaction_21',['CreateInputAction',['../InputActions_8h.html#af245978b85d96ad56dc36dc6fd8850b1',1,'duin']]],
-  ['createprocess_22',['CreateProcess',['../Process_8h.html#a66aa7e632561ba16e7089d64c2732760',1,'duin']]]
+  ['createprefab_22',['CreatePrefab',['../classduin_1_1World.html#aff3fe0d8442b75b300d605d14fcfa4b0',1,'duin::World']]],
+  ['createprocess_23',['CreateProcess',['../Process_8h.html#a66aa7e632561ba16e7089d64c2732760',1,'duin']]]
 ];

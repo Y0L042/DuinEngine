@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_0',['key',['../structduin_1_1InputBinding.html#a766cb0e75c623bcc449f6355682ced52',1,'duin::InputBinding']]]
+  ['jsondata_0',['jsonData',['../structduin_1_1PackedPair.html#a1bb7db2092a502572203cfc8185c1a15',1,'duin::PackedPair']]]
 ];

@@ -109,7 +109,6 @@ $(document).ready(function(){initNavTree('structduin_1_1PackedScene.html',''); i
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
@@ -136,20 +135,17 @@ Collaboration diagram for duin::PackedScene:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a2a3e63599d5589a787d5a4397f520a33" id="r_a2a3e63599d5589a787d5a4397f520a33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1PackedScene.html#a2a3e63599d5589a787d5a4397f520a33">Instantiate</a> (const <a class="el" href="classduin_1_1Entity.html">Entity</a> &amp;e)</td></tr>
-<tr class="memdesc:a2a3e63599d5589a787d5a4397f520a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates entities in the given world from this packed scene.  <br /></td></tr>
-<tr class="separator:a2a3e63599d5589a787d5a4397f520a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a3f1de3c7f7096014e860d0b4f25b1f88" id="r_a3f1de3c7f7096014e860d0b4f25b1f88"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structduin_1_1PackedScene.html">PackedScene</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1PackedScene.html#a3f1de3c7f7096014e860d0b4f25b1f88">Deserialize</a> (const <a class="el" href="classduin_1_1JSONValue.html">JSONValue</a> &amp;scene)</td></tr>
 <tr class="separator:a3f1de3c7f7096014e860d0b4f25b1f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab581111e3b48a028466939660949acca" id="r_ab581111e3b48a028466939660949acca"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1JSONValue.html">JSONValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1PackedScene.html#ab581111e3b48a028466939660949acca">Serialize</a> (const <a class="el" href="structduin_1_1PackedScene.html">PackedScene</a> &amp;pScene)</td></tr>
 <tr class="separator:ab581111e3b48a028466939660949acca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae36132860344c433d7b8246039b3e94a" id="r_ae36132860344c433d7b8246039b3e94a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structduin_1_1PackedScene.html">PackedScene</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1PackedScene.html#ae36132860344c433d7b8246039b3e94a">Pack</a> (<a class="el" href="classduin_1_1Entity.html">Entity</a> &amp;e)</td></tr>
-<tr class="separator:ae36132860344c433d7b8246039b3e94a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcf772a4a181cca857de3fde62f43488" id="r_adcf772a4a181cca857de3fde62f43488"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1PackedScene.html#adcf772a4a181cca857de3fde62f43488">Instantiate</a> (<a class="el" href="structduin_1_1PackedScene.html">PackedScene</a> &amp;pscn, <a class="el" href="classduin_1_1World.html">World</a> *world)</td></tr>
+<tr class="memdesc:adcf772a4a181cca857de3fde62f43488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates entities in the given world from this packed scene.  <br /></td></tr>
+<tr class="separator:adcf772a4a181cca857de3fde62f43488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef3b017698ad46db210ad61a6923e069" id="r_aef3b017698ad46db210ad61a6923e069"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structduin_1_1PackedScene.html">PackedScene</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1PackedScene.html#aef3b017698ad46db210ad61a6923e069">Pack</a> (const std::vector&lt; <a class="el" href="classduin_1_1Entity.html">Entity</a> &gt; &amp;vecEntities)</td></tr>
+<tr class="separator:aef3b017698ad46db210ad61a6923e069"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -186,7 +182,7 @@ Static Public Attributes</h2></td></tr>
 <div class="textblock"><p>Complete serialized scene. </p>
 <p>Contains all data needed to save/load a scene: metadata, entities, and external dependencies. </p>
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00120">120</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00151">151</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3f1de3c7f7096014e860d0b4f25b1f88" name="a3f1de3c7f7096014e860d0b4f25b1f88"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3f1de3c7f7096014e860d0b4f25b1f88">&#9670;&#160;</a></span>Deserialize()</h2>
@@ -212,34 +208,52 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00237">237</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00556">556</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a2a3e63599d5589a787d5a4397f520a33" name="a2a3e63599d5589a787d5a4397f520a33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a3e63599d5589a787d5a4397f520a33">&#9670;&#160;</a></span>Instantiate()</h2>
+<a id="adcf772a4a181cca857de3fde62f43488" name="adcf772a4a181cca857de3fde62f43488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcf772a4a181cca857de3fde62f43488">&#9670;&#160;</a></span>Instantiate()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void duin::PackedScene::Instantiate </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classduin_1_1Entity.html">Entity</a> &amp;&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structduin_1_1PackedScene.html">PackedScene</a> &amp;&#160;</td>
+          <td class="paramname"><em>pscn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classduin_1_1World.html">World</a> *&#160;</td>
+          <td class="paramname"><em>world</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Creates entities in the given world from this packed scene. </p>
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00315">315</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00634">634</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
 
 </div>
 </div>
-<a id="ae36132860344c433d7b8246039b3e94a" name="ae36132860344c433d7b8246039b3e94a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae36132860344c433d7b8246039b3e94a">&#9670;&#160;</a></span>Pack()</h2>
+<a id="aef3b017698ad46db210ad61a6923e069" name="aef3b017698ad46db210ad61a6923e069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef3b017698ad46db210ad61a6923e069">&#9670;&#160;</a></span>Pack()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -250,8 +264,8 @@ Static Public Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="structduin_1_1PackedScene.html">duin::PackedScene</a> duin::PackedScene::Pack </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classduin_1_1Entity.html">Entity</a> &amp;&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="classduin_1_1Entity.html">Entity</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vecEntities</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -262,7 +276,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00322">322</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00644">644</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
 
 </div>
 </div>
@@ -290,7 +304,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00287">287</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8cpp_source.html#l00606">606</a> of file <a class="el" href="SceneBuilder_8cpp_source.html">SceneBuilder.cpp</a>.</p>
 
 </div>
 </div>
@@ -309,7 +323,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Root entities. </p>
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00133">133</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00164">164</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -327,7 +341,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>External refs. </p>
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00132">132</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00163">163</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -345,7 +359,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Version/author info. </p>
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00131">131</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00162">162</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -363,7 +377,7 @@ Static Public Attributes</h2></td></tr>
 
 <p><a class="el" href="structduin_1_1Scene.html">Scene</a> name. </p>
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00130">130</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00161">161</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -387,7 +401,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00127">127</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00158">158</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -411,7 +425,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00126">126</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00157">157</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -435,7 +449,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00125">125</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00156">156</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -459,7 +473,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00124">124</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00155">155</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -483,7 +497,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00123">123</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00154">154</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>
@@ -501,7 +515,7 @@ Static Public Attributes</h2></td></tr>
 
 <p><a class="el" href="structduin_1_1Scene.html">Scene</a> identifier. </p>
 
-<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00129">129</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SceneBuilder_8h_source.html#l00160">160</a> of file <a class="el" href="SceneBuilder_8h_source.html">SceneBuilder.h</a>.</p>
 
 </div>
 </div>

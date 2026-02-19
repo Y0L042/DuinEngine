@@ -1,7 +1,7 @@
 var searchData=
 [
   ['data_20oriented_0',['ECS (Data-Oriented)',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#arch_ecs',1,'']]],
-  ['dataiterator_1',['dataiterator',['../classduin_1_1JSONValue_1_1DataIterator.html',1,'duin::JSONValue::DataIterator'],['../classDataIterator.html',1,'DataIterator'],['../classduin_1_1JSONValue_1_1DataIterator.html#ac4a22e0b0a8af8ba50ae793b219958fc',1,'duin::JSONValue::DataIterator::DataIterator()']]],
+  ['dataiterator_1',['dataiterator',['../classduin_1_1JSONValue_1_1DataIterator.html',1,'duin::JSONValue::DataIterator'],['../classduin_1_1JSONValue_1_1DataIterator.html#ac4a22e0b0a8af8ba50ae793b219958fc',1,'duin::JSONValue::DataIterator::DataIterator()'],['../classDataIterator.html',1,'DataIterator']]],
   ['ddvertex_2',['DdVertex',['../structDdVertex.html',1,'']]],
   ['debug_3',['Debug',['../classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190',1,'duin::Application']]],
   ['debugcapsulecomponent_4',['DebugCapsuleComponent',['../structduin_1_1ECSComponent_1_1DebugCapsuleComponent.html',1,'duin::ECSComponent']]],
@@ -26,7 +26,7 @@ var searchData=
   ['deferend_23',['DeferEnd',['../classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a',1,'duin::World']]],
   ['delayprocess_24',['DelayProcess',['../Application_8h.html#aecc5acc7a607d98f0bb1e8593228878b',1,'duin']]],
   ['delayprocessmilli_25',['DelayProcessMilli',['../Application_8h.html#abcea3cb41f726c5889b85a897865c547',1,'duin']]],
-  ['deleteentity_26',['deleteentity',['../classduin_1_1World.html#ae09fe967922ca19078997066af8c93fc',1,'duin::World::DeleteEntity(uint64_t id)'],['../classduin_1_1World.html#afdce70486012f1026a31a12a5a3becb6',1,'duin::World::DeleteEntity(const Entity &amp;entity)']]],
+  ['deleteentity_26',['deleteentity',['../classduin_1_1World.html#afdce70486012f1026a31a12a5a3becb6',1,'duin::World::DeleteEntity(const Entity &amp;entity)'],['../classduin_1_1World.html#ae09fe967922ca19078997066af8c93fc',1,'duin::World::DeleteEntity(uint64_t id)']]],
   ['deleteexternalref_27',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
   ['deletewith_28',['deletewith',['../classduin_1_1World.html#a233e74dcebf1c77fffac169056ba95ff',1,'duin::World::DeleteWith()'],['../classduin_1_1World.html#ae55aaaf75442844fb0883c554685f4fe',1,'duin::World::DeleteWith(uint64_t id)'],['../classduin_1_1World.html#ae257698b1a693e83ce3b3040396b0adb',1,'duin::World::DeleteWith(uint64_t first, uint64_t second)']]],
   ['deltasystemtime_29',['DeltaSystemTime',['../classduin_1_1Iter.html#af8edea9c6f4c497b8eea212dca4ef32e',1,'duin::Iter']]],
@@ -60,5 +60,6 @@ var searchData=
   ['dynamicbody_57',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
   ['dynamicbody_2eh_58',['DynamicBody.h',['../DynamicBody_8h.html',1,'']]],
   ['dynamicbodycomponent_59',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]],
-  ['dynamicfriction_60',['dynamicFriction',['../classduin_1_1PhysicsMaterial.html#ae7fa3ccbe732bc96cbbf7bdedeca5ddf',1,'duin::PhysicsMaterial']]]
+  ['dynamicbodycomponentimpl_60',['DynamicBodyComponentImpl',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent_1_1DynamicBodyComponentImpl.html',1,'duin::ECSComponent::DynamicBodyComponent']]],
+  ['dynamicfriction_61',['dynamicFriction',['../classduin_1_1PhysicsMaterial.html#ae7fa3ccbe732bc96cbbf7bdedeca5ddf',1,'duin::PhysicsMaterial']]]
 ];

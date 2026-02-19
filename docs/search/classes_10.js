@@ -6,5 +6,7 @@ var searchData=
   ['renderstate_3',['RenderState',['../structduin_1_1RenderState.html',1,'duin']]],
   ['rendertexture_4',['RenderTexture',['../structduin_1_1RenderTexture.html',1,'duin']]],
   ['rotation2d_5',['Rotation2D',['../structduin_1_1ECSComponent_1_1Rotation2D.html',1,'duin::ECSComponent']]],
-  ['rotation3d_6',['Rotation3D',['../structduin_1_1ECSComponent_1_1Rotation3D.html',1,'duin::ECSComponent']]]
+  ['rotation2dimpl_6',['Rotation2DImpl',['../structduin_1_1ECSComponent_1_1Rotation2D_1_1Rotation2DImpl.html',1,'duin::ECSComponent::Rotation2D']]],
+  ['rotation3d_7',['Rotation3D',['../structduin_1_1ECSComponent_1_1Rotation3D.html',1,'duin::ECSComponent']]],
+  ['rotation3dimpl_8',['Rotation3DImpl',['../structduin_1_1ECSComponent_1_1Rotation3D_1_1Rotation3DImpl.html',1,'duin::ECSComponent::Rotation3D']]]
 ];

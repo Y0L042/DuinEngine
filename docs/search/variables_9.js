@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lastmodified_0',['lastModified',['../structduin_1_1PackedSceneMetadata.html#a3b0e82020a7cb4e804de99b941565f15',1,'duin::PackedSceneMetadata']]]
+  ['key_0',['key',['../structduin_1_1InputBinding.html#a766cb0e75c623bcc449f6355682ced52',1,'duin::InputBinding']]]
 ];

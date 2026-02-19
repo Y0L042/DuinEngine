@@ -8,5 +8,6 @@ var searchData=
   ['triggered_5',['Triggered',['../structduin_1_1InputBinding.html#a3d68e8b2f06dcbb7355888a33cf287b4',1,'duin::InputBinding']]],
   ['tryget_6',['TryGet',['../classduin_1_1Entity.html#a7e3a75743f37a731e81ba64400920f5e',1,'duin::Entity']]],
   ['trygetmut_7',['TryGetMut',['../classduin_1_1Entity.html#a9119f6121cf475a11c2bbce0daa4e4a1',1,'duin::Entity']]],
-  ['trygetpair_8',['TryGetPair',['../classduin_1_1Entity.html#ac3c7c31e01ea4211a200a943695914dd',1,'duin::Entity']]]
+  ['trygetpair_8',['TryGetPair',['../classduin_1_1Entity.html#a73d65a440766b477ed7e4343df4a186c',1,'duin::Entity']]],
+  ['typeid_9',['TypeId',['../structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279',1,'duin::Entity::ID']]]
 ];

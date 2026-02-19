@@ -1,0 +1,6 @@
+<map id="duin::ECSComponent::Scale3D::Scale3DImpl" name="duin::ECSComponent::Scale3D::Scale3DImpl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,229,179,269"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1Vector3.html" title=" " alt="" coords="39,73,145,99"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,112,95,229,89,229,89,112"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="121,65,139,62,155,65,167,72,172,86,166,101,150,109,129,109,108,101,110,96,130,103,148,104,162,98,167,86,163,76,153,70,139,68,122,71"/>
+</map>

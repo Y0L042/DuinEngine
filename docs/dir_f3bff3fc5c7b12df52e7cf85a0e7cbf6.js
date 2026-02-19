@@ -1,7 +1,7 @@
 var dir_f3bff3fc5c7b12df52e7cf85a0e7cbf6 =
 [
     [ "Camera.cpp", "Camera_8cpp_source.html", null ],
-    [ "Camera.h", "Camera_8h.html", null ],
+    [ "Camera.h", "Camera_8h.html", "Camera_8h" ],
     [ "Color.h", "Color_8h.html", null ],
     [ "Renderer.cpp", "Renderer_8cpp_source.html", null ],
     [ "Renderer.h", "Renderer_8h.html", null ],

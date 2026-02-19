@@ -19,5 +19,6 @@ var searchData=
   ['dircallbackwrapper_16',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
   ['diskrendergeometry_17',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
   ['dynamicbody_18',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
-  ['dynamicbodycomponent_19',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]]
+  ['dynamicbodycomponent_19',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]],
+  ['dynamicbodycomponentimpl_20',['DynamicBodyComponentImpl',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent_1_1DynamicBodyComponentImpl.html',1,'duin::ECSComponent::DynamicBodyComponent']]]
 ];
