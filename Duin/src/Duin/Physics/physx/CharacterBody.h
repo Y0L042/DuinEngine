@@ -10,6 +10,7 @@
 #include <characterkinematic/PxController.h>
 #include <characterkinematic/PxControllerManager.h>
 #include <cooking/PxCooking.h>
+#include <rfl.hpp>
 
 namespace duin
 {

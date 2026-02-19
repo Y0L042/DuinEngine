@@ -8,7 +8,8 @@ namespace duin
 {
 std::shared_ptr<CharacterBody> CharacterBody::Create(CharacterBodyDesc desc)
 {
-    return std::make_shared<CharacterBody>(desc);
+    auto ptr = std::make_shared<CharacterBody>(desc);
+    return ptr;
 }
 
 CharacterBody::CharacterBody(CharacterBodyDesc desc) : desc(desc)

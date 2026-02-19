@@ -9,7 +9,7 @@ namespace duin
 {
 ConfigValue ConfigValue::Parse(const std::string &string)
 {
-    if (string.empty())
+    if (string.empty() || string == "")
         return ConfigValue();
     try
     {
@@ -74,17 +74,47 @@ bool ConfigValue::Contains(const std::string &key)
 
 ConfigValue ConfigValue::At(const std::string &key)
 {
+    if (!modValue_.is_table())
+    {
+        DN_CORE_WARN("ConfigValue::At called on non-table value");
+        return ConfigValue();
+    }
+    
+    if (!modValue_.contains(key))
+    {
+        DN_CORE_WARN("ConfigValue::At key '{}' not found", key);
+        return ConfigValue();
+    }
+    
     return ConfigValue(modValue_.at(key));
 }
 
 std::string ConfigValue::AsString() const
 {
-    return std::string();
+    if (IsEmpty())
+        return "";
+    
+    if (!modValue_.is_string())
+    {
+        DN_CORE_WARN("ConfigValue::AsString called on non-string value");
+        return "";
+    }
+    
+    return modValue_.as_string();
 }
 
 int ConfigValue::AsInteger() const
 {
-    return 0;
+    if (IsEmpty())
+        return 0;
+    
+    if (!modValue_.is_integer())
+    {
+        DN_CORE_WARN("ConfigValue::AsInteger called on non-integer value");
+        return 0;
+    }
+    
+    return modValue_.as_integer();
 }
 
 bool ConfigValue::IsTable() const

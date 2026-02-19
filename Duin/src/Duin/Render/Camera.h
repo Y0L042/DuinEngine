@@ -8,6 +8,7 @@
 
 #include "Duin/Core/Utils/UUID.h"
 #include "Duin/Core/Maths/DuinMaths.h"
+#include "rfl.hpp"
 
 #include <unordered_map>
 
@@ -61,6 +62,23 @@ struct Camera
     int IsValid() const
     {
         return uuid != UUID::INVALID;
+    }
+
+    struct CameraImpl
+    {
+        UUID uuid;
+        Vector3 position;
+        Vector3 target;
+        Vector3 up;
+        float fovy;
+    };
+    using ReflectionType = CameraImpl;
+    Camera(const ReflectionType &impl) : Camera(impl.uuid, impl.position, impl.target, impl.up, impl.fovy)
+    {
+    }
+    ReflectionType reflection() const
+    {
+        return CameraImpl{uuid, position, target, up, fovy};
     }
 };
 

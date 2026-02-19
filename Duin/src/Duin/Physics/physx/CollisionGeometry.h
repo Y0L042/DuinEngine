@@ -140,7 +140,7 @@ class ConvexMeshGeometry : public CollisionGeometry
     ConvexMeshGeometry(const ReflectionType &impl) : ConvexMeshGeometry()
     {
     }
-    const ReflectionType &reflection() const
+    ReflectionType reflection() const
     {
         return ReflectionType{};
     }
@@ -159,7 +159,7 @@ class TriangleMeshGeometry : public CollisionGeometry
     TriangleMeshGeometry(const ReflectionType &impl) : TriangleMeshGeometry()
     {
     }
-    const ReflectionType &reflection() const
+    ReflectionType reflection() const
     {
         return ReflectionType{};
     }
