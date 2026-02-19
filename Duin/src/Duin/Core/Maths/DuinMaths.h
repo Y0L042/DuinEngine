@@ -126,17 +126,18 @@ namespace duin
 // Vector2 type
 typedef struct Vector2
 {
-    using ReflectionType = struct
+    struct Vector2Impl
     {
         float x, y;
     };
+    using ReflectionType = Vector2Impl;
     Vector2(const ReflectionType &impl) : x(impl.x), y(impl.y)
     {
     }
 
-    const ReflectionType &reflection() const
+    ReflectionType reflection() const
     {
-        return ReflectionType{x, y};
+        return Vector2Impl{x, y};
     }
 
     float x;
@@ -176,17 +177,18 @@ typedef struct Vector2
 // Vector3 type
 typedef struct Vector3
 {
-    using ReflectionType = struct
+    struct Vector3Impl
     {
         float x, y, z;
     };
+    using ReflectionType = Vector3Impl;
     Vector3(const ReflectionType &impl) : x(impl.x), y(impl.y), z(impl.z)
     {
     }
 
-    const ReflectionType &reflection() const
+    ReflectionType reflection() const
     {
-        return ReflectionType{x, y, z};
+        return Vector3Impl{x, y, z};
     }
 
     float x;
@@ -245,17 +247,18 @@ typedef struct Vector3
 // Vector4 type
 typedef struct Vector4
 {
-    using ReflectionType = struct
+    struct Vector4Impl
     {
         float x, y, z, w;
     };
+    using ReflectionType = Vector4Impl;
     Vector4(const ReflectionType &impl) : x(impl.x), y(impl.y), z(impl.z), w(impl.w)
     {
     }
 
-    const ReflectionType &reflection() const
+    ReflectionType reflection() const
     {
-        return ReflectionType{x, y, z, w};
+        return Vector4Impl{x, y, z, w};
     }
 
     float x;
@@ -317,13 +320,14 @@ typedef Vector4 Quaternion;
 // Matrix type (OpenGL style 4x4 - right handed, column major)
 typedef struct Matrix
 {
-    using ReflectionType = struct
+    struct MatrixImpl
     {
         float m0, m4, m8, m12;
         float m1, m5, m9, m13;
         float m2, m6, m10, m14;
         float m3, m7, m11, m15;
     };
+    using ReflectionType = MatrixImpl;
 
     Matrix(const ReflectionType &impl)
         : m0(impl.m0), m4(impl.m4), m8(impl.m8), m12(impl.m12), m1(impl.m1), m5(impl.m5), m9(impl.m9), m13(impl.m13),
@@ -333,7 +337,7 @@ typedef struct Matrix
 
     ReflectionType reflection() const
     {
-        return ReflectionType{m0, m4, m8, m12, m1, m5, m9, m13, m2, m6, m10, m14, m3, m7, m11, m15};
+        return MatrixImpl{m0, m4, m8, m12, m1, m5, m9, m13, m2, m6, m10, m14, m3, m7, m11, m15};
     }
 
     float m0, m4, m8, m12;  // Matrix first row (4 components)

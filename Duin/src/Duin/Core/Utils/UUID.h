@@ -38,6 +38,7 @@
 #include <functional>
 #include <cstdint>
 #include <string>
+#include <rfl.hpp>
 
 namespace duin
 {
@@ -192,6 +193,18 @@ class UUID
     operator uint64_t() const
     {
         return uuid_;
+    }
+
+    using ReflectionType = struct UUIDImpl
+    {
+        uint64_t uuid;
+    };
+    UUID(const ReflectionType &impl) : UUID(impl.uuid)
+    {
+    }
+    ReflectionType reflection() const
+    {
+        return UUIDImpl{uuid_};
     }
 
   private:
