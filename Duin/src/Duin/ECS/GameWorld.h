@@ -1,5 +1,5 @@
 /**
- * @file ECSManager.h
+ * @file GameWorld.h
  * @brief Entity Component System manager and component definitions.
  * @ingroup ECS
  *
@@ -7,7 +7,7 @@
  * - ECSTag namespace: Tag components for entity categorization
  * - ECSComponent namespace: Data components
  * - ECSPrefab namespace: Entity templates
- * - ECSManager class: World management and query execution
+ * - GameWorld class: World management and query execution
  */
 
 #pragma once
@@ -1184,16 +1184,16 @@ extern duin::Entity DebugCapsule; ///< Debug capsule prefab.
 class JSONMember;
 
 /**
- * @class ECSManager
+ * @class GameWorld
  * @brief Central ECS world manager.
  * @ingroup ECS_Manager
  *
  * Owns the FLECS world and provides methods for entity creation,
  * component registration, and query execution. Each scene/tab in
- * the editor has its own ECSManager instance.
+ * the editor has its own GameWorld instance.
  *
  * @code
- * ECSManager ecs;
+ * GameWorld ecs;
  * ecs.Initialize();
  *
  * duin::Entity e = ecs.world.CreateEntity()
@@ -1201,13 +1201,11 @@ class JSONMember;
  *     .Set<ECSComponent::Transform3D>({position});
  * @endcode
  */
-class ECSManager
+class GameWorld : public World
 {
   public:
-    std::shared_ptr<duin::World> world; ///< The Duin ECS world instance.
-
-    ECSManager();
-    ~ECSManager();
+    GameWorld();
+    ~GameWorld();
 
     /** @brief Initializes the ECS world and registers components. */
     void Initialize();

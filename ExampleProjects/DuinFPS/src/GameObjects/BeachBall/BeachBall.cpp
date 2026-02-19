@@ -13,7 +13,7 @@ void BeachBall::Ready()
     duin::Vector3 position(1.0f, 5.0f, 1.0f);
     body = duin::DynamicBody::Create({position}, duin::SphereGeometry(radius), duin::PhysicsMaterial(0.4f, 0.4f, 0.5f));
 
-    entity = ecs.world->CreateEntity("BeachBall")
+    entity = world->CreateEntity("BeachBall")
                  .IsA(duin::ECSPrefab::PhysicsDynamicBody)
                  .Set<duin::ECSComponent::Transform3D>({position})
                  .Set<duin::ECSComponent::DynamicBodyComponent>(body);

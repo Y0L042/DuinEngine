@@ -5,7 +5,9 @@
 #include <Duin/ECS/ECSModule.h>
 #include <Duin/IO/JSONValue.h>
 
-duin::ECSManager ecs;
+#include <memory>
+
+std::unique_ptr<duin::GameWorld> world;
 
 struct TagA
 {
@@ -68,19 +70,18 @@ SandboxScene::~SandboxScene()
 
 void SandboxScene::Enter()
 {
-    ecs.Initialize();
-    duin::World &world = *ecs.world;
-    world.Component<TagA>();
-    world.Component<TagB>();
-    world.Component<TagC>();
-    world.Component<X>();
-    world.Component<Y>();
+    world->Initialize();
+    world->Component<TagA>();
+    world->Component<TagB>();
+    world->Component<TagC>();
+    world->Component<X>();
+    world->Component<Y>();
 
     #if 0
-    duin::Entity entityA = world.CreateEntity();
-    duin::Entity entityB = world.CreateEntity().ChildOf(entityA);
+    duin::Entity entityA = world->CreateEntity();
+    duin::Entity entityB = world->CreateEntity().ChildOf(entityA);
 
-    duin::Entity entityZ = world.CreateEntity();
+    duin::Entity entityZ = world->CreateEntity();
 
     entityB.ForEachComponent([&](duin::Entity::ID componentID) {
         if (componentID.IsPair())
@@ -106,9 +107,9 @@ void SandboxScene::Enter()
     #endif
 
 #if 1
-    duin::Entity prefab1 = world.CreatePrefab("Prefab1").Set<X>(3).Add<TagC>();
+    duin::Entity prefab1 = world->CreatePrefab("Prefab1").Set<X>(3).Add<TagC>();
 
-    duin::Entity e = world.CreateEntity("Player1").IsA(prefab1).Add<TagA>();
+    duin::Entity e = world->CreateEntity("Player1").IsA(prefab1).Add<TagA>();
     e.Add<TagB>();
     e.Set<Y>(1);
 
@@ -167,27 +168,27 @@ void SandboxScene::Enter()
     ecs.Initialize();
     duin::World& world = *ecs.world;
 
-    world.Component<Vec3>();
-    world.Component<Camera>();
+    world->Component<Vec3>();
+    world->Component<Camera>();
 
     duin::Entity original =
-        world.CreateEntity("Player").Set<Vec3>(10.0f, 20.0f, 30.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
+        world->CreateEntity("Player").Set<Vec3>(10.0f, 20.0f, 30.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
 
     duin::PackedEntity pe = duin::PackedEntity::Pack(original);
 
-    duin::Entity restored = world.CreateEntity();
+    duin::Entity restored = world->CreateEntity();
     duin::PackedEntity::Instantiate(pe, restored);
 #endif
 
 #if 0    
     DN_INFO("SandboxScene Entered.");
 
-    world.Component<X>();
-    world.Component<Y>();
-    world.Component<Z>();
+    world->Component<X>();
+    world->Component<Y>();
+    world->Component<Z>();
 
 
-    duin::Entity e = world.CreateEntity().Set<X>(1).Set<Y>(2).Set<Z>(3);
+    duin::Entity e = world->CreateEntity().Set<X>(1).Set<Y>(2).Set<Z>(3);
 
     // duin::PackedScene pscn = duin::PackedScene::Pack(e);
 
@@ -198,7 +199,7 @@ void SandboxScene::Enter()
         DN_INFO("SERCOM: {}", sercom);
     });
 
-    duin::Entity e2 = world.CreateEntity();
+    duin::Entity e2 = world->CreateEntity();
     for (auto& str : sercomVec)
     {
         duin::JSONValue v = duin::JSONValue::Parse(str);

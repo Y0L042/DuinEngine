@@ -34,20 +34,20 @@ void Player::Init()
     //duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
     //std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
 
-    duin::Entity root = ecs.world->CreateEntity();
+    duin::Entity root = world->CreateEntity();
 #if !WRITE_ENT
     duin::JSONValue scnJSON = duin::JSONValue::ParseFromFile(
         "C:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\Sandbox\\data\\playerScene.json");
     duin::PackedScene pscn = duin::PackedScene::Deserialize(scnJSON);
-    duin::PackedScene::Instantiate(pscn, ecs.world.get());
+    duin::PackedScene::Instantiate(pscn, world.get());
 
-    player = ecs.world->Lookup("Player");//.Set<duin::ECSComponent::CharacterBodyComponent>({playerBody});
-    cameraRoot = ecs.world->Lookup("Player::CameraRoot");
-    playerCamera = ecs.world->Lookup("Player::CameraRoot::PlayerCamera");
+    player = world->Lookup("Player");//.Set<duin::ECSComponent::CharacterBodyComponent>({playerBody});
+    cameraRoot = world->Lookup("Player::CameraRoot");
+    playerCamera = world->Lookup("Player::CameraRoot::PlayerCamera");
 #endif
 
 #if WRITE_ENT
-    player = ecs.world->CreateEntity("Player")
+    player = world->CreateEntity("Player")
                  .ChildOf(root)
                  .IsA(duin::ECSPrefab::PhysicsCharacterBody)
                  .Set<duin::ECSComponent::Transform3D>({playerPosition})
@@ -65,13 +65,13 @@ void Player::Init()
                  .Add<GravityComponent>()
                  .Add<CanGravity>()
                  .Add<OnGroundTag>();
-    cameraRoot = ecs.world->CreateEntity("CameraRoot")
+    cameraRoot = world->CreateEntity("CameraRoot")
                      .IsA(duin::ECSPrefab::Node3D)
                      .ChildOf(player)
                      .Set<duin::ECSComponent::Transform3D>({{0.0f, playerHeight, 0.0f}})
                      .Add<MouseInputVec2>()
                      .Add<CameraPitchComponent>();
-    playerCamera = ecs.world->CreateEntity("PlayerCamera")
+    playerCamera = world->CreateEntity("PlayerCamera")
                        .IsA(duin::ECSPrefab::Camera3D)
                        .ChildOf(cameraRoot)
                        .Set<duin::ECSComponent::Transform3D>({{0.0f, 0.0f, 0.0f}})
@@ -87,7 +87,7 @@ void Player::Init()
     DN_INFO("{}", worldJSON.Write());
 #endif
 
-    // cameraRef = flecs::ref<duin::Camera>(ecs.world.GetFlecsWorld(), playerCamera.GetFlecsEntity());
+    // cameraRef = flecs::ref<duin::Camera>(world->GetFlecsWorld(), playerCamera.GetFlecsEntity());
     // duin::Camera* cam = cameraRef.get();
 
     blackboard.player = &player;

@@ -1,5 +1,5 @@
 #include "dnpch.h"
-#include "ECSManager.h"
+#include "GameWorld.h"
 #include "Duin/Core/Application.h"
 #include "Duin/Core/Utils/SerialisationManager.h"
 #include "Duin/Render/Camera.h"
@@ -198,27 +198,26 @@ void RegisterObservers(duin::World &world)
 
 
 /*----------------------------------------------------------------------------*/
-//  ECSManager Functions
+//  GameWorld Functions
 /*----------------------------------------------------------------------------*/
-ECSManager::ECSManager()
+GameWorld::GameWorld()
 {
 
 }
 
-ECSManager::~ECSManager()
+GameWorld::~GameWorld()
 {
 }
 
-void ECSManager::Initialize()
+void GameWorld::Initialize()
 {
-    world = std::make_shared<duin::World>();
-    ECSTag::RegisterTags(*world);
+    ECSTag::RegisterTags(*this);
     DN_CORE_INFO("Tags registered.");
-    ECSComponent::RegisterComponents(*world);
+    ECSComponent::RegisterComponents(*this);
     DN_CORE_INFO("Components registered.");
-    ECSPrefab::RegisterPrefabs(*world);
+    ECSPrefab::RegisterPrefabs(*this);
     DN_CORE_INFO("Prefabs registered.");
-    ECSObserver::RegisterObservers(*world);
+    ECSObserver::RegisterObservers(*this);
     DN_CORE_INFO("Observers registered.");
 
     QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
@@ -228,30 +227,30 @@ void ECSManager::Initialize()
     QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
 }
 
-duin::Entity ECSManager::CreateEntityFromJSON(JSONMember &member)
+duin::Entity GameWorld::CreateEntityFromJSON(JSONMember &member)
 {
     std::string ecsData = member.GetMemberDataAsString();
-    duin::Entity entity = world->CreateEntity();
+    duin::Entity entity = this->CreateEntity();
     entity.GetFlecsEntity().from_json(ecsData.c_str());
     return entity;
 }
 
-void ECSManager::ActivateCameraEntity(duin::Entity entity)
+void GameWorld::ActivateCameraEntity(duin::Entity entity)
 {
     if (entity.Has<Camera>())
     {
-        world->DeferBegin();
-        world->GetFlecsWorld().each([](flecs::entity e, ECSTag::ActiveCamera) { e.remove<ECSTag::ActiveCamera>(); });
+        this->DeferBegin();
+        this->GetFlecsWorld().each([](flecs::entity e, ECSTag::ActiveCamera) { e.remove<ECSTag::ActiveCamera>(); });
         entity.Add<ECSTag::ActiveCamera>();
-        world->DeferEnd();
+        this->DeferEnd();
     }
 }
 
-void ECSManager::PostUpdateQueryExecution(double delta)
+void GameWorld::PostUpdateQueryExecution(double delta)
 {
 }
 
-void ECSManager::PostPhysicsUpdateQueryExecution(double delta)
+void GameWorld::PostPhysicsUpdateQueryExecution(double delta)
 {
     /* Update physics-objects' positions first */
     ExecuteQueryCharacterBody3DUpdateTransform();
@@ -262,33 +261,33 @@ void ECSManager::PostPhysicsUpdateQueryExecution(double delta)
     ExecuteQuerySetCameraAsActive();
 }
 
-void ECSManager::PostDrawQueryExecution()
+void GameWorld::PostDrawQueryExecution()
 {
     ExecuteQueryDrawCube();
     ExecuteQueryDrawDebugCapsule();
     ExecuteQueryDrawDebugCube();
 }
 
-void ECSManager::PostDrawUIQueryExecution()
+void GameWorld::PostDrawUIQueryExecution()
 {
 }
 
-void ECSManager::Clear()
+void GameWorld::Clear()
 {
-    world->GetFlecsWorld().reset();
+    this->GetFlecsWorld().reset();
 }
 
-void ECSManager::InitializeRemoteExplorer()
+void GameWorld::InitializeRemoteExplorer()
 {
 }
 
 /*----------------------------------------------------------------------
  * Transform Updates
 ----------------------------------------------------------------------*/
-void ECSManager::ExecuteQueryCharacterBody3DUpdateTransform()
+void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
 {
     static auto q =
-        world->QueryBuilder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D>()
+        this->QueryBuilder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D>()
             .With<ECSTag::PxKinematic>()
             .Cached()
             .Build();
@@ -325,10 +324,10 @@ void ECSManager::ExecuteQueryCharacterBody3DUpdateTransform()
     });
 }
 
-void ECSManager::ExecuteQuerySyncDynamicBody3DTransform()
+void GameWorld::ExecuteQuerySyncDynamicBody3DTransform()
 {
     static auto q =
-        world->QueryBuilder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>().Cached().Build();
+        this->QueryBuilder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>().Cached().Build();
 
     q.Each([](duin::Entity e, const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
               ECSComponent::Transform3D &tx) {
@@ -339,9 +338,9 @@ void ECSManager::ExecuteQuerySyncDynamicBody3DTransform()
     });
 }
 
-void ECSManager::ExecuteQueryTransform3DHierarchicalUpdate()
+void GameWorld::ExecuteQueryTransform3DHierarchicalUpdate()
 {
-    flecs::world &flecsWorld = world->GetFlecsWorld();
+    flecs::world &flecsWorld = this->GetFlecsWorld();
     static flecs::query q = flecsWorld.query_builder<ECSComponent::Transform3D, const ECSComponent::Transform3D *>()
                                 .term_at(1)
                                 .parent()
@@ -367,9 +366,9 @@ void ECSManager::ExecuteQueryTransform3DHierarchicalUpdate()
     });
 }
 
-void ECSManager::ExecuteQueryControlCamera()
+void GameWorld::ExecuteQueryControlCamera()
 {
-    static auto q = world->QueryBuilder<Camera, const ECSComponent::Transform3D>().Cached().Build();
+    static auto q = this->QueryBuilder<Camera, const ECSComponent::Transform3D>().Cached().Build();
 
     q.Each([](duin::Entity e, Camera &c, const ECSComponent::Transform3D &tx) {
         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
@@ -385,7 +384,7 @@ void ECSManager::ExecuteQueryControlCamera()
     });
 }
 
-void ECSManager::ExecuteQueryDrawCube()
+void GameWorld::ExecuteQueryDrawCube()
 {
 
     // TODO REPLACE_RAYLIB
@@ -410,7 +409,7 @@ void ECSManager::ExecuteQueryDrawCube()
     //     });
 }
 
-void ECSManager::ExecuteQueryDrawDebugCapsule()
+void GameWorld::ExecuteQueryDrawDebugCapsule()
 {
     // TODO REPLACE_RAYLIB
     // static flecs::query q = world.query_builder<
@@ -436,7 +435,7 @@ void ECSManager::ExecuteQueryDrawDebugCapsule()
     //     });
 }
 
-void ECSManager::ExecuteQueryDrawDebugCube()
+void GameWorld::ExecuteQueryDrawDebugCube()
 {
     // TODO REPLACE_RAYLIB
     // static flecs::query q = world.query_builder<
@@ -462,9 +461,9 @@ void ECSManager::ExecuteQueryDrawDebugCube()
     //     });
 }
 
-void ECSManager::ExecuteQuerySetCameraAsActive()
+void GameWorld::ExecuteQuerySetCameraAsActive()
 {
-    static auto q = world->QueryBuilder<Camera>().With<ECSTag::ActiveCamera>().Build();
+    static auto q = this->QueryBuilder<Camera>().With<ECSTag::ActiveCamera>().Build();
 
     q.Each([](duin::Entity e, Camera &camera) { SetActiveCamera(&camera); });
 }

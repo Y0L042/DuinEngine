@@ -9,15 +9,16 @@
 #include <Duin/ECS/ECSModule.h>
 #include <Duin/Scene/SceneBuilder.h>
 
-duin::ECSManager ecs;
+std::unique_ptr<duin::GameWorld> world;
 std::shared_ptr<Player> playerObj;
 
 void GameState_Gameplay::Enter()
 {
     debugConsole.Log("GameState_Gameplay: Entering GameState_Gameplay");
     duin::Input::CaptureMouse(true);
-    ecs.Initialize();
-    RegisterComponents(*ecs.world);
+    world = std::make_unique<duin::GameWorld>();
+    world->Initialize();
+    RegisterComponents(*world);
 
     playerObj = CreateChildObject<Player>();
 
@@ -41,22 +42,22 @@ void GameState_Gameplay::Update(double delta)
 
 void GameState_Gameplay::PhysicsUpdate(double delta)
 {
-    ExecuteQueryUpdatePlayerYaw(*ecs.world);
-    ExecuteQueryUpdateCameraPitch(*ecs.world);
-    ExecuteQueryComputePlayerInputVelocity(*ecs.world);
-    ExecuteQueryGravity(*ecs.world);
-    ExecuteQueryDebugCameraTarget(*ecs.world);
-    ExecuteQueryVelocityBob(*ecs.world);
+    ExecuteQueryUpdatePlayerYaw(*world);
+    ExecuteQueryUpdateCameraPitch(*world);
+    ExecuteQueryComputePlayerInputVelocity(*world);
+    ExecuteQueryGravity(*world);
+    ExecuteQueryDebugCameraTarget(*world);
+    ExecuteQueryVelocityBob(*world);
 
-    ExecuteQueryMoveDebugCamera(*ecs.world);
+    ExecuteQueryMoveDebugCamera(*world);
 
-    ExecuteQueryIdle(*ecs.world);
-    ExecuteQueryRun(*ecs.world);
-    ExecuteQuerySprint(*ecs.world);
-    ExecuteQueryOnGroundJump(*ecs.world);
+    ExecuteQueryIdle(*world);
+    ExecuteQueryRun(*world);
+    ExecuteQuerySprint(*world);
+    ExecuteQueryOnGroundJump(*world);
 
-    ExecuteQueryResolveInputVelocities(*ecs.world);
-    ExecuteQueryResolveInputForces(*ecs.world);
+    ExecuteQueryResolveInputVelocities(*world);
+    ExecuteQueryResolveInputForces(*world);
 }
 
 void GameState_Gameplay::Draw()

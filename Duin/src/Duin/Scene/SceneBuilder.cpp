@@ -1,6 +1,6 @@
 #include "dnpch.h"
 #include "SceneBuilder.h"
-#include "Duin/ECS/ECSManager.h"
+#include "Duin/ECS/GameWorld.h"
 #include "Duin/ECS/DECS/Entity.h"
 #include "Duin/IO/JSONValue.h"
 #include "Duin/IO/FileUtils.h"

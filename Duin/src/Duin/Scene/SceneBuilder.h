@@ -11,7 +11,7 @@
 #pragma once
 
 #include "Duin/IO/JSONValue.h"
-#include "Duin/ECS/ECSManager.h"
+#include "Duin/ECS/GameWorld.h"
 #include "Duin/ECS/DECS/World.h"
 
 #include <rfl.hpp>

@@ -4,6 +4,6 @@
  * ECS Module
  */
 
-#include "ECSManager.h"
+#include "GameWorld.h"
 #include "./DECS/DECS.h"
 #include "ComponentSerializer.h"
