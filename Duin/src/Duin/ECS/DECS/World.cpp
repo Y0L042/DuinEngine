@@ -3,7 +3,14 @@
 #include "Entity.h"
 #include "Query.h"
 
-duin::World::World() : flecsWorld(flecs::world()) {};
+duin::World::World() 
+{
+}
+
+duin::World::World(flecs::world w)
+    : flecsWorld(w) {
+
+      };
 
 duin::World::~World() {};
 
@@ -11,6 +18,15 @@ duin::Entity duin::World::CreateEntity(const std::string &name)
 {
     Entity e;
     flecs::entity flecsEntity = flecsWorld.entity(name.c_str());
+    e.SetWorld(this);
+    e.SetFlecsEntity(flecsEntity);
+    return e;
+}
+
+duin::Entity duin::World::CreatePrefab(const std::string &name)
+{
+    Entity e;
+    flecs::entity flecsEntity = flecsWorld.prefab(name.c_str());
     e.SetWorld(this);
     e.SetFlecsEntity(flecsEntity);
     return e;
@@ -90,6 +106,15 @@ duin::Entity duin::World::MakeAlive(uint64_t id)
     return e;
 }
 
+duin::Entity duin::World::GetWorldEntity()
+{
+    Entity e;
+    e.SetWorld(this);
+    e.SetFlecsEntity(flecsWorld.entity());
+
+    return e;
+}
+
 void duin::World::Release()
 {
     flecsWorld.release();
@@ -100,7 +125,16 @@ void duin::World::Quit()
     flecsWorld.quit();
 }
 
-flecs::world duin::World::GetFlecsWorld()
+duin::Entity duin::World::Lookup(const std::string &name)
+{
+    Entity e;
+    e.SetWorld(this);
+    e.SetFlecsEntity(flecsWorld.lookup(name.c_str()));
+
+    return e;
+}
+
+flecs::world &duin::World::GetFlecsWorld()
 {
     return flecsWorld;
 }

@@ -16,6 +16,7 @@
 
 #include <flecs.h>
 #include <rfl.hpp>
+#include "Duin/ECS/DECS/DECS.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Debug/DNLog.h"
 #include "Duin/Core/Utils/UUID.h"
@@ -123,16 +124,17 @@ struct Position2D
     {
     }
 
-    using ReflectionType = struct
+    struct Position2DImpl
     {
         Vector2 v;
     };
+    using ReflectionType = Position2DImpl;
     Position2D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Position2DImpl{value};
     }
 };
 
@@ -149,16 +151,17 @@ struct Rotation2D
     {
     }
 
-    using ReflectionType = struct
+    struct Rotation2DImpl
     {
         float v;
     };
+    using ReflectionType = Rotation2DImpl;
     Rotation2D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Rotation2DImpl{value};
     }
 };
 
@@ -179,16 +182,17 @@ struct Scale2D
     {
     }
 
-    using ReflectionType = struct
+    struct Scale2DImpl
     {
         Vector2 v;
     };
+    using ReflectionType = Scale2DImpl;
     Scale2D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Scale2DImpl{value};
     }
 };
 
@@ -218,16 +222,17 @@ struct Velocity2D
     {
     }
 
-    using ReflectionType = struct
+    struct Velocity2DImpl
     {
         Vector2 v;
     };
+    using ReflectionType = Velocity2DImpl;
     Velocity2D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Velocity2DImpl{value};
     }
 };
 
@@ -254,16 +259,17 @@ struct Position3D
     {
     }
 
-    using ReflectionType = struct
+    struct Position3DImpl
     {
         Vector3 v;
     };
+    using ReflectionType = Position3DImpl;
     Position3D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Position3DImpl{value};
     }
 };
 
@@ -284,16 +290,17 @@ struct Rotation3D
     {
     }
 
-    using ReflectionType = struct
+    struct Rotation3DImpl
     {
         Quaternion v;
     };
+    using ReflectionType = Rotation3DImpl;
     Rotation3D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Rotation3DImpl{value};
     }
 };
 
@@ -314,16 +321,17 @@ struct Scale3D
     {
     }
 
-    using ReflectionType = struct
+    struct Scale3DImpl
     {
         Vector3 v;
     };
+    using ReflectionType = Scale3DImpl;
     Scale3D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Scale3DImpl{value};
     }
 };
 
@@ -792,18 +800,19 @@ struct Transform3D
         return GetGlobalRotation(entity_);
     }
 
-    using ReflectionType = struct
+    struct Transform3DImpl
     {
         Vector3 pos;
         Vector3 scale;
         Quaternion rot;
     };
+    using ReflectionType = Transform3DImpl;
     Transform3D(const ReflectionType &impl) : position_(impl.pos), scale_(impl.scale), rotation_(impl.rot)
     {
     }
-    const ReflectionType &reflection() const
+    ReflectionType reflection() const
     {
-        return ReflectionType{position_, scale_, rotation_};
+        return Transform3DImpl{position_, scale_, rotation_};
     }
 
   private:
@@ -973,16 +982,17 @@ struct Velocity3D
     {
     }
 
-    using ReflectionType = struct
+    struct Velocity3DImpl
     {
         Vector3 v;
     };
+    using ReflectionType = Velocity3DImpl;
     Velocity3D(const ReflectionType &impl) : value(impl.v)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{value};
+        return Velocity3DImpl{value};
     }
 };
 
@@ -1010,6 +1020,7 @@ struct CubeComponent
 /** @brief Character controller body component. */
 struct CharacterBodyComponent
 {
+    CharacterBodyDesc desc;
     std::shared_ptr<CharacterBody> body;
 
     CharacterBodyComponent() : body(nullptr)
@@ -1020,17 +1031,14 @@ struct CharacterBodyComponent
     {
     }
 
-    using ReflectionType = struct
-    {
-        CharacterBodyDesc v;
-    };
+    using ReflectionType = CharacterBodyDesc;
     // TODO should it create the body directly, or should the body be seen as a resource?
-    CharacterBodyComponent(const ReflectionType &impl) : body(CharacterBody::Create(impl.v))
+    CharacterBodyComponent(const ReflectionType &impl) : desc(impl), body(CharacterBody::Create(impl))
     {
     }
-    const ReflectionType &reflection() const
+    ReflectionType reflection() const
     {
-        return ReflectionType{body->GetDescriptor()};
+        return body ? body->GetDescriptor() : desc;
     }
 };
 
@@ -1048,16 +1056,17 @@ struct StaticBodyComponent
     }
 
     // TODO
-    using ReflectionType = struct
+    struct StaticBodyComponentImpl
     {
-        void *v;
+        int e;
     };
+    using ReflectionType = StaticBodyComponentImpl;
     StaticBodyComponent(const ReflectionType &impl) : body(nullptr)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{nullptr};
+        return StaticBodyComponentImpl{0};
     }
 };
 
@@ -1075,16 +1084,17 @@ struct KinematicBodyComponent
     }
 
     // TODO
-    using ReflectionType = struct
+    struct KinematicBodyComponentImpl
     {
-        void *v;
+        int e;
     };
+    using ReflectionType = KinematicBodyComponentImpl;
     KinematicBodyComponent(const ReflectionType &impl) : body(nullptr)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{nullptr};
+        return KinematicBodyComponentImpl{0};
     }
 };
 
@@ -1102,23 +1112,24 @@ struct DynamicBodyComponent
     }
 
     // TODO
-    using ReflectionType = struct
+    struct DynamicBodyComponentImpl
     {
-        void *v;
+        int e;
     };
+    using ReflectionType = DynamicBodyComponentImpl;
     DynamicBodyComponent(const ReflectionType &impl) : body(nullptr)
     {
     }
     const ReflectionType &reflection() const
     {
-        return ReflectionType{nullptr};
+        return DynamicBodyComponentImpl{0};
     }
 };
 
 /** @brief Static cube physics body (stub). */
 struct PhysicsStaticCubeComponent
 {
-    PhysicsStaticCubeComponent *cube;
+    std::shared_ptr<PhysicsStaticCubeComponent> cube;
 };
 /** @} */
 
@@ -1155,19 +1166,19 @@ struct DebugCubeComponent
  */
 namespace ECSPrefab
 {
-extern flecs::entity Node;   ///< Base node prefab.
-extern flecs::entity Node2D; ///< 2D node with Position2D, Rotation2D, Scale2D.
-extern flecs::entity Node3D; ///< 3D node with Transform3D.
+extern duin::Entity Node;   ///< Base node prefab.
+extern duin::Entity Node2D; ///< 2D node with Position2D, Rotation2D, Scale2D.
+extern duin::Entity Node3D; ///< 3D node with Transform3D.
 
-extern flecs::entity PhysicsStaticBody;    ///< Static body prefab.
-extern flecs::entity PhysicsKinematicBody; ///< Kinematic body prefab.
-extern flecs::entity PhysicsDynamicBody;   ///< Dynamic body prefab.
-extern flecs::entity PhysicsCharacterBody; ///< Character body prefab.
+extern duin::Entity PhysicsStaticBody;    ///< Static body prefab.
+extern duin::Entity PhysicsKinematicBody; ///< Kinematic body prefab.
+extern duin::Entity PhysicsDynamicBody;   ///< Dynamic body prefab.
+extern duin::Entity PhysicsCharacterBody; ///< Character body prefab.
 
-extern flecs::entity Camera3D; ///< 3D camera prefab.
-extern flecs::entity Cube;     ///< Renderable cube prefab.
+extern duin::Entity Camera3D; ///< 3D camera prefab.
+extern duin::Entity Cube;     ///< Renderable cube prefab.
 
-extern flecs::entity DebugCapsule; ///< Debug capsule prefab.
+extern duin::Entity DebugCapsule; ///< Debug capsule prefab.
 }; // namespace ECSPrefab
 
 class JSONMember;
@@ -1185,27 +1196,27 @@ class JSONMember;
  * ECSManager ecs;
  * ecs.Initialize();
  *
- * flecs::entity e = ecs.world.entity()
- *     .is_a(ECSPrefab::Node3D)
- *     .set<ECSComponent::Transform3D>({position});
+ * duin::Entity e = ecs.world.CreateEntity()
+ *     .IsA(ECSPrefab::Node3D)
+ *     .Set<ECSComponent::Transform3D>({position});
  * @endcode
  */
 class ECSManager
 {
   public:
-    flecs::world world; ///< The FLECS world instance.
+    std::shared_ptr<duin::World> world; ///< The Duin ECS world instance.
 
-    ECSManager() = default;
-    ~ECSManager() = default;
+    ECSManager();
+    ~ECSManager();
 
     /** @brief Initializes the ECS world and registers components. */
     void Initialize();
 
     /** @brief Creates entity from JSON data. @deprecated Use SceneBuilder. */
-    flecs::entity CreateEntityFromJSON(JSONMember &member);
+    duin::Entity CreateEntityFromJSON(JSONMember &member);
 
     /** @brief Sets the given entity as the active camera. */
-    void ActivateCameraEntity(flecs::entity entity);
+    void ActivateCameraEntity(duin::Entity entity);
 
     /** @brief Runs post-update queries. Called by engine. */
     void PostUpdateQueryExecution(double delta);

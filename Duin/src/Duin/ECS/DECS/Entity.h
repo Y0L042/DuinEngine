@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <type_traits>
+#include "Duin/Core/Debug/DNLog.h"
 
 namespace duin
 {
@@ -20,9 +21,241 @@ class Entity
 {
   public:
     /**
+     * @brief Wrapper around flecs::id_t that provides entity ID manipulation.
+     * A flecs id is an identifier that can be added to entities. Ids can be:
+     * - entities (including components, tags)
+     * - pair ids
+     * - entities with id flags set (like flecs::AUTO_OVERRIDE, flecs::TOGGLE)
+     */
+    struct ID
+    {
+        /**
+         * @brief Default constructor.
+         */
+        ID();
+
+        ID(flecs::id id, World *world) : flecsId_(id), world_(world)
+        {
+        }
+
+        /**
+         * @brief Construct from raw ID value.
+         * @param value The raw ID value.
+         */
+        explicit ID(flecs::id_t value);
+
+        /**
+         * @brief Construct from world and ID value.
+         * @param world Pointer to the world.
+         * @param value The raw ID value.
+         */
+        explicit ID(World *world, flecs::id_t value = 0);
+
+        /**
+         * @brief Construct a pair ID from two IDs.
+         * @param world Pointer to the world.
+         * @param first First ID.
+         * @param second Second ID.
+         */
+        explicit ID(World *world, flecs::id_t first, flecs::id_t second);
+
+        /**
+         * @brief Construct from world and string expression.
+         * @param world Pointer to the world.
+         * @param expr String expression.
+         */
+        explicit ID(World *world, const char *expr);
+
+        /**
+         * @brief Construct a pair ID from two raw IDs.
+         * @param first First ID.
+         * @param second Second ID.
+         */
+        explicit ID(flecs::id_t first, flecs::id_t second);
+
+        /**
+         * @brief Construct a pair ID from two Entity::ID objects.
+         * @param first First ID.
+         * @param second Second ID.
+         */
+        explicit ID(const ID &first, const ID &second);
+
+        /**
+         * @brief Test if ID is a pair (has first, second).
+         * @return True if the ID is a pair.
+         */
+        bool IsPair() const;
+
+        /**
+         * @brief Test if ID is a wildcard.
+         * @return True if the ID is a wildcard.
+         */
+        bool IsWildcard() const;
+
+        /**
+         * @brief Test if ID is an entity.
+         * @return True if the ID is an entity.
+         */
+        bool IsEntity() const;
+
+        /**
+         * @brief Return ID as entity (only allowed when ID is valid entity).
+         * @return The entity.
+         */
+        Entity GetEntity() const;
+
+        /**
+         * @brief Return ID with flags added.
+         * @param flags Flags to add.
+         * @return ID with added flags.
+         */
+        ID AddFlags(flecs::id_t flags) const;
+
+        /**
+         * @brief Return ID with specific flags removed.
+         * @param flags Flags to remove.
+         * @return ID with removed flags.
+         */
+        ID RemoveFlags(flecs::id_t flags) const;
+
+        /**
+         * @brief Return ID without any flags.
+         * @return ID without flags.
+         */
+        ID RemoveFlags() const;
+
+        /**
+         * @brief Return ID without generation.
+         * @return ID without generation.
+         */
+        ID RemoveGeneration() const;
+
+        /**
+         * @brief Return component type ID.
+         * @return The type ID entity.
+         */
+        Entity TypeId() const;
+
+        /**
+         * @brief Test if ID has specified flags.
+         * @param flags Flags to test.
+         * @return True if all specified flags are set.
+         */
+        bool HasFlags(flecs::id_t flags) const;
+
+        /**
+         * @brief Test if ID has any flags.
+         * @return True if any flags are set.
+         */
+        bool HasFlags() const;
+
+        /**
+         * @brief Return flags set on ID.
+         * @return Entity representing the flags.
+         */
+        Entity GetFlags() const;
+
+        /**
+         * @brief Test if ID has specified relation as first element.
+         * @param first Relation to test.
+         * @return True if the relation matches.
+         */
+        bool HasRelation(flecs::id_t first) const;
+
+        /**
+         * @brief Get first element from a pair.
+         * If the ID is not a pair, this operation will fail. When the ID has a
+         * world, the operation will ensure that the returned ID has the correct
+         * generation count.
+         * @return The first element entity.
+         */
+        Entity First() const;
+
+        /**
+         * @brief Get second element from a pair.
+         * If the ID is not a pair, this operation will fail. When the ID has a
+         * world, the operation will ensure that the returned ID has the correct
+         * generation count.
+         * @return The second element entity.
+         */
+        Entity Second() const;
+
+        /**
+         * @brief Convert ID to string.
+         * @return String representation of the ID.
+         */
+        std::string Str() const;
+
+        /**
+         * @brief Convert flags of ID to string.
+         * @return String representation of the flags.
+         */
+        std::string FlagsStr() const;
+
+        /**
+         * @brief Get raw flecs::id_t value.
+         * @return The raw ID value.
+         */
+        flecs::id_t RawId() const;
+
+        /**
+         * @brief Implicit conversion to flecs::id_t.
+         */
+        operator flecs::id_t() const;
+
+        /**
+         * @brief Get the world this ID belongs to.
+         * @return Pointer to the World.
+         */
+        World *GetWorld() const;
+
+        /**
+         * @brief Get the underlying flecs::id object.
+         * @return The flecs::id object.
+         */
+        flecs::id GetFlecsId() const;
+
+      private:
+        friend class Entity;
+
+        World *world_ =
+            nullptr; ///< World is optional, but guarantees that entity identifiers extracted from the id are valid
+        flecs::id flecsId_; ///< Internal flecs id handle.
+    };
+
+    /**
      * @brief Default constructor.
      */
     Entity();
+
+    Entity(uint64_t id, World *world = nullptr);
+
+    /**
+     * @brief Copy constructor.
+     * @param other The entity to copy from.
+     */
+    Entity(const Entity &other);
+
+    /**
+     * @brief Copy assignment operator.
+     * @param other The entity to copy from.
+     * @return Reference to this entity.
+     */
+    Entity &operator=(const Entity &other);
+
+    /**
+     * @brief Move constructor.
+     * @param other The entity to move from.
+     */
+    Entity(Entity &&other) noexcept;
+
+    /**
+     * @brief Move assignment operator.
+     * @param other The entity to move from.
+     * @return Reference to this entity.
+     */
+    Entity &operator=(Entity &&other) noexcept;
+
     /**
      * @brief Destructor.
      */
@@ -34,12 +267,14 @@ class Entity
      * @return True if entities are equal.
      */
     bool operator==(const Entity &other) const;
+
     /**
      * @brief Inequality operator.
      * @param other The other entity to compare.
      * @return True if entities are not equal.
      */
     bool operator!=(const Entity &other) const;
+
     /**
      * @brief Checks if the entity is valid.
      * @return True if valid.
@@ -64,6 +299,11 @@ class Entity
      * @return True if alive.
      */
     bool IsAlive() const;
+
+    bool IsTag() const;
+
+    bool IsPair() const;
+
     /**
      * @brief Get the entity's unique ID.
      * @return The entity ID.
@@ -127,6 +367,10 @@ class Entity
      * @return Reference to this entity.
      */
     Entity &IsA(const Entity &second);
+
+    Entity First();
+    Entity Second();
+
     /**
      * @brief Get the parent entity.
      * @return The parent entity.
@@ -166,6 +410,11 @@ class Entity
         return flecsEntity.has<T>();
     }
 
+    bool Has(Entity e) const
+    {
+        return flecsEntity.has(e.flecsEntity.raw_id());
+    }
+
     /**
      * @brief Check if the entity has all specified components.
      * @tparam Components The component types.
@@ -188,6 +437,12 @@ class Entity
         return (flecsEntity.has<Components>() || ...);
     }
 
+    template <typename T>
+    bool Owns() const
+    {
+        return (flecsEntity.owns<T>());
+    }
+
     /**
      * @brief Add a component to the entity.
      * @tparam T The component type.
@@ -201,13 +456,36 @@ class Entity
     }
 
     /**
+     * @brief Add an entity/tag/trait to the entity by ID.
+     * This is typically used for adding tags, traits, or relationships.
+     * @param component The component/tag/trait ID to add.
+     * @return Reference to this entity.
+     */
+    Entity &Add(flecs::id_t component)
+    {
+        flecsEntity.add(component);
+        return *this;
+    }
+
+    // Helper trait to check if Args is a single Entity parameter
+    template<typename... Args>
+    struct IsSingleEntityArg : std::false_type {};
+    
+    template<typename T>
+    struct IsSingleEntityArg<T> : std::is_same<typename std::decay<T>::type, Entity> {};
+
+    /**
      * @brief Add a component with constructor arguments.
      * @tparam T The component type.
      * @tparam Args Constructor argument types.
      * @param args Arguments to construct the component.
      * @return Reference to this entity.
+     * 
+     * Note: This overload is disabled when a single Entity argument is passed
+     * to avoid ambiguity with the relationship pair overload.
      */
-    template <typename T, typename... Args>
+    template <typename T, typename... Args, 
+              typename = typename std::enable_if<!IsSingleEntityArg<Args...>::value>::type>
     Entity &Add(Args &&...args)
     {
         if constexpr (sizeof...(args) == 0)
@@ -218,6 +496,30 @@ class Entity
         {
             flecsEntity.set<T>(T{std::forward<Args>(args)...});
         }
+        return *this;
+    }
+
+    /**
+     * @brief Add a relationship pair to the entity.
+     * This creates a (Relation, target) pair where Relation is a component type
+     * and target is another entity. This is commonly used for relationships like
+     * Likes, Targets, Owns, etc.
+     * 
+     * Example:
+     * @code
+     * Entity player = world.CreateEntity("Player");
+     * Entity enemy = world.CreateEntity("Enemy");
+     * player.Add<Targets>(enemy);  // Player targets enemy
+     * @endcode
+     * 
+     * @tparam Relation The relationship component type (first element of the pair).
+     * @param target The target entity (second element of the pair).
+     * @return Reference to this entity.
+     */
+    template <typename Relation>
+    Entity &Add(const Entity &target)
+    {
+        flecsEntity.add<Relation>(target.flecsEntity.raw_id());
         return *this;
     }
 
@@ -326,7 +628,7 @@ class Entity
         return *this;
     }
 
-    //Entity &Set(id, void* data);
+    // Entity &Set(id, void* data);
 
     // ========== UNIFIED GET API ==========
     /**
@@ -340,12 +642,10 @@ class Entity
         return flecsEntity.get<T>();
     }
 
-    const void* Get(Entity e)
+    const void *Get(Entity e)
     {
         return flecsEntity.get(e.GetID());
     }
-
-
 
     /**
      * @brief Try to get a const pointer to a component.
@@ -394,10 +694,25 @@ class Entity
         return flecsEntity.get_mut<T>();
     }
 
-    void IterateEachComponent()
+    // ========== PAIR STORAGE TYPE HELPER ==========
+  private:
+    /**
+     * @brief Helper to determine storage type for pairs (Flecs rules).
+     *
+     * Storage type is derived using the following rules:
+     * - If pair::first is non-empty, the storage type is pair::first
+     * - If pair::first is empty and pair::second is non-empty, the storage type is pair::second
+     */
+    template <typename First, typename Second>
+    struct PairStorageType
     {
-    }
+        using type = std::conditional_t<!std::is_empty_v<First>, First, Second>;
+    };
 
+    template <typename First, typename Second>
+    using PairStorageType_t = typename PairStorageType<First, Second>::type;
+
+  public:
     // ========== UNIFIED PAIR API ==========
     /**
      * @brief Check if the entity has a pair of components.
@@ -439,13 +754,16 @@ class Entity
 
     /**
      * @brief Set the value of a pair component.
+     * Storage type is automatically determined:
+     * - If First is non-empty, value type is First
+     * - If First is empty and Second is non-empty, value type is Second
      * @tparam First First component type.
      * @tparam Second Second component type.
-     * @param value Value to set.
+     * @param value Value to set (of the storage type).
      * @return Reference to this entity.
      */
     template <typename First, typename Second>
-    Entity &SetPair(const Second &value)
+    Entity &SetPair(const PairStorageType_t<First, Second> &value)
     {
         flecsEntity.set<First, Second>(value);
         return *this;
@@ -455,24 +773,25 @@ class Entity
      * @brief Set the value of a pair component (rvalue overload).
      * @tparam First First component type.
      * @tparam Second Second component type.
-     * @param value Value to set.
+     * @param value Value to set (of the storage type).
      * @return Reference to this entity.
      */
     template <typename First, typename Second>
-    Entity &SetPair(Second &&value)
+    Entity &SetPair(PairStorageType_t<First, Second> &&value)
     {
-        flecsEntity.set<First, Second>(std::forward<Second>(value));
+        flecsEntity.set<First, Second>(std::forward<PairStorageType_t<First, Second>>(value));
         return *this;
     }
 
     /**
      * @brief Get a const reference to a pair component.
+     * Returns the storage type (First if non-empty, else Second).
      * @tparam First First component type.
      * @tparam Second Second component type.
-     * @return Const reference to the pair component.
+     * @return Const reference to the pair component storage type.
      */
     template <typename First, typename Second>
-    const Second &GetPair() const
+    const PairStorageType_t<First, Second> &GetPair() const
     {
         return flecsEntity.get<First, Second>();
     }
@@ -481,10 +800,10 @@ class Entity
      * @brief Try to get a const pointer to a pair component.
      * @tparam First First component type.
      * @tparam Second Second component type.
-     * @return Pointer to the pair component, or nullptr if not present.
+     * @return Pointer to the pair component storage type, or nullptr if not present.
      */
     template <typename First, typename Second>
-    const Second *TryGetPair() const
+    const PairStorageType_t<First, Second> *TryGetPair() const
     {
         return flecsEntity.try_get<First, Second>();
     }
@@ -493,10 +812,10 @@ class Entity
      * @brief Get a mutable reference to a pair component.
      * @tparam First First component type.
      * @tparam Second Second component type.
-     * @return Mutable reference to the pair component.
+     * @return Mutable reference to the pair component storage type.
      */
     template <typename First, typename Second>
-    Second &GetPairMut()
+    PairStorageType_t<First, Second> &GetPairMut()
     {
         return flecsEntity.get_mut<First, Second>();
     }
@@ -587,7 +906,9 @@ class Entity
     }
 
     /**
-     * @brief Modify multiple components in one call.
+     * @brief Modify components using a callback function.
+     * The callback receives references to mutable components and can modify them.
+     * Components are automatically marked as modified after the callback returns.
      * @tparam Func The function type.
      * @param func The function to apply.
      * @return Reference to this entity.
@@ -595,13 +916,18 @@ class Entity
     template <typename Func>
     Entity &Modify(const Func &func)
     {
-        assert(false);
-        // flecsEntity.insert(func);
+        func(*this);
         return *this;
     }
 
     /**
      * @brief Enable a specific component.
+     * The component must have the CanToggle trait to be enabled/disabled.
+     * Add the trait when registering: world.Component<T>().Add<flecs::CanToggle>();
+    /**
+     * @brief Enable a specific component.
+     * The component must have the CanToggle trait to be enabled/disabled.
+     * Add the trait when registering: world.Component<T>().Add(flecs::CanToggle);
      * @tparam T The component type.
      * @return Reference to this entity.
      */
@@ -614,6 +940,8 @@ class Entity
 
     /**
      * @brief Disable a specific component.
+     * The component must have the CanToggle trait to be enabled/disabled.
+     * Add the trait when registering: world.Component<T>().Add(flecs::CanToggle);
      * @tparam T The component type.
      * @return Reference to this entity.
      */
@@ -626,6 +954,7 @@ class Entity
 
     /**
      * @brief Check if a specific component is enabled.
+     * The component must have the CanToggle trait to support this operation.
      * @tparam T The component type.
      * @return True if enabled.
      */
@@ -665,31 +994,23 @@ class Entity
 
     /**
      * @brief Execute a function within the scope of this entity.
+     * Creates a scope where entities created within the callback will be children of this entity.
      * @tparam Func The function type.
-     * @param func The function to execute.
+     * @param func The function to execute, receives a reference to this entity.
      * @return Reference to this entity.
      */
     template <typename Func>
-    Entity &WithScope(Func &&func) const
-    {
-        // flecsEntity.scope(std::forward<Func>(func));
-        assert(false);
-        return const_cast<Entity &>(*this);
-    }
+    Entity &WithScope(Func &&func);
 
     /**
-     * @brief Execute a function with a specific component.
+     * @brief Execute a function with this entity as the "with" context.
+     * Creates a with context where components added within the callback will include this entity.
      * @tparam Func The function type.
-     * @param func The function to execute.
+     * @param func The function to execute, receives a reference to this entity.
      * @return Reference to this entity.
      */
     template <typename Func>
-    Entity &WithComponent(Func &&func) const
-    {
-        // flecsEntity.with(std::forward<Func>(func));
-        assert(false);
-        return const_cast<Entity &>(*this);
-    }
+    Entity &WithComponent(Func &&func);
 
     /**
      * @brief Emit an event from this entity.
@@ -712,11 +1033,6 @@ class Entity
     {
         flecsEntity.modified<T>();
     }
-
-    /**
-     * @brief Mark the entire entity as modified.
-     */
-    void Modified() const;
 
     // ========== QUERY HELPERS ==========
     /**
@@ -741,33 +1057,51 @@ class Entity
 
     /**
      * @brief For each target entity of a relationship, execute a function.
+     * Iterates over all targets where this entity has the specified relationship.
      * @tparam Relationship The relationship type.
      * @tparam Func The function type.
-     * @param func The function to execute.
+     * @param func The function to execute, receives each target entity.
      */
     template <typename Relationship, typename Func>
-    void ForEachTarget(Func &&func) const
-    {
-        // flecsEntity.each<Relationship>([&](flecs::entity target) {
-        //	Entity targetEntity;
-        //	targetEntity.SetWorld(world);
-        //	targetEntity.SetFlecsEntity(target);
-        //	func(targetEntity);
-        // });
-        assert(false);
-    }
+    void ForEachTarget(Func &&func) const;
+
+    //template <typename Func>
+    //void ForEachComponent(Func &&func) const
+    //{
+    //    flecsEntity.each([&](flecs::id &id) {
+    //        // id represents the component type
+    //        // You can get type information and invoke the callback
+    //        ID id_(id, world);
+    //        func(id_);
+    //        //if (id.is_entity() && id.entity().has<flecs::Component>())
+    //        //{
+    //        //    flecs::entity fe = id.entity();
+    //        //    Entity e(fe, world);
+
+    //        //    func(e);
+    //        //}
+    //        //else
+    //        //{
+    //        //    DN_CORE_WARN("Component ID {} is not an Entity!", id.raw_id());
+    //        //}
+    //    });
+    //}
 
     template <typename Func>
     void ForEachComponent(Func &&func) const
     {
-        flecsEntity.each([&](flecs::id id) {
-            // id represents the component type
-            // You can get type information and invoke the callback
-            flecs::entity fe = id.entity();
-            Entity e(fe, world);
+        // Get the entity type (includes inherited components via IsA)
+        const ecs_type_t *type = ecs_get_type(flecsEntity.world().c_ptr(), flecsEntity.id());
 
-            func(e);
-        });
+        if (type && type->array)
+        {
+            for (int32_t i = 0; i < type->count; i++)
+            {
+                flecs::id id(flecsEntity.world(), type->array[i]);
+                ID id_(id, world);
+                func(id_);
+            }
+        }
     }
 
     /**
@@ -785,7 +1119,7 @@ class Entity
     template <typename... Components>
     friend class Query;
 
-    World *world;              ///< Pointer to the world this entity belongs to (non-owning).
+    World *world = nullptr;    ///< Pointer to the world this entity belongs to (non-owning).
     flecs::entity flecsEntity; ///< Internal flecs entity handle.
 
     /**

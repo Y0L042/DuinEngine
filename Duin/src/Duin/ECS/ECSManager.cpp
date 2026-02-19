@@ -2,6 +2,8 @@
 #include "ECSManager.h"
 #include "Duin/Core/Application.h"
 #include "Duin/Core/Utils/SerialisationManager.h"
+#include "Duin/Render/Camera.h"
+#include "PrefabRegistry.h"
 
 #include <functional>
 
@@ -13,118 +15,115 @@ namespace duin
 /*----------------------------------------------------------------------------*/
 namespace ECSTag
 {
-void RegisterTags(flecs::world &world)
+void RegisterTags(duin::World &world)
 {
-    world.component<ECSTag::Local>();
-    world.component<ECSTag::Global>();
+    world.Component<ECSTag::Local>();
+    world.Component<ECSTag::Global>();
 
-    world.component<ECSTag::CreateExternalRef>();
-    world.component<ECSTag::ActiveExternalRef>();
-    world.component<ECSTag::DeleteExternalRef>();
+    world.Component<ECSTag::CreateExternalRef>();
+    world.Component<ECSTag::ActiveExternalRef>();
+    world.Component<ECSTag::DeleteExternalRef>();
 
-    world.component<ECSTag::PxKinematic>();
-    world.component<ECSTag::PxDynamic>();
-    world.component<ECSTag::PxStatic>();
-    world.component<ECSTag::NonPx>();
+    world.Component<ECSTag::PxKinematic>();
+    world.Component<ECSTag::PxDynamic>();
+    world.Component<ECSTag::PxStatic>();
+    world.Component<ECSTag::NonPx>();
 
-    world.component<ECSTag::SetCameraAsActive>();
-    world.component<ECSTag::CameraIsActive>();
-    world.component<ECSTag::ActiveCamera>();
+    world.Component<ECSTag::SetCameraAsActive>();
+    world.Component<ECSTag::CameraIsActive>();
+    world.Component<ECSTag::ActiveCamera>();
 }
 } // namespace ECSTag
 
 namespace ECSComponent
 {
-void RegisterComponents(flecs::world &world)
+void RegisterComponents(duin::World &world)
 {
-    world.component<ECSComponent::Position2D>();
-    world.component<ECSComponent::Rotation2D>();
-    world.component<ECSComponent::Scale2D>();
-    world.component<ECSComponent::Velocity2D>();
+    world.Component<ECSComponent::Position2D>();
+    world.Component<ECSComponent::Rotation2D>();
+    world.Component<ECSComponent::Scale2D>();
+    world.Component<ECSComponent::Velocity2D>();
 
-    world.component<ECSComponent::Transform3D>();
-    world.component<ECSComponent::Position3D>();
-    world.component<ECSComponent::Rotation3D>();
-    world.component<ECSComponent::Scale3D>();
-    world.component<ECSComponent::Velocity3D>();
+    world.Component<ECSComponent::Transform3D>();
+    world.Component<ECSComponent::Position3D>();
+    world.Component<ECSComponent::Rotation3D>();
+    world.Component<ECSComponent::Scale3D>();
+    world.Component<ECSComponent::Velocity3D>();
 
-    world.component<ECSComponent::CubeComponent>();
-    world.component<ECSComponent::StaticBodyComponent>();
-    world.component<ECSComponent::KinematicBodyComponent>();
-    world.component<ECSComponent::DynamicBodyComponent>();
-    world.component<ECSComponent::CharacterBodyComponent>();
-    world.component<ECSComponent::PhysicsStaticCubeComponent>();
+    world.Component<ECSComponent::CubeComponent>();
+    world.Component<ECSComponent::StaticBodyComponent>();
+    world.Component<ECSComponent::KinematicBodyComponent>();
+    world.Component<ECSComponent::DynamicBodyComponent>();
+    world.Component<ECSComponent::CharacterBodyComponent>();
+    world.Component<ECSComponent::PhysicsStaticCubeComponent>();
 
-    world.component<ECSComponent::DebugCapsuleComponent>();
-    world.component<ECSComponent::DebugCubeComponent>();
+    world.Component<ECSComponent::DebugCapsuleComponent>();
+    world.Component<ECSComponent::DebugCubeComponent>();
 
-    world.component<Camera>();
+    world.Component<Camera>();
 }
 } // namespace ECSComponent
 
 namespace ECSPrefab
 {
 /* --- Prefabs --- */
-flecs::entity Node;
-flecs::entity Node2D;
-flecs::entity Node3D;
+duin::Entity Node;
+duin::Entity Node2D;
+duin::Entity Node3D;
 
-flecs::entity PhysicsStaticBody;
-flecs::entity PhysicsKinematicBody;
-flecs::entity PhysicsDynamicBody;
-flecs::entity PhysicsCharacterBody;
+duin::Entity PhysicsStaticBody;
+duin::Entity PhysicsKinematicBody;
+duin::Entity PhysicsDynamicBody;
+duin::Entity PhysicsCharacterBody;
 
-flecs::entity Camera3D;
-flecs::entity Cube;
-flecs::entity DebugCapsule;
+duin::Entity Camera3D;
+duin::Entity Cube;
+duin::Entity DebugCapsule;
 
-void RegisterPrefabs(flecs::world &world)
+void RegisterPrefabs(duin::World &world)
 {
-    Node = world.prefab("Node").add<UUID>();
+    Node = world.CreatePrefab("Node").Add<UUID>();
 
-    Node2D = world.prefab("Node2D")
-                 .is_a(ECSPrefab::Node)
-                 .set<ECSComponent::Position2D, ECSTag::Local>({0.0f, 0.0f})
-                 .set<ECSComponent::Rotation2D, ECSTag::Local>(0.0f)
-                 .set<ECSComponent::Scale2D, ECSTag::Local>({0.0f, 0.0f})
+    Node2D = world.CreatePrefab("Node2D");
+    Node2D.IsA(Node)
+        .SetPair<ECSComponent::Position2D, ECSTag::Local>(ECSComponent::Position2D{0.0f, 0.0f})
+        .SetPair<ECSComponent::Rotation2D, ECSTag::Local>(ECSComponent::Rotation2D{0.0f})
+        .SetPair<ECSComponent::Scale2D, ECSTag::Local>(ECSComponent::Scale2D{0.0f, 0.0f})
+        .SetPair<ECSComponent::Position2D, ECSTag::Global>(ECSComponent::Position2D{0.0f, 0.0f})
+        .SetPair<ECSComponent::Rotation2D, ECSTag::Global>(ECSComponent::Rotation2D{0.0f})
+        .SetPair<ECSComponent::Scale2D, ECSTag::Global>(ECSComponent::Scale2D{0.0f, 0.0f});
 
-                 .set<ECSComponent::Position2D, ECSTag::Global>({0.0f, 0.0f})
-                 .set<ECSComponent::Rotation2D, ECSTag::Global>(0.0f)
-                 .set<ECSComponent::Scale2D, ECSTag::Global>({0.0f, 0.0f});
+    Node3D = world.CreatePrefab("Node3D").IsA(Node).Set<ECSComponent::Transform3D>(ECSComponent::Transform3D{});
 
-    Node3D = world.prefab("Node3D").is_a(ECSPrefab::Node).set<ECSComponent::Transform3D>({});
+    PhysicsStaticBody = world.CreatePrefab("StaticBody")
+                            .IsA(Node3D)
+                            .Add<ECSTag::PxStatic>()
+                            .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
+                            .Set<ECSComponent::StaticBodyComponent>(ECSComponent::StaticBodyComponent{nullptr});
 
-    PhysicsStaticBody = world.prefab("StaticBody")
-                            .is_a(ECSPrefab::Node3D)
-                            .add<ECSTag::PxStatic>()
-                            .set<ECSComponent::Velocity3D>({0.0f, 0.0f, 0.0f})
-                            .set<ECSComponent::StaticBodyComponent>({nullptr});
-    ;
+    PhysicsKinematicBody =
+        world.CreatePrefab("KinematicBody")
+            .IsA(Node3D)
+            .Add<ECSTag::PxKinematic>()
+            .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
+            .Set<ECSComponent::KinematicBodyComponent>(ECSComponent::KinematicBodyComponent{nullptr});
 
-    PhysicsKinematicBody = world.prefab("KinematicBody")
-                               .is_a(ECSPrefab::Node3D)
-                               .add<ECSTag::PxKinematic>()
-                               .set<ECSComponent::Velocity3D>({0.0f, 0.0f, 0.0f})
-                               .set<ECSComponent::KinematicBodyComponent>({nullptr});
-    ;
+    PhysicsDynamicBody = world.CreatePrefab("DynamicBody")
+                             .IsA(Node3D)
+                             .Add<ECSTag::PxDynamic>()
+                             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
+                             .Set<ECSComponent::DynamicBodyComponent>(ECSComponent::DynamicBodyComponent{nullptr});
 
-    PhysicsDynamicBody = world.prefab("DynamicBody")
-                             .is_a(ECSPrefab::Node3D)
-                             .add<ECSTag::PxDynamic>()
-                             .set<ECSComponent::Velocity3D>({0.0f, 0.0f, 0.0f})
-                             .set<ECSComponent::DynamicBodyComponent>({nullptr});
-    ;
+    PhysicsCharacterBody =
+        world.CreatePrefab("CharacterBody")
+            .IsA(Node3D)
+            .Add<ECSTag::PxKinematic>()
+            .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
+            .Set<ECSComponent::CharacterBodyComponent>(ECSComponent::CharacterBodyComponent{nullptr});
 
-    PhysicsCharacterBody = world.prefab("CharacterBody")
-                               .is_a(ECSPrefab::Node3D)
-                               .add<ECSTag::PxKinematic>()
-                               .set<ECSComponent::Velocity3D>({0.0f, 0.0f, 0.0f})
-                               .set<ECSComponent::CharacterBodyComponent>({nullptr});
-    ;
-
-    Camera3D = world.prefab("Camera3D")
-                   .is_a(ECSPrefab::Node3D)
-                   .set<Camera>(Camera{
+    Camera3D = world.CreatePrefab("Camera3D")
+                   .IsA(Node3D)
+                   .Set<Camera>(Camera{
                        /* .uuid =  */ UUID(),
                        /* .position =  */ {0.0f, 0.0f, 0.0f},
                        /* .target =  */ {0.0f, 0.0f, 0.0f},
@@ -133,40 +132,41 @@ void RegisterPrefabs(flecs::world &world)
                        // .projection = ::CAMERA_PERSPECTIVE
                    });
 
-    Cube = world.prefab("Cube").is_a(ECSPrefab::Node3D)
-        // TODO REPLACE_RAYLIB
-        // .set<ECSComponent::CubeComponent>({
-        //                                   .width = 1.0f,
-        //                                   .height = 1.0f,
-        //                                   .length = 1.0f,
-        //                                   .color = ::GRAY
-        //                                   })
-        ;
+    Cube = world.CreatePrefab("Cube").IsA(Node3D);
+    // TODO REPLACE_RAYLIB
+    // .Set<ECSComponent::CubeComponent>({...})
 
-    DebugCapsule = world.prefab("DebugCapsule").is_a(ECSPrefab::Node3D)
-        // TODO REPLACE_RAYLIB
-        // .set<ECSComponent::DebugCapsuleComponent>({
-        //     1.75f,
-        //     1.0f,
-        //     8, 16,
-        //     ::GREEN
-        //     })
-        ;
+    DebugCapsule = world.CreatePrefab("DebugCapsule").IsA(Node3D);
+    // TODO REPLACE_RAYLIB
+    // .Set<ECSComponent::DebugCapsuleComponent>({...})
+
+    PrefabRegistry::Get().RegisterPrefabEntity("Node", Node);
+    PrefabRegistry::Get().RegisterPrefabEntity("Node2D", Node2D);
+    PrefabRegistry::Get().RegisterPrefabEntity("Node3D", Node3D);
+    PrefabRegistry::Get().RegisterPrefabEntity("PhysicsStaticBody", PhysicsStaticBody);
+    PrefabRegistry::Get().RegisterPrefabEntity("PhysicsKinematicBody", PhysicsKinematicBody);
+    PrefabRegistry::Get().RegisterPrefabEntity("PhysicsDynamicBody", PhysicsDynamicBody);
+    PrefabRegistry::Get().RegisterPrefabEntity("PhysicsCharacterBody", PhysicsCharacterBody);
+    PrefabRegistry::Get().RegisterPrefabEntity("Camera3D", Camera3D);
+    PrefabRegistry::Get().RegisterPrefabEntity("Cube", Cube);
+    PrefabRegistry::Get().RegisterPrefabEntity("DebugCapsule", DebugCapsule);
 }
 } // namespace ECSPrefab
 
 namespace ECSObserver
 {
-void RegisterObservers(flecs::world &world)
+void RegisterObservers(duin::World &world)
 {
-    ECSComponent::Transform3D::RegisterOnAddObserver(world);
-    ECSComponent::Transform3D::RegisterOnSetObserver(world);
+    flecs::world &flecsWorld = world.GetFlecsWorld();
+
+    ECSComponent::Transform3D::RegisterOnAddObserver(flecsWorld);
+    ECSComponent::Transform3D::RegisterOnSetObserver(flecsWorld);
 
     flecs::observer localObserver;
     flecs::observer globalObserver;
 
     // On .set<Position3D, Local>
-    localObserver = world.observer<flecs::pair<ECSComponent::Position3D, ECSTag::Local>>()
+    localObserver = flecsWorld.observer<flecs::pair<ECSComponent::Position3D, ECSTag::Local>>()
                         .event(flecs::OnSet)
                         .each([globalObserver](flecs::iter &it, size_t i, ECSComponent::Position3D &lPos) {
                             // DN_CORE_INFO(".set<Position3D, Local>");
@@ -181,7 +181,7 @@ void RegisterObservers(flecs::world &world)
                         });
 
     // On .set<Position3D, Global>
-    globalObserver = world.observer<flecs::pair<ECSComponent::Position3D, ECSTag::Global>>()
+    globalObserver = flecsWorld.observer<flecs::pair<ECSComponent::Position3D, ECSTag::Global>>()
                          .event(flecs::OnSet)
                          .each([localObserver](flecs::iter &it, size_t i, ECSComponent::Position3D &gPos) {
                              // DN_CORE_INFO(".set<Position3D, Global>");
@@ -196,18 +196,29 @@ void RegisterObservers(flecs::world &world)
 }
 }; // namespace ECSObserver
 
+
 /*----------------------------------------------------------------------------*/
 //  ECSManager Functions
 /*----------------------------------------------------------------------------*/
+ECSManager::ECSManager()
+{
+
+}
+
+ECSManager::~ECSManager()
+{
+}
+
 void ECSManager::Initialize()
 {
-    ECSTag::RegisterTags(world);
+    world = std::make_shared<duin::World>();
+    ECSTag::RegisterTags(*world);
     DN_CORE_INFO("Tags registered.");
-    ECSComponent::RegisterComponents(world);
+    ECSComponent::RegisterComponents(*world);
     DN_CORE_INFO("Components registered.");
-    ECSPrefab::RegisterPrefabs(world);
+    ECSPrefab::RegisterPrefabs(*world);
     DN_CORE_INFO("Prefabs registered.");
-    ECSObserver::RegisterObservers(world);
+    ECSObserver::RegisterObservers(*world);
     DN_CORE_INFO("Observers registered.");
 
     QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
@@ -217,22 +228,22 @@ void ECSManager::Initialize()
     QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
 }
 
-flecs::entity ECSManager::CreateEntityFromJSON(JSONMember &member)
+duin::Entity ECSManager::CreateEntityFromJSON(JSONMember &member)
 {
     std::string ecsData = member.GetMemberDataAsString();
-    flecs::entity entity = world.entity();
-    entity.from_json(ecsData.c_str());
-    return flecs::entity();
+    duin::Entity entity = world->CreateEntity();
+    entity.GetFlecsEntity().from_json(ecsData.c_str());
+    return entity;
 }
 
-void ECSManager::ActivateCameraEntity(flecs::entity entity)
+void ECSManager::ActivateCameraEntity(duin::Entity entity)
 {
-    if (entity.has<Camera>())
+    if (entity.Has<Camera>())
     {
-        world.defer_begin();
-        world.each([](flecs::entity e, ECSTag::ActiveCamera) { e.remove<ECSTag::ActiveCamera>(); });
-        entity.add<ECSTag::ActiveCamera>();
-        world.defer_end();
+        world->DeferBegin();
+        world->GetFlecsWorld().each([](flecs::entity e, ECSTag::ActiveCamera) { e.remove<ECSTag::ActiveCamera>(); });
+        entity.Add<ECSTag::ActiveCamera>();
+        world->DeferEnd();
     }
 }
 
@@ -264,7 +275,7 @@ void ECSManager::PostDrawUIQueryExecution()
 
 void ECSManager::Clear()
 {
-    world.reset();
+    world->GetFlecsWorld().reset();
 }
 
 void ECSManager::InitializeRemoteExplorer()
@@ -276,23 +287,29 @@ void ECSManager::InitializeRemoteExplorer()
 ----------------------------------------------------------------------*/
 void ECSManager::ExecuteQueryCharacterBody3DUpdateTransform()
 {
-    static flecs::query q =
-        world.query_builder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D>()
-            .with<ECSTag::PxKinematic>()
-            .cached()
-            .build();
-    q.each([](flecs::entity e, ECSComponent::CharacterBodyComponent &cb, ECSComponent::Transform3D &tx,
+    static auto q =
+        world->QueryBuilder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D>()
+            .With<ECSTag::PxKinematic>()
+            .Cached()
+            .Build();
+    q.Each([](duin::Entity e, ECSComponent::CharacterBodyComponent &cb, ECSComponent::Transform3D &tx,
               ECSComponent::Velocity3D &velocity) {
         // Move CharacterBody3D and get physics-resolved global position
         double delta = GetPhysicsFrameTime();
         Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
+
+        if (!cb.body)
+        {
+            DN_WARN("CharacterBody pointer is nullptr!");
+            return;
+        }
 
         Vector3 oldPos = cb.body->GetFootPosition();
         cb.body->Move(vDelta, delta);
         Vector3 newPos = cb.body->GetFootPosition();
 
         // add distance between current globalPos (old) and pxBody global pos (new) to localPos
-        Vector3 globalDelta = Vector3Subtract(newPos, ECSComponent::Transform3D::GetGlobalPosition(e));
+        Vector3 globalDelta = Vector3Subtract(newPos, ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity()));
         Vector3 newLocalPos = Vector3Add(globalDelta, tx.GetPosition());
         tx.SetPosition(newLocalPos);
 
@@ -310,21 +327,22 @@ void ECSManager::ExecuteQueryCharacterBody3DUpdateTransform()
 
 void ECSManager::ExecuteQuerySyncDynamicBody3DTransform()
 {
-    static flecs::query q =
-        world.query_builder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>().cached().build();
+    static auto q =
+        world->QueryBuilder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>().Cached().Build();
 
-    q.each([](flecs::entity e, const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
+    q.Each([](duin::Entity e, const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
               ECSComponent::Transform3D &tx) {
         Vector3 newGPos = dynamicBodyComponent.body->GetPosition();
-        ECSComponent::Transform3D::SetGlobalPosition(e, newGPos);
+        ECSComponent::Transform3D::SetGlobalPosition(e.GetFlecsEntity(), newGPos);
         Quaternion newGRot = dynamicBodyComponent.body->GetRotation();
-        ECSComponent::Transform3D::SetGlobalRotation(e, newGRot);
+        ECSComponent::Transform3D::SetGlobalRotation(e.GetFlecsEntity(), newGRot);
     });
 }
 
 void ECSManager::ExecuteQueryTransform3DHierarchicalUpdate()
 {
-    static flecs::query q = world.query_builder<ECSComponent::Transform3D, const ECSComponent::Transform3D *>()
+    flecs::world &flecsWorld = world->GetFlecsWorld();
+    static flecs::query q = flecsWorld.query_builder<ECSComponent::Transform3D, const ECSComponent::Transform3D *>()
                                 .term_at(1)
                                 .parent()
                                 .cascade()
@@ -351,11 +369,11 @@ void ECSManager::ExecuteQueryTransform3DHierarchicalUpdate()
 
 void ECSManager::ExecuteQueryControlCamera()
 {
-    static flecs::query q = world.query_builder<Camera, const ECSComponent::Transform3D>().cached().build();
+    static auto q = world->QueryBuilder<Camera, const ECSComponent::Transform3D>().Cached().Build();
 
-    q.each([](flecs::entity e, Camera &c, const ECSComponent::Transform3D &tx) {
-        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
-        Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e);
+    q.Each([](duin::Entity e, Camera &c, const ECSComponent::Transform3D &tx) {
+        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
+        Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e.GetFlecsEntity());
 
         // Rotate the default forward by gRot to get the new target position of the camera
         Vector3 defaultForward = {0.0f, 0.0f, -1.0f};
@@ -446,9 +464,9 @@ void ECSManager::ExecuteQueryDrawDebugCube()
 
 void ECSManager::ExecuteQuerySetCameraAsActive()
 {
-    static flecs::query q = world.query_builder<Camera>().with<ECSTag::ActiveCamera>().build();
+    static auto q = world->QueryBuilder<Camera>().With<ECSTag::ActiveCamera>().Build();
 
-    q.each([](Camera &camera) { SetActiveCamera(&camera); });
+    q.Each([](duin::Entity e, Camera &camera) { SetActiveCamera(&camera); });
 }
 
 } // namespace duin

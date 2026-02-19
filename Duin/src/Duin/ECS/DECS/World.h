@@ -3,7 +3,6 @@
 #include <flecs.h>
 #include "../ComponentSerializer.h"
 #include "Query.h"
-#include "Entity.h"
 
 namespace duin
 {
@@ -18,6 +17,9 @@ class World
      * @brief Construct a new World object.
      */
     World();
+
+    World(flecs::world w);
+
     /**
      * @brief Destroy the World object.
      */
@@ -29,6 +31,13 @@ class World
      * @return The created Entity object.
      */
     Entity CreateEntity(const std::string &name = "");
+
+    /**
+     * @brief Create a new prefab entity in the world.
+     * @param name Optional name for the prefab.
+     * @return The created prefab Entity object.
+     */
+    Entity CreatePrefab(const std::string &name = "");
     /**
      * @brief Delete an entity by its ID.
      * @param id The ID of the entity to delete.
@@ -148,6 +157,8 @@ class World
      */
     void Quit();
 
+    Entity Lookup(const std::string& name);
+
     /**
      * @brief Iterate over the children of the root entity.
      * @tparam Func The function type.
@@ -193,22 +204,20 @@ class World
      * @brief Get the world as an entity.
      * @return Entity representing the world itself.
      */
-    Entity GetWorldEntity()
-    {
-        Entity e;
-        e.SetWorld(this);
-        e.SetFlecsEntity(flecsWorld.entity());
-        return e;
-    }
+    Entity GetWorldEntity();
 
-    flecs::world GetFlecsWorld();
+    flecs::world& GetFlecsWorld();
 
   private:
     friend class Entity;
     flecs::world flecsWorld;
+
+
 
     // Prevent copying
     World(const World &) = delete;
     World &operator=(const World &) = delete;
 };
 } // namespace duin
+
+
