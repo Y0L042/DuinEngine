@@ -38,8 +38,34 @@ struct PackedComponent
     static PackedComponent Deserialize(const JSONValue &Comp);
     static JSONValue Serialize(const PackedComponent &pComp);
 
-    // Pack (Instance to PackedComponent)
-    // Unpack (PackedComponent to Instance)
+    // ComponentSerializer::Serialize() -> PackedComponent::Pack()
+    static PackedComponent Pack(Entity e, Entity cmp);
+    static void Instantiate(const PackedComponent &p, Entity e);
+};
+
+/**
+ * @struct PackedPair
+ * @brief Serialized FLECS pair (relationship, target).
+ * @ingroup ECS_Scene
+ *
+ * Represents a FLECS pair relationship such as IsA, ChildOf, or custom relationships.
+ * Format: {"relationship":"RelationshipName","target":"TargetName","data":"..."}
+ */
+struct PackedPair
+{
+    static const std::string TAG_RELATIONSHIP;
+    static const std::string TAG_TARGET;
+    static const std::string TAG_DATA;
+
+    std::string relationshipName; ///< Name of the relationship (first element)
+    std::string targetName;       ///< Name or UUID of the target (second element)
+    std::string jsonData;         ///< Optional data stored with the pair
+
+    static PackedPair Deserialize(const JSONValue &pair);
+    static JSONValue Serialize(const PackedPair &ppair);
+
+    static PackedPair Pack(Entity e, Entity::ID pairId);
+    static void Instantiate(const PackedPair &p, Entity e);
 };
 
 /**
@@ -54,20 +80,25 @@ struct PackedEntity
 {
     static const std::string TAG_UUID;
     static const std::string TAG_NAME;
-    static const std::string TAG_TAGS;
     static const std::string TAG_ENABLED;
     static const std::string TAG_CHILDREN;
     static const std::string TAG_COMPONENTS;
+    static const std::string TAG_TAGS;
+    static const std::string TAG_PAIRS;
 
     UUID uuid;                               ///< Entity unique identifier.
     std::string name;                        ///< Entity display name.
-    std::vector<std::string> tags;           ///< Tag names applied to entity.
     bool enabled;                            ///< Whether entity is active.
+    std::vector<PackedComponent> tags;       ///< Attached tags.
+    std::vector<PackedPair> pairs;           ///< FLECS pairs (relationships).
     std::vector<PackedComponent> components; ///< Attached components.
     std::vector<PackedEntity> children;      ///< Child entities.
 
     static PackedEntity Deserialize(const JSONValue &entity);
     static JSONValue Serialize(const PackedEntity &pEntity);
+
+    static PackedEntity Pack(Entity e);
+    static void Instantiate(const PackedEntity &pe, Entity e);
 };
 
 /**
@@ -136,8 +167,8 @@ struct PackedScene
     static JSONValue Serialize(const PackedScene &pScene);
 
     /** @brief Creates entities in the given world from this packed scene. */
-    void Instantiate(const Entity &e);
-    static PackedScene Pack(Entity &e);
+    static void Instantiate(PackedScene &pscn, World *world);
+    static PackedScene Pack(const std::vector<Entity> &vecEntities);
 
   private:
 };

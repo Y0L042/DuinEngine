@@ -6,6 +6,7 @@
 #include "Duin/IO/FileUtils.h"
 #include <flecs.h>
 #include "Duin/ECS/ComponentSerializer.h"
+#include "Duin/ECS/PrefabRegistry.h"
 
 #define PRETTY_WRITE_JSON
 
@@ -19,12 +20,17 @@
 // Static TAG definitions
 const std::string duin::PackedComponent::TAG_JSON = "json";
 
+const std::string duin::PackedPair::TAG_RELATIONSHIP = "relationship";
+const std::string duin::PackedPair::TAG_TARGET = "target";
+const std::string duin::PackedPair::TAG_DATA = "data";
+
 const std::string duin::PackedEntity::TAG_UUID = "uuid";
 const std::string duin::PackedEntity::TAG_NAME = "name";
-const std::string duin::PackedEntity::TAG_TAGS = "tags";
 const std::string duin::PackedEntity::TAG_ENABLED = "enabled";
 const std::string duin::PackedEntity::TAG_CHILDREN = "children";
 const std::string duin::PackedEntity::TAG_COMPONENTS = "components";
+const std::string duin::PackedEntity::TAG_TAGS = "tags";
+const std::string duin::PackedEntity::TAG_PAIRS = "pairs";
 
 const std::string duin::PackedExternalDependency::TAG_UUID = "uuid";
 const std::string duin::PackedExternalDependency::TAG_TYPE = "type";
@@ -44,6 +50,13 @@ const std::string duin::PackedScene::TAG_ENTITIES = "entities";
 duin::PackedComponent duin::PackedComponent::Deserialize(const JSONValue &json)
 {
     PackedComponent pc;
+
+    if (!json.HasMember("type"))
+    {
+        DN_CORE_WARN("PackedComponent::Deserialize - Component missing 'type' field, skipping");
+        return pc;
+    }
+
     pc.componentTypeName = json.GetMember("type").GetString();
     pc.jsonData = json.Write();
 
@@ -55,6 +68,175 @@ duin::JSONValue duin::PackedComponent::Serialize(const PackedComponent &pComp)
     JSONValue json = JSONValue::Parse(pComp.jsonData);
 
     return json;
+}
+
+duin::PackedComponent duin::PackedComponent::Pack(Entity e, Entity cmp)
+{
+    std::string cmpstr;
+    if (cmp.IsTag())
+    {
+        /* Tag */
+        cmpstr = duin::ComponentSerializer::Get().Serialize(cmp.GetName(), nullptr);
+    }
+    else if (cmp.IsPair())
+    {
+        /* Pair */
+        Entity first = cmp.First();
+        Entity second = cmp.Second();
+        cmpstr = duin::ComponentSerializer::Get().Serialize(first.GetName(), second.Get(cmp));
+    }
+    else
+    {
+        /* Component */
+        cmpstr = duin::ComponentSerializer::Get().Serialize(cmp.GetName(), e.Get(cmp));
+    }
+
+    if (cmpstr.empty())
+    {
+        DN_CORE_WARN("PackedComponent::Pack - Failed to serialize component: {}", cmp.GetName());
+        return PackedComponent();
+    }
+
+    JSONValue v = JSONValue::Parse(cmpstr);
+
+    if (!v.HasMember("type"))
+    {
+        DN_CORE_WARN("PackedComponent::Pack - Serialized component missing 'type' field: {}", cmp.GetName());
+        return PackedComponent();
+    }
+
+    PackedComponent pcmp;
+    pcmp.componentTypeName = v["type"].GetString();
+    pcmp.jsonData = v.Write();
+
+    return pcmp;
+}
+
+void duin::PackedComponent::Instantiate(const PackedComponent &p, Entity e)
+{
+    void *data = nullptr;
+    ComponentSerializer::Get().Deserialize(e, p.componentTypeName, data, p.jsonData);
+}
+
+// PackedPair
+duin::PackedPair duin::PackedPair::Pack(Entity e, Entity::ID pairId)
+{
+    PackedPair pp;
+
+    if (!pairId.IsPair())
+    {
+        DN_CORE_WARN("PackedPair::Pack - ID is not a pair: {}", pairId.Str());
+        return pp;
+    }
+
+    // Get the first element (relationship)
+    Entity first = pairId.First();
+    pp.relationshipName = first.GetName();
+
+    // Get the second element (target)
+    Entity second = pairId.Second();
+    pp.targetName = second.GetName();
+
+    // Try to get data from the pair
+    // In FLECS, data is stored based on which element is a component
+    const void *pairData = nullptr;
+    if (e.Has(first))
+    {
+        pairData = e.Get(first);
+    }
+    if (pairData != nullptr)
+    {
+        // Data is stored on the first element (relationship)
+        pp.jsonData = ComponentSerializer::Get().Serialize(first.GetName(), pairData);
+    }
+    else
+    {
+        // Check if data is stored on the second element
+        if (e.Has(second))
+        {
+            pairData = e.Get(second);
+        }
+        if (pairData != nullptr)
+        {
+            pp.jsonData = ComponentSerializer::Get().Serialize(second.GetName(), pairData);
+        }
+        else
+        {
+            // No data - this is a tag pair
+            pp.jsonData = "";
+        }
+    }
+
+    DN_CORE_INFO("Packed pair: ({}, {}) with data: {}", pp.relationshipName, pp.targetName,
+                 pp.jsonData.empty() ? "none" : "present");
+
+    return pp;
+}
+
+duin::JSONValue duin::PackedPair::Serialize(const PackedPair &ppair)
+{
+    JSONValue json;
+    json.SetObject();
+
+    json.AddMember(TAG_RELATIONSHIP, ppair.relationshipName);
+    json.AddMember(TAG_TARGET, ppair.targetName);
+
+    if (!ppair.jsonData.empty())
+    {
+        json.AddMember(TAG_DATA, ppair.jsonData);
+    }
+
+    return json;
+}
+
+duin::PackedPair duin::PackedPair::Deserialize(const JSONValue &json)
+{
+    PackedPair pp;
+
+    if (json.HasMember(TAG_RELATIONSHIP))
+    {
+        pp.relationshipName = json.GetMember(TAG_RELATIONSHIP).GetString();
+    }
+
+    if (json.HasMember(TAG_TARGET))
+    {
+        pp.targetName = json.GetMember(TAG_TARGET).GetString();
+    }
+
+    if (json.HasMember(TAG_DATA))
+    {
+        pp.jsonData = json.GetMember(TAG_DATA).GetString();
+    }
+
+    return pp;
+}
+
+void duin::PackedPair::Instantiate(const PackedPair &p, Entity e)
+{
+    if (p.relationshipName.empty() || p.targetName.empty())
+    {
+        DN_CORE_WARN("PackedPair::Instantiate - Invalid pair (empty relationship or target)");
+        return;
+    }
+
+    World *world = e.GetWorld();
+    if (!world)
+    {
+        DN_CORE_WARN("PackedPair::Instantiate - Entity has no world");
+        return;
+    }
+
+    // Apply inheritance pair
+    if (p.relationshipName == "IsA")
+    {
+        Entity targetEntity = PrefabRegistry::Get().Find(p.targetName);
+        if (targetEntity.IsValid())
+        {
+            e.IsA(targetEntity);
+        }
+    }
+
+    DN_CORE_INFO("Instantiated pair: ({}, {}) on entity {}", p.relationshipName, p.targetName, e.GetName());
 }
 
 // PackedEntity
@@ -79,12 +261,72 @@ duin::PackedEntity duin::PackedEntity::Deserialize(const JSONValue &json)
 
     if (json.HasMember(pe.TAG_TAGS))
     {
-        JSONValue tagsArray = json.GetMember(pe.TAG_TAGS);
-        if (tagsArray.IsArray())
+        JSONValue componentsArray = json.GetMember(pe.TAG_TAGS);
+        if (componentsArray.IsArray())
         {
-            for (auto it = tagsArray.Begin(); it != tagsArray.End(); ++it)
+            for (auto it = componentsArray.Begin(); it != componentsArray.End(); ++it)
             {
-                pe.tags.push_back(it.GetValue().GetString());
+                JSONValue cmpJSON(it.GetValue());
+
+                if (!cmpJSON.HasMember("type"))
+                {
+                    DN_CORE_WARN("Skipping component without 'type' field");
+                    continue;
+                }
+
+                PackedComponent cmp = PackedComponent::Deserialize(cmpJSON);
+                if (!cmp.componentTypeName.empty())
+                {
+                    pe.tags.push_back(cmp);
+                }
+            }
+        }
+    }
+
+    if (json.HasMember(pe.TAG_PAIRS))
+    {
+        JSONValue pairsArray = json.GetMember(pe.TAG_PAIRS);
+        if (pairsArray.IsArray())
+        {
+            for (auto it = pairsArray.Begin(); it != pairsArray.End(); ++it)
+            {
+                JSONValue pairJSON(it.GetValue());
+
+                if (!pairJSON.HasMember(PackedPair::TAG_RELATIONSHIP) || !pairJSON.HasMember(PackedPair::TAG_TARGET))
+                {
+                    DN_CORE_WARN("Skipping pair without 'relationship' or 'target' field");
+                    continue;
+                }
+
+                PackedPair pair = PackedPair::Deserialize(pairJSON);
+                if (!pair.relationshipName.empty() && !pair.targetName.empty())
+                {
+                    pe.pairs.push_back(pair);
+                }
+            }
+        }
+    }
+
+    if (json.HasMember(pe.TAG_COMPONENTS))
+    {
+        JSONValue componentsArray = json.GetMember(pe.TAG_COMPONENTS);
+        if (componentsArray.IsArray())
+        {
+            for (auto it = componentsArray.Begin(); it != componentsArray.End(); ++it)
+            {
+                JSONValue cmpJSON(it.GetValue());
+
+                if (!cmpJSON.HasMember("type"))
+                {
+                    DN_CORE_WARN("Skipping component without 'type' field");
+                    continue;
+                }
+
+                PackedComponent cmp = PackedComponent::Deserialize(cmpJSON);
+                if (!cmp.componentTypeName.empty())
+                {
+                    pe.components.push_back(cmp);
+                }
             }
         }
     }
@@ -103,24 +345,6 @@ duin::PackedEntity duin::PackedEntity::Deserialize(const JSONValue &json)
         }
     }
 
-    if (json.HasMember(pe.TAG_COMPONENTS))
-    {
-        JSONValue componentsArray = json.GetMember(pe.TAG_COMPONENTS);
-        if (componentsArray.IsArray())
-        {
-            for (auto it = componentsArray.Begin(); it != componentsArray.End(); ++it)
-            {
-                JSONValue cmpJSON(it.GetValue());
-                PackedComponent cmp = PackedComponent::Deserialize(cmpJSON);
-                pe.components.push_back(cmp);
-            }
-        }
-    }
-    else
-    {
-        DN_CORE_INFO("No components found!");
-    }
-
     return pe;
 }
 
@@ -135,21 +359,21 @@ duin::JSONValue duin::PackedEntity::Serialize(const PackedEntity &entity)
 
     JSONValue tagsArray;
     tagsArray.SetArray();
-    for (const auto &tag : entity.tags)
+    for (const auto &component : entity.tags)
     {
-        JSONValue t(tag);
-        tagsArray.PushBack(t);
+        JSONValue cmpJSON = PackedComponent::Serialize(component);
+        tagsArray.PushBack(cmpJSON);
     }
     json.AddMember(entity.TAG_TAGS, tagsArray);
 
-    JSONValue childrenArray;
-    childrenArray.SetArray();
-    for (const auto &child : entity.children)
+    JSONValue pairsArray;
+    pairsArray.SetArray();
+    for (const auto &pair : entity.pairs)
     {
-        JSONValue eJSON = PackedEntity::Serialize(child);
-        childrenArray.PushBack(eJSON);
+        JSONValue pairJSON = PackedPair::Serialize(pair);
+        pairsArray.PushBack(pairJSON);
     }
-    json.AddMember(entity.TAG_CHILDREN, childrenArray);
+    json.AddMember(entity.TAG_PAIRS, pairsArray);
 
     JSONValue componentsArray;
     componentsArray.SetArray();
@@ -160,7 +384,102 @@ duin::JSONValue duin::PackedEntity::Serialize(const PackedEntity &entity)
     }
     json.AddMember(entity.TAG_COMPONENTS, componentsArray);
 
+    JSONValue childrenArray;
+    childrenArray.SetArray();
+    for (const auto &child : entity.children)
+    {
+        JSONValue eJSON = PackedEntity::Serialize(child);
+        childrenArray.PushBack(eJSON);
+    }
+    json.AddMember(entity.TAG_CHILDREN, childrenArray);
+
     return json;
+}
+
+duin::PackedEntity duin::PackedEntity::Pack(Entity e)
+{
+    PackedEntity pe;
+    pe.name = e.GetName();
+    pe.enabled = e.IsAlive();
+
+    e.ForEachComponent([e, &pe](duin::Entity::ID id) {
+        if (id.IsPair())
+        {
+            // Handle FLECS pair (relationship, target)
+            duin::PackedPair pp = duin::PackedPair::Pack(e, id);
+            if (!pp.relationshipName.empty() && !pp.targetName.empty())
+            {
+                pe.pairs.push_back(pp);
+            }
+            else
+            {
+                DN_CORE_WARN("Skipping invalid pair during pack: {}", id.Str());
+            }
+        }
+        else if (id.IsEntity())
+        {
+            // Handle regular component or tag
+            duin::Entity cmp = id.GetEntity();
+            duin::PackedComponent pc = duin::PackedComponent::Pack(e, cmp);
+
+            if (!pc.componentTypeName.empty())
+            {
+                pe.components.push_back(pc);
+            }
+            else
+            {
+                DN_CORE_WARN("Skipping invalid component during pack: {}", cmp.GetName());
+            }
+        }
+        else
+        {
+            DN_CORE_WARN("Skipping unknown ID type during pack: {}", id.Str());
+        }
+    });
+
+    for (Entity child : e.GetChildren())
+    {
+        pe.children.push_back(PackedEntity::Pack(child));
+    }
+
+    return pe;
+}
+
+void duin::PackedEntity::Instantiate(const PackedEntity &pe, Entity e)
+{
+    if (!pe.name.empty())
+    {
+        e.SetName(pe.name);
+    }
+
+    if (!pe.enabled)
+    {
+        e.Disable();
+    }
+
+    // Instantiate components
+    for (const duin::PackedComponent &cmp : pe.components)
+    {
+        if (cmp.componentTypeName == "Transform3DImpl")
+        {
+            DN_INFO("PAUSE");
+        }
+        duin::PackedComponent::Instantiate(cmp, e);
+    }
+
+    // Instantiate pairs
+    for (const duin::PackedPair &pair : pe.pairs)
+    {
+        duin::PackedPair::Instantiate(pair, e);
+    }
+
+    // Instantiate children
+    for (const PackedEntity &child : pe.children)
+    {
+        Entity childEntity = e.GetWorld()->CreateEntity();
+        childEntity.ChildOf(e);
+        PackedEntity::Instantiate(child, childEntity);
+    }
 }
 
 // PackedExternalDependency
@@ -312,23 +631,26 @@ duin::JSONValue duin::PackedScene::Serialize(const PackedScene &scene)
     return json;
 }
 
-void duin::PackedScene::Instantiate(const Entity &e)
+void duin::PackedScene::Instantiate(PackedScene &pscn, World *world)
 {
-    for (PackedEntity &pEntity : entities)
+    for (PackedEntity &pEntity : pscn.entities)
     {
+        Entity newEntity = world->CreateEntity();
+
+        PackedEntity::Instantiate(pEntity, newEntity);
     }
 }
 
-duin::PackedScene duin::PackedScene::Pack(Entity &e)
+duin::PackedScene duin::PackedScene::Pack(const std::vector<Entity> &vecEntities)
 {
     PackedScene packedScene;
 
-    std::vector<std::string> sercomVec;
-    e.ForEachComponent([&](duin::Entity &ent) {
-        std::string sercom = duin::ComponentSerializer::Get().Serialize(ent.GetName(), e.Get(ent));
-        sercomVec.push_back(sercom);
-        DN_INFO("SERCOM: {}", sercom);
-    });
+    // Pack the children of the scene root as root-level entities in the scene
+    for (Entity e : vecEntities)
+    {
+        PackedEntity packedEntity = PackedEntity::Pack(e);
+        packedScene.entities.push_back(packedEntity);
+    }
 
     return packedScene;
 }
