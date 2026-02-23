@@ -29,6 +29,11 @@ class ComponentSerializer
     {
         std::string typeName = static_cast<std::string>(typeEntity.name());
 
+        if (typeAliases_.contains(typeName))// && serializers_.contains(typeName) && deserializers_.contains(typeName))
+        {
+            return;
+        }
+
         // Serialize function
         serializers_[typeName] = [](const void *ptr) -> std::string {
             if (ptr == nullptr) /* Tag */
@@ -84,7 +89,7 @@ class ComponentSerializer
         if constexpr (requires { typename T::ReflectionType; })
         {
             std::string fullReflectionTypeName = rfl::type_name_t<typename T::ReflectionType>().str();
-            
+
             // Extract unqualified name (e.g., "duin::ECSComponent::Velocity2D::Velocity2DImpl" -> "Velocity2DImpl")
             std::string unqualifiedName = fullReflectionTypeName;
             size_t lastColonPos = fullReflectionTypeName.find_last_of(':');
@@ -92,7 +97,7 @@ class ComponentSerializer
             {
                 unqualifiedName = fullReflectionTypeName.substr(lastColonPos + 1);
             }
-            
+
             typeAliases_[unqualifiedName] = typeName;
             DN_CORE_INFO("Registered type alias: {} -> {}", unqualifiedName, typeName);
         }
@@ -108,6 +113,11 @@ class ComponentSerializer
             return it->second(componentPtr);
         }
         return "{}";
+    }
+
+    bool IsRegistered(const std::string &typeName) const
+    {
+        return serializers_.find(typeName) != serializers_.end();
     }
 
     void Deserialize(Entity e, const std::string &typeName, void *componentPtr, const std::string &json)

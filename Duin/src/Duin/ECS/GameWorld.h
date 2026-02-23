@@ -1208,7 +1208,7 @@ class GameWorld : public World
     ~GameWorld();
 
     /** @brief Initializes the ECS world and registers components. */
-    void Initialize();
+    void Initialize(bool connectSignals = true);
 
     /** @brief Creates entity from JSON data. @deprecated Use SceneBuilder. */
     duin::Entity CreateEntityFromJSON(JSONMember &member);

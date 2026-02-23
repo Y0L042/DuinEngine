@@ -95,27 +95,27 @@ void RegisterPrefabs(duin::World &world)
 
     Node3D = world.CreatePrefab("Node3D").IsA(Node).Set<ECSComponent::Transform3D>(ECSComponent::Transform3D{});
 
-    PhysicsStaticBody = world.CreatePrefab("StaticBody")
+    PhysicsStaticBody = world.CreatePrefab("PhysicsStaticBody")
                             .IsA(Node3D)
                             .Add<ECSTag::PxStatic>()
                             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
                             .Set<ECSComponent::StaticBodyComponent>(ECSComponent::StaticBodyComponent{nullptr});
 
     PhysicsKinematicBody =
-        world.CreatePrefab("KinematicBody")
+        world.CreatePrefab("PhysicsKinematicBody")
             .IsA(Node3D)
             .Add<ECSTag::PxKinematic>()
             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
             .Set<ECSComponent::KinematicBodyComponent>(ECSComponent::KinematicBodyComponent{nullptr});
 
-    PhysicsDynamicBody = world.CreatePrefab("DynamicBody")
+    PhysicsDynamicBody = world.CreatePrefab("PhysicsDynamicBody")
                              .IsA(Node3D)
                              .Add<ECSTag::PxDynamic>()
                              .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
                              .Set<ECSComponent::DynamicBodyComponent>(ECSComponent::DynamicBodyComponent{nullptr});
 
     PhysicsCharacterBody =
-        world.CreatePrefab("CharacterBody")
+        world.CreatePrefab("PhysicsCharacterBody")
             .IsA(Node3D)
             .Add<ECSTag::PxKinematic>()
             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
@@ -196,20 +196,18 @@ void RegisterObservers(duin::World &world)
 }
 }; // namespace ECSObserver
 
-
 /*----------------------------------------------------------------------------*/
 //  GameWorld Functions
 /*----------------------------------------------------------------------------*/
 GameWorld::GameWorld()
 {
-
 }
 
 GameWorld::~GameWorld()
 {
 }
 
-void GameWorld::Initialize()
+void GameWorld::Initialize(bool connectSignals)
 {
     ECSTag::RegisterTags(*this);
     DN_CORE_INFO("Tags registered.");
@@ -220,11 +218,14 @@ void GameWorld::Initialize()
     ECSObserver::RegisterObservers(*this);
     DN_CORE_INFO("Observers registered.");
 
-    QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
-    QueuePostPhysicsUpdateCallback(
-        std::function<void(double)>([this](double delta) { PostPhysicsUpdateQueryExecution(delta); }));
-    QueuePostDrawCallback(std::function<void()>([this]() { PostDrawQueryExecution(); }));
-    QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
+    if (connectSignals)
+    {
+        QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
+        QueuePostPhysicsUpdateCallback(
+            std::function<void(double)>([this](double delta) { PostPhysicsUpdateQueryExecution(delta); }));
+        QueuePostDrawCallback(std::function<void()>([this]() { PostDrawQueryExecution(); }));
+        QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
+    }
 }
 
 duin::Entity GameWorld::CreateEntityFromJSON(JSONMember &member)
