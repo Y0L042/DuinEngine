@@ -2,6 +2,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #define DN_DISABLE_ALL_LOGGING
 #include <doctest.h>
+#include "CustomReporter.h"    // Custom console reporter with inline values
+// Note: Not including CustomXmlReporter because doctest doesn't support overriding built-in reporters
 #include <Duin/Core/Debug/DNLog.h>
 #include <iostream>
 #include <fstream>
@@ -40,6 +42,9 @@ int main(int argc, char **argv)
     // Only configure options for actual test execution
     ctx.setOption("abort-after", 50);
     ctx.setOption("no-breaks", true);
+
+    // Don't force a reporter - let command line args control it
+    // VS Test Adapter needs XML reporter, console/batch runs can use: --reporters=inline-values
 
     // Apply command line arguments (this processes --list-tests and other flags)
     ctx.applyCommandLine(argc, argv);
