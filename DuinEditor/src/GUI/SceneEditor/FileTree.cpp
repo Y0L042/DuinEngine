@@ -94,7 +94,7 @@ void FileTree::DrawNode(FSNode *node, const std::string &nodeLabel)
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
         {
             selectedNode = node;
-            if (node->type == ArcheType::P_FILE && node->fileExt == FILEEXT_ECST)
+            if (node->type == ArcheType::P_FILE && (node->fileExt == FILEEXT_ECST || node->fileExt == FILEEXT_JSON))
             {
                 onSceneSelect.Emit(node);
             }
