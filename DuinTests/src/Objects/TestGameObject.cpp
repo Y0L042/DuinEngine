@@ -1,4 +1,5 @@
 #include <doctest.h>
+#include "Defines.h"
 #include <Duin/Objects/GameObject.h>
 #include <Duin/Core/Events/Event.h>
 #include <vector>
@@ -149,8 +150,18 @@ TEST_SUITE("GameObject")
         auto obj1 = std::make_shared<duin::GameObject>();
         auto obj2 = std::make_shared<duin::GameObject>();
 
+        CAPTURE(obj1->GetUUID());
+        CAPTURE(obj1->GetUUID() != duin::UUID::INVALID);
+        CAPTURE(obj1->GetUUID());
         CHECK(obj1->GetUUID() != duin::UUID::INVALID);
+        CAPTURE(obj2->GetUUID());
+        CAPTURE(obj2->GetUUID() != duin::UUID::INVALID);
+        CAPTURE(obj2->GetUUID());
         CHECK(obj2->GetUUID() != duin::UUID::INVALID);
+        CAPTURE(obj1->GetUUID());
+        CAPTURE(obj2->GetUUID());
+        CAPTURE(obj1->GetUUID() != obj2->GetUUID());
+        CAPTURE(obj1->GetUUID() != obj2->GetUUID());
         CHECK(obj1->GetUUID() != obj2->GetUUID());
     }
 
@@ -160,8 +171,14 @@ TEST_SUITE("GameObject")
 
         bool t1 = obj != nullptr;
         bool t2 = obj->GetParent().get() == nullptr;
+        CAPTURE(t1);
+        CAPTURE(t1);
         CHECK(t1);
+        CAPTURE(obj->GetUUID());
+        CAPTURE(obj->GetUUID());
         CHECK(obj->GetUUID() != duin::UUID::INVALID);
+        CAPTURE(t2);
+        CAPTURE(t2);
         CHECK(t2);
     }
 
@@ -170,8 +187,15 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
+        CAPTURE(child.get());
+        CAPTURE(child.get() != nullptr);
         CHECK(child.get() != nullptr);
+        CAPTURE(child->initCalled);
+        CAPTURE(child->initCalled);
         CHECK(child->initCalled);
+        CAPTURE(child->GetParent().get());
+        CAPTURE(parent.get());
+        CAPTURE(child->GetParent().get() == parent.get());
         CHECK(child->GetParent().get() == parent.get());
     }
 
@@ -184,10 +208,20 @@ TEST_SUITE("GameObject")
         auto child2 = parent->CreateChildObject<TestObjectB>();
         auto child3 = parent->CreateChildObject<TestObjectC>();
 
+        CAPTURE(child2.get());
+        CAPTURE(child2.get() != nullptr);
         CHECK(child2.get() != nullptr);
+        CAPTURE(child3.get());
+        CAPTURE(child3.get() != nullptr);
         CHECK(child3.get() != nullptr);
+        CAPTURE(child1.get());
+        CAPTURE(child1.get() != nullptr);
         CHECK(child1.get() != nullptr);
+        CAPTURE(child1->initCalled);
+        CAPTURE(child1->initCalled);
         CHECK(child1->initCalled);
+        CAPTURE(child2->initCalled);
+        CAPTURE(child2->initCalled);
         CHECK(child2->initCalled);
     }
 
@@ -198,7 +232,12 @@ TEST_SUITE("GameObject")
 
         parent->AddChildObject(child);
 
+        CAPTURE(child->GetParent().get());
+        CAPTURE(parent.get());
+        CAPTURE(child->GetParent().get() == parent.get());
         CHECK(child->GetParent().get() == parent.get());
+        CAPTURE(child->initCalled);
+        CAPTURE(child->initCalled);
         CHECK(child->initCalled);
     }
 
@@ -211,6 +250,9 @@ TEST_SUITE("GameObject")
         parent->AddChildObject(child); // Try to add again
 
         // Child should still have the parent and Init should only be called once
+        CAPTURE(child->GetParent().get());
+        CAPTURE(parent.get());
+        CAPTURE(child->GetParent().get() == parent.get());
         CHECK(child->GetParent().get() == parent.get());
     }
 
@@ -221,6 +263,7 @@ TEST_SUITE("GameObject")
         // Should not crash
         parent->AddChildObject(nullptr);
 
+        CAPTURE(true);
         CHECK(true); // If we reach here, test passes
     }
 
@@ -229,10 +272,15 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
+        CAPTURE(child->GetParent().get());
+        CAPTURE(parent.get());
+        CAPTURE(child->GetParent().get() == parent.get());
         CHECK(child->GetParent().get() == parent.get());
 
         parent->RemoveChildObject(child);
 
+        CAPTURE(child->GetParent().get());
+        CAPTURE(child->GetParent().get() == nullptr);
         CHECK(child->GetParent().get() == nullptr);
     }
 
@@ -243,6 +291,7 @@ TEST_SUITE("GameObject")
         // Should not crash
         parent->RemoveChildObject(nullptr);
 
+        CAPTURE(true);
         CHECK(true);
     }
 
@@ -253,6 +302,9 @@ TEST_SUITE("GameObject")
 
         child->SetParent(parent);
 
+        CAPTURE(child->GetParent().get());
+        CAPTURE(parent.get());
+        CAPTURE(child->GetParent().get() == parent.get());
         CHECK(child->GetParent().get() == parent.get());
     }
 
@@ -260,6 +312,8 @@ TEST_SUITE("GameObject")
     {
         auto obj = std::make_shared<duin::GameObject>();
 
+        CAPTURE(obj->GetParent().get());
+        CAPTURE(obj->GetParent().get() == nullptr);
         CHECK(obj->GetParent().get() == nullptr);
     }
 
@@ -269,9 +323,14 @@ TEST_SUITE("GameObject")
         auto child = std::make_shared<duin::GameObject>();
 
         child->SetParent(parent);
+        CAPTURE(child->GetParent().get());
+        CAPTURE(parent.get());
+        CAPTURE(child->GetParent().get() == parent.get());
         CHECK(child->GetParent().get() == parent.get());
 
         child->ResetParent();
+        CAPTURE(child->GetParent().get());
+        CAPTURE(child->GetParent().get() == nullptr);
         CHECK(child->GetParent().get() == nullptr);
     }
 
@@ -281,7 +340,12 @@ TEST_SUITE("GameObject")
 
         auto sharedPtr = obj->GetSharedPointer<TestObjectA>();
 
+        CAPTURE(sharedPtr.get());
+        CAPTURE(sharedPtr.get() != nullptr);
         CHECK(sharedPtr.get() != nullptr);
+        CAPTURE(sharedPtr.get());
+        CAPTURE(obj.get());
+        CAPTURE(sharedPtr == obj);
         CHECK(sharedPtr == obj);
     }
 
@@ -290,7 +354,12 @@ TEST_SUITE("GameObject")
         auto obj1 = std::make_shared<duin::GameObject>();
         auto obj2 = std::make_shared<duin::GameObject>();
 
+        CAPTURE(obj1->GetUUID());
+        CAPTURE(obj2->GetUUID());
+        CAPTURE(*obj1 != *obj2);
         CHECK_FALSE(*obj1 == *obj2);
+        CAPTURE(obj1->GetUUID());
+        CAPTURE(*obj1 == *obj1);
         CHECK(*obj1 == *obj1); // Same object should equal itself
     }
 
@@ -302,10 +371,14 @@ TEST_SUITE("GameObject")
         parent->ObjectReady();
 
         // Parent's Ready should be called after child's
+        CAPTURE(parent->callOrder.size());
         CHECK(parent->callOrder.size() > 0);
+        CAPTURE(parent->callOrder.back());
         CHECK(parent->callOrder.back() == "Ready");
 
+        CAPTURE(child->callOrder.size());
         CHECK(child->callOrder.size() > 0);
+        CAPTURE(child->callOrder.back());
         CHECK(child->callOrder.back() == "Ready");
     }
 
@@ -316,8 +389,11 @@ TEST_SUITE("GameObject")
 
         parent->ObjectUpdate(0.016);
 
+        CAPTURE(parent->updateCalls);
         CHECK(parent->updateCalls == 1);
+        CAPTURE(child->updateCalls);
         CHECK(child->updateCalls == 1);
+        CAPTURE(parent->lastDelta);
         CHECK(parent->lastDelta == doctest::Approx(0.016));
     }
 
@@ -328,7 +404,9 @@ TEST_SUITE("GameObject")
 
         parent->ObjectPhysicsUpdate(0.016);
 
+        CAPTURE(parent->physicsUpdateCalls);
         CHECK(parent->physicsUpdateCalls == 1);
+        CAPTURE(child->physicsUpdateCalls);
         CHECK(child->physicsUpdateCalls == 1);
     }
 
@@ -339,7 +417,9 @@ TEST_SUITE("GameObject")
 
         parent->ObjectDraw();
 
+        CAPTURE(parent->drawCalls);
         CHECK(parent->drawCalls == 1);
+        CAPTURE(child->drawCalls);
         CHECK(child->drawCalls == 1);
     }
 
@@ -350,7 +430,9 @@ TEST_SUITE("GameObject")
 
         parent->ObjectDrawUI();
 
+        CAPTURE(parent->drawUICalls);
         CHECK(parent->drawUICalls == 1);
+        CAPTURE(child->drawUICalls);
         CHECK(child->drawUICalls == 1);
     }
 
@@ -361,7 +443,9 @@ TEST_SUITE("GameObject")
 
         parent->ObjectDebug();
 
+        CAPTURE(parent->debugCalls);
         CHECK(parent->debugCalls == 1);
+        CAPTURE(child->debugCalls);
         CHECK(child->debugCalls == 1);
     }
 
@@ -381,7 +465,9 @@ TEST_SUITE("GameObject")
 
         parent->ObjectOnEvent(testEvent);
 
+        CAPTURE(parent->eventCalls);
         CHECK(parent->eventCalls == 1);
+        CAPTURE(child->eventCalls);
         CHECK(child->eventCalls == 1);
     }
 
@@ -393,9 +479,17 @@ TEST_SUITE("GameObject")
         auto grandchild1 = child1->CreateChildObject<TestObjectA>();
         auto grandchild2 = child2->CreateChildObject<TestObjectA>();
 
+        CAPTURE(child1->GetParent().get());
+        CAPTURE(root.get());
         CHECK(child1->GetParent().get() == root.get());
+        CAPTURE(child2->GetParent().get());
+        CAPTURE(root.get());
         CHECK(child2->GetParent().get() == root.get());
+        CAPTURE(grandchild1->GetParent().get());
+        CAPTURE(child1.get());
         CHECK(grandchild1->GetParent().get() == child1.get());
+        CAPTURE(grandchild2->GetParent().get());
+        CAPTURE(child2.get());
         CHECK(grandchild2->GetParent().get() == child2.get());
     }
 
@@ -407,8 +501,11 @@ TEST_SUITE("GameObject")
 
         root->ObjectUpdate(0.016);
 
+        CAPTURE(root->updateCalls);
         CHECK(root->updateCalls == 1);
+        CAPTURE(child->updateCalls);
         CHECK(child->updateCalls == 1);
+        CAPTURE(grandchild->updateCalls);
         CHECK(grandchild->updateCalls == 1);
     }
 
@@ -420,7 +517,9 @@ TEST_SUITE("GameObject")
         parent->ObjectUpdate(0.033);
         parent->ObjectUpdate(0.020);
 
+        CAPTURE(parent->updateCalls);
         CHECK(parent->updateCalls == 3);
+        CAPTURE(parent->lastDelta);
         CHECK(parent->lastDelta == doctest::Approx(0.020));
     }
 
@@ -432,6 +531,7 @@ TEST_SUITE("GameObject")
         parent->ObjectPhysicsUpdate(0.016);
         parent->ObjectPhysicsUpdate(0.016);
 
+        CAPTURE(parent->physicsUpdateCalls);
         CHECK(parent->physicsUpdateCalls == 3);
     }
 
@@ -443,6 +543,7 @@ TEST_SUITE("GameObject")
         parent->ObjectDraw();
         parent->ObjectDraw();
 
+        CAPTURE(parent->drawCalls);
         CHECK(parent->drawCalls == 3);
     }
 
@@ -453,6 +554,7 @@ TEST_SUITE("GameObject")
         parent->ObjectDrawUI();
         parent->ObjectDrawUI();
 
+        CAPTURE(parent->drawUICalls);
         CHECK(parent->drawUICalls == 2);
     }
 
@@ -465,6 +567,10 @@ TEST_SUITE("GameObject")
 
         root->ObjectUpdate(0.016);
 
+        CAPTURE(root->updateCalls);
+        CAPTURE(child1->updateCalls);
+        CAPTURE(child2->updateCalls);
+        CAPTURE(child3->updateCalls);
         CHECK(root->updateCalls == 1);
         CHECK(child1->updateCalls == 1);
         CHECK(child2->updateCalls == 1);
@@ -476,9 +582,12 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
+        CAPTURE(child->GetParent().get());
+        CAPTURE(parent.get());
         CHECK(child->GetParent().get() == parent.get());
 
         parent->RemoveChildObject(child);
+        CAPTURE(child->GetParent().get());
         CHECK(child->GetParent().get() == nullptr);
 
         // Add back
@@ -494,6 +603,7 @@ TEST_SUITE("GameObject")
         parent->AddChildObject(child);
 
         // Check Init was called
+        CAPTURE(child->initCalled);
         CHECK(child->initCalled);
 
         // Reset the flag
@@ -503,6 +613,7 @@ TEST_SUITE("GameObject")
         parent->AddChildObject(child);
 
         // Init should not be called again since it's a duplicate
+        CAPTURE(child->initCalled);
         CHECK_FALSE(child->initCalled);
     }
 
@@ -515,6 +626,10 @@ TEST_SUITE("GameObject")
 
         root->ObjectReady();
 
+        CAPTURE(root->callOrder.size());
+        CAPTURE(child->callOrder.size());
+        CAPTURE(grandchild->callOrder.size());
+        CAPTURE(greatgrandchild->callOrder.size());
         CHECK(root->callOrder.size() > 0);
         CHECK(child->callOrder.size() > 0);
         CHECK(grandchild->callOrder.size() > 0);
@@ -540,6 +655,15 @@ TEST_SUITE("GameObject")
         obj->DrawUI();
         obj->Debug();
 
+        CAPTURE(obj->callOrder.size());
+        CAPTURE(obj->callOrder[0]);
+        CAPTURE(obj->callOrder[1]);
+        CAPTURE(obj->callOrder[2]);
+        CAPTURE(obj->callOrder[3]);
+        CAPTURE(obj->callOrder[4]);
+        CAPTURE(obj->callOrder[5]);
+        CAPTURE(obj->callOrder[6]);
+        CAPTURE(obj->callOrder[7]);
         CHECK(obj->callOrder.size() == 8);
         CHECK(obj->callOrder[0] == "Init");
         CHECK(obj->callOrder[1] == "Ready");
@@ -561,6 +685,11 @@ TEST_SUITE("GameObject")
         parent->ObjectDrawUI();
         parent->ObjectDebug();
 
+        CAPTURE(parent->updateCalls);
+        CAPTURE(parent->physicsUpdateCalls);
+        CAPTURE(parent->drawCalls);
+        CAPTURE(parent->drawUICalls);
+        CAPTURE(parent->debugCalls);
         CHECK(parent->updateCalls == 1);
         CHECK(parent->physicsUpdateCalls == 1);
         CHECK(parent->drawCalls == 1);
@@ -575,6 +704,10 @@ TEST_SUITE("GameObject")
         auto child2 = parent->CreateChildObject<TestObjectA>();
         auto child3 = parent->CreateChildObject<TestObjectA>();
 
+        CAPTURE(child1->GetParent().get());
+        CAPTURE(parent.get());
+        CAPTURE(child2->GetParent().get());
+        CAPTURE(child3->GetParent().get());
         CHECK(child1->GetParent().get() == parent.get());
         CHECK(child2->GetParent().get() == parent.get());
         CHECK(child3->GetParent().get() == parent.get());
@@ -595,6 +728,9 @@ TEST_SUITE("GameObject")
         auto childB = parent->CreateChildObject<TestObjectB>();
 
         // Verify types
+        CAPTURE(std::dynamic_pointer_cast<TestObjectA>(childA).get());
+        CAPTURE(std::dynamic_pointer_cast<TestObjectB>(childB).get());
+        CAPTURE(std::dynamic_pointer_cast<TestObjectB>(childA).get());
         CHECK(std::dynamic_pointer_cast<TestObjectA>(childA).get() != nullptr);
         CHECK(std::dynamic_pointer_cast<TestObjectB>(childB).get() != nullptr);
         CHECK(std::dynamic_pointer_cast<TestObjectB>(childA).get() == nullptr);
@@ -740,6 +876,9 @@ TEST_SUITE("GameObject")
             temp = std::static_pointer_cast<TestObjectA>(temp->GetParent());
             depth++;
         }
+        CAPTURE(depth);
+        CAPTURE(temp.get());
+        CAPTURE(root.get());
         CHECK(depth == 50);
         CHECK(temp.get() == root.get());
     }
@@ -779,9 +918,11 @@ TEST_SUITE("GameObject")
         parent->ObjectUpdate(0.016);
 
         // All children should be updated
+        CAPTURE(parent->updateCalls);
         CHECK(parent->updateCalls == 1);
         for (const auto &child : children)
         {
+            CAPTURE(child->updateCalls);
             CHECK(child->updateCalls == 1);
         }
     }
@@ -875,6 +1016,7 @@ TEST_SUITE("GameObject")
         }
 
         // Parent should still be valid
+        CAPTURE(parent->GetUUID());
         CHECK(parent->GetUUID() != duin::UUID::INVALID);
         CHECK(parent->GetParent().get() == nullptr);
     }
@@ -1865,121 +2007,128 @@ TEST_SUITE("GameObject")
 
     TEST_CASE("EnableUpdate controls Update execution")
     {
-        auto obj = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<duin::GameObject>();
+        auto obj = root->CreateChildObject<TestObjectA>();
 
-        obj->ObjectUpdate(0.016);
-        CHECK(obj->updateCalls == 1);
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(obj->updateCalls, obj->updateCalls == 1);
 
         obj->EnableUpdate(false);
-        obj->ObjectUpdate(0.016);
-        CHECK(obj->updateCalls == 1); // Still 1, not incremented
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(obj->updateCalls, obj->updateCalls == 1); // Still 1, not incremented
 
         obj->EnableUpdate(true);
-        obj->ObjectUpdate(0.016);
-        CHECK(obj->updateCalls == 2);
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(obj->updateCalls, obj->updateCalls == 2);
     }
 
     TEST_CASE("EnablePhysicsUpdate controls PhysicsUpdate execution")
     {
-        auto obj = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<duin::GameObject>();
+        auto obj = root->CreateChildObject<TestObjectA>();
 
-        obj->ObjectPhysicsUpdate(0.016);
-        CHECK(obj->physicsUpdateCalls == 1);
+        root->ObjectPhysicsUpdate(0.016);
+        MSG_CHECK(obj->physicsUpdateCalls, obj->physicsUpdateCalls == 1);
 
         obj->EnablePhysicsUpdate(false);
-        obj->ObjectPhysicsUpdate(0.016);
-        CHECK(obj->physicsUpdateCalls == 1);
+        root->ObjectPhysicsUpdate(0.016);
+        MSG_CHECK(obj->physicsUpdateCalls, obj->physicsUpdateCalls == 1);
 
         obj->EnablePhysicsUpdate(true);
-        obj->ObjectPhysicsUpdate(0.016);
-        CHECK(obj->physicsUpdateCalls == 2);
+        root->ObjectPhysicsUpdate(0.016);
+        MSG_CHECK(obj->physicsUpdateCalls, obj->physicsUpdateCalls == 2);
     }
 
     TEST_CASE("EnableDraw controls Draw execution")
     {
-        auto obj = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<duin::GameObject>();
+        auto obj = root->CreateChildObject<TestObjectA>();
 
-        obj->ObjectDraw();
-        CHECK(obj->drawCalls == 1);
+        root->ObjectDraw();
+        MSG_CHECK(obj->drawCalls, obj->drawCalls == 1);
 
         obj->EnableDraw(false);
-        obj->ObjectDraw();
-        CHECK(obj->drawCalls == 1);
+        root->ObjectDraw();
+        MSG_CHECK(obj->drawCalls, obj->drawCalls == 1);
 
         obj->EnableDraw(true);
-        obj->ObjectDraw();
-        CHECK(obj->drawCalls == 2);
+        root->ObjectDraw();
+        MSG_CHECK(obj->drawCalls, obj->drawCalls == 2);
     }
 
     TEST_CASE("EnableDrawUI controls DrawUI execution")
     {
-        auto obj = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<duin::GameObject>();
+        auto obj = root->CreateChildObject<TestObjectA>();
 
-        obj->ObjectDrawUI();
-        CHECK(obj->drawUICalls == 1);
+        root->ObjectDrawUI();
+        MSG_CHECK(obj->drawUICalls, obj->drawUICalls == 1);
 
         obj->EnableDrawUI(false);
-        obj->ObjectDrawUI();
-        CHECK(obj->drawUICalls == 1);
+        root->ObjectDrawUI();
+        MSG_CHECK(obj->drawUICalls, obj->drawUICalls == 1);
 
         obj->EnableDrawUI(true);
-        obj->ObjectDrawUI();
-        CHECK(obj->drawUICalls == 2);
+        root->ObjectDrawUI();
+        MSG_CHECK(obj->drawUICalls, obj->drawUICalls == 2);
     }
 
     TEST_CASE("EnableDebug controls Debug execution")
     {
-        auto obj = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<duin::GameObject>();
+        auto obj = root->CreateChildObject<TestObjectA>();
 
-        obj->ObjectDebug();
-        CHECK(obj->debugCalls == 1);
+        root->ObjectDebug();
+        MSG_CHECK(obj->debugCalls, obj->debugCalls == 1);
 
         obj->EnableDebug(false);
-        obj->ObjectDebug();
-        CHECK(obj->debugCalls == 1);
+        root->ObjectDebug();
+        MSG_CHECK(obj->debugCalls, obj->debugCalls == 1);
 
         obj->EnableDebug(true);
-        obj->ObjectDebug();
-        CHECK(obj->debugCalls == 2);
+        root->ObjectDebug();
+        MSG_CHECK(obj->debugCalls, obj->debugCalls == 2);
     }
 
     TEST_CASE("EnableOnEvent controls OnEvent execution")
     {
-        auto obj = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<duin::GameObject>();
+        auto obj = root->CreateChildObject<TestObjectA>();
 
         duin::Event testEvent{};
-        obj->ObjectOnEvent(testEvent);
-        CHECK(obj->eventCalls == 1);
+        root->ObjectOnEvent(testEvent);
+        MSG_CHECK(obj->eventCalls, obj->eventCalls == 1);
 
         obj->EnableOnEvent(false);
-        obj->ObjectOnEvent(testEvent);
-        CHECK(obj->eventCalls == 1);
+        root->ObjectOnEvent(testEvent);
+        MSG_CHECK(obj->eventCalls, obj->eventCalls == 1);
 
         obj->EnableOnEvent(true);
-        obj->ObjectOnEvent(testEvent);
-        CHECK(obj->eventCalls == 2);
+        root->ObjectOnEvent(testEvent);
+        MSG_CHECK(obj->eventCalls, obj->eventCalls == 2);
     }
 
     TEST_CASE("Master Enable disables all functions")
     {
-        auto obj = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<duin::GameObject>();
+        auto obj = root->CreateChildObject<TestObjectA>();
 
         obj->Enable(false);
 
         duin::Event testEvent{};
-        obj->ObjectOnEvent(testEvent);
-        obj->ObjectUpdate(0.016);
-        obj->ObjectPhysicsUpdate(0.016);
-        obj->ObjectDraw();
-        obj->ObjectDrawUI();
-        obj->ObjectDebug();
+        root->ObjectOnEvent(testEvent);
+        root->ObjectUpdate(0.016);
+        root->ObjectPhysicsUpdate(0.016);
+        root->ObjectDraw();
+        root->ObjectDrawUI();
+        root->ObjectDebug();
 
-        CHECK(obj->eventCalls == 0);
-        CHECK(obj->updateCalls == 0);
-        CHECK(obj->physicsUpdateCalls == 0);
-        CHECK(obj->drawCalls == 0);
-        CHECK(obj->drawUICalls == 0);
-        CHECK(obj->debugCalls == 0);
+        MSG_CHECK(obj->eventCalls, obj->eventCalls == 0);
+        MSG_CHECK(obj->updateCalls, obj->updateCalls == 0);
+        MSG_CHECK(obj->physicsUpdateCalls, obj->physicsUpdateCalls == 0);
+        MSG_CHECK(obj->drawCalls, obj->drawCalls == 0);
+        MSG_CHECK(obj->drawUICalls, obj->drawUICalls == 0);
+        MSG_CHECK(obj->debugCalls, obj->debugCalls == 0);
     }
 
     TEST_CASE("Master Enable re-enables all functions")
@@ -2005,16 +2154,21 @@ TEST_SUITE("GameObject")
         CHECK(obj->debugCalls == 1);
     }
 
-    TEST_CASE("Disabled parent prevents children execution")
+    TEST_CASE("Disabled parent prevents children execution, but direct calls still work")
     {
-        auto parent = std::make_shared<TestObjectA>();
+        auto root = std::make_shared<TestObjectA>();
+        auto parent = root->CreateChildObject<TestObjectA>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
         parent->EnableUpdate(false);
-        parent->ObjectUpdate(0.016);
+        root->ObjectUpdate(0.016);
 
-        CHECK(parent->updateCalls == 0);
-        CHECK(child->updateCalls == 0);
+        MSG_CHECK(parent->updateCalls, parent->updateCalls == 0);
+        MSG_CHECK(child->updateCalls, child->updateCalls == 0);
+
+        // Direct call to child should still execute Update
+        child->ObjectUpdate(0.016);
+        MSG_CHECK(child->updateCalls, child->updateCalls == 1);
     }
 
     TEST_CASE("Disabled child does not affect parent execution")
@@ -2025,27 +2179,30 @@ TEST_SUITE("GameObject")
         child->EnableUpdate(false);
         parent->ObjectUpdate(0.016);
 
+        CAPTURE(parent->updateCalls);
+        CAPTURE(child->updateCalls);
         CHECK(parent->updateCalls == 1);
         CHECK(child->updateCalls == 0);
     }
 
     TEST_CASE("Signal does not fire when function is disabled")
     {
-        auto obj = std::make_shared<SignalTrackerObject>();
+        auto root = std::make_shared<SignalTrackerObject>();
+        auto obj = root->CreateChildObject<SignalTrackerObject>();
         int signalCount = 0;
 
         obj->ConnectOnObjectUpdate([&signalCount](double delta) { signalCount++; });
 
-        obj->ObjectUpdate(0.016);
-        CHECK(signalCount == 1);
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(signalCount, signalCount == 1);
 
         obj->EnableUpdate(false);
-        obj->ObjectUpdate(0.016);
-        CHECK(signalCount == 1); // Still 1, signal didn't fire
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(signalCount, signalCount == 1); // Still 1, signal didn't fire
 
         obj->EnableUpdate(true);
-        obj->ObjectUpdate(0.016);
-        CHECK(signalCount == 2);
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(signalCount, signalCount == 2);
     }
 
     // ========================================================================
@@ -2144,7 +2301,8 @@ TEST_SUITE("GameObject")
 
     TEST_CASE("Nested signals with enable/disable combination")
     {
-        auto parent = std::make_shared<SignalTrackerObject>();
+        auto root = std::make_shared<SignalTrackerObject>();
+        auto parent = root->CreateChildObject<SignalTrackerObject>();
         auto child = parent->CreateChildObject<SignalTrackerObject>();
 
         int parentSignalCount = 0;
@@ -2153,19 +2311,19 @@ TEST_SUITE("GameObject")
         parent->ConnectOnObjectUpdate([&parentSignalCount](double delta) { parentSignalCount++; });
         child->ConnectOnObjectUpdate([&childSignalCount](double delta) { childSignalCount++; });
 
-        parent->ObjectUpdate(0.016);
-        CHECK(parentSignalCount == 1);
-        CHECK(childSignalCount == 1);
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(parentSignalCount, parentSignalCount == 1);
+        MSG_CHECK(childSignalCount, childSignalCount == 1);
 
         child->EnableUpdate(false);
-        parent->ObjectUpdate(0.016);
-        CHECK(parentSignalCount == 2);
-        CHECK(childSignalCount == 1); // Child signal doesn't fire when disabled
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(parentSignalCount, parentSignalCount == 2);
+        MSG_CHECK(childSignalCount, childSignalCount == 1); // Child signal doesn't fire when disabled
 
         parent->EnableUpdate(false);
-        parent->ObjectUpdate(0.016);
-        CHECK(parentSignalCount == 2); // Neither fires
-        CHECK(childSignalCount == 1);
+        root->ObjectUpdate(0.016);
+        MSG_CHECK(parentSignalCount, parentSignalCount == 2); // Neither fires
+        MSG_CHECK(childSignalCount, childSignalCount == 1);
     }
 
     TEST_CASE("Multiple children with signals")
