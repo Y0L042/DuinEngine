@@ -194,10 +194,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab75a1ae0712f0e82f0ec2ec52b0a9446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52868f865b35ac9cc153fde572c93b2f" id="r_a52868f865b35ac9cc153fde572c93b2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#a52868f865b35ac9cc153fde572c93b2f">Lookup</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a52868f865b35ac9cc153fde572c93b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ad39a5909b32b319d3bf9dd1e7fa65a" id="r_a4ad39a5909b32b319d3bf9dd1e7fa65a"><td class="memTemplParams" colspan="2">template&lt;typename Func &gt; </td></tr>
-<tr class="memitem:a4ad39a5909b32b319d3bf9dd1e7fa65a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#a4ad39a5909b32b319d3bf9dd1e7fa65a">IterateChildren</a> (Func &amp;&amp;f) const</td></tr>
-<tr class="memdesc:a4ad39a5909b32b319d3bf9dd1e7fa65a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the children of the root entity.  <br /></td></tr>
-<tr class="separator:a4ad39a5909b32b319d3bf9dd1e7fa65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10d8a0714c4268d4ec4475786c39f65a" id="r_a10d8a0714c4268d4ec4475786c39f65a"><td class="memTemplParams" colspan="2">template&lt;typename Func &gt; </td></tr>
+<tr class="memitem:a10d8a0714c4268d4ec4475786c39f65a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#a10d8a0714c4268d4ec4475786c39f65a">IterateChildren</a> (Func &amp;&amp;f, bool filterBuiltins=true) const</td></tr>
+<tr class="memdesc:a10d8a0714c4268d4ec4475786c39f65a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the children of the root entity.  <br /></td></tr>
+<tr class="separator:a10d8a0714c4268d4ec4475786c39f65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a911c6989e08bc31bfa3e0d57c9184329" id="r_a911c6989e08bc31bfa3e0d57c9184329"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classduin_1_1Entity.html">Entity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#a911c6989e08bc31bfa3e0d57c9184329">GetChildren</a> (bool filterBuiltins=true)</td></tr>
+<tr class="separator:a911c6989e08bc31bfa3e0d57c9184329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af61b69e468d6a169ab7d6d5f874f3d53" id="r_af61b69e468d6a169ab7d6d5f874f3d53"><td class="memTemplParams" colspan="2">template&lt;typename Func &gt; </td></tr>
+<tr class="memitem:af61b69e468d6a169ab7d6d5f874f3d53"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#af61b69e468d6a169ab7d6d5f874f3d53">Each</a> (Func &amp;&amp;func) const</td></tr>
+<tr class="separator:af61b69e468d6a169ab7d6d5f874f3d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa110e80c9d0963701eb9ed784d118802" id="r_aa110e80c9d0963701eb9ed784d118802"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aa110e80c9d0963701eb9ed784d118802"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Entity.html">Entity</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#aa110e80c9d0963701eb9ed784d118802">Component</a> ()</td></tr>
 <tr class="memdesc:aa110e80c9d0963701eb9ed784d118802"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a component type with the world.  <br /></td></tr>
@@ -218,7 +223,7 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00013">13</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00018">18</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5671bad8729f782406f211f7d00d3201" name="a5671bad8729f782406f211f7d00d3201"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5671bad8729f782406f211f7d00d3201">&#9670;&#160;</a></span>World() <span class="overload">[1/2]</span></h2>
@@ -316,7 +321,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00183">183</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00209">209</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 
 </div>
 </div>
@@ -418,7 +423,7 @@ template&lt;typename Func &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00113">113</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00118">118</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 
 </div>
 </div>
@@ -553,7 +558,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00057">57</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00062">62</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 
 </div>
 </div>
@@ -624,6 +629,56 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="af61b69e468d6a169ab7d6d5f874f3d53" name="af61b69e468d6a169ab7d6d5f874f3d53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af61b69e468d6a169ab7d6d5f874f3d53">&#9670;&#160;</a></span>Each()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::World::Each </td>
+          <td>(</td>
+          <td class="paramtype">Func &amp;&amp;&#160;</td>
+          <td class="paramname"><em>func</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00199">199</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+
+</div>
+</div>
+<a id="a911c6989e08bc31bfa3e0d57c9184329" name="a911c6989e08bc31bfa3e0d57c9184329"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a911c6989e08bc31bfa3e0d57c9184329">&#9670;&#160;</a></span>GetChildren()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="classduin_1_1Entity.html">duin::Entity</a> &gt; duin::World::GetChildren </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>filterBuiltins</em> = <code>true</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="World_8cpp_source.html#l00137">137</a> of file <a class="el" href="World_8cpp_source.html">World.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a9c6d3b7649d8df6dc1280e083c468e69" name="a9c6d3b7649d8df6dc1280e083c468e69"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9c6d3b7649d8df6dc1280e083c468e69">&#9670;&#160;</a></span>GetFlecsWorld()</h2>
 
@@ -639,7 +694,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="World_8cpp_source.html#l00137">137</a> of file <a class="el" href="World_8cpp_source.html">World.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8cpp_source.html#l00164">164</a> of file <a class="el" href="World_8cpp_source.html">World.cpp</a>.</p>
 
 </div>
 </div>
@@ -745,8 +800,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a4ad39a5909b32b319d3bf9dd1e7fa65a" name="a4ad39a5909b32b319d3bf9dd1e7fa65a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ad39a5909b32b319d3bf9dd1e7fa65a">&#9670;&#160;</a></span>IterateChildren()</h2>
+<a id="a10d8a0714c4268d4ec4475786c39f65a" name="a10d8a0714c4268d4ec4475786c39f65a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10d8a0714c4268d4ec4475786c39f65a">&#9670;&#160;</a></span>IterateChildren()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -760,8 +815,18 @@ template&lt;typename Func &gt; </div>
           <td class="memname">void duin::World::IterateChildren </td>
           <td>(</td>
           <td class="paramtype">Func &amp;&amp;&#160;</td>
-          <td class="paramname"><em>f</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>filterBuiltins</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
@@ -785,7 +850,7 @@ template&lt;typename Func &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00168">168</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00173">173</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 
 </div>
 </div>
@@ -892,7 +957,7 @@ template&lt;typename... Comps&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00198">198</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00224">224</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 
 </div>
 </div>
@@ -971,7 +1036,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00078">78</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00083">83</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 
 </div>
 </div>
@@ -1091,7 +1156,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00212">212</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="World_8h_source.html#l00238">238</a> of file <a class="el" href="World_8h_source.html">World.h</a>.</p>
 
 </div>
 </div>

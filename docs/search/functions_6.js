@@ -59,7 +59,7 @@ var searchData=
   ['getsdlwindow_56',['GetSDLWindow',['../Application_8h.html#a06c682bea80e996d1f3e4ae1202b9f1c',1,'duin']]],
   ['getsharedpointer_57',['GetSharedPointer',['../classduin_1_1GameObject.html#a90a010d59d0519af6b0aefb1d1abb54a',1,'duin::GameObject']]],
   ['getsourceid_58',['GetSourceId',['../classduin_1_1Iter.html#ab8522529e159af31f7bb3acc2a3ecbe2',1,'duin::Iter']]],
-  ['getstatestack_59',['GetStateStack',['../classduin_1_1GameStateMachine.html#ae1455c5a8b4fe4b1926c7c8f7706956a',1,'duin::GameStateMachine']]],
+  ['getstatestack_59',['GetStateStack',['../classduin_1_1GameStateMachine.html#aa40401dd223357463c2fceee61c27fa7',1,'duin::GameStateMachine']]],
   ['getstring_60',['GetString',['../classduin_1_1JSONValue.html#aab6eb6a2c1588f524464fd06b377dca3',1,'duin::JSONValue']]],
   ['gettarget_61',['GetTarget',['../classduin_1_1Entity.html#a7e50ebee07c2e60721af175166348e4a',1,'duin::Entity']]],
   ['gettermindex_62',['GetTermIndex',['../classduin_1_1Iter.html#aa0ff8a4ee53a2cdbe9070b30a3ac58cc',1,'duin::Iter']]],

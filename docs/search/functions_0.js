@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['activatecameraentity_0',['ActivateCameraEntity',['../classduin_1_1ECSManager.html#a6293ca7a7c8796223736299df201d31b',1,'duin::ECSManager']]],
+  ['activatecameraentity_0',['ActivateCameraEntity',['../classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611',1,'duin::GameWorld']]],
   ['adapterdircallback_1',['AdapterDirCallback',['../namespaceduin_1_1fs.html#a3d87bfc1b1996e671a6c036c7808344b',1,'duin::fs']]],
   ['add_2',['add',['../classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84',1,'duin::Entity::Add()'],['../classduin_1_1Entity.html#a77a55812a586a70a42a5a5162761ff31',1,'duin::Entity::Add(flecs::id_t component)'],['../classduin_1_1Entity.html#a69486898c47cff67cc37c042423075e7',1,'duin::Entity::Add(Args &amp;&amp;...args)'],['../classduin_1_1Entity.html#a6881a895e82bb940444703fa55432b52',1,'duin::Entity::Add(const Entity &amp;target)']]],
   ['addchildobject_3',['addchildobject',['../classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b',1,'duin::Application::AddChildObject()'],['../classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2',1,'duin::GameObject::AddChildObject()']]],

@@ -1,46 +1,46 @@
 <map id="JSONValue.h" name="JSONValue.h">
-<area shape="rect" id="Node000001" title="Defines the duin::JSONValue class for manipulating JSON data using RapidJSON." alt="" coords="683,5,786,31"/>
-<area shape="rect" id="Node000002" href="$Component_8h_source.html" title=" " alt="" coords="311,79,420,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="671,34,421,82,420,77,670,29"/>
-<area shape="rect" id="Node000011" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="571,372,704,397"/>
-<area shape="poly" id="edge21_Node000001_Node000011" title=" " alt="" coords="737,44,737,163,737,239,732,285,710,326,685,354,658,374,655,370,681,350,706,322,727,283,732,239,732,163,732,44"/>
-<area shape="rect" id="Node000012" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="578,299,697,324"/>
-<area shape="poly" id="edge22_Node000001_Node000012" title=" " alt="" coords="729,44,644,299,639,298,724,43"/>
+<area shape="rect" id="Node000001" title="Defines the duin::JSONValue class for manipulating JSON data using RapidJSON." alt="" coords="675,5,778,31"/>
+<area shape="rect" id="Node000002" href="$Component_8h_source.html" title=" " alt="" coords="296,79,405,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="662,34,406,82,405,77,661,29"/>
+<area shape="rect" id="Node000011" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="563,372,696,397"/>
+<area shape="poly" id="edge21_Node000001_Node000011" title=" " alt="" coords="729,44,729,163,729,239,724,285,702,326,677,354,650,374,647,370,673,350,698,322,719,283,724,239,724,163,724,44"/>
+<area shape="rect" id="Node000012" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="570,299,689,324"/>
+<area shape="poly" id="edge22_Node000001_Node000012" title=" " alt="" coords="721,44,636,299,631,298,716,43"/>
 <area shape="rect" id="Node000016" href="$IOModule_8h_source.html" title=" " alt="" coords="5,152,101,177"/>
-<area shape="poly" id="edge17_Node000001_Node000016" title=" " alt="" coords="670,27,501,45,400,61,299,81,177,118,82,154,80,149,175,113,298,76,399,56,500,40,669,22"/>
-<area shape="rect" id="Node000017" href="$src_2Duin_2IO_2JSONValue_8cpp_source.html" title=" " alt="" coords="772,79,889,104"/>
-<area shape="poly" id="edge19_Node000001_Node000017" title=" " alt="" coords="763,37,817,76,813,81,760,41"/>
-<area shape="rect" id="Node000018" href="$docs_2examples_2JSONValue_8cpp.html" title="Comprehensive usage examples for duin::JSONValue class." alt="" coords="913,79,1031,104"/>
-<area shape="poly" id="edge20_Node000001_Node000018" title=" " alt="" coords="787,32,934,76,933,81,785,37"/>
-<area shape="rect" id="Node000019" href="$SceneDefinition_8h_source.html" title=" " alt="" coords="1055,79,1191,104"/>
-<area shape="poly" id="edge23_Node000001_Node000019" title=" " alt="" coords="800,29,1061,76,1060,81,799,34"/>
-<area shape="rect" id="Node000003" href="$Component_8cpp_source.html" title=" " alt="" coords="182,152,306,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="335,113,265,154,263,149,332,109"/>
-<area shape="rect" id="Node000004" href="$DECS_8h_source.html" title=" " alt="" coords="331,152,400,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="368,118,368,152,363,152,363,118"/>
-<area shape="rect" id="Node000005" href="$DECS_8cpp_source.html" title=" " alt="" coords="271,225,355,251"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="351,190,324,227,320,224,347,187"/>
-<area shape="rect" id="Node000006" href="$ECSManager_8h.html" title="Entity Component System manager and component definitions." alt="" coords="431,225,545,251"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="398,182,469,223,467,227,395,186"/>
-<area shape="rect" id="Node000008" href="$ECSModule_8h_source.html" title=" " alt="" coords="241,299,348,324"/>
-<area shape="poly" id="edge13_Node000004_Node000008" title=" " alt="" coords="374,191,376,220,369,252,346,281,319,301,316,296,343,277,364,250,371,220,369,191"/>
-<area shape="rect" id="Node000013" href="$Scene_8h_source.html" title=" " alt="" coords="174,225,247,251"/>
-<area shape="poly" id="edge14_Node000004_Node000013" title=" " alt="" coords="329,185,237,228,235,223,327,181"/>
-<area shape="rect" id="Node000015" href="$World_8cpp_source.html" title=" " alt="" coords="63,225,150,251"/>
-<area shape="poly" id="edge16_Node000004_Node000015" title=" " alt="" coords="318,182,149,228,148,223,317,177"/>
-<area shape="rect" id="Node000007" href="$ECSManager_8cpp_source.html" title=" " alt="" coords="423,299,553,324"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="491,264,491,299,485,299,485,264"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="445,258,327,301,325,296,443,253"/>
-<area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="454,260,433,273,416,289,408,306,408,314,413,322,437,339,476,353,571,372,570,378,475,358,434,344,409,326,403,316,403,305,412,286,429,269,451,255"/>
-<area shape="poly" id="edge11_Node000006_Node000012" title=" " alt="" coords="525,254,614,296,612,301,523,259"/>
-<area shape="rect" id="Node000009" href="$Duin_8h_source.html" title=" " alt="" coords="128,372,192,397"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="262,333,183,374,181,369,260,328"/>
-<area shape="rect" id="Node000010" href="$Duin_8cpp_source.html" title=" " alt="" coords="121,445,199,471"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="163,411,163,445,157,445,157,411"/>
-<area shape="poly" id="edge12_Node000012_Node000011" title=" " alt="" coords="640,338,640,372,635,372,635,338"/>
-<area shape="rect" id="Node000014" href="$Scene_8cpp_source.html" title=" " alt="" coords="129,299,217,324"/>
-<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="201,264,182,300,177,297,196,262"/>
-<area shape="poly" id="edge18_Node000016_Node000009" title=" " alt="" coords="51,191,48,220,53,250,72,288,98,321,147,370,144,374,94,325,68,290,48,251,43,220,45,191"/>
-<area shape="rect" id="Node000020" href="$SceneDefinition_8cpp_source.html" title=" " alt="" coords="1047,152,1198,177"/>
-<area shape="poly" id="edge24_Node000019_Node000020" title=" " alt="" coords="1125,118,1125,152,1120,152,1120,118"/>
+<area shape="poly" id="edge17_Node000001_Node000016" title=" " alt="" coords="662,26,490,44,387,60,285,81,169,118,80,154,78,149,167,113,283,76,386,55,489,39,662,21"/>
+<area shape="rect" id="Node000017" href="$src_2Duin_2IO_2JSONValue_8cpp_source.html" title=" " alt="" coords="764,79,881,104"/>
+<area shape="poly" id="edge19_Node000001_Node000017" title=" " alt="" coords="755,37,809,76,805,81,752,41"/>
+<area shape="rect" id="Node000018" href="$docs_2examples_2JSONValue_8cpp.html" title="Comprehensive usage examples for duin::JSONValue class." alt="" coords="905,79,1023,104"/>
+<area shape="poly" id="edge20_Node000001_Node000018" title=" " alt="" coords="779,32,926,76,925,81,777,37"/>
+<area shape="rect" id="Node000019" href="$SceneDefinition_8h_source.html" title=" " alt="" coords="1047,79,1183,104"/>
+<area shape="poly" id="edge23_Node000001_Node000019" title=" " alt="" coords="792,29,1053,76,1052,81,791,34"/>
+<area shape="rect" id="Node000003" href="$Component_8cpp_source.html" title=" " alt="" coords="167,152,291,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="320,113,251,154,248,149,318,109"/>
+<area shape="rect" id="Node000004" href="$DECS_8h_source.html" title=" " alt="" coords="316,152,385,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="353,118,353,152,348,152,348,118"/>
+<area shape="rect" id="Node000005" href="$DECS_8cpp_source.html" title=" " alt="" coords="330,225,414,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="361,190,371,224,366,226,356,192"/>
+<area shape="rect" id="Node000006" href="$ECSModule_8h_source.html" title=" " alt="" coords="239,299,345,324"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="338,190,320,226,306,266,297,299,292,298,301,264,315,224,334,188"/>
+<area shape="rect" id="Node000009" href="$GameWorld_8h.html" title="Entity Component System manager and component definitions." alt="" coords="438,225,549,251"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="387,181,471,223,469,227,384,186"/>
+<area shape="rect" id="Node000013" href="$Scene_8h_source.html" title=" " alt="" coords="181,225,254,251"/>
+<area shape="poly" id="edge14_Node000004_Node000013" title=" " alt="" coords="319,186,240,227,238,223,316,181"/>
+<area shape="rect" id="Node000015" href="$World_8cpp_source.html" title=" " alt="" coords="70,225,157,251"/>
+<area shape="poly" id="edge16_Node000004_Node000015" title=" " alt="" coords="303,183,152,228,151,223,302,178"/>
+<area shape="rect" id="Node000007" href="$Duin_8h_source.html" title=" " alt="" coords="131,372,195,397"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="260,333,185,374,183,369,258,328"/>
+<area shape="rect" id="Node000008" href="$Duin_8cpp_source.html" title=" " alt="" coords="123,445,202,471"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="165,411,165,445,160,445,160,411"/>
+<area shape="poly" id="edge9_Node000009_Node000006" title=" " alt="" coords="449,258,326,301,324,296,447,253"/>
+<area shape="rect" id="Node000010" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="420,299,545,324"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="492,265,487,299,482,298,487,264"/>
+<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="456,259,433,273,414,288,405,306,406,314,410,322,433,339,471,352,563,372,562,377,470,358,431,343,406,326,401,315,400,304,410,285,430,268,453,254"/>
+<area shape="poly" id="edge12_Node000009_Node000012" title=" " alt="" coords="528,254,608,296,606,301,526,259"/>
+<area shape="poly" id="edge13_Node000012_Node000011" title=" " alt="" coords="632,338,632,372,627,372,627,338"/>
+<area shape="rect" id="Node000014" href="$Scene_8cpp_source.html" title=" " alt="" coords="127,299,215,324"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="204,264,180,300,176,297,200,261"/>
+<area shape="poly" id="edge18_Node000016_Node000007" title=" " alt="" coords="53,191,54,220,60,250,79,287,104,321,151,370,147,374,100,325,74,290,55,252,48,220,48,191"/>
+<area shape="rect" id="Node000020" href="$SceneDefinition_8cpp_source.html" title=" " alt="" coords="1039,152,1190,177"/>
+<area shape="poly" id="edge24_Node000019_Node000020" title=" " alt="" coords="1117,118,1117,152,1112,152,1112,118"/>
 </map>

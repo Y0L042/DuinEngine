@@ -142,6 +142,9 @@ Collaboration diagram for duin::GameStateMachine:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ba1ab218864fd29c00bf8fee5959f78" id="r_a7ba1ab218864fd29c00bf8fee5959f78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a7ba1ab218864fd29c00bf8fee5959f78">GetUUID</a> ()</td></tr>
 <tr class="separator:a7ba1ab218864fd29c00bf8fee5959f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64c409b0bbac63ef33f17ef5505b0536" id="r_a64c409b0bbac63ef33f17ef5505b0536"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a64c409b0bbac63ef33f17ef5505b0536"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a64c409b0bbac63ef33f17ef5505b0536">CreateState</a> ()</td></tr>
+<tr class="separator:a64c409b0bbac63ef33f17ef5505b0536"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd1bede4446b7b6f889b6717571e4fa6" id="r_acd1bede4446b7b6f889b6717571e4fa6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:acd1bede4446b7b6f889b6717571e4fa6"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#acd1bede4446b7b6f889b6717571e4fa6">GetActiveState</a> ()</td></tr>
 <tr class="memdesc:acd1bede4446b7b6f889b6717571e4fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the active state cast to type T.  <br /></td></tr>
@@ -150,23 +153,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af38da22c2d87b9df8ee50da8e3d8d45c"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#af38da22c2d87b9df8ee50da8e3d8d45c">SwitchState</a> ()</td></tr>
 <tr class="memdesc:af38da22c2d87b9df8ee50da8e3d8d45c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits current state and enters a new one.  <br /></td></tr>
 <tr class="separator:af38da22c2d87b9df8ee50da8e3d8d45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eca364716573fc25a1dbd6426ec3519" id="r_a7eca364716573fc25a1dbd6426ec3519"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7eca364716573fc25a1dbd6426ec3519"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a7eca364716573fc25a1dbd6426ec3519">SwitchState</a> (std::shared_ptr&lt; T &gt; newState)</td></tr>
+<tr class="separator:a7eca364716573fc25a1dbd6426ec3519"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc85786c887f4b546fec63ade4d9b027" id="r_acc85786c887f4b546fec63ade4d9b027"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:acc85786c887f4b546fec63ade4d9b027"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#acc85786c887f4b546fec63ade4d9b027">FlushAndSwitchState</a> ()</td></tr>
 <tr class="memdesc:acc85786c887f4b546fec63ade4d9b027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits all states and enters a new one.  <br /></td></tr>
 <tr class="separator:acc85786c887f4b546fec63ade4d9b027"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a69c9b14f86a504f613f4592cbca794" id="r_a1a69c9b14f86a504f613f4592cbca794"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a1a69c9b14f86a504f613f4592cbca794"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a1a69c9b14f86a504f613f4592cbca794">FlushAndSwitchState</a> (std::shared_ptr&lt; T &gt; newState)</td></tr>
+<tr class="separator:a1a69c9b14f86a504f613f4592cbca794"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2ed1c9402257e1646ee7775a0d3686c" id="r_aa2ed1c9402257e1646ee7775a0d3686c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aa2ed1c9402257e1646ee7775a0d3686c"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#aa2ed1c9402257e1646ee7775a0d3686c">PushState</a> ()</td></tr>
 <tr class="memdesc:aa2ed1c9402257e1646ee7775a0d3686c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses current state and pushes a new one.  <br /></td></tr>
 <tr class="separator:aa2ed1c9402257e1646ee7775a0d3686c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfe535febb7e9216bce8034d7e4b5266" id="r_abfe535febb7e9216bce8034d7e4b5266"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:abfe535febb7e9216bce8034d7e4b5266"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#abfe535febb7e9216bce8034d7e4b5266">PushState</a> (std::shared_ptr&lt; T &gt; newState)</td></tr>
+<tr class="separator:abfe535febb7e9216bce8034d7e4b5266"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a045b22b2414f922bf8c4aa148986d5fa" id="r_a045b22b2414f922bf8c4aa148986d5fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a045b22b2414f922bf8c4aa148986d5fa">PopState</a> ()</td></tr>
 <tr class="memdesc:a045b22b2414f922bf8c4aa148986d5fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pops the current state and resumes the previous one.  <br /></td></tr>
 <tr class="separator:a045b22b2414f922bf8c4aa148986d5fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70c34c19eb98b61dbb26d8dfff2e301a" id="r_a70c34c19eb98b61dbb26d8dfff2e301a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a70c34c19eb98b61dbb26d8dfff2e301a">FlushStack</a> ()</td></tr>
 <tr class="memdesc:a70c34c19eb98b61dbb26d8dfff2e301a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits and removes all states from the stack.  <br /></td></tr>
 <tr class="separator:a70c34c19eb98b61dbb26d8dfff2e301a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1455c5a8b4fe4b1926c7c8f7706956a" id="r_ae1455c5a8b4fe4b1926c7c8f7706956a"><td class="memItemLeft" align="right" valign="top">std::stack&lt; std::unique_ptr&lt; <a class="el" href="classduin_1_1GameState.html">GameState</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#ae1455c5a8b4fe4b1926c7c8f7706956a">GetStateStack</a> ()</td></tr>
-<tr class="memdesc:ae1455c5a8b4fe4b1926c7c8f7706956a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to the internal state stack.  <br /></td></tr>
-<tr class="separator:ae1455c5a8b4fe4b1926c7c8f7706956a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa40401dd223357463c2fceee61c27fa7" id="r_aa40401dd223357463c2fceee61c27fa7"><td class="memItemLeft" align="right" valign="top">std::stack&lt; std::shared_ptr&lt; <a class="el" href="classduin_1_1GameState.html">GameState</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#aa40401dd223357463c2fceee61c27fa7">GetStateStack</a> ()</td></tr>
+<tr class="memdesc:aa40401dd223357463c2fceee61c27fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns reference to the internal state stack.  <br /></td></tr>
+<tr class="separator:aa40401dd223357463c2fceee61c27fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac937e106c3833ee19846ad8c5afeedaa" id="r_ac937e106c3833ee19846ad8c5afeedaa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#ac937e106c3833ee19846ad8c5afeedaa">Init</a> () override</td></tr>
 <tr class="separator:ac937e106c3833ee19846ad8c5afeedaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e6a5cda55d89799cafed0e42b1755bd" id="r_a5e6a5cda55d89799cafed0e42b1755bd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameStateMachine.html#a5e6a5cda55d89799cafed0e42b1755bd">Ready</a> () override</td></tr>
@@ -277,6 +289,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a42ae805d326e0beadc25d8e37dff7699 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ad333fc114074ffea4d8d535e1f4037 inherit pub_methods_classduin_1_1GameObject" id="r_a4ad333fc114074ffea4d8d535e1f4037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4ad333fc114074ffea4d8d535e1f4037">EnableDebug</a> (bool enable)</td></tr>
 <tr class="separator:a4ad333fc114074ffea4d8d535e1f4037 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a933c3a5b5e771ea3e83b8ad0ce52d926 inherit pub_methods_classduin_1_1GameObject" id="r_a933c3a5b5e771ea3e83b8ad0ce52d926"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a933c3a5b5e771ea3e83b8ad0ce52d926">EnableChildren</a> (bool enable)</td></tr>
+<tr class="separator:a933c3a5b5e771ea3e83b8ad0ce52d926 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa91e09d2b0f0e2b29d0352761934d237 inherit pub_methods_classduin_1_1GameObject" id="r_aa91e09d2b0f0e2b29d0352761934d237"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aa91e09d2b0f0e2b29d0352761934d237">IsOnEventEnabled</a> () const</td></tr>
+<tr class="separator:aa91e09d2b0f0e2b29d0352761934d237 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a985f701012441be5721cd9b5de635a40 inherit pub_methods_classduin_1_1GameObject" id="r_a985f701012441be5721cd9b5de635a40"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a985f701012441be5721cd9b5de635a40">IsUpdateEnabled</a> () const</td></tr>
+<tr class="separator:a985f701012441be5721cd9b5de635a40 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf9c45c16455cce896aa0c78451873c inherit pub_methods_classduin_1_1GameObject" id="r_a4cf9c45c16455cce896aa0c78451873c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a4cf9c45c16455cce896aa0c78451873c">IsPhysicsUpdateEnabled</a> () const</td></tr>
+<tr class="separator:a4cf9c45c16455cce896aa0c78451873c inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67dea51bcf169fb6766ea271f3b8da19 inherit pub_methods_classduin_1_1GameObject" id="r_a67dea51bcf169fb6766ea271f3b8da19"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a67dea51bcf169fb6766ea271f3b8da19">IsDrawEnabled</a> () const</td></tr>
+<tr class="separator:a67dea51bcf169fb6766ea271f3b8da19 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97cd66d3c6815fa8ba7edbf6ecdb9b26 inherit pub_methods_classduin_1_1GameObject" id="r_a97cd66d3c6815fa8ba7edbf6ecdb9b26"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a97cd66d3c6815fa8ba7edbf6ecdb9b26">IsDrawUIEnabled</a> () const</td></tr>
+<tr class="separator:a97cd66d3c6815fa8ba7edbf6ecdb9b26 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aade7fc22472220c74904ad8c7377c89e inherit pub_methods_classduin_1_1GameObject" id="r_aade7fc22472220c74904ad8c7377c89e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aade7fc22472220c74904ad8c7377c89e">IsDebugEnabled</a> () const</td></tr>
+<tr class="separator:aade7fc22472220c74904ad8c7377c89e inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af702ab69c30f06f75802d5d6ab7e029f inherit pub_methods_classduin_1_1GameObject" id="r_af702ab69c30f06f75802d5d6ab7e029f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#af702ab69c30f06f75802d5d6ab7e029f">IsChildrenEnabled</a> () const</td></tr>
+<tr class="separator:af702ab69c30f06f75802d5d6ab7e029f inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -320,7 +348,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00260">260</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00245">245</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -339,11 +367,40 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00264">264</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00249">249</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a64c409b0bbac63ef33f17ef5505b0536" name="a64c409b0bbac63ef33f17ef5505b0536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64c409b0bbac63ef33f17ef5505b0536">&#9670;&#160;</a></span>CreateState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; T &gt; duin::GameStateMachine::CreateState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00052">52</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+
+</div>
+</div>
 <a id="abf013aa2bc841a092bab21ff6373bac7" name="abf013aa2bc841a092bab21ff6373bac7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abf013aa2bc841a092bab21ff6373bac7">&#9670;&#160;</a></span>Debug()</h2>
 
@@ -369,7 +426,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00389">389</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00376">376</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -398,7 +455,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00361">361</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00348">348</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -427,12 +484,12 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00375">375</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00362">362</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
 <a id="acc85786c887f4b546fec63ade4d9b027" name="acc85786c887f4b546fec63ade4d9b027"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc85786c887f4b546fec63ade4d9b027">&#9670;&#160;</a></span>FlushAndSwitchState()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acc85786c887f4b546fec63ade4d9b027">&#9670;&#160;</a></span>FlushAndSwitchState() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -465,7 +522,37 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the new state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00102">102</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00132">132</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+
+</div>
+</div>
+<a id="a1a69c9b14f86a504f613f4592cbca794" name="a1a69c9b14f86a504f613f4592cbca794"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a69c9b14f86a504f613f4592cbca794">&#9670;&#160;</a></span>FlushAndSwitchState() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * duin::GameStateMachine::FlushAndSwitchState </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>newState</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00153">153</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -486,7 +573,7 @@ template&lt;typename T &gt; </div>
 
 <p>Exits and removes all states from the stack. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00293">293</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00280">280</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -524,18 +611,18 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to state, or nullptr if wrong type or empty. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00057">57</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00066">66</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
-<a id="ae1455c5a8b4fe4b1926c7c8f7706956a" name="ae1455c5a8b4fe4b1926c7c8f7706956a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1455c5a8b4fe4b1926c7c8f7706956a">&#9670;&#160;</a></span>GetStateStack()</h2>
+<a id="aa40401dd223357463c2fceee61c27fa7" name="aa40401dd223357463c2fceee61c27fa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa40401dd223357463c2fceee61c27fa7">&#9670;&#160;</a></span>GetStateStack()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::stack&lt; std::unique_ptr&lt; <a class="el" href="classduin_1_1GameState.html">duin::GameState</a> &gt; &gt; &amp; duin::GameStateMachine::GetStateStack </td>
+          <td class="memname">std::stack&lt; std::shared_ptr&lt; <a class="el" href="classduin_1_1GameState.html">duin::GameState</a> &gt; &gt; &amp; duin::GameStateMachine::GetStateStack </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -545,7 +632,7 @@ template&lt;typename T &gt; </div>
 
 <p>Returns reference to the internal state stack. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00306">306</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00293">293</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -564,7 +651,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00268">268</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00253">253</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -593,7 +680,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00311">311</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00298">298</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -623,7 +710,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00319">319</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00306">306</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -653,7 +740,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00347">347</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00334">334</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -674,12 +761,12 @@ template&lt;typename T &gt; </div>
 
 <p>Pops the current state and resumes the previous one. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00273">273</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00258">258</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
 <a id="aa2ed1c9402257e1646ee7775a0d3686c" name="aa2ed1c9402257e1646ee7775a0d3686c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2ed1c9402257e1646ee7775a0d3686c">&#9670;&#160;</a></span>PushState()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2ed1c9402257e1646ee7775a0d3686c">&#9670;&#160;</a></span>PushState() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -712,7 +799,37 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the new state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00127">127</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00178">178</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+
+</div>
+</div>
+<a id="abfe535febb7e9216bce8034d7e4b5266" name="abfe535febb7e9216bce8034d7e4b5266"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfe535febb7e9216bce8034d7e4b5266">&#9670;&#160;</a></span>PushState() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * duin::GameStateMachine::PushState </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>newState</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00196">196</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -741,12 +858,12 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00315">315</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00302">302</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
 <a id="af38da22c2d87b9df8ee50da8e3d8d45c" name="af38da22c2d87b9df8ee50da8e3d8d45c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af38da22c2d87b9df8ee50da8e3d8d45c">&#9670;&#160;</a></span>SwitchState()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af38da22c2d87b9df8ee50da8e3d8d45c">&#9670;&#160;</a></span>SwitchState() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -779,7 +896,37 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the new state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00077">77</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00086">86</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+
+</div>
+</div>
+<a id="a7eca364716573fc25a1dbd6426ec3519" name="a7eca364716573fc25a1dbd6426ec3519"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eca364716573fc25a1dbd6426ec3519">&#9670;&#160;</a></span>SwitchState() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * duin::GameStateMachine::SwitchState </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>newState</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00107">107</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -809,7 +956,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00333">333</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00320">320</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>

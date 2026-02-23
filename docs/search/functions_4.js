@@ -7,7 +7,7 @@ var searchData=
   ['empty_4',['Empty',['../classduin_1_1JSONValue.html#ad9525bb02243fbb6ba53eff2a9ce0cd5',1,'duin::JSONValue']]],
   ['enable_5',['Enable',['../classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2',1,'duin::Entity']]],
   ['enablecomponent_6',['EnableComponent',['../classduin_1_1Entity.html#a69667913ef257f525f393d7e5ee0727d',1,'duin::Entity']]],
-  ['end_7',['end',['../classduin_1_1Iter.html#a411d5ddd67f86345e957d2e6503141ab',1,'duin::Iter::end()'],['../classduin_1_1JSONValue.html#ac6fd79b0fe9642c6e5cec53d34f8472e',1,'duin::JSONValue::end()'],['../classduin_1_1JSONValue.html#aa5a7c1e4b2fe8a425c435d8e70c2a219',1,'duin::JSONValue::end() const'],['../classduin_1_1JSONValue.html#a509122295d931e69643c525ee3b10588',1,'duin::JSONValue::End()']]],
+  ['end_7',['end',['../classduin_1_1JSONValue.html#a509122295d931e69643c525ee3b10588',1,'duin::JSONValue::End()'],['../classduin_1_1Iter.html#a411d5ddd67f86345e957d2e6503141ab',1,'duin::Iter::end()'],['../classduin_1_1JSONValue.html#ac6fd79b0fe9642c6e5cec53d34f8472e',1,'duin::JSONValue::end()'],['../classduin_1_1JSONValue.html#aa5a7c1e4b2fe8a425c435d8e70c2a219',1,'duin::JSONValue::end() const']]],
   ['engineinitialize_8',['EngineInitialize',['../classduin_1_1Application.html#a5c485974f6ba4ebacdf2d24d930bdb34',1,'duin::Application']]],
   ['ensure_9',['Ensure',['../classduin_1_1Entity.html#a234751dd79e5f68f6cab1e8316d41119',1,'duin::Entity']]],
   ['ensureunixpath_10',['EnsureUnixPath',['../namespaceduin_1_1fs.html#a34824b1612a2df17c4382d1a40d67c25',1,'duin::fs']]],
@@ -26,6 +26,6 @@ var searchData=
   ['example_5freal_5fworld_5fgame_5fentity_23',['example_real_world_game_entity',['../docs_2examples_2JSONValue_8cpp.html#accddcb9dfb63190256143f5b7240261f',1,'JSONValue.cpp']]],
   ['example_5fserialization_24',['example_serialization',['../docs_2examples_2JSONValue_8cpp.html#a94b5ee43fe40db7b658e67facfbde8d2',1,'JSONValue.cpp']]],
   ['example_5ftype_5fchecking_25',['example_type_checking',['../docs_2examples_2JSONValue_8cpp.html#adcfc8a22d91576210eb4b77f85e2fb2c',1,'JSONValue.cpp']]],
-  ['executequerysetcameraasactive_26',['ExecuteQuerySetCameraAsActive',['../classduin_1_1ECSManager.html#aa54869c664fdf4a2a0258d065282eed3',1,'duin::ECSManager']]],
+  ['executequerysetcameraasactive_26',['ExecuteQuerySetCameraAsActive',['../classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb',1,'duin::GameWorld']]],
   ['exit_27',['Exit',['../classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6',1,'duin::Application']]]
 ];

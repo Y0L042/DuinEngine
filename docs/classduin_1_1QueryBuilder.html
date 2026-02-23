@@ -122,8 +122,8 @@ $(document).ready(function(){initNavTree('classduin_1_1QueryBuilder.html',''); i
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af457cdf2fa4a6a8886a3eb244ffc6f3c" id="r_af457cdf2fa4a6a8886a3eb244ffc6f3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1QueryBuilder.html#af457cdf2fa4a6a8886a3eb244ffc6f3c">QueryBuilder</a> (flecs::query_builder&lt; Components... &gt; &amp;&amp;builder)</td></tr>
-<tr class="separator:af457cdf2fa4a6a8886a3eb244ffc6f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af34fc1746bfa1c5d8eb73f11f710176a" id="r_af34fc1746bfa1c5d8eb73f11f710176a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1QueryBuilder.html#af34fc1746bfa1c5d8eb73f11f710176a">QueryBuilder</a> (flecs::query_builder&lt; Components... &gt; &amp;&amp;builder, <a class="el" href="classduin_1_1World.html">World</a> *world=nullptr)</td></tr>
+<tr class="separator:af34fc1746bfa1c5d8eb73f11f710176a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af09467e53dd4de867a79a114d1c2f1c2" id="r_af09467e53dd4de867a79a114d1c2f1c2"><td class="memTemplParams" colspan="2">template&lt;typename... Comps&gt; </td></tr>
 <tr class="memitem:af09467e53dd4de867a79a114d1c2f1c2"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1QueryBuilder.html">QueryBuilder</a>&lt; Components... &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1QueryBuilder.html#af09467e53dd4de867a79a114d1c2f1c2">With</a> ()</td></tr>
 <tr class="separator:af09467e53dd4de867a79a114d1c2f1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,8 +143,8 @@ class duin::QueryBuilder&lt; Components &gt;</div><p>Wrapper for flecs::query_bu
 
 <p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00281">281</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af457cdf2fa4a6a8886a3eb244ffc6f3c" name="af457cdf2fa4a6a8886a3eb244ffc6f3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af457cdf2fa4a6a8886a3eb244ffc6f3c">&#9670;&#160;</a></span>QueryBuilder()</h2>
+<a id="af34fc1746bfa1c5d8eb73f11f710176a" name="af34fc1746bfa1c5d8eb73f11f710176a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af34fc1746bfa1c5d8eb73f11f710176a">&#9670;&#160;</a></span>QueryBuilder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,8 +158,18 @@ template&lt;typename... Components&gt; </div>
           <td class="memname"><a class="el" href="classduin_1_1QueryBuilder.html">duin::QueryBuilder</a>&lt; Components &gt;::QueryBuilder </td>
           <td>(</td>
           <td class="paramtype">flecs::query_builder&lt; Components... &gt; &amp;&amp;&#160;</td>
-          <td class="paramname"><em>builder</em></td><td>)</td>
+          <td class="paramname"><em>builder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classduin_1_1World.html">World</a> *&#160;</td>
+          <td class="paramname"><em>world</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -202,7 +212,7 @@ template&lt;typename... Components&gt; </div>
 <p>Build and return the final <a class="el" href="classduin_1_1Query.html" title="Wrapper for flecs::query to provide a unified query API.">Query</a> object. </p>
 <dl class="section return"><dt>Returns</dt><dd>Constructed <a class="el" href="classduin_1_1Query.html" title="Wrapper for flecs::query to provide a unified query API.">Query</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00316">316</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00317">317</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
 
 </div>
 </div>
@@ -234,7 +244,7 @@ template&lt;typename... Components&gt; </div>
 <p>Mark the query as cached. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1QueryBuilder.html" title="Wrapper for flecs::query_builder to provide a unified query builder API.">QueryBuilder</a> for method chaining. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00306">306</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00307">307</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +275,7 @@ template&lt;typename... Comps&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00289">289</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00290">290</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
 
 </div>
 </div>
@@ -296,7 +306,7 @@ template&lt;typename... Comps&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00296">296</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00297">297</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
 
 </div>
 </div>

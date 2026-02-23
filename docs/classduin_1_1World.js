@@ -17,7 +17,7 @@ var classduin_1_1World =
     [ "IsAlive", "classduin_1_1World.html#aa0d9964391cedfd38a85466dfabde49a", null ],
     [ "IsDeferred", "classduin_1_1World.html#a53417b177bde457d39d578c660299028", null ],
     [ "IsValid", "classduin_1_1World.html#a1edc0c919ab3fb24b50c98ec02c9c253", null ],
-    [ "IterateChildren", "classduin_1_1World.html#a4ad39a5909b32b319d3bf9dd1e7fa65a", null ],
+    [ "IterateChildren", "classduin_1_1World.html#a10d8a0714c4268d4ec4475786c39f65a", null ],
     [ "MakeAlive", "classduin_1_1World.html#a13627cd5605818fb477d79889befbd9e", null ],
     [ "Progress", "classduin_1_1World.html#a2b14f69e148eb0439f583e75b1e57631", null ],
     [ "Quit", "classduin_1_1World.html#ab75a1ae0712f0e82f0ec2ec52b0a9446", null ],

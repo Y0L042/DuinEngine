@@ -1,7 +1,7 @@
 var searchData=
 [
   ['a_0',['a',['../structduin_1_1Color.html#a6aea26ada4929b0252f0c81b6ebd8f2e',1,'duin::Color']]],
-  ['activatecameraentity_1',['ActivateCameraEntity',['../classduin_1_1ECSManager.html#a6293ca7a7c8796223736299df201d31b',1,'duin::ECSManager']]],
+  ['activatecameraentity_1',['ActivateCameraEntity',['../classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611',1,'duin::GameWorld']]],
   ['activecamera_2',['ActiveCamera',['../structduin_1_1ECSTag_1_1ActiveCamera.html',1,'duin::ECSTag']]],
   ['activeexternalref_3',['ActiveExternalRef',['../structduin_1_1ECSTag_1_1ActiveExternalRef.html',1,'duin::ECSTag']]],
   ['adapterdircallback_4',['AdapterDirCallback',['../namespaceduin_1_1fs.html#a3d87bfc1b1996e671a6c036c7808344b',1,'duin::fs']]],

@@ -5,5 +5,5 @@ var group__ECS =
     [ "Tags", "group__ECS__Tags.html", "group__ECS__Tags" ],
     [ "Prefabs", "group__ECS__Prefabs.html", "group__ECS__Prefabs" ],
     [ "Scene Serialization", "group__ECS__Scene.html", "group__ECS__Scene" ],
-    [ "ECSManager.h", "ECSManager_8h.html", null ]
+    [ "GameWorld.h", "GameWorld_8h.html", null ]
 ];

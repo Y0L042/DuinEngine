@@ -1,4 +1,4 @@
-var ECSManager_8h =
+var GameWorld_8h =
 [
     [ "duin::ECSTag::Local", "structduin_1_1ECSTag_1_1Local.html", null ],
     [ "duin::ECSTag::Global", "structduin_1_1ECSTag_1_1Global.html", null ],

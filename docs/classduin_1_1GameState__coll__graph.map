@@ -1,21 +1,22 @@
 <map id="duin::GameState" name="duin::GameState">
-<area shape="rect" id="Node000001" title="Base class for application states." alt="" coords="1037,145,1168,171"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="805,44,897,69"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="911,60,962,70,1014,88,1058,115,1091,143,1087,147,1055,119,1012,92,961,75,910,65"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="823,29,831,21,851,17,867,20,877,26,879,36,874,45,870,43,874,35,872,29,865,25,851,23,834,26,827,33"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1GameStateMachine.html" title="Stack&#45;based state manager." alt="" coords="757,232,944,257"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="904,225,1012,189,1068,168,1070,173,1014,194,906,230"/>
-<area shape="rect" id="Node000004" href="$classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="417,269,556,295"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="569,271,757,252,757,257,570,276"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="5,306,208,346"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="222,321,306,316,393,305,445,292,446,297,394,310,306,321,222,327"/>
-<area shape="rect" id="Node000006" href="$classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="25,120,189,145"/>
-<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="202,124,357,118,559,115,786,120,1014,137,1050,143,1050,148,1013,142,785,125,559,121,357,124,202,130"/>
-<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="152,148,233,182,452,267,450,272,231,187,149,153"/>
-<area shape="rect" id="Node000007" href="$classduin_1_1Signal.html" title=" " alt="" coords="36,194,177,234"/>
-<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="176,187,232,174,346,159,463,149,692,141,892,144,1037,151,1037,156,892,149,692,147,463,155,346,164,232,179,177,192"/>
-<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="149,239,188,261,233,278,280,287,328,290,417,288,417,293,328,296,279,292,231,283,186,266,146,244"/>
-<area shape="rect" id="Node000008" href="$classduin_1_1Signal.html" title=" " alt="" coords="21,388,193,413"/>
-<area shape="poly" id="edge11_Node000001_Node000008" title=" " alt="" coords="207,404,298,404,393,398,552,380,676,360,734,346,795,326,943,266,986,243,1026,216,1086,169,1089,173,1029,221,989,248,945,271,797,331,736,351,677,365,553,385,394,403,298,410,207,409"/>
-<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="206,396,299,384,347,372,392,356,416,342,439,325,472,293,476,297,442,329,419,346,394,360,348,377,300,389,207,402"/>
+<area shape="rect" id="Node000001" title="Base class for application states." alt="" coords="1037,175,1168,201"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="417,202,556,227"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="570,208,1037,188,1037,193,570,214"/>
+<area shape="rect" id="Node000008" href="$classduin_1_1GameStateMachine.html" title="Stack&#45;based state manager." alt="" coords="757,150,944,175"/>
+<area shape="poly" id="edge9_Node000008_Node000002" title=" " alt="" coords="555,197,580,192,756,169,757,174,580,197,556,202"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,240,208,280"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="222,256,306,250,393,239,448,225,449,230,394,244,307,255,222,261"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="25,54,189,79"/>
+<area shape="poly" id="edge10_Node000001_Node000004" title=" " alt="" coords="202,59,347,55,533,58,739,73,843,87,945,105,980,114,1015,128,1054,151,1086,173,1083,177,1051,155,1012,133,979,119,943,111,842,92,738,78,533,63,347,60,202,64"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="151,82,233,116,451,199,449,204,231,121,149,87"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1Signal.html" title=" " alt="" coords="36,128,177,168"/>
+<area shape="poly" id="edge11_Node000001_Node000005" title=" " alt="" coords="174,121,232,108,295,101,372,98,551,99,749,112,944,135,1014,152,1073,173,1071,178,1013,157,944,140,748,117,551,104,372,103,296,107,232,113,176,127"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="149,173,188,195,233,212,280,221,328,224,417,221,417,226,328,229,279,226,231,217,186,200,146,178"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1Signal.html" title=" " alt="" coords="21,322,193,347"/>
+<area shape="poly" id="edge12_Node000001_Node000006" title=" " alt="" coords="184,347,329,368,420,377,520,381,626,380,734,371,841,353,943,324,992,299,1034,264,1068,228,1090,199,1094,203,1072,231,1038,268,995,303,945,329,842,358,734,377,626,385,520,386,420,382,328,373,183,353"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="206,331,299,320,347,308,392,291,417,277,439,260,473,226,476,230,442,264,420,281,394,296,348,313,300,325,207,337"/>
+<area shape="rect" id="Node000007" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="805,290,897,315"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="909,284,960,267,1012,244,1051,222,1083,199,1086,203,1054,226,1015,249,962,272,911,289"/>
+<area shape="poly" id="edge7_Node000007_Node000007" title=" " alt="" coords="823,275,831,267,851,263,867,266,877,272,879,282,874,291,870,289,874,281,872,275,865,271,851,269,834,272,827,279"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="958,171,1037,179,1037,184,957,176"/>
 </map>

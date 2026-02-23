@@ -1,0 +1,6 @@
+<map id="duin::PackedPair" name="duin::PackedPair">
+<area shape="rect" id="Node000001" title="Serialized FLECS pair (relationship, target)." alt="" coords="5,108,132,133"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="23,5,115,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,45,71,108,66,108,66,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="129,8,138,11,141,18,133,27,115,30,114,25,131,22,136,18,134,15,127,13"/>
+</map>
