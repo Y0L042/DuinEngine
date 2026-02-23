@@ -18,6 +18,9 @@ struct TagB
 struct TagC
 {
 };
+struct Target
+{
+};
 
 struct X
 {
@@ -70,150 +73,7 @@ SandboxScene::~SandboxScene()
 
 void SandboxScene::Enter()
 {
-    world->Initialize();
-    world->Component<TagA>();
-    world->Component<TagB>();
-    world->Component<TagC>();
-    world->Component<X>();
-    world->Component<Y>();
-
-    #if 0
-    duin::Entity entityA = world->CreateEntity();
-    duin::Entity entityB = world->CreateEntity().ChildOf(entityA);
-
-    duin::Entity entityZ = world->CreateEntity();
-
-    entityB.ForEachComponent([&](duin::Entity::ID componentID) {
-        if (componentID.IsPair())
-        {
-            duin::Entity r = componentID.First();
-            duin::Entity t = componentID.Second();
-            DN_INFO("FIRSTY {}", static_cast<std::string>(r.GetName()));
-            DN_INFO("SECONDY {}", t.GetID());
-
-            if (r.GetName() == "ChildOf")
-            {
-                duin::Entity e(t.GetID());
-                entityZ.ChildOf(e);
-            }
-        }
-    });
-
-    DN_INFO("EntityA ID {}", entityA.GetID());
-    DN_INFO("EntityB ID {}", entityB.GetID());
-    DN_INFO("EntityZ ID {}", entityZ.GetID());
-
-    entityA.ForEachChild([&](duin::Entity e) { DN_INFO("EntityA Child's ID {}", e.GetID()); });
-    #endif
-
-#if 1
-    duin::Entity prefab1 = world->CreatePrefab("Prefab1").Set<X>(3).Add<TagC>();
-
-    duin::Entity e = world->CreateEntity("Player1").IsA(prefab1).Add<TagA>();
-    e.Add<TagB>();
-    e.Set<Y>(1);
-
-    e.ForEachComponent([&](duin::Entity::ID componentID) {
-        if (componentID.IsPair())
-        {
-            duin::Entity r = componentID.First();
-            duin::Entity t = componentID.Second();
-            DN_INFO("FIRSTY {}", static_cast<std::string>(r.GetName()));
-            DN_INFO("SECONDY {}", static_cast<std::string>(t.GetName()));
-        }
-    });
-
-    std::vector<std::string> sercomVec;
-    e.ForEachComponent([&](duin::Entity::ID &entID) {
-        if (entID.IsEntity() && e.Has(entID.GetEntity()))
-        {
-            std::string s = duin::ComponentSerializer::Get().Serialize(entID.GetEntity().GetName(), nullptr);
-            sercomVec.push_back(s);
-            DN_INFO("Serialized Tag {}", s);
-        }
-    });
-
-    duin::World world2;
-    world2.Component<TagA>();
-    world2.Component<TagB>();
-    world2.Component<TagC>();
-    world2.Component<X>();
-    world2.Component<Y>();
-
-    duin::Entity prefab2 = world2.CreatePrefab("Prefab2").Set<X>(3).Add<TagC>();
-
-    duin::Entity e2 = world2.CreateEntity("Player2");
-    for (std::string &s : sercomVec)
-    {
-        duin::JSONValue v = duin::JSONValue::Parse(s);
-        duin::ComponentSerializer::Get().Deserialize(e2, v["type"].GetString(), nullptr, s);
-    }
-    e2.ForEachComponent([&](duin::Entity::ID &entID) {
-        if (entID.IsEntity() && e.Has(entID.GetEntity()))
-        {
-            duin::Entity ent = entID.GetEntity();
-            DN_INFO("Entity 2 {} has tag {} ({})!", e2.GetID(), ent.GetName(), ent.GetID());
-            std::string s = duin::ComponentSerializer::Get().Serialize(ent.GetName(), nullptr);
-            DN_INFO("Entity 2 has Tag {}", s);
-        }
-    });
-
-    std::string flecsJSON1 = static_cast<std::string>(e.GetFlecsEntity().to_json());
-    DN_INFO("Entity 1 flecsJSON \n{}", flecsJSON1);
-    std::string flecsJSON2 = static_cast<std::string>(e2.GetFlecsEntity().to_json());
-    DN_INFO("Entity 2 flecsJSON \n{}", flecsJSON2);
-#endif
-
-#if 0
-    ecs.Initialize();
-    duin::World& world = *ecs.world;
-
-    world->Component<Vec3>();
-    world->Component<Camera>();
-
-    duin::Entity original =
-        world->CreateEntity("Player").Set<Vec3>(10.0f, 20.0f, 30.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
-
-    duin::PackedEntity pe = duin::PackedEntity::Pack(original);
-
-    duin::Entity restored = world->CreateEntity();
-    duin::PackedEntity::Instantiate(pe, restored);
-#endif
-
-#if 0    
-    DN_INFO("SandboxScene Entered.");
-
-    world->Component<X>();
-    world->Component<Y>();
-    world->Component<Z>();
-
-
-    duin::Entity e = world->CreateEntity().Set<X>(1).Set<Y>(2).Set<Z>(3);
-
-    // duin::PackedScene pscn = duin::PackedScene::Pack(e);
-
-    std::vector<std::string> sercomVec;
-    e.ForEachComponent([&](duin::Entity& ent) {
-        std::string sercom = duin::ComponentSerializer::Get().Serialize(ent.GetName(), e.Get(ent));
-        sercomVec.push_back(sercom);
-        DN_INFO("SERCOM: {}", sercom);
-    });
-
-    duin::Entity e2 = world->CreateEntity();
-    for (auto& str : sercomVec)
-    {
-        duin::JSONValue v = duin::JSONValue::Parse(str);
-        void *data = nullptr;
-        duin::ComponentSerializer::Get().Deserialize(e2, v["type"].GetString(), data, str);
-
-    }
-
-
-    e2.ForEachComponent([&](duin::Entity &ent) {
-        std::string desercom = duin::ComponentSerializer::Get().Serialize(ent.GetName(), e2.Get(ent));
-        DN_INFO("DESERCOM: {}", desercom);
-    });
-#endif
+    Tests();
 }
 
 void SandboxScene::OnEvent(duin::Event e)
@@ -246,4 +106,99 @@ void SandboxScene::SetPause()
 
 void SandboxScene::SetUnpause()
 {
+}
+
+void SandboxScene::Tests()
+{
+    // TestMisc();
+    // Test_FlecsJSON();
+    Test_SceneBuilder_01();
+}
+
+void SandboxScene::Test_Misc()
+{
+}
+
+void SandboxScene::Test_FlecsJSON()
+{
+    /*
+        fatal: observable.c: 758: assert(cr != tgt_cr): (ChildOf,#595) (CYCLE_DETECTED)
+
+        flecs saves relationships per-instance. Serialization/deserialization does not work cross-instance
+    */
+
+    world = std::make_unique<duin::GameWorld>();
+    world->Initialize();
+    world->Component<TagA>();
+    world->Component<TagB>();
+    world->Component<TagC>();
+    world->Component<X>();
+    world->Component<Y>();
+
+    duin::Entity e1 = world->CreateEntity().Add<TagA>();
+    duin::Entity e2 = world->CreateEntity().ChildOf(e1).Add<TagB>();
+
+    std::string e1JSON = static_cast<std::string>(e1.GetFlecsEntity().to_json());
+    std::string e2JSON = static_cast<std::string>(e2.GetFlecsEntity().to_json());
+
+    DN_INFO("e1JSON: \n{}\n", e1JSON);
+    DN_INFO("e2JSON: \n{}\n", e2JSON);
+
+    duin::GameWorld world2;
+    world2.Initialize();
+    world2.Component<TagA>();
+    world2.Component<TagB>();
+    world2.Component<TagC>();
+    world2.Component<X>();
+    world2.Component<Y>();
+
+    duin::Entity eZ = world2.CreateEntity();
+    duin::Entity eA = world2.CreateEntity();
+    duin::Entity eB = world2.CreateEntity();
+    eA.GetFlecsEntity().from_json(e1JSON.c_str());
+    eB.GetFlecsEntity().from_json(e2JSON.c_str());
+
+    DN_INFO("eAJSON: \n{}\n", static_cast<std::string>(eA.GetFlecsEntity().to_json()));
+    DN_INFO("eBJSON: \n{}\n", static_cast<std::string>(eB.GetFlecsEntity().to_json()));
+}
+
+// Testing Packing and Instantiation of Entities with Pairs
+void SandboxScene::Test_SceneBuilder_01()
+{
+    duin::World world;
+    duin::SceneBuilder sceneBuilder(&world);
+
+    world.Component<TagA>();
+    world.Component<TagB>();
+    world.Component<TagC>();
+    world.Component<X>();
+    world.Component<Y>();
+    world.Component<Target>();
+
+    duin::Entity e1 = world.CreateEntity("Parent").Add<TagA>();
+    duin::Entity e2 = world.CreateEntity("Child").ChildOf(e1).Add<TagB>().Add<Target>(e1);
+    duin::Entity e3 = world.CreateEntity("Baddy").Set<X>(10).Add<Target>(e1);
+    e1.Add<Target>(e3);
+
+    duin::PackedScene pscn = sceneBuilder.PackScene(&world);
+
+    DN_INFO("pscn:\n{}\n", sceneBuilder.SerializeScene(pscn).Write());
+
+
+
+    duin::World world2;
+    duin::SceneBuilder sceneBuilder2(&world2);
+
+    world2.Component<TagA>();
+    world2.Component<TagB>();
+    world2.Component<TagC>();
+    world2.Component<X>();
+    world2.Component<Y>();
+    world2.Component<Target>();
+
+    sceneBuilder2.InstantiateScene(pscn, &world2);
+
+    duin::PackedScene pscn2 = sceneBuilder2.PackScene(&world2);
+
+    DN_INFO("pscn:\n{}\n", sceneBuilder2.SerializeScene(pscn2).Write());
 }

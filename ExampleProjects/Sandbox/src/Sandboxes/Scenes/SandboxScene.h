@@ -5,7 +5,7 @@
 class SandboxScene : public duin::GameState
 {
   public:
-    SandboxScene(duin::GameStateMachine& sm);
+    SandboxScene(duin::GameStateMachine &sm);
     ~SandboxScene();
 
     void Enter() override;
@@ -17,5 +17,11 @@ class SandboxScene : public duin::GameState
     void Exit() override;
     void SetPause() override;
     void SetUnpause() override;
+
+    void Tests();
+    void Test_Misc();
+    void Test_FlecsJSON();
+  void Test_SceneBuilder_01();
+
   private:
 };
