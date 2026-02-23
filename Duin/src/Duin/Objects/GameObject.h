@@ -147,7 +147,7 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 
     /**
      * @name Enable/Disable Callbacks
-     * Control which callbacks are active.
+     * Control which callbacks are able to be called by parents.
      * @{
      */
     void Enable(bool enable);
@@ -157,6 +157,21 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     void EnableDraw(bool enable);
     void EnableDrawUI(bool enable);
     void EnableDebug(bool enable);
+    void EnableChildren(bool enable);
+    /** @} */
+
+    /**
+     * @name Query Callback State
+     * Check which callbacks are currently enabled.
+     * @{
+     */
+    bool IsOnEventEnabled() const;
+    bool IsUpdateEnabled() const;
+    bool IsPhysicsUpdateEnabled() const;
+    bool IsDrawEnabled() const;
+    bool IsDrawUIEnabled() const;
+    bool IsDebugEnabled() const;
+    bool IsChildrenEnabled() const;
     /** @} */
 
     /** @brief Returns this object's unique identifier. */
@@ -205,5 +220,6 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     bool drawEnabled = true;
     bool drawUIEnabled = true;
     bool debugEnabled = true;
+    bool childrenEnabled = true;
 };
 } // namespace duin

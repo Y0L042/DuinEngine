@@ -48,6 +48,15 @@ class GameStateMachine : public GameObject
 
     UUID GetUUID();
 
+    template <typename T>
+    std::shared_ptr<T> CreateState()
+    {
+        auto newState = CreateChildObject<T>(*this);
+        newState->Enable(false);
+
+        return newState;
+    }
+
     /**
      * @brief Returns the active state cast to type T.
      * @tparam T Expected state type.
@@ -79,15 +88,36 @@ class GameStateMachine : public GameObject
         static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
         if (!stateStack.empty())
         {
-            stateStack.top()->StateExit();
             if (!stateStack.empty())
             {
-                stateStack.pop();
+                PopState();
             }
         }
-        auto newState = std::make_unique<T>(*this);
+
+        std::shared_ptr<T> newState = CreateChildObject<T>(*this);
+        newState->Enable(false);
         T *ptr = newState.get();
-        stateStack.emplace(std::move(newState));
+        stateStack.push(newState);
+        stateStack.top()->StateEnter();
+
+        return ptr;
+    }
+
+    template <typename T>
+    T *SwitchState(std::shared_ptr<T> newState)
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        if (!stateStack.empty())
+        {
+            if (!stateStack.empty())
+            {
+                PopState();
+            }
+        }
+
+        newState->Enable(false);
+        T *ptr = newState.get();
+        stateStack.push(newState);
         stateStack.top()->StateEnter();
 
         return ptr;
@@ -104,15 +134,36 @@ class GameStateMachine : public GameObject
         static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
         while (!stateStack.empty())
         {
-            stateStack.top()->StateExit();
             if (!stateStack.empty())
             {
-                stateStack.pop();
+                PopState();
             }
         }
-        auto newState = std::make_unique<T>(*this);
+
+        std::shared_ptr<T> newState = CreateChildObject<T>(*this);
+        newState->Enable(false);
         T *ptr = newState.get();
-        stateStack.emplace(std::move(newState));
+        stateStack.push(newState);
+        stateStack.top()->StateEnter();
+
+        return ptr;
+    }
+
+    template <typename T>
+    T *FlushAndSwitchState(std::shared_ptr<T> newState)
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        while (!stateStack.empty())
+        {
+            if (!stateStack.empty())
+            {
+                PopState();
+            }
+        }
+
+        newState->Enable(false);
+        T *ptr = newState.get();
+        stateStack.push(newState);
         stateStack.top()->StateEnter();
 
         return ptr;
@@ -132,9 +183,27 @@ class GameStateMachine : public GameObject
             stateStack.top()->StateSetPause();
         }
 
-        auto newState = std::make_unique<T>(*this);
+        std::shared_ptr<T> newState = CreateChildObject<T>(*this);
+        newState->Enable(false);
         T *ptr = newState.get();
-        stateStack.emplace(std::move(newState));
+        stateStack.push(newState);
+        stateStack.top()->StateEnter();
+
+        return ptr;
+    }
+
+    template <typename T>
+    T *PushState(std::shared_ptr<T> newState)
+    {
+        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
+        if (!stateStack.empty())
+        {
+            stateStack.top()->StateSetPause();
+        }
+
+        newState->Enable(false);
+        T *ptr = newState.get();
+        stateStack.push(newState);
         stateStack.top()->StateEnter();
 
         return ptr;
@@ -146,7 +215,7 @@ class GameStateMachine : public GameObject
     /** @brief Exits and removes all states from the stack. */
     void FlushStack();
     /** @brief Returns reference to the internal state stack. */
-    std::stack<std::unique_ptr<GameState>> &GetStateStack();
+    std::stack<std::shared_ptr<GameState>> &GetStateStack();
 
     virtual void Init() override;
     virtual void Ready() override;
@@ -158,7 +227,7 @@ class GameStateMachine : public GameObject
     virtual void Debug() override;
 
   private:
-    std::stack<std::unique_ptr<GameState>> stateStack;
+    std::stack<std::shared_ptr<GameState>> stateStack;
 };
 
 /**
@@ -180,7 +249,7 @@ class GameStateMachine : public GameObject
  * };
  * @endcode
  */
-class GameState
+class GameState : public GameObject
 {
   public:
     GameState(GameStateMachine &owner);
@@ -206,14 +275,19 @@ class GameState
      * @{
      */
     virtual void Enter() {};
-    virtual void OnEvent(Event e) {};
-    virtual void Update(double delta) {};
-    virtual void PhysicsUpdate(double delta) {};
-    virtual void Draw() {};
-    virtual void DrawUI() {};
+    virtual void OnEvent(Event e) override {};
+    virtual void Update(double delta) override {};
+    virtual void PhysicsUpdate(double delta) override {};
+    virtual void Draw() override {};
+    virtual void DrawUI() override {};
     virtual void Exit() {};
     virtual void SetPause() {};
     virtual void SetUnpause() {};
+
+    void Init() override final {};
+    void Ready() override final {};
+    void Debug() override final {};
+
     /** @} */
 
     template <typename T>
@@ -238,14 +312,6 @@ class GameState
     void FlushStack();
 
     bool IsEqualTo(GameState *other);
-
-    template <typename T, typename... Args>
-    std::shared_ptr<T> CreateChildObject(Args... args)
-    {
-        return stateGameObject->template CreateChildObject<T>(std::forward<Args>(args)...);
-    }
-    void AddChildObject(std::shared_ptr<GameObject> child);
-    void RemoveChildObject(std::shared_ptr<GameObject> child);
 
     // Signal connection functions
     UUID ConnectOnStateEnter(std::function<void()> callback);
@@ -298,7 +364,6 @@ class GameState
     UUID uuid;
     std::string stateName;
     GameStateMachine &owner;
-    std::shared_ptr<GameObject> stateGameObject;
 
     // Signals emit after main functions called
     Signal<> OnStateEnter;

@@ -242,6 +242,46 @@ void duin::GameObject::EnableDebug(bool enable)
     debugEnabled = enable;
 }
 
+void duin::GameObject::EnableChildren(bool enable)
+{
+    childrenEnabled = enable;
+}
+
+bool duin::GameObject::IsOnEventEnabled() const
+{
+    return onEventEnabled;
+}
+
+bool duin::GameObject::IsUpdateEnabled() const
+{
+    return updateEnabled;
+}
+
+bool duin::GameObject::IsPhysicsUpdateEnabled() const
+{
+    return physicsUpdateEnabled;
+}
+
+bool duin::GameObject::IsDrawEnabled() const
+{
+    return drawEnabled;
+}
+
+bool duin::GameObject::IsDrawUIEnabled() const
+{
+    return drawUIEnabled;
+}
+
+bool duin::GameObject::IsDebugEnabled() const
+{
+    return debugEnabled;
+}
+
+bool duin::GameObject::IsChildrenEnabled() const
+{
+    return childrenEnabled;
+}
+
 duin::UUID duin::GameObject::GetUUID() const
 {
     return uuid;
@@ -259,95 +299,105 @@ bool duin::GameObject::operator!=(const GameObject &other) const
 
 void duin::GameObject::ObjectReady()
 {
-    for (auto &child : children)
+    if (childrenEnabled)
     {
-        if (child)
-            child->ObjectReady();
+        for (auto &child : children)
+        {
+            if (child)
+                child->ObjectReady();
+        }
     }
+
     Ready();
     OnObjectReady.Emit();
 }
 
 void duin::GameObject::ObjectOnEvent(Event event)
 {
-    if (!onEventEnabled)
-        return;
-
-    for (auto &child : children)
+    if (childrenEnabled)
     {
-        if (child)
-            child->ObjectOnEvent(event);
+        for (auto &child : children)
+        {
+            if (child && child->IsOnEventEnabled())
+                child->ObjectOnEvent(event);
+        }
     }
+
     OnEvent(event);
     OnObjectOnEvent.Emit(event);
 }
 
 void duin::GameObject::ObjectUpdate(double delta)
 {
-    if (!updateEnabled)
-        return;
-
-    for (auto &child : children)
+    if (childrenEnabled)
     {
-        if (child)
-            child->ObjectUpdate(delta);
+        for (auto &child : children)
+        {
+            if (child && child->IsUpdateEnabled())
+                child->ObjectUpdate(delta);
+        }
     }
+
     Update(delta);
     OnObjectUpdate.Emit(delta);
 }
 
 void duin::GameObject::ObjectPhysicsUpdate(double delta)
 {
-    if (!physicsUpdateEnabled)
-        return;
-
-    for (auto &child : children)
+    if (childrenEnabled)
     {
-        if (child)
-            child->ObjectPhysicsUpdate(delta);
+        for (auto &child : children)
+        {
+            if (child && child->IsPhysicsUpdateEnabled())
+                child->ObjectPhysicsUpdate(delta);
+        }
     }
+
     PhysicsUpdate(delta);
     OnObjectPhysicsUpdate.Emit(delta);
 }
 
 void duin::GameObject::ObjectDraw()
 {
-    if (!drawEnabled)
-        return;
-
-    for (auto &child : children)
+    if (childrenEnabled)
     {
-        if (child)
-            child->ObjectDraw();
+        for (auto &child : children)
+        {
+            if (child && child->IsDrawEnabled())
+                child->ObjectDraw();
+        }
     }
+
     Draw();
     OnObjectDraw.Emit();
 }
 
 void duin::GameObject::ObjectDrawUI()
 {
-    if (!drawUIEnabled)
-        return;
-
-    for (auto &child : children)
+    if (childrenEnabled)
     {
-        if (child)
-            child->ObjectDrawUI();
+        for (auto &child : children)
+        {
+            if (child && child->IsDrawUIEnabled())
+                child->ObjectDrawUI();
+        }
     }
+
     DrawUI();
     OnObjectDrawUI.Emit();
 }
 
 void duin::GameObject::ObjectDebug()
 {
-    if (!debugEnabled)
-        return;
-
-    for (auto &child : children)
+    if (childrenEnabled)
     {
-        if (child)
-            child->ObjectDebug();
+        for (auto &child : children)
+        {
+            if (child && child->IsDebugEnabled())
+                child->ObjectDebug();
+        }
     }
+
     Debug();
     OnObjectDebug.Emit();
 }

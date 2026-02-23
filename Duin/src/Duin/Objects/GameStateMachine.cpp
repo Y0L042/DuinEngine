@@ -5,62 +5,55 @@
 
 duin::GameState::GameState(GameStateMachine &owner) : owner(owner)
 {
-    stateGameObject = std::make_shared<GameObject>();
 }
 
 void duin::GameState::StateEnter()
 {
     Enter();
-    stateGameObject->ObjectReady();
     OnStateEnter.Emit();
 }
 
 void duin::GameState::StateOnEvent(Event e)
 {
-    if (!onEventEnabled)
-        return;
+    //if (!onEventEnabled)
+    //    return;
 
-    stateGameObject->ObjectOnEvent(e);
     OnEvent(e);
     OnStateOnEvent.Emit(e);
 }
 
 void duin::GameState::StateUpdate(double delta)
 {
-    if (!updateEnabled)
-        return;
+    //if (!updateEnabled)
+    //    return;
 
-    stateGameObject->ObjectUpdate(delta);
     Update(delta);
     OnStateUpdate.Emit(delta);
 }
 
 void duin::GameState::StatePhysicsUpdate(double delta)
 {
-    if (!physicsUpdateEnabled)
-        return;
+    //if (!physicsUpdateEnabled)
+    //    return;
 
-    stateGameObject->ObjectPhysicsUpdate(delta);
     PhysicsUpdate(delta);
     OnStatePhysicsUpdate.Emit(delta);
 }
 
 void duin::GameState::StateDraw()
 {
-    if (!drawEnabled)
-        return;
+    //if (!drawEnabled)
+    //    return;
 
-    stateGameObject->ObjectDraw();
     Draw();
     OnStateDraw.Emit();
 }
 
 void duin::GameState::StateDrawUI()
 {
-    if (!drawUIEnabled)
-        return;
+    //if (!drawUIEnabled)
+    //    return;
 
-    stateGameObject->ObjectDrawUI();
     DrawUI();
     OnStateDrawUI.Emit();
 }
@@ -73,11 +66,13 @@ void duin::GameState::StateExit()
 
 void duin::GameState::StateSetPause()
 {
+    Enable(false);
     SetPause();
 }
 
 void duin::GameState::StateSetUnpause()
 {
+    Enable(true);
     SetUnpause();
 }
 
@@ -89,16 +84,6 @@ void duin::GameState::PopState()
 void duin::GameState::FlushStack()
 {
     owner.FlushStack();
-}
-
-void duin::GameState::AddChildObject(std::shared_ptr<GameObject> child)
-{
-    stateGameObject->AddChildObject(child);
-}
-
-void duin::GameState::RemoveChildObject(std::shared_ptr<GameObject> child)
-{
-    stateGameObject->RemoveChildObject(child);
 }
 
 // Signal connection functions
@@ -282,6 +267,8 @@ void duin::GameStateMachine::PopState()
         return;
     }
     stateStack.top()->StateExit();
+    std::shared_ptr<GameState> poppedState = stateStack.top();
+    poppedState->GetParent()->RemoveChildObject(poppedState);
     stateStack.pop();
 
     if (!stateStack.empty())
@@ -303,7 +290,7 @@ void duin::GameStateMachine::FlushStack()
     }
 }
 
-std::stack<std::unique_ptr<duin::GameState>> &duin::GameStateMachine::GetStateStack()
+std::stack<std::shared_ptr<duin::GameState>> &duin::GameStateMachine::GetStateStack()
 {
     return stateStack;
 }
@@ -327,7 +314,7 @@ void duin::GameStateMachine::OnEvent(Event e)
     {
         return;
     }
-    stateStack.top()->StateOnEvent(e);
+    //stateStack.top()->StateOnEvent(e);
 }
 
 void duin::GameStateMachine::Update(double delta)
@@ -341,7 +328,7 @@ void duin::GameStateMachine::Update(double delta)
     {
         return;
     }
-    stateStack.top()->StateUpdate(delta);
+    //stateStack.top()->StateUpdate(delta);
 }
 
 void duin::GameStateMachine::PhysicsUpdate(double delta)
@@ -355,7 +342,7 @@ void duin::GameStateMachine::PhysicsUpdate(double delta)
     {
         return;
     }
-    stateStack.top()->StatePhysicsUpdate(delta);
+    //stateStack.top()->StatePhysicsUpdate(delta);
 }
 
 void duin::GameStateMachine::Draw()
@@ -369,7 +356,7 @@ void duin::GameStateMachine::Draw()
     {
         return;
     }
-    stateStack.top()->StateDraw();
+    //stateStack.top()->StateDraw();
 }
 
 void duin::GameStateMachine::DrawUI()
@@ -383,7 +370,7 @@ void duin::GameStateMachine::DrawUI()
     {
         return;
     }
-    stateStack.top()->StateDrawUI();
+    //stateStack.top()->StateDrawUI();
 }
 
 void duin::GameStateMachine::Debug()
