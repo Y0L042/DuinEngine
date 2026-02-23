@@ -26,8 +26,12 @@ TEST_SUITE("Signal")
     {
         duin::Signal<> sig1;
         duin::Signal<> sig2;
+        CAPTURE(sig1.GetUUID());
         CHECK(sig1.GetUUID() != duin::UUID::INVALID);
+        CAPTURE(sig2.GetUUID());
         CHECK(sig2.GetUUID() != duin::UUID::INVALID);
+        CAPTURE(sig1.GetUUID());
+        CAPTURE(sig2.GetUUID());
         CHECK(sig1.GetUUID() != sig2.GetUUID());
     }
 
@@ -36,10 +40,13 @@ TEST_SUITE("Signal")
         duin::Signal<int> sig;
         int called = 0;
         duin::UUID id = sig.Connect([&](int v) { called = v; });
+        CAPTURE(id);
         CHECK(id != duin::UUID::INVALID);
+        CAPTURE(sig.GetListenerCount());
         CHECK(sig.GetListenerCount() == 1);
 
         sig.Emit(42);
+        CAPTURE(called);
         CHECK(called == 42);
     }
 
@@ -52,9 +59,13 @@ TEST_SUITE("Signal")
 
         sig.Emit("test");
         DN_INFO("{}", results[0]);
+        CAPTURE(sig.GetListenerCount());
         CHECK(sig.GetListenerCount() == 2);
+        CAPTURE(results.size());
         CHECK(results.size() == 2);
+        CAPTURE(results[0]);
         CHECK(results[0] == "A:test");
+        CAPTURE(results[1]);
         CHECK(results[1] == "B:test");
     }
 
@@ -65,10 +76,12 @@ TEST_SUITE("Signal")
         duin::UUID id = sig.Connect([&](int v) { called = v; });
 
         bool disconnected = sig.Disconnect(id);
+        CAPTURE(disconnected);
         CHECK(disconnected);
 
         called = 0;
         sig.Emit(99);
+        CAPTURE(called);
         CHECK(called == 0); // Should not be called after disconnect
     }
 
