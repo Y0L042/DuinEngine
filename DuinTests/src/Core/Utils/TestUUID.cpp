@@ -15,10 +15,14 @@ TEST_SUITE("UUID")
         duin::UUID uuid2;
 
         // UUIDs should be non-zero (valid)
+        CAPTURE(uuid1);
         CHECK(uuid1 != duin::UUID::INVALID);
+        CAPTURE(uuid2);
         CHECK(uuid2 != duin::UUID::INVALID);
 
         // Different UUIDs should be generated
+        CAPTURE(uuid1);
+        CAPTURE(uuid2);
         CHECK(uuid1 != uuid2);
     }
 
@@ -27,7 +31,9 @@ TEST_SUITE("UUID")
         SUBCASE("Zero value")
         {
             duin::UUID uuid(0);
+            CAPTURE(uuid);
             CHECK(uuid == duin::UUID::INVALID);
+            CAPTURE(static_cast<uint64_t>(uuid));
             CHECK(static_cast<uint64_t>(uuid) == 0);
         }
 
@@ -35,6 +41,8 @@ TEST_SUITE("UUID")
         {
             uint64_t value = 12345678901234567890ULL;
             duin::UUID uuid(value);
+            CAPTURE(static_cast<uint64_t>(uuid));
+            CAPTURE(value);
             CHECK(static_cast<uint64_t>(uuid) == value);
         }
 
@@ -42,6 +50,8 @@ TEST_SUITE("UUID")
         {
             uint64_t value = UINT64_MAX;
             duin::UUID uuid(value);
+            CAPTURE(static_cast<uint64_t>(uuid));
+            CAPTURE(value);
             CHECK(static_cast<uint64_t>(uuid) == value);
         }
     }
@@ -49,9 +59,12 @@ TEST_SUITE("UUID")
     TEST_CASE("INVALID constant")
     {
         duin::UUID invalid = duin::UUID::INVALID;
+        CAPTURE(static_cast<uint64_t>(invalid));
         CHECK(static_cast<uint64_t>(invalid) == 0);
 
         duin::UUID zero(0);
+        CAPTURE(invalid);
+        CAPTURE(zero);
         CHECK(invalid == zero);
     }
 
@@ -63,13 +76,21 @@ TEST_SUITE("UUID")
 
         SUBCASE("operator==")
         {
+            CAPTURE(uuid1);
+            CAPTURE(uuid2);
             CHECK(uuid1 == uuid2);
+            CAPTURE(uuid1);
+            CAPTURE(uuid3);
             CHECK_FALSE(uuid1 == uuid3);
         }
 
         SUBCASE("operator!=")
         {
+            CAPTURE(uuid1);
+            CAPTURE(uuid3);
             CHECK(uuid1 != uuid3);
+            CAPTURE(uuid1);
+            CAPTURE(uuid2);
             CHECK_FALSE(uuid1 != uuid2);
         }
     }
