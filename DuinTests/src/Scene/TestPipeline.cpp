@@ -80,7 +80,8 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
         }
 
         duin::Entity root = world.CreateEntity("SceneRoot");
-        duin::PackedScene::Instantiate(scene, &world);
+        duin::SceneBuilder builder(&world);
+        builder.InstantiateScene(scene, &world);
 
         std::vector<duin::Entity> rootChildren = root.GetChildren();
         CHECK(rootChildren.size() == 1);
@@ -137,7 +138,8 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
         duin::PackedScene scene = duin::PackedScene::Deserialize(json);
 
         duin::Entity root = world.CreateEntity("SceneRoot");
-        duin::PackedScene::Instantiate(scene, &world);
+        duin::SceneBuilder builder(&world);
+        builder.InstantiateScene(scene, &world);
 
         std::vector<duin::Entity> children = root.GetChildren();
         CHECK(children.size() == 2);
@@ -234,7 +236,8 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         duin::Entity weapon = world.CreateEntity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.3f);
         weapon.ChildOf(player);
 
-        duin::PackedScene ps = duin::PackedScene::Pack({sceneRoot});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene ps = builder.PackScene({sceneRoot});
         ps.uuid = duin::UUID::FromStringHex("scene111111111111");
         ps.name = "GameScene";
         ps.metadata.editorVersion = "1.0";
@@ -285,7 +288,8 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
             world.CreateEntity("Object").Set<Vec3>(3.0f, 6.0f, 9.0f).Set<Camera>(45.0f, 0.5f, 100.0f, false);
         obj.ChildOf(sceneRoot);
 
-        duin::PackedScene ps = duin::PackedScene::Pack({sceneRoot});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene ps = builder.PackScene({sceneRoot});
         ps.uuid = duin::UUID::FromStringHex("roundtrip111111");
         ps.name = "RoundTripScene";
 
@@ -308,7 +312,8 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         world2.Component<Vec3>();
         world2.Component<Camera>();
         duin::Entity newRoot = world2.CreateEntity("NewRoot");
-        duin::PackedScene::Instantiate(ps2, &world2);
+        duin::SceneBuilder builder2(&world2);
+        builder2.InstantiateScene(ps2, &world2);
 
         std::vector<duin::Entity> children = newRoot.GetChildren();
         CHECK(children.size() == 1);
@@ -338,7 +343,8 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         grandchild.ChildOf(child);
 
         // Pack
-        duin::PackedScene ps = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene ps = builder.PackScene({root});
         ps.uuid = duin::UUID::FromStringHex("fullpipe11111111");
         ps.name = "FullPipelineScene";
 
@@ -363,7 +369,8 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         world2.Component<Vec3>();
         world2.Component<Camera>();
         duin::Entity newRoot = world2.CreateEntity("NewRoot");
-        duin::PackedScene::Instantiate(ps2, &world2);
+        duin::SceneBuilder builder2(&world2);
+        builder2.InstantiateScene(ps2, &world2);
 
         // Verify hierarchy
         std::vector<duin::Entity> level1 = newRoot.GetChildren();

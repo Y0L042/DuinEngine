@@ -1,5 +1,6 @@
 #include "TestConfig.h"
 #include "TestSceneBuilderCommon.h"
+#include "Defines.h"
 #include <doctest.h>
 #include <Duin/Scene/SceneBuilder.h>
 #include <Duin/Core/Utils/UUID.h>
@@ -9,6 +10,7 @@
 
 namespace TestSceneBuilder
 {
+    // TODO Tags are still seen as components, and are packed and serialized as components (this works, but a bit confusing).
 
 TEST_SUITE("Tag Component Tests")
 {
@@ -33,8 +35,8 @@ TEST_SUITE("Tag Component Tests")
 
         duin::PackedEntity pe = duin::PackedEntity::Pack(entity);
 
-        CHECK(pe.name == "TaggedEntity");
-        CHECK(pe.components.size() >= 1); // At least Vec3
+        MSG_CHECK(pe.name, pe.name == "TaggedEntity");
+        MSG_CHECK(pe.components.size(), pe.components.size() >= 1); // At least Vec3
 
         // Instantiate in new world
         duin::World world2;
@@ -45,11 +47,11 @@ TEST_SUITE("Tag Component Tests")
         duin::Entity restored = world2.CreateEntity();
         duin::PackedEntity::Instantiate(pe, restored);
 
-        CHECK(restored.GetName() == "TaggedEntity");
-        CHECK(restored.Has<Vec3>());
-        CHECK(restored.Has<PlayerTag>());
-        CHECK(restored.Has<ActiveTag>());
-        CHECK(restored.GetMut<Vec3>() == Vec3{1.0f, 2.0f, 3.0f});
+        MSG_CHECK(restored.GetName(), restored.GetName() == "TaggedEntity");
+        MSG_CHECK(restored.Has<Vec3>(), restored.Has<Vec3>());
+        MSG_CHECK(restored.Has<PlayerTag>(), restored.Has<PlayerTag>());
+        MSG_CHECK(restored.Has<ActiveTag>(), restored.Has<ActiveTag>());
+        MSG_CHECK(restored.GetMut<Vec3>(), (restored.GetMut<Vec3>() == Vec3{1.0f, 2.0f, 3.0f}));
     }
 
     TEST_CASE("Pack and Instantiate multiple entities with different tag combinations")
@@ -61,26 +63,22 @@ TEST_SUITE("Tag Component Tests")
         world.Component<CollectibleTag>();
         world.Component<ActiveTag>();
 
-        duin::Entity root = world.CreateEntity("Root");
-
         duin::Entity player = world.CreateEntity("Player")
-            .ChildOf(root)
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
             .Add<PlayerTag>()
             .Add<ActiveTag>();
 
         duin::Entity enemy = world.CreateEntity("Enemy")
-            .ChildOf(root)
             .Set<Vec3>(10.0f, 0.0f, 0.0f)
             .Add<EnemyTag>()
             .Add<ActiveTag>();
 
         duin::Entity item = world.CreateEntity("HealthPack")
-            .ChildOf(root)
             .Set<Vec3>(5.0f, 0.0f, 5.0f)
             .Add<CollectibleTag>();
 
-        duin::PackedScene scene = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene scene = builder.PackScene(&world);
         scene.name = "TaggedScene";
 
         // Instantiate in new world
@@ -91,11 +89,11 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<CollectibleTag>();
         world2.Component<ActiveTag>();
 
-        duin::Entity newRoot = world2.CreateEntity("NewRoot");
-        duin::PackedScene::Instantiate(scene, &world2);
+        duin::SceneBuilder builder2(&world2);
+        builder2.InstantiateScene(scene, &world2);
 
-        std::vector<duin::Entity> children = newRoot.GetChildren();
-        CHECK(children.size() == 3);
+        std::vector<duin::Entity> children = world2.GetChildren();
+        MSG_CHECK(children.size(), children.size() == 3);
 
         // Verify tags are preserved
         int activeCount = 0;
@@ -103,7 +101,7 @@ TEST_SUITE("Tag Component Tests")
         {
             if (child.Has<ActiveTag>()) activeCount++;
         }
-        CHECK(activeCount == 2);
+        MSG_CHECK(activeCount, activeCount == 2);
     }
 
     TEST_CASE("Serialize and deserialize entity with only tags")
@@ -121,7 +119,7 @@ TEST_SUITE("Tag Component Tests")
         duin::JSONValue json = duin::PackedEntity::Serialize(pe);
         duin::PackedEntity deserialized = duin::PackedEntity::Deserialize(json);
 
-        CHECK(deserialized.name == "TagOnlyEntity");
+        MSG_CHECK(deserialized.name, deserialized.name == "TagOnlyEntity");
 
         // Instantiate
         duin::World world2;
@@ -132,10 +130,10 @@ TEST_SUITE("Tag Component Tests")
         duin::Entity restored = world2.CreateEntity();
         duin::PackedEntity::Instantiate(deserialized, restored);
 
-        CHECK(restored.GetName() == "TagOnlyEntity");
-        CHECK(restored.Has<PlayerTag>());
-        CHECK(restored.Has<DestroyableTag>());
-        CHECK_FALSE(restored.Has<EnemyTag>());
+        MSG_CHECK(restored.GetName(), restored.GetName() == "TagOnlyEntity");
+        MSG_CHECK(restored.Has<PlayerTag>(), restored.Has<PlayerTag>());
+        MSG_CHECK(restored.Has<DestroyableTag>(), restored.Has<DestroyableTag>());
+        MSG_CHECK_FALSE(restored.Has<EnemyTag>(), restored.Has<EnemyTag>());
     }
 
     TEST_CASE("Tag components persist through scene serialization")
@@ -145,14 +143,13 @@ TEST_SUITE("Tag Component Tests")
         world.Component<ActiveTag>();
         world.Component<DestroyableTag>();
 
-        duin::Entity root = world.CreateEntity("Root");
         duin::Entity entity = world.CreateEntity("TaggedEntity")
-            .ChildOf(root)
             .Set<Vec3>(1.0f, 2.0f, 3.0f)
             .Add<ActiveTag>()
             .Add<DestroyableTag>();
 
-        duin::PackedScene scene = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene scene = builder.PackScene(&world);
         scene.name = "TagPersistenceTest";
         scene.uuid = duin::UUID::FromStringHex("tagtest11111111");
 
@@ -167,16 +164,16 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<ActiveTag>();
         world2.Component<DestroyableTag>();
 
-        duin::Entity newRoot = world2.CreateEntity("NewRoot");
-        duin::PackedScene::Instantiate(scene2, &world2);
+        duin::SceneBuilder builder2(&world2);
+        builder2.InstantiateScene(scene2, &world2);
 
-        std::vector<duin::Entity> children = newRoot.GetChildren();
-        REQUIRE(children.size() == 1);
+        std::vector<duin::Entity> children = world2.GetChildren();
+        MSG_CHECK(children.size(), children.size() == 1);
         if (children.size() >= 1)
         {
-            CHECK(children[0].Has<Vec3>());
-            CHECK(children[0].Has<ActiveTag>());
-            CHECK(children[0].Has<DestroyableTag>());
+            MSG_CHECK(children[0].Has<Vec3>(), children[0].Has<Vec3>());
+            MSG_CHECK(children[0].Has<ActiveTag>(), children[0].Has<ActiveTag>());
+            MSG_CHECK(children[0].Has<DestroyableTag>(), children[0].Has<DestroyableTag>());
         }
     }
 }

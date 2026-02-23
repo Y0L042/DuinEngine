@@ -123,7 +123,8 @@ TEST_SUITE("Prefab and Inheritance Tests")
                 .Set<Speed>({3.0f});
         }
 
-        duin::PackedScene scene = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene scene = builder.PackScene({root});
         scene.name = "EnemySpawnScene";
 
         CHECK(scene.entities.size() == 5);
@@ -218,7 +219,8 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Health>({200.0f})  // Override
             .Set<Speed>({3.0f});    // Override
 
-        duin::PackedScene scene = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene scene = builder.PackScene({root});
 
         // Instantiate scene
         duin::World world2;
@@ -227,7 +229,8 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Speed>();
 
         duin::Entity newRoot = world2.CreateEntity("NewRoot");
-        duin::PackedScene::Instantiate(scene, &world2);
+        duin::SceneBuilder builder2(&world2);
+        builder2.InstantiateScene(scene, &world2);
 
         std::vector<duin::Entity> children = newRoot.GetChildren();
         CHECK(children.size() == 2);

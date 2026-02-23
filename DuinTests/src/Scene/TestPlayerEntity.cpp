@@ -472,6 +472,7 @@ TEST_SUITE("Complex Player Entity Tests")
     TEST_CASE("PackedScene with Player Hierarchy")
     {
         duin::World world;
+        duin::SceneBuilder sceneBuilder(&world);
         world.Component<Vec3>();
         world.Component<Camera>();
         world.Component<Mass>();
@@ -489,7 +490,7 @@ TEST_SUITE("Complex Player Entity Tests")
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true);
 
         // Pack scene
-        duin::PackedScene scene = duin::PackedScene::Pack({root});
+        duin::PackedScene scene = sceneBuilder.PackScene({root});
         scene.uuid = duin::UUID::FromStringHex("playerscn111111");
         scene.name = "PlayerScene";
 

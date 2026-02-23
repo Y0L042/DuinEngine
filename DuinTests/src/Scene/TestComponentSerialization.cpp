@@ -14,6 +14,9 @@ TEST_SUITE("Component Serialization")
 {
     TEST_CASE("Deserialize Component")
     {
+        duin::World world;
+        duin::SceneBuilder sb(&world);
+
         std::string jsonStr = R"(
         {   
             "type" : "TestStructX",
@@ -22,19 +25,22 @@ TEST_SUITE("Component Serialization")
         std::string normalizedJsonStr = duin::JSONValue::Parse(jsonStr).Write();
         duin::JSONValue v = duin::JSONValue::Parse(jsonStr);
 
-        duin::PackedComponent p = duin::PackedComponent::Deserialize(v);
+        duin::PackedComponent p = sb.DeserializeComponent(v);
 
         CHECK(p.jsonData == normalizedJsonStr);
     }
 
     TEST_CASE("Serialize Component")
     {
+        duin::World world;
+        duin::SceneBuilder sb(&world);
+
         std::string jsonStr = R"({"type":"TestStructX","x":"3"})";
         duin::PackedComponent p{.jsonData = jsonStr};
 
         duin::JSONValue v = duin::JSONValue::Parse(jsonStr);
 
-        std::string pstr = duin::PackedComponent::Serialize(p).Write();
+        std::string pstr = sb.SerializeComponent(p).Write();
 
         CHECK(pstr == jsonStr);
     }
@@ -47,13 +53,14 @@ TEST_SUITE("Component Instantiation")
         duin::World world;
         world.Component<Vec3>();
         world.Component<Camera>();
+        duin::SceneBuilder sb(&world);
         duin::Entity e = world.CreateEntity().Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(3.0f, 2.0f, 4.0f, true);
         std::vector<duin::PackedComponent> cmpList;
         e.ForEachComponent([&](duin::Entity::ID cmpID) {
             if (cmpID.IsEntity())
             {
                 duin::Entity cmp = cmpID.GetEntity();
-                duin::PackedComponent pc = duin::PackedComponent::Pack(e, cmp);
+                duin::PackedComponent pc = sb.PackComponent(e, cmp);
                 cmpList.push_back(pc);
             }
         });
@@ -80,6 +87,7 @@ TEST_SUITE("Component Instantiation")
         duin::World world;
         world.Component<Vec3>();
         world.Component<Camera>();
+        duin::SceneBuilder sb(&world);
         std::vector<duin::PackedComponent> cmpList{2};
         cmpList[0].componentTypeName = "Vec3";
         cmpList[0].jsonData = R"({"type":"Vec3","x":1.0,"y":2.0,"z":3.0})";
@@ -89,7 +97,7 @@ TEST_SUITE("Component Instantiation")
         duin::Entity e = world.CreateEntity();
         for (duin::PackedComponent &cmp : cmpList)
         {
-            duin::PackedComponent::Instantiate(cmp, e);
+            sb.InstantiateComponent(cmp, e);
         }
 
         CHECK(e.GetMut<Vec3>() == Vec3{1.0f, 2.0f, 3.0f});

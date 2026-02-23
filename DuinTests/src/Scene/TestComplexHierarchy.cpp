@@ -139,6 +139,7 @@ TEST_SUITE("Complex Hierarchy Tests")
     TEST_CASE("Scene with multiple complex entity hierarchies")
     {
         duin::World world;
+        duin::SceneBuilder sceneBuilder(&world);
         world.Component<Vec3>();
         world.Component<Camera>();
 
@@ -177,7 +178,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         light2.ChildOf(environment);
 
         // Pack scene
-        duin::PackedScene ps = duin::PackedScene::Pack({sceneRoot});
+        duin::PackedScene ps = sceneBuilder.PackScene({sceneRoot});
         ps.uuid = duin::UUID::FromStringHex("complexscene1111");
         ps.name = "ComplexScene";
 
@@ -194,7 +195,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         world2.Component<Vec3>();
         world2.Component<Camera>();
         duin::Entity newRoot = world2.CreateEntity("NewSceneRoot");
-        duin::PackedScene::Instantiate(ps2, &world2);
+        sceneBuilder.InstantiateScene(ps2, &world2);
 
         // Verify
         std::vector<duin::Entity> rootChildren = newRoot.GetChildren();
@@ -505,6 +506,7 @@ TEST_SUITE("Complex Hierarchy Tests")
     TEST_CASE("Mixed scene - some entities with deep hierarchies, others standalone")
     {
         duin::World world;
+        duin::SceneBuilder sceneBuilder(&world);
         world.Component<Vec3>();
         world.Component<Camera>();
 
@@ -540,7 +542,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         mediumChild.ChildOf(mediumRoot);
 
         // Pack scene
-        duin::PackedScene ps = duin::PackedScene::Pack({sceneRoot});
+        duin::PackedScene ps = sceneBuilder.PackScene({sceneRoot});
         CHECK(ps.entities.size() == 4); // 2 standalone + 2 hierarchies
 
         // Serialize, deserialize, and instantiate
@@ -551,7 +553,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         world2.Component<Vec3>();
         world2.Component<Camera>();
         duin::Entity newRoot = world2.CreateEntity("NewSceneRoot");
-        duin::PackedScene::Instantiate(ps2, &world2);
+        sceneBuilder.InstantiateScene(ps2, &world2);
 
         // Verify
         std::vector<duin::Entity> rootChildren = newRoot.GetChildren();

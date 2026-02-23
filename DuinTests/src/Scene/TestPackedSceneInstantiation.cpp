@@ -17,7 +17,8 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         world.Component<Vec3>();
 
         duin::Entity root = world.CreateEntity("EmptyRoot");
-        duin::PackedScene ps = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene ps = builder.PackScene({root});
 
         CHECK(ps.entities.empty());
     }
@@ -36,7 +37,8 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         b.ChildOf(root);
         c.ChildOf(root);
 
-        duin::PackedScene ps = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene ps = builder.PackScene({root});
 
         CHECK(ps.entities.size() == 3);
     }
@@ -70,8 +72,10 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         scene.entities.push_back(e1);
         scene.entities.push_back(e2);
 
+
         duin::Entity root = world.CreateEntity("SceneRoot");
-        duin::PackedScene::Instantiate(scene, &world);
+        duin::SceneBuilder builder(&world);
+        builder.InstantiateScene(scene, &world);
 
         std::vector<duin::Entity> children = root.GetChildren();
         CHECK(children.size() == 2);
@@ -92,7 +96,8 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         e2.ChildOf(root);
 
         // Pack
-        duin::PackedScene ps = duin::PackedScene::Pack({root});
+        duin::SceneBuilder builder(&world);
+        duin::PackedScene ps = builder.PackScene({root});
         ps.uuid = duin::UUID::FromStringHex("packinstrt111111");
         ps.name = "PackInstantiateRoundTrip";
 
@@ -100,11 +105,13 @@ TEST_SUITE("PackedScene Pack and Instantiate")
 
 
         // Instantiate into new root
+
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
         duin::Entity newRoot = world2.CreateEntity("NewRoot");
-        duin::PackedScene::Instantiate(ps, &world2);
+        duin::SceneBuilder builder2(&world2);
+        builder2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> children = newRoot.GetChildren();
         CHECK(children.size() == 2);

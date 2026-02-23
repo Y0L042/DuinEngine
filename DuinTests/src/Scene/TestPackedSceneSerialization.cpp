@@ -5,6 +5,7 @@
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/IO/JSONValue.h>
 #include <Duin/ECS/ECSModule.h>
+#include "Defines.h"
 
 namespace TestSceneBuilder
 {
@@ -291,7 +292,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
                     "uuid": "1234567890abcdef",
                     "name": "Player",
                     "enabled": true,
-                    "tags": ["PxDynamic", "CameraIsActive"],
+                    "tags": [{"type":"PxDynamic"}, {"type":"CameraIsActive"}],
                     "components": [],
                     "children": []
                 }
