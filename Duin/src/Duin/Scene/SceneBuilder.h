@@ -34,13 +34,6 @@ struct PackedComponent
 
     std::string componentTypeName;
     std::string jsonData;
-
-    static PackedComponent Deserialize(const JSONValue &Comp);
-    static JSONValue Serialize(const PackedComponent &pComp);
-
-    // ComponentSerializer::Serialize() -> PackedComponent::Pack()
-    static PackedComponent Pack(Entity e, Entity cmp);
-    static void Instantiate(const PackedComponent &p, Entity e);
 };
 
 /**
@@ -53,26 +46,26 @@ struct PackedComponent
  */
 struct PackedPair
 {
-    static const std::string TAG_RELATIONSHIP;
-    static const std::string TAG_TARGET;
+    static const std::string TAG_RELATIONSHIPNAME;
+    static const std::string TAG_RELATIONSHIPUUID;
+    static const std::string TAG_TARGETNAME;
+    static const std::string TAG_TARGETUUID;
     static const std::string TAG_DATA;
 
     std::string relationshipName; ///< Name of the relationship (first element)
-    std::string targetName;       ///< Name or UUID of the target (second element)
-    std::string jsonData;         ///< Optional data stored with the pair
+    UUID relationshipUUID;
+    std::string targetName; ///< Name or UUID of the target (second element)
+    UUID targetUUID;
+    std::string jsonData; ///< Optional data stored with the pair
 
-    static PackedPair Deserialize(const JSONValue &pair);
-    static JSONValue Serialize(const PackedPair &ppair);
-
-    static PackedPair Pack(Entity e, Entity::ID pairId);
-    static void Instantiate(const PackedPair &p, Entity e);
+    static JSONValue Serialize(const PackedPair &pp);
+    static PackedPair Deserialize(const JSONValue &json);
 };
 
 /**
  * @struct PackedEntity
  * @brief Serialized entity with components and children.
  * @ingroup ECS_Scene
- *
  *
  * Represents a complete entity hierarchy for serialization.
  */
@@ -94,11 +87,10 @@ struct PackedEntity
     std::vector<PackedComponent> components; ///< Attached components.
     std::vector<PackedEntity> children;      ///< Child entities.
 
-    static PackedEntity Deserialize(const JSONValue &entity);
-    static JSONValue Serialize(const PackedEntity &pEntity);
-
     static PackedEntity Pack(Entity e);
     static void Instantiate(const PackedEntity &pe, Entity e);
+    static JSONValue Serialize(const PackedEntity &pe);
+    static PackedEntity Deserialize(const JSONValue &json);
 };
 
 /**
@@ -113,9 +105,6 @@ struct PackedExternalDependency
 
     UUID uuid;        ///< Dependency identifier.
     std::string type; ///< Dependency type (scene, asset).
-
-    static PackedExternalDependency Deserialize(const JSONValue &exdep);
-    static JSONValue Serialize(const PackedExternalDependency &pExdep);
 };
 
 /**
@@ -134,9 +123,6 @@ struct PackedSceneMetadata
     std::string engineVersion; ///< Engine version.
     std::string lastModified;  ///< Last modification timestamp.
     std::string author;        ///< Author name.
-
-    static PackedSceneMetadata Deserialize(const JSONValue &meta);
-    static JSONValue Serialize(const PackedSceneMetadata &pMeta);
 };
 
 /**
@@ -163,14 +149,57 @@ struct PackedScene
     std::vector<PackedExternalDependency> externalDependencies; ///< External refs.
     std::vector<PackedEntity> entities;                         ///< Root entities.
 
-    static PackedScene Deserialize(const JSONValue &scene);
-    static JSONValue Serialize(const PackedScene &pScene);
-
-    /** @brief Creates entities in the given world from this packed scene. */
-    static void Instantiate(PackedScene &pscn, World *world);
-    static PackedScene Pack(const std::vector<Entity> &vecEntities);
+    static JSONValue Serialize(const PackedScene &pscn);
+    static PackedScene Deserialize(const JSONValue &json);
 
   private:
+};
+
+class SceneBuilder
+{
+  public:
+    SceneBuilder(duin::World *world);
+    ~SceneBuilder() = default;
+
+    PackedScene PackScene(const std::vector<Entity> &vecEntities);
+    PackedScene PackScene(std::shared_ptr<World> world);
+    PackedScene PackScene(World *world);
+    void InstantiateScene(PackedScene &pscn, World *world);
+    void InstantiateSceneAsChildren(PackedScene &pscn, Entity parent);
+    JSONValue SerializeScene(const PackedScene &pscn);
+    PackedScene DeserializeScene(const JSONValue &scene);
+
+    JSONValue SerializeMetadata(const PackedSceneMetadata &metadata);
+    PackedSceneMetadata DeserializeMetadata(const JSONValue &metadata);
+
+    PackedEntity PackEntity(Entity e);
+    void InstantiateEntity(const PackedEntity &pe, Entity e);
+    JSONValue SerializeEntity(const PackedEntity &pe);
+    PackedEntity DeserializeEntity(const JSONValue &entity);
+
+    PackedComponent PackComponent(Entity e, Entity cmp);
+    void InstantiateComponent(const PackedComponent &pc, Entity e);
+    JSONValue SerializeComponent(const PackedComponent &pc);
+    PackedComponent DeserializeComponent(const JSONValue &comp);
+
+    PackedPair PackPair(Entity e, Entity::ID pairId);
+    PackedPair PackPairWRelationshipEntity(Entity::ID pairID, UUID rUUID);
+    PackedPair PackPairWTargetEntity(Entity::ID pairID, UUID tUUID);
+    PackedPair PackPairWBothEntities(Entity::ID pairID, UUID rUUID, UUID tUUID);
+    void InstantiatePair(const PackedPair &pp, Entity e);
+    JSONValue SerializePair(const PackedPair &pp);
+    PackedPair DeserializePair(const JSONValue &pair);
+
+    JSONValue SerializeExternalDependency(const PackedExternalDependency &ped);
+    PackedExternalDependency DeserializeExternalDependency(const JSONValue &exdep);
+
+  private:
+    duin::World *world = nullptr;
+    std::unordered_map<uint64_t, UUID> instanceToPackedEntityMap;
+    std::unordered_map<UUID, uint64_t> packedEntityToInstanceMap;
+
+    void PrePassEntity(Entity e);
+    void PrePassInstantiate(const PackedEntity &pe, Entity parent);
 };
 
 } // namespace duin
