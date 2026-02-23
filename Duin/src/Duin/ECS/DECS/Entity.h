@@ -397,6 +397,15 @@ class Entity
         });
     }
 
+    template <typename First, typename Func>
+    Entity &Each(Func &&func)
+    {
+        flecsEntity.each<First>([&](flecs::id fID) {
+            Entity::ID id(fID, world);
+            func(id);
+        });
+    };
+
     // ========== UNIFIED COMPONENT API ==========
 
     /**
@@ -468,11 +477,15 @@ class Entity
     }
 
     // Helper trait to check if Args is a single Entity parameter
-    template<typename... Args>
-    struct IsSingleEntityArg : std::false_type {};
-    
-    template<typename T>
-    struct IsSingleEntityArg<T> : std::is_same<typename std::decay<T>::type, Entity> {};
+    template <typename... Args>
+    struct IsSingleEntityArg : std::false_type
+    {
+    };
+
+    template <typename T>
+    struct IsSingleEntityArg<T> : std::is_same<typename std::decay<T>::type, Entity>
+    {
+    };
 
     /**
      * @brief Add a component with constructor arguments.
@@ -480,11 +493,11 @@ class Entity
      * @tparam Args Constructor argument types.
      * @param args Arguments to construct the component.
      * @return Reference to this entity.
-     * 
+     *
      * Note: This overload is disabled when a single Entity argument is passed
      * to avoid ambiguity with the relationship pair overload.
      */
-    template <typename T, typename... Args, 
+    template <typename T, typename... Args,
               typename = typename std::enable_if<!IsSingleEntityArg<Args...>::value>::type>
     Entity &Add(Args &&...args)
     {
@@ -504,14 +517,14 @@ class Entity
      * This creates a (Relation, target) pair where Relation is a component type
      * and target is another entity. This is commonly used for relationships like
      * Likes, Targets, Owns, etc.
-     * 
+     *
      * Example:
      * @code
      * Entity player = world.CreateEntity("Player");
      * Entity enemy = world.CreateEntity("Enemy");
      * player.Add<Targets>(enemy);  // Player targets enemy
      * @endcode
-     * 
+     *
      * @tparam Relation The relationship component type (first element of the pair).
      * @param target The target entity (second element of the pair).
      * @return Reference to this entity.
@@ -1065,18 +1078,18 @@ class Entity
     template <typename Relationship, typename Func>
     void ForEachTarget(Func &&func) const;
 
-    //template <typename Func>
-    //void ForEachComponent(Func &&func) const
+    // template <typename Func>
+    // void ForEachComponent(Func &&func) const
     //{
-    //    flecsEntity.each([&](flecs::id &id) {
-    //        // id represents the component type
-    //        // You can get type information and invoke the callback
-    //        ID id_(id, world);
-    //        func(id_);
-    //        //if (id.is_entity() && id.entity().has<flecs::Component>())
-    //        //{
-    //        //    flecs::entity fe = id.entity();
-    //        //    Entity e(fe, world);
+    //     flecsEntity.each([&](flecs::id &id) {
+    //         // id represents the component type
+    //         // You can get type information and invoke the callback
+    //         ID id_(id, world);
+    //         func(id_);
+    //         //if (id.is_entity() && id.entity().has<flecs::Component>())
+    //         //{
+    //         //    flecs::entity fe = id.entity();
+    //         //    Entity e(fe, world);
 
     //        //    func(e);
     //        //}

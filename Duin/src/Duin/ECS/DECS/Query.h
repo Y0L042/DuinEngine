@@ -281,7 +281,8 @@ template <typename... Components>
 class QueryBuilder
 {
   public:
-    QueryBuilder(flecs::query_builder<Components...> &&builder) : flecsQueryBuilder(std::move(builder))
+    QueryBuilder(flecs::query_builder<Components...> &&builder, World *world = nullptr)
+        : flecsQueryBuilder(std::move(builder)), world_(world)
     {
     }
 
@@ -315,11 +316,12 @@ class QueryBuilder
      */
     Query<Components...> Build()
     {
-        return Query<Components...>(flecsQueryBuilder.build());
+        return Query<Components...>(flecsQueryBuilder.build(), world_);
     }
 
   private:
     flecs::query_builder<Components...> flecsQueryBuilder;
+    World *world_ = nullptr;
 };
 
 /**
@@ -338,7 +340,7 @@ class Query
      * @brief Constructor from flecs query (move).
      * @param other The flecs query to wrap.
      */
-    Query(flecs::query<Components...> &&other) : rawQuery(std::move(other))
+    Query(flecs::query<Components...> &&other, World *world = nullptr) : rawQuery(std::move(other)), world_(world)
     {
         DN_CORE_INFO("Constructing query using r-value move");
     }
@@ -347,7 +349,7 @@ class Query
      * @brief Constructor from flecs query (copy).
      * @param other The flecs query to wrap.
      */
-    Query(const flecs::query<Components...> &other) : rawQuery(other)
+    Query(const flecs::query<Components...> &other, World *world = nullptr) : rawQuery(other), world_(world)
     {
         DN_CORE_INFO("Constructing query using l-value");
     }
@@ -399,10 +401,10 @@ class Query
     template <typename Func>
     void Each(Func &&func) const
     {
-        rawQuery.each([&func](flecs::entity flecsEntity, Components &...comps) {
+        rawQuery.each([&func, this](flecs::entity flecsEntity, Components &...comps) {
             Entity duinEntity;
             duinEntity.flecsEntity = flecsEntity;
-            duinEntity.world = nullptr;
+            duinEntity.world = world_;
             func(duinEntity, comps...);
         });
     }
@@ -474,5 +476,6 @@ class Query
     friend class World;
     friend class Entity;
     flecs::query<Components...> rawQuery;
+    World *world_ = nullptr;
 };
 } // namespace duin

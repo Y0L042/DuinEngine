@@ -3,6 +3,11 @@
 #include <flecs.h>
 #include "../ComponentSerializer.h"
 #include "Query.h"
+#include <cstdint>
+#include <string>
+#include <vector>
+#include <flecs/addons/cpp/entity.hpp>
+#include <flecs/addons/cpp/world.hpp>
 
 namespace duin
 {
@@ -157,7 +162,7 @@ class World
      */
     void Quit();
 
-    Entity Lookup(const std::string& name);
+    Entity Lookup(const std::string &name);
 
     /**
      * @brief Iterate over the children of the root entity.
@@ -165,14 +170,35 @@ class World
      * @param f The function to apply to each child.
      */
     template <typename Func>
-    void IterateChildren(Func &&f) const
+    void IterateChildren(Func &&f, bool filterBuiltins = true) const
     {
         flecsWorld.children([&](flecs::entity child) {
+            if (filterBuiltins)
+            {
+                // Filter out known FLECS internal entity categories:
+                //   flecs::Component  (struct type)  � component/tag type descriptor entities
+                //   flecs::Observer   (entity_t tag) � internal observer entities
+                //   flecs::Module     (entity_t tag) � module scope entities
+                if (child.has<flecs::Component>())
+                    return;
+                if (child.has(flecs::Observer))
+                    return;
+                if (child.has(flecs::Module))
+                    return;
+            }
             Entity e;
             e.SetWorld(const_cast<World *>(this));
             e.SetFlecsEntity(child);
             f(e);
         });
+    }
+
+    std::vector<Entity> GetChildren(bool filterBuiltins = true);
+
+    template <typename Func>
+    void Each(Func&& func) const
+    {
+        flecsWorld.each(std::forward<Func>(func));
     }
 
     /**
@@ -197,7 +223,7 @@ class World
     template <typename... Comps>
     duin::QueryBuilder<Comps...> QueryBuilder() const
     {
-        return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>());
+        return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>(), const_cast<World *>(this));
     }
 
     /**
@@ -206,18 +232,14 @@ class World
      */
     Entity GetWorldEntity();
 
-    flecs::world& GetFlecsWorld();
+    flecs::world &GetFlecsWorld();
 
   private:
     friend class Entity;
     flecs::world flecsWorld;
-
-
 
     // Prevent copying
     World(const World &) = delete;
     World &operator=(const World &) = delete;
 };
 } // namespace duin
-
-

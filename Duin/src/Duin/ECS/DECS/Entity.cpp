@@ -12,13 +12,12 @@
 #include <flecs/addons/cpp/entity.hpp>
 #include <flecs/addons/cpp/mixins/id/decl.hpp>
 
-duin::Entity::Entity()
+duin::Entity::Entity() : flecsEntity(flecs::entity_t(0))
 {
 }
 
 duin::Entity::Entity(uint64_t id, World *world) : flecsEntity(flecs::entity(id)), world(world)
 {
-
 }
 
 duin::Entity duin::Entity::GetTarget(uint64_t relationship, int32_t index) const
@@ -80,7 +79,8 @@ duin::World *duin::Entity::GetWorld() const
 
 bool duin::Entity::IsValid() const
 {
-    return flecsEntity.is_valid();
+    bool res = true && flecsEntity.is_valid() && world != nullptr;
+    return res;
 }
 
 bool duin::Entity::IsAlive() const
@@ -204,10 +204,9 @@ duin::Entity duin::Entity::Second()
     return e;
 }
 
-
 duin::Entity duin::Entity::GetParent() const
 {
-    return Entity(flecsEntity.parent());
+    return Entity(flecsEntity.parent(), world);
 }
 
 std::vector<duin::Entity> duin::Entity::GetChildren() const
@@ -222,7 +221,6 @@ void duin::Entity::SetWorld(World *world)
     this->world = world;
 }
 
-
 void duin::Entity::SetFlecsEntity(const flecs::entity &entity)
 {
     flecsEntity = entity;
@@ -230,46 +228,35 @@ void duin::Entity::SetFlecsEntity(const flecs::entity &entity)
 
 // ========== Entity::ID Implementation ==========
 
-
-duin::Entity::ID::ID()
-    : world_(nullptr)
-    , flecsId_(static_cast<flecs::id_t>(0))
+duin::Entity::ID::ID() : world_(nullptr), flecsId_(static_cast<flecs::id_t>(0))
 {
 }
 
-duin::Entity::ID::ID(flecs::id_t value)
-    : world_(nullptr)
-    , flecsId_(value)
+duin::Entity::ID::ID(flecs::id_t value) : world_(nullptr), flecsId_(value)
 {
 }
 
 duin::Entity::ID::ID(World *world, flecs::id_t value)
-    : world_(world)
-    , flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, value)
+    : world_(world), flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, value)
 {
 }
 
 duin::Entity::ID::ID(World *world, flecs::id_t first, flecs::id_t second)
-    : world_(world)
-    , flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, first, second)
+    : world_(world), flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, first, second)
 {
 }
 
 duin::Entity::ID::ID(World *world, const char *expr)
-    : world_(world)
-    , flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, expr)
+    : world_(world), flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, expr)
 {
 }
 
-duin::Entity::ID::ID(flecs::id_t first, flecs::id_t second)
-    : world_(nullptr)
-    , flecsId_(first, second)
+duin::Entity::ID::ID(flecs::id_t first, flecs::id_t second) : world_(nullptr), flecsId_(first, second)
 {
 }
 
 duin::Entity::ID::ID(const ID &first, const ID &second)
-    : world_(first.world_)
-    , flecsId_(first.flecsId_, second.flecsId_)
+    : world_(first.world_), flecsId_(first.flecsId_, second.flecsId_)
 {
 }
 
@@ -382,4 +369,3 @@ flecs::id duin::Entity::ID::GetFlecsId() const
 {
     return flecsId_;
 }
-

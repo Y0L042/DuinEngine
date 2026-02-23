@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "Query.h"
 
-duin::World::World() 
+duin::World::World()
 {
 }
 
@@ -132,6 +132,33 @@ duin::Entity duin::World::Lookup(const std::string &name)
     e.SetFlecsEntity(flecsWorld.lookup(name.c_str()));
 
     return e;
+}
+
+std::vector<duin::Entity> duin::World::GetChildren(bool filterBuiltins)
+{
+    std::vector<Entity> children;
+
+    flecsWorld.children([&](flecs::entity child) {
+        if (filterBuiltins)
+        {
+            // Filter out known FLECS internal entity categories:
+            //   flecs::Component  (struct type)  — component/tag type descriptor entities
+            //   flecs::Observer   (entity_t tag) — internal observer entities
+            //   flecs::Module     (entity_t tag) — module scope entities
+            if (child.has<flecs::Component>())
+                return;
+            if (child.has(flecs::Observer))
+                return;
+            if (child.has(flecs::Module))
+                return;
+        }
+        Entity e;
+        e.SetWorld(const_cast<World *>(this));
+        e.SetFlecsEntity(child);
+        children.push_back(e);
+    });
+
+    return children;
 }
 
 flecs::world &duin::World::GetFlecsWorld()
