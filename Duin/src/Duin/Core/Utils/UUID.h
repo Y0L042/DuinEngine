@@ -158,8 +158,8 @@ class UUID
      */
     static UUID FromStringHex(const std::string &string);
 
-    std::string ToStrDec();
-    std::string ToStrHex();
+    std::string ToStrDec() const;
+    std::string ToStrHex() const;
 
     /**
      * @brief Equality comparison operator.

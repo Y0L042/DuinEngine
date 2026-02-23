@@ -148,12 +148,12 @@ duin::UUID duin::UUID::FromStringHex(const std::string &string)
     return UUID(value);
 }
 
-std::string duin::UUID::ToStrDec()
+std::string duin::UUID::ToStrDec() const
 {
     return UUID::ToStringDec(*this);
 }
 
-std::string duin::UUID::ToStrHex()
+std::string duin::UUID::ToStrHex() const
 {
     return UUID::ToStringHex(*this);
 }
