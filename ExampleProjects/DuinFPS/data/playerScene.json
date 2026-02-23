@@ -1,0 +1,307 @@
+{
+	"sceneUUID": "0xB9322953E1B3C456",
+	"sceneName": "",
+	"metadata": {
+		"editorVersion": "",
+		"engineVersion": "",
+		"lastModified": "",
+		"author": ""
+	},
+	"externalDependencies": [
+
+	],
+	"entities": [
+		{
+			"uuid": "0x290F25D657B96ADF",
+			"name": "Player",
+			"enabled": true,
+			"tags": [
+
+			],
+			"pairs": [
+				{
+					"relationship": "Identifier",
+					"target": "Name"
+				},
+				{
+					"relationship": "IsA",
+					"target": "CharacterBody"
+				}
+			],
+			"components": [
+				{
+					"type": "PxKinematic"
+				},
+				{
+					"type": "Transform3DImpl",
+					"pos": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": 500.0,
+						"z": 50.0
+					},
+					"scale": {
+						"type": "Vector3Impl",
+						"x": 1.0,
+						"y": 1.0,
+						"z": 1.0
+					},
+					"rot": {
+						"type": "Vector4Impl",
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0,
+						"w": 1.0
+					}
+				},
+				{
+					"type": "Velocity3DImpl",
+					"v": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": 2.5485321318574616e-13,
+						"z": 2.2841164968494522e-43
+					}
+				},
+				{
+					"type": "CharacterBodyDesc",
+					"height": 1.75,
+					"radius": 0.30000001192092896,
+					"slopeLimit": 0.7071067690849304,
+					"stepOffset": 0.5,
+					"contactOffset": 0.10000000149011612,
+					"position": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": 500.0,
+						"z": 50.0
+					},
+					"upDirection": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": 1.0,
+						"z": 0.0
+					}
+				},
+				{
+					"type": "PlayerMovementInputVec3",
+					"value": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
+					}
+				},
+				{
+					"type": "GravityComponent",
+					"value": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": -9.8100004196167,
+						"z": 0.0
+					}
+				},
+				{
+					"type": "MouseInputVec2",
+					"value": {
+						"type": "Vector2Impl",
+						"x": 0.0,
+						"y": 0.0
+					}
+				},
+				{
+					"type": "CameraYawComponent",
+					"value": 0.0
+				},
+				{
+					"type": "InputVelocities",
+					"vec": [
+
+					]
+				},
+				{
+					"type": "InputForces",
+					"vec": [
+
+					]
+				},
+				{
+					"type": "InputVelocityDirection",
+					"value": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
+					}
+				},
+				{
+					"type": "Mass",
+					"value": 80.0
+				},
+				{
+					"type": "CanRunComponent",
+					"speed": 10.0
+				},
+				{
+					"type": "CanJumpComponent",
+					"impulse": 625.0
+				},
+				{
+					"type": "CanSprintComponent",
+					"speed": 17.5
+				},
+				{
+					"type": "OnGroundTag"
+				},
+				{
+					"type": "CanGravity"
+				}
+			],
+			"children": [
+				{
+					"uuid": "0x3CB1B60968CD0A60",
+					"name": "CameraRoot",
+					"enabled": true,
+					"tags": [
+
+					],
+					"pairs": [
+						{
+							"relationship": "Identifier",
+							"target": "Name"
+						},
+						{
+							"relationship": "ChildOf",
+							"target": "Player"
+						},
+						{
+							"relationship": "IsA",
+							"target": "Node3D"
+						}
+					],
+					"components": [
+						{
+							"type": "Transform3DImpl",
+							"pos": {
+								"type": "Vector3Impl",
+								"x": 0.0,
+								"y": 1.75,
+								"z": 0.0
+							},
+							"scale": {
+								"type": "Vector3Impl",
+								"x": 1.0,
+								"y": 1.0,
+								"z": 1.0
+							},
+							"rot": {
+								"type": "Vector4Impl",
+								"x": 0.0,
+								"y": 0.0,
+								"z": 0.0,
+								"w": 1.0
+							}
+						},
+						{
+							"type": "MouseInputVec2",
+							"value": {
+								"type": "Vector2Impl",
+								"x": 0.0,
+								"y": 0.0
+							}
+						},
+						{
+							"type": "CameraPitchComponent",
+							"value": 0.0
+						}
+					],
+					"children": [
+						{
+							"uuid": "0x3B8918EC9D0FFAB",
+							"name": "PlayerCamera",
+							"enabled": true,
+							"tags": [
+
+							],
+							"pairs": [
+								{
+									"relationship": "Identifier",
+									"target": "Name"
+								},
+								{
+									"relationship": "ChildOf",
+									"target": "CameraRoot"
+								},
+								{
+									"relationship": "IsA",
+									"target": "Camera3D"
+								}
+							],
+							"components": [
+								{
+									"type": "ActiveCamera"
+								},
+								{
+									"type": "Transform3DImpl",
+									"pos": {
+										"type": "Vector3Impl",
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									},
+									"scale": {
+										"type": "Vector3Impl",
+										"x": 1.0,
+										"y": 1.0,
+										"z": 1.0
+									},
+									"rot": {
+										"type": "Vector4Impl",
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0,
+										"w": 1.0
+									}
+								},
+								{
+									"type": "CameraImpl",
+									"uuid": {
+										"type": "UUIDImpl",
+										"uuid": 2041140372913019731
+									},
+									"position": {
+										"type": "Vector3Impl",
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									},
+									"target": {
+										"type": "Vector3Impl",
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									},
+									"up": {
+										"type": "Vector3Impl",
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									},
+									"fovy": 72.0
+								},
+								{
+									"type": "VelocityBob",
+									"frequency": 10.0,
+									"amplitude": 1.0
+								}
+							],
+							"children": [
+
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

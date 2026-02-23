@@ -8,7 +8,7 @@
 #include <Duin/Scene/SceneBuilder.h>
 #include <Duin/IO/IOModule.h>
 
-#define WRITE_ENT 0
+#define WRITE_ENT 1
 
 flecs::ref<duin::Camera> cameraRef;
 
@@ -20,28 +20,31 @@ void Player::Init()
 {
     debugConsole.Log("Player: Ready");
 
+#if WRITE_ENT
     float playerHeight = 1.75f;
-    //duin::Vector3 playerPosition(0.0f, 50.0f, 5.0f);
-    //duin::CharacterBodyDesc playerDesc = {
-    //    .height = playerHeight,
-    //    .radius = 0.3f,
-    //    .slopeLimit = std::cosf(physx::PxPi / 4.0),
-    //    .stepOffset = 0.5f,
-    //    .contactOffset = 0.1f,
-    //    .position = duin::Vector3(playerPosition),
-    //    .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
-    //};
-    //duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
-    //std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
+    duin::Vector3 playerPosition(0.0f, 50.0f, 5.0f);
+    duin::CharacterBodyDesc playerDesc = {
+        .height = playerHeight,
+        .radius = 0.3f,
+        .slopeLimit = std::cosf(physx::PxPi / 4.0),
+        .stepOffset = 0.5f,
+        .contactOffset = 0.1f,
+        .position = duin::Vector3(playerPosition),
+        .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
+    };
+    duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
+    std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
+#endif
 
+    duin::SceneBuilder sceneBuilder(world.get());
     duin::Entity root = world->CreateEntity();
 #if !WRITE_ENT
     duin::JSONValue scnJSON = duin::JSONValue::ParseFromFile(
         "C:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\Sandbox\\data\\playerScene.json");
     duin::PackedScene pscn = duin::PackedScene::Deserialize(scnJSON);
-    duin::PackedScene::Instantiate(pscn, world.get());
+    sceneBuilder.InstantiateScene(pscn, world.get());
 
-    player = world->Lookup("Player");//.Set<duin::ECSComponent::CharacterBodyComponent>({playerBody});
+    player = world->Lookup("Player"); //.Set<duin::ECSComponent::CharacterBodyComponent>({playerBody});
     cameraRoot = world->Lookup("Player::CameraRoot");
     playerCamera = world->Lookup("Player::CameraRoot::PlayerCamera");
 #endif
@@ -82,7 +85,7 @@ void Player::Init()
 #endif
 
 #if 1
-    duin::PackedScene pscn_ = duin::PackedScene::Pack({player});
+    duin::PackedScene pscn_ = sceneBuilder.PackScene({player});
     duin::JSONValue worldJSON = duin::PackedScene::Serialize(pscn_);
     DN_INFO("{}", worldJSON.Write());
 #endif
