@@ -224,6 +224,10 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
             return;
         }
     }
+    if (pp.relationshipName == "ChildOf")
+    {
+        return;
+    }
 
     // For component/tag-type relationships we must look up the entity using its full FLECS path
     // (e.g. "::TestSceneBuilder::Targets") because the short name alone is insufficient when
@@ -283,7 +287,8 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
         // Build the pair ID from the two resolved entity IDs.  For component-type
         // relationships this produces (component_type_id, target_id) which matches
         // what has<Relation>(target) and Has<Relation>(target) check.
-        e.Add(flecs::id(w->GetFlecsWorld().c_ptr(), relationship.GetID(), target.GetID()));
+        //e.Add(flecs::id(w->GetFlecsWorld().c_ptr(), relationship.GetID(), target.GetID()));
+        e.Add(relationship, target);
         DN_CORE_INFO("Instantiated pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName, e.GetName());
     }
     else
