@@ -111,8 +111,9 @@ void SandboxScene::SetUnpause()
 void SandboxScene::Tests()
 {
     // TestMisc();
-    // Test_FlecsJSON();
-    Test_SceneBuilder_01();
+    //Test_FlecsJSON();
+    //Test_SceneBuilder_01();
+    Test_FlecsNames();
 }
 
 void SandboxScene::Test_Misc()
@@ -121,45 +122,42 @@ void SandboxScene::Test_Misc()
 
 void SandboxScene::Test_FlecsJSON()
 {
-    /*
-        fatal: observable.c: 758: assert(cr != tgt_cr): (ChildOf,#595) (CYCLE_DETECTED)
+    flecs::world world;
+    world.component<TagA>();
+    world.component<TagB>();
+    world.component<TagC>();
+    world.component<X>();
+    world.component<Y>();
 
-        flecs saves relationships per-instance. Serialization/deserialization does not work cross-instance
-    */
+    flecs::entity e1 = world.entity().add<TagA>();
+    flecs::entity e2 = world.entity().child_of(e1).add<TagB>();
 
-    world = std::make_unique<duin::GameWorld>();
-    world->Initialize();
-    world->Component<TagA>();
-    world->Component<TagB>();
-    world->Component<TagC>();
-    world->Component<X>();
-    world->Component<Y>();
+    std::string e1JSON = static_cast<std::string>(e1.to_json());
+    std::string e2JSON = static_cast<std::string>(e2.to_json());
 
-    duin::Entity e1 = world->CreateEntity().Add<TagA>();
-    duin::Entity e2 = world->CreateEntity().ChildOf(e1).Add<TagB>();
+    DN_INFO("e1JSON {}: \n{}\n", e1.raw_id(), e1JSON);
+    DN_INFO("e2JSON {}: \n{}\n", e2.raw_id(), e2JSON);
 
-    std::string e1JSON = static_cast<std::string>(e1.GetFlecsEntity().to_json());
-    std::string e2JSON = static_cast<std::string>(e2.GetFlecsEntity().to_json());
+    flecs::world world2;
+    world2.component<TagA>();
+    world2.component<TagB>();
+    world2.component<TagC>();
+    world2.component<X>();
+    world2.component<Y>();
 
-    DN_INFO("e1JSON: \n{}\n", e1JSON);
-    DN_INFO("e2JSON: \n{}\n", e2JSON);
+    flecs::entity eZ = world2.entity();
+    flecs::entity eA = world2.entity();
+    flecs::entity eB = world2.entity();
+    eA.from_json(e1JSON.c_str());
+    eB.from_json(e2JSON.c_str());
 
-    duin::GameWorld world2;
-    world2.Initialize();
-    world2.Component<TagA>();
-    world2.Component<TagB>();
-    world2.Component<TagC>();
-    world2.Component<X>();
-    world2.Component<Y>();
+    std::string eZJSON = static_cast<std::string>(eZ.to_json());
+    std::string eAJSON = static_cast<std::string>(eA.to_json());
+    std::string eBJSON = static_cast<std::string>(eB.to_json());
 
-    duin::Entity eZ = world2.CreateEntity();
-    duin::Entity eA = world2.CreateEntity();
-    duin::Entity eB = world2.CreateEntity();
-    eA.GetFlecsEntity().from_json(e1JSON.c_str());
-    eB.GetFlecsEntity().from_json(e2JSON.c_str());
-
-    DN_INFO("eAJSON: \n{}\n", static_cast<std::string>(eA.GetFlecsEntity().to_json()));
-    DN_INFO("eBJSON: \n{}\n", static_cast<std::string>(eB.GetFlecsEntity().to_json()));
+    DN_INFO("eZJSON {}: \n{}\n", eZ.raw_id(), eZJSON),
+    DN_INFO("eAJSON {}: \n{}\n", eA.raw_id(), eAJSON);
+    DN_INFO("eBJSON {}: \n{}\n", eB.raw_id(), eBJSON);
 }
 
 // Testing Packing and Instantiation of Entities with Pairs
@@ -184,8 +182,6 @@ void SandboxScene::Test_SceneBuilder_01()
 
     DN_INFO("pscn:\n{}\n", sceneBuilder.SerializeScene(pscn).Write());
 
-
-
     duin::World world2;
     duin::SceneBuilder sceneBuilder2(&world2);
 
@@ -201,4 +197,14 @@ void SandboxScene::Test_SceneBuilder_01()
     duin::PackedScene pscn2 = sceneBuilder2.PackScene(&world2);
 
     DN_INFO("pscn:\n{}\n", sceneBuilder2.SerializeScene(pscn2).Write());
+}
+
+void SandboxScene::Test_FlecsNames()
+{
+    flecs::world world;
+    auto t1 = world.entity("Twin");
+    auto t2 = world.entity("Twin");
+
+    DN_INFO("T1: {}", static_cast<std::string>(t1.to_json()));
+    DN_INFO("T2: {}", static_cast<std::string>(t2.to_json()));
 }

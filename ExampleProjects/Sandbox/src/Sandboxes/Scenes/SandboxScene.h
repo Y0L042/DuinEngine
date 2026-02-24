@@ -21,7 +21,8 @@ class SandboxScene : public duin::GameState
     void Tests();
     void Test_Misc();
     void Test_FlecsJSON();
-  void Test_SceneBuilder_01();
+    void Test_SceneBuilder_01();
+    void Test_FlecsNames();
 
   private:
 };
