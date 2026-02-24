@@ -470,7 +470,7 @@ class Entity
     template <typename First>
     bool Has(Entity second) const
     {
-        return flecsEntity.has<First>(second.GetID());
+        return flecsEntity.has<First>(second.GetFlecsEntity());
     }
 
     template <typename First>
@@ -531,7 +531,14 @@ class Entity
         return *this;
     }
 
-    Entity &Add(const Entity& relationship, const Entity& target);
+    template <typename First, typename Second>
+    Entity &Add()
+    {
+        flecsEntity.add<First, Second>();
+        return *this;
+    }
+
+    Entity &Add(const Entity &relationship, const Entity &target);
 
     /**
      * @brief Add an entity/tag/trait to the entity by ID.
