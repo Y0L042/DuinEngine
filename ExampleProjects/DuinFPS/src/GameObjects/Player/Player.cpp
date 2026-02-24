@@ -41,7 +41,7 @@ void Player::Init()
 #if !WRITE_ENT
     duin::JSONValue scnJSON = duin::JSONValue::ParseFromFile(
         "C:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\Sandbox\\data\\playerScene.json");
-    duin::PackedScene pscn = duin::PackedScene::Deserialize(scnJSON);
+    duin::PackedScene pscn = sceneBuilder.DeserializeScene(scnJSON);
     sceneBuilder.InstantiateScene(pscn, world.get());
 
     player = world->Lookup("Player"); //.Set<duin::ECSComponent::CharacterBodyComponent>({playerBody});
@@ -86,7 +86,7 @@ void Player::Init()
 
 #if 1
     duin::PackedScene pscn_ = sceneBuilder.PackScene({player});
-    duin::JSONValue worldJSON = duin::PackedScene::Serialize(pscn_);
+    duin::JSONValue worldJSON = sceneBuilder.SerializeScene(pscn_);
     DN_INFO("{}", worldJSON.Write());
 #endif
 
