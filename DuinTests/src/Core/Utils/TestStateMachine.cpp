@@ -977,6 +977,25 @@ TEST_SUITE("GameState - Child Objects")
     }
 }
 
+TEST_SUITE("GameStateMachine - Hierarchy Update")
+{
+    TEST_CASE("GameState Update called exactly once when root ObjectUpdate propagates through hierarchy")
+    {
+        // Root GameObject -> GameStateMachine (child) -> active GameState
+        // Updating the root must NOT double-call the state's Update
+        auto root = std::make_shared<duin::GameObject>();
+        auto sm = root->CreateChildObject<duin::GameStateMachine>();
+        auto *state = sm->PushState<TestStateA>();
+
+        MSG_CHECK(state->updateCalls, state->updateCalls == 0);
+
+        // ObjectUpdate propagates through the hierarchy
+        root->ObjectUpdate(0.016);
+
+        MSG_CHECK(state->updateCalls, state->updateCalls == 1);
+    }
+}
+
 TEST_SUITE("GameState - IsEqualTo")
 {
     TEST_CASE("IsEqualTo same state")
