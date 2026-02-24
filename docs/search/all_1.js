@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['begin_0',['begin',['../classduin_1_1Iter.html#a8eb8395944137b257f439a1620a29088',1,'duin::Iter::begin()'],['../classduin_1_1JSONValue.html#a827c9638724cf584317563e94e489b45',1,'duin::JSONValue::begin()'],['../classduin_1_1JSONValue.html#aafbcf9c008215f9f668c7a8cd9d0ca6a',1,'duin::JSONValue::begin() const'],['../classduin_1_1JSONValue.html#a9731b776b30971e4525bd2ff93441dd6',1,'duin::JSONValue::Begin()']]],
+  ['begin_0',['begin',['../classduin_1_1JSONValue.html#a9731b776b30971e4525bd2ff93441dd6',1,'duin::JSONValue::Begin()'],['../classduin_1_1Iter.html#a8eb8395944137b257f439a1620a29088',1,'duin::Iter::begin()'],['../classduin_1_1JSONValue.html#a827c9638724cf584317563e94e489b45',1,'duin::JSONValue::begin()'],['../classduin_1_1JSONValue.html#aafbcf9c008215f9f668c7a8cd9d0ca6a',1,'duin::JSONValue::begin() const']]],
   ['bgfxbufferhandle_1',['BGFXBufferHandle',['../structduin_1_1BGFXBufferHandle.html',1,'duin']]],
   ['bindinghash_2',['bindingHash',['../structduin_1_1InputBinding.html#a3244217349492a9affd4638fe5a62dfc',1,'duin::InputBinding']]],
   ['bodies_3',['Bodies',['../group__Physics__Bodies.html',1,'']]],

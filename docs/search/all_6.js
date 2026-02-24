@@ -39,7 +39,7 @@ var searchData=
   ['getflecsquery_36',['GetFlecsQuery',['../classduin_1_1Query.html#a3612e6e75945f3c1eaed9ad779489425',1,'duin::Query']]],
   ['getgeometryvariant_37',['GetGeometryVariant',['../classduin_1_1CollisionShape.html#ab67faf2128fdbababcb626c4c24c5b94',1,'duin::CollisionShape']]],
   ['getgroupid_38',['GetGroupId',['../classduin_1_1Iter.html#a2a78f61df8ac29d71faedf853a2cf4b4',1,'duin::Iter']]],
-  ['getid_39',['GetID',['../classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714',1,'duin::Entity']]],
+  ['getid_39',['getid',['../classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714',1,'duin::Entity::GetID()'],['../structduin_1_1Entity_1_1ID.html#ad97d1990bf528357344d84749e0fda85',1,'duin::Entity::ID::GetID()']]],
   ['getinputvector_40',['GetInputVector',['../namespaceduin_1_1Input.html#a0fb28052967a3ce464629769db24f954',1,'duin::Input']]],
   ['getint_41',['GetInt',['../classduin_1_1JSONValue.html#ab92b04c14a9cc7193b302133cebb45cf',1,'duin::JSONValue']]],
   ['getkeypressed_42',['GetKeyPressed',['../namespaceduin_1_1Input.html#a964cf48d82226e5f1726868c37f3a4de',1,'duin::Input']]],

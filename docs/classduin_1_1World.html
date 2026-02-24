@@ -192,8 +192,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab75a1ae0712f0e82f0ec2ec52b0a9446" id="r_ab75a1ae0712f0e82f0ec2ec52b0a9446"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#ab75a1ae0712f0e82f0ec2ec52b0a9446">Quit</a> ()</td></tr>
 <tr class="memdesc:ab75a1ae0712f0e82f0ec2ec52b0a9446"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quit and clean up the world.  <br /></td></tr>
 <tr class="separator:ab75a1ae0712f0e82f0ec2ec52b0a9446"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52868f865b35ac9cc153fde572c93b2f" id="r_a52868f865b35ac9cc153fde572c93b2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#a52868f865b35ac9cc153fde572c93b2f">Lookup</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:a52868f865b35ac9cc153fde572c93b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61297c4a389e833aed848b27020b1fe7" id="r_a61297c4a389e833aed848b27020b1fe7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#a61297c4a389e833aed848b27020b1fe7">Lookup</a> (const std::string &amp;name, const std::string &amp;sep=&quot;::&quot;, const std::string &amp;root_sep=&quot;::&quot;, bool recursive=true)</td></tr>
+<tr class="separator:a61297c4a389e833aed848b27020b1fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10d8a0714c4268d4ec4475786c39f65a" id="r_a10d8a0714c4268d4ec4475786c39f65a"><td class="memTemplParams" colspan="2">template&lt;typename Func &gt; </td></tr>
 <tr class="memitem:a10d8a0714c4268d4ec4475786c39f65a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1World.html#a10d8a0714c4268d4ec4475786c39f65a">IterateChildren</a> (Func &amp;&amp;f, bool filterBuiltins=true) const</td></tr>
 <tr class="memdesc:a10d8a0714c4268d4ec4475786c39f65a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over the children of the root entity.  <br /></td></tr>
@@ -854,8 +854,8 @@ template&lt;typename Func &gt; </div>
 
 </div>
 </div>
-<a id="a52868f865b35ac9cc153fde572c93b2f" name="a52868f865b35ac9cc153fde572c93b2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52868f865b35ac9cc153fde572c93b2f">&#9670;&#160;</a></span>Lookup()</h2>
+<a id="a61297c4a389e833aed848b27020b1fe7" name="a61297c4a389e833aed848b27020b1fe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61297c4a389e833aed848b27020b1fe7">&#9670;&#160;</a></span>Lookup()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -864,8 +864,30 @@ template&lt;typename Func &gt; </div>
           <td class="memname"><a class="el" href="classduin_1_1Entity.html">duin::Entity</a> duin::World::Lookup </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>sep</em> = <code>&quot;::&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>root_sep</em> = <code>&quot;::&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>recursive</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
