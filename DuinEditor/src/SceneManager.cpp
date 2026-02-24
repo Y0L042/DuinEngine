@@ -10,7 +10,8 @@ SceneManager::~SceneManager()
 
 duin::PackedScene &SceneManager::LoadScene(duin::JSONValue sceneJSON)
 {
-    duin::PackedScene pscn = duin::PackedScene::Deserialize(sceneJSON);
+    duin::SceneBuilder builder(nullptr);
+    duin::PackedScene pscn = builder.DeserializeScene(sceneJSON);
     loadedScenes[pscn.uuid] = pscn;
 
     return loadedScenes[pscn.uuid];
