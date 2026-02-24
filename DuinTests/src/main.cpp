@@ -2,14 +2,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #define DN_DISABLE_ALL_LOGGING
 #include <doctest.h>
-#include "CustomReporter.h"    // Custom console reporter with inline values
-// Note: Not including CustomXmlReporter because doctest doesn't support overriding built-in reporters
-#include <Duin/Core/Debug/DNLog.h>
 #include <iostream>
-#include <fstream>
 #include <ctime>
 #include <sstream>
-#include <cstring>
+#include <corecrt.h>
 
 #define __TESTING__
 
@@ -28,35 +24,16 @@ std::string getTimestampedFilename()
 
 int main(int argc, char **argv)
 {
-    //// Check if we're running an isolated test FIRST (before doctest processing)
-    // if (argc == 3 && strcmp(argv[1], "--run-test-isolated") == 0)
-    //{
-    //     const char* testName = argv[2];
-    //     int exitCode = RunIsolatedTest(testName);
-    //     return exitCode;
-    // }
-
-    // Create doctest context
     doctest::Context ctx;
-
-    // Only configure options for actual test execution
     ctx.setOption("abort-after", 50);
     ctx.setOption("no-breaks", true);
-
-    // Don't force a reporter - let command line args control it
-    // VS Test Adapter needs XML reporter, console/batch runs can use: --reporters=inline-values
-
-    // Apply command line arguments (this processes --list-tests and other flags)
     ctx.applyCommandLine(argc, argv);
 
     // Run the tests
     int res = ctx.run();
 
-    // Check if we should exit early (e.g., --list-tests, --help, --version)
-    // If doctest is in "list mode", it will have set shouldExit() to true
     if (ctx.shouldExit())
     {
-        // Just run doctest to output the list/help, then exit
         return res;
     }
 
