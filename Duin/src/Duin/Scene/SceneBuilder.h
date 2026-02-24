@@ -48,18 +48,23 @@ struct PackedPair
 {
     static const std::string TAG_RELATIONSHIPNAME;
     static const std::string TAG_RELATIONSHIPUUID;
+    static const std::string TAG_RELATIONSHIP_IS_COMPONENT;
+    static const std::string TAG_RELATIONSHIPPATH;
     static const std::string TAG_TARGETNAME;
     static const std::string TAG_TARGETUUID;
+    static const std::string TAG_TARGET_IS_COMPONENT;
+    static const std::string TAG_TARGETPATH;
     static const std::string TAG_DATA;
 
-    std::string relationshipName; ///< Name of the relationship (first element)
+    std::string relationshipName; ///< Short display name of the relationship (first element)
     UUID relationshipUUID;
-    std::string targetName; ///< Name or UUID of the target (second element)
+    bool relationshipIsComponent = false; ///< True if relationship is a component/tag type, not a plain entity
+    std::string relationshipPath;         ///< Full FLECS path (for component-type lookup across worlds)
+    std::string targetName; ///< Short display name of the target (second element)
     UUID targetUUID;
+    bool targetIsComponent = false; ///< True if target is a component/tag type, not a plain entity
+    std::string targetPath;         ///< Full FLECS path (for component-type lookup across worlds)
     std::string jsonData; ///< Optional data stored with the pair
-
-    static JSONValue Serialize(const PackedPair &pp);
-    static PackedPair Deserialize(const JSONValue &json);
 };
 
 /**
@@ -86,11 +91,6 @@ struct PackedEntity
     std::vector<PackedPair> pairs;           ///< FLECS pairs (relationships).
     std::vector<PackedComponent> components; ///< Attached components.
     std::vector<PackedEntity> children;      ///< Child entities.
-
-    static PackedEntity Pack(Entity e);
-    static void Instantiate(const PackedEntity &pe, Entity e);
-    static JSONValue Serialize(const PackedEntity &pe);
-    static PackedEntity Deserialize(const JSONValue &json);
 };
 
 /**
@@ -136,7 +136,6 @@ struct PackedSceneMetadata
  */
 struct PackedScene
 {
-  public:
     static const std::string TAG_SCENEUUID;
     static const std::string TAG_SCENENAME;
     static const std::string TAG_METADATA;
@@ -148,11 +147,6 @@ struct PackedScene
     PackedSceneMetadata metadata;                               ///< Version/author info.
     std::vector<PackedExternalDependency> externalDependencies; ///< External refs.
     std::vector<PackedEntity> entities;                         ///< Root entities.
-
-    static JSONValue Serialize(const PackedScene &pscn);
-    static PackedScene Deserialize(const JSONValue &json);
-
-  private:
 };
 
 class SceneBuilder
