@@ -142,7 +142,7 @@ TEST_SUITE("Entity")
         duin::World w;
         duin::Entity e = w.CreateEntity("PathEntity");
         std::string path = e.GetPath();
-        CHECK(path.empty()); // Implementation is TODO, so should be empty
+        CHECK(path == static_cast<std::string>(e.GetFlecsEntity().path()));
     }
 
     TEST_CASE("GetTarget")
@@ -629,7 +629,7 @@ TEST_SUITE("Entity::ID")
     TEST_CASE("Default constructor")
     {
         duin::Entity::ID id;
-        CHECK(id.RawId() == 0);
+        CHECK(id.GetID() == 0);
         CHECK(id.GetWorld() == nullptr);
     }
 
@@ -637,7 +637,7 @@ TEST_SUITE("Entity::ID")
     {
         flecs::id_t rawValue = 12345;
         duin::Entity::ID id(rawValue);
-        CHECK(id.RawId() == rawValue);
+        CHECK(id.GetID() == rawValue);
         CHECK(id.GetWorld() == nullptr);
     }
 
@@ -648,7 +648,7 @@ TEST_SUITE("Entity::ID")
         flecs::id_t entityId = e.GetID();
 
         duin::Entity::ID id(&w, entityId);
-        CHECK(id.RawId() == entityId);
+        CHECK(id.GetID() == entityId);
         CHECK(id.GetWorld() == &w);
     }
 
@@ -766,8 +766,8 @@ TEST_SUITE("Entity::ID")
         duin::Entity e = w.CreateEntity("TestEntity");
         duin::Entity::ID id(&w, e.GetID());
 
-        flecs::id_t rawId = id;
-        CHECK(rawId == e.GetID());
+        flecs::id_t GetID = id;
+        CHECK(GetID == e.GetID());
     }
 
     TEST_CASE("GetFlecsId returns valid flecs::id")
@@ -797,7 +797,7 @@ TEST_SUITE("Entity::ID")
         CHECK(idWithFlags.HasFlags(flecs::AUTO_OVERRIDE));
 
         // The flagged ID should be different from the original
-        CHECK(idWithFlags.RawId() != componentId.RawId());
+        CHECK(idWithFlags.GetID() != componentId.GetID());
 
         // RemoveFlags returns an ID without the specified flags
         duin::Entity::ID idRemovedFlags = idWithFlags.RemoveFlags(flecs::AUTO_OVERRIDE);
@@ -826,7 +826,7 @@ TEST_SUITE("Entity::ID")
 
         // RemoveGeneration returns an ID without generation
         duin::Entity::ID idNoGen = id.RemoveGeneration();
-        CHECK(idNoGen.RawId() != 0); // Should have a valid ID
+        CHECK(idNoGen.GetID() != 0); // Should have a valid ID
     }
 
     TEST_CASE("TypeId returns component type")
