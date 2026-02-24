@@ -5,6 +5,7 @@
 
 duin::GameState::GameState(GameStateMachine &owner) : owner(owner)
 {
+    Enable(false);
 }
 
 void duin::GameState::StateEnter()
@@ -187,41 +188,6 @@ void duin::GameState::DisconnectAllSignals(const SignalConnections &connections)
     DisconnectOnStateExit(connections.onExit);
 }
 
-// Enable functions
-void duin::GameState::Enable(bool enable)
-{
-    onEventEnabled = enable;
-    updateEnabled = enable;
-    physicsUpdateEnabled = enable;
-    drawEnabled = enable;
-    drawUIEnabled = enable;
-}
-
-void duin::GameState::EnableOnEvent(bool enable)
-{
-    onEventEnabled = enable;
-}
-
-void duin::GameState::EnableUpdate(bool enable)
-{
-    updateEnabled = enable;
-}
-
-void duin::GameState::EnablePhysicsUpdate(bool enable)
-{
-    physicsUpdateEnabled = enable;
-}
-
-void duin::GameState::EnableDraw(bool enable)
-{
-    drawEnabled = enable;
-}
-
-void duin::GameState::EnableDrawUI(bool enable)
-{
-    drawUIEnabled = enable;
-}
-
 bool duin::GameState::IsEqualTo(GameState *other)
 {
     return (this->uuid == other->uuid);
@@ -314,7 +280,7 @@ void duin::GameStateMachine::OnEvent(Event e)
     {
         return;
     }
-    //stateStack.top()->StateOnEvent(e);
+    stateStack.top()->StateOnEvent(e);
 }
 
 void duin::GameStateMachine::Update(double delta)
@@ -328,7 +294,7 @@ void duin::GameStateMachine::Update(double delta)
     {
         return;
     }
-    //stateStack.top()->StateUpdate(delta);
+    stateStack.top()->StateUpdate(delta);
 }
 
 void duin::GameStateMachine::PhysicsUpdate(double delta)
@@ -342,7 +308,7 @@ void duin::GameStateMachine::PhysicsUpdate(double delta)
     {
         return;
     }
-    //stateStack.top()->StatePhysicsUpdate(delta);
+    stateStack.top()->StatePhysicsUpdate(delta);
 }
 
 void duin::GameStateMachine::Draw()
@@ -356,7 +322,7 @@ void duin::GameStateMachine::Draw()
     {
         return;
     }
-    //stateStack.top()->StateDraw();
+    stateStack.top()->StateDraw();
 }
 
 void duin::GameStateMachine::DrawUI()
@@ -370,7 +336,7 @@ void duin::GameStateMachine::DrawUI()
     {
         return;
     }
-    //stateStack.top()->StateDrawUI();
+    stateStack.top()->StateDrawUI();
 }
 
 void duin::GameStateMachine::Debug()

@@ -304,7 +304,9 @@ void duin::GameObject::ObjectReady()
         for (auto &child : children)
         {
             if (child)
+            {
                 child->ObjectReady();
+            }
         }
     }
 
@@ -319,7 +321,9 @@ void duin::GameObject::ObjectOnEvent(Event event)
         for (auto &child : children)
         {
             if (child && child->IsOnEventEnabled())
+            {
                 child->ObjectOnEvent(event);
+            }
         }
     }
 
@@ -334,7 +338,9 @@ void duin::GameObject::ObjectUpdate(double delta)
         for (auto &child : children)
         {
             if (child && child->IsUpdateEnabled())
+            {
                 child->ObjectUpdate(delta);
+            }
         }
     }
 
@@ -349,7 +355,9 @@ void duin::GameObject::ObjectPhysicsUpdate(double delta)
         for (auto &child : children)
         {
             if (child && child->IsPhysicsUpdateEnabled())
+            {
                 child->ObjectPhysicsUpdate(delta);
+            }
         }
     }
 
@@ -364,7 +372,9 @@ void duin::GameObject::ObjectDraw()
         for (auto &child : children)
         {
             if (child && child->IsDrawEnabled())
+            {
                 child->ObjectDraw();
+            }
         }
     }
 
@@ -379,7 +389,9 @@ void duin::GameObject::ObjectDrawUI()
         for (auto &child : children)
         {
             if (child && child->IsDrawUIEnabled())
+            {
                 child->ObjectDrawUI();
+            }
         }
     }
 
@@ -394,7 +406,9 @@ void duin::GameObject::ObjectDebug()
         for (auto &child : children)
         {
             if (child && child->IsDebugEnabled())
+            {
                 child->ObjectDebug();
+            }
         }
     }
 

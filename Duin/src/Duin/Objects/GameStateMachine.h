@@ -338,13 +338,6 @@ class GameState : public GameObject
 
     void DisconnectAllSignals(const SignalConnections &connections);
 
-    void Enable(bool enable);
-    void EnableOnEvent(bool enable);
-    void EnableUpdate(bool enable);
-    void EnablePhysicsUpdate(bool enable);
-    void EnableDraw(bool enable);
-    void EnableDrawUI(bool enable);
-
     UUID GetUUID();
     GameStateMachine &GetOwner();
 
@@ -375,11 +368,7 @@ class GameState : public GameObject
     Signal<> OnStateExit;
 
   private:
-    bool onEventEnabled = true;
-    bool updateEnabled = true;
-    bool physicsUpdateEnabled = true;
-    bool drawEnabled = true;
-    bool drawUIEnabled = true;
+
 };
 
 } // namespace duin
