@@ -1,5 +1,5 @@
 {
-	"sceneUUID": "0xB9322953E1B3C456",
+	"sceneUUID": "0xEE07EE3BC68774CF",
 	"sceneName": "",
 	"metadata": {
 		"editorVersion": "",
@@ -12,33 +12,36 @@
 	],
 	"entities": [
 		{
-			"uuid": "0x290F25D657B96ADF",
+			"uuid": "0xE54D4E250BF18C8C",
 			"name": "Player",
 			"enabled": true,
 			"tags": [
-
-			],
-			"pairs": [
-				{
-					"relationship": "Identifier",
-					"target": "Name"
-				},
-				{
-					"relationship": "IsA",
-					"target": "CharacterBody"
-				}
-			],
-			"components": [
 				{
 					"type": "PxKinematic"
 				},
+				{
+					"type": "OnGroundTag"
+				},
+				{
+					"type": "CanGravity"
+				}
+			],
+			"pairs": [
+				{
+					"relationship": "IsA",
+					"relationshipUUID": "0xED87D1DD350293F2",
+					"target": "CharacterBody",
+					"targetUUID": "0xA7377B5EBD23154E"
+				}
+			],
+			"components": [
 				{
 					"type": "Transform3DImpl",
 					"pos": {
 						"type": "Vector3Impl",
 						"x": 0.0,
-						"y": 500.0,
-						"z": 50.0
+						"y": 50.0,
+						"z": 5.0
 					},
 					"scale": {
 						"type": "Vector3Impl",
@@ -59,8 +62,8 @@
 					"v": {
 						"type": "Vector3Impl",
 						"x": 0.0,
-						"y": 2.5485321318574616e-13,
-						"z": 2.2841164968494522e-43
+						"y": 2.9275597057676354e-8,
+						"z": 1.6675451725465325e-43
 					}
 				},
 				{
@@ -73,8 +76,8 @@
 					"position": {
 						"type": "Vector3Impl",
 						"x": 0.0,
-						"y": 500.0,
-						"z": 50.0
+						"y": 50.0,
+						"z": 5.0
 					},
 					"upDirection": {
 						"type": "Vector3Impl",
@@ -149,17 +152,11 @@
 				{
 					"type": "CanSprintComponent",
 					"speed": 17.5
-				},
-				{
-					"type": "OnGroundTag"
-				},
-				{
-					"type": "CanGravity"
 				}
 			],
 			"children": [
 				{
-					"uuid": "0x3CB1B60968CD0A60",
+					"uuid": "0x6A7EAD9C9033EA2C",
 					"name": "CameraRoot",
 					"enabled": true,
 					"tags": [
@@ -167,16 +164,10 @@
 					],
 					"pairs": [
 						{
-							"relationship": "Identifier",
-							"target": "Name"
-						},
-						{
-							"relationship": "ChildOf",
-							"target": "Player"
-						},
-						{
 							"relationship": "IsA",
-							"target": "Node3D"
+							"relationshipUUID": "0xD9B8576A6116127E",
+							"target": "Node3D",
+							"targetUUID": "0x803569B6D51E2D23"
 						}
 					],
 					"components": [
@@ -217,30 +208,23 @@
 					],
 					"children": [
 						{
-							"uuid": "0x3B8918EC9D0FFAB",
+							"uuid": "0x104D75441C1A5EF",
 							"name": "PlayerCamera",
 							"enabled": true,
 							"tags": [
-
+								{
+									"type": "ActiveCamera"
+								}
 							],
 							"pairs": [
 								{
-									"relationship": "Identifier",
-									"target": "Name"
-								},
-								{
-									"relationship": "ChildOf",
-									"target": "CameraRoot"
-								},
-								{
 									"relationship": "IsA",
-									"target": "Camera3D"
+									"relationshipUUID": "0xC459C0CC663AD89E",
+									"target": "Camera3D",
+									"targetUUID": "0x4E925BD8E7109CD6"
 								}
 							],
 							"components": [
-								{
-									"type": "ActiveCamera"
-								},
 								{
 									"type": "Transform3DImpl",
 									"pos": {
@@ -267,7 +251,7 @@
 									"type": "CameraImpl",
 									"uuid": {
 										"type": "UUIDImpl",
-										"uuid": 2041140372913019731
+										"uuid": 15297644786604149552
 									},
 									"position": {
 										"type": "Vector3Impl",
