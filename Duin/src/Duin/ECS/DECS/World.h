@@ -162,7 +162,7 @@ class World
      */
     void Quit();
 
-    Entity Lookup(const std::string &name);
+    Entity Lookup(const std::string &name, const std::string &sep = "::", const std::string &root_sep = "::", bool recursive = true);
 
     /**
      * @brief Iterate over the children of the root entity.

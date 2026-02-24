@@ -196,7 +196,7 @@ class Entity
          * @brief Get raw flecs::id_t value.
          * @return The raw ID value.
          */
-        flecs::id_t RawId() const;
+        uint64_t GetID() const;
 
         /**
          * @brief Implicit conversion to flecs::id_t.
@@ -235,6 +235,31 @@ class Entity
      * @param other The entity to copy from.
      */
     Entity(const Entity &other);
+
+    /**
+     * @brief Construct an entity from a flecs entity.
+     * @param entity The flecs entity.
+     */
+    Entity(const flecs::entity &entity);
+
+    /**
+     * @brief Construct an entity from a flecs entity, and a world.
+     * @param entity The flecs entity.
+     * @param world The World.
+     */
+    Entity(const flecs::entity &entity, World *world);
+
+    /**
+     * @brief Set the world pointer for this entity.
+     * @param world The world pointer.
+     */
+    void SetWorld(World *world);
+
+    /**
+     * @brief Set the internal flecs entity handle.
+     * @param entity The flecs entity.
+     */
+    void SetFlecsEntity(const flecs::entity &entity);
 
     /**
      * @brief Copy assignment operator.
@@ -321,6 +346,8 @@ class Entity
      * @return The entity path.
      */
     std::string GetPath(const std::string &sep = "::", const std::string &init_sep = "::") const;
+
+    Entity Lookup(const std::string &childName, bool searchPath = false);
 
     /**
      * @brief Set the entity's name.
@@ -419,9 +446,49 @@ class Entity
         return flecsEntity.has<T>();
     }
 
+    template <typename First, typename Second>
+    bool Has() const
+    {
+        return flecsEntity.has<First, Second>();
+    }
+
     bool Has(Entity e) const
     {
         return flecsEntity.has(e.flecsEntity.raw_id());
+    }
+
+    bool Has(Entity first, Entity second)
+    {
+        return flecsEntity.has(first.GetID(), second.GetID());
+    }
+
+    bool Has(Entity::ID id) const
+    {
+        return flecsEntity.has(id.GetID());
+    }
+
+    template <typename First>
+    bool Has(Entity second) const
+    {
+        return flecsEntity.has<First>(second.GetID());
+    }
+
+    template <typename First>
+    bool Has(Entity::ID second) const
+    {
+        return flecsEntity.has<First>(second.GetID());
+    }
+
+    template <typename Second>
+    bool HasSecond(Entity first) const
+    {
+        return flecsEntity.has_second<Second>(first.GetID());
+    }
+
+    template <typename Second>
+    bool HasSecond(Entity::ID first) const
+    {
+        return flecsEntity.has_second<Second>(first.GetID());
     }
 
     /**
@@ -463,6 +530,8 @@ class Entity
         flecsEntity.add<T>();
         return *this;
     }
+
+    Entity &Add(const Entity& relationship, const Entity& target);
 
     /**
      * @brief Add an entity/tag/trait to the entity by ID.
@@ -737,6 +806,18 @@ class Entity
     bool HasPair() const
     {
         return flecsEntity.has<First, Second>();
+    }
+
+    template <typename First>
+    bool HasPair(Entity second) const
+    {
+        return flecsEntity.has<First>(second.GetID());
+    }
+
+    template <typename First>
+    bool HasPair(Entity::ID second) const
+    {
+        return flecsEntity.has<First>(second.GetID());
     }
 
     /**
@@ -1134,31 +1215,6 @@ class Entity
 
     World *world = nullptr;    ///< Pointer to the world this entity belongs to (non-owning).
     flecs::entity flecsEntity; ///< Internal flecs entity handle.
-
-    /**
-     * @brief Construct an entity from a flecs entity.
-     * @param entity The flecs entity.
-     */
-    Entity(const flecs::entity &entity);
-
-    /**
-     * @brief Construct an entity from a flecs entity, and a world.
-     * @param entity The flecs entity.
-     * @param world The World.
-     */
-    Entity(const flecs::entity &entity, World *world);
-
-    /**
-     * @brief Set the world pointer for this entity.
-     * @param world The world pointer.
-     */
-    void SetWorld(World *world);
-
-    /**
-     * @brief Set the internal flecs entity handle.
-     * @param entity The flecs entity.
-     */
-    void SetFlecsEntity(const flecs::entity &entity);
 
     /**
      * @brief Internal helper for recursive Set operations.

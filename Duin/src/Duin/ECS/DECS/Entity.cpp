@@ -112,8 +112,13 @@ std::string duin::Entity::GetName() const
 
 std::string duin::Entity::GetPath(const std::string &sep, const std::string &init_sep) const
 {
-    // TODO
-    return std::string();
+    return static_cast<std::string>(flecsEntity.path());
+}
+
+duin::Entity duin::Entity::Lookup(const std::string &childName, bool searchPath)
+{
+    flecs::entity e = flecsEntity.lookup(childName.c_str(), searchPath);
+    return Entity(e, world);
 }
 
 duin::Entity &duin::Entity::ChildOf(const Entity &parent)
@@ -202,6 +207,13 @@ duin::Entity duin::Entity::Second()
     e.SetWorld(world);
 
     return e;
+}
+
+duin::Entity &duin::Entity::Add(const Entity &relationship, const Entity &target)
+{
+    flecsEntity.add(relationship.GetID(), target.GetID());
+
+    return *this;
 }
 
 duin::Entity duin::Entity::GetParent() const
@@ -350,7 +362,7 @@ std::string duin::Entity::ID::FlagsStr() const
     return flecsId_.flags_str().c_str();
 }
 
-flecs::id_t duin::Entity::ID::RawId() const
+uint64_t duin::Entity::ID::GetID() const
 {
     return flecsId_.raw_id();
 }

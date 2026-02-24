@@ -6,7 +6,6 @@
 #include <unordered_map>
 #include <functional>
 #include <string>
-#include "./DECS/World.h"
 #include "./DECS/Entity.h"
 #include "Duin/Core/Debug/DNLog.h"
 
@@ -29,7 +28,7 @@ class ComponentSerializer
     {
         std::string typeName = static_cast<std::string>(typeEntity.name());
 
-        if (typeAliases_.contains(typeName))// && serializers_.contains(typeName) && deserializers_.contains(typeName))
+        if (typeAliases_.contains(typeName)) // && serializers_.contains(typeName) && deserializers_.contains(typeName))
         {
             return;
         }
@@ -80,6 +79,7 @@ class ComponentSerializer
                         typed_ptr = new T;
                         *typed_ptr = result.value();
                         e.Set<T>(*typed_ptr);
+                        delete typed_ptr;
                     }
                 };
             }
@@ -141,7 +141,6 @@ class ComponentSerializer
     std::unordered_map<std::string, SerializeFn> serializers_;
     std::unordered_map<std::string, DeserializeFn> deserializers_;
     std::unordered_map<std::string, std::string> typeAliases_; // Maps reflection type name to component name
-    int INVALID_PTR_ = -1;
 };
 
 } // namespace duin

@@ -125,11 +125,11 @@ void duin::World::Quit()
     flecsWorld.quit();
 }
 
-duin::Entity duin::World::Lookup(const std::string &name)
+duin::Entity duin::World::Lookup(const std::string &name, const std::string &sep, const std::string &root_sep, bool recursive)
 {
     Entity e;
     e.SetWorld(this);
-    e.SetFlecsEntity(flecsWorld.lookup(name.c_str()));
+    e.SetFlecsEntity(flecsWorld.lookup(name.c_str(), sep.c_str(), root_sep.c_str(), recursive));
 
     return e;
 }
@@ -142,9 +142,9 @@ std::vector<duin::Entity> duin::World::GetChildren(bool filterBuiltins)
         if (filterBuiltins)
         {
             // Filter out known FLECS internal entity categories:
-            //   flecs::Component  (struct type)  — component/tag type descriptor entities
-            //   flecs::Observer   (entity_t tag) — internal observer entities
-            //   flecs::Module     (entity_t tag) — module scope entities
+            //   flecs::Component  (struct type)  ï¿½ component/tag type descriptor entities
+            //   flecs::Observer   (entity_t tag) ï¿½ internal observer entities
+            //   flecs::Module     (entity_t tag) ï¿½ module scope entities
             if (child.has<flecs::Component>())
                 return;
             if (child.has(flecs::Observer))
