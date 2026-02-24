@@ -14,7 +14,8 @@ TEST_SUITE("Full Entity Hierarchy Serialization")
     TEST_CASE("Deserialize Entity with Children")
     {
         duin::JSONValue v = duin::JSONValue::Parse(FULL_ENTITY_JSON);
-        duin::PackedEntity p = duin::PackedEntity::Deserialize(v);
+        duin::SceneBuilder builder(nullptr);
+        duin::PackedEntity p = builder.DeserializeEntity(v);
 
         // Parent entity checks
         CHECK(p.uuid == duin::UUID::FromStringHex("f5a3e8d1c9b2a7f4"));
@@ -76,7 +77,8 @@ TEST_SUITE("Full Entity Hierarchy Serialization")
         parent.children.push_back(child);
 
         // Serialize
-        duin::JSONValue json = duin::PackedEntity::Serialize(parent);
+        duin::SceneBuilder builder(nullptr);
+        duin::JSONValue json = builder.SerializeEntity(parent);
 
         CHECK(json.IsObject());
         CHECK(json["uuid"].GetString() == duin::UUID::FromStringHex("f5a3e8d1c9b2a7f4").ToStrHex());
@@ -97,7 +99,7 @@ TEST_SUITE("Full Entity Hierarchy Serialization")
     {
         // Create original hierarchy
         duin::PackedEntity original;
-        original.uuid = duin::UUID::FromStringHex("abcd1234efgh5678");
+        original.uuid = duin::UUID::FromStringHex("abcd1234ef0b5678");
         original.name = "Parent";
         original.enabled = true;
 
@@ -109,8 +111,9 @@ TEST_SUITE("Full Entity Hierarchy Serialization")
         original.children.push_back(child);
 
         // Round-trip
-        duin::JSONValue json = duin::PackedEntity::Serialize(original);
-        duin::PackedEntity deserialized = duin::PackedEntity::Deserialize(json);
+        duin::SceneBuilder builder(nullptr);
+        duin::JSONValue json = builder.SerializeEntity(original);
+        duin::PackedEntity deserialized = builder.DeserializeEntity(json);
 
         CHECK(original.uuid == deserialized.uuid);
         CHECK(original.name == deserialized.name);

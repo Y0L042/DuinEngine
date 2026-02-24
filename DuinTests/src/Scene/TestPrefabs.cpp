@@ -16,6 +16,12 @@ struct Speed { float value = 5.0f; bool operator==(const Speed& o) const { retur
 struct Damage { float value = 10.0f; bool operator==(const Damage& o) const { return value == o.value; } };
 struct Prefab {};
 
+static std::string BaseName(const std::string &name)
+{
+    auto pos = name.find('#');
+    return pos != std::string::npos ? name.substr(0, pos) : name;
+}
+
 TEST_SUITE("Prefab and Inheritance Tests")
 {
     TEST_CASE("Create and instantiate basic prefab")
@@ -33,22 +39,30 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Armor>({50.0f})
             .Add<Prefab>();
 
-        // Pack the prefab
-        duin::PackedEntity pe = duin::PackedEntity::Pack(soldierPrefab);
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({soldierPrefab});
 
-        CHECK(pe.name == "SoldierPrefab");
-        CHECK(pe.components.size() >= 3);
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "SoldierPrefab");
+        CHECK(ps.entities[0].components.size() >= 3);
 
-        // Instantiate prefab
+        // Instantiate prefab into new world
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Health>();
         world2.Component<Armor>();
         world2.Component<Prefab>();
 
-        duin::Entity instance = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, instance);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &instance = worldEntities[0];
+        CHECK(BaseName(instance.GetName()) == "SoldierPrefab");
         CHECK(instance.Has<Vec3>());
         CHECK(instance.Has<Health>());
         CHECK(instance.Has<Armor>());
@@ -63,6 +77,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Health>();
         world.Component<Speed>();
         world.Component<Damage>();
+        world.Component<Armor>();
 
         // Create base prefab
         duin::Entity baseSoldier = world.CreateEntity("BaseSoldier")
@@ -75,9 +90,11 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Health>({150.0f})  // Override health
             .Set<Armor>({75.0f});
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(heavySoldier);
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({heavySoldier});
 
-        CHECK(pe.name == "HeavySoldier");
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "HeavySoldier");
 
         // Instantiate
         duin::World world2;
@@ -87,9 +104,15 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Damage>();
         world2.Component<Armor>();
 
-        duin::Entity instance = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, instance);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &instance = worldEntities[0];
         CHECK(instance.Has<Health>());
         CHECK(instance.Has<Armor>());
     }
@@ -102,21 +125,13 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Speed>();
         world.Component<Prefab>();
 
-        // Create enemy prefab
-        duin::Entity enemyPrefab = world.CreateEntity("EnemyPrefab")
-            .Set<Health>({50.0f})
-            .Set<Speed>({3.0f})
-            .Add<Prefab>();
-
-        duin::PackedEntity prefabPacked = duin::PackedEntity::Pack(enemyPrefab);
-
-        // Create scene root and instantiate multiple enemies
+        // Create scene root with 5 enemy children
         duin::Entity root = world.CreateEntity("Root");
 
         for (int i = 0; i < 5; ++i)
         {
             std::string name = "Enemy_" + std::to_string(i);
-            duin::Entity enemy = world.CreateEntity(name.c_str())
+            world.CreateEntity(name.c_str())
                 .ChildOf(root)
                 .Set<Vec3>(static_cast<float>(i * 5), 0.0f, 0.0f)
                 .Set<Health>({50.0f})
@@ -127,13 +142,16 @@ TEST_SUITE("Prefab and Inheritance Tests")
         duin::PackedScene scene = builder.PackScene({root});
         scene.name = "EnemySpawnScene";
 
-        CHECK(scene.entities.size() == 5);
+        // root is the single scene entity with 5 enemy children
+        CHECK(scene.entities.size() == 1);
+        CHECK(scene.entities[0].children.size() == 5);
 
         // Serialize and deserialize
-        duin::JSONValue json = duin::PackedScene::Serialize(scene);
-        duin::PackedScene scene2 = duin::PackedScene::Deserialize(json);
+        duin::JSONValue json = builder.SerializeScene(scene);
+        duin::PackedScene scene2 = builder.DeserializeScene(json);
 
-        CHECK(scene2.entities.size() == 5);
+        CHECK(scene2.entities.size() == 1);
+        CHECK(scene2.entities[0].children.size() == 5);
     }
 
     TEST_CASE("Prefab with child entities")
@@ -152,18 +170,20 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .ChildOf(vehiclePrefab)
             .Set<Vec3>(0.0f, 2.0f, 0.0f);
 
-        duin::Entity turretCamera = world.CreateEntity("TurretCamera")
+        world.CreateEntity("TurretCamera")
             .ChildOf(turret)
             .Set<Vec3>(0.0f, 0.5f, 0.0f)
             .Set<Camera>(60.0f, 0.1f, 500.0f, false);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(vehiclePrefab);
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({vehiclePrefab});
 
-        CHECK(pe.name == "VehiclePrefab");
-        CHECK(pe.children.size() == 1);
-        CHECK(pe.children[0].name == "Turret");
-        CHECK(pe.children[0].children.size() == 1);
-        CHECK(pe.children[0].children[0].name == "TurretCamera");
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "VehiclePrefab");
+        CHECK(ps.entities[0].children.size() == 1);
+        CHECK(ps.entities[0].children[0].name == "Turret");
+        CHECK(ps.entities[0].children[0].children.size() == 1);
+        CHECK(ps.entities[0].children[0].children[0].name == "TurretCamera");
 
         // Instantiate
         duin::World world2;
@@ -171,20 +191,26 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Health>();
         world2.Component<Camera>();
 
-        duin::Entity instance = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, instance);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &instance = worldEntities[0];
         std::vector<duin::Entity> children = instance.GetChildren();
         CHECK(children.size() == 1);
         if (children.size() >= 1)
         {
-            CHECK(children[0].GetName() == "Turret");
+            CHECK(BaseName(children[0].GetName()) == "Turret");
 
             std::vector<duin::Entity> grandchildren = children[0].GetChildren();
             CHECK(grandchildren.size() == 1);
             if (grandchildren.size() >= 1)
             {
-                CHECK(grandchildren[0].GetName() == "TurretCamera");
+                CHECK(BaseName(grandchildren[0].GetName()) == "TurretCamera");
                 CHECK(grandchildren[0].Has<Camera>());
             }
         }
@@ -197,30 +223,19 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Health>();
         world.Component<Speed>();
 
-        // Create base prefab
-        duin::Entity monsterPrefab = world.CreateEntity("MonsterPrefab")
-            .Set<Health>({100.0f})
-            .Set<Speed>({5.0f});
-
-        duin::PackedEntity prefabPacked = duin::PackedEntity::Pack(monsterPrefab);
-
-        // Create instances with overridden values
-        duin::Entity root = world.CreateEntity("Root");
-
+        // Create instances with different values as separate scene root entities
         duin::Entity weakMonster = world.CreateEntity("WeakMonster")
-            .ChildOf(root)
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
-            .Set<Health>({50.0f})   // Override
+            .Set<Health>({50.0f})
             .Set<Speed>({5.0f});
 
         duin::Entity strongMonster = world.CreateEntity("StrongMonster")
-            .ChildOf(root)
             .Set<Vec3>(10.0f, 0.0f, 0.0f)
-            .Set<Health>({200.0f})  // Override
-            .Set<Speed>({3.0f});    // Override
+            .Set<Health>({200.0f})
+            .Set<Speed>({3.0f});
 
         duin::SceneBuilder builder(&world);
-        duin::PackedScene scene = builder.PackScene({root});
+        duin::PackedScene scene = builder.PackScene({weakMonster, strongMonster});
 
         // Instantiate scene
         duin::World world2;
@@ -228,22 +243,21 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Health>();
         world2.Component<Speed>();
 
-        duin::Entity newRoot = world2.CreateEntity("NewRoot");
         duin::SceneBuilder builder2(&world2);
         builder2.InstantiateScene(scene, &world2);
 
-        std::vector<duin::Entity> children = newRoot.GetChildren();
+        std::vector<duin::Entity> children = world2.GetChildren();
         CHECK(children.size() == 2);
 
         // Find and verify overridden values
-        for (auto& child : children)
+        for (auto &child : children)
         {
-            if (child.GetName() == "WeakMonster")
+            if (BaseName(child.GetName()) == "WeakMonster")
             {
                 CHECK(child.GetMut<Health>() == Health{50.0f});
                 CHECK(child.GetMut<Speed>() == Speed{5.0f});
             }
-            else if (child.GetName() == "StrongMonster")
+            else if (BaseName(child.GetName()) == "StrongMonster")
             {
                 CHECK(child.GetMut<Health>() == Health{200.0f});
                 CHECK(child.GetMut<Speed>() == Speed{3.0f});
@@ -258,25 +272,23 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Health>();
         world.Component<Damage>();
 
-        // Create weapon prefab
-        duin::Entity weaponPrefab = world.CreateEntity("WeaponPrefab")
-            .Set<Damage>({10.0f});
-
-        // Create character prefab that includes weapon
+        // Create character prefab that includes weapon as child
         duin::Entity characterPrefab = world.CreateEntity("CharacterPrefab")
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
             .Set<Health>({100.0f});
 
-        duin::Entity characterWeapon = world.CreateEntity("Weapon")
+        world.CreateEntity("Weapon")
             .ChildOf(characterPrefab)
             .Set<Vec3>(0.5f, 1.0f, 0.0f)
             .Set<Damage>({10.0f});
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(characterPrefab);
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({characterPrefab});
 
-        CHECK(pe.name == "CharacterPrefab");
-        CHECK(pe.children.size() == 1);
-        CHECK(pe.children[0].name == "Weapon");
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "CharacterPrefab");
+        CHECK(ps.entities[0].children.size() == 1);
+        CHECK(ps.entities[0].children[0].name == "Weapon");
 
         // Instantiate
         duin::World world2;
@@ -284,17 +296,23 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Health>();
         world2.Component<Damage>();
 
-        duin::Entity instance = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, instance);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &instance = worldEntities[0];
         CHECK(instance.Has<Vec3>());
         CHECK(instance.Has<Health>());
-        
+
         std::vector<duin::Entity> children = instance.GetChildren();
         CHECK(children.size() == 1);
         if (children.size() >= 1)
         {
-            CHECK(children[0].GetName() == "Weapon");
+            CHECK(BaseName(children[0].GetName()) == "Weapon");
             CHECK(children[0].Has<Damage>());
             CHECK(children[0].GetMut<Damage>() == Damage{10.0f});
         }

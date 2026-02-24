@@ -10,6 +10,13 @@
 namespace TestSceneBuilder
 {
 
+// Helper: strip the '#uuid' suffix that SceneBuilder::InstantiateEntity appends.
+static std::string BaseName(const std::string &name)
+{
+    auto pos = name.find('#');
+    return pos != std::string::npos ? name.substr(0, pos) : name;
+}
+
 TEST_SUITE("Entity Pack-Instantiate Round-trip")
 {
     TEST_CASE("Pack then Instantiate single entity with components")
@@ -21,18 +28,28 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         duin::Entity original =
             world.CreateEntity("Player").Set<Vec3>(10.0f, 20.0f, 30.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(original);
+        // Pack as scene entity; original is ps.entities[0]
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({original});
 
-        CHECK(pe.name == "Player");
-        CHECK(pe.components.size() == 2);
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "Player");
+        CHECK(ps.entities[0].components.size() == 2);
 
+        // Instantiate into new world
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::Entity restored = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, restored);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
-        CHECK(restored.GetName() == "Player");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &restored = worldEntities[0];
+        CHECK(BaseName(restored.GetName()) == "Player");
         CHECK(restored.Has<Vec3>());
         CHECK(restored.Has<Camera>());
         CHECK(restored.GetMut<Vec3>() == Vec3{10.0f, 20.0f, 30.0f});
@@ -49,29 +66,37 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         duin::Entity child = world.CreateEntity("Child").Set<Camera>(60.0f, 0.5f, 500.0f, false);
         child.ChildOf(parent);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(parent);
+        // Pack parent as scene entity; child is nested inside
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({parent});
 
-        CHECK(pe.name == "Parent");
-        CHECK(pe.children.size() == 1);
-        if (pe.children.size() >= 1)
-        {
-            CHECK(pe.children[0].name == "Child");
-        }
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "Parent");
+        CHECK(ps.entities[0].children.size() == 1);
+        if (ps.entities[0].children.size() >= 1)
+            CHECK(ps.entities[0].children[0].name == "Child");
 
+        // Instantiate
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::Entity restored = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, restored);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
-        CHECK(restored.GetName() == "Parent");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &restored = worldEntities[0];
+        CHECK(BaseName(restored.GetName()) == "Parent");
         CHECK(restored.Has<Vec3>());
 
         std::vector<duin::Entity> children = restored.GetChildren();
         CHECK(children.size() == 1);
         if (children.size() >= 1)
         {
-            CHECK(children[0].GetName() == "Child");
+            CHECK(BaseName(children[0].GetName()) == "Child");
             CHECK(children[0].Has<Camera>());
             CHECK(children[0].GetMut<Camera>() == Camera{60.0f, 0.5f, 500.0f, false});
         }
@@ -88,35 +113,44 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         mid.ChildOf(root);
         leaf.ChildOf(mid);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(root);
+        // Pack root as scene entity
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({root});
 
-        CHECK(pe.children.size() == 1);
-        if (pe.children.size() >= 1)
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].children.size() == 1);
+        if (ps.entities[0].children.size() >= 1)
         {
-            CHECK(pe.children[0].children.size() == 1);
-            if (pe.children[0].children.size() >= 1)
-            {
-                CHECK(pe.children[0].children[0].name == "Leaf");
-            }
+            CHECK(ps.entities[0].children[0].children.size() == 1);
+            if (ps.entities[0].children[0].children.size() >= 1)
+                CHECK(ps.entities[0].children[0].children[0].name == "Leaf");
         }
 
+        // Instantiate
         duin::World world2;
         world2.Component<Vec3>();
-        duin::Entity restored = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, restored);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
-        CHECK(restored.GetName() == "Root");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &restored = worldEntities[0];
+        CHECK(BaseName(restored.GetName()) == "Root");
+
         std::vector<duin::Entity> midChildren = restored.GetChildren();
         CHECK(midChildren.size() == 1);
         if (midChildren.size() >= 1)
         {
-            CHECK(midChildren[0].GetName() == "Middle");
+            CHECK(BaseName(midChildren[0].GetName()) == "Middle");
 
             std::vector<duin::Entity> leafChildren = midChildren[0].GetChildren();
             CHECK(leafChildren.size() == 1);
             if (leafChildren.size() >= 1)
             {
-                CHECK(leafChildren[0].GetName() == "Leaf");
+                CHECK(BaseName(leafChildren[0].GetName()) == "Leaf");
                 CHECK(leafChildren[0].Has<Vec3>());
                 CHECK(leafChildren[0].GetMut<Vec3>() == Vec3{2.0f, 2.0f, 2.0f});
             }
@@ -135,17 +169,28 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         childA.ChildOf(parent);
         childB.ChildOf(parent);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(parent);
+        // Pack parent as scene entity
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({parent});
 
-        CHECK(pe.children.size() == 2);
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].children.size() == 2);
 
+        // Instantiate
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::Entity restored = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, restored);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
-        CHECK(restored.GetName() == "Parent");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &restored = worldEntities[0];
+        CHECK(BaseName(restored.GetName()) == "Parent");
+
         std::vector<duin::Entity> children = restored.GetChildren();
         CHECK(children.size() == 2);
     }

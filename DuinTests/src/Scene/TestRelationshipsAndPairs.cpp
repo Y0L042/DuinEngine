@@ -11,6 +11,12 @@
 namespace TestSceneBuilder
 {
 
+static std::string BaseName(const std::string &name)
+{
+    auto pos = name.find('#');
+    return pos != std::string::npos ? name.substr(0, pos) : name;
+}
+
 TEST_SUITE("Relationship and Pair Tests")
 {
     struct Health { float value = 100.0f; };
@@ -26,7 +32,6 @@ TEST_SUITE("Relationship and Pair Tests")
     TEST_CASE("Pack and Instantiate entity with pair relationships")
     {
         duin::World world;
-        duin::SceneBuilder sceneBuilder(&world);
         world.Component<Vec3>();
         world.Component<Likes>();
         world.Component<Targets>();
@@ -35,36 +40,49 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity enemy = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
         duin::Entity battie = world.CreateEntity().Set<Vec3>(10.0f, 0.0f, 0.0f);
 
-        // Add relationship: player targets enemy
+        // Add relationship: player targets enemy (and unnamed battie)
         player.Add<Targets>(enemy);
         player.Add<Targets>(battie);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
+        // Pack player and enemy together for cross-entity relationship resolution
+        duin::SceneBuilder sceneBuilder(&world);
+        duin::PackedScene ps = sceneBuilder.PackScene({player, enemy, battie});
 
-        // Verify relationship is packed
-        MSG_CHECK(pe.name, pe.name == "Player");
-        //MSG_CHECK(pe.pairs.size(), pe.pairs.size() == 1); // Doesnt account for builtin pairs
-        
-        auto targetsPair = std::find_if(pe.pairs.begin(), pe.pairs.end(), 
-            [](const duin::PackedPair& pair) { return pair.relationshipName == "Targets"; });
-        MSG_CHECK(targetsPair != pe.pairs.end(), targetsPair != pe.pairs.end());
-        if (targetsPair != pe.pairs.end()) {
+        // Verify player's pair is packed
+        const duin::PackedEntity &playerPacked = ps.entities[0];
+        MSG_CHECK(playerPacked.name, playerPacked.name == "Player");
+        //MSG_CHECK(playerPacked.pairs.size(), playerPacked.pairs.size() == 1); // Doesn't account for builtin pairs
+
+        auto targetsPair = std::find_if(playerPacked.pairs.begin(), playerPacked.pairs.end(),
+            [](const duin::PackedPair &pair) { return pair.relationshipName == "Targets"; });
+        MSG_CHECK(targetsPair != playerPacked.pairs.end(), targetsPair != playerPacked.pairs.end());
+        if (targetsPair != playerPacked.pairs.end())
+        {
             MSG_CHECK(targetsPair->targetName, targetsPair->targetName == "Enemy");
         }
 
         // Instantiate and verify
         duin::World world2;
         world2.Component<Vec3>();
-        world2.Component<Targets>();
+        duin::Entity te = world2.Component<Targets>();
 
-        // Create target entity first (must exist before instantiating pair)
-        duin::Entity enemy2 = world2.CreateEntity("Enemy");
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
-        duin::Entity player2 = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, player2);
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        DN_INFO("World Size: {}", worldEntities.size());
+        world2.IterateChildren([](duin::Entity child) { DN_INFO("NAME: {}", child.GetName()); });
 
-        MSG_CHECK(player2.GetName(), player2.GetName() == "Player");
-        CHECK(player2.HasPair(world2.Component<Targets>().GetID(), enemy2.GetID()));
+        REQUIRE(worldEntities.size() >= 2);
+
+        duin::Entity player2 = world2.Lookup("Player");
+        duin::Entity enemy2 = world2.Lookup("Enemy");
+
+        REQUIRE(player2.IsValid());
+        REQUIRE(enemy2.IsValid());
+
+        CHECK(player2.Has(te, enemy2));
+        CHECK(player2.Has<Targets>(enemy2));
     }
 
     TEST_CASE("Parent-child relationships as pairs")
@@ -74,28 +92,37 @@ TEST_SUITE("Relationship and Pair Tests")
 
         duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
         duin::Entity child = world.CreateEntity("Child").Set<Vec3>(1.0f, 0.0f, 0.0f);
-        
+
         child.ChildOf(parent);
 
         // Verify parent-child relationship
         CHECK(child.GetParent() == parent);
         CHECK(parent.GetChildren().size() == 1);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(parent);
-        
-        CHECK(pe.children.size() == 1);
-        CHECK(pe.children[0].name == "Child");
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({parent});
+
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].children.size() == 1);
+        CHECK(ps.entities[0].children[0].name == "Child");
 
         // Instantiate and verify relationship preserved
         duin::World world2;
         world2.Component<Vec3>();
 
-        duin::Entity restored = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, restored);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &restored = worldEntities[0];
         std::vector<duin::Entity> restoredChildren = restored.GetChildren();
         CHECK(restoredChildren.size() == 1);
-        CHECK(restoredChildren[0].GetParent() == restored);
+        if (restoredChildren.size() >= 1)
+            CHECK(restoredChildren[0].GetParent() == restored);
     }
 
     TEST_CASE("Multiple relationship pairs on single entity")
@@ -113,15 +140,16 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity weapon = world.CreateEntity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.0f);
         duin::Entity enemy = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
 
-        // Player owns weapon
+        // Player owns weapon, targets enemy
         player.Add<Owns>(weapon);
-        
-        // Player targets enemy
         player.Add<Targets>(enemy);
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
+        // Pack all three together for cross-entity relationship resolution
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({player, weapon, enemy});
 
-        CHECK(pe.name == "Player");
+        CHECK(ps.entities.size() == 3);
+        CHECK(ps.entities[0].name == "Player");
         // Pairs should be serialized as part of component data or relationships
     }
 
@@ -138,37 +166,43 @@ TEST_SUITE("Relationship and Pair Tests")
         alice.Add<Likes>(bob);
         bob.Add<Likes>(alice);
 
-        duin::PackedEntity alicePacked = duin::PackedEntity::Pack(alice);
-        duin::PackedEntity bobPacked = duin::PackedEntity::Pack(bob);
+        duin::SceneBuilder sbAlice(&world);
+        duin::PackedScene psAlice = sbAlice.PackScene({alice});
 
-        CHECK(alicePacked.name == "Alice");
-        CHECK(bobPacked.name == "Bob");
-        CHECK(alicePacked.pairs.size() == 1);
-        CHECK(bobPacked.pairs.size() == 1);
-        
-        auto aliceLikesPair = std::find_if(alicePacked.pairs.begin(), alicePacked.pairs.end(),
-            [](const duin::PackedPair& pair) { return pair.relationshipName == "Likes"; });
-        if (aliceLikesPair != alicePacked.pairs.end()) {
+        duin::SceneBuilder sbBob(&world);
+        duin::PackedScene psBob = sbBob.PackScene({bob});
+
+        CHECK(psAlice.entities[0].name == "Alice");
+        CHECK(psBob.entities[0].name == "Bob");
+        CHECK(psAlice.entities[0].pairs.size() == 1);
+        CHECK(psBob.entities[0].pairs.size() == 1);
+
+        auto aliceLikesPair = std::find_if(psAlice.entities[0].pairs.begin(), psAlice.entities[0].pairs.end(),
+            [](const duin::PackedPair &pair) { return pair.relationshipName == "Likes"; });
+        if (aliceLikesPair != psAlice.entities[0].pairs.end())
+        {
             CHECK(aliceLikesPair->targetName == "Bob");
         }
-        
-        auto bobLikesPair = std::find_if(bobPacked.pairs.begin(), bobPacked.pairs.end(),
-            [](const duin::PackedPair& pair) { return pair.relationshipName == "Likes"; });
-        if (bobLikesPair != bobPacked.pairs.end()) {
+
+        auto bobLikesPair = std::find_if(psBob.entities[0].pairs.begin(), psBob.entities[0].pairs.end(),
+            [](const duin::PackedPair &pair) { return pair.relationshipName == "Likes"; });
+        if (bobLikesPair != psBob.entities[0].pairs.end())
+        {
             CHECK(bobLikesPair->targetName == "Alice");
         }
     }
 
     TEST_CASE("PackedPair serialization and deserialization")
     {
-        // Create a sample PackedPair
+        // Create a sample PackedPair — this test specifically validates the lower-level API
         duin::PackedPair original;
         original.relationshipName = "Targets";
         original.targetName = "Enemy";
         original.jsonData = "";
 
         // Serialize to JSON
-        duin::JSONValue json = duin::PackedPair::Serialize(original);
+        duin::SceneBuilder builder(nullptr);
+        duin::JSONValue json = builder.SerializePair(original);
 
         // Verify JSON structure
         CHECK(json.HasMember("relationship"));
@@ -177,7 +211,7 @@ TEST_SUITE("Relationship and Pair Tests")
         CHECK(json.GetMember("target").GetString() == "Enemy");
 
         // Deserialize back
-        duin::PackedPair restored = duin::PackedPair::Deserialize(json);
+        duin::PackedPair restored = builder.DeserializePair(json);
 
         // Verify restored data
         CHECK(restored.relationshipName == "Targets");
@@ -200,16 +234,19 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity enemy1 = world.CreateEntity("Enemy1").IsA(enemyPrefab);
 
         // Pack the entity
-        duin::PackedEntity pe = duin::PackedEntity::Pack(enemy1);
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({enemy1});
 
         // Verify IsA relationship is packed
-        CHECK(pe.name == "Enemy1");
-        CHECK(pe.pairs.size() == 1);
-        
-        auto isAPair = std::find_if(pe.pairs.begin(), pe.pairs.end(),
-            [](const duin::PackedPair& pair) { return pair.relationshipName == "IsA"; });
-        CHECK(isAPair != pe.pairs.end());
-        if (isAPair != pe.pairs.end()) {
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "Enemy1");
+        CHECK(ps.entities[0].pairs.size() == 1);
+
+        auto isAPair = std::find_if(ps.entities[0].pairs.begin(), ps.entities[0].pairs.end(),
+            [](const duin::PackedPair &pair) { return pair.relationshipName == "IsA"; });
+        CHECK(isAPair != ps.entities[0].pairs.end());
+        if (isAPair != ps.entities[0].pairs.end())
+        {
             CHECK(isAPair->targetName == "EnemyPrefab");
         }
     }
@@ -225,27 +262,34 @@ TEST_SUITE("Relationship and Pair Tests")
 
         player.Add<Targets>(enemy);
 
-        // Pack
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
+        // Pack player and enemy together for cross-entity relationship resolution
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({player, enemy});
 
         // Serialize to JSON
-        duin::JSONValue json = duin::PackedEntity::Serialize(pe);
+        duin::JSONValue json = sb.SerializeScene(ps);
 
-        // Verify pairs array exists in JSON
-        CHECK(json.HasMember("pairs"));
-        CHECK(json.GetMember("pairs").IsArray());
+        // Verify entities array exists in JSON
+        CHECK(json.HasMember("entities"));
+        CHECK(json.GetMember("entities").IsArray());
 
         // Deserialize
-        duin::PackedEntity restored = duin::PackedEntity::Deserialize(json);
+        duin::PackedScene ps2 = sb.DeserializeScene(json);
 
-        // Verify pairs are restored
-        MSG_CHECK(restored.pairs.size() , restored.pairs.size() == 1);
-        
-        auto restoredTargetsPair = std::find_if(restored.pairs.begin(), restored.pairs.end(),
-            [](const duin::PackedPair& pair) { return pair.relationshipName == "Targets"; });
-        MSG_CHECK(restoredTargetsPair != restored.pairs.end(), restoredTargetsPair != restored.pairs.end());
-        if (restoredTargetsPair != restored.pairs.end()) {
-            MSG_CHECK(restoredTargetsPair->targetName, restoredTargetsPair->targetName == "Enemy");
+        // Verify pairs are restored in player's packed data
+        CHECK(ps2.entities.size() == 2);
+        if (ps2.entities.size() >= 1)
+        {
+            const duin::PackedEntity &playerRestored = ps2.entities[0];
+            MSG_CHECK(playerRestored.pairs.size(), playerRestored.pairs.size() == 1);
+
+            auto restoredTargetsPair = std::find_if(playerRestored.pairs.begin(), playerRestored.pairs.end(),
+                [](const duin::PackedPair &pair) { return pair.relationshipName == "Targets"; });
+            MSG_CHECK(restoredTargetsPair != playerRestored.pairs.end(), restoredTargetsPair != playerRestored.pairs.end());
+            if (restoredTargetsPair != playerRestored.pairs.end())
+            {
+                MSG_CHECK(restoredTargetsPair->targetName, restoredTargetsPair->targetName == "Enemy");
+            }
         }
     }
 }

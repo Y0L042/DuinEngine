@@ -11,7 +11,7 @@ namespace TestSceneBuilder
 
 TEST_SUITE("PackedScene Pack and Instantiate")
 {
-    TEST_CASE("Pack empty scene root")
+    TEST_CASE("Pack single entity as scene entity")
     {
         duin::World world;
         world.Component<Vec3>();
@@ -20,7 +20,10 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         duin::SceneBuilder builder(&world);
         duin::PackedScene ps = builder.PackScene({root});
 
-        CHECK(ps.entities.empty());
+        // PackScene({entity}) packs the entity itself as ps.entities[0]
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "EmptyRoot");
+        CHECK(ps.entities[0].children.empty());
     }
 
     TEST_CASE("Pack scene with multiple root-level entities")
@@ -29,16 +32,12 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity root = world.CreateEntity("Root");
         duin::Entity a = world.CreateEntity("A").Set<Vec3>(1.0f, 0.0f, 0.0f);
         duin::Entity b = world.CreateEntity("B").Set<Vec3>(0.0f, 1.0f, 0.0f);
         duin::Entity c = world.CreateEntity("C").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
-        a.ChildOf(root);
-        b.ChildOf(root);
-        c.ChildOf(root);
 
         duin::SceneBuilder builder(&world);
-        duin::PackedScene ps = builder.PackScene({root});
+        duin::PackedScene ps = builder.PackScene({a, b, c});
 
         CHECK(ps.entities.size() == 3);
     }
@@ -50,7 +49,7 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         world.Component<Camera>();
 
         duin::PackedScene scene;
-        scene.uuid = duin::UUID::FromStringHex("instantiate11111");
+        scene.uuid = duin::UUID::FromStringHex("ab11111111111111");
         scene.name = "InstantiateTest";
 
         duin::PackedEntity e1;
@@ -72,13 +71,15 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         scene.entities.push_back(e1);
         scene.entities.push_back(e2);
 
+        // Instantiate into a fresh world; InstantiateScene creates entities at world root
+        duin::World world2;
+        world2.Component<Vec3>();
+        world2.Component<Camera>();
+        duin::SceneBuilder builder(&world2);
+        builder.InstantiateScene(scene, &world2);
 
-        duin::Entity root = world.CreateEntity("SceneRoot");
-        duin::SceneBuilder builder(&world);
-        builder.InstantiateScene(scene, &world);
-
-        std::vector<duin::Entity> children = root.GetChildren();
-        CHECK(children.size() == 2);
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 2);
     }
 
     TEST_CASE("Pack then Instantiate scene round-trip preserves data")
@@ -87,56 +88,50 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        // Build scene
-        duin::Entity root = world.CreateEntity("Root");
-        duin::Entity e1 =
+        // Build scene with two world-root entities
+        duin::Entity player =
             world.CreateEntity("Player").Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
-        duin::Entity e2 = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 10.0f);
-        e1.ChildOf(root);
-        e2.ChildOf(root);
+        duin::Entity enemy = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 10.0f);
 
-        // Pack
+        // Pack the two entities as separate scene root entities
         duin::SceneBuilder builder(&world);
-        duin::PackedScene ps = builder.PackScene({root});
-        ps.uuid = duin::UUID::FromStringHex("packinstrt111111");
+        duin::PackedScene ps = builder.PackScene({player, enemy});
+        ps.uuid = duin::UUID::FromStringHex("0ac1111111111111");
         ps.name = "PackInstantiateRoundTrip";
 
         CHECK(ps.entities.size() == 2);
 
-
-        // Instantiate into new root
-
+        // Instantiate into new world; entities appear at world root
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::Entity newRoot = world2.CreateEntity("NewRoot");
         duin::SceneBuilder builder2(&world2);
         builder2.InstantiateScene(ps, &world2);
 
-        std::vector<duin::Entity> children = newRoot.GetChildren();
-        CHECK(children.size() == 2);
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 2);
 
-        // Find Player and Enemy by name
-        duin::Entity *player = nullptr;
-        duin::Entity *enemy = nullptr;
-        for (auto &c : children)
+        // Find Player and Enemy by checking component values
+        duin::Entity *restoredPlayer = nullptr;
+        duin::Entity *restoredEnemy = nullptr;
+        for (auto &e : worldEntities)
         {
-            if (c.GetName() == "Player")
-                player = &c;
-            if (c.GetName() == "Enemy")
-                enemy = &c;
+            if (e.Has<Camera>())
+                restoredPlayer = &e;
+            else
+                restoredEnemy = &e;
         }
 
-        REQUIRE(player != nullptr);
-        REQUIRE(enemy != nullptr);
+        REQUIRE(restoredPlayer != nullptr);
+        REQUIRE(restoredEnemy != nullptr);
 
-        CHECK(player->Has<Vec3>());
-        CHECK(player->Has<Camera>());
-        CHECK(player->GetMut<Vec3>() == Vec3{1.0f, 2.0f, 3.0f});
-        CHECK(player->GetMut<Camera>() == Camera{90.0f, 0.1f, 1000.0f, true});
+        CHECK(restoredPlayer->Has<Vec3>());
+        CHECK(restoredPlayer->Has<Camera>());
+        CHECK(restoredPlayer->GetMut<Vec3>() == Vec3{1.0f, 2.0f, 3.0f});
+        CHECK(restoredPlayer->GetMut<Camera>() == Camera{90.0f, 0.1f, 1000.0f, true});
 
-        CHECK(enemy->Has<Vec3>());
-        CHECK(enemy->GetMut<Vec3>() == Vec3{10.0f, 0.0f, 10.0f});
+        CHECK(restoredEnemy->Has<Vec3>());
+        CHECK(restoredEnemy->GetMut<Vec3>() == Vec3{10.0f, 0.0f, 10.0f});
     }
 }
 

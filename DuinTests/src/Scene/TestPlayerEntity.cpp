@@ -9,114 +9,85 @@
 namespace TestSceneBuilder
 {
 
+// Helper: strip the '#uuid' suffix that SceneBuilder::InstantiateEntity appends.
+static std::string BaseName(const std::string &name)
+{
+    auto pos = name.find('#');
+    return pos != std::string::npos ? name.substr(0, pos) : name;
+}
+
 // Define test components matching Player.cpp structure
 struct Mass
 {
     float value = 1.0f;
-    bool operator==(const Mass &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const Mass &other) const { return value == other.value; }
 };
 
 struct CanRunComponent
 {
     float speed = 7.5f;
-    bool operator==(const CanRunComponent &other) const
-    {
-        return speed == other.speed;
-    }
+    bool operator==(const CanRunComponent &other) const { return speed == other.speed; }
 };
 
 struct CanSprintComponent
 {
     float speed = 12.0f;
-    bool operator==(const CanSprintComponent &other) const
-    {
-        return speed == other.speed;
-    }
+    bool operator==(const CanSprintComponent &other) const { return speed == other.speed; }
 };
 
 struct CanJumpComponent
 {
     float impulse = 29000.61f;
-    bool operator==(const CanJumpComponent &other) const
-    {
-        return impulse == other.impulse;
-    }
+    bool operator==(const CanJumpComponent &other) const { return impulse == other.impulse; }
 };
 
 struct InputVelocities
 {
     Vec3 value = {0.0f, 0.0f, 0.0f};
-    bool operator==(const InputVelocities &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const InputVelocities &other) const { return value == other.value; }
 };
 
 struct InputForces
 {
     Vec3 value = {0.0f, 0.0f, 0.0f};
-    bool operator==(const InputForces &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const InputForces &other) const { return value == other.value; }
 };
 
 struct PlayerMovementInputVec3
 {
     Vec3 value = {0.0f, 0.0f, 0.0f};
-    bool operator==(const PlayerMovementInputVec3 &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const PlayerMovementInputVec3 &other) const { return value == other.value; }
 };
 
 struct InputVelocityDirection
 {
     Vec3 value = {0.0f, 0.0f, 0.0f};
-    bool operator==(const InputVelocityDirection &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const InputVelocityDirection &other) const { return value == other.value; }
 };
 
 struct MouseInputVec2
 {
     float x = 0.0f;
     float y = 0.0f;
-    bool operator==(const MouseInputVec2 &other) const
-    {
-        return x == other.x && y == other.y;
-    }
+    bool operator==(const MouseInputVec2 &other) const { return x == other.x && y == other.y; }
 };
 
 struct CameraYawComponent
 {
     float value = 0.0f;
-    bool operator==(const CameraYawComponent &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const CameraYawComponent &other) const { return value == other.value; }
 };
 
 struct CameraPitchComponent
 {
     float value = 0.0f;
-    bool operator==(const CameraPitchComponent &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const CameraPitchComponent &other) const { return value == other.value; }
 };
 
 struct GravityComponent
 {
     Vec3 value = {0.0f, -9.81f, 0.0f};
-    bool operator==(const GravityComponent &other) const
-    {
-        return value == other.value;
-    }
+    bool operator==(const GravityComponent &other) const { return value == other.value; }
 };
 
 struct VelocityBob
@@ -160,7 +131,6 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<CanGravity>();
         world.Component<OnGroundTag>();
 
-        // Create player entity with multiple components like in Player.cpp
         duin::Entity player = world.CreateEntity("Player")
                                   .Set<Vec3>(0.0f, 50.0f, 5.0f)
                                   .Set<Mass>({80.0f})
@@ -177,20 +147,22 @@ TEST_SUITE("Complex Player Entity Tests")
                                   .Add<CanGravity>()
                                   .Add<OnGroundTag>();
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
+        // Pack player as scene entity; inspect packed component data
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({player});
 
-        CHECK(pe.name == "Player");
-        CHECK(pe.enabled == true);
-        CHECK(pe.components.size() >= 7); // At least the non-tag components
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "Player");
+        CHECK(ps.entities[0].enabled == true);
+        CHECK(ps.entities[0].components.size() >= 7);
 
-        // Verify specific component values are packed
         bool foundMass = false;
         bool foundCanRun = false;
         bool foundCanSprint = false;
         bool foundCanJump = false;
         bool foundVec3 = false;
 
-        for (const auto &comp : pe.components)
+        for (const auto &comp : ps.entities[0].components)
         {
             if (comp.componentTypeName == "Mass")
             {
@@ -224,9 +196,6 @@ TEST_SUITE("Complex Player Entity Tests")
             {
                 foundVec3 = true;
                 duin::JSONValue json = duin::JSONValue::Parse(comp.jsonData);
-                CHECK(json.HasMember("x"));
-                CHECK(json.HasMember("y"));
-                CHECK(json.HasMember("z"));
                 CHECK(json["x"].GetDouble() == doctest::Approx(0.0));
                 CHECK(json["y"].GetDouble() == doctest::Approx(50.0));
                 CHECK(json["z"].GetDouble() == doctest::Approx(5.0));
@@ -254,10 +223,12 @@ TEST_SUITE("Complex Player Entity Tests")
                                   .Add<CanGravity>()
                                   .Add<OnGroundTag>();
 
-        // Pack
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
+        // Pack as scene entity
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({player});
 
-        CHECK(pe.name == "PlayerWithTags");
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "PlayerWithTags");
 
         // Instantiate in new world
         duin::World world2;
@@ -266,10 +237,16 @@ TEST_SUITE("Complex Player Entity Tests")
         world2.Component<CanGravity>();
         world2.Component<OnGroundTag>();
 
-        duin::Entity newPlayer = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, newPlayer);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
-        CHECK(newPlayer.GetName() == "PlayerWithTags");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &newPlayer = worldEntities[0];
+        CHECK(BaseName(newPlayer.GetName()) == "PlayerWithTags");
         CHECK(newPlayer.Has<Vec3>());
         CHECK(newPlayer.Has<Mass>());
         CHECK(newPlayer.Has<CanGravity>());
@@ -292,21 +269,18 @@ TEST_SUITE("Complex Player Entity Tests")
 
         float playerHeight = 1.75f;
 
-        // Create player entity
         duin::Entity player = world.CreateEntity("Player")
                                   .Set<Vec3>(0.0f, 50.0f, 5.0f)
                                   .Set<Mass>({80.0f})
                                   .Add<MouseInputVec2>()
                                   .Add<CameraYawComponent>();
 
-        // Create camera root child
         duin::Entity cameraRoot = world.CreateEntity("CameraRoot")
                                       .ChildOf(player)
                                       .Set<Vec3>(0.0f, playerHeight, 0.0f)
                                       .Add<MouseInputVec2>()
                                       .Add<CameraPitchComponent>();
 
-        // Create player camera grandchild
         duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
@@ -314,18 +288,20 @@ TEST_SUITE("Complex Player Entity Tests")
                                         .Set<VelocityBob>({10.0f, 1.0f})
                                         .Add<ActiveCameraTag>();
 
-        // Pack the player entity
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
+        // Pack player hierarchy as scene entity; inspect packed structure
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({player});
 
-        CHECK(pe.name == "Player");
-        CHECK(pe.children.size() == 1);
-        CHECK(pe.children[0].name == "CameraRoot");
-        CHECK(pe.children[0].children.size() == 1);
-        CHECK(pe.children[0].children[0].name == "PlayerCamera");
+        CHECK(ps.entities.size() == 1);
+        CHECK(ps.entities[0].name == "Player");
+        CHECK(ps.entities[0].children.size() == 1);
+        CHECK(ps.entities[0].children[0].name == "CameraRoot");
+        CHECK(ps.entities[0].children[0].children.size() == 1);
+        CHECK(ps.entities[0].children[0].children[0].name == "PlayerCamera");
 
         // Verify CameraRoot position
         bool foundCameraRootPos = false;
-        for (const auto &comp : pe.children[0].components)
+        for (const auto &comp : ps.entities[0].children[0].components)
         {
             if (comp.componentTypeName == "Vec3")
             {
@@ -338,10 +314,10 @@ TEST_SUITE("Complex Player Entity Tests")
         }
         CHECK(foundCameraRootPos);
 
-        // Verify PlayerCamera has Camera component with correct values
+        // Verify PlayerCamera has Camera and VelocityBob
         bool foundCamera = false;
         bool foundVelocityBob = false;
-        for (const auto &comp : pe.children[0].children[0].components)
+        for (const auto &comp : ps.entities[0].children[0].children[0].components)
         {
             if (comp.componentTypeName == "Camera")
             {
@@ -369,33 +345,29 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<Mass>();
         world.Component<VelocityBob>();
 
-        // Create hierarchy
         duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
-
         duin::Entity cameraRoot = world.CreateEntity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f);
-
         duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true)
                                         .Set<VelocityBob>({10.0f, 1.0f});
 
-        // Pack and serialize
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
-        duin::JSONValue json = duin::PackedEntity::Serialize(pe);
+        // Pack, serialize, deserialize via SceneBuilder instance
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({player});
+        duin::JSONValue json = sb.SerializeScene(ps);
+        duin::PackedScene deserialized = sb.DeserializeScene(json);
 
-        // Deserialize
-        duin::PackedEntity deserialized = duin::PackedEntity::Deserialize(json);
+        CHECK(deserialized.entities.size() == 1);
+        CHECK(deserialized.entities[0].name == "Player");
+        CHECK(deserialized.entities[0].children.size() == 1);
+        CHECK(deserialized.entities[0].children[0].name == "CameraRoot");
+        CHECK(deserialized.entities[0].children[0].children.size() == 1);
+        CHECK(deserialized.entities[0].children[0].children[0].name == "PlayerCamera");
 
-        CHECK(deserialized.name == "Player");
-        CHECK(deserialized.children.size() == 1);
-        CHECK(deserialized.children[0].name == "CameraRoot");
-        CHECK(deserialized.children[0].children.size() == 1);
-        CHECK(deserialized.children[0].children[0].name == "PlayerCamera");
-
-        // Verify component data integrity
         bool foundMass = false;
-        for (const auto &comp : deserialized.components)
+        for (const auto &comp : deserialized.entities[0].components)
         {
             if (comp.componentTypeName == "Mass")
             {
@@ -416,24 +388,21 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<VelocityBob>();
         world.Component<CameraPitchComponent>();
 
-        // Create original hierarchy
         duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
-
         duin::Entity cameraRoot =
             world.CreateEntity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f).Add<CameraPitchComponent>();
-
         duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true)
                                         .Set<VelocityBob>({10.0f, 1.0f});
 
-        // Pack, serialize, deserialize
-        duin::PackedEntity pe = duin::PackedEntity::Pack(player);
-        duin::JSONValue json = duin::PackedEntity::Serialize(pe);
-        duin::PackedEntity deserialized = duin::PackedEntity::Deserialize(json);
+        // Pack, serialize, deserialize, instantiate via SceneBuilder instance
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({player});
+        duin::JSONValue json = sb.SerializeScene(ps);
+        duin::PackedScene deserialized = sb.DeserializeScene(json);
 
-        // Instantiate in new world
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
@@ -441,11 +410,16 @@ TEST_SUITE("Complex Player Entity Tests")
         world2.Component<VelocityBob>();
         world2.Component<CameraPitchComponent>();
 
-        duin::Entity newPlayer = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(deserialized, newPlayer);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(deserialized, &world2);
 
-        // Verify hierarchy
-        CHECK(newPlayer.GetName() == "Player");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &newPlayer = worldEntities[0];
+        CHECK(BaseName(newPlayer.GetName()) == "Player");
         CHECK(newPlayer.Has<Vec3>());
         CHECK(newPlayer.Has<Mass>());
         CHECK(newPlayer.GetMut<Vec3>() == Vec3{0.0f, 50.0f, 5.0f});
@@ -453,14 +427,14 @@ TEST_SUITE("Complex Player Entity Tests")
 
         std::vector<duin::Entity> children = newPlayer.GetChildren();
         CHECK(children.size() == 1);
-        CHECK(children[0].GetName() == "CameraRoot");
+        CHECK(BaseName(children[0].GetName()) == "CameraRoot");
         CHECK(children[0].Has<Vec3>());
         CHECK(children[0].Has<CameraPitchComponent>());
         CHECK(children[0].GetMut<Vec3>() == Vec3{0.0f, 1.75f, 0.0f});
 
         std::vector<duin::Entity> grandchildren = children[0].GetChildren();
         CHECK(grandchildren.size() == 1);
-        CHECK(grandchildren[0].GetName() == "PlayerCamera");
+        CHECK(BaseName(grandchildren[0].GetName()) == "PlayerCamera");
         CHECK(grandchildren[0].Has<Vec3>());
         CHECK(grandchildren[0].Has<Camera>());
         CHECK(grandchildren[0].Has<VelocityBob>());
@@ -477,27 +451,22 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<Camera>();
         world.Component<Mass>();
 
-        duin::Entity root = world.CreateEntity();
-
-        // Create player hierarchy
-        duin::Entity player = world.CreateEntity("Player").ChildOf(root).Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
-
+        // Create player hierarchy (player is world-root entity)
+        duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
         duin::Entity cameraRoot = world.CreateEntity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f);
-
         duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true);
 
-        // Pack scene
-        duin::PackedScene scene = sceneBuilder.PackScene({root});
+        // Pack player as scene entity
+        duin::PackedScene scene = sceneBuilder.PackScene({player});
         scene.uuid = duin::UUID::FromStringHex("playerscn111111");
         scene.name = "PlayerScene";
 
-        // Serialize
-        duin::JSONValue json = duin::PackedScene::Serialize(scene);
+        // Serialize and verify structure
+        duin::JSONValue json = sceneBuilder.SerializeScene(scene);
 
-        // Verify scene structure
         CHECK(json.IsObject());
         CHECK(json.HasMember("sceneUUID"));
         CHECK(json.HasMember("sceneName"));
@@ -506,11 +475,11 @@ TEST_SUITE("Complex Player Entity Tests")
         CHECK(json["entities"].IsArray());
         CHECK(json["entities"].Capacity() >= 1);
 
-        // Deserialize
-        duin::PackedScene deserializedScene = duin::PackedScene::Deserialize(json);
+        // Deserialize and verify
+        duin::PackedScene deserializedScene = sceneBuilder.DeserializeScene(json);
 
         CHECK(deserializedScene.name == "PlayerScene");
-        CHECK(deserializedScene.entities.size() >= 1);
+        CHECK(deserializedScene.entities.size() == 1);
         if (deserializedScene.entities.size() >= 1)
         {
             CHECK(deserializedScene.entities[0].name == "Player");
@@ -525,17 +494,16 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<CanRunComponent>();
         world.Component<Mass>();
 
-        // Test with specific floating point values
         duin::Entity entity = world.CreateEntity("PrecisionTest")
                                   .Set<CanJumpComponent>({625.0f})
                                   .Set<CanRunComponent>({10.0f})
                                   .Set<Mass>({80.5f});
 
-        // Pack
-        duin::PackedEntity pe = duin::PackedEntity::Pack(entity);
+        // Pack and verify exact values in JSON
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({entity});
 
-        // Verify exact values in JSON
-        for (const auto &comp : pe.components)
+        for (const auto &comp : ps.entities[0].components)
         {
             if (comp.componentTypeName == "CanJumpComponent")
             {
@@ -554,15 +522,21 @@ TEST_SUITE("Complex Player Entity Tests")
             }
         }
 
-        // Instantiate and verify
+        // Instantiate and verify component values
         duin::World world2;
         world2.Component<CanJumpComponent>();
         world2.Component<CanRunComponent>();
         world2.Component<Mass>();
 
-        duin::Entity newEntity = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, newEntity);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        CHECK(worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &newEntity = worldEntities[0];
         CHECK(newEntity.GetMut<CanJumpComponent>() == CanJumpComponent{625.0f});
         CHECK(newEntity.GetMut<CanRunComponent>() == CanRunComponent{10.0f});
         CHECK(newEntity.GetMut<Mass>() == Mass{80.5f});

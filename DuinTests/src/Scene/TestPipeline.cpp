@@ -5,20 +5,30 @@
 #include <Duin/Core/Utils/UUID.h>
 #include <Duin/IO/JSONValue.h>
 #include <Duin/ECS/ECSModule.h>
+#include "Defines.h"
 
 namespace TestSceneBuilder
 {
+
+static std::string BaseName(const std::string &name)
+{
+    auto pos = name.find('#');
+    return pos != std::string::npos ? name.substr(0, pos) : name;
+}
 
 TEST_SUITE("Full Pipeline: String to Instantiation")
 {
     TEST_CASE("JSON string -> PackedScene -> Instantiate entities")
     {
         duin::World world;
+        duin::SceneBuilder builder(&world);
         world.Component<Vec3>();
         world.Component<Camera>();
+        world.Component<TAG_Main>();
+        world.Component<TAG_Camera>();
 
         std::string jsonStr = R"({
-            "sceneUUID": "aabb112233445566",
+            "sceneUUID": "0xaabb112233445566",
             "sceneName": "PipelineScene",
             "metadata": {
                 "editorVersion": "1.0",
@@ -29,10 +39,10 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
             "externalDependencies": [],
             "entities": [
                 {
-                    "uuid": "ent111111111111",
+                    "uuid": "0x1111222233334444",
                     "name": "MainEntity",
                     "enabled": true,
-                    "tags": ["main"],
+                    "tags": [{"type":"TAG_Main"}],
                     "components": [
                         {
                             "type": "Vec3",
@@ -43,10 +53,10 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
                     ],
                     "children": [
                         {
-                            "uuid": "ent222222222222",
+                            "uuid": "0x5555666677778888",
                             "name": "ChildCamera",
                             "enabled": true,
-                            "tags": ["camera"],
+                            "tags": [{"type":"TAG_Camera"}],
                             "components": [
                                 {
                                     "type": "Camera",
@@ -64,11 +74,12 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::PackedScene scene = duin::PackedScene::Deserialize(json);
+        MSG_CHECK(json.Write(), json.IsValid());
+        duin::PackedScene scene = builder.DeserializeScene(json);
 
-        CHECK(scene.uuid == duin::UUID::FromStringHex("aabb112233445566"));
-        CHECK(scene.name == "PipelineScene");
-        CHECK(scene.entities.size() == 1);
+        MSG_CHECK(scene.uuid, scene.uuid == duin::UUID::FromStringHex("0xaabb112233445566"));
+        MSG_CHECK(scene.name, scene.name == "PipelineScene");
+        MSG_CHECK(scene.entities.size(), scene.entities.size() == 1);
         if (scene.entities.size() >= 1)
         {
             CHECK(scene.entities[0].name == "MainEntity");
@@ -79,26 +90,26 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
             }
         }
 
-        duin::Entity root = world.CreateEntity("SceneRoot");
-        duin::SceneBuilder builder(&world);
+        // Instantiate into world: entities are created at world root
         builder.InstantiateScene(scene, &world);
 
-        std::vector<duin::Entity> rootChildren = root.GetChildren();
-        CHECK(rootChildren.size() == 1);
-        if (rootChildren.size() >= 1)
-        {
-            CHECK(rootChildren[0].GetName() == "MainEntity");
-            CHECK(rootChildren[0].Has<Vec3>());
-            CHECK(rootChildren[0].GetMut<Vec3>() == Vec3{5.0f, 10.0f, 15.0f});
+        // Do not assume only one root entity; look up MainEntity directly
+        duin::Entity mainEntity = world.Lookup("MainEntity");
+        REQUIRE(mainEntity.IsValid());
+        CHECK(BaseName(mainEntity.GetName()) == "MainEntity");
+        MSG_CHECK(mainEntity.Has<Vec3>(), mainEntity.Has<Vec3>());
+        auto vec3 = mainEntity.TryGet<Vec3>();
+        REQUIRE(vec3 != nullptr);
+        CHECK(*vec3 == Vec3{5.0f, 10.0f, 15.0f});
+        CHECK(mainEntity.GetMut<Vec3>() == Vec3{5.0f, 10.0f, 15.0f});
 
-            std::vector<duin::Entity> grandChildren = rootChildren[0].GetChildren();
-            CHECK(grandChildren.size() == 1);
-            if (grandChildren.size() >= 1)
-            {
-                CHECK(grandChildren[0].GetName() == "ChildCamera");
-                CHECK(grandChildren[0].Has<Camera>());
-                CHECK(grandChildren[0].GetMut<Camera>() == Camera{75.0f, 0.1f, 1000.0f, true});
-            }
+        std::vector<duin::Entity> grandChildren = mainEntity.GetChildren();
+        CHECK(grandChildren.size() == 1);
+        if (grandChildren.size() >= 1)
+        {
+            CHECK(BaseName(grandChildren[0].GetName()) == "ChildCamera");
+            CHECK(grandChildren[0].Has<Camera>());
+            CHECK(grandChildren[0].GetMut<Camera>() == Camera{75.0f, 0.1f, 1000.0f, true});
         }
     }
 
@@ -112,7 +123,7 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
             "sceneName": "MultiRootScene",
             "entities": [
                 {
-                    "uuid": "root1111111111",
+                    "uuid": "aaaa1111111111",
                     "name": "EntityA",
                     "enabled": true,
                     "tags": [],
@@ -122,7 +133,7 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
                     "children": []
                 },
                 {
-                    "uuid": "root2222222222",
+                    "uuid": "aaaa2222222222",
                     "name": "EntityB",
                     "enabled": true,
                     "tags": [],
@@ -135,18 +146,21 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::PackedScene scene = duin::PackedScene::Deserialize(json);
-
-        duin::Entity root = world.CreateEntity("SceneRoot");
         duin::SceneBuilder builder(&world);
+        duin::PackedScene scene = builder.DeserializeScene(json);
+
+        // Instantiate: EntityA and EntityB appear at world root
         builder.InstantiateScene(scene, &world);
 
-        std::vector<duin::Entity> children = root.GetChildren();
+        std::vector<duin::Entity> children = world.GetChildren();
         CHECK(children.size() == 2);
     }
 
     TEST_CASE("JSON string -> Deserialize -> Serialize -> Deserialize consistency")
     {
+        duin::World world;
+        duin::SceneBuilder sb(&world);
+
         std::string jsonStr = R"({
             "sceneUUID": "eeff112233aabb00",
             "sceneName": "ConsistencyScene",
@@ -162,19 +176,19 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
             ],
             "entities": [
                 {
-                    "uuid": "ent333333333333",
+                    "uuid": "aaa333333333333",
                     "name": "Root",
                     "enabled": true,
-                    "tags": ["persistent"],
+                    "tags": [{"type":"persistent"}],
                     "components": [
                         {"type": "Vec3", "x": 1.0, "y": 2.0, "z": 3.0}
                     ],
                     "children": [
                         {
-                            "uuid": "ent444444444444",
+                            "uuid": "aaa444444444444",
                             "name": "Leaf",
                             "enabled": false,
-                            "tags": ["leaf", "static"],
+                            "tags": [{"type":"leaf"}, {"type":"static"}],
                             "components": [],
                             "children": []
                         }
@@ -184,10 +198,10 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
         })";
 
         duin::JSONValue json1 = duin::JSONValue::Parse(jsonStr);
-        duin::PackedScene scene1 = duin::PackedScene::Deserialize(json1);
+        duin::PackedScene scene1 = sb.DeserializeScene(json1);
 
-        duin::JSONValue json2 = duin::PackedScene::Serialize(scene1);
-        duin::PackedScene scene2 = duin::PackedScene::Deserialize(json2);
+        duin::JSONValue json2 = sb.SerializeScene(scene1);
+        duin::PackedScene scene2 = sb.DeserializeScene(json2);
 
         CHECK(scene1.uuid == scene2.uuid);
         CHECK(scene1.name == scene2.name);
@@ -227,17 +241,14 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity sceneRoot = world.CreateEntity("SceneRoot");
-
+        // player is the scene root entity; weapon is its child
         duin::Entity player =
             world.CreateEntity("Player").Set<Vec3>(10.0f, 0.0f, -5.0f).Set<Camera>(90.0f, 0.1f, 2000.0f, true);
-        player.ChildOf(sceneRoot);
-
         duin::Entity weapon = world.CreateEntity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.3f);
         weapon.ChildOf(player);
 
         duin::SceneBuilder builder(&world);
-        duin::PackedScene ps = builder.PackScene({sceneRoot});
+        duin::PackedScene ps = builder.PackScene({player});
         ps.uuid = duin::UUID::FromStringHex("scene111111111111");
         ps.name = "GameScene";
         ps.metadata.editorVersion = "1.0";
@@ -256,7 +267,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
             }
         }
 
-        duin::JSONValue json = duin::PackedScene::Serialize(ps);
+        duin::JSONValue json = builder.SerializeScene(ps);
 
         CHECK(json.IsObject());
         CHECK(json.HasMember("sceneUUID"));
@@ -283,21 +294,20 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity sceneRoot = world.CreateEntity("SceneRoot");
+        // obj is the scene root entity
         duin::Entity obj =
             world.CreateEntity("Object").Set<Vec3>(3.0f, 6.0f, 9.0f).Set<Camera>(45.0f, 0.5f, 100.0f, false);
-        obj.ChildOf(sceneRoot);
 
         duin::SceneBuilder builder(&world);
-        duin::PackedScene ps = builder.PackScene({sceneRoot});
+        duin::PackedScene ps = builder.PackScene({obj});
         ps.uuid = duin::UUID::FromStringHex("roundtrip111111");
         ps.name = "RoundTripScene";
 
-        duin::JSONValue json = duin::PackedScene::Serialize(ps);
+        duin::JSONValue json = builder.SerializeScene(ps);
         std::string jsonStr = json.Write();
 
         duin::JSONValue json2 = duin::JSONValue::Parse(jsonStr);
-        duin::PackedScene ps2 = duin::PackedScene::Deserialize(json2);
+        duin::PackedScene ps2 = builder.DeserializeScene(json2);
 
         CHECK(ps2.uuid == duin::UUID::FromStringHex("roundtrip111111"));
         CHECK(ps2.name == "RoundTripScene");
@@ -311,15 +321,14 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::Entity newRoot = world2.CreateEntity("NewRoot");
         duin::SceneBuilder builder2(&world2);
         builder2.InstantiateScene(ps2, &world2);
 
-        std::vector<duin::Entity> children = newRoot.GetChildren();
+        std::vector<duin::Entity> children = world2.GetChildren();
         CHECK(children.size() == 1);
         if (children.size() >= 1)
         {
-            CHECK(children[0].GetName() == "Object");
+            CHECK(BaseName(children[0].GetName()) == "Object");
             CHECK(children[0].Has<Vec3>());
             CHECK(children[0].Has<Camera>());
             CHECK(children[0].GetMut<Vec3>() == Vec3{3.0f, 6.0f, 9.0f});
@@ -333,29 +342,27 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        // Build original hierarchy
-        duin::Entity root = world.CreateEntity("Root");
+        // Build original hierarchy: parent -> child -> grandchild
         duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(1.0f, 2.0f, 3.0f);
         duin::Entity child = world.CreateEntity("Child").Set<Camera>(60.0f, 0.2f, 500.0f, true);
         duin::Entity grandchild = world.CreateEntity("Grandchild").Set<Vec3>(4.0f, 5.0f, 6.0f);
-        parent.ChildOf(root);
         child.ChildOf(parent);
         grandchild.ChildOf(child);
 
-        // Pack
+        // Pack parent as scene root entity
         duin::SceneBuilder builder(&world);
-        duin::PackedScene ps = builder.PackScene({root});
+        duin::PackedScene ps = builder.PackScene({parent});
         ps.uuid = duin::UUID::FromStringHex("fullpipe11111111");
         ps.name = "FullPipelineScene";
 
         // Serialize to JSON string
-        duin::JSONValue json = duin::PackedScene::Serialize(ps);
+        duin::JSONValue json = builder.SerializeScene(ps);
         std::string jsonStr = json.Write();
         CHECK(!jsonStr.empty());
 
         // Deserialize from string
         duin::JSONValue json2 = duin::JSONValue::Parse(jsonStr);
-        duin::PackedScene ps2 = duin::PackedScene::Deserialize(json2);
+        duin::PackedScene ps2 = builder.DeserializeScene(json2);
 
         CHECK(ps2.name == "FullPipelineScene");
         CHECK(ps2.entities.size() == 1);
@@ -364,20 +371,19 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
             CHECK(ps2.entities[0].name == "Parent");
         }
 
-        // Instantiate
+        // Instantiate into world2 at world root
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::Entity newRoot = world2.CreateEntity("NewRoot");
         duin::SceneBuilder builder2(&world2);
         builder2.InstantiateScene(ps2, &world2);
 
         // Verify hierarchy
-        std::vector<duin::Entity> level1 = newRoot.GetChildren();
+        std::vector<duin::Entity> level1 = world2.GetChildren();
         CHECK(level1.size() == 1);
         if (level1.size() >= 1)
         {
-            CHECK(level1[0].GetName() == "Parent");
+            CHECK(BaseName(level1[0].GetName()) == "Parent");
             CHECK(level1[0].Has<Vec3>());
             CHECK(level1[0].GetMut<Vec3>() == Vec3{1.0f, 2.0f, 3.0f});
 
@@ -385,7 +391,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
             CHECK(level2.size() == 1);
             if (level2.size() >= 1)
             {
-                CHECK(level2[0].GetName() == "Child");
+                CHECK(BaseName(level2[0].GetName()) == "Child");
                 CHECK(level2[0].Has<Camera>());
                 CHECK(level2[0].GetMut<Camera>() == Camera{60.0f, 0.2f, 500.0f, true});
 
@@ -393,7 +399,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
                 CHECK(level3.size() == 1);
                 if (level3.size() >= 1)
                 {
-                    CHECK(level3[0].GetName() == "Grandchild");
+                    CHECK(BaseName(level3[0].GetName()) == "Grandchild");
                     CHECK(level3[0].Has<Vec3>());
                     CHECK(level3[0].GetMut<Vec3>() == Vec3{4.0f, 5.0f, 6.0f});
                 }

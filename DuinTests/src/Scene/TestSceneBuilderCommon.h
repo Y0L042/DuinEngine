@@ -39,5 +39,11 @@ struct Camera
                 isPrimary == other.isPrimary);
     }
 };
+struct TAG_Main
+{
+};
+struct TAG_Camera
+{
+};
 
 } // namespace TestSceneBuilder

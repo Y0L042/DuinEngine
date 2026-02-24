@@ -21,6 +21,12 @@ TEST_SUITE("Tag Component Tests")
     struct ActiveTag {};
     struct DestroyableTag {};
 
+    static std::string BaseName(const std::string &name)
+    {
+        auto pos = name.find('#');
+        return pos != std::string::npos ? name.substr(0, pos) : name;
+    }
+
     TEST_CASE("Pack and Instantiate entity with tag components")
     {
         duin::World world;
@@ -33,10 +39,12 @@ TEST_SUITE("Tag Component Tests")
             .Add<PlayerTag>()
             .Add<ActiveTag>();
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(entity);
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({entity});
 
-        MSG_CHECK(pe.name, pe.name == "TaggedEntity");
-        MSG_CHECK(pe.components.size(), pe.components.size() >= 1); // At least Vec3
+        MSG_CHECK(ps.entities.size(), ps.entities.size() == 1);
+        MSG_CHECK(ps.entities[0].name, ps.entities[0].name == "TaggedEntity");
+        MSG_CHECK(ps.entities[0].components.size(), ps.entities[0].components.size() >= 1); // At least Vec3
 
         // Instantiate in new world
         duin::World world2;
@@ -44,10 +52,16 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<PlayerTag>();
         world2.Component<ActiveTag>();
 
-        duin::Entity restored = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(pe, restored);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(ps, &world2);
 
-        MSG_CHECK(restored.GetName(), restored.GetName() == "TaggedEntity");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        MSG_CHECK(worldEntities.size(), worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &restored = worldEntities[0];
+        MSG_CHECK(restored.GetName(), BaseName(restored.GetName()) == "TaggedEntity");
         MSG_CHECK(restored.Has<Vec3>(), restored.Has<Vec3>());
         MSG_CHECK(restored.Has<PlayerTag>(), restored.Has<PlayerTag>());
         MSG_CHECK(restored.Has<ActiveTag>(), restored.Has<ActiveTag>());
@@ -97,7 +111,7 @@ TEST_SUITE("Tag Component Tests")
 
         // Verify tags are preserved
         int activeCount = 0;
-        for (auto& child : children)
+        for (auto &child : children)
         {
             if (child.Has<ActiveTag>()) activeCount++;
         }
@@ -115,11 +129,15 @@ TEST_SUITE("Tag Component Tests")
             .Add<PlayerTag>()
             .Add<DestroyableTag>();
 
-        duin::PackedEntity pe = duin::PackedEntity::Pack(entity);
-        duin::JSONValue json = duin::PackedEntity::Serialize(pe);
-        duin::PackedEntity deserialized = duin::PackedEntity::Deserialize(json);
+        duin::SceneBuilder sb(&world);
+        duin::PackedScene ps = sb.PackScene({entity});
+        duin::JSONValue json = sb.SerializeScene(ps);
+        duin::PackedScene deserialized = sb.DeserializeScene(json);
 
-        MSG_CHECK(deserialized.name, deserialized.name == "TagOnlyEntity");
+        MSG_CHECK(deserialized.entities.size(), deserialized.entities.size() == 1);
+        if (deserialized.entities.empty())
+            return;
+        MSG_CHECK(deserialized.entities[0].name, deserialized.entities[0].name == "TagOnlyEntity");
 
         // Instantiate
         duin::World world2;
@@ -127,10 +145,16 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<EnemyTag>();
         world2.Component<DestroyableTag>();
 
-        duin::Entity restored = world2.CreateEntity();
-        duin::PackedEntity::Instantiate(deserialized, restored);
+        duin::SceneBuilder sb2(&world2);
+        sb2.InstantiateScene(deserialized, &world2);
 
-        MSG_CHECK(restored.GetName(), restored.GetName() == "TagOnlyEntity");
+        std::vector<duin::Entity> worldEntities = world2.GetChildren();
+        MSG_CHECK(worldEntities.size(), worldEntities.size() == 1);
+        if (worldEntities.empty())
+            return;
+
+        duin::Entity &restored = worldEntities[0];
+        MSG_CHECK(restored.GetName(), BaseName(restored.GetName()) == "TagOnlyEntity");
         MSG_CHECK(restored.Has<PlayerTag>(), restored.Has<PlayerTag>());
         MSG_CHECK(restored.Has<DestroyableTag>(), restored.Has<DestroyableTag>());
         MSG_CHECK_FALSE(restored.Has<EnemyTag>(), restored.Has<EnemyTag>());
@@ -153,11 +177,11 @@ TEST_SUITE("Tag Component Tests")
         scene.name = "TagPersistenceTest";
         scene.uuid = duin::UUID::FromStringHex("tagtest11111111");
 
-        duin::JSONValue json = duin::PackedScene::Serialize(scene);
+        duin::JSONValue json = builder.SerializeScene(scene);
         std::string jsonStr = json.Write();
 
         duin::JSONValue json2 = duin::JSONValue::Parse(jsonStr);
-        duin::PackedScene scene2 = duin::PackedScene::Deserialize(json2);
+        duin::PackedScene scene2 = builder.DeserializeScene(json2);
 
         duin::World world2;
         world2.Component<Vec3>();
