@@ -21,7 +21,9 @@ struct TagC
 struct Target
 {
 };
-
+struct Targets
+{
+};
 struct X
 {
     int x;
@@ -199,27 +201,19 @@ void SandboxScene::Test_SceneBuilder_01()
     DN_INFO("pscn:\n{}\n", sceneBuilder2.SerializeScene(pscn2).Write());
 }
 
+
 void SandboxScene::Test_FlecsNames()
 {
-    struct Target
-    {
-    };
-
-            world.Component<Targets>();
-
-    duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
-    duin::Entity child = world.CreateEntity("Child").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f);
-    duin::Entity target = world.CreateEntity("TargetMan").Set<Vec3>(5.0f, 0.0f, 0.0f);
-    child.Add<Targets>(target);
-
     flecs::world world;
-    world.component<Target>();
+    auto targets = world.component<Targets>();
     auto t1 = world.entity("Twin");
-    auto t2 = world.entity("Twin").add<Target>();
-
+    auto t2 = world.entity("Twin");
     auto t3 = world.entity("Target");
+
+    t2.add<Targets>(t3);
 
     DN_INFO("T1: {}", static_cast<std::string>(t1.to_json()));
     DN_INFO("T2: {}", static_cast<std::string>(t2.to_json()));
     DN_INFO("t3 {} vs {} lookup(t3)", t3.raw_id(), world.lookup("Target").raw_id());
+    DN_INFO("Targets: {}", targets.raw_id());
 }
