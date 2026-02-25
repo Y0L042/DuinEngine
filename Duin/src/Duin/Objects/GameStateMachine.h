@@ -85,42 +85,15 @@ class GameStateMachine : public GameObject
     template <typename T>
     T *SwitchState()
     {
-        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
-        if (!stateStack.empty())
-        {
-            if (!stateStack.empty())
-            {
-                PopState();
-            }
-        }
-
-        std::shared_ptr<T> newState = CreateChildObject<T>(*this);
-        newState->Enable(false);
-        T *ptr = newState.get();
-        stateStack.push(newState);
-        stateStack.top()->StateEnter();
-
-        return ptr;
+        return SwitchState<T>(CreateChildObject<T>(*this));
     }
 
     template <typename T>
     T *SwitchState(std::shared_ptr<T> newState)
     {
         static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
-        if (!stateStack.empty())
-        {
-            if (!stateStack.empty())
-            {
-                PopState();
-            }
-        }
-
-        newState->Enable(false);
-        T *ptr = newState.get();
-        stateStack.push(newState);
-        stateStack.top()->StateEnter();
-
-        return ptr;
+        if (!stateStack.empty()) PopState();
+        return PushNewState(std::move(newState));
     }
 
     /**
@@ -131,42 +104,15 @@ class GameStateMachine : public GameObject
     template <typename T>
     T *FlushAndSwitchState()
     {
-        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
-        while (!stateStack.empty())
-        {
-            if (!stateStack.empty())
-            {
-                PopState();
-            }
-        }
-
-        std::shared_ptr<T> newState = CreateChildObject<T>(*this);
-        newState->Enable(false);
-        T *ptr = newState.get();
-        stateStack.push(newState);
-        stateStack.top()->StateEnter();
-
-        return ptr;
+        return FlushAndSwitchState<T>(CreateChildObject<T>(*this));
     }
 
     template <typename T>
     T *FlushAndSwitchState(std::shared_ptr<T> newState)
     {
         static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
-        while (!stateStack.empty())
-        {
-            if (!stateStack.empty())
-            {
-                PopState();
-            }
-        }
-
-        newState->Enable(false);
-        T *ptr = newState.get();
-        stateStack.push(newState);
-        stateStack.top()->StateEnter();
-
-        return ptr;
+        while (!stateStack.empty()) PopState();
+        return PushNewState(std::move(newState));
     }
 
     /**
@@ -177,36 +123,15 @@ class GameStateMachine : public GameObject
     template <typename T>
     T *PushState()
     {
-        static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
-        if (!stateStack.empty())
-        {
-            stateStack.top()->StateSetPause();
-        }
-
-        std::shared_ptr<T> newState = CreateChildObject<T>(*this);
-        newState->Enable(false);
-        T *ptr = newState.get();
-        stateStack.push(newState);
-        stateStack.top()->StateEnter();
-
-        return ptr;
+        return PushState<T>(CreateChildObject<T>(*this));
     }
 
     template <typename T>
     T *PushState(std::shared_ptr<T> newState)
     {
         static_assert(std::is_base_of<GameState, T>::value, "T must derive from GameState");
-        if (!stateStack.empty())
-        {
-            stateStack.top()->StateSetPause();
-        }
-
-        newState->Enable(false);
-        T *ptr = newState.get();
-        stateStack.push(newState);
-        stateStack.top()->StateEnter();
-
-        return ptr;
+        if (!stateStack.empty()) stateStack.top()->StateSetPause();
+        return PushNewState(std::move(newState));
     }
 
     /** @brief Pops the current state and resumes the previous one. */
@@ -227,6 +152,16 @@ class GameStateMachine : public GameObject
     virtual void Debug() override;
 
   private:
+    template <typename T>
+    T *PushNewState(std::shared_ptr<T> newState)
+    {
+        newState->Enable(false);
+        T *ptr = newState.get();
+        stateStack.push(std::move(newState));
+        stateStack.top()->StateEnter();
+        return ptr;
+    }
+
     std::stack<std::shared_ptr<GameState>> stateStack;
 };
 
