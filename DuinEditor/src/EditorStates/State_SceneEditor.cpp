@@ -53,6 +53,7 @@ void State_SceneEditor::CreateGUIElements()
     sceneTree = CreateChildObject<SceneTree>();
     sceneViewport = CreateChildObject<SceneViewport>();
     fileTree = CreateChildObject<FileTree>(this);
+    entityProperties = CreateChildObject<EntityProperties>();
 
     fileTree->onSceneSelect.Connect([&](FSNode *sceneFile) {
         duin::PackedScene &pscn = LoadSceneFromFile(sceneFile);

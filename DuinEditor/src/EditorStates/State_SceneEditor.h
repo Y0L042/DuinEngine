@@ -12,12 +12,14 @@
 #include "../GUI/SceneEditor/SceneTree.h"
 #include "../GUI/SceneEditor/SceneViewport.h"
 #include "../GUI/SceneEditor/FileTree.h"
+#include "../GUI/SceneEditor/EntityProperties.h"
 
 class State_SceneEditor : public duin::GameState
 {
   public:
     duin::Signal<FileManager *> onUpdateFileManager;
     duin::Signal<duin::PackedScene &> onSetActiveScene;
+    duin::Signal<duin::Entity> onSelectEntity;
 
     State_SceneEditor(duin::GameStateMachine &sm) : duin::GameState(sm) {};
     ~State_SceneEditor() = default;
@@ -41,6 +43,7 @@ class State_SceneEditor : public duin::GameState
     std::shared_ptr<SceneTree> sceneTree;
     std::shared_ptr<SceneViewport> sceneViewport;
     std::shared_ptr<FileTree> fileTree;
+    std::shared_ptr<EntityProperties> entityProperties;
 
     std::function<void(void)> queuedNewScene;
 
