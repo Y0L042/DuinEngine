@@ -54,7 +54,7 @@ TEST_SUITE("Component Instantiation")
         world.Component<Vec3>();
         world.Component<Camera>();
         duin::SceneBuilder sb(&world);
-        duin::Entity e = world.CreateEntity().Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(3.0f, 2.0f, 4.0f, true);
+        duin::Entity e = world.Entity().Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(3.0f, 2.0f, 4.0f, true);
         std::vector<duin::PackedComponent> cmpList;
         e.ForEachComponent([&](duin::Entity::ID cmpID) {
             if (cmpID.IsEntity())
@@ -94,7 +94,7 @@ TEST_SUITE("Component Instantiation")
         cmpList[1].componentTypeName = "Camera";
         cmpList[1].jsonData = R"({"type":"Camera","fov":3.0,"nearPlane":2.0,"farPlane":4.0,"isPrimary":true})";
 
-        duin::Entity e = world.CreateEntity();
+        duin::Entity e = world.Entity();
         for (duin::PackedComponent &cmp : cmpList)
         {
             sb.InstantiateComponent(cmp, e);

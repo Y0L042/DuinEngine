@@ -14,18 +14,18 @@ duin::World::World(flecs::world w)
 
 duin::World::~World() {};
 
-duin::Entity duin::World::CreateEntity(const std::string &name)
+duin::Entity duin::World::Entity(const std::string &name)
 {
-    Entity e;
+    duin::Entity e;
     flecs::entity flecsEntity = flecsWorld.entity(name.c_str());
     e.SetWorld(this);
     e.SetFlecsEntity(flecsEntity);
     return e;
 }
 
-duin::Entity duin::World::CreatePrefab(const std::string &name)
+duin::Entity duin::World::Prefab(const std::string &name)
 {
-    Entity e;
+    duin::Entity e;
     flecs::entity flecsEntity = flecsWorld.prefab(name.c_str());
     e.SetWorld(this);
     e.SetFlecsEntity(flecsEntity);
@@ -37,7 +37,7 @@ void duin::World::DeleteEntity(uint64_t id)
     flecsWorld.entity(id).destruct();
 }
 
-void duin::World::DeleteEntity(const Entity &entity)
+void duin::World::DeleteEntity(const duin::Entity &entity)
 {
     flecsWorld.entity(entity.GetID()).destruct();
 }
@@ -99,7 +99,7 @@ void duin::World::SetVersion(uint64_t id)
 
 duin::Entity duin::World::MakeAlive(uint64_t id)
 {
-    Entity e;
+    duin::Entity e;
     flecs::entity flecsEntity = flecsWorld.make_alive(id);
     e.SetWorld(this);
     e.SetFlecsEntity(flecsEntity);
@@ -108,7 +108,7 @@ duin::Entity duin::World::MakeAlive(uint64_t id)
 
 duin::Entity duin::World::GetWorldEntity()
 {
-    Entity e;
+    duin::Entity e;
     e.SetWorld(this);
     e.SetFlecsEntity(flecsWorld.entity());
 
@@ -127,7 +127,7 @@ void duin::World::Quit()
 
 duin::Entity duin::World::Lookup(const std::string &name, const std::string &sep, const std::string &root_sep, bool recursive)
 {
-    Entity e;
+    duin::Entity e;
     e.SetWorld(this);
     e.SetFlecsEntity(flecsWorld.lookup(name.c_str(), sep.c_str(), root_sep.c_str(), recursive));
 
@@ -136,7 +136,7 @@ duin::Entity duin::World::Lookup(const std::string &name, const std::string &sep
 
 std::vector<duin::Entity> duin::World::GetChildren(bool filterBuiltins)
 {
-    std::vector<Entity> children;
+    std::vector<duin::Entity> children;
 
     flecsWorld.children([&](flecs::entity child) {
         if (filterBuiltins)
@@ -152,7 +152,7 @@ std::vector<duin::Entity> duin::World::GetChildren(bool filterBuiltins)
             if (child.has(flecs::Module))
                 return;
         }
-        Entity e;
+        duin::Entity e;
         e.SetWorld(const_cast<World *>(this));
         e.SetFlecsEntity(child);
         children.push_back(e);

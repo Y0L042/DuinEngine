@@ -19,7 +19,7 @@ TEST_SUITE("World")
     TEST_CASE("CreateEntity and DeleteEntity by ID")
     {
         duin::World w;
-        duin::Entity e = w.CreateEntity("TestEntity");
+        duin::Entity e = w.Entity("TestEntity");
         CHECK(e.IsValid());
         uint64_t id = e.GetID();
         CHECK(w.IsAlive(id));
@@ -30,7 +30,7 @@ TEST_SUITE("World")
     TEST_CASE("CreateEntity and DeleteEntity by Entity reference")
     {
         duin::World w;
-        duin::Entity e = w.CreateEntity("TestEntity2");
+        duin::Entity e = w.Entity("TestEntity2");
         CHECK(e.IsValid());
         uint64_t id = e.GetID();
         w.DeleteEntity(e);
@@ -40,8 +40,8 @@ TEST_SUITE("World")
     TEST_CASE("DeleteWith by ID and by pair")
     {
         duin::World w;
-        duin::Entity e1 = w.CreateEntity("CompA");
-        duin::Entity e2 = w.CreateEntity("CompB");
+        duin::Entity e1 = w.Entity("CompA");
+        duin::Entity e2 = w.Entity("CompB");
         uint64_t idA = e1.GetID();
         uint64_t idB = e2.GetID();
 
@@ -52,8 +52,8 @@ TEST_SUITE("World")
     TEST_CASE("RemoveAll by ID and by pair")
     {
         duin::World w;
-        duin::Entity e1 = w.CreateEntity("CompC");
-        duin::Entity e2 = w.CreateEntity("CompD");
+        duin::Entity e1 = w.Entity("CompC");
+        duin::Entity e2 = w.Entity("CompD");
         uint64_t idC = e1.GetID();
         uint64_t idD = e2.GetID();
 
@@ -81,7 +81,7 @@ TEST_SUITE("World")
     TEST_CASE("IsAlive and IsValid")
     {
         duin::World w;
-        duin::Entity e = w.CreateEntity("TestEntity3");
+        duin::Entity e = w.Entity("TestEntity3");
         uint64_t id = e.GetID();
         CHECK(w.IsAlive(id));
         CHECK(w.IsValid(id));
@@ -94,7 +94,7 @@ TEST_SUITE("World")
     TEST_CASE("SetVersion")
     {
         duin::World w;
-        duin::Entity e = w.CreateEntity("TestEntity4");
+        duin::Entity e = w.Entity("TestEntity4");
         uint64_t id = e.GetID();
         w.SetVersion(id);
     }
@@ -102,7 +102,7 @@ TEST_SUITE("World")
     TEST_CASE("MakeAlive")
     {
         duin::World w;
-        duin::Entity e = w.CreateEntity("TestEntity5");
+        duin::Entity e = w.Entity("TestEntity5");
         uint64_t id = e.GetID();
         w.DeleteEntity(id);
         duin::Entity e2 = w.MakeAlive(id);
@@ -130,7 +130,7 @@ TEST_SUITE("World")
             int x;
         };
         w.Component<DummyComponent>();
-        duin::Entity e = w.CreateEntity("DummyEntity");
+        duin::Entity e = w.Entity("DummyEntity");
         e.Set<DummyComponent>({42});
         w.DeleteWith<DummyComponent>();
         w.RemoveAll<DummyComponent>();
@@ -154,7 +154,7 @@ TEST_SUITE("World")
             int y;
         };
         w.Component<CompX>();
-        duin::Entity e = w.CreateEntity("CompXEntity");
+        duin::Entity e = w.Entity("CompXEntity");
         e.Set<CompX>({123});
         auto val = e.Get<CompX>();
         CHECK(val.y == 123);
@@ -163,9 +163,9 @@ TEST_SUITE("World")
     TEST_CASE("IterateChildren")
     {
         duin::World w;
-        duin::Entity parent = w.CreateEntity("Parent");
-        duin::Entity child1 = w.CreateEntity("Child1");
-        duin::Entity child2 = w.CreateEntity("Child2");
+        duin::Entity parent = w.Entity("Parent");
+        duin::Entity child1 = w.Entity("Child1");
+        duin::Entity child2 = w.Entity("Child2");
         int count = 0;
         w.IterateChildren([&](duin::Entity e) {
             count++;

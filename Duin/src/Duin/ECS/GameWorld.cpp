@@ -82,9 +82,9 @@ duin::Entity DebugCapsule;
 
 void RegisterPrefabs(duin::World &world)
 {
-    Node = world.CreatePrefab("Node").Add<UUID>();
+    Node = world.Prefab("Node").Add<UUID>();
 
-    Node2D = world.CreatePrefab("Node2D");
+    Node2D = world.Prefab("Node2D");
     Node2D.IsA(Node)
         .SetPair<ECSComponent::Position2D, ECSTag::Local>(ECSComponent::Position2D{0.0f, 0.0f})
         .SetPair<ECSComponent::Rotation2D, ECSTag::Local>(ECSComponent::Rotation2D{0.0f})
@@ -93,35 +93,35 @@ void RegisterPrefabs(duin::World &world)
         .SetPair<ECSComponent::Rotation2D, ECSTag::Global>(ECSComponent::Rotation2D{0.0f})
         .SetPair<ECSComponent::Scale2D, ECSTag::Global>(ECSComponent::Scale2D{0.0f, 0.0f});
 
-    Node3D = world.CreatePrefab("Node3D").IsA(Node).Set<ECSComponent::Transform3D>(ECSComponent::Transform3D{});
+    Node3D = world.Prefab("Node3D").IsA(Node).Set<ECSComponent::Transform3D>(ECSComponent::Transform3D{});
 
-    PhysicsStaticBody = world.CreatePrefab("PhysicsStaticBody")
+    PhysicsStaticBody = world.Prefab("PhysicsStaticBody")
                             .IsA(Node3D)
                             .Add<ECSTag::PxStatic>()
                             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
                             .Set<ECSComponent::StaticBodyComponent>(ECSComponent::StaticBodyComponent{nullptr});
 
     PhysicsKinematicBody =
-        world.CreatePrefab("PhysicsKinematicBody")
+        world.Prefab("PhysicsKinematicBody")
             .IsA(Node3D)
             .Add<ECSTag::PxKinematic>()
             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
             .Set<ECSComponent::KinematicBodyComponent>(ECSComponent::KinematicBodyComponent{nullptr});
 
-    PhysicsDynamicBody = world.CreatePrefab("PhysicsDynamicBody")
+    PhysicsDynamicBody = world.Prefab("PhysicsDynamicBody")
                              .IsA(Node3D)
                              .Add<ECSTag::PxDynamic>()
                              .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
                              .Set<ECSComponent::DynamicBodyComponent>(ECSComponent::DynamicBodyComponent{nullptr});
 
     PhysicsCharacterBody =
-        world.CreatePrefab("PhysicsCharacterBody")
+        world.Prefab("PhysicsCharacterBody")
             .IsA(Node3D)
             .Add<ECSTag::PxKinematic>()
             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
             .Set<ECSComponent::CharacterBodyComponent>(ECSComponent::CharacterBodyComponent{nullptr});
 
-    Camera3D = world.CreatePrefab("Camera3D")
+    Camera3D = world.Prefab("Camera3D")
                    .IsA(Node3D)
                    .Set<Camera>(Camera{
                        /* .uuid =  */ UUID(),
@@ -132,11 +132,11 @@ void RegisterPrefabs(duin::World &world)
                        // .projection = ::CAMERA_PERSPECTIVE
                    });
 
-    Cube = world.CreatePrefab("Cube").IsA(Node3D);
+    Cube = world.Prefab("Cube").IsA(Node3D);
     // TODO REPLACE_RAYLIB
     // .Set<ECSComponent::CubeComponent>({...})
 
-    DebugCapsule = world.CreatePrefab("DebugCapsule").IsA(Node3D);
+    DebugCapsule = world.Prefab("DebugCapsule").IsA(Node3D);
     // TODO REPLACE_RAYLIB
     // .Set<ECSComponent::DebugCapsuleComponent>({...})
 
@@ -231,7 +231,7 @@ void GameWorld::Initialize(bool connectSignals)
 duin::Entity GameWorld::CreateEntityFromJSON(JSONMember &member)
 {
     std::string ecsData = member.GetMemberDataAsString();
-    duin::Entity entity = this->CreateEntity();
+    duin::Entity entity = this->Entity();
     entity.GetFlecsEntity().from_json(ecsData.c_str());
     return entity;
 }

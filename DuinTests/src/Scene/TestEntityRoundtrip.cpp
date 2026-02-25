@@ -26,7 +26,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         world.Component<Camera>();
 
         duin::Entity original =
-            world.CreateEntity("Player").Set<Vec3>(10.0f, 20.0f, 30.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
+            world.Entity("Player").Set<Vec3>(10.0f, 20.0f, 30.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
 
         // Pack as scene entity; original is ps.entities[0]
         duin::SceneBuilder sb(&world);
@@ -62,8 +62,8 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(1.0f, 2.0f, 3.0f);
-        duin::Entity child = world.CreateEntity("Child").Set<Camera>(60.0f, 0.5f, 500.0f, false);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(1.0f, 2.0f, 3.0f);
+        duin::Entity child = world.Entity("Child").Set<Camera>(60.0f, 0.5f, 500.0f, false);
         child.ChildOf(parent);
 
         // Pack parent as scene entity; child is nested inside
@@ -107,9 +107,9 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         duin::World world;
         world.Component<Vec3>();
 
-        duin::Entity root = world.CreateEntity("Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity mid = world.CreateEntity("Middle").Set<Vec3>(1.0f, 1.0f, 1.0f);
-        duin::Entity leaf = world.CreateEntity("Leaf").Set<Vec3>(2.0f, 2.0f, 2.0f);
+        duin::Entity root = world.Entity("Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity mid = world.Entity("Middle").Set<Vec3>(1.0f, 1.0f, 1.0f);
+        duin::Entity leaf = world.Entity("Leaf").Set<Vec3>(2.0f, 2.0f, 2.0f);
         mid.ChildOf(root);
         leaf.ChildOf(mid);
 
@@ -163,9 +163,9 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity childA = world.CreateEntity("ChildA").Set<Vec3>(1.0f, 0.0f, 0.0f);
-        duin::Entity childB = world.CreateEntity("ChildB").Set<Camera>(45.0f, 0.2f, 800.0f, true);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity childA = world.Entity("ChildA").Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity childB = world.Entity("ChildB").Set<Camera>(45.0f, 0.2f, 800.0f, true);
         childA.ChildOf(parent);
         childB.ChildOf(parent);
 

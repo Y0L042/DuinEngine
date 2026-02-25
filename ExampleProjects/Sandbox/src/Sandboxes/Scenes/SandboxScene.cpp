@@ -173,9 +173,9 @@ void SandboxScene::Test_SceneBuilder_01()
     world.Component<Y>();
     world.Component<Target>();
 
-    duin::Entity e1 = world.CreateEntity("Parent").Add<TagA>();
-    duin::Entity e2 = world.CreateEntity("Child").ChildOf(e1).Add<TagB>().Add<Target>(e1);
-    duin::Entity e3 = world.CreateEntity("Baddy").Set<X>(10).Add<Target>(e1);
+    duin::Entity e1 = world.Entity("Parent").Add<TagA>();
+    duin::Entity e2 = world.Entity("Child").ChildOf(e1).Add<TagB>().Add<Target>(e1);
+    duin::Entity e3 = world.Entity("Baddy").Set<X>(10).Add<Target>(e1);
     e1.Add<Target>(e3);
 
     duin::PackedScene pscn = sceneBuilder.PackScene(&world);
@@ -201,10 +201,25 @@ void SandboxScene::Test_SceneBuilder_01()
 
 void SandboxScene::Test_FlecsNames()
 {
+    struct Target
+    {
+    };
+
+            world.Component<Targets>();
+
+    duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
+    duin::Entity child = world.CreateEntity("Child").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f);
+    duin::Entity target = world.CreateEntity("TargetMan").Set<Vec3>(5.0f, 0.0f, 0.0f);
+    child.Add<Targets>(target);
+
     flecs::world world;
+    world.component<Target>();
     auto t1 = world.entity("Twin");
-    auto t2 = world.entity("Twin");
+    auto t2 = world.entity("Twin").add<Target>();
+
+    auto t3 = world.entity("Target");
 
     DN_INFO("T1: {}", static_cast<std::string>(t1.to_json()));
     DN_INFO("T2: {}", static_cast<std::string>(t2.to_json()));
+    DN_INFO("t3 {} vs {} lookup(t3)", t3.raw_id(), world.lookup("Target").raw_id());
 }

@@ -243,8 +243,8 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
 
         // player is the scene root entity; weapon is its child
         duin::Entity player =
-            world.CreateEntity("Player").Set<Vec3>(10.0f, 0.0f, -5.0f).Set<Camera>(90.0f, 0.1f, 2000.0f, true);
-        duin::Entity weapon = world.CreateEntity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.3f);
+            world.Entity("Player").Set<Vec3>(10.0f, 0.0f, -5.0f).Set<Camera>(90.0f, 0.1f, 2000.0f, true);
+        duin::Entity weapon = world.Entity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.3f);
         weapon.ChildOf(player);
 
         duin::SceneBuilder builder(&world);
@@ -296,7 +296,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
 
         // obj is the scene root entity
         duin::Entity obj =
-            world.CreateEntity("Object").Set<Vec3>(3.0f, 6.0f, 9.0f).Set<Camera>(45.0f, 0.5f, 100.0f, false);
+            world.Entity("Object").Set<Vec3>(3.0f, 6.0f, 9.0f).Set<Camera>(45.0f, 0.5f, 100.0f, false);
 
         duin::SceneBuilder builder(&world);
         duin::PackedScene ps = builder.PackScene({obj});
@@ -343,9 +343,9 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         world.Component<Camera>();
 
         // Build original hierarchy: parent -> child -> grandchild
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(1.0f, 2.0f, 3.0f);
-        duin::Entity child = world.CreateEntity("Child").Set<Camera>(60.0f, 0.2f, 500.0f, true);
-        duin::Entity grandchild = world.CreateEntity("Grandchild").Set<Vec3>(4.0f, 5.0f, 6.0f);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(1.0f, 2.0f, 3.0f);
+        duin::Entity child = world.Entity("Child").Set<Camera>(60.0f, 0.2f, 500.0f, true);
+        duin::Entity grandchild = world.Entity("Grandchild").Set<Vec3>(4.0f, 5.0f, 6.0f);
         child.ChildOf(parent);
         grandchild.ChildOf(child);
 

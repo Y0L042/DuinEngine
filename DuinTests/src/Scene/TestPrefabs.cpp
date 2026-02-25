@@ -33,7 +33,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Prefab>();
 
         // Create a prefab
-        duin::Entity soldierPrefab = world.CreateEntity("SoldierPrefab")
+        duin::Entity soldierPrefab = world.Entity("SoldierPrefab")
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
             .Set<Health>({100.0f})
             .Set<Armor>({50.0f})
@@ -80,12 +80,12 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Armor>();
 
         // Create base prefab
-        duin::Entity baseSoldier = world.CreateEntity("BaseSoldier")
+        duin::Entity baseSoldier = world.Entity("BaseSoldier")
             .Set<Health>({100.0f})
             .Set<Speed>({5.0f});
 
         // Create specialized prefab that inherits from base
-        duin::Entity heavySoldier = world.CreateEntity("HeavySoldier")
+        duin::Entity heavySoldier = world.Entity("HeavySoldier")
             .IsA(baseSoldier)
             .Set<Health>({150.0f})  // Override health
             .Set<Armor>({75.0f});
@@ -126,12 +126,12 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Prefab>();
 
         // Create scene root with 5 enemy children
-        duin::Entity root = world.CreateEntity("Root");
+        duin::Entity root = world.Entity("Root");
 
         for (int i = 0; i < 5; ++i)
         {
             std::string name = "Enemy_" + std::to_string(i);
-            world.CreateEntity(name.c_str())
+            world.Entity(name.c_str())
                 .ChildOf(root)
                 .Set<Vec3>(static_cast<float>(i * 5), 0.0f, 0.0f)
                 .Set<Health>({50.0f})
@@ -162,15 +162,15 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Camera>();
 
         // Create vehicle prefab with nested structure
-        duin::Entity vehiclePrefab = world.CreateEntity("VehiclePrefab")
+        duin::Entity vehiclePrefab = world.Entity("VehiclePrefab")
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
             .Set<Health>({200.0f});
 
-        duin::Entity turret = world.CreateEntity("Turret")
+        duin::Entity turret = world.Entity("Turret")
             .ChildOf(vehiclePrefab)
             .Set<Vec3>(0.0f, 2.0f, 0.0f);
 
-        world.CreateEntity("TurretCamera")
+        world.Entity("TurretCamera")
             .ChildOf(turret)
             .Set<Vec3>(0.0f, 0.5f, 0.0f)
             .Set<Camera>(60.0f, 0.1f, 500.0f, false);
@@ -224,12 +224,12 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Speed>();
 
         // Create instances with different values as separate scene root entities
-        duin::Entity weakMonster = world.CreateEntity("WeakMonster")
+        duin::Entity weakMonster = world.Entity("WeakMonster")
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
             .Set<Health>({50.0f})
             .Set<Speed>({5.0f});
 
-        duin::Entity strongMonster = world.CreateEntity("StrongMonster")
+        duin::Entity strongMonster = world.Entity("StrongMonster")
             .Set<Vec3>(10.0f, 0.0f, 0.0f)
             .Set<Health>({200.0f})
             .Set<Speed>({3.0f});
@@ -273,11 +273,11 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world.Component<Damage>();
 
         // Create character prefab that includes weapon as child
-        duin::Entity characterPrefab = world.CreateEntity("CharacterPrefab")
+        duin::Entity characterPrefab = world.Entity("CharacterPrefab")
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
             .Set<Health>({100.0f});
 
-        world.CreateEntity("Weapon")
+        world.Entity("Weapon")
             .ChildOf(characterPrefab)
             .Set<Vec3>(0.5f, 1.0f, 0.0f)
             .Set<Damage>({10.0f});

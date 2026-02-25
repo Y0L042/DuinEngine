@@ -34,7 +34,7 @@ TEST_SUITE("Tag Component Tests")
         world.Component<PlayerTag>();
         world.Component<ActiveTag>();
 
-        duin::Entity entity = world.CreateEntity("TaggedEntity")
+        duin::Entity entity = world.Entity("TaggedEntity")
             .Set<Vec3>(1.0f, 2.0f, 3.0f)
             .Add<PlayerTag>()
             .Add<ActiveTag>();
@@ -77,17 +77,17 @@ TEST_SUITE("Tag Component Tests")
         world.Component<CollectibleTag>();
         world.Component<ActiveTag>();
 
-        duin::Entity player = world.CreateEntity("Player")
+        duin::Entity player = world.Entity("Player")
             .Set<Vec3>(0.0f, 0.0f, 0.0f)
             .Add<PlayerTag>()
             .Add<ActiveTag>();
 
-        duin::Entity enemy = world.CreateEntity("Enemy")
+        duin::Entity enemy = world.Entity("Enemy")
             .Set<Vec3>(10.0f, 0.0f, 0.0f)
             .Add<EnemyTag>()
             .Add<ActiveTag>();
 
-        duin::Entity item = world.CreateEntity("HealthPack")
+        duin::Entity item = world.Entity("HealthPack")
             .Set<Vec3>(5.0f, 0.0f, 5.0f)
             .Add<CollectibleTag>();
 
@@ -125,7 +125,7 @@ TEST_SUITE("Tag Component Tests")
         world.Component<EnemyTag>();
         world.Component<DestroyableTag>();
 
-        duin::Entity entity = world.CreateEntity("TagOnlyEntity")
+        duin::Entity entity = world.Entity("TagOnlyEntity")
             .Add<PlayerTag>()
             .Add<DestroyableTag>();
 
@@ -167,7 +167,7 @@ TEST_SUITE("Tag Component Tests")
         world.Component<ActiveTag>();
         world.Component<DestroyableTag>();
 
-        duin::Entity entity = world.CreateEntity("TaggedEntity")
+        duin::Entity entity = world.Entity("TaggedEntity")
             .Set<Vec3>(1.0f, 2.0f, 3.0f)
             .Add<ActiveTag>()
             .Add<DestroyableTag>();

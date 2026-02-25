@@ -37,7 +37,7 @@ void Player::Init()
 #endif
 
     duin::SceneBuilder sceneBuilder(world.get());
-    duin::Entity root = world->CreateEntity();
+    duin::Entity root = world->Entity();
 #if !WRITE_ENT
     duin::JSONValue scnJSON = duin::JSONValue::ParseFromFile(
         "C:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\Sandbox\\data\\playerScene.json");
@@ -50,7 +50,7 @@ void Player::Init()
 #endif
 
 #if WRITE_ENT
-    player = world->CreateEntity("Player")
+    player = world->Entity("Player")
                  .ChildOf(root)
                  .IsA(duin::ECSPrefab::PhysicsCharacterBody)
                  .Set<duin::ECSComponent::Transform3D>({playerPosition})
@@ -68,13 +68,13 @@ void Player::Init()
                  .Add<GravityComponent>()
                  .Add<CanGravity>()
                  .Add<OnGroundTag>();
-    cameraRoot = world->CreateEntity("CameraRoot")
+    cameraRoot = world->Entity("CameraRoot")
                      .IsA(duin::ECSPrefab::Node3D)
                      .ChildOf(player)
                      .Set<duin::ECSComponent::Transform3D>({{0.0f, playerHeight, 0.0f}})
                      .Add<MouseInputVec2>()
                      .Add<CameraPitchComponent>();
-    playerCamera = world->CreateEntity("PlayerCamera")
+    playerCamera = world->Entity("PlayerCamera")
                        .IsA(duin::ECSPrefab::Camera3D)
                        .ChildOf(cameraRoot)
                        .Set<duin::ECSComponent::Transform3D>({{0.0f, 0.0f, 0.0f}})

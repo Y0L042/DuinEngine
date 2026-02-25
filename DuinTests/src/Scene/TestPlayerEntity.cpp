@@ -131,7 +131,7 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<CanGravity>();
         world.Component<OnGroundTag>();
 
-        duin::Entity player = world.CreateEntity("Player")
+        duin::Entity player = world.Entity("Player")
                                   .Set<Vec3>(0.0f, 50.0f, 5.0f)
                                   .Set<Mass>({80.0f})
                                   .Set<CanRunComponent>({10.0f})
@@ -217,7 +217,7 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<CanGravity>();
         world.Component<OnGroundTag>();
 
-        duin::Entity player = world.CreateEntity("PlayerWithTags")
+        duin::Entity player = world.Entity("PlayerWithTags")
                                   .Set<Vec3>(1.0f, 2.0f, 3.0f)
                                   .Set<Mass>({75.0f})
                                   .Add<CanGravity>()
@@ -269,19 +269,19 @@ TEST_SUITE("Complex Player Entity Tests")
 
         float playerHeight = 1.75f;
 
-        duin::Entity player = world.CreateEntity("Player")
+        duin::Entity player = world.Entity("Player")
                                   .Set<Vec3>(0.0f, 50.0f, 5.0f)
                                   .Set<Mass>({80.0f})
                                   .Add<MouseInputVec2>()
                                   .Add<CameraYawComponent>();
 
-        duin::Entity cameraRoot = world.CreateEntity("CameraRoot")
+        duin::Entity cameraRoot = world.Entity("CameraRoot")
                                       .ChildOf(player)
                                       .Set<Vec3>(0.0f, playerHeight, 0.0f)
                                       .Add<MouseInputVec2>()
                                       .Add<CameraPitchComponent>();
 
-        duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
+        duin::Entity playerCamera = world.Entity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true)
@@ -345,9 +345,9 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<Mass>();
         world.Component<VelocityBob>();
 
-        duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
-        duin::Entity cameraRoot = world.CreateEntity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f);
-        duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
+        duin::Entity player = world.Entity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
+        duin::Entity cameraRoot = world.Entity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f);
+        duin::Entity playerCamera = world.Entity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true)
@@ -388,10 +388,10 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<VelocityBob>();
         world.Component<CameraPitchComponent>();
 
-        duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
+        duin::Entity player = world.Entity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
         duin::Entity cameraRoot =
-            world.CreateEntity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f).Add<CameraPitchComponent>();
-        duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
+            world.Entity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f).Add<CameraPitchComponent>();
+        duin::Entity playerCamera = world.Entity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true)
@@ -452,9 +452,9 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<Mass>();
 
         // Create player hierarchy (player is world-root entity)
-        duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
-        duin::Entity cameraRoot = world.CreateEntity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f);
-        duin::Entity playerCamera = world.CreateEntity("PlayerCamera")
+        duin::Entity player = world.Entity("Player").Set<Vec3>(0.0f, 50.0f, 5.0f).Set<Mass>({80.0f});
+        duin::Entity cameraRoot = world.Entity("CameraRoot").ChildOf(player).Set<Vec3>(0.0f, 1.75f, 0.0f);
+        duin::Entity playerCamera = world.Entity("PlayerCamera")
                                         .ChildOf(cameraRoot)
                                         .Set<Vec3>(0.0f, 0.0f, 0.0f)
                                         .Set<Camera>(72.0f, 0.1f, 1000.0f, true);
@@ -494,7 +494,7 @@ TEST_SUITE("Complex Player Entity Tests")
         world.Component<CanRunComponent>();
         world.Component<Mass>();
 
-        duin::Entity entity = world.CreateEntity("PrecisionTest")
+        duin::Entity entity = world.Entity("PrecisionTest")
                                   .Set<CanJumpComponent>({625.0f})
                                   .Set<CanRunComponent>({10.0f})
                                   .Set<Mass>({80.5f});

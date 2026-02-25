@@ -99,3 +99,17 @@ imgui.ini
 ClassDiagram.cd
 *.cd
 imgui.ini
+logs
+temp
+nul
+*.json
+tmp.txt
+DuinEditor/src - Copy
+TestResults
+DuinTests/artifacts
+DuinTests/TestLogs
+ExampleProjects/Sandbox/**.ini
+ExampleProjects/Sandbox/Sandbox.vcxproj
+/ExampleProjects/DuinFPS/duinfps.toml
+/Duin.sln
+/ExampleProjects/Sandbox/Sandbox.vcxproj

@@ -21,9 +21,9 @@ TEST_SUITE("Query")
         w.Component<TestComponent>();
 
         // Create entities with components
-        duin::Entity e1 = w.CreateEntity("Entity1");
-        duin::Entity e2 = w.CreateEntity("Entity2");
-        duin::Entity e3 = w.CreateEntity("Entity3");
+        duin::Entity e1 = w.Entity("Entity1");
+        duin::Entity e2 = w.Entity("Entity2");
+        duin::Entity e3 = w.Entity("Entity3");
         e1.Set<TestComponent>({10});
         e2.Set<TestComponent>({20});
         e3.Set<TestComponent>({30});
@@ -58,13 +58,13 @@ TEST_SUITE("Query")
         w.Component<CompB>();
 
         // Create entities with both components
-        duin::Entity e1 = w.CreateEntity("Entity1");
-        duin::Entity e2 = w.CreateEntity("Entity2");
+        duin::Entity e1 = w.Entity("Entity1");
+        duin::Entity e2 = w.Entity("Entity2");
         e1.Set<CompA>({5}).Set<CompB>({1.5f});
         e2.Set<CompA>({10}).Set<CompB>({2.5f});
 
         // Create entity with only one component (should not be included)
-        duin::Entity e3 = w.CreateEntity("Entity3");
+        duin::Entity e3 = w.Entity("Entity3");
         e3.Set<CompA>({15});
 
         // Create query for both components
@@ -114,7 +114,7 @@ TEST_SUITE("Query")
         };
         w.Component<TestComponent>();
 
-        duin::Entity e = w.CreateEntity("TestEntity");
+        duin::Entity e = w.Entity("TestEntity");
         e.Set<TestComponent>({42});
 
         // Explicitly specify template parameters
@@ -143,10 +143,10 @@ TEST_SUITE("Query")
         w.Component<Position>();
 
         // Create parent-child hierarchy
-        duin::Entity parent = w.CreateEntity("Parent");
-        duin::Entity child1 = w.CreateEntity("Child1");
-        duin::Entity child2 = w.CreateEntity("Child2");
-        duin::Entity grandchild = w.CreateEntity("Grandchild");
+        duin::Entity parent = w.Entity("Parent");
+        duin::Entity child1 = w.Entity("Child1");
+        duin::Entity child2 = w.Entity("Child2");
+        duin::Entity grandchild = w.Entity("Grandchild");
 
         parent.Set<Position>({0.0f, 0.0f});
         child1.Set<Position>({10.0f, 10.0f}).ChildOf(parent);
@@ -177,9 +177,9 @@ TEST_SUITE("Query")
         w.Component<Transform>();
 
         // Create parent-child hierarchy
-        duin::Entity parent = w.CreateEntity("Parent");
-        duin::Entity child1 = w.CreateEntity("Child1");
-        duin::Entity child2 = w.CreateEntity("Child2");
+        duin::Entity parent = w.Entity("Parent");
+        duin::Entity child1 = w.Entity("Child1");
+        duin::Entity child2 = w.Entity("Child2");
 
         parent.Set<Transform>({100.0f, 200.0f});
         child1.Set<Transform>({10.0f, 20.0f}).ChildOf(parent);
@@ -212,10 +212,10 @@ TEST_SUITE("Query")
         };
         w.Component<Tag>();
 
-        duin::Entity parent = w.CreateEntity("Parent");
-        duin::Entity child1 = w.CreateEntity("Child1");
-        duin::Entity child2 = w.CreateEntity("Child2");
-        duin::Entity orphan = w.CreateEntity("Orphan");
+        duin::Entity parent = w.Entity("Parent");
+        duin::Entity child1 = w.Entity("Child1");
+        duin::Entity child2 = w.Entity("Child2");
+        duin::Entity orphan = w.Entity("Orphan");
 
         parent.Add<Tag>();
         child1.Add<Tag>().ChildOf(parent);
@@ -249,10 +249,10 @@ TEST_SUITE("Query")
         w.Component<Enemy>();
         w.Component<Boss>();
 
-        duin::Entity player = w.CreateEntity("Player");
-        duin::Entity minion1 = w.CreateEntity("Minion1");
-        duin::Entity minion2 = w.CreateEntity("Minion2");
-        duin::Entity bossEnemy = w.CreateEntity("BossEnemy");
+        duin::Entity player = w.Entity("Player");
+        duin::Entity minion1 = w.Entity("Minion1");
+        duin::Entity minion2 = w.Entity("Minion2");
+        duin::Entity bossEnemy = w.Entity("BossEnemy");
 
         player.Set<Health>({100});
         minion1.Set<Health>({50}).Add<Enemy>();
@@ -295,10 +295,10 @@ TEST_SUITE("Query")
         w.Component<Flying>();
         w.Component<Ranged>();
 
-        duin::Entity groundMelee = w.CreateEntity("GroundMelee");
-        duin::Entity groundRanged = w.CreateEntity("GroundRanged");
-        duin::Entity flyingMelee = w.CreateEntity("FlyingMelee");
-        duin::Entity flyingRanged = w.CreateEntity("FlyingRanged");
+        duin::Entity groundMelee = w.Entity("GroundMelee");
+        duin::Entity groundRanged = w.Entity("GroundRanged");
+        duin::Entity flyingMelee = w.Entity("FlyingMelee");
+        duin::Entity flyingRanged = w.Entity("FlyingRanged");
 
         groundMelee.Set<Position>({0.0f, 0.0f}).Add<Enemy>();
         groundRanged.Set<Position>({10.0f, 0.0f}).Add<Enemy>().Add<Ranged>();
@@ -330,9 +330,9 @@ TEST_SUITE("Query")
         w.Component<Health>();
         w.Component<Dead>();
 
-        duin::Entity alive1 = w.CreateEntity("Alive1");
-        duin::Entity alive2 = w.CreateEntity("Alive2");
-        duin::Entity dead1 = w.CreateEntity("Dead1");
+        duin::Entity alive1 = w.Entity("Alive1");
+        duin::Entity alive2 = w.Entity("Alive2");
+        duin::Entity dead1 = w.Entity("Dead1");
 
         alive1.Set<Health>({100});
         alive2.Set<Health>({50});
@@ -371,10 +371,10 @@ TEST_SUITE("Query")
         w.Component<Ice>();
         w.Component<Lightning>();
 
-        duin::Entity fireSpell = w.CreateEntity("FireSpell");
-        duin::Entity iceSpell = w.CreateEntity("IceSpell");
-        duin::Entity lightningSpell = w.CreateEntity("LightningSpell");
-        duin::Entity physicalAttack = w.CreateEntity("PhysicalAttack");
+        duin::Entity fireSpell = w.Entity("FireSpell");
+        duin::Entity iceSpell = w.Entity("IceSpell");
+        duin::Entity lightningSpell = w.Entity("LightningSpell");
+        duin::Entity physicalAttack = w.Entity("PhysicalAttack");
 
         fireSpell.Set<Damage>({20}).Add<Fire>();
         iceSpell.Set<Damage>({15}).Add<Ice>();
@@ -416,10 +416,10 @@ TEST_SUITE("Query")
         w.Component<Enemy>();
         w.Component<Boss>();
 
-        duin::Entity ally1 = w.CreateEntity("Ally1");
-        duin::Entity ally2 = w.CreateEntity("Ally2");
-        duin::Entity regularEnemy = w.CreateEntity("RegularEnemy");
-        duin::Entity bossEnemy = w.CreateEntity("BossEnemy");
+        duin::Entity ally1 = w.Entity("Ally1");
+        duin::Entity ally2 = w.Entity("Ally2");
+        duin::Entity regularEnemy = w.Entity("RegularEnemy");
+        duin::Entity bossEnemy = w.Entity("BossEnemy");
 
         ally1.Set<Unit>({1}).Add<Friendly>();
         ally2.Set<Unit>({2}).Add<Friendly>();
@@ -448,10 +448,10 @@ TEST_SUITE("Query")
         w.Component<Active>();
         w.Component<Visible>();
 
-        duin::Entity activeVisible = w.CreateEntity("ActiveVisible");
-        duin::Entity activeOnly = w.CreateEntity("ActiveOnly");
-        duin::Entity visibleOnly = w.CreateEntity("VisibleOnly");
-        duin::Entity neither = w.CreateEntity("Neither");
+        duin::Entity activeVisible = w.Entity("ActiveVisible");
+        duin::Entity activeOnly = w.Entity("ActiveOnly");
+        duin::Entity visibleOnly = w.Entity("VisibleOnly");
+        duin::Entity neither = w.Entity("Neither");
 
         activeVisible.Add<Active>().Add<Visible>();
         activeOnly.Add<Active>();
@@ -487,10 +487,10 @@ TEST_SUITE("Query")
         w.Component<Selectable>();
         w.Component<Selected>();
 
-        duin::Entity parent = w.CreateEntity("Parent");
-        duin::Entity selectableChild = w.CreateEntity("SelectableChild");
-        duin::Entity selectedChild = w.CreateEntity("SelectedChild");
-        duin::Entity normalChild = w.CreateEntity("NormalChild");
+        duin::Entity parent = w.Entity("Parent");
+        duin::Entity selectableChild = w.Entity("SelectableChild");
+        duin::Entity selectedChild = w.Entity("SelectedChild");
+        duin::Entity normalChild = w.Entity("NormalChild");
 
         parent.Set<Transform>({0.0f, 0.0f});
         selectableChild.Set<Transform>({10.0f, 0.0f}).Add<Selectable>().ChildOf(parent);
@@ -523,9 +523,9 @@ TEST_SUITE("Query")
         w.Component<Position>();
         w.Component<Enabled>();
 
-        duin::Entity parent = w.CreateEntity("Parent");
-        duin::Entity enabledChild = w.CreateEntity("EnabledChild");
-        duin::Entity disabledChild = w.CreateEntity("DisabledChild");
+        duin::Entity parent = w.Entity("Parent");
+        duin::Entity enabledChild = w.Entity("EnabledChild");
+        duin::Entity disabledChild = w.Entity("DisabledChild");
 
         parent.Set<Position>({100.0f, 100.0f}).Add<Enabled>();
         enabledChild.Set<Position>({10.0f, 10.0f}).Add<Enabled>().ChildOf(parent);
@@ -565,8 +565,8 @@ TEST_SUITE("Query")
         };
         w.Component<Transform>();
 
-        duin::Entity parent = w.CreateEntity("Parent");
-        duin::Entity child = w.CreateEntity("Child");
+        duin::Entity parent = w.Entity("Parent");
+        duin::Entity child = w.Entity("Child");
 
         parent.Set<Transform>({0.0f, 0.0f, 0.0f});
         child.Set<Transform>({10.0f, 10.0f, 10.0f}).ChildOf(parent);
@@ -600,7 +600,7 @@ TEST_SUITE("Query")
         w.Component<Depth>();
 
         // Create a deep hierarchy
-        duin::Entity root = w.CreateEntity("Root");
+        duin::Entity root = w.Entity("Root");
         duin::Entity current = root;
         root.Set<Depth>({0});
 
@@ -608,7 +608,7 @@ TEST_SUITE("Query")
         for (int i = 1; i <= maxDepth; ++i)
         {
             std::string name = "Level" + std::to_string(i);
-            duin::Entity child = w.CreateEntity(name.c_str());
+            duin::Entity child = w.Entity(name.c_str());
             child.Set<Depth>({i}).ChildOf(current);
             current = child;
         }

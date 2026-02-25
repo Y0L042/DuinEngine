@@ -35,14 +35,14 @@ class World
      * @param name Optional name for the entity.
      * @return The created Entity object.
      */
-    Entity CreateEntity(const std::string &name = "");
+    duin::Entity Entity(const std::string &name = "");
 
     /**
      * @brief Create a new prefab entity in the world.
      * @param name Optional name for the prefab.
      * @return The created prefab Entity object.
      */
-    Entity CreatePrefab(const std::string &name = "");
+    duin::Entity Prefab(const std::string &name = "");
     /**
      * @brief Delete an entity by its ID.
      * @param id The ID of the entity to delete.
@@ -52,7 +52,7 @@ class World
      * @brief Delete an entity by reference.
      * @param entity The entity to delete.
      */
-    void DeleteEntity(const Entity &entity);
+    void DeleteEntity(const duin::Entity &entity);
 
     /**
      * @brief Remove all entities with a given component or pair.
@@ -151,7 +151,7 @@ class World
      * @param id The entity ID.
      * @return The alive Entity object.
      */
-    Entity MakeAlive(uint64_t id);
+    duin::Entity MakeAlive(uint64_t id);
 
     /**
      * @brief Release the world resources.
@@ -162,7 +162,7 @@ class World
      */
     void Quit();
 
-    Entity Lookup(const std::string &name, const std::string &sep = "::", const std::string &root_sep = "::", bool recursive = true);
+    duin::Entity Lookup(const std::string &name, const std::string &sep = "::", const std::string &root_sep = "::", bool recursive = true);
 
     /**
      * @brief Iterate over the children of the root entity.
@@ -186,14 +186,14 @@ class World
                 if (child.has(flecs::Module))
                     return;
             }
-            Entity e;
+            duin::Entity e;
             e.SetWorld(const_cast<World *>(this));
             e.SetFlecsEntity(child);
             f(e);
         });
     }
 
-    std::vector<Entity> GetChildren(bool filterBuiltins = true);
+    std::vector<duin::Entity> GetChildren(bool filterBuiltins = true);
 
     template <typename Func>
     void Each(Func&& func) const
@@ -206,11 +206,11 @@ class World
      * @tparam T The component type.
      */
     template <typename T>
-    Entity Component()
+    duin::Entity Component()
     {
         flecs::entity typeEntity = flecsWorld.component<T>();
 
-        Entity e;
+        duin::Entity e;
         e.SetFlecsEntity(typeEntity);
         e.SetWorld(this);
 
@@ -230,7 +230,7 @@ class World
      * @brief Get the world as an entity.
      * @return Entity representing the world itself.
      */
-    Entity GetWorldEntity();
+    duin::Entity GetWorldEntity();
 
     flecs::world &GetFlecsWorld();
 

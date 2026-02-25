@@ -16,7 +16,7 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         duin::World world;
         world.Component<Vec3>();
 
-        duin::Entity root = world.CreateEntity("EmptyRoot");
+        duin::Entity root = world.Entity("EmptyRoot");
         duin::SceneBuilder builder(&world);
         duin::PackedScene ps = builder.PackScene({root});
 
@@ -32,9 +32,9 @@ TEST_SUITE("PackedScene Pack and Instantiate")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity a = world.CreateEntity("A").Set<Vec3>(1.0f, 0.0f, 0.0f);
-        duin::Entity b = world.CreateEntity("B").Set<Vec3>(0.0f, 1.0f, 0.0f);
-        duin::Entity c = world.CreateEntity("C").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
+        duin::Entity a = world.Entity("A").Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity b = world.Entity("B").Set<Vec3>(0.0f, 1.0f, 0.0f);
+        duin::Entity c = world.Entity("C").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
 
         duin::SceneBuilder builder(&world);
         duin::PackedScene ps = builder.PackScene({a, b, c});
@@ -90,8 +90,8 @@ TEST_SUITE("PackedScene Pack and Instantiate")
 
         // Build scene with two world-root entities
         duin::Entity player =
-            world.CreateEntity("Player").Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
-        duin::Entity enemy = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 10.0f);
+            world.Entity("Player").Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
+        duin::Entity enemy = world.Entity("Enemy").Set<Vec3>(10.0f, 0.0f, 10.0f);
 
         // Pack the two entities as separate scene root entities
         duin::SceneBuilder builder(&world);

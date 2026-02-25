@@ -124,7 +124,7 @@ TEST_SUITE("Simple Entity Serialization")
         world.Component<Camera>();
 
         duin::Entity e =
-            world.CreateEntity("TestCamera").Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(75.0f, 0.1f, 1000.0f, true);
+            world.Entity("TestCamera").Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(75.0f, 0.1f, 1000.0f, true);
 
         duin::SceneBuilder builder(&world);
         duin::PackedEntity pe = builder.PackEntity(e);
@@ -149,8 +149,8 @@ TEST_SUITE("Simple Entity Serialization")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity child = world.CreateEntity("Child").Set<Camera>(60.0f, 0.1f, 500.0f, false);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity child = world.Entity("Child").Set<Camera>(60.0f, 0.1f, 500.0f, false);
         child.ChildOf(parent);
 
         duin::SceneBuilder builder(&world);
@@ -186,7 +186,7 @@ TEST_SUITE("Simple Entity Serialization")
         camComp.jsonData = R"({"type":"Camera","fov":90.0,"nearPlane":0.5,"farPlane":2000.0,"isPrimary":false})";
         pe.components.push_back(camComp);
 
-        duin::Entity e = world.CreateEntity();
+        duin::Entity e = world.Entity();
         duin::SceneBuilder builder(&world);
         builder.InstantiateEntity(pe, e);
 
@@ -223,7 +223,7 @@ TEST_SUITE("Simple Entity Serialization")
 
         pe.children.push_back(childPe);
 
-        duin::Entity e = world.CreateEntity();
+        duin::Entity e = world.Entity();
         duin::SceneBuilder builder(&world);
         builder.InstantiateEntity(pe, e);
 
@@ -254,7 +254,7 @@ TEST_SUITE("Simple Entity Serialization")
         comp.jsonData = R"({"type":"Vec3","x":1.0,"y":2.0,"z":3.0})";
         pe.components.push_back(comp);
 
-        duin::Entity e = world.CreateEntity();
+        duin::Entity e = world.Entity();
         duin::SceneBuilder builder(&world);
         builder.InstantiateEntity(pe, e);
 

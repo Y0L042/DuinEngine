@@ -87,9 +87,9 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Likes>();
         world.Component<Targets>();
 
-        duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity enemy = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
-        duin::Entity battie = world.CreateEntity().Set<Vec3>(10.0f, 0.0f, 0.0f);
+        duin::Entity player = world.Entity("Player").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity enemy = world.Entity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
+        duin::Entity battie = world.Entity().Set<Vec3>(10.0f, 0.0f, 0.0f);
 
         // Add relationship: player targets enemy (and unnamed battie)
         player.Add<Targets>(enemy);
@@ -141,8 +141,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Vec3>();
 
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity child = world.CreateEntity("Child").Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity child = world.Entity("Child").Set<Vec3>(1.0f, 0.0f, 0.0f);
 
         child.ChildOf(parent);
 
@@ -184,10 +184,10 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Owns>();
         world.Component<Targets>();
 
-        duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Team>({1});
+        duin::Entity player = world.Entity("Player").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Team>({1});
 
-        duin::Entity weapon = world.CreateEntity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.0f);
-        duin::Entity foe = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
+        duin::Entity weapon = world.Entity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.0f);
+        duin::Entity foe = world.Entity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
 
         // Player owns weapon, targets enemy
         player.Add<Owns>(weapon);
@@ -207,8 +207,8 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Vec3>();
         world.Component<Likes>();
 
-        duin::Entity alice = world.CreateEntity("Alice").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity bob = world.CreateEntity("Bob").Set<Vec3>(5.0f, 0.0f, 0.0f);
+        duin::Entity alice = world.Entity("Alice").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity bob = world.Entity("Bob").Set<Vec3>(5.0f, 0.0f, 0.0f);
 
         // Mutual relationship
         alice.Add<Likes>(bob);
@@ -275,10 +275,10 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Health>();
 
         // Create a prefab
-        duin::Entity enemyPrefab = world.CreateEntity("EnemyPrefab").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({100.0f});
+        duin::Entity enemyPrefab = world.Entity("EnemyPrefab").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({100.0f});
 
         // Create an instance using IsA
-        duin::Entity enemy1 = world.CreateEntity("Enemy1").IsA(enemyPrefab);
+        duin::Entity enemy1 = world.Entity("Enemy1").IsA(enemyPrefab);
 
         // Pack the entity
         duin::SceneBuilder sb(&world);
@@ -304,8 +304,8 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Vec3>();
         world.Component<Targets>();
 
-        duin::Entity player = world.CreateEntity("Player").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity foe = world.CreateEntity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
+        duin::Entity player = world.Entity("Player").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity foe = world.Entity("Enemy").Set<Vec3>(10.0f, 0.0f, 0.0f);
 
         player.Add<Targets>(foe);
 
@@ -369,7 +369,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Targets>();
         world.Component<Ally>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         // (Targets, Ally): both are zero-size tag types
         unit.Add<Targets, Ally>();
 
@@ -412,7 +412,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Targets>();
         world.Component<Ally>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         unit.Add<Targets, Ally>();
 
         duin::SceneBuilder sb(&world);
@@ -437,7 +437,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Targets>();
         world.Component<Health>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         // (Targets, Health): rel=tag, tgt=component
         unit.Add<Targets, Health>();
 
@@ -475,7 +475,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Targets>();
         world.Component<Health>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         unit.Add<Targets, Health>();
 
         duin::SceneBuilder sb(&world);
@@ -500,8 +500,8 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Vec3>();
         world.Component<Targets>();
 
-        duin::Entity attacker = world.CreateEntity("Attacker").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity foe = world.CreateEntity("Foe").Set<Vec3>(5.0f, 0.0f, 0.0f);
+        duin::Entity attacker = world.Entity("Attacker").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity foe = world.Entity("Foe").Set<Vec3>(5.0f, 0.0f, 0.0f);
         attacker.Add<Targets>(foe);
 
         duin::SceneBuilder sb(&world);
@@ -548,7 +548,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Damage>();
         world.Component<Ally>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         // (Damage, Ally): rel=component, tgt=tag
         unit.Add<Damage, Ally>();
 
@@ -586,7 +586,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Damage>();
         world.Component<Ally>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         unit.Add<Damage, Ally>();
 
         duin::SceneBuilder sb(&world);
@@ -611,7 +611,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Damage>();
         world.Component<Health>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         // (Damage, Health): both components
         unit.Add<Damage, Health>();
 
@@ -654,7 +654,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Damage>();
         world.Component<Health>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity unit = world.Entity("Unit");
         unit.Add<Damage, Health>();
 
         duin::SceneBuilder sb(&world);
@@ -678,8 +678,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Damage>();
 
-        duin::Entity attacker = world.CreateEntity("Attacker");
-        duin::Entity victim = world.CreateEntity("Victim");
+        duin::Entity attacker = world.Entity("Attacker");
+        duin::Entity victim = world.Entity("Victim");
         // (Damage, victim): rel=component, tgt=runtime entity
         attacker.Add<Damage>(victim);
 
@@ -716,8 +716,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Damage>();
 
-        duin::Entity attacker = world.CreateEntity("Attacker");
-        duin::Entity victim = world.CreateEntity("Victim");
+        duin::Entity attacker = world.Entity("Attacker");
+        duin::Entity victim = world.Entity("Victim");
         attacker.Add<Damage>(victim);
 
         duin::SceneBuilder sb(&world);
@@ -742,8 +742,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Ally>();
 
-        duin::Entity weapon = world.CreateEntity("Weapon");
-        duin::Entity holder = world.CreateEntity("Holder");
+        duin::Entity weapon = world.Entity("Weapon");
+        duin::Entity holder = world.Entity("Holder");
         // (weapon, Ally): rel=runtime entity, tgt=tag
         holder.Add(weapon, world.Component<Ally>());
 
@@ -784,8 +784,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Ally>();
 
-        duin::Entity weapon = world.CreateEntity("Weapon");
-        duin::Entity holder = world.CreateEntity("Holder");
+        duin::Entity weapon = world.Entity("Weapon");
+        duin::Entity holder = world.Entity("Holder");
         holder.Add(weapon, world.Component<Ally>());
 
         duin::SceneBuilder sb(&world);
@@ -810,8 +810,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Health>();
 
-        duin::Entity buff = world.CreateEntity("Buff");
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity buff = world.Entity("Buff");
+        duin::Entity unit = world.Entity("Unit");
         // (buff, Health): rel=runtime entity, tgt=component
         unit.Add(buff, world.Component<Health>());
 
@@ -847,8 +847,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Health>();
 
-        duin::Entity buff = world.CreateEntity("Buff");
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity buff = world.Entity("Buff");
+        duin::Entity unit = world.Entity("Unit");
         unit.Add(buff, world.Component<Health>());
 
         duin::SceneBuilder sb(&world);
@@ -872,9 +872,9 @@ TEST_SUITE("Relationship and Pair Tests")
     {
         duin::World world;
 
-        duin::Entity relation = world.CreateEntity("Weapon");
-        duin::Entity target = world.CreateEntity("Enemy");
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity relation = world.Entity("Weapon");
+        duin::Entity target = world.Entity("Enemy");
+        duin::Entity unit = world.Entity("Unit");
         // (weapon entity, enemy entity): both runtime entities
         unit.Add(relation, target);
 
@@ -914,9 +914,9 @@ TEST_SUITE("Relationship and Pair Tests")
     {
         duin::World world;
 
-        duin::Entity relation = world.CreateEntity("Weapon");
-        duin::Entity target = world.CreateEntity("Enemy");
-        duin::Entity unit = world.CreateEntity("Unit");
+        duin::Entity relation = world.Entity("Weapon");
+        duin::Entity target = world.Entity("Enemy");
+        duin::Entity unit = world.Entity("Unit");
         unit.Add(relation, target);
 
         duin::SceneBuilder sb(&world);
@@ -944,8 +944,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Vec3>();
 
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity child = world.CreateEntity("Child").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity child = world.Entity("Child").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f);
 
         CHECK(child.GetParent() == parent);
 
@@ -975,9 +975,9 @@ TEST_SUITE("Relationship and Pair Tests")
     {
         duin::World world;
 
-        duin::Entity root = world.CreateEntity("Root");
-        duin::Entity mid = world.CreateEntity("Mid").ChildOf(root);
-        duin::Entity leaf = world.CreateEntity("Leaf").ChildOf(mid);
+        duin::Entity root = world.Entity("Root");
+        duin::Entity mid = world.Entity("Mid").ChildOf(root);
+        duin::Entity leaf = world.Entity("Leaf").ChildOf(mid);
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({root});
@@ -1016,10 +1016,10 @@ TEST_SUITE("Relationship and Pair Tests")
     {
         duin::World world;
 
-        duin::Entity parent = world.CreateEntity("Parent");
-        world.CreateEntity("ChildA").ChildOf(parent);
-        world.CreateEntity("ChildB").ChildOf(parent);
-        world.CreateEntity("ChildC").ChildOf(parent);
+        duin::Entity parent = world.Entity("Parent");
+        world.Entity("ChildA").ChildOf(parent);
+        world.Entity("ChildB").ChildOf(parent);
+        world.Entity("ChildC").ChildOf(parent);
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({parent});
@@ -1049,9 +1049,9 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Vec3>();
         world.Component<Health>();
 
-        duin::Entity parent = world.CreateEntity("Boss").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({500.0f});
+        duin::Entity parent = world.Entity("Boss").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({500.0f});
         duin::Entity minion =
-            world.CreateEntity("Minion").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f).Set<Health>({50.0f});
+            world.Entity("Minion").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f).Set<Health>({50.0f});
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({parent});
@@ -1085,9 +1085,9 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Vec3>();
         world.Component<Health>();
 
-        duin::Entity basePrefab = world.CreateEntity("BasePrefab").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({100.0f});
+        duin::Entity basePrefab = world.Entity("BasePrefab").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({100.0f});
 
-        duin::Entity instance = world.CreateEntity("Instance").IsA(basePrefab);
+        duin::Entity instance = world.Entity("Instance").IsA(basePrefab);
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({instance});
@@ -1116,9 +1116,9 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Health>();
         world.Component<Strength>();
 
-        duin::Entity base = world.CreateEntity("BaseWarrior").Set<Health>({200.0f}).Set<Strength>({10});
+        duin::Entity base = world.Entity("BaseWarrior").Set<Health>({200.0f}).Set<Strength>({10});
 
-        duin::Entity instance = world.CreateEntity("Warrior").IsA(base);
+        duin::Entity instance = world.Entity("Warrior").IsA(base);
 
         // Via IsA, inherited values should be accessible
         CHECK(instance.Has<Health>());
@@ -1130,8 +1130,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Health>();
 
-        duin::Entity base = world.CreateEntity("BaseUnit").Set<Health>({100.0f});
-        duin::Entity strongInstance = world.CreateEntity("StrongUnit").IsA(base).Set<Health>({250.0f}); // override
+        duin::Entity base = world.Entity("BaseUnit").Set<Health>({100.0f});
+        duin::Entity strongInstance = world.Entity("StrongUnit").IsA(base).Set<Health>({250.0f}); // override
 
         CHECK(strongInstance.GetMut<Health>() == Health{250.0f});
     }
@@ -1142,9 +1142,9 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Health>();
         world.Component<Damage>();
 
-        duin::Entity baseA = world.CreateEntity("BaseA").Set<Health>({100.0f});
-        duin::Entity baseB = world.CreateEntity("BaseB").IsA(baseA).Set<Damage>({5.0f});
-        duin::Entity leaf = world.CreateEntity("LeafUnit").IsA(baseB);
+        duin::Entity baseA = world.Entity("BaseA").Set<Health>({100.0f});
+        duin::Entity baseB = world.Entity("BaseB").IsA(baseA).Set<Damage>({5.0f});
+        duin::Entity leaf = world.Entity("LeafUnit").IsA(baseB);
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({leaf});
@@ -1170,11 +1170,11 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Health>();
         world.Component<Vec3>();
 
-        duin::Entity prefab = world.CreateEntity("EnemyPrefab").Set<Health>({80.0f}).Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity prefab = world.Entity("EnemyPrefab").Set<Health>({80.0f}).Set<Vec3>(0.0f, 0.0f, 0.0f);
 
-        duin::Entity inst1 = world.CreateEntity("Enemy1").IsA(prefab).Set<Vec3>(1.0f, 0.0f, 0.0f);
-        duin::Entity inst2 = world.CreateEntity("Enemy2").IsA(prefab).Set<Vec3>(2.0f, 0.0f, 0.0f);
-        duin::Entity standalone = world.CreateEntity("Soldier").Set<Health>({120.0f});
+        duin::Entity inst1 = world.Entity("Enemy1").IsA(prefab).Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity inst2 = world.Entity("Enemy2").IsA(prefab).Set<Vec3>(2.0f, 0.0f, 0.0f);
+        duin::Entity standalone = world.Entity("Soldier").Set<Health>({120.0f});
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({inst1, inst2, standalone});
@@ -1207,9 +1207,9 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Vec3>();
         world.Component<Targets>();
 
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
-        duin::Entity child = world.CreateEntity("Child").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f);
-        duin::Entity target = world.CreateEntity("TargetMan").Set<Vec3>(5.0f, 0.0f, 0.0f);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity child = world.Entity("Child").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity target = world.Entity("TargetMan").Set<Vec3>(5.0f, 0.0f, 0.0f);
         child.Add<Targets>(target);
 
         duin::SceneBuilder sb(&world);
@@ -1254,9 +1254,9 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Health>();
 
-        duin::Entity prefab = world.CreateEntity("SoldierPrefab").Set<Health>({100.0f});
-        duin::Entity group = world.CreateEntity("Squad");
-        duin::Entity inst = world.CreateEntity("Soldier1").IsA(prefab).ChildOf(group);
+        duin::Entity prefab = world.Entity("SoldierPrefab").Set<Health>({100.0f});
+        duin::Entity group = world.Entity("Squad");
+        duin::Entity inst = world.Entity("Soldier1").IsA(prefab).ChildOf(group);
 
         CHECK(inst.Has<Health>());
         CHECK(inst.GetParent() == group);
@@ -1282,10 +1282,10 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Owns>();
         world.Component<Follows>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
-        duin::Entity a = world.CreateEntity("A");
-        duin::Entity b = world.CreateEntity("B");
-        duin::Entity c = world.CreateEntity("C");
+        duin::Entity unit = world.Entity("Unit");
+        duin::Entity a = world.Entity("A");
+        duin::Entity b = world.Entity("B");
+        duin::Entity c = world.Entity("C");
 
         unit.Add<Targets>(a);
         unit.Add<Owns>(b);
@@ -1326,10 +1326,10 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Owns>();
         world.Component<Follows>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
-        duin::Entity a = world.CreateEntity("A");
-        duin::Entity b = world.CreateEntity("B");
-        duin::Entity c = world.CreateEntity("C");
+        duin::Entity unit = world.Entity("Unit");
+        duin::Entity a = world.Entity("A");
+        duin::Entity b = world.Entity("B");
+        duin::Entity c = world.Entity("C");
 
         unit.Add<Targets>(a);
         unit.Add<Owns>(b);
@@ -1411,8 +1411,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Targets>();
 
-        duin::Entity unit = world.CreateEntity("Unit");
-        duin::Entity outsider = world.CreateEntity("Outsider");
+        duin::Entity unit = world.Entity("Unit");
+        duin::Entity outsider = world.Entity("Outsider");
         unit.Add<Targets>(outsider);
 
         // Pack only unit — outsider is NOT in the packed set
@@ -1432,8 +1432,8 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world;
         world.Component<Vec3>();
 
-        duin::Entity a = world.CreateEntity("A").Set<Vec3>(1.0f, 0.0f, 0.0f);
-        duin::Entity b = world.CreateEntity("B").Set<Vec3>(2.0f, 0.0f, 0.0f);
+        duin::Entity a = world.Entity("A").Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity b = world.Entity("B").Set<Vec3>(2.0f, 0.0f, 0.0f);
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({a, b});
@@ -1441,7 +1441,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world2;
         world2.Component<Vec3>();
 
-        duin::Entity sceneRoot = world2.CreateEntity("SceneRoot");
+        duin::Entity sceneRoot = world2.Entity("SceneRoot");
         duin::SceneBuilder sb2(&world2);
         sb2.InstantiateSceneAsChildren(ps, sceneRoot);
 

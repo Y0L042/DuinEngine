@@ -32,26 +32,26 @@ TEST_SUITE("Complex Hierarchy Tests")
         //     GrandchildB1 (Camera)
         //       GreatGrandchildB1 (Vec3)
 
-        duin::Entity root = world.CreateEntity("Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity root = world.Entity("Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
 
-        duin::Entity childA = world.CreateEntity("ChildA").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
+        duin::Entity childA = world.Entity("ChildA").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
         childA.ChildOf(root);
 
-        duin::Entity grandchildA1 = world.CreateEntity("GrandchildA1").Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity grandchildA1 = world.Entity("GrandchildA1").Set<Vec3>(1.0f, 0.0f, 0.0f);
         grandchildA1.ChildOf(childA);
 
         duin::Entity grandchildA2 =
-            world.CreateEntity("GrandchildA2").Set<Vec3>(2.0f, 0.0f, 0.0f).Set<Camera>(60.0f, 0.2f, 500.0f, false);
+            world.Entity("GrandchildA2").Set<Vec3>(2.0f, 0.0f, 0.0f).Set<Camera>(60.0f, 0.2f, 500.0f, false);
         grandchildA2.ChildOf(childA);
 
         duin::Entity childB =
-            world.CreateEntity("ChildB").Set<Vec3>(0.0f, 1.0f, 0.0f).Set<Camera>(75.0f, 0.1f, 800.0f, false);
+            world.Entity("ChildB").Set<Vec3>(0.0f, 1.0f, 0.0f).Set<Camera>(75.0f, 0.1f, 800.0f, false);
         childB.ChildOf(root);
 
-        duin::Entity grandchildB1 = world.CreateEntity("GrandchildB1").Set<Camera>(45.0f, 0.5f, 300.0f, true);
+        duin::Entity grandchildB1 = world.Entity("GrandchildB1").Set<Camera>(45.0f, 0.5f, 300.0f, true);
         grandchildB1.ChildOf(childB);
 
-        duin::Entity greatGrandchildB1 = world.CreateEntity("GreatGrandchildB1").Set<Vec3>(3.0f, 3.0f, 3.0f);
+        duin::Entity greatGrandchildB1 = world.Entity("GreatGrandchildB1").Set<Vec3>(3.0f, 3.0f, 3.0f);
         greatGrandchildB1.ChildOf(grandchildB1);
 
         // Pack root as scene entity; root itself is ps.entities[0]
@@ -156,29 +156,29 @@ TEST_SUITE("Complex Hierarchy Tests")
 
         // Create three entity hierarchies as world-root entities (no shared container)
         duin::Entity player =
-            world.CreateEntity("Player").Set<Vec3>(10.0f, 0.0f, 0.0f).Set<Camera>(90.0f, 0.1f, 2000.0f, true);
+            world.Entity("Player").Set<Vec3>(10.0f, 0.0f, 0.0f).Set<Camera>(90.0f, 0.1f, 2000.0f, true);
 
-        duin::Entity playerCamera = world.CreateEntity("PlayerCamera").Set<Camera>(75.0f, 0.1f, 1500.0f, false);
+        duin::Entity playerCamera = world.Entity("PlayerCamera").Set<Camera>(75.0f, 0.1f, 1500.0f, false);
         playerCamera.ChildOf(player);
 
-        duin::Entity weapon = world.CreateEntity("Weapon").Set<Vec3>(0.5f, 1.2f, 0.3f);
+        duin::Entity weapon = world.Entity("Weapon").Set<Vec3>(0.5f, 1.2f, 0.3f);
         weapon.ChildOf(player);
 
-        duin::Entity weaponEffect = world.CreateEntity("WeaponEffect").Set<Vec3>(0.1f, 0.1f, 0.1f);
+        duin::Entity weaponEffect = world.Entity("WeaponEffect").Set<Vec3>(0.1f, 0.1f, 0.1f);
         weaponEffect.ChildOf(weapon);
 
         duin::Entity enemy =
-            world.CreateEntity("Enemy").Set<Vec3>(-10.0f, 0.0f, 0.0f).Set<Camera>(60.0f, 0.2f, 1000.0f, false);
+            world.Entity("Enemy").Set<Vec3>(-10.0f, 0.0f, 0.0f).Set<Camera>(60.0f, 0.2f, 1000.0f, false);
 
-        duin::Entity enemyWeapon = world.CreateEntity("EnemyWeapon").Set<Vec3>(0.3f, 1.0f, 0.2f);
+        duin::Entity enemyWeapon = world.Entity("EnemyWeapon").Set<Vec3>(0.3f, 1.0f, 0.2f);
         enemyWeapon.ChildOf(enemy);
 
-        duin::Entity environment = world.CreateEntity("Environment").Set<Vec3>(0.0f, -1.0f, 0.0f);
+        duin::Entity environment = world.Entity("Environment").Set<Vec3>(0.0f, -1.0f, 0.0f);
 
-        duin::Entity light1 = world.CreateEntity("Light1").Set<Vec3>(5.0f, 10.0f, 5.0f);
+        duin::Entity light1 = world.Entity("Light1").Set<Vec3>(5.0f, 10.0f, 5.0f);
         light1.ChildOf(environment);
 
-        duin::Entity light2 = world.CreateEntity("Light2").Set<Vec3>(-5.0f, 10.0f, -5.0f);
+        duin::Entity light2 = world.Entity("Light2").Set<Vec3>(-5.0f, 10.0f, -5.0f);
         light2.ChildOf(environment);
 
         // Pack the three root entities as separate scene entities
@@ -200,7 +200,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         world2.Component<Vec3>();
         world2.Component<Camera>();
         duin::SceneBuilder sb2(&world2);
-        duin::Entity newRoot = world2.CreateEntity("NewSceneRoot");
+        duin::Entity newRoot = world2.Entity("NewSceneRoot");
         sb2.InstantiateSceneAsChildren(ps2, newRoot);
 
         std::vector<duin::Entity> rootChildren = newRoot.GetChildren();
@@ -299,12 +299,12 @@ TEST_SUITE("Complex Hierarchy Tests")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity parent = world.CreateEntity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity parent = world.Entity("Parent").Set<Vec3>(0.0f, 0.0f, 0.0f);
 
         for (int i = 0; i < 10; ++i)
         {
             std::string name = "Child" + std::to_string(i);
-            duin::Entity child = world.CreateEntity(name.c_str());
+            duin::Entity child = world.Entity(name.c_str());
 
             if (i % 3 == 0)
                 child.Set<Vec3>(static_cast<float>(i), 0.0f, 0.0f);
@@ -376,12 +376,12 @@ TEST_SUITE("Complex Hierarchy Tests")
         world.Component<Vec3>();
         world.Component<Camera>();
 
-        duin::Entity root = world.CreateEntity("L0_Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity root = world.Entity("L0_Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
 
         for (int i = 0; i < 3; ++i)
         {
             std::string l1Name = "L1_" + std::to_string(i);
-            duin::Entity l1 = world.CreateEntity(l1Name.c_str());
+            duin::Entity l1 = world.Entity(l1Name.c_str());
 
             if (i == 0)
                 l1.Set<Vec3>(1.0f, 0.0f, 0.0f);
@@ -395,21 +395,21 @@ TEST_SUITE("Complex Hierarchy Tests")
             for (int j = 0; j < 2; ++j)
             {
                 std::string l2Name = "L2_" + std::to_string(i) + "_" + std::to_string(j);
-                duin::Entity l2 = world.CreateEntity(l2Name.c_str()).Set<Vec3>(static_cast<float>(i + j), 1.0f, 0.0f);
+                duin::Entity l2 = world.Entity(l2Name.c_str()).Set<Vec3>(static_cast<float>(i + j), 1.0f, 0.0f);
                 l2.ChildOf(l1);
 
                 for (int k = 0; k < 2; ++k)
                 {
                     std::string l3Name =
                         "L3_" + std::to_string(i) + "_" + std::to_string(j) + "_" + std::to_string(k);
-                    duin::Entity l3 = world.CreateEntity(l3Name.c_str())
+                    duin::Entity l3 = world.Entity(l3Name.c_str())
                                           .Set<Camera>(static_cast<float>(45 + k), 0.1f, 800.0f, k == 0);
                     l3.ChildOf(l2);
 
                     std::string l4Name =
                         "L4_" + std::to_string(i) + "_" + std::to_string(j) + "_" + std::to_string(k);
                     duin::Entity l4 =
-                        world.CreateEntity(l4Name.c_str())
+                        world.Entity(l4Name.c_str())
                             .Set<Vec3>(static_cast<float>(i), static_cast<float>(j), static_cast<float>(k));
                     l4.ChildOf(l3);
                 }
@@ -493,21 +493,21 @@ TEST_SUITE("Complex Hierarchy Tests")
         world.Component<Camera>();
 
         // Create world-root entities (no shared container)
-        duin::Entity standalone1 = world.CreateEntity("Standalone1").Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity standalone1 = world.Entity("Standalone1").Set<Vec3>(1.0f, 0.0f, 0.0f);
 
-        duin::Entity deepRoot = world.CreateEntity("DeepRoot").Set<Vec3>(0.0f, 1.0f, 0.0f);
-        duin::Entity deepChild1 = world.CreateEntity("DeepChild1").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
+        duin::Entity deepRoot = world.Entity("DeepRoot").Set<Vec3>(0.0f, 1.0f, 0.0f);
+        duin::Entity deepChild1 = world.Entity("DeepChild1").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
         deepChild1.ChildOf(deepRoot);
-        duin::Entity deepChild2 = world.CreateEntity("DeepChild2").Set<Vec3>(0.0f, 2.0f, 0.0f);
+        duin::Entity deepChild2 = world.Entity("DeepChild2").Set<Vec3>(0.0f, 2.0f, 0.0f);
         deepChild2.ChildOf(deepChild1);
-        duin::Entity deepChild3 = world.CreateEntity("DeepChild3").Set<Camera>(60.0f, 0.2f, 500.0f, false);
+        duin::Entity deepChild3 = world.Entity("DeepChild3").Set<Camera>(60.0f, 0.2f, 500.0f, false);
         deepChild3.ChildOf(deepChild2);
 
-        duin::Entity standalone2 = world.CreateEntity("Standalone2").Set<Camera>(45.0f, 0.5f, 300.0f, true);
+        duin::Entity standalone2 = world.Entity("Standalone2").Set<Camera>(45.0f, 0.5f, 300.0f, true);
 
         duin::Entity mediumRoot =
-            world.CreateEntity("MediumRoot").Set<Vec3>(2.0f, 0.0f, 0.0f).Set<Camera>(75.0f, 0.1f, 800.0f, false);
-        duin::Entity mediumChild = world.CreateEntity("MediumChild").Set<Vec3>(2.5f, 1.0f, 0.0f);
+            world.Entity("MediumRoot").Set<Vec3>(2.0f, 0.0f, 0.0f).Set<Camera>(75.0f, 0.1f, 800.0f, false);
+        duin::Entity mediumChild = world.Entity("MediumChild").Set<Vec3>(2.5f, 1.0f, 0.0f);
         mediumChild.ChildOf(mediumRoot);
 
         // Pack all world-root entities (4 entities: 2 standalone + deepRoot + mediumRoot)
@@ -524,7 +524,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         world2.Component<Vec3>();
         world2.Component<Camera>();
         duin::SceneBuilder sb2(&world2);
-        duin::Entity newRoot = world2.CreateEntity("NewSceneRoot");
+        duin::Entity newRoot = world2.Entity("NewSceneRoot");
         sb2.InstantiateSceneAsChildren(ps2, newRoot);
 
         std::vector<duin::Entity> rootChildren = newRoot.GetChildren();
@@ -576,21 +576,21 @@ TEST_SUITE("Complex Hierarchy Tests")
 
         // Root -> Parent1 -> Child1 -> Grandchild1
         //      -> Parent2 -> Child2
-        duin::Entity root = world.CreateEntity("Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
+        duin::Entity root = world.Entity("Root").Set<Vec3>(0.0f, 0.0f, 0.0f);
 
-        duin::Entity parent1 = world.CreateEntity("Parent1").Set<Vec3>(1.0f, 0.0f, 0.0f);
+        duin::Entity parent1 = world.Entity("Parent1").Set<Vec3>(1.0f, 0.0f, 0.0f);
         parent1.ChildOf(root);
 
-        duin::Entity child1 = world.CreateEntity("Child1").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
+        duin::Entity child1 = world.Entity("Child1").Set<Camera>(90.0f, 0.1f, 1000.0f, true);
         child1.ChildOf(parent1);
 
-        duin::Entity grandchild1 = world.CreateEntity("Grandchild1").Set<Vec3>(2.0f, 0.0f, 0.0f);
+        duin::Entity grandchild1 = world.Entity("Grandchild1").Set<Vec3>(2.0f, 0.0f, 0.0f);
         grandchild1.ChildOf(child1);
 
-        duin::Entity parent2 = world.CreateEntity("Parent2").Set<Camera>(60.0f, 0.2f, 500.0f, false);
+        duin::Entity parent2 = world.Entity("Parent2").Set<Camera>(60.0f, 0.2f, 500.0f, false);
         parent2.ChildOf(root);
 
-        duin::Entity child2 = world.CreateEntity("Child2").Set<Vec3>(3.0f, 0.0f, 0.0f);
+        duin::Entity child2 = world.Entity("Child2").Set<Vec3>(3.0f, 0.0f, 0.0f);
         child2.ChildOf(parent2);
 
         // Verify original relationships

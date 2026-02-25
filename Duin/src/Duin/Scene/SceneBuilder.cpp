@@ -551,7 +551,7 @@ void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
         }
         else
         {
-            Entity childEntity = world->CreateEntity();
+            Entity childEntity = world->Entity();
             childEntity.ChildOf(e);
             InstantiateEntity(child, childEntity);
         }
@@ -901,7 +901,7 @@ void duin::SceneBuilder::PrePassEntity(Entity e)
 
 void duin::SceneBuilder::PrePassInstantiate(const PackedEntity &pe, Entity parent)
 {
-    Entity e = world->CreateEntity();
+    Entity e = world->Entity();
     if (parent.IsValid())
         e.ChildOf(parent);
     if (!pe.name.empty())
