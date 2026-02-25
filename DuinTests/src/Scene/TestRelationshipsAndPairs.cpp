@@ -1050,8 +1050,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Component<Health>();
 
         duin::Entity parent = world.Entity("Boss").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({500.0f});
-        duin::Entity minion =
-            world.Entity("Minion").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f).Set<Health>({50.0f});
+        duin::Entity minion = world.Entity("Minion").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f).Set<Health>({50.0f});
 
         duin::SceneBuilder sb(&world);
         duin::PackedScene ps = sb.PackScene({parent});
@@ -1239,6 +1238,8 @@ TEST_SUITE("Relationship and Pair Tests")
 
         duin::Entity child2 = world2.Lookup("Parent::Child");
         duin::Entity target2 = world2.Lookup("TargetMan");
+        flecs::entity target2flecs = world2.GetFlecsWorld().lookup("TargetMan");
+        INFO("DN2 ", target2.GetID(), " vs flecs2 ", target2flecs.raw_id());
         REQUIRE(child2.IsValid());
         REQUIRE(target2.IsValid());
         CHECK(child2.Has<Targets>(582));
