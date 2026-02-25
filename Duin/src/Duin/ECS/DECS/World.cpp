@@ -7,10 +7,8 @@ duin::World::World()
 {
 }
 
-duin::World::World(flecs::world w)
-    : flecsWorld(w) {
-
-      };
+duin::World::World(flecs::world &&w)
+    : flecsWorld(std::move(w)) {};
 
 duin::World::~World() {};
 

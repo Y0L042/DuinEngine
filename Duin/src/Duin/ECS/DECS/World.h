@@ -23,7 +23,7 @@ class World
      */
     World();
 
-    World(flecs::world w);
+    World(flecs::world &&w);
 
     /**
      * @brief Destroy the World object.
@@ -241,5 +241,9 @@ class World
     // Prevent copying
     World(const World &) = delete;
     World &operator=(const World &) = delete;
+
+    // Allow moving
+    World(World &&) = default;
+    World &operator=(World &&) = default;
 };
 } // namespace duin
