@@ -624,6 +624,178 @@ TEST_SUITE("Entity")
     }
 }
 
+TEST_SUITE("Entity Constructors")
+{
+    // Helpers to verify the internal flecs::entity has a valid world attached.
+    // An entity constructed with flecs::entity(id) (no world) will return nullptr
+    // from world().c_ptr(), causing asserts on name(), is_valid(), etc.
+    auto flecsHasWorld = [](const duin::Entity &e) -> bool {
+        return e.GetFlecsEntity().world().c_ptr() != nullptr;
+    };
+
+    TEST_CASE("Default constructor - entity is invalid, flecs entity has no world")
+    {
+        duin::Entity e;
+        CHECK(!e.IsValid());
+        CHECK(e.GetWorld() == nullptr);
+        CHECK(e.GetFlecsEntity().world().c_ptr() == nullptr);
+    }
+
+    TEST_CASE("Entity(uint64_t id, World* world) - valid id with world")
+    {
+        duin::World w;
+        duin::Entity src = w.Entity("CtorSource");
+        uint64_t id = src.GetID();
+
+        duin::Entity e(id, &w);
+
+        CHECK(e.IsValid());
+        CHECK(e.IsAlive());
+        CHECK(e.GetID() == id);
+        CHECK(e.GetWorld() == &w);
+        CHECK(flecsHasWorld(e));
+        // Must not assert - previously this would crash when flecs tried to resolve name
+        CHECK(e.GetName() == "CtorSource");
+    }
+
+    TEST_CASE("Entity(uint64_t id, World* world) - null world gives invalid entity")
+    {
+        duin::Entity e(42, nullptr);
+        CHECK(!e.IsValid());
+        CHECK(e.GetWorld() == nullptr);
+        // flecs entity has no world when constructed without one
+        CHECK(e.GetFlecsEntity().world().c_ptr() == nullptr);
+    }
+
+    TEST_CASE("Entity(const flecs::entity&) - flecs entity carries its own world")
+    {
+        duin::World w;
+        flecs::entity fe = w.GetFlecsWorld().entity("FlecsCtorEntity");
+
+        duin::Entity e(fe);
+
+        // duin world pointer is null (not set via this ctor), but flecs world is valid
+        CHECK(e.GetWorld() == nullptr);
+        CHECK(!e.IsValid()); // IsValid() requires duin world != nullptr
+        CHECK(e.GetFlecsEntity().world().c_ptr() != nullptr);
+        CHECK(fe.is_valid());
+    }
+
+    TEST_CASE("Entity(const flecs::entity&, World*) - both worlds set")
+    {
+        duin::World w;
+        flecs::entity fe = w.GetFlecsWorld().entity("FlecsAndDuinWorld");
+
+        duin::Entity e(fe, &w);
+
+        CHECK(e.IsValid());
+        CHECK(e.IsAlive());
+        CHECK(e.GetWorld() == &w);
+        CHECK(flecsHasWorld(e));
+        CHECK(e.GetName() == "FlecsAndDuinWorld");
+    }
+
+    TEST_CASE("Copy constructor - copies world and flecs entity")
+    {
+        duin::World w;
+        duin::Entity src = w.Entity("CopyCtorEntity");
+
+        duin::Entity copy(src);
+
+        CHECK(copy.IsValid());
+        CHECK(copy.IsAlive());
+        CHECK(copy.GetID() == src.GetID());
+        CHECK(copy.GetWorld() == &w);
+        CHECK(flecsHasWorld(copy));
+        CHECK(copy.GetName() == "CopyCtorEntity");
+        CHECK(copy == src);
+    }
+
+    TEST_CASE("Copy assignment - copies world and flecs entity")
+    {
+        duin::World w;
+        duin::Entity src = w.Entity("CopyAssignEntity");
+
+        duin::Entity e;
+        e = src;
+
+        CHECK(e.IsValid());
+        CHECK(e.IsAlive());
+        CHECK(e.GetID() == src.GetID());
+        CHECK(e.GetWorld() == &w);
+        CHECK(flecsHasWorld(e));
+        CHECK(e.GetName() == "CopyAssignEntity");
+    }
+
+    TEST_CASE("Move constructor - transfers world and flecs entity, source loses world")
+    {
+        duin::World w;
+        duin::Entity src = w.Entity("MoveCtorEntity");
+        uint64_t id = src.GetID();
+
+        duin::Entity moved(std::move(src));
+
+        CHECK(moved.IsValid());
+        CHECK(moved.IsAlive());
+        CHECK(moved.GetID() == id);
+        CHECK(moved.GetWorld() == &w);
+        CHECK(flecsHasWorld(moved));
+        CHECK(moved.GetName() == "MoveCtorEntity");
+        // Source world pointer is cleared after move
+        CHECK(src.GetWorld() == nullptr);
+    }
+
+    TEST_CASE("Move assignment - transfers world and flecs entity, source loses world")
+    {
+        duin::World w;
+        duin::Entity src = w.Entity("MoveAssignEntity");
+        uint64_t id = src.GetID();
+
+        duin::Entity e;
+        e = std::move(src);
+
+        CHECK(e.IsValid());
+        CHECK(e.IsAlive());
+        CHECK(e.GetID() == id);
+        CHECK(e.GetWorld() == &w);
+        CHECK(flecsHasWorld(e));
+        CHECK(e.GetName() == "MoveAssignEntity");
+        CHECK(src.GetWorld() == nullptr);
+    }
+
+    TEST_CASE("World::Entity(uint64_t id) - constructs valid entity from existing id")
+    {
+        duin::World w;
+        duin::Entity src = w.Entity("WorldEntityById");
+        uint64_t id = src.GetID();
+
+        duin::Entity e = w.Entity(id);
+
+        CHECK(e.IsValid());
+        CHECK(e.IsAlive());
+        CHECK(e.GetID() == id);
+        CHECK(e.GetWorld() == &w);
+        CHECK(flecsHasWorld(e));
+        CHECK(e.GetName() == "WorldEntityById");
+    }
+
+    TEST_CASE("SetWorld and SetFlecsEntity - manually assembled entity is valid")
+    {
+        duin::World w;
+        flecs::entity fe = w.GetFlecsWorld().entity("ManualEntity");
+
+        duin::Entity e;
+        e.SetWorld(&w);
+        e.SetFlecsEntity(fe);
+
+        CHECK(e.IsValid());
+        CHECK(e.IsAlive());
+        CHECK(e.GetWorld() == &w);
+        CHECK(flecsHasWorld(e));
+        CHECK(e.GetName() == "ManualEntity");
+    }
+}
+
 TEST_SUITE("Entity::ID")
 {
     TEST_CASE("Default constructor")
