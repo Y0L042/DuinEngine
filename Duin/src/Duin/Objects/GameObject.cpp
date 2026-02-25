@@ -9,6 +9,10 @@ duin::GameObject::GameObject()
 
 duin::GameObject::~GameObject()
 {
+    for (auto& child : children)
+    {
+        child.reset();
+    }
 }
 
 void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
@@ -50,8 +54,20 @@ void duin::GameObject::RemoveChildObject(std::shared_ptr<GameObject> child)
 
 void duin::GameObject::TransferChildObject(std::shared_ptr<GameObject> child, std::shared_ptr<GameObject> newParent)
 {
+    auto childKeeper = child;
     RemoveChildObject(child);
     newParent->AddChildObject(child);
+}
+
+std::vector<std::weak_ptr<duin::GameObject>> duin::GameObject::GetChildren()
+{
+    std::vector<std::weak_ptr<GameObject>> v(children.begin(), children.end());
+    return v;
+}
+
+size_t duin::GameObject::GetChildrenCount()
+{
+    return children.size();
 }
 
 void duin::GameObject::SetParent(std::shared_ptr<GameObject> parent)
@@ -59,14 +75,14 @@ void duin::GameObject::SetParent(std::shared_ptr<GameObject> parent)
     this->parent = parent;
 }
 
-std::shared_ptr<duin::GameObject> duin::GameObject::GetParent()
+std::weak_ptr<duin::GameObject> duin::GameObject::GetParent()
 {
     return parent;
 }
 
 void duin::GameObject::ResetParent()
 {
-    this->parent = nullptr;
+    this->parent.reset();
 }
 
 // Signal connection implementations

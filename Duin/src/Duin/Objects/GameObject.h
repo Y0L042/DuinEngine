@@ -91,8 +91,11 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     /** @brief Moves a child to a new parent. */
     void TransferChildObject(std::shared_ptr<GameObject> child, std::shared_ptr<GameObject> newParent);
 
+    std::vector<std::weak_ptr<GameObject>> GetChildren();
+    size_t GetChildrenCount();
+
     /** @brief Returns the parent object, or nullptr if root. */
-    std::shared_ptr<GameObject> GetParent();
+    std::weak_ptr<GameObject> GetParent();
 
     /**
      * @name Signal Connections
@@ -212,7 +215,7 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 
   private:
     UUID uuid;
-    std::shared_ptr<GameObject> parent;
+    std::weak_ptr<GameObject> parent;
     std::vector<std::shared_ptr<GameObject>> children;
     bool onEventEnabled = true;
     bool updateEnabled = true;
