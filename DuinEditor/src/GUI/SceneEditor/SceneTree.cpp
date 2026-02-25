@@ -16,9 +16,9 @@ void SceneTree::Init()
 {
     imguiWindowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
 
-    if (GetParent().get() != nullptr)
+    if (!GetParent().expired())
     {
-        sceneEditor = dynamic_pointer_cast<State_SceneEditor>(GetParent());
+        sceneEditor = dynamic_pointer_cast<State_SceneEditor>(GetParent().lock());
         sceneEditor->onSetActiveScene.Connect([&](duin::PackedScene &pscn) {});
     }
 }
@@ -77,18 +77,10 @@ void SceneTree::UpdateTree(duin::World *world)
          //if (!e.HasPair(flecs::ChildOf, flecs::Wildcard))
          if (!e.GetParent().IsValid())
          {
-             DN_INFO("Entity {}, parent {}", e.GetID(), e.GetParent().GetID());
              vec.push_back(e);
          }
      });
      UpdateTreeImpl(vec);
-
-    //entityTree.clear();
-    //duin::Entity plr = world->Lookup("Player");
-    //for (duin::Entity &child : plr.GetChildren())
-    //{
-    //    entityTree.emplace_back(UpdateChild(child));
-    //}
 }
 
 void SceneTree::UpdateTreeImpl(std::vector<duin::Entity> entities)
