@@ -21,6 +21,15 @@ duin::Entity duin::World::Entity(const std::string &name)
     return e;
 }
 
+duin::Entity duin::World::Entity(uint64_t id)
+{
+    duin::Entity e;
+    flecs::entity flecsEntity = flecsWorld.entity(id);
+    e.SetWorld(this);
+    e.SetFlecsEntity(flecsEntity);
+    return e;
+}
+
 duin::Entity duin::World::Prefab(const std::string &name)
 {
     duin::Entity e;

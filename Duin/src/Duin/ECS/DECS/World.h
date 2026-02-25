@@ -37,6 +37,8 @@ class World
      */
     duin::Entity Entity(const std::string &name = "");
 
+    duin::Entity Entity(uint64_t id);
+
     /**
      * @brief Create a new prefab entity in the world.
      * @param name Optional name for the prefab.

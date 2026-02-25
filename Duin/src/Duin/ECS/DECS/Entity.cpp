@@ -16,7 +16,8 @@ duin::Entity::Entity() : flecsEntity(flecs::entity_t(0))
 {
 }
 
-duin::Entity::Entity(uint64_t id, World *world) : flecsEntity(flecs::entity(id)), world(world)
+duin::Entity::Entity(uint64_t id, World *world)
+    : flecsEntity(world ? flecs::entity(world->GetFlecsWorld().c_ptr(), id) : flecs::entity(id)), world(world)
 {
 }
 
@@ -79,7 +80,10 @@ duin::World *duin::Entity::GetWorld() const
 
 bool duin::Entity::IsValid() const
 {
-    bool res = true && flecsEntity.is_valid() && world != nullptr;
+    bool res = true 
+        && world != nullptr && world->flecsWorld.is_valid(flecsEntity)
+        && flecsEntity.is_valid() 
+        ;
     return res;
 }
 
