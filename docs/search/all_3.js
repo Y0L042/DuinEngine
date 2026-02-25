@@ -26,7 +26,7 @@ var searchData=
   ['deferend_23',['DeferEnd',['../classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a',1,'duin::World']]],
   ['delayprocess_24',['DelayProcess',['../Application_8h.html#aecc5acc7a607d98f0bb1e8593228878b',1,'duin']]],
   ['delayprocessmilli_25',['DelayProcessMilli',['../Application_8h.html#abcea3cb41f726c5889b85a897865c547',1,'duin']]],
-  ['deleteentity_26',['deleteentity',['../classduin_1_1World.html#afdce70486012f1026a31a12a5a3becb6',1,'duin::World::DeleteEntity(const Entity &amp;entity)'],['../classduin_1_1World.html#ae09fe967922ca19078997066af8c93fc',1,'duin::World::DeleteEntity(uint64_t id)']]],
+  ['deleteentity_26',['deleteentity',['../classduin_1_1World.html#a4680c52eb2cace2f4937e471f261f3e6',1,'duin::World::DeleteEntity(const duin::Entity &amp;entity)'],['../classduin_1_1World.html#ae09fe967922ca19078997066af8c93fc',1,'duin::World::DeleteEntity(uint64_t id)']]],
   ['deleteexternalref_27',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
   ['deletewith_28',['deletewith',['../classduin_1_1World.html#a233e74dcebf1c77fffac169056ba95ff',1,'duin::World::DeleteWith()'],['../classduin_1_1World.html#ae55aaaf75442844fb0883c554685f4fe',1,'duin::World::DeleteWith(uint64_t id)'],['../classduin_1_1World.html#ae257698b1a693e83ce3b3040396b0adb',1,'duin::World::DeleteWith(uint64_t first, uint64_t second)']]],
   ['deltasystemtime_29',['DeltaSystemTime',['../classduin_1_1Iter.html#af8edea9c6f4c497b8eea212dca4ef32e',1,'duin::Iter']]],
