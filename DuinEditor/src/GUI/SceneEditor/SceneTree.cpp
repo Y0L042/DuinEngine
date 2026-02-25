@@ -45,11 +45,15 @@ void SceneTree::DrawUI()
 
 void SceneTree::DrawEntityNode(const EntityNode &node)
 {
-    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+
+    if (node.entityId == selectedEntityId)
+        flags |= ImGuiTreeNodeFlags_Selected;
 
     std::string displayName = node.entityName.empty() ? "Unnamed Entity" : node.entityName;
-    std::string nodeId = displayName + "##" + std::to_string(reinterpret_cast<uintptr_t>(&node));
+    std::string nodeId = displayName + "##" + std::to_string(node.entityId);
 
+    bool nodeOpen = false;
     if (node.children.empty())
     {
         flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
@@ -57,21 +61,37 @@ void SceneTree::DrawEntityNode(const EntityNode &node)
     }
     else
     {
-        bool nodeOpen = ImGui::TreeNodeEx(nodeId.c_str(), flags, "%s", displayName.c_str());
+        nodeOpen = ImGui::TreeNodeEx(nodeId.c_str(), flags, "%s", displayName.c_str());
+    }
 
-        if (nodeOpen)
+    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+    {
+        selectedEntityId = node.entityId;
+        if (sceneEditor && activeWorld && activeWorld->IsAlive(node.entityId))
         {
-            for (const auto &child : node.children)
+            duin::Entity e(node.entityId, activeWorld);
+            if (!e.IsValid())
             {
-                DrawEntityNode(child);
+                DN_FATAL("Entity {} is not valid!", e.GetID());
             }
-            ImGui::TreePop();
+            sceneEditor->onSelectEntity.Emit(e);
+            DN_INFO("Entity {} [{}] double-clicked.", e.GetName(), e.GetID());
         }
+    }
+
+    if (nodeOpen)
+    {
+        for (const auto &child : node.children)
+        {
+            DrawEntityNode(child);
+        }
+        ImGui::TreePop();
     }
 }
 
 void SceneTree::UpdateTree(duin::World *world)
 {
+     activeWorld = world;
      std::vector<duin::Entity> vec;
      world->IterateChildren([&](duin::Entity e) {
          //if (!e.HasPair(flecs::ChildOf, flecs::Wildcard))
@@ -95,6 +115,7 @@ void SceneTree::UpdateTreeImpl(std::vector<duin::Entity> entities)
 SceneTree::EntityNode SceneTree::UpdateChild(duin::Entity &child)
 {
     EntityNode node;
+    node.entityId = child.GetID();
     node.entityName = child.GetName();
     for (duin::Entity &child : child.GetChildren())
     {

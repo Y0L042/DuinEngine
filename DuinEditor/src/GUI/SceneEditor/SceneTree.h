@@ -6,9 +6,6 @@
 #include <string>
 #include <Duin/ECS/DECS/Entity.h>
 #include <Duin/Objects/GameObject.h>
-#include <string>
-#include <Duin/ECS/DECS/Entity.h>
-#include <Duin/Objects/GameObject.h>
 
 class State_SceneEditor;
 class SceneTree : public duin::GameObject
@@ -16,6 +13,7 @@ class SceneTree : public duin::GameObject
   public:
       struct EntityNode
       {
+          uint64_t entityId = 0;
           std::string entityName = "Entity";
           std::string entitySupertype = "None";
           std::vector<EntityNode> children;
@@ -35,7 +33,9 @@ class SceneTree : public duin::GameObject
     ImGuiWindowFlags imguiWindowFlags;
     std::shared_ptr<State_SceneEditor> sceneEditor;
     std::vector<EntityNode> entityTree;
-    
+    duin::World *activeWorld = nullptr;
+    uint64_t selectedEntityId = 0;
+
     void UpdateTreeImpl(std::vector<duin::Entity> entities);
     EntityNode UpdateChild(duin::Entity& child);
     void DrawEntityNode(const EntityNode& node);
