@@ -35,8 +35,8 @@ void FSNode::Traverse()
         {
             std::cout << dirEntry.path() << "\n";
 
-            FSNode *child = new FSNode(dirEntry.path().string());
-            subNodes.push_back(child);
+            subNodes.push_back(std::make_unique<FSNode>(dirEntry.path().string()));
+            FSNode *child = subNodes.back().get();
             if (child->type == ArcheType::P_DIRECTORY)
             {
                 child->Traverse();
@@ -123,17 +123,17 @@ void FileManager::PrintTree()
 
 static void RecurseTreePrint(FSNode *node)
 {
-    for (FSNode *nodePtr : node->subNodes)
+    for (auto& nodePtr : node->subNodes)
     {
         if (nodePtr->type == ArcheType::P_DIRECTORY)
         {
             DN_INFO("{}/", nodePtr->path);
-            RecurseTreePrint(nodePtr);
+            RecurseTreePrint(nodePtr.get());
         }
         else
         {
             DN_INFO(" - {}", nodePtr->name);
-            RecurseTreePrint(nodePtr);
+            RecurseTreePrint(nodePtr.get());
         }
     }
 }

@@ -19,7 +19,7 @@ struct FSNode
     std::string name;
     std::string fileExtension;
 
-    std::vector<FSNode *> subNodes;
+    std::vector<std::unique_ptr<FSNode>> subNodes;
 
     FSNode() = default;
     FSNode(std::string path);

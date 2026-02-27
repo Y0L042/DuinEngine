@@ -75,9 +75,9 @@ void FileTree::DrawNode(FSNode *node, const std::string &nodeLabel)
 
         if (nodeOpen)
         {
-            for (FSNode *child : node->subNodes)
+            for (auto& child : node->subNodes)
             {
-                DrawNode(child, child->name);
+                DrawNode(child.get(), child->name);
             }
             ImGui::TreePop();
         }
