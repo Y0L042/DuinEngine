@@ -41,7 +41,7 @@ var searchData=
   ['getname_38',['GetName',['../classduin_1_1Entity.html#ace1897ea3abe808840aee03c087d2ab3',1,'duin::Entity']]],
   ['getpair_39',['GetPair',['../classduin_1_1Entity.html#a3358c512f3fb73bf4806d72b29541fe3',1,'duin::Entity']]],
   ['getpairmut_40',['GetPairMut',['../classduin_1_1Entity.html#a719e88696babec1a29641606d6a62b45',1,'duin::Entity']]],
-  ['getparent_41',['getparent',['../classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c',1,'duin::GameObject::GetParent()'],['../classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177',1,'duin::Entity::GetParent() const']]],
+  ['getparent_41',['getparent',['../classduin_1_1GameObject.html#a014c6c10fabbbd6e26e371f5bc433021',1,'duin::GameObject::GetParent()'],['../classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177',1,'duin::Entity::GetParent() const']]],
   ['getpath_42',['GetPath',['../classduin_1_1Entity.html#ae50d8eb5adb53d60e44c25911c5de17c',1,'duin::Entity']]],
   ['getphysicsfps_43',['GetPhysicsFPS',['../Application_8h.html#a51c23dc923d10fe411ad0f6b31e7df29',1,'duin']]],
   ['getphysicsframecount_44',['GetPhysicsFrameCount',['../Application_8h.html#a3bd3cde8d117614051151b4ccf54334d',1,'duin']]],

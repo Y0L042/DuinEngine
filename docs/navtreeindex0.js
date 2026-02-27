@@ -61,9 +61,10 @@ var NAVTREEINDEX0 =
 "Filesystem_8cpp.html":[5,0,1,0,4,4],
 "Filesystem_8cpp_source.html":[5,0,1,0,4,4],
 "Filesystem_8h_source.html":[5,0,1,0,4,5],
+"GameObjectRef_8h_source.html":[5,0,1,0,5,2],
 "GameObject_8cpp_source.html":[5,0,1,0,5,0],
 "GameObject_8h.html":[2,4,0,0],
-"GameStateMachine_8cpp_source.html":[5,0,1,0,5,2],
+"GameStateMachine_8cpp_source.html":[5,0,1,0,5,3],
 "GameStateMachine_8h.html":[2,4,1,0],
 "GameWorld_8cpp_source.html":[5,0,1,0,3,3],
 "GameWorld_8h.html":[2,1,5],
@@ -87,9 +88,9 @@ var NAVTREEINDEX0 =
 "MathsModule_8h_source.html":[5,0,1,0,2,2,4],
 "Mesh_8cpp_source.html":[5,0,1,0,0,2],
 "Mesh_8h_source.html":[5,0,1,0,0,3],
-"ObjectManager_8cpp_source.html":[5,0,1,0,5,4],
-"ObjectManager_8h_source.html":[5,0,1,0,5,5],
-"ObjectModule_8h_source.html":[5,0,1,0,5,6],
+"ObjectManager_8cpp_source.html":[5,0,1,0,5,5],
+"ObjectManager_8h_source.html":[5,0,1,0,5,6],
+"ObjectModule_8h_source.html":[5,0,1,0,5,7],
 "PhysXConversions_8h_source.html":[5,0,1,0,2,2,5],
 "PhysicsIncludes_8h_source.html":[5,0,1,0,6,1],
 "PhysicsMaterial_8cpp_source.html":[5,0,1,0,6,0,15],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a":[4,0,0,29,55],
 "classduin_1_1Entity.html#a984ab5849dcbf343dee6b33f1d58eba0":[4,0,0,29,6],
 "classduin_1_1Entity.html#a98e9b92eb17ace2752c12af656369cfe":[4,0,0,29,57],
-"classduin_1_1Entity.html#a9b6fa02c5592b4c2fa9b13622b69a0bd":[4,0,0,29,25],
-"classduin_1_1Entity.html#aa4573c6ecff5395f51a9d8e3d1654f41":[4,0,0,29,26]
+"classduin_1_1Entity.html#a9b6fa02c5592b4c2fa9b13622b69a0bd":[4,0,0,29,25]
 };

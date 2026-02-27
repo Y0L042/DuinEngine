@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"classduin_1_1Entity.html#aa4573c6ecff5395f51a9d8e3d1654f41":[4,0,0,29,26],
 "classduin_1_1Entity.html#aadbb57cad9331333e22c3a783155bf68":[4,0,0,29,50],
 "classduin_1_1Entity.html#ab104a4cfc2fbd5faaf1a395b616f3824":[4,0,0,29,15],
 "classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54":[4,0,0,29,3],
@@ -29,7 +30,7 @@ var NAVTREEINDEX1 =
 "classduin_1_1FileUtils.html":[4,0,0,34],
 "classduin_1_1FrameCountFormatter.html":[4,0,0,37],
 "classduin_1_1GameObject.html":[2,4,0,1],
-"classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c":[2,4,0,1,4],
+"classduin_1_1GameObject.html#a014c6c10fabbbd6e26e371f5bc433021":[2,4,0,1,4],
 "classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4":[2,4,0,1,7],
 "classduin_1_1GameObject.html#a90a010d59d0519af6b0aefb1d1abb54a":[2,4,0,1,5],
 "classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37":[2,4,0,1,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "debugdraw_8h_source.html":[5,0,1,1,1,1],
 "deprecated.html":[1],
 "dir_0265bf50e0ea2445a73dc7360c887a9e.html":[5,0,1,0],
-"dir_035665b1485da821b7fab5d1c5a00dc8.html":[5,0,1,0,2,2],
-"dir_06228a9601ec3fb28510acbf085a4907.html":[5,0,1,0,2,1]
+"dir_035665b1485da821b7fab5d1c5a00dc8.html":[5,0,1,0,2,2]
 };

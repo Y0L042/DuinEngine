@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"dir_06228a9601ec3fb28510acbf085a4907.html":[5,0,1,0,2,1],
 "dir_1609e9defd7e02c5db55177a9543350a.html":[5,0,1,0,4],
 "dir_1c456be630437f89e30c4aae8644fd01.html":[5,0,1,0,1],
 "dir_2f4b070c8b0964cbc0af53bf864244df.html":[5,0,1,0,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structImGuiKeyData.html":[4,0,86],
 "structImGuiKeyOwnerData.html":[4,0,87],
 "structImGuiKeyRoutingData.html":[4,0,88],
-"structImGuiKeyRoutingTable.html":[4,0,89],
-"structImGuiLastItemData.html":[4,0,90]
+"structImGuiKeyRoutingTable.html":[4,0,89]
 };

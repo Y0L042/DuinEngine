@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"structImGuiLastItemData.html":[4,0,90],
 "structImGuiListClipper.html":[4,0,91],
 "structImGuiListClipperData.html":[4,0,92],
 "structImGuiListClipperRange.html":[4,0,93],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "structduin_1_1RenderState.html":[2,3,0,4],
 "structduin_1_1RenderState.html#a63cccf0d345b856ada5148f2308c0018":[2,3,0,4,2],
 "structduin_1_1RenderState.html#a7ab86b31bba578fd418dfc239ba0ce87":[2,3,0,4,3],
-"structduin_1_1RenderState.html#a99b4163be250cbaf705c3a5e656f143b":[2,3,0,4,1],
-"structduin_1_1RenderState.html#ad064ed394d808bd17365e5a161ac062d":[2,3,0,4,0]
+"structduin_1_1RenderState.html#a99b4163be250cbaf705c3a5e656f143b":[2,3,0,4,1]
 };

@@ -273,9 +273,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad924d34dc3f30a0be10b680327d6168d inherit pub_methods_classduin_1_1GameObject" id="r_ad924d34dc3f30a0be10b680327d6168d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad924d34dc3f30a0be10b680327d6168d">TransferChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child, std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; newParent)</td></tr>
 <tr class="memdesc:ad924d34dc3f30a0be10b680327d6168d inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a child to a new parent.  <br /></td></tr>
 <tr class="separator:ad924d34dc3f30a0be10b680327d6168d inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3403b712b50b9c17f32fb9445c42756c inherit pub_methods_classduin_1_1GameObject" id="r_a3403b712b50b9c17f32fb9445c42756c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a3403b712b50b9c17f32fb9445c42756c">GetParent</a> ()</td></tr>
-<tr class="memdesc:a3403b712b50b9c17f32fb9445c42756c inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent object, or nullptr if root.  <br /></td></tr>
-<tr class="separator:a3403b712b50b9c17f32fb9445c42756c inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cdcf98fc6d74060da5d92bb69e478a2 inherit pub_methods_classduin_1_1GameObject" id="r_a9cdcf98fc6d74060da5d92bb69e478a2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::weak_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9cdcf98fc6d74060da5d92bb69e478a2">GetChildren</a> ()</td></tr>
+<tr class="separator:a9cdcf98fc6d74060da5d92bb69e478a2 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ce6cd4080452aeb14b05e97a5b2688b inherit pub_methods_classduin_1_1GameObject" id="r_a2ce6cd4080452aeb14b05e97a5b2688b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a2ce6cd4080452aeb14b05e97a5b2688b">GetChildrenCount</a> ()</td></tr>
+<tr class="separator:a2ce6cd4080452aeb14b05e97a5b2688b inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a014c6c10fabbbd6e26e371f5bc433021 inherit pub_methods_classduin_1_1GameObject" id="r_a014c6c10fabbbd6e26e371f5bc433021"><td class="memItemLeft" align="right" valign="top">std::weak_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a014c6c10fabbbd6e26e371f5bc433021">GetParent</a> ()</td></tr>
+<tr class="memdesc:a014c6c10fabbbd6e26e371f5bc433021 inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent object, or nullptr if root.  <br /></td></tr>
+<tr class="separator:a014c6c10fabbbd6e26e371f5bc433021 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject" id="r_acc88e71a32dc1a84322601bf599bb7d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">ConnectAllSignals</a> (std::function&lt; void()&gt; onReady, std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; onEvent, std::function&lt; void(double)&gt; onUpdate, std::function&lt; void(double)&gt; onPhysicsUpdate, std::function&lt; void()&gt; onDraw, std::function&lt; void()&gt; onDrawUI, std::function&lt; void()&gt; onDebug)</td></tr>
 <tr class="memdesc:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects all lifecycle signals at once.  <br /></td></tr>
 <tr class="separator:acc88e71a32dc1a84322601bf599bb7d5 inherit pub_methods_classduin_1_1GameObject"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -418,9 +422,9 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    <span class="keywordtype">void</span> Exit()<span class="keyword"> override </span>{ <span class="comment">// Cleanup }</span></div>
 <div class="line">};</div>
 <div class="ttc" id="aclassduin_1_1GameStateMachine_html"><div class="ttname"><a href="classduin_1_1GameStateMachine.html">duin::GameStateMachine</a></div><div class="ttdoc">Stack-based state manager.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00043">GameStateMachine.h:44</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameState_html"><div class="ttname"><a href="classduin_1_1GameState.html">duin::GameState</a></div><div class="ttdoc">Base class for application states.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00252">GameStateMachine.h:253</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameState_html"><div class="ttname"><a href="classduin_1_1GameState.html">duin::GameState</a></div><div class="ttdoc">Base class for application states.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00187">GameStateMachine.h:188</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00252">252</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00187">187</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac05857a7ce4eb17210400fa8753eb1ee" name="ac05857a7ce4eb17210400fa8753eb1ee"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac05857a7ce4eb17210400fa8753eb1ee">&#9670;&#160;</a></span>GameState()</h2>
@@ -499,7 +503,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00162">162</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00167">167</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -519,7 +523,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00111">111</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00116">116</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -539,7 +543,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00116">116</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00121">121</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -559,7 +563,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00091">91</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00096">96</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -579,7 +583,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00121">121</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00126">126</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -599,7 +603,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00096">96</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00101">101</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -619,7 +623,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00106">106</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00111">111</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -639,7 +643,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00101">101</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00106">106</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -668,7 +672,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00289">289</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00224">224</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -688,7 +692,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00180">180</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00185">185</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -708,7 +712,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00147">147</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00152">152</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -728,7 +732,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00152">152</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00157">157</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -748,7 +752,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00127">127</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00132">132</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -768,7 +772,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00157">157</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00162">162</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -788,7 +792,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00132">132</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00137">137</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -808,7 +812,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00142">142</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00147">147</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -828,7 +832,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00137">137</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00142">142</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -857,7 +861,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00281">281</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00216">216</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -886,7 +890,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00282">282</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00217">217</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -913,7 +917,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00277">277</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00212">212</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -940,7 +944,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00283">283</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00218">218</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -969,7 +973,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00300">300</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00235">235</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -988,7 +992,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00085">85</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00090">90</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1007,7 +1011,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00206">206</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00211">211</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1026,7 +1030,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00201">201</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00206">206</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1045,7 +1049,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00196">196</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00201">201</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1074,7 +1078,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00287">287</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00222">222</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1094,7 +1098,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00191">191</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00196">196</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1124,7 +1128,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00278">278</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00213">213</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1152,7 +1156,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00351">351</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00286">286</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1180,7 +1184,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00346">346</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00281">281</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1210,7 +1214,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00280">280</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00215">215</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1229,7 +1233,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00080">80</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00085">85</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1258,7 +1262,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00306">306</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00241">241</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1287,7 +1291,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00288">288</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00223">223</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1314,7 +1318,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00284">284</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00219">219</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1341,7 +1345,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00285">285</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00220">220</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1360,7 +1364,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00044">44</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00047">47</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1379,7 +1383,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00053">53</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00057">57</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1417,7 +1421,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00062">62</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00067">67</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1457,7 +1461,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00035">35</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00037">37</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1476,7 +1480,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00068">68</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00073">73</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1495,7 +1499,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00074">74</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00079">79</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1515,7 +1519,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00026">26</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8cpp_source.html#l00027">27</a> of file <a class="el" href="GameStateMachine_8cpp_source.html">GameStateMachine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1544,7 +1548,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00294">294</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00229">229</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1574,7 +1578,7 @@ template&lt;typename T &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00279">279</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00214">214</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1599,7 +1603,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00366">366</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00301">301</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1623,7 +1627,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00367">367</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00302">302</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1647,7 +1651,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00362">362</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00297">297</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1671,7 +1675,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00368">368</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00303">303</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1695,7 +1699,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00363">363</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00298">298</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1719,7 +1723,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00365">365</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00300">300</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1743,7 +1747,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00364">364</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00299">299</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1767,7 +1771,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00359">359</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00294">294</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1791,7 +1795,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00358">358</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00293">293</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>
@@ -1815,7 +1819,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00357">357</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameStateMachine_8h_source.html#l00292">292</a> of file <a class="el" href="GameStateMachine_8h_source.html">GameStateMachine.h</a>.</p>
 
 </div>
 </div>

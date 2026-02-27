@@ -136,531 +136,535 @@ $(document).ready(function(){initNavTree('Entity_8cpp_source.html',''); initResi
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
 </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(uint64_t <span class="keywordtype">id</span>, <a class="code hl_class" href="classduin_1_1World.html">World</a> *world) : flecsEntity(flecs::entity(id)), world(world)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="}">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a7e50ebee07c2e60721af175166348e4a">   23</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1Entity.html#a7e50ebee07c2e60721af175166348e4a">duin::Entity::GetTarget</a>(uint64_t relationship, int32_t index)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(flecsEntity.target(relationship, index));</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(uint64_t <span class="keywordtype">id</span>, <a class="code hl_class" href="classduin_1_1World.html">World</a> *world)</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    : flecsEntity(world ? flecs::entity(world-&gt;GetFlecsWorld().c_ptr(), id) : flecs::entity(id)), world(world)</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>{</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="}">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a7e50ebee07c2e60721af175166348e4a">   24</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1Entity.html#a7e50ebee07c2e60721af175166348e4a">duin::Entity::GetTarget</a>(uint64_t relationship, int32_t index)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(flecsEntity.target(relationship, index));</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
 </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>flecs::entity duin::Entity::GetFlecsEntity()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordflow">return</span> flecsEntity;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a70ce2c7be1097450ac148e1920d86559">   33</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<span class="keyword">const</span> flecs::entity &amp;entity) : flecsEntity(entity)</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>{</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>flecs::entity duin::Entity::GetFlecsEntity()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordflow">return</span> flecsEntity;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a70ce2c7be1097450ac148e1920d86559">   34</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<span class="keyword">const</span> flecs::entity &amp;entity) : flecsEntity(entity)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>{</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
 </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a984ab5849dcbf343dee6b33f1d58eba0">   37</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<span class="keyword">const</span> flecs::entity &amp;entity, <a class="code hl_class" href="classduin_1_1World.html">World</a> *world) : flecsEntity(entity), world(world)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>{</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>}</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a984ab5849dcbf343dee6b33f1d58eba0">   38</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<span class="keyword">const</span> flecs::entity &amp;entity, <a class="code hl_class" href="classduin_1_1World.html">World</a> *world) : flecsEntity(entity), world(world)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
 </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="foldopen" id="foldopen00041" data-start="{" data-end="}">
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ad58e3dcc9130d57479aa24e4d21cd458">   41</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other) : world(other.world), flecsEntity(other.flecsEntity)</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>{</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ad58e3dcc9130d57479aa24e4d21cd458">   42</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other) : world(other.world), flecsEntity(other.flecsEntity)</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>{</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
 </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">   45</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">duin::Entity::operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other)</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>{</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;other)</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        world = other.world;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        flecsEntity = other.flecsEntity;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    }</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">   46</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">duin::Entity::operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other)</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>{</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;other)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        world = other.world;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        flecsEntity = other.flecsEntity;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
 </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#af1a8594dcea6f8bd63446ce2db228336">   55</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;&amp;other) noexcept : world(other.world), flecsEntity(std::move(other.flecsEntity))</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>{</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    other.world = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#af1a8594dcea6f8bd63446ce2db228336">   56</a></span><a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a>(<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;&amp;other) noexcept : world(other.world), flecsEntity(std::move(other.flecsEntity))</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>{</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    other.world = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
 </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="foldopen" id="foldopen00060" data-start="{" data-end="}">
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a98e9b92eb17ace2752c12af656369cfe">   60</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">duin::Entity::operator=</a>(<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;&amp;other) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>{</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;other)</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        world = other.world;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        flecsEntity = std::move(other.flecsEntity);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        other.world = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="foldopen" id="foldopen00061" data-start="{" data-end="}">
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a98e9b92eb17ace2752c12af656369cfe">   61</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">duin::Entity::operator=</a>(<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;&amp;other) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>{</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">if</span> (<span class="keyword">this</span> != &amp;other)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        world = other.world;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        flecsEntity = std::move(other.flecsEntity);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        other.world = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>}</div>
 </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="foldopen" id="foldopen00071" data-start="{" data-end="}">
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a8ed57407b083c48309d557dd94db5ac9">   71</a></span><a class="code hl_function" href="classduin_1_1Entity.html#a8ed57407b083c48309d557dd94db5ac9">duin::Entity::~Entity</a>()</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>{</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="foldopen" id="foldopen00072" data-start="{" data-end="}">
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a8ed57407b083c48309d557dd94db5ac9">   72</a></span><a class="code hl_function" href="classduin_1_1Entity.html#a8ed57407b083c48309d557dd94db5ac9">duin::Entity::~Entity</a>()</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>{</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>}</div>
 </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="foldopen" id="foldopen00075" data-start="{" data-end="}">
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4">   75</a></span><a class="code hl_class" href="classduin_1_1World.html">duin::World</a> *<a class="code hl_function" href="classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4">duin::Entity::GetWorld</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordflow">return</span> world;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="foldopen" id="foldopen00076" data-start="{" data-end="}">
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4">   76</a></span><a class="code hl_class" href="classduin_1_1World.html">duin::World</a> *<a class="code hl_function" href="classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4">duin::Entity::GetWorld</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordflow">return</span> world;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}</div>
 </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="foldopen" id="foldopen00080" data-start="{" data-end="}">
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">   80</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">duin::Entity::IsValid</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordtype">bool</span> res = <span class="keyword">true</span> &amp;&amp; flecsEntity.is_valid() &amp;&amp; world != <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordflow">return</span> res;</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">   81</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">duin::Entity::IsValid</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">bool</span> res = <span class="keyword">true</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        &amp;&amp; world != <span class="keyword">nullptr</span> &amp;&amp; world-&gt;flecsWorld.is_valid(flecsEntity)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        &amp;&amp; flecsEntity.is_valid() </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        ;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keywordflow">return</span> res;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>}</div>
 </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="foldopen" id="foldopen00086" data-start="{" data-end="}">
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a3cd74944b0325a2d9d83ee0bc6fe010e">   86</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a3cd74944b0325a2d9d83ee0bc6fe010e">duin::Entity::IsAlive</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">return</span> flecsEntity.is_alive();</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="foldopen" id="foldopen00090" data-start="{" data-end="}">
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a3cd74944b0325a2d9d83ee0bc6fe010e">   90</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a3cd74944b0325a2d9d83ee0bc6fe010e">duin::Entity::IsAlive</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordflow">return</span> flecsEntity.is_alive();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
 </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keywordtype">bool</span> duin::Entity::IsTag()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">bool</span> res = ecs_id_is_tag(world-&gt;GetFlecsWorld().c_ptr(), flecsEntity.raw_id());</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordflow">return</span> res;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="keywordtype">bool</span> duin::Entity::IsPair()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordtype">bool</span> res = flecsEntity.is_pair();</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordflow">return</span> res;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>}</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="foldopen" id="foldopen00103" data-start="{" data-end="}">
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714">  103</a></span>uint64_t <a class="code hl_function" href="classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714">duin::Entity::GetID</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordflow">return</span> flecsEntity.id();</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keywordtype">bool</span> duin::Entity::IsTag()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">bool</span> res = ecs_id_is_tag(world-&gt;GetFlecsWorld().c_ptr(), flecsEntity.raw_id());</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> res;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keywordtype">bool</span> duin::Entity::IsPair()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordtype">bool</span> res = flecsEntity.is_pair();</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">return</span> res;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>}</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="foldopen" id="foldopen00107" data-start="{" data-end="}">
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714">  107</a></span>uint64_t <a class="code hl_function" href="classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714">duin::Entity::GetID</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordflow">return</span> flecsEntity.id();</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>}</div>
 </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="foldopen" id="foldopen00108" data-start="{" data-end="}">
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ace1897ea3abe808840aee03c087d2ab3">  108</a></span>std::string <a class="code hl_function" href="classduin_1_1Entity.html#ace1897ea3abe808840aee03c087d2ab3">duin::Entity::GetName</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordflow">return</span> flecsEntity.name().c_str();</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="foldopen" id="foldopen00112" data-start="{" data-end="}">
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ace1897ea3abe808840aee03c087d2ab3">  112</a></span>std::string <a class="code hl_function" href="classduin_1_1Entity.html#ace1897ea3abe808840aee03c087d2ab3">duin::Entity::GetName</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordflow">return</span> flecsEntity.name().c_str();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
 </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="foldopen" id="foldopen00113" data-start="{" data-end="}">
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ae50d8eb5adb53d60e44c25911c5de17c">  113</a></span>std::string <a class="code hl_function" href="classduin_1_1Entity.html#ae50d8eb5adb53d60e44c25911c5de17c">duin::Entity::GetPath</a>(<span class="keyword">const</span> std::string &amp;sep, <span class="keyword">const</span> std::string &amp;init_sep)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>std::string<span class="keyword">&gt;</span>(flecsEntity.path());</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="foldopen" id="foldopen00117" data-start="{" data-end="}">
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ae50d8eb5adb53d60e44c25911c5de17c">  117</a></span>std::string <a class="code hl_function" href="classduin_1_1Entity.html#ae50d8eb5adb53d60e44c25911c5de17c">duin::Entity::GetPath</a>(<span class="keyword">const</span> std::string &amp;sep, <span class="keyword">const</span> std::string &amp;init_sep)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>std::string<span class="keyword">&gt;</span>(flecsEntity.path());</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>}</div>
 </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> duin::Entity::Lookup(<span class="keyword">const</span> std::string &amp;childName, <span class="keywordtype">bool</span> searchPath)</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>{</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    flecs::entity e = flecsEntity.lookup(childName.c_str(), searchPath);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(e, world);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="foldopen" id="foldopen00124" data-start="{" data-end="}">
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32">  124</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32">duin::Entity::ChildOf</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;parent)</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>{</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    flecsEntity.child_of(parent.flecsEntity);</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>}</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> duin::Entity::Lookup(<span class="keyword">const</span> std::string &amp;childName, <span class="keywordtype">bool</span> searchPath)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>{</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    flecs::entity e = flecsEntity.lookup(childName.c_str(), searchPath);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(e, world);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>}</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="foldopen" id="foldopen00128" data-start="{" data-end="}">
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32">  128</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32">duin::Entity::ChildOf</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;parent)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>{</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    flecsEntity.child_of(parent.flecsEntity);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}</div>
 </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="foldopen" id="foldopen00130" data-start="{" data-end="}">
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9">  130</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9">duin::Entity::SetName</a>(<span class="keyword">const</span> std::string &amp;name)</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>{</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> e = world-&gt;Lookup(name);</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordflow">if</span> (!e.<a class="code hl_function" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">IsValid</a>())</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    {</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        flecsEntity.set_name(name.c_str());</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    }</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="foldopen" id="foldopen00134" data-start="{" data-end="}">
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9">  134</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9">duin::Entity::SetName</a>(<span class="keyword">const</span> std::string &amp;name)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>{</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> e = world-&gt;Lookup(name);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordflow">if</span> (!e.<a class="code hl_function" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">IsValid</a>())</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    {</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        DN_CORE_WARN(<span class="stringliteral">&quot;Entity {} with name &lt;{}&gt; already exist when trying to set name for entity {}.&quot;</span>,</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                     e.flecsEntity.raw_id(), name, flecsEntity.raw_id());</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    }</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>}</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        flecsEntity.set_name(name.c_str());</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    }</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        DN_CORE_WARN(<span class="stringliteral">&quot;Entity {} with name &lt;{}&gt; already exist when trying to set name for entity {}.&quot;</span>,</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                     e.flecsEntity.raw_id(), name, flecsEntity.raw_id());</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    }</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>}</div>
 </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="foldopen" id="foldopen00146" data-start="{" data-end="}">
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2">  146</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2">duin::Entity::Enable</a>()</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>{</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    flecsEntity.enable();</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>}</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2">  150</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2">duin::Entity::Enable</a>()</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>{</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    flecsEntity.enable();</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>}</div>
 </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="foldopen" id="foldopen00152" data-start="{" data-end="}">
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4">  152</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4">duin::Entity::Disable</a>()</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>{</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    flecsEntity.disable();</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>}</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4">  156</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4">duin::Entity::Disable</a>()</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>{</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    flecsEntity.disable();</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>}</div>
 </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a42d7275f30e0f8563e65f2f306ac5c29">  158</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a42d7275f30e0f8563e65f2f306ac5c29">duin::Entity::operator==</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordflow">return</span> (flecsEntity == other.flecsEntity);</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>}</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="foldopen" id="foldopen00162" data-start="{" data-end="}">
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a42d7275f30e0f8563e65f2f306ac5c29">  162</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a42d7275f30e0f8563e65f2f306ac5c29">duin::Entity::operator==</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordflow">return</span> (flecsEntity == other.flecsEntity);</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>}</div>
 </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="foldopen" id="foldopen00163" data-start="{" data-end="}">
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a">  163</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a">duin::Entity::operator!=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keywordflow">return</span> (flecsEntity != other.flecsEntity);</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>}</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="foldopen" id="foldopen00167" data-start="{" data-end="}">
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a">  167</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a">duin::Entity::operator!=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;other)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keywordflow">return</span> (flecsEntity != other.flecsEntity);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>}</div>
 </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="foldopen" id="foldopen00168" data-start="{" data-end="}">
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a03122d63a5d4ee5c350e462da9dc4d00">  168</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a03122d63a5d4ee5c350e462da9dc4d00">duin::Entity::Destruct</a>()</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>{</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    flecsEntity.destruct();</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>}</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
+<div class="foldopen" id="foldopen00172" data-start="{" data-end="}">
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a03122d63a5d4ee5c350e462da9dc4d00">  172</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a03122d63a5d4ee5c350e462da9dc4d00">duin::Entity::Destruct</a>()</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>{</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    flecsEntity.destruct();</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>}</div>
 </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
-<div class="foldopen" id="foldopen00174" data-start="{" data-end="}">
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca">  174</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca">duin::Entity::Clear</a>()</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>{</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    flecsEntity.clear();</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>}</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="foldopen" id="foldopen00178" data-start="{" data-end="}">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca">  178</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca">duin::Entity::Clear</a>()</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>{</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    flecsEntity.clear();</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>}</div>
 </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
-<div class="foldopen" id="foldopen00180" data-start="{" data-end="}">
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d">  180</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d">duin::Entity::Clone</a>(<span class="keywordtype">bool</span> clone_value)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> e;</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">SetFlecsEntity</a>(flecsEntity.clone());</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">SetWorld</a>(world);</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keywordflow">return</span> e;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>}</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d">  184</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d">duin::Entity::Clone</a>(<span class="keywordtype">bool</span> clone_value)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> e;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">SetFlecsEntity</a>(flecsEntity.clone());</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">SetWorld</a>(world);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keywordflow">return</span> e;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>}</div>
 </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="foldopen" id="foldopen00188" data-start="{" data-end="}">
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">  188</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">duin::Entity::IsA</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;second)</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>{</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    flecsEntity.is_a(second.flecsEntity);</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>}</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="foldopen" id="foldopen00192" data-start="{" data-end="}">
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">  192</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">duin::Entity::IsA</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> &amp;second)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>{</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    flecsEntity.is_a(second.flecsEntity);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>}</div>
 </div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> duin::Entity::First()</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>{</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> e;</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">SetFlecsEntity</a>(flecsEntity.first());</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">SetWorld</a>(world);</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordflow">return</span> e;</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>}</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> duin::Entity::Second()</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>{</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    Entity e;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">SetFlecsEntity</a>(flecsEntity.second());</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    e.SetWorld(world);</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="keywordflow">return</span> e;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>}</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a>(<span class="keyword">const</span> Entity &amp;relationship, <span class="keyword">const</span> Entity &amp;target)</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>{</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    flecsEntity.add(relationship.GetID(), target.GetID());</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> duin::Entity::First()</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>{</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a> e;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">SetFlecsEntity</a>(flecsEntity.first());</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">SetWorld</a>(world);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keywordflow">return</span> e;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>}</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> duin::Entity::Second()</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>{</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    Entity e;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    e.<a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">SetFlecsEntity</a>(flecsEntity.second());</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    e.SetWorld(world);</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keywordflow">return</span> e;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>}</div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>}</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="foldopen" id="foldopen00219" data-start="{" data-end="}">
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177">  219</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177">duin::Entity::GetParent</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(flecsEntity.parent(), world);</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>}</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> &amp;<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a>(<span class="keyword">const</span> Entity &amp;relationship, <span class="keyword">const</span> Entity &amp;target)</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>{</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    flecsEntity.add(relationship.GetID(), target.GetID());</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>}</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
+<div class="foldopen" id="foldopen00223" data-start="{" data-end="}">
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177">  223</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177">duin::Entity::GetParent</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(flecsEntity.parent(), world);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>}</div>
 </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="foldopen" id="foldopen00224" data-start="{" data-end="}">
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a36e14f21f4727b5b3ac1eaf64f5e81a0">  224</a></span>std::vector&lt;duin::Entity&gt; <a class="code hl_function" href="classduin_1_1Entity.html#a36e14f21f4727b5b3ac1eaf64f5e81a0">duin::Entity::GetChildren</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    std::vector&lt;Entity&gt; children;</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    flecsEntity.children([&amp;](flecs::entity child) { children.emplace_back(<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(child, world)); });</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordflow">return</span> children;</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>}</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="foldopen" id="foldopen00228" data-start="{" data-end="}">
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a36e14f21f4727b5b3ac1eaf64f5e81a0">  228</a></span>std::vector&lt;duin::Entity&gt; <a class="code hl_function" href="classduin_1_1Entity.html#a36e14f21f4727b5b3ac1eaf64f5e81a0">duin::Entity::GetChildren</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    std::vector&lt;Entity&gt; children;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    flecsEntity.children([&amp;](flecs::entity child) { children.emplace_back(<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>(child, world)); });</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <span class="keywordflow">return</span> children;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>}</div>
 </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="foldopen" id="foldopen00231" data-start="{" data-end="}">
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">  231</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">duin::Entity::SetWorld</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world)</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>{</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    this-&gt;world = world;</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>}</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="foldopen" id="foldopen00235" data-start="{" data-end="}">
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">  235</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">duin::Entity::SetWorld</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world)</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>{</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    this-&gt;world = world;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>}</div>
 </div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
-<div class="foldopen" id="foldopen00236" data-start="{" data-end="}">
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">  236</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">duin::Entity::SetFlecsEntity</a>(<span class="keyword">const</span> flecs::entity &amp;entity)</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>{</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    flecsEntity = entity;</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>}</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="foldopen" id="foldopen00240" data-start="{" data-end="}">
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">  240</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">duin::Entity::SetFlecsEntity</a>(<span class="keyword">const</span> flecs::entity &amp;entity)</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>{</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    flecsEntity = entity;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>}</div>
 </div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span><span class="comment">// ========== Entity::ID Implementation ==========</span></div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
-<div class="foldopen" id="foldopen00243" data-start="{" data-end="}">
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">  243</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>() : world_(nullptr), flecsId_(static_cast&lt;flecs::id_t&gt;(0))</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>{</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>}</div>
-</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="comment">// ========== Entity::ID Implementation ==========</span></div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
 <div class="foldopen" id="foldopen00247" data-start="{" data-end="}">
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#af53b0a9adf715b2f38c83bea08887d59">  247</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(flecs::id_t value) : world_(nullptr), flecsId_(value)</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">  247</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>() : world_(nullptr), flecsId_(static_cast&lt;flecs::id_t&gt;(0))</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>{</div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>}</div>
 </div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
 <div class="foldopen" id="foldopen00251" data-start="{" data-end="}">
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a5b7799967ea965a0bdf2690967431da5">  251</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world, flecs::id_t value)</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    : world_(world), flecsId_(world ? world-&gt;GetFlecsWorld().c_ptr() : nullptr, value)</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>{</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>}</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#af53b0a9adf715b2f38c83bea08887d59">  251</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(flecs::id_t value) : world_(nullptr), flecsId_(value)</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>{</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>}</div>
 </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
-<div class="foldopen" id="foldopen00256" data-start="{" data-end="}">
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a825459a7bf60d990da2325267a52c77d">  256</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world, flecs::id_t first, flecs::id_t second)</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    : world_(world), flecsId_(world ? world-&gt;GetFlecsWorld().c_ptr() : nullptr, first, second)</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>{</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>}</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="foldopen" id="foldopen00255" data-start="{" data-end="}">
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a5b7799967ea965a0bdf2690967431da5">  255</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world, flecs::id_t value)</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    : world_(world), flecsId_(world ? world-&gt;GetFlecsWorld().c_ptr() : nullptr, value)</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>{</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>}</div>
 </div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="foldopen" id="foldopen00261" data-start="{" data-end="}">
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ad13a9879ee25102d576a0936141d48f6">  261</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world, <span class="keyword">const</span> <span class="keywordtype">char</span> *expr)</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    : world_(world), flecsId_(world ? world-&gt;GetFlecsWorld().c_ptr() : nullptr, expr)</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>{</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>}</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="foldopen" id="foldopen00260" data-start="{" data-end="}">
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a825459a7bf60d990da2325267a52c77d">  260</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world, flecs::id_t first, flecs::id_t second)</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    : world_(world), flecsId_(world ? world-&gt;GetFlecsWorld().c_ptr() : nullptr, first, second)</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>{</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>}</div>
 </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
-<div class="foldopen" id="foldopen00266" data-start="{" data-end="}">
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a3b786fd70905e1e9e396964d44d9971c">  266</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(flecs::id_t first, flecs::id_t second) : world_(nullptr), flecsId_(first, second)</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="foldopen" id="foldopen00265" data-start="{" data-end="}">
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ad13a9879ee25102d576a0936141d48f6">  265</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<a class="code hl_class" href="classduin_1_1World.html">World</a> *world, <span class="keyword">const</span> <span class="keywordtype">char</span> *expr)</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    : world_(world), flecsId_(world ? world-&gt;GetFlecsWorld().c_ptr() : nullptr, expr)</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>{</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>}</div>
 </div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
 <div class="foldopen" id="foldopen00270" data-start="{" data-end="}">
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a6e0bad291f25f8fc4164264f2d22f5a0">  270</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a> &amp;first, <span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a> &amp;second)</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    : world_(first.world_), flecsId_(first.flecsId_, second.flecsId_)</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>{</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>}</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a3b786fd70905e1e9e396964d44d9971c">  270</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(flecs::id_t first, flecs::id_t second) : world_(nullptr), flecsId_(first, second)</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>{</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>}</div>
 </div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
-<div class="foldopen" id="foldopen00275" data-start="{" data-end="}">
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec">  275</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec">duin::Entity::ID::IsPair</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="keywordflow">return</span> flecsId_.is_pair();</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>}</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
+<div class="foldopen" id="foldopen00274" data-start="{" data-end="}">
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a6e0bad291f25f8fc4164264f2d22f5a0">  274</a></span><a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a> &amp;first, <span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a> &amp;second)</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    : world_(first.world_), flecsId_(first.flecsId_, second.flecsId_)</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>{</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>}</div>
 </div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
-<div class="foldopen" id="foldopen00280" data-start="{" data-end="}">
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5">  280</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5">duin::Entity::ID::IsWildcard</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <span class="keywordflow">return</span> flecsId_.is_wildcard();</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>}</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
+<div class="foldopen" id="foldopen00279" data-start="{" data-end="}">
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec">  279</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec">duin::Entity::ID::IsPair</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordflow">return</span> flecsId_.is_pair();</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>}</div>
 </div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="foldopen" id="foldopen00285" data-start="{" data-end="}">
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a02d4df302e4796fc960f4fc6b29ace45">  285</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a02d4df302e4796fc960f4fc6b29ace45">duin::Entity::ID::IsEntity</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <span class="keywordflow">return</span> flecsId_.is_entity();</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>}</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="foldopen" id="foldopen00284" data-start="{" data-end="}">
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5">  284</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5">duin::Entity::ID::IsWildcard</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <span class="keywordflow">return</span> flecsId_.is_wildcard();</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>}</div>
 </div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
-<div class="foldopen" id="foldopen00290" data-start="{" data-end="}">
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0">  290</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0">duin::Entity::ID::GetEntity</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.entity(), world_);</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>}</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="foldopen" id="foldopen00289" data-start="{" data-end="}">
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a02d4df302e4796fc960f4fc6b29ace45">  289</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a02d4df302e4796fc960f4fc6b29ace45">duin::Entity::ID::IsEntity</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordflow">return</span> flecsId_.is_entity();</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>}</div>
 </div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
-<div class="foldopen" id="foldopen00295" data-start="{" data-end="}">
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ad114b24c33d3195734ab0914961b6462">  295</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ad114b24c33d3195734ab0914961b6462">duin::Entity::ID::AddFlags</a>(flecs::id_t flags)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    flecs::id newId = flecsId_.add_flags(flags);</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newId.raw_id());</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>}</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="foldopen" id="foldopen00294" data-start="{" data-end="}">
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0">  294</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0">duin::Entity::ID::GetEntity</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.entity(), world_);</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>}</div>
 </div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
-<div class="foldopen" id="foldopen00301" data-start="{" data-end="}">
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#af75dd3306c6755b90d5e46a2f09782a1">  301</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">duin::Entity::ID::RemoveFlags</a>(flecs::id_t flags)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    flecs::id newId = flecsId_.remove_flags(flags);</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newId.raw_id());</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>}</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
+<div class="foldopen" id="foldopen00299" data-start="{" data-end="}">
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ad114b24c33d3195734ab0914961b6462">  299</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ad114b24c33d3195734ab0914961b6462">duin::Entity::ID::AddFlags</a>(flecs::id_t flags)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    flecs::id newId = flecsId_.add_flags(flags);</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newId.raw_id());</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>}</div>
 </div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="foldopen" id="foldopen00307" data-start="{" data-end="}">
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">  307</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">duin::Entity::ID::RemoveFlags</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    flecs::id newId = flecsId_.remove_flags();</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newId.raw_id());</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>}</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> </div>
+<div class="foldopen" id="foldopen00305" data-start="{" data-end="}">
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#af75dd3306c6755b90d5e46a2f09782a1">  305</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">duin::Entity::ID::RemoveFlags</a>(flecs::id_t flags)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    flecs::id newId = flecsId_.remove_flags(flags);</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newId.raw_id());</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>}</div>
 </div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> </div>
-<div class="foldopen" id="foldopen00313" data-start="{" data-end="}">
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ac77359e55e5f4c79175232bb21419e68">  313</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ac77359e55e5f4c79175232bb21419e68">duin::Entity::ID::RemoveGeneration</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="comment">// TODO</span></div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    flecs::entity newEntity = flecsId_.entity();</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newEntity.raw_id());</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>}</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
+<div class="foldopen" id="foldopen00311" data-start="{" data-end="}">
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">  311</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">duin::Entity::ID::RemoveFlags</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    flecs::id newId = flecsId_.remove_flags();</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newId.raw_id());</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>}</div>
 </div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
-<div class="foldopen" id="foldopen00320" data-start="{" data-end="}">
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279">  320</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279">duin::Entity::ID::TypeId</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.type_id(), world_);</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>}</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
+<div class="foldopen" id="foldopen00317" data-start="{" data-end="}">
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ac77359e55e5f4c79175232bb21419e68">  317</a></span><a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ac77359e55e5f4c79175232bb21419e68">duin::Entity::ID::RemoveGeneration</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    <span class="comment">// TODO</span></div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    flecs::entity newEntity = flecsId_.entity();</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structduin_1_1Entity_1_1ID.html">ID</a>(world_, newEntity.raw_id());</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>}</div>
 </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
-<div class="foldopen" id="foldopen00325" data-start="{" data-end="}">
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a2a4f6cd83989d6c8bb8d671d1def27e8">  325</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">duin::Entity::ID::HasFlags</a>(flecs::id_t flags)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keywordflow">return</span> flecsId_.has_flags(flags);</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>}</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
+<div class="foldopen" id="foldopen00324" data-start="{" data-end="}">
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279">  324</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279">duin::Entity::ID::TypeId</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.type_id(), world_);</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>}</div>
 </div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
-<div class="foldopen" id="foldopen00330" data-start="{" data-end="}">
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">  330</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">duin::Entity::ID::HasFlags</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    <span class="keywordflow">return</span> flecsId_.has_flags();</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>}</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
+<div class="foldopen" id="foldopen00329" data-start="{" data-end="}">
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a2a4f6cd83989d6c8bb8d671d1def27e8">  329</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">duin::Entity::ID::HasFlags</a>(flecs::id_t flags)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="keywordflow">return</span> flecsId_.has_flags(flags);</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>}</div>
 </div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
-<div class="foldopen" id="foldopen00335" data-start="{" data-end="}">
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a988ed8d85afa33f3549f859822988cb8">  335</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a988ed8d85afa33f3549f859822988cb8">duin::Entity::ID::GetFlags</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.flags(), world_);</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>}</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
+<div class="foldopen" id="foldopen00334" data-start="{" data-end="}">
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">  334</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">duin::Entity::ID::HasFlags</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="keywordflow">return</span> flecsId_.has_flags();</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>}</div>
 </div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
-<div class="foldopen" id="foldopen00340" data-start="{" data-end="}">
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a6c11417e94319a67101e4de51e4569db">  340</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a6c11417e94319a67101e4de51e4569db">duin::Entity::ID::HasRelation</a>(flecs::id_t first)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    <span class="keywordflow">return</span> flecsId_.has_relation(first);</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>}</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
+<div class="foldopen" id="foldopen00339" data-start="{" data-end="}">
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a988ed8d85afa33f3549f859822988cb8">  339</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a988ed8d85afa33f3549f859822988cb8">duin::Entity::ID::GetFlags</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.flags(), world_);</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>}</div>
 </div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> </div>
-<div class="foldopen" id="foldopen00345" data-start="{" data-end="}">
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97">  345</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97">duin::Entity::ID::First</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.first(), world_);</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>}</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
+<div class="foldopen" id="foldopen00344" data-start="{" data-end="}">
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a6c11417e94319a67101e4de51e4569db">  344</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a6c11417e94319a67101e4de51e4569db">duin::Entity::ID::HasRelation</a>(flecs::id_t first)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    <span class="keywordflow">return</span> flecsId_.has_relation(first);</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>}</div>
 </div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> </div>
-<div class="foldopen" id="foldopen00350" data-start="{" data-end="}">
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be">  350</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be">duin::Entity::ID::Second</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.second(), world_);</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>}</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> </div>
+<div class="foldopen" id="foldopen00349" data-start="{" data-end="}">
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97">  349</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97">duin::Entity::ID::First</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.first(), world_);</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>}</div>
 </div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
-<div class="foldopen" id="foldopen00355" data-start="{" data-end="}">
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269">  355</a></span>std::string <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269">duin::Entity::ID::Str</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    <span class="keywordflow">return</span> flecsId_.str().c_str();</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>}</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span> </div>
+<div class="foldopen" id="foldopen00354" data-start="{" data-end="}">
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be">  354</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be">duin::Entity::ID::Second</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">Entity</a>(flecsId_.second(), world_);</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>}</div>
 </div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
-<div class="foldopen" id="foldopen00360" data-start="{" data-end="}">
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a7fbf2df23028c05a544f74055649cbab">  360</a></span>std::string <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a7fbf2df23028c05a544f74055649cbab">duin::Entity::ID::FlagsStr</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>    <span class="keywordflow">return</span> flecsId_.flags_str().c_str();</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>}</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> </div>
+<div class="foldopen" id="foldopen00359" data-start="{" data-end="}">
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269">  359</a></span>std::string <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269">duin::Entity::ID::Str</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>    <span class="keywordflow">return</span> flecsId_.str().c_str();</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>}</div>
 </div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
-<div class="foldopen" id="foldopen00365" data-start="{" data-end="}">
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ad97d1990bf528357344d84749e0fda85">  365</a></span>uint64_t <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ad97d1990bf528357344d84749e0fda85">duin::Entity::ID::GetID</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    <span class="keywordflow">return</span> flecsId_.raw_id();</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>}</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
+<div class="foldopen" id="foldopen00364" data-start="{" data-end="}">
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a7fbf2df23028c05a544f74055649cbab">  364</a></span>std::string <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a7fbf2df23028c05a544f74055649cbab">duin::Entity::ID::FlagsStr</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    <span class="keywordflow">return</span> flecsId_.flags_str().c_str();</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>}</div>
 </div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
-<div class="foldopen" id="foldopen00370" data-start="{" data-end="}">
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a9d88790749ce72f67f6da4e5a5f3d2b3">  370</a></span>duin::Entity::ID::operator flecs::id_t()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    <span class="keywordflow">return</span> flecsId_.raw_id();</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>}</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
+<div class="foldopen" id="foldopen00369" data-start="{" data-end="}">
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#ad97d1990bf528357344d84749e0fda85">  369</a></span>uint64_t <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#ad97d1990bf528357344d84749e0fda85">duin::Entity::ID::GetID</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="keywordflow">return</span> flecsId_.raw_id();</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>}</div>
 </div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span> </div>
-<div class="foldopen" id="foldopen00375" data-start="{" data-end="}">
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca">  375</a></span><a class="code hl_class" href="classduin_1_1World.html">duin::World</a> *<a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca">duin::Entity::ID::GetWorld</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <span class="keywordflow">return</span> world_;</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>}</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
+<div class="foldopen" id="foldopen00374" data-start="{" data-end="}">
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a9d88790749ce72f67f6da4e5a5f3d2b3">  374</a></span>duin::Entity::ID::operator flecs::id_t()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    <span class="keywordflow">return</span> flecsId_.raw_id();</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>}</div>
 </div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
-<div class="foldopen" id="foldopen00380" data-start="{" data-end="}">
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33">  380</a></span>flecs::id <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33">duin::Entity::ID::GetFlecsId</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>    <span class="keywordflow">return</span> flecsId_;</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>}</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span> </div>
+<div class="foldopen" id="foldopen00379" data-start="{" data-end="}">
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca">  379</a></span><a class="code hl_class" href="classduin_1_1World.html">duin::World</a> *<a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca">duin::Entity::ID::GetWorld</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>    <span class="keywordflow">return</span> world_;</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>}</div>
+</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
+<div class="foldopen" id="foldopen00384" data-start="{" data-end="}">
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno"><a class="line" href="structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33">  384</a></span>flecs::id <a class="code hl_function" href="structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33">duin::Entity::ID::GetFlecsId</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    <span class="keywordflow">return</span> flecsId_;</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>}</div>
 </div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html"><div class="ttname"><a href="classduin_1_1Entity.html">duin::Entity</a></div><div class="ttdoc">Represents an entity in the ECS world.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00020">Entity.h:21</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a03122d63a5d4ee5c350e462da9dc4d00"><div class="ttname"><a href="classduin_1_1Entity.html#a03122d63a5d4ee5c350e462da9dc4d00">duin::Entity::Destruct</a></div><div class="ttdeci">Entity &amp; Destruct()</div><div class="ttdoc">Destruct the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00168">Entity.cpp:168</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a0c54493457b4f09126b4204ce10b522d"><div class="ttname"><a href="classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d">duin::Entity::Clone</a></div><div class="ttdeci">Entity Clone(bool clone_value=true) const</div><div class="ttdoc">Clone the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00180">Entity.cpp:180</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a0c7b0ded6fdc2ed341df1d34f163d31c"><div class="ttname"><a href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">duin::Entity::operator=</a></div><div class="ttdeci">Entity &amp; operator=(const Entity &amp;other)</div><div class="ttdoc">Copy assignment operator.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00045">Entity.cpp:45</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a0fda7cce9c316b8d430ebfc371cb65c4"><div class="ttname"><a href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">duin::Entity::SetFlecsEntity</a></div><div class="ttdeci">void SetFlecsEntity(const flecs::entity &amp;entity)</div><div class="ttdoc">Set the internal flecs entity handle.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00236">Entity.cpp:236</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a1136c1f55672360d6f12aa841bc353e9"><div class="ttname"><a href="classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9">duin::Entity::SetName</a></div><div class="ttdeci">Entity &amp; SetName(const std::string &amp;name)</div><div class="ttdoc">Set the entity's name.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00130">Entity.cpp:130</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a1958572abac481940ed080113b247764"><div class="ttname"><a href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">duin::Entity::SetWorld</a></div><div class="ttdeci">void SetWorld(World *world)</div><div class="ttdoc">Set the world pointer for this entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00231">Entity.cpp:231</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a2aa04f148776b59cacac3d0aa641f177"><div class="ttname"><a href="classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177">duin::Entity::GetParent</a></div><div class="ttdeci">Entity GetParent() const</div><div class="ttdoc">Get the parent entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00219">Entity.cpp:219</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a36e14f21f4727b5b3ac1eaf64f5e81a0"><div class="ttname"><a href="classduin_1_1Entity.html#a36e14f21f4727b5b3ac1eaf64f5e81a0">duin::Entity::GetChildren</a></div><div class="ttdeci">std::vector&lt; Entity &gt; GetChildren() const</div><div class="ttdoc">Get all children of this entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00224">Entity.cpp:224</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a3cd74944b0325a2d9d83ee0bc6fe010e"><div class="ttname"><a href="classduin_1_1Entity.html#a3cd74944b0325a2d9d83ee0bc6fe010e">duin::Entity::IsAlive</a></div><div class="ttdeci">bool IsAlive() const</div><div class="ttdoc">Check if the entity is alive.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00086">Entity.cpp:86</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a42d7275f30e0f8563e65f2f306ac5c29"><div class="ttname"><a href="classduin_1_1Entity.html#a42d7275f30e0f8563e65f2f306ac5c29">duin::Entity::operator==</a></div><div class="ttdeci">bool operator==(const Entity &amp;other) const</div><div class="ttdoc">Equality operator.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00158">Entity.cpp:158</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a03122d63a5d4ee5c350e462da9dc4d00"><div class="ttname"><a href="classduin_1_1Entity.html#a03122d63a5d4ee5c350e462da9dc4d00">duin::Entity::Destruct</a></div><div class="ttdeci">Entity &amp; Destruct()</div><div class="ttdoc">Destruct the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00172">Entity.cpp:172</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a0c54493457b4f09126b4204ce10b522d"><div class="ttname"><a href="classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d">duin::Entity::Clone</a></div><div class="ttdeci">Entity Clone(bool clone_value=true) const</div><div class="ttdoc">Clone the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00184">Entity.cpp:184</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a0c7b0ded6fdc2ed341df1d34f163d31c"><div class="ttname"><a href="classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c">duin::Entity::operator=</a></div><div class="ttdeci">Entity &amp; operator=(const Entity &amp;other)</div><div class="ttdoc">Copy assignment operator.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00046">Entity.cpp:46</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a0fda7cce9c316b8d430ebfc371cb65c4"><div class="ttname"><a href="classduin_1_1Entity.html#a0fda7cce9c316b8d430ebfc371cb65c4">duin::Entity::SetFlecsEntity</a></div><div class="ttdeci">void SetFlecsEntity(const flecs::entity &amp;entity)</div><div class="ttdoc">Set the internal flecs entity handle.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00240">Entity.cpp:240</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a1136c1f55672360d6f12aa841bc353e9"><div class="ttname"><a href="classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9">duin::Entity::SetName</a></div><div class="ttdeci">Entity &amp; SetName(const std::string &amp;name)</div><div class="ttdoc">Set the entity's name.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00134">Entity.cpp:134</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a1958572abac481940ed080113b247764"><div class="ttname"><a href="classduin_1_1Entity.html#a1958572abac481940ed080113b247764">duin::Entity::SetWorld</a></div><div class="ttdeci">void SetWorld(World *world)</div><div class="ttdoc">Set the world pointer for this entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00235">Entity.cpp:235</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a2aa04f148776b59cacac3d0aa641f177"><div class="ttname"><a href="classduin_1_1Entity.html#a2aa04f148776b59cacac3d0aa641f177">duin::Entity::GetParent</a></div><div class="ttdeci">Entity GetParent() const</div><div class="ttdoc">Get the parent entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00223">Entity.cpp:223</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a36e14f21f4727b5b3ac1eaf64f5e81a0"><div class="ttname"><a href="classduin_1_1Entity.html#a36e14f21f4727b5b3ac1eaf64f5e81a0">duin::Entity::GetChildren</a></div><div class="ttdeci">std::vector&lt; Entity &gt; GetChildren() const</div><div class="ttdoc">Get all children of this entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00228">Entity.cpp:228</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a3cd74944b0325a2d9d83ee0bc6fe010e"><div class="ttname"><a href="classduin_1_1Entity.html#a3cd74944b0325a2d9d83ee0bc6fe010e">duin::Entity::IsAlive</a></div><div class="ttdeci">bool IsAlive() const</div><div class="ttdoc">Check if the entity is alive.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00090">Entity.cpp:90</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a42d7275f30e0f8563e65f2f306ac5c29"><div class="ttname"><a href="classduin_1_1Entity.html#a42d7275f30e0f8563e65f2f306ac5c29">duin::Entity::operator==</a></div><div class="ttdeci">bool operator==(const Entity &amp;other) const</div><div class="ttdoc">Equality operator.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00162">Entity.cpp:162</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html_a537de7ca63c0877259d234b6b8f8cd84"><div class="ttname"><a href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a></div><div class="ttdeci">Entity &amp; Add()</div><div class="ttdoc">Add a component to the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00528">Entity.h:528</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a53ded7d74bbab23fe2cd4f316cec5f32"><div class="ttname"><a href="classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32">duin::Entity::ChildOf</a></div><div class="ttdeci">Entity &amp; ChildOf(const Entity &amp;parent)</div><div class="ttdoc">Set this entity as a child of another entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00124">Entity.cpp:124</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a5593c6b08b0e1330801b3c93f4fc944c"><div class="ttname"><a href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">duin::Entity::IsValid</a></div><div class="ttdeci">bool IsValid() const</div><div class="ttdoc">Check if the entity is valid.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00080">Entity.cpp:80</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a7e50ebee07c2e60721af175166348e4a"><div class="ttname"><a href="classduin_1_1Entity.html#a7e50ebee07c2e60721af175166348e4a">duin::Entity::GetTarget</a></div><div class="ttdeci">Entity GetTarget(uint64_t relationship, int32_t index=0) const</div><div class="ttdoc">Get the target entity for a relationship.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00023">Entity.cpp:23</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a8ed57407b083c48309d557dd94db5ac9"><div class="ttname"><a href="classduin_1_1Entity.html#a8ed57407b083c48309d557dd94db5ac9">duin::Entity::~Entity</a></div><div class="ttdeci">~Entity()</div><div class="ttdoc">Destructor.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00071">Entity.cpp:71</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a94d73e470447aa6983129902a2aa271a"><div class="ttname"><a href="classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a">duin::Entity::operator!=</a></div><div class="ttdeci">bool operator!=(const Entity &amp;other) const</div><div class="ttdoc">Inequality operator.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00163">Entity.cpp:163</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a53ded7d74bbab23fe2cd4f316cec5f32"><div class="ttname"><a href="classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32">duin::Entity::ChildOf</a></div><div class="ttdeci">Entity &amp; ChildOf(const Entity &amp;parent)</div><div class="ttdoc">Set this entity as a child of another entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00128">Entity.cpp:128</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a5593c6b08b0e1330801b3c93f4fc944c"><div class="ttname"><a href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">duin::Entity::IsValid</a></div><div class="ttdeci">bool IsValid() const</div><div class="ttdoc">Check if the entity is valid.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00081">Entity.cpp:81</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a7e50ebee07c2e60721af175166348e4a"><div class="ttname"><a href="classduin_1_1Entity.html#a7e50ebee07c2e60721af175166348e4a">duin::Entity::GetTarget</a></div><div class="ttdeci">Entity GetTarget(uint64_t relationship, int32_t index=0) const</div><div class="ttdoc">Get the target entity for a relationship.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00024">Entity.cpp:24</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a8ed57407b083c48309d557dd94db5ac9"><div class="ttname"><a href="classduin_1_1Entity.html#a8ed57407b083c48309d557dd94db5ac9">duin::Entity::~Entity</a></div><div class="ttdeci">~Entity()</div><div class="ttdoc">Destructor.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00072">Entity.cpp:72</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a94d73e470447aa6983129902a2aa271a"><div class="ttname"><a href="classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a">duin::Entity::operator!=</a></div><div class="ttdeci">bool operator!=(const Entity &amp;other) const</div><div class="ttdoc">Inequality operator.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00167">Entity.cpp:167</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html_ab19c54f29d625b54c8f5f398b07eda54"><div class="ttname"><a href="classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54">duin::Entity::Entity</a></div><div class="ttdeci">Entity()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00015">Entity.cpp:15</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_ab1a7be9396a631a4adfb421b99975bca"><div class="ttname"><a href="classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca">duin::Entity::Clear</a></div><div class="ttdeci">Entity &amp; Clear()</div><div class="ttdoc">Clear all components and data from the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00174">Entity.cpp:174</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_ac6721645b73d406b0937df4138859dc4"><div class="ttname"><a href="classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4">duin::Entity::GetWorld</a></div><div class="ttdeci">World * GetWorld() const</div><div class="ttdoc">Get the world this entity belongs to.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00075">Entity.cpp:75</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_ace1897ea3abe808840aee03c087d2ab3"><div class="ttname"><a href="classduin_1_1Entity.html#ace1897ea3abe808840aee03c087d2ab3">duin::Entity::GetName</a></div><div class="ttdeci">std::string GetName() const</div><div class="ttdoc">Get the entity's name.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00108">Entity.cpp:108</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_ad4b449e33056cb2fc41b131425be6137"><div class="ttname"><a href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">duin::Entity::IsA</a></div><div class="ttdeci">Entity &amp; IsA(const Entity &amp;second)</div><div class="ttdoc">Set this entity as an instance of another entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00188">Entity.cpp:188</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_ae50d8eb5adb53d60e44c25911c5de17c"><div class="ttname"><a href="classduin_1_1Entity.html#ae50d8eb5adb53d60e44c25911c5de17c">duin::Entity::GetPath</a></div><div class="ttdeci">std::string GetPath(const std::string &amp;sep=&quot;::&quot;, const std::string &amp;init_sep=&quot;::&quot;) const</div><div class="ttdoc">Get the entity's path in the hierarchy.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00113">Entity.cpp:113</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_af6d1a6ab98ab3627e6e64ebecc6cdea2"><div class="ttname"><a href="classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2">duin::Entity::Enable</a></div><div class="ttdeci">Entity &amp; Enable()</div><div class="ttdoc">Enable the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00146">Entity.cpp:146</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_afc688a5b3067607db06935db9eaf3714"><div class="ttname"><a href="classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714">duin::Entity::GetID</a></div><div class="ttdeci">uint64_t GetID() const</div><div class="ttdoc">Get the entity's unique ID.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00103">Entity.cpp:103</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_afcc78d5918c24888686828cdaa9df4b4"><div class="ttname"><a href="classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4">duin::Entity::Disable</a></div><div class="ttdeci">Entity &amp; Disable()</div><div class="ttdoc">Disable the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00152">Entity.cpp:152</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_ab1a7be9396a631a4adfb421b99975bca"><div class="ttname"><a href="classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca">duin::Entity::Clear</a></div><div class="ttdeci">Entity &amp; Clear()</div><div class="ttdoc">Clear all components and data from the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00178">Entity.cpp:178</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_ac6721645b73d406b0937df4138859dc4"><div class="ttname"><a href="classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4">duin::Entity::GetWorld</a></div><div class="ttdeci">World * GetWorld() const</div><div class="ttdoc">Get the world this entity belongs to.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00076">Entity.cpp:76</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_ace1897ea3abe808840aee03c087d2ab3"><div class="ttname"><a href="classduin_1_1Entity.html#ace1897ea3abe808840aee03c087d2ab3">duin::Entity::GetName</a></div><div class="ttdeci">std::string GetName() const</div><div class="ttdoc">Get the entity's name.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00112">Entity.cpp:112</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_ad4b449e33056cb2fc41b131425be6137"><div class="ttname"><a href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">duin::Entity::IsA</a></div><div class="ttdeci">Entity &amp; IsA(const Entity &amp;second)</div><div class="ttdoc">Set this entity as an instance of another entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00192">Entity.cpp:192</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_ae50d8eb5adb53d60e44c25911c5de17c"><div class="ttname"><a href="classduin_1_1Entity.html#ae50d8eb5adb53d60e44c25911c5de17c">duin::Entity::GetPath</a></div><div class="ttdeci">std::string GetPath(const std::string &amp;sep=&quot;::&quot;, const std::string &amp;init_sep=&quot;::&quot;) const</div><div class="ttdoc">Get the entity's path in the hierarchy.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00117">Entity.cpp:117</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_af6d1a6ab98ab3627e6e64ebecc6cdea2"><div class="ttname"><a href="classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2">duin::Entity::Enable</a></div><div class="ttdeci">Entity &amp; Enable()</div><div class="ttdoc">Enable the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00150">Entity.cpp:150</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_afc688a5b3067607db06935db9eaf3714"><div class="ttname"><a href="classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714">duin::Entity::GetID</a></div><div class="ttdeci">uint64_t GetID() const</div><div class="ttdoc">Get the entity's unique ID.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00107">Entity.cpp:107</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_afcc78d5918c24888686828cdaa9df4b4"><div class="ttname"><a href="classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4">duin::Entity::Disable</a></div><div class="ttdeci">Entity &amp; Disable()</div><div class="ttdoc">Disable the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00156">Entity.cpp:156</a></div></div>
 <div class="ttc" id="aclassduin_1_1World_html"><div class="ttname"><a href="classduin_1_1World.html">duin::World</a></div><div class="ttdef"><b>Definition</b> <a href="World_8h_source.html#l00018">World.h:19</a></div></div>
 <div class="ttc" id="astructduin_1_1Entity_1_1ID_html"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html">duin::Entity::ID</a></div><div class="ttdoc">Wrapper around flecs::id_t that provides entity ID manipulation. A flecs id is an identifier that can...</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00030">Entity.h:31</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a02d4df302e4796fc960f4fc6b29ace45"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a02d4df302e4796fc960f4fc6b29ace45">duin::Entity::ID::IsEntity</a></div><div class="ttdeci">bool IsEntity() const</div><div class="ttdoc">Test if ID is an entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00285">Entity.cpp:285</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a13ec73ed0f46812ce1b12dea9f565fe5"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5">duin::Entity::ID::IsWildcard</a></div><div class="ttdeci">bool IsWildcard() const</div><div class="ttdoc">Test if ID is a wildcard.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00280">Entity.cpp:280</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a1e45067c1604fd6678535162e730e4ec"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec">duin::Entity::ID::IsPair</a></div><div class="ttdeci">bool IsPair() const</div><div class="ttdoc">Test if ID is a pair (has first, second).</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00275">Entity.cpp:275</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a1ed4d4fdcad5414b63f5bb8e747e8269"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269">duin::Entity::ID::Str</a></div><div class="ttdeci">std::string Str() const</div><div class="ttdoc">Convert ID to string.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00355">Entity.cpp:355</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a4813e2ff9d4a59af369f2a85b36ea279"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279">duin::Entity::ID::TypeId</a></div><div class="ttdeci">Entity TypeId() const</div><div class="ttdoc">Return component type ID.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00320">Entity.cpp:320</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a4e14c52b81b74d078c6577bd4d320fd0"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0">duin::Entity::ID::GetEntity</a></div><div class="ttdeci">Entity GetEntity() const</div><div class="ttdoc">Return ID as entity (only allowed when ID is valid entity).</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00290">Entity.cpp:290</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a53db2b6739f3d24c41c6b71f48c671be"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be">duin::Entity::ID::Second</a></div><div class="ttdeci">Entity Second() const</div><div class="ttdoc">Get second element from a pair. If the ID is not a pair, this operation will fail....</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00350">Entity.cpp:350</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a64fe415e67e4ab071a67cf4b3ad595d3"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">duin::Entity::ID::HasFlags</a></div><div class="ttdeci">bool HasFlags() const</div><div class="ttdoc">Test if ID has any flags.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00330">Entity.cpp:330</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a6c11417e94319a67101e4de51e4569db"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a6c11417e94319a67101e4de51e4569db">duin::Entity::ID::HasRelation</a></div><div class="ttdeci">bool HasRelation(flecs::id_t first) const</div><div class="ttdoc">Test if ID has specified relation as first element.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00340">Entity.cpp:340</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a6f161364d88322249693b9cc2b890c33"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33">duin::Entity::ID::GetFlecsId</a></div><div class="ttdeci">flecs::id GetFlecsId() const</div><div class="ttdoc">Get the underlying flecs::id object.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00380">Entity.cpp:380</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a7692090b67e97cac9177207be2a4a2ca"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca">duin::Entity::ID::GetWorld</a></div><div class="ttdeci">World * GetWorld() const</div><div class="ttdoc">Get the world this ID belongs to.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00375">Entity.cpp:375</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a7fbf2df23028c05a544f74055649cbab"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a7fbf2df23028c05a544f74055649cbab">duin::Entity::ID::FlagsStr</a></div><div class="ttdeci">std::string FlagsStr() const</div><div class="ttdoc">Convert flags of ID to string.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00360">Entity.cpp:360</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a932a83d26ba53b1fd4192fb168ebcc88"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a></div><div class="ttdeci">ID()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00243">Entity.cpp:243</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a988ed8d85afa33f3549f859822988cb8"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a988ed8d85afa33f3549f859822988cb8">duin::Entity::ID::GetFlags</a></div><div class="ttdeci">Entity GetFlags() const</div><div class="ttdoc">Return flags set on ID.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00335">Entity.cpp:335</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ab0212508643cd0aa7df5f61b0783dc97"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97">duin::Entity::ID::First</a></div><div class="ttdeci">Entity First() const</div><div class="ttdoc">Get first element from a pair. If the ID is not a pair, this operation will fail. When the ID has a w...</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00345">Entity.cpp:345</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ac77359e55e5f4c79175232bb21419e68"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ac77359e55e5f4c79175232bb21419e68">duin::Entity::ID::RemoveGeneration</a></div><div class="ttdeci">ID RemoveGeneration() const</div><div class="ttdoc">Return ID without generation.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00313">Entity.cpp:313</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ad114b24c33d3195734ab0914961b6462"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ad114b24c33d3195734ab0914961b6462">duin::Entity::ID::AddFlags</a></div><div class="ttdeci">ID AddFlags(flecs::id_t flags) const</div><div class="ttdoc">Return ID with flags added.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00295">Entity.cpp:295</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ad97d1990bf528357344d84749e0fda85"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ad97d1990bf528357344d84749e0fda85">duin::Entity::ID::GetID</a></div><div class="ttdeci">uint64_t GetID() const</div><div class="ttdoc">Get raw flecs::id_t value.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00365">Entity.cpp:365</a></div></div>
-<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ae32c1ba6c5c3e6d132623aba9339caab"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">duin::Entity::ID::RemoveFlags</a></div><div class="ttdeci">ID RemoveFlags() const</div><div class="ttdoc">Return ID without any flags.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00307">Entity.cpp:307</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a02d4df302e4796fc960f4fc6b29ace45"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a02d4df302e4796fc960f4fc6b29ace45">duin::Entity::ID::IsEntity</a></div><div class="ttdeci">bool IsEntity() const</div><div class="ttdoc">Test if ID is an entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00289">Entity.cpp:289</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a13ec73ed0f46812ce1b12dea9f565fe5"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5">duin::Entity::ID::IsWildcard</a></div><div class="ttdeci">bool IsWildcard() const</div><div class="ttdoc">Test if ID is a wildcard.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00284">Entity.cpp:284</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a1e45067c1604fd6678535162e730e4ec"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec">duin::Entity::ID::IsPair</a></div><div class="ttdeci">bool IsPair() const</div><div class="ttdoc">Test if ID is a pair (has first, second).</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00279">Entity.cpp:279</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a1ed4d4fdcad5414b63f5bb8e747e8269"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269">duin::Entity::ID::Str</a></div><div class="ttdeci">std::string Str() const</div><div class="ttdoc">Convert ID to string.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00359">Entity.cpp:359</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a4813e2ff9d4a59af369f2a85b36ea279"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279">duin::Entity::ID::TypeId</a></div><div class="ttdeci">Entity TypeId() const</div><div class="ttdoc">Return component type ID.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00324">Entity.cpp:324</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a4e14c52b81b74d078c6577bd4d320fd0"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0">duin::Entity::ID::GetEntity</a></div><div class="ttdeci">Entity GetEntity() const</div><div class="ttdoc">Return ID as entity (only allowed when ID is valid entity).</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00294">Entity.cpp:294</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a53db2b6739f3d24c41c6b71f48c671be"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be">duin::Entity::ID::Second</a></div><div class="ttdeci">Entity Second() const</div><div class="ttdoc">Get second element from a pair. If the ID is not a pair, this operation will fail....</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00354">Entity.cpp:354</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a64fe415e67e4ab071a67cf4b3ad595d3"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3">duin::Entity::ID::HasFlags</a></div><div class="ttdeci">bool HasFlags() const</div><div class="ttdoc">Test if ID has any flags.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00334">Entity.cpp:334</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a6c11417e94319a67101e4de51e4569db"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a6c11417e94319a67101e4de51e4569db">duin::Entity::ID::HasRelation</a></div><div class="ttdeci">bool HasRelation(flecs::id_t first) const</div><div class="ttdoc">Test if ID has specified relation as first element.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00344">Entity.cpp:344</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a6f161364d88322249693b9cc2b890c33"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33">duin::Entity::ID::GetFlecsId</a></div><div class="ttdeci">flecs::id GetFlecsId() const</div><div class="ttdoc">Get the underlying flecs::id object.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00384">Entity.cpp:384</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a7692090b67e97cac9177207be2a4a2ca"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca">duin::Entity::ID::GetWorld</a></div><div class="ttdeci">World * GetWorld() const</div><div class="ttdoc">Get the world this ID belongs to.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00379">Entity.cpp:379</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a7fbf2df23028c05a544f74055649cbab"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a7fbf2df23028c05a544f74055649cbab">duin::Entity::ID::FlagsStr</a></div><div class="ttdeci">std::string FlagsStr() const</div><div class="ttdoc">Convert flags of ID to string.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00364">Entity.cpp:364</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a932a83d26ba53b1fd4192fb168ebcc88"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88">duin::Entity::ID::ID</a></div><div class="ttdeci">ID()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00247">Entity.cpp:247</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_a988ed8d85afa33f3549f859822988cb8"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#a988ed8d85afa33f3549f859822988cb8">duin::Entity::ID::GetFlags</a></div><div class="ttdeci">Entity GetFlags() const</div><div class="ttdoc">Return flags set on ID.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00339">Entity.cpp:339</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ab0212508643cd0aa7df5f61b0783dc97"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97">duin::Entity::ID::First</a></div><div class="ttdeci">Entity First() const</div><div class="ttdoc">Get first element from a pair. If the ID is not a pair, this operation will fail. When the ID has a w...</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00349">Entity.cpp:349</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ac77359e55e5f4c79175232bb21419e68"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ac77359e55e5f4c79175232bb21419e68">duin::Entity::ID::RemoveGeneration</a></div><div class="ttdeci">ID RemoveGeneration() const</div><div class="ttdoc">Return ID without generation.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00317">Entity.cpp:317</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ad114b24c33d3195734ab0914961b6462"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ad114b24c33d3195734ab0914961b6462">duin::Entity::ID::AddFlags</a></div><div class="ttdeci">ID AddFlags(flecs::id_t flags) const</div><div class="ttdoc">Return ID with flags added.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00299">Entity.cpp:299</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ad97d1990bf528357344d84749e0fda85"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ad97d1990bf528357344d84749e0fda85">duin::Entity::ID::GetID</a></div><div class="ttdeci">uint64_t GetID() const</div><div class="ttdoc">Get raw flecs::id_t value.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00369">Entity.cpp:369</a></div></div>
+<div class="ttc" id="astructduin_1_1Entity_1_1ID_html_ae32c1ba6c5c3e6d132623aba9339caab"><div class="ttname"><a href="structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab">duin::Entity::ID::RemoveFlags</a></div><div class="ttdeci">ID RemoveFlags() const</div><div class="ttdoc">Return ID without any flags.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00311">Entity.cpp:311</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
