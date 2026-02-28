@@ -29,11 +29,10 @@ void Player::Init()
         .slopeLimit = std::cosf(physx::PxPi / 4.0),
         .stepOffset = 0.5f,
         .contactOffset = 0.1f,
-        .position = duin::Vector3(playerPosition),
         .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
     };
     duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
-    std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc);
+    std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc, playerPosition);
 #endif
 
     duin::SceneBuilder sceneBuilder(world.get());
