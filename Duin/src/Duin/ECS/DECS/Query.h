@@ -332,9 +332,10 @@ class Query
 {
   public:
     /**
-     * @brief Default constructor.
+     * @brief Default constructor. Produces an invalid/null query.
+     * Use IsValid() before calling Any(), Each(), Run(), etc.
      */
-    Query() = delete;
+    Query() = default;
 
     /**
      * @brief Constructor from flecs query (move).
@@ -360,21 +361,18 @@ class Query
     ~Query() = default;
 
     /**
-     * @brief Mark query as cached (for builder pattern compatibility).
-     * @return Reference to this query.
+     * @brief Returns true if this query has been built and is safe to iterate.
      */
-    Query &Cached()
+    bool IsValid() const
     {
-        return *this;
+        bool res = static_cast<bool>(rawQuery) && world_;
+        return res;
     }
 
-    /**
-     * @brief Build the query (for builder pattern compatibility).
-     * @return Reference to this query.
-     */
-    Query &Build()
+    void Destruct()
     {
-        return *this;
+        if (IsValid())
+            rawQuery.destruct();
     }
 
     /**
@@ -401,6 +399,8 @@ class Query
     template <typename Func>
     void Each(Func &&func) const
     {
+        if (!IsValid())
+            return;
         rawQuery.each([&func, this](flecs::entity flecsEntity, Components &...comps) {
             Entity duinEntity;
             duinEntity.flecsEntity = flecsEntity;
@@ -435,6 +435,8 @@ class Query
     template <typename Func>
     void Run(Func &&func) const
     {
+        if (!IsValid())
+            return;
         // Wrap the user's callback to convert flecs::iter to duin::Iter
         rawQuery.run([&func](flecs::iter &flecsIter) {
             // Create duin::Iter from flecs::iter
@@ -451,6 +453,8 @@ class Query
      */
     int32_t Count() const
     {
+        if (!IsValid())
+            return 0;
         return rawQuery.count();
     }
 
@@ -460,6 +464,8 @@ class Query
      */
     bool IsTrue() const
     {
+        if (!IsValid())
+            return false;
         return rawQuery.is_true();
     }
 
@@ -469,6 +475,8 @@ class Query
      */
     flecs::entity First() const
     {
+        if (!IsValid())
+            return flecs::entity();
         return rawQuery.first();
     }
 

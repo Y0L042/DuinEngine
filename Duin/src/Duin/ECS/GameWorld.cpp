@@ -1,8 +1,10 @@
 #include "dnpch.h"
 #include "GameWorld.h"
+#include "ComponentInspector.h"
 #include "Duin/Core/Application.h"
 #include "Duin/Core/Utils/SerialisationManager.h"
 #include "Duin/Render/Camera.h"
+#include "Duin/Render/Renderer.h"
 #include "PrefabRegistry.h"
 
 #include <functional>
@@ -32,6 +34,20 @@ void RegisterTags(duin::World &world)
     world.Component<ECSTag::SetCameraAsActive>();
     world.Component<ECSTag::CameraIsActive>();
     world.Component<ECSTag::ActiveCamera>();
+
+    auto &inspector = duin::ComponentInspector::Get();
+    inspector.RegisterComponent<ECSTag::Local>("Local");
+    inspector.RegisterComponent<ECSTag::Global>("Global");
+    inspector.RegisterComponent<ECSTag::CreateExternalRef>("CreateExternalRef");
+    inspector.RegisterComponent<ECSTag::ActiveExternalRef>("ActiveExternalRef");
+    inspector.RegisterComponent<ECSTag::DeleteExternalRef>("DeleteExternalRef");
+    inspector.RegisterComponent<ECSTag::PxKinematic>("PxKinematic");
+    inspector.RegisterComponent<ECSTag::PxDynamic>("PxDynamic");
+    inspector.RegisterComponent<ECSTag::PxStatic>("PxStatic");
+    inspector.RegisterComponent<ECSTag::NonPx>("NonPx");
+    inspector.RegisterComponent<ECSTag::SetCameraAsActive>("SetCameraAsActive");
+    inspector.RegisterComponent<ECSTag::CameraIsActive>("CameraIsActive");
+    inspector.RegisterComponent<ECSTag::ActiveCamera>("ActiveCamera");
 }
 } // namespace ECSTag
 
@@ -61,6 +77,26 @@ void RegisterComponents(duin::World &world)
     world.Component<ECSComponent::DebugCubeComponent>();
 
     world.Component<Camera>();
+
+    // Register components with the inspector (idempotent — skips if already registered)
+    auto &inspector = duin::ComponentInspector::Get();
+    inspector.RegisterComponent<ECSComponent::Position2D>("Position2D");
+    inspector.RegisterComponent<ECSComponent::Rotation2D>("Rotation2D");
+    inspector.RegisterComponent<ECSComponent::Scale2D>("Scale2D");
+    inspector.RegisterComponent<ECSComponent::Velocity2D>("Velocity2D");
+    inspector.RegisterComponent<ECSComponent::Transform3D>("Transform3D");
+    inspector.RegisterComponent<ECSComponent::Position3D>("Position3D");
+    inspector.RegisterComponent<ECSComponent::Rotation3D>("Rotation3D");
+    inspector.RegisterComponent<ECSComponent::Scale3D>("Scale3D");
+    inspector.RegisterComponent<ECSComponent::Velocity3D>("Velocity3D");
+    inspector.RegisterComponent<ECSComponent::CubeComponent>("CubeComponent");
+    inspector.RegisterComponent<ECSComponent::StaticBodyComponent>("StaticBodyComponent");
+    inspector.RegisterComponent<ECSComponent::KinematicBodyComponent>("KinematicBodyComponent");
+    inspector.RegisterComponent<ECSComponent::DynamicBodyComponent>("DynamicBodyComponent");
+    inspector.RegisterComponent<ECSComponent::CharacterBodyComponent>("CharacterBodyComponent");
+    inspector.RegisterComponent<ECSComponent::DebugCapsuleComponent>("DebugCapsuleComponent");
+    inspector.RegisterComponent<ECSComponent::DebugCubeComponent>("DebugCubeComponent");
+    inspector.RegisterComponent<Camera>("Camera");
 }
 } // namespace ECSComponent
 
@@ -226,6 +262,48 @@ void GameWorld::Initialize(bool connectSignals)
         QueuePostDrawCallback(std::function<void()>([this]() { PostDrawQueryExecution(); }));
         QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
     }
+
+    InitializeQueries();
+}
+
+void GameWorld::InitializeQueries()
+{
+    queryTransform3DHierarchicalUpdate =
+        this->GetFlecsWorld()
+            .query_builder<ECSComponent::Transform3D, const ECSComponent::Transform3D *>()
+            .term_at(1)
+            .parent()
+            .cascade()
+            .cached()
+            .build();
+
+    queryCharacterBody3DUpdateTransform =
+        this->QueryBuilder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D,
+                           ECSComponent::Velocity3D>()
+            .With<ECSTag::PxKinematic>()
+            .Cached()
+            .Build();
+
+    querySyncDynamicBody3DTransform =
+        this->QueryBuilder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>()
+            .Cached()
+            .Build();
+
+    queryControlCamera =
+        this->QueryBuilder<Camera, const ECSComponent::Transform3D>().Cached().Build();
+
+    querySetCameraAsActive =
+        this->QueryBuilder<Camera>().With<ECSTag::ActiveCamera>().Build();
+
+    queryDrawDebugCapsule =
+        this->QueryBuilder<const ECSComponent::DebugCapsuleComponent, const ECSComponent::Transform3D>()
+            .Cached()
+            .Build();
+
+    queryDrawDebugCube =
+        this->QueryBuilder<const ECSComponent::DebugCubeComponent, const ECSComponent::Transform3D>()
+            .Cached()
+            .Build();
 }
 
 duin::Entity GameWorld::CreateEntityFromJSON(JSONMember &member)
@@ -273,9 +351,30 @@ void GameWorld::PostDrawUIQueryExecution()
 {
 }
 
+void GameWorld::ResetQueries()
+{
+    queryTransform3DHierarchicalUpdate = {};
+    queryCharacterBody3DUpdateTransform = {};
+    querySyncDynamicBody3DTransform = {};
+    queryControlCamera = {};
+    querySetCameraAsActive = {};
+    queryDrawDebugCapsule = {};
+    queryDrawDebugCube = {};
+}
+
 void GameWorld::Clear()
 {
+    // Reset all cached queries before resetting the world — they hold pointers
+    // into the old ecs_world_t* and must not outlive it.
+    ResetQueries();
+
     this->GetFlecsWorld().reset();
+}
+
+void GameWorld::Reset(bool connectSignals)
+{
+    Clear();
+    Initialize(connectSignals);
 }
 
 void GameWorld::InitializeRemoteExplorer()
@@ -287,12 +386,7 @@ void GameWorld::InitializeRemoteExplorer()
 ----------------------------------------------------------------------*/
 void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
 {
-    static auto q =
-        this->QueryBuilder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D>()
-            .With<ECSTag::PxKinematic>()
-            .Cached()
-            .Build();
-    q.Each([](duin::Entity e, ECSComponent::CharacterBodyComponent &cb, ECSComponent::Transform3D &tx,
+    queryCharacterBody3DUpdateTransform.Each([](duin::Entity e, ECSComponent::CharacterBodyComponent &cb, ECSComponent::Transform3D &tx,
               ECSComponent::Velocity3D &velocity) {
         // Move CharacterBody3D and get physics-resolved global position
         double delta = GetPhysicsFrameTime();
@@ -303,7 +397,7 @@ void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
             DN_WARN("CharacterBody pointer is nullptr!");
             return;
         }
-
+        cb.body->SetPosition(tx.GetGlobalPosition());
         Vector3 oldPos = cb.body->GetFootPosition();
         cb.body->Move(vDelta, delta);
         Vector3 newPos = cb.body->GetFootPosition();
@@ -327,10 +421,7 @@ void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
 
 void GameWorld::ExecuteQuerySyncDynamicBody3DTransform()
 {
-    static auto q =
-        this->QueryBuilder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>().Cached().Build();
-
-    q.Each([](duin::Entity e, const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
+    querySyncDynamicBody3DTransform.Each([](duin::Entity e, const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
               ECSComponent::Transform3D &tx) {
         Vector3 newGPos = dynamicBodyComponent.body->GetPosition();
         ECSComponent::Transform3D::SetGlobalPosition(e.GetFlecsEntity(), newGPos);
@@ -341,15 +432,7 @@ void GameWorld::ExecuteQuerySyncDynamicBody3DTransform()
 
 void GameWorld::ExecuteQueryTransform3DHierarchicalUpdate()
 {
-    flecs::world &flecsWorld = this->GetFlecsWorld();
-    static flecs::query q = flecsWorld.query_builder<ECSComponent::Transform3D, const ECSComponent::Transform3D *>()
-                                .term_at(1)
-                                .parent()
-                                .cascade()
-                                .cached()
-                                .build();
-
-    q.each([](flecs::entity e, ECSComponent::Transform3D &tx, const ECSComponent::Transform3D *parent_tx) {
+    queryTransform3DHierarchicalUpdate.each([](flecs::entity e, ECSComponent::Transform3D &tx, const ECSComponent::Transform3D *parent_tx) {
         // ECSComponent::Transform3D::SetGlobalPosition(e, tx.GetPosition());
         // tx.SetGlobalPosition(tx.GetPosition());
         if (parent_tx)
@@ -369,9 +452,7 @@ void GameWorld::ExecuteQueryTransform3DHierarchicalUpdate()
 
 void GameWorld::ExecuteQueryControlCamera()
 {
-    static auto q = this->QueryBuilder<Camera, const ECSComponent::Transform3D>().Cached().Build();
-
-    q.Each([](duin::Entity e, Camera &c, const ECSComponent::Transform3D &tx) {
+    queryControlCamera.Each([](duin::Entity e, Camera &c, const ECSComponent::Transform3D &tx) {
         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
         Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e.GetFlecsEntity());
 
@@ -412,61 +493,31 @@ void GameWorld::ExecuteQueryDrawCube()
 
 void GameWorld::ExecuteQueryDrawDebugCapsule()
 {
-    // TODO REPLACE_RAYLIB
-    // static flecs::query q = world.query_builder<
-    //     const ECSComponent::DebugCapsuleComponent,
-    //     const ECSComponent::Transform3D
-    // >()
-    // .cached()
-    // .build();
-    //
-    // q.each([](
-    //     flecs::entity e,
-    //     const ECSComponent::DebugCapsuleComponent& capsule,
-    //     const ECSComponent::Transform3D& tx
-    //     ) {
-    //         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
-    //         ::DrawCapsuleWires(gPos.ToRaylib(),
-    //             Vector3Add(gPos, { 0.0f, capsule.height, 0.0f }).ToRaylib(),
-    //             capsule.radius,
-    //             capsule.slices,
-    //             capsule.rings,
-    //             capsule.color
-    //         );
-    //     });
+    queryDrawDebugCapsule.Each([](duin::Entity e,
+              const ECSComponent::DebugCapsuleComponent &capsule,
+              const ECSComponent::Transform3D &tx) {
+        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
+        Vector3 top = { gPos.x, gPos.y + capsule.height, gPos.z };
+        DrawDebugCapsule(gPos, top, capsule.radius);
+    });
 }
 
 void GameWorld::ExecuteQueryDrawDebugCube()
 {
-    // TODO REPLACE_RAYLIB
-    // static flecs::query q = world.query_builder<
-    //     const ECSComponent::DebugCubeComponent,
-    //     const ECSComponent::Transform3D
-    // >()
-    // .cached()
-    // .build();
-    //
-    // q.each([](
-    //     flecs::entity e,
-    //     const ECSComponent::DebugCubeComponent& cube,
-    //     const ECSComponent::Transform3D& tx
-    //     ) {
-    //         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);
-    //         ::DrawCubeWires(
-    //             Vector3Add(gPos, { cube.width / 2.0f, cube.height / 2.0f, cube.length / 2.0f }).ToRaylib(),
-    //             cube.width,
-    //             cube.height,
-    //             cube.length,
-    //             cube.color
-    //         );
-    //     });
+    queryDrawDebugCube.Each([](duin::Entity e,
+              const ECSComponent::DebugCubeComponent &cube,
+              const ECSComponent::Transform3D &tx) {
+        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
+        Vector3 halfSize = { cube.width * 0.5f, cube.height * 0.5f, cube.length * 0.5f };
+        Vector3 min = Vector3Subtract(gPos, halfSize);
+        Vector3 max = Vector3Add(gPos, halfSize);
+        DrawDebugBox(min, max);
+    });
 }
 
 void GameWorld::ExecuteQuerySetCameraAsActive()
 {
-    static auto q = this->QueryBuilder<Camera>().With<ECSTag::ActiveCamera>().Build();
-
-    q.Each([](duin::Entity e, Camera &camera) { SetActiveCamera(&camera); });
+    querySetCameraAsActive.Each([](duin::Entity e, Camera &camera) { SetActiveCamera(&camera); });
 }
 
 } // namespace duin

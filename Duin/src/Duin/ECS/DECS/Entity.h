@@ -467,6 +467,11 @@ class Entity
         return flecsEntity.has(id.GetID());
     }
 
+    bool Has(flecs::entity_t id) const
+    {
+        return flecsEntity.has(id);
+    }
+
     template <typename First>
     bool Has(Entity second) const
     {
@@ -759,6 +764,75 @@ class Entity
     }
 
     /**
+     * @brief Get a mutable reference to a pair component.
+     * @tparam First First element of the pair.
+     * @tparam Second Second element of the pair.
+     * @return Mutable reference to the pair storage type.
+     */
+    template <typename First, typename Second>
+    auto &GetMut()
+    {
+        return flecsEntity.get_mut<First, Second>();
+    }
+
+    /**
+     * @brief Get a mutable reference to a pair (First component, entity second).
+     * @tparam First First element of the pair.
+     * @param second The second entity of the pair.
+     * @return Mutable reference to the First component.
+     */
+    template <typename First>
+    First &GetMut(Entity second)
+    {
+        return flecsEntity.get_mut<First>(second.flecsEntity);
+    }
+
+    /**
+     * @brief Get a mutable pointer (untyped) to a component by entity.
+     * @param comp The component entity.
+     * @return Pointer to the component data.
+     */
+    void *GetMut(Entity comp)
+    {
+        return flecsEntity.get_mut(comp.GetID());
+    }
+
+    /**
+     * @brief Get a mutable pointer (untyped) to a pair by entities.
+     * @param first First element of the pair.
+     * @param second Second element of the pair.
+     * @return Pointer to the pair component data.
+     */
+    void *GetMut(Entity first, Entity second)
+    {
+        return flecsEntity.get_mut(first.GetID(), second.GetID());
+    }
+
+    /**
+     * @brief Get a mutable reference to the second element of a pair.
+     * @tparam Second Second element of the pair.
+     * @param first The first entity of the pair.
+     * @return Mutable reference to the Second component.
+     */
+    template <typename Second>
+    Second &GetMutSecond(Entity first)
+    {
+        return flecsEntity.get_mut_second<Second>(first.GetID());
+    }
+
+    /**
+     * @brief Get a mutable reference to the second element of a typed pair.
+     * @tparam First First element of the pair.
+     * @tparam Second Second element of the pair.
+     * @return Mutable reference to the Second component.
+     */
+    template <typename First, typename Second>
+    Second &GetMutSecond()
+    {
+        return *flecsEntity.get_mut_second<First, Second>();
+    }
+
+    /**
      * @brief Try to get a mutable pointer to a component.
      * @tparam T The component type.
      * @return Pointer to the component, or nullptr if not present.
@@ -767,6 +841,84 @@ class Entity
     T *TryGetMut()
     {
         return flecsEntity.try_get_mut<T>();
+    }
+
+    /**
+     * @brief Try to get a mutable pointer (untyped) to a component by entity.
+     * @param comp The component entity.
+     * @return Pointer to the component data, or nullptr if not present.
+     */
+    void *TryGetMut(Entity comp)
+    {
+        return flecsEntity.try_get_mut(comp.GetID());
+    }
+
+    void *TryGetMut(Entity::ID id)
+    {
+        if (!id.IsEntity())
+        {
+            return nullptr;
+        }
+        return flecsEntity.try_get_mut(id.GetID());
+    }
+
+    /**
+     * @brief Try to get a mutable pointer to a pair component.
+     * @tparam First First element of the pair.
+     * @tparam Second Second element of the pair.
+     * @return Pointer to the pair storage type, or nullptr if not present.
+     */
+    template <typename First, typename Second>
+    auto *TryGetMut()
+    {
+        return flecsEntity.try_get_mut<First, Second>();
+    }
+
+    /**
+     * @brief Try to get a mutable pointer to a pair (First component, entity second).
+     * @tparam First First element of the pair.
+     * @param second The second entity of the pair.
+     * @return Pointer to the First component, or nullptr if not present.
+     */
+    template <typename First>
+    First *TryGetMut(Entity second)
+    {
+        return flecsEntity.try_get_mut<First>(second.flecsEntity);
+    }
+
+    /**
+     * @brief Try to get a mutable pointer (untyped) to a pair by entities.
+     * @param first First element of the pair.
+     * @param second Second element of the pair.
+     * @return Pointer to the pair component data, or nullptr if not present.
+     */
+    void *TryGetMut(Entity first, Entity second)
+    {
+        return flecsEntity.try_get_mut(first.GetID(), second.GetID());
+    }
+
+    /**
+     * @brief Try to get a mutable pointer to the second element of a pair.
+     * @tparam Second Second element of the pair.
+     * @param first The first entity of the pair.
+     * @return Pointer to the Second component, or nullptr if not present.
+     */
+    template <typename Second>
+    Second *TryGetMutSecond(Entity first)
+    {
+        return flecsEntity.try_get_mut_second<Second>(first.GetID());
+    }
+
+    /**
+     * @brief Try to get a mutable pointer to the second element of a typed pair.
+     * @tparam First First element of the pair.
+     * @tparam Second Second element of the pair.
+     * @return Pointer to the Second component, or nullptr if not present.
+     */
+    template <typename First, typename Second>
+    Second *TryGetMutSecond()
+    {
+        return flecsEntity.try_get_mut_second<First, Second>();
     }
 
     /**

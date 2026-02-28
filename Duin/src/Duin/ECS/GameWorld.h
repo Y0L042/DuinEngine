@@ -1033,7 +1033,7 @@ struct CharacterBodyComponent
 
     using ReflectionType = CharacterBodyDesc;
     // TODO should it create the body directly, or should the body be seen as a resource?
-    CharacterBodyComponent(const ReflectionType &impl) : desc(impl), body(CharacterBody::Create(impl))
+    CharacterBodyComponent(const ReflectionType &impl) : desc(impl), body(CharacterBody::Create(impl, {0, 0, 0}))
     {
     }
     ReflectionType reflection() const
@@ -1217,16 +1217,17 @@ class GameWorld : public World
     void ActivateCameraEntity(duin::Entity entity);
 
     /** @brief Runs post-update queries. Called by engine. */
-    void PostUpdateQueryExecution(double delta);
+    virtual void PostUpdateQueryExecution(double delta);
     /** @brief Runs post-physics queries. Called by engine. */
-    void PostPhysicsUpdateQueryExecution(double delta);
+    virtual void PostPhysicsUpdateQueryExecution(double delta);
     /** @brief Runs post-draw queries. Called by engine. */
-    void PostDrawQueryExecution();
+    virtual void PostDrawQueryExecution();
     /** @brief Runs post-draw-UI queries. Called by engine. */
-    void PostDrawUIQueryExecution();
+    virtual void PostDrawUIQueryExecution();
 
     /** @brief Clears all entities from the world. */
     void Clear();
+    void Reset(bool connectSignals = true);
 
     /**
      * @name Transform Queries
@@ -1250,8 +1251,27 @@ class GameWorld : public World
     void ExecuteQueryDrawDebugCube();
     /** @} */
 
+  protected:
+    virtual void InitializeQueries();
+    virtual void ResetQueries();
+
   private:
     void InitializeRemoteExplorer();
+
+    flecs::query<ECSComponent::Transform3D, const ECSComponent::Transform3D *>
+        queryTransform3DHierarchicalUpdate;
+    Query<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D>
+        queryCharacterBody3DUpdateTransform;
+    Query<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>
+        querySyncDynamicBody3DTransform;
+    Query<Camera, const ECSComponent::Transform3D>
+        queryControlCamera;
+    Query<Camera>
+        querySetCameraAsActive;
+    Query<const ECSComponent::DebugCapsuleComponent, const ECSComponent::Transform3D>
+        queryDrawDebugCapsule;
+    Query<const ECSComponent::DebugCubeComponent, const ECSComponent::Transform3D>
+        queryDrawDebugCube;
 };
 
 } // namespace duin
