@@ -6,13 +6,13 @@
 
 namespace duin
 {
-std::shared_ptr<CharacterBody> CharacterBody::Create(CharacterBodyDesc desc)
+std::shared_ptr<CharacterBody> CharacterBody::Create(CharacterBodyDesc desc, Vector3 position)
 {
-    auto ptr = std::make_shared<CharacterBody>(desc);
+    auto ptr = std::make_shared<CharacterBody>(desc, position);
     return ptr;
 }
 
-CharacterBody::CharacterBody(CharacterBodyDesc desc) : desc(desc)
+CharacterBody::CharacterBody(CharacterBodyDesc desc, Vector3 position) : desc(desc)
 {
     PhysicsServer &server = PhysicsServer::Get();
     pxMaterial = server.pxPhysics->createMaterial(0.5f, 0.5f, 0.5f);
@@ -23,7 +23,7 @@ CharacterBody::CharacterBody(CharacterBodyDesc desc) : desc(desc)
     pxDesc.slopeLimit = desc.slopeLimit;
     pxDesc.stepOffset = desc.stepOffset;
     pxDesc.contactOffset = desc.contactOffset;
-    pxDesc.position = desc.position.ToPhysXd();
+    pxDesc.position = position.ToPhysXd();
     pxDesc.upDirection = desc.upDirection.ToPhysX();
     pxDesc.material = pxMaterial;
 
@@ -42,9 +42,19 @@ CharacterBody::~CharacterBody()
     //}
 }
 
+void CharacterBody::SetPosition(Vector3 position)
+{
+    pxController->setPosition(position.ToPhysXd());
+}
+
 Vector3 CharacterBody::GetPosition()
 {
     return Vector3(pxController->getPosition());
+}
+
+void CharacterBody::SetFootPosition(Vector3 position)
+{
+    pxController->setFootPosition(position.ToPhysXd());
 }
 
 Vector3 CharacterBody::GetFootPosition()

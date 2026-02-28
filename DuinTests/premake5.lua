@@ -46,14 +46,26 @@ project "DuinTests"
 	{
 	}
 
+    filter { "files:**/external/**" }
+        flags { "NoPCH" }
+        warnings "Off"
+        pchheader ""
+    filter {}
+
+    filter { "files:**/vendor/**" }
+        flags { "NoPCH" }
+        warnings "Off"
+        pchheader ""
+    filter {}
+
     filter "system:windows"
         buildoptions { "/openmp" }
         cppdialect "C++20"
 
     filter "action:vs*"
-        buildoptions { 
-            "/utf-8", 
-            '/Zc:__cplusplus', 
+        buildoptions {
+            "/utf-8",
+            '/Zc:__cplusplus',
             '/Zc:preprocessor' ,
         }
         flags { "MultiProcessorCompile" }

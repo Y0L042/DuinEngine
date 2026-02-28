@@ -30,6 +30,7 @@ workspace "Duin"
     IncludeDir["toml11"] = "Duin/vendor/toml11/include"
     IncludeDir["rapidjson"] = "Duin/vendor/rapidjson/include"
     IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog"
+    IncludeDir["imguizmo"] = "Duin/vendor/imguizmo"
     IncludeDir["physx"] = "Duin/vendor/PhysX/physx/include"
     IncludeDir["doctest"] = "Duin/vendor/doctest/doctest"
     IncludeDir["reflectcpp"] = "Duin/vendor/reflectcpp/include"
@@ -49,6 +50,7 @@ workspace "Duin"
         "%{IncludeDir.bgfx_3p}",
         "%{IncludeDir.spdlog}",
         "%{IncludeDir.imgui}",
+        "%{IncludeDir.imguizmo}",
         "%{IncludeDir.imguifilex}",
         "%{IncludeDir.flecs}",
         "%{IncludeDir.fmt}",

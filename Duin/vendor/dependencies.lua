@@ -14,6 +14,7 @@ local dep_fmt = require "dep_fmt"
 local dep_spdlog = require "dep_spdlog"
 local dep_toml11 = require "dep_toml11"
 local dep_imgui = require "dep_imgui"
+local dep_imguizmo = require "dep_imguizmo"
 local dep_rapidjson = require "dep_rapidjson"
 local dep_flecs = require "dep_flecs"
 local dep_doctest = require "dep_doctest"
@@ -33,6 +34,7 @@ local dependencies_ordered = {
     {name = "SDL3", buildFn = dep_sdl3.build},
     {name = "TOML11", buildFn = dep_toml11.build},
     {name = "IMGUI", buildFn = dep_imgui.build},
+    {name = "IMGUIZMO", buildFn = dep_imguizmo.build},
     {name = "REFLECTCPP", buildFn = dep_reflectcpp.build}
 }
 
@@ -47,6 +49,7 @@ local dependencies = {
     SPDLOG = dep_spdlog.build,
     TOML11 = dep_toml11.build,
     IMGUI = dep_imgui.build,
+    IMGUIZMO = dep_imguizmo.build,
     RAPIDJSON = dep_rapidjson.build,
     FLECS = dep_flecs.build,
     DOCTEST = dep_doctest.build,

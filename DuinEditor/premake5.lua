@@ -50,6 +50,18 @@ project "DuinEditor"
         "nfd.lib",
 	}
 
+    filter { "files:**/external/**" }
+        flags { "NoPCH" }
+        warnings "Off"
+        pchheader ""
+    filter {}
+
+    filter { "files:**/vendor/**" }
+        flags { "NoPCH" }
+        warnings "Off"
+        pchheader ""
+    filter {}
+
     filter "system:windows"
         buildoptions { "/openmp" }
         cppdialect "C++20"

@@ -210,6 +210,8 @@ void DrawSquare(Vector3 position = Vector3(), Quaternion rotation = QuaternionId
 void DrawGrid(float size = 50);
 void DrawPlane(Vector3 size);
 void DrawDebugSphere(Vector3 position, float radius);
+void DrawDebugCapsule(Vector3 from, Vector3 to, float radius);
+void DrawDebugBox(Vector3 min, Vector3 max);
 /** @} */
 
 /** @brief Draws a RenderTexture as an ImGui image. Returns texture ID. */

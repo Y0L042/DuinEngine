@@ -32,12 +32,17 @@ project "Duin"
         pchheader ""  -- Ensures .c files ignore PCH
     filter {} -- Clear the filter
 
-    -- Filter to apply settings only to .cpp files inside "ignoredir"
-    filter "files:**/external/**.cpp"  -- Added: match .cpp files in any "ignoredir" folder
-        flags { "NoPCH" }             -- Added: disable precompiled headers
-        warnings      "Off"                 -- Added: turn off all warnings for these files
-        pchheader ""                  -- Added: clear the precompiled header setting
-    filter {}                        -- Clear the filter
+    filter { "files:**/external/**" }
+        flags { "NoPCH" }
+        warnings "Off"
+        pchheader ""
+    filter {}
+
+    filter { "files:**/vendor/**" }
+        flags { "NoPCH" }
+        warnings "Off"
+        pchheader ""
+    filter {}
 
 
     -- files(global_files)
@@ -65,6 +70,7 @@ project "Duin"
         SolutionRoot .. "/%{IncludeDir.bgfx_3p}",
         SolutionRoot .. "/%{IncludeDir.spdlog}",
 		SolutionRoot .. "/%{IncludeDir.imgui}",
+        SolutionRoot .. "/%{IncludeDir.imguizmo}",
 		SolutionRoot .. "/%{IncludeDir.imguibackends}",
 		SolutionRoot .. "/%{IncludeDir.imguifilex}",
 		SolutionRoot .. "/%{IncludeDir.flecs}",
@@ -126,6 +132,7 @@ project "Duin"
             "/utf-8", 
             '/Zc:__cplusplus', 
             '/Zc:preprocessor' ,
+            '/bigobj'
         }  -- Changed: Added /utf-8 flag for Unicode support
         flags { "MultiProcessorCompile" }
     filter {}

@@ -21,20 +21,22 @@ struct CharacterBodyDesc
     float slopeLimit;
     float stepOffset;
     float contactOffset;
-    Vector3 position;
+    //Vector3 position;
     Vector3 upDirection;
 };
 
 class CharacterBody : public PhysicsObject
 {
   public:
-    static std::shared_ptr<CharacterBody> Create(CharacterBodyDesc desc);
+    static std::shared_ptr<CharacterBody> Create(CharacterBodyDesc desc, Vector3 position);
 
-    CharacterBody(CharacterBodyDesc desc);
+    CharacterBody(CharacterBodyDesc desc, Vector3 position);
     ~CharacterBody();
 
+    void SetPosition(Vector3 position);
     Vector3 GetPosition() override;
 
+    void SetFootPosition(Vector3 position);
     Vector3 GetFootPosition();
     Vector3 GetCurrentVelocity();
     int IsOnFloor();

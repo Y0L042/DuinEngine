@@ -97,4 +97,27 @@ function utils.runBatchScript(scriptPath, args)
     utils.runCommand(command)
 end
 
+function utils.copyFiles(sourceDir, targetDir, patterns)
+    if not os.isdir(targetDir) then
+        os.mkdir(targetDir)
+    end
+
+    if os.target() == "windows" then
+        for _, pattern in ipairs(patterns) do
+            local winSource = sourceDir:gsub("/", "\\")
+            local winTarget = targetDir:gsub("/", "\\")
+            utils.runCommand("xcopy /Y /I \"" .. winSource .. "\\" .. pattern .. "\" \"" .. winTarget .. "\\\" >nul 2>&1")
+        end
+    else
+        local findPatterns = ""
+        for i, pattern in ipairs(patterns) do
+            if i > 1 then
+                findPatterns = findPatterns .. " -o "
+            end
+            findPatterns = findPatterns .. "-name '" .. pattern .. "'"
+        end
+        utils.runCommand("find \"" .. sourceDir .. "\" -maxdepth 1 \\( " .. findPatterns .. " \\) -exec cp -f {} \"" .. targetDir .. "/\" \\;")
+    end
+end
+
 return utils

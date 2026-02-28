@@ -358,6 +358,19 @@ void DrawDebugSphere(Vector3 pos, float radius)
     dde.drawOrb(pos.x, pos.y, pos.z, radius);
 }
 
+void DrawDebugCapsule(Vector3 from, Vector3 to, float radius)
+{
+    dde.drawCapsule({ from.x, from.y, from.z }, { to.x, to.y, to.z }, radius);
+}
+
+void DrawDebugBox(Vector3 min, Vector3 max)
+{
+    bx::Aabb aabb;
+    aabb.min = { min.x, min.y, min.z };
+    aabb.max = { max.x, max.y, max.z };
+    dde.draw(aabb);
+}
+
 void DrawPlane(Vector3 size)
 {
     Vector3 position = Vector3Zero();
