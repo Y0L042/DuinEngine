@@ -1,6 +1,6 @@
 <map id="duin::CharacterBodyDesc" name="duin::CharacterBodyDesc">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,244,192,269"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,229,192,255"/>
 <area shape="rect" id="Node000002" href="$structduin_1_1Vector3.html" title=" " alt="" coords="45,73,152,99"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,113,101,244,96,244,96,113"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="126,65,144,61,161,63,174,72,179,86,172,102,156,110,135,109,113,101,115,96,136,104,155,105,168,99,173,86,170,75,159,68,145,67,127,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,112,101,229,96,229,96,112"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="128,65,146,62,162,65,174,72,179,86,172,101,156,109,136,109,114,101,116,96,137,103,155,104,168,98,173,86,170,76,160,70,146,68,129,71"/>
 </map>

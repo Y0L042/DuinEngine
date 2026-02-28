@@ -63,10 +63,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"classduin_1_1Entity.html#aa4573c6ecff5395f51a9d8e3d1654f41",
-"dir_06228a9601ec3fb28510acbf085a4907.html",
-"structImGuiLastItemData.html",
-"structduin_1_1RenderState.html#ad064ed394d808bd17365e5a161ac062d"
+"classduin_1_1Entity.html#a689706b7897dd7cc9bb59c88485c54a6",
+"classduin_1_1World.html#a233e74dcebf1c77fffac169056ba95ff",
+"structImFontGlyphRangesBuilder.html",
+"structduin_1_1PackedEntity.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

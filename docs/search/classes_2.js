@@ -13,12 +13,14 @@ var searchData=
   ['collisionshape_10',['CollisionShape',['../classduin_1_1CollisionShape.html',1,'duin']]],
   ['color_11',['Color',['../structduin_1_1Color.html',1,'duin']]],
   ['componentdata_12',['ComponentData',['../structduin_1_1ComponentData.html',1,'duin']]],
-  ['componentserializer_13',['ComponentSerializer',['../classduin_1_1ComponentSerializer.html',1,'duin']]],
-  ['conerendergeometry_14',['ConeRenderGeometry',['../structduin_1_1ConeRenderGeometry.html',1,'duin']]],
-  ['configvalue_15',['ConfigValue',['../classduin_1_1ConfigValue.html',1,'duin']]],
-  ['constdataiterator_16',['constdataiterator',['../classConstDataIterator.html',1,'ConstDataIterator'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html',1,'duin::JSONValue::ConstDataIterator']]],
-  ['convexmeshgeometry_17',['ConvexMeshGeometry',['../classduin_1_1ConvexMeshGeometry.html',1,'duin']]],
-  ['createexternalref_18',['CreateExternalRef',['../structduin_1_1ECSTag_1_1CreateExternalRef.html',1,'duin::ECSTag']]],
-  ['cubecomponent_19',['CubeComponent',['../structduin_1_1ECSComponent_1_1CubeComponent.html',1,'duin::ECSComponent']]],
-  ['cylinderrendergeometry_20',['CylinderRenderGeometry',['../structduin_1_1CylinderRenderGeometry.html',1,'duin']]]
+  ['componentinspector_13',['ComponentInspector',['../classduin_1_1ComponentInspector.html',1,'duin']]],
+  ['componentserializer_14',['ComponentSerializer',['../classduin_1_1ComponentSerializer.html',1,'duin']]],
+  ['conerendergeometry_15',['ConeRenderGeometry',['../structduin_1_1ConeRenderGeometry.html',1,'duin']]],
+  ['configvalue_16',['ConfigValue',['../classduin_1_1ConfigValue.html',1,'duin']]],
+  ['constdataiterator_17',['constdataiterator',['../classConstDataIterator.html',1,'ConstDataIterator'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html',1,'duin::JSONValue::ConstDataIterator']]],
+  ['context_18',['Context',['../structIMGUIZMO__NAMESPACE_1_1Context.html',1,'IMGUIZMO_NAMESPACE']]],
+  ['convexmeshgeometry_19',['ConvexMeshGeometry',['../classduin_1_1ConvexMeshGeometry.html',1,'duin']]],
+  ['createexternalref_20',['CreateExternalRef',['../structduin_1_1ECSTag_1_1CreateExternalRef.html',1,'duin::ECSTag']]],
+  ['cubecomponent_21',['CubeComponent',['../structduin_1_1ECSComponent_1_1CubeComponent.html',1,'duin::ECSComponent']]],
+  ['cylinderrendergeometry_22',['CylinderRenderGeometry',['../structduin_1_1CylinderRenderGeometry.html',1,'duin']]]
 ];

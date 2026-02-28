@@ -15,10 +15,11 @@ var searchData=
   ['debugshapevertex_12',['DebugShapeVertex',['../structDebugShapeVertex.html',1,'']]],
   ['debuguvvertex_13',['DebugUvVertex',['../structDebugUvVertex.html',1,'']]],
   ['debugvertex_14',['DebugVertex',['../structDebugVertex.html',1,'']]],
-  ['deleteexternalref_15',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
-  ['dircallbackwrapper_16',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
-  ['diskrendergeometry_17',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
-  ['dynamicbody_18',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
-  ['dynamicbodycomponent_19',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]],
-  ['dynamicbodycomponentimpl_20',['DynamicBodyComponentImpl',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent_1_1DynamicBodyComponentImpl.html',1,'duin::ECSComponent::DynamicBodyComponent']]]
+  ['delegate_15',['delegate',['../structGraphEditor_1_1Delegate.html',1,'GraphEditor::Delegate'],['../structImCurveEdit_1_1Delegate.html',1,'ImCurveEdit::Delegate'],['../structImGradient_1_1Delegate.html',1,'ImGradient::Delegate']]],
+  ['deleteexternalref_16',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
+  ['dircallbackwrapper_17',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
+  ['diskrendergeometry_18',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
+  ['dynamicbody_19',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]],
+  ['dynamicbodycomponent_20',['DynamicBodyComponent',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent.html',1,'duin::ECSComponent']]],
+  ['dynamicbodycomponentimpl_21',['DynamicBodyComponentImpl',['../structduin_1_1ECSComponent_1_1DynamicBodyComponent_1_1DynamicBodyComponentImpl.html',1,'duin::ECSComponent::DynamicBodyComponent']]]
 ];

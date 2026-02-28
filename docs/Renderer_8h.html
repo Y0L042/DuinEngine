@@ -203,19 +203,21 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="Renderer_8h__dep__incl.png" border="0" usemap="#aRenderer_8hdep" alt=""/></div>
 <map name="aRenderer_8hdep" id="aRenderer_8hdep">
-<area shape="rect" title="Core rendering system and utilities." alt="" coords="251,5,343,31"/>
+<area shape="rect" title="Core rendering system and utilities." alt="" coords="323,5,415,31"/>
 <area shape="rect" href="Application_8cpp_source.html" title=" " alt="" coords="5,79,128,104"/>
-<area shape="poly" title=" " alt="" coords="248,37,105,81,103,76,246,32"/>
-<area shape="rect" href="RenderIncludes_8h_source.html" title=" " alt="" coords="153,79,287,104"/>
-<area shape="poly" title=" " alt="" coords="277,42,234,80,231,76,273,38"/>
-<area shape="rect" href="RenderModule_8h_source.html" title=" " alt="" coords="312,79,440,104"/>
-<area shape="poly" title=" " alt="" coords="322,38,365,76,361,80,318,42"/>
-<area shape="rect" href="Renderer_8cpp_source.html" title=" " alt="" coords="464,79,571,104"/>
-<area shape="poly" title=" " alt="" coords="347,32,483,76,481,81,345,37"/>
-<area shape="rect" href="Duin_8h_source.html" title=" " alt="" coords="344,152,408,177"/>
-<area shape="poly" title=" " alt="" coords="379,118,379,152,373,152,373,118"/>
-<area shape="rect" href="Duin_8cpp_source.html" title=" " alt="" coords="337,225,415,251"/>
-<area shape="poly" title=" " alt="" coords="379,191,379,225,373,225,373,191"/>
+<area shape="poly" title=" " alt="" coords="310,36,116,81,115,76,309,31"/>
+<area shape="rect" href="GameWorld_8cpp_source.html" title=" " alt="" coords="152,79,277,104"/>
+<area shape="poly" title=" " alt="" coords="333,39,241,81,239,76,331,34"/>
+<area shape="rect" href="RenderIncludes_8h_source.html" title=" " alt="" coords="302,79,437,104"/>
+<area shape="poly" title=" " alt="" coords="372,44,372,79,367,79,367,44"/>
+<area shape="rect" href="RenderModule_8h_source.html" title=" " alt="" coords="461,79,589,104"/>
+<area shape="poly" title=" " alt="" coords="408,34,501,76,499,81,406,39"/>
+<area shape="rect" href="Renderer_8cpp_source.html" title=" " alt="" coords="613,79,720,104"/>
+<area shape="poly" title=" " alt="" coords="430,31,619,76,618,81,428,36"/>
+<area shape="rect" href="Duin_8h_source.html" title=" " alt="" coords="493,152,557,177"/>
+<area shape="poly" title=" " alt="" coords="528,118,528,152,523,152,523,118"/>
+<area shape="rect" href="Duin_8cpp_source.html" title=" " alt="" coords="486,225,565,251"/>
+<area shape="poly" title=" " alt="" coords="528,191,528,225,523,225,523,191"/>
 </map>
 </div>
 </div>
@@ -306,6 +308,10 @@ Functions</h2></td></tr>
 <tr class="separator:a19136c4e5ad9d638729bd00af03de4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13404f1e699cc308ab178c790172a618" id="r_a13404f1e699cc308ab178c790172a618"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#a13404f1e699cc308ab178c790172a618">duin::DrawDebugSphere</a> (<a class="el" href="structduin_1_1Vector3.html">Vector3</a> pos, float radius)</td></tr>
 <tr class="separator:a13404f1e699cc308ab178c790172a618"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e1757de2872008e08cd6f7f33fcfefa" id="r_a6e1757de2872008e08cd6f7f33fcfefa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#a6e1757de2872008e08cd6f7f33fcfefa">duin::DrawDebugCapsule</a> (<a class="el" href="structduin_1_1Vector3.html">Vector3</a> from, <a class="el" href="structduin_1_1Vector3.html">Vector3</a> to, float radius)</td></tr>
+<tr class="separator:a6e1757de2872008e08cd6f7f33fcfefa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472a26e13e0fffedbc465b203f640639" id="r_a472a26e13e0fffedbc465b203f640639"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#a472a26e13e0fffedbc465b203f640639">duin::DrawDebugBox</a> (<a class="el" href="structduin_1_1Vector3.html">Vector3</a> min, <a class="el" href="structduin_1_1Vector3.html">Vector3</a> max)</td></tr>
+<tr class="separator:a472a26e13e0fffedbc465b203f640639"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -486,6 +492,72 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a472a26e13e0fffedbc465b203f640639" name="a472a26e13e0fffedbc465b203f640639"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a472a26e13e0fffedbc465b203f640639">&#9670;&#160;</a></span>DrawDebugBox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::DrawDebugBox </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td>
+          <td class="paramname"><em>min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td>
+          <td class="paramname"><em>max</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00366">366</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6e1757de2872008e08cd6f7f33fcfefa" name="a6e1757de2872008e08cd6f7f33fcfefa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e1757de2872008e08cd6f7f33fcfefa">&#9670;&#160;</a></span>DrawDebugCapsule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::DrawDebugCapsule </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structduin_1_1Vector3.html">Vector3</a>&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>radius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00361">361</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a13404f1e699cc308ab178c790172a618" name="a13404f1e699cc308ab178c790172a618"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a13404f1e699cc308ab178c790172a618">&#9670;&#160;</a></span>DrawDebugSphere()</h2>
 
@@ -584,7 +656,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00361">361</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00374">374</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>

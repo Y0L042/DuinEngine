@@ -55,6 +55,7 @@ var annotated_dup =
       [ "CollisionShape", "classduin_1_1CollisionShape.html", "classduin_1_1CollisionShape" ],
       [ "Color", "structduin_1_1Color.html", "structduin_1_1Color" ],
       [ "ComponentData", "structduin_1_1ComponentData.html", null ],
+      [ "ComponentInspector", "classduin_1_1ComponentInspector.html", "classduin_1_1ComponentInspector" ],
       [ "ComponentSerializer", "classduin_1_1ComponentSerializer.html", null ],
       [ "ConeRenderGeometry", "structduin_1_1ConeRenderGeometry.html", null ],
       [ "ConfigValue", "classduin_1_1ConfigValue.html", null ],
@@ -133,6 +134,33 @@ var annotated_dup =
       [ "Vector4", "structduin_1_1Vector4.html", "structduin_1_1Vector4" ],
       [ "WindowEvent", "classduin_1_1WindowEvent.html", null ],
       [ "World", "classduin_1_1World.html", "classduin_1_1World" ]
+    ] ],
+    [ "GraphEditor", null, [
+      [ "Delegate", "structGraphEditor_1_1Delegate.html", null ],
+      [ "Link", "structGraphEditor_1_1Link.html", null ],
+      [ "Node", "structGraphEditor_1_1Node.html", null ],
+      [ "Options", "structGraphEditor_1_1Options.html", null ],
+      [ "Template", "structGraphEditor_1_1Template.html", null ],
+      [ "ViewState", "structGraphEditor_1_1ViewState.html", null ]
+    ] ],
+    [ "ImCurveEdit", null, [
+      [ "Delegate", "structImCurveEdit_1_1Delegate.html", null ],
+      [ "EditPoint", "structImCurveEdit_1_1EditPoint.html", null ]
+    ] ],
+    [ "ImGradient", null, [
+      [ "Delegate", "structImGradient_1_1Delegate.html", null ]
+    ] ],
+    [ "IMGUIZMO_NAMESPACE", null, [
+      [ "Context", "structIMGUIZMO__NAMESPACE_1_1Context.html", null ],
+      [ "matrix_t", "structIMGUIZMO__NAMESPACE_1_1matrix__t.html", null ],
+      [ "Style", "structIMGUIZMO__NAMESPACE_1_1Style.html", null ],
+      [ "vec_t", "structIMGUIZMO__NAMESPACE_1_1vec__t.html", null ]
+    ] ],
+    [ "ImLightRig", null, [
+      [ "Light", "structImLightRig_1_1Light.html", null ]
+    ] ],
+    [ "ImSequencer", null, [
+      [ "SequenceInterface", "structImSequencer_1_1SequenceInterface.html", null ]
     ] ],
     [ "Attrib", "structAttrib.html", null ],
     [ "Axis", "structAxis.html", null ],

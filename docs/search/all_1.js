@@ -7,6 +7,6 @@ var searchData=
   ['boxgeometry_4',['BoxGeometry',['../classduin_1_1BoxGeometry.html',1,'duin']]],
   ['boxrendergeometry_5',['BoxRenderGeometry',['../structduin_1_1BoxRenderGeometry.html',1,'duin']]],
   ['boxrendershape_6',['BoxRenderShape',['../classduin_1_1BoxRenderShape.html',1,'duin']]],
-  ['build_7',['build',['../classduin_1_1QueryBuilder.html#a68390f5719f9c9643dc5c8aba6892e0d',1,'duin::QueryBuilder::Build()'],['../classduin_1_1Query.html#ab52640fbe801d6556947ed0d33b4d7c4',1,'duin::Query::Build()'],['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#building_build',1,'Build']]],
+  ['build_7',['build',['../classduin_1_1QueryBuilder.html#a68390f5719f9c9643dc5c8aba6892e0d',1,'duin::QueryBuilder::Build()'],['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#building_build',1,'Build']]],
   ['building_8',['Building',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#building',1,'']]]
 ];

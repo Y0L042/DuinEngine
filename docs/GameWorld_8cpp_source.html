@@ -118,514 +118,568 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="GameWorld_8h.html">GameWorld.h</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="Application_8h.html">Duin/Core/Application.h</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Duin/Core/Utils/SerialisationManager.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="Camera_8h.html">Duin/Render/Camera.h</a>&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;PrefabRegistry.h&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;ComponentInspector.h&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="Application_8h.html">Duin/Core/Application.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Duin/Core/Utils/SerialisationManager.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="Camera_8h.html">Duin/Render/Camera.h</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="Renderer_8h.html">Duin/Render/Renderer.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;PrefabRegistry.h&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>duin</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">// ECS Structures</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>duin</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceECSTag.html">ECSTag</a></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> RegisterTags(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">// ECS Structures</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceECSTag.html">ECSTag</a></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::Local&gt;();</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::Global&gt;();</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::CreateExternalRef&gt;();</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::ActiveExternalRef&gt;();</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::DeleteExternalRef&gt;();</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::PxKinematic&gt;();</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::PxDynamic&gt;();</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::PxStatic&gt;();</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::NonPx&gt;();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::SetCameraAsActive&gt;();</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::CameraIsActive&gt;();</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::ActiveCamera&gt;();</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>} <span class="comment">// namespace ECSTag</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keywordtype">void</span> RegisterTags(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>{</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::Local&gt;();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::Global&gt;();</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::CreateExternalRef&gt;();</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::ActiveExternalRef&gt;();</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::DeleteExternalRef&gt;();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::PxKinematic&gt;();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::PxDynamic&gt;();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::PxStatic&gt;();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::NonPx&gt;();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::SetCameraAsActive&gt;();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::CameraIsActive&gt;();</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSTag::ActiveCamera&gt;();</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceECSComponent.html">ECSComponent</a></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">void</span> RegisterComponents(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>{</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Position2D&gt;();</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Rotation2D&gt;();</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Scale2D&gt;();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Velocity2D&gt;();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Transform3D&gt;();</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Position3D&gt;();</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Rotation3D&gt;();</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Scale3D&gt;();</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Velocity3D&gt;();</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::CubeComponent&gt;();</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::StaticBodyComponent&gt;();</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::KinematicBodyComponent&gt;();</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::DynamicBodyComponent&gt;();</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::CharacterBodyComponent&gt;();</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::PhysicsStaticCubeComponent&gt;();</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::DebugCapsuleComponent&gt;();</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::DebugCubeComponent&gt;();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">auto</span> &amp;inspector = duin::ComponentInspector::Get();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    inspector.RegisterComponent&lt;ECSTag::Local&gt;(<span class="stringliteral">&quot;Local&quot;</span>);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    inspector.RegisterComponent&lt;ECSTag::Global&gt;(<span class="stringliteral">&quot;Global&quot;</span>);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    inspector.RegisterComponent&lt;ECSTag::CreateExternalRef&gt;(<span class="stringliteral">&quot;CreateExternalRef&quot;</span>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    inspector.RegisterComponent&lt;ECSTag::ActiveExternalRef&gt;(<span class="stringliteral">&quot;ActiveExternalRef&quot;</span>);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    inspector.RegisterComponent&lt;ECSTag::DeleteExternalRef&gt;(<span class="stringliteral">&quot;DeleteExternalRef&quot;</span>);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    inspector.RegisterComponent&lt;ECSTag::PxKinematic&gt;(<span class="stringliteral">&quot;PxKinematic&quot;</span>);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    inspector.RegisterComponent&lt;ECSTag::PxDynamic&gt;(<span class="stringliteral">&quot;PxDynamic&quot;</span>);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    inspector.RegisterComponent&lt;ECSTag::PxStatic&gt;(<span class="stringliteral">&quot;PxStatic&quot;</span>);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    inspector.RegisterComponent&lt;ECSTag::NonPx&gt;(<span class="stringliteral">&quot;NonPx&quot;</span>);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    inspector.RegisterComponent&lt;ECSTag::SetCameraAsActive&gt;(<span class="stringliteral">&quot;SetCameraAsActive&quot;</span>);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    inspector.RegisterComponent&lt;ECSTag::CameraIsActive&gt;(<span class="stringliteral">&quot;CameraIsActive&quot;</span>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    inspector.RegisterComponent&lt;ECSTag::ActiveCamera&gt;(<span class="stringliteral">&quot;ActiveCamera&quot;</span>);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>} <span class="comment">// namespace ECSTag</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceECSComponent.html">ECSComponent</a></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>{</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keywordtype">void</span> RegisterComponents(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>{</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Position2D&gt;();</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Rotation2D&gt;();</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Scale2D&gt;();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Velocity2D&gt;();</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;Camera&gt;();</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>} <span class="comment">// namespace ECSComponent</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceECSPrefab.html">ECSPrefab</a></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>{</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="comment">/* --- Prefabs --- */</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Node;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Node2D;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Node3D;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsStaticBody;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsKinematicBody;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsDynamicBody;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsCharacterBody;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Transform3D&gt;();</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Position3D&gt;();</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Rotation3D&gt;();</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Scale3D&gt;();</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::Velocity3D&gt;();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::CubeComponent&gt;();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::StaticBodyComponent&gt;();</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::KinematicBodyComponent&gt;();</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::DynamicBodyComponent&gt;();</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::CharacterBodyComponent&gt;();</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::PhysicsStaticCubeComponent&gt;();</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::DebugCapsuleComponent&gt;();</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;ECSComponent::DebugCubeComponent&gt;();</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Camera3D;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Cube;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> DebugCapsule;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keywordtype">void</span> RegisterPrefabs(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>{</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    Node = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Node&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;<a class="code hl_struct" href="structUUID.html">UUID</a>&gt;();</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    Node2D = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Node2D&quot;</span>);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    Node2D.<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node)</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        .<a class="code hl_function" href="classduin_1_1Entity.html#a2c8228c51547918b8ca5913cbb6f55c6">SetPair</a>&lt;ECSComponent::Position2D, ECSTag::Local&gt;(ECSComponent::Position2D{0.0f, 0.0f})</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        .SetPair&lt;ECSComponent::Rotation2D, ECSTag::Local&gt;(ECSComponent::Rotation2D{0.0f})</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        .SetPair&lt;ECSComponent::Scale2D, ECSTag::Local&gt;(ECSComponent::Scale2D{0.0f, 0.0f})</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        .SetPair&lt;ECSComponent::Position2D, ECSTag::Global&gt;(ECSComponent::Position2D{0.0f, 0.0f})</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        .SetPair&lt;ECSComponent::Rotation2D, ECSTag::Global&gt;(ECSComponent::Rotation2D{0.0f})</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        .SetPair&lt;ECSComponent::Scale2D, ECSTag::Global&gt;(ECSComponent::Scale2D{0.0f, 0.0f});</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    Node3D = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Node3D&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node).<a class="code hl_function" href="classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89">Set</a>&lt;ECSComponent::Transform3D&gt;(ECSComponent::Transform3D{});</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    PhysicsStaticBody = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsStaticBody&quot;</span>)</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                            .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                            .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxStatic&gt;()</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                            .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                            .Set&lt;ECSComponent::StaticBodyComponent&gt;(ECSComponent::StaticBodyComponent{<span class="keyword">nullptr</span>});</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    PhysicsKinematicBody =</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsKinematicBody&quot;</span>)</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxKinematic&gt;()</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            .Set&lt;ECSComponent::KinematicBodyComponent&gt;(ECSComponent::KinematicBodyComponent{<span class="keyword">nullptr</span>});</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    PhysicsDynamicBody = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsDynamicBody&quot;</span>)</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                             .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                             .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxDynamic&gt;()</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                             .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                             .Set&lt;ECSComponent::DynamicBodyComponent&gt;(ECSComponent::DynamicBodyComponent{<span class="keyword">nullptr</span>});</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    PhysicsCharacterBody =</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsCharacterBody&quot;</span>)</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxKinematic&gt;()</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            .Set&lt;ECSComponent::CharacterBodyComponent&gt;(ECSComponent::CharacterBodyComponent{<span class="keyword">nullptr</span>});</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    Camera3D = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Camera3D&quot;</span>)</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                   .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                   .<a class="code hl_function" href="classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89">Set</a>&lt;Camera&gt;(Camera{</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                       <span class="comment">/* .uuid =  */</span> <a class="code hl_struct" href="structUUID.html">UUID</a>(),</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                       <span class="comment">/* .position =  */</span> {0.0f, 0.0f, 0.0f},</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                       <span class="comment">/* .target =  */</span> {0.0f, 0.0f, 0.0f},</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                       <span class="comment">/* .up =  */</span> {0.0f, 1.0f, 0.0f},</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                       <span class="comment">/* .fovy =  */</span> 72.0f</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                       <span class="comment">// .projection = ::CAMERA_PERSPECTIVE</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                   });</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    Cube = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Cube&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D);</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="comment">// .Set&lt;ECSComponent::CubeComponent&gt;({...})</span></div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    DebugCapsule = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;DebugCapsule&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="comment">// .Set&lt;ECSComponent::DebugCapsuleComponent&gt;({...})</span></div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Node&quot;</span>, Node);</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Node2D&quot;</span>, Node2D);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Node3D&quot;</span>, Node3D);</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsStaticBody&quot;</span>, PhysicsStaticBody);</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsKinematicBody&quot;</span>, PhysicsKinematicBody);</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsDynamicBody&quot;</span>, PhysicsDynamicBody);</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsCharacterBody&quot;</span>, PhysicsCharacterBody);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Camera3D&quot;</span>, Camera3D);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Cube&quot;</span>, Cube);</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;DebugCapsule&quot;</span>, DebugCapsule);</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>}</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>} <span class="comment">// namespace ECSPrefab</span></div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="keyword">namespace </span>ECSObserver</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>{</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="keywordtype">void</span> RegisterObservers(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>{</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    flecs::world &amp;flecsWorld = world.GetFlecsWorld();</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    ECSComponent::Transform3D::RegisterOnAddObserver(flecsWorld);</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    ECSComponent::Transform3D::RegisterOnSetObserver(flecsWorld);</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    flecs::observer localObserver;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    flecs::observer globalObserver;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="comment">// On .set&lt;Position3D, Local&gt;</span></div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    localObserver = flecsWorld.observer&lt;flecs::pair&lt;ECSComponent::Position3D, ECSTag::Local&gt;&gt;()</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                        .event(flecs::OnSet)</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                        .each([globalObserver](flecs::iter &amp;it, <span class="keywordtype">size_t</span> i, ECSComponent::Position3D &amp;lPos) {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                            <span class="comment">// DN_CORE_INFO(&quot;.set&lt;Position3D, Local&gt;&quot;);</span></div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                            <span class="keywordflow">if</span> (globalObserver.is_valid())</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                            {</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                                globalObserver.disable();</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                                <span class="comment">// DN_CORE_INFO(&quot;syncinc global&quot;);</span></div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                                Vector3 gPos = it.entity(i).try_get&lt;ECSComponent::Position3D, ECSTag::Global&gt;()-&gt;value;</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                                it.entity(i).set&lt;ECSComponent::Position3D, ECSTag::Global&gt;({{0.0f, 0.0f, 0.0f}});</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                                globalObserver.enable();</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                            }</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                        });</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="comment">// On .set&lt;Position3D, Global&gt;</span></div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    globalObserver = flecsWorld.observer&lt;flecs::pair&lt;ECSComponent::Position3D, ECSTag::Global&gt;&gt;()</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                         .event(flecs::OnSet)</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                         .each([localObserver](flecs::iter &amp;it, <span class="keywordtype">size_t</span> i, ECSComponent::Position3D &amp;gPos) {</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                             <span class="comment">// DN_CORE_INFO(&quot;.set&lt;Position3D, Global&gt;&quot;);</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                             <span class="keywordflow">if</span> (localObserver.is_valid())</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                             {</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                                 localObserver.disable();</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                                 <span class="comment">// DN_CORE_INFO(&quot;syncinc local&quot;);</span></div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                                 it.entity(i).set&lt;ECSComponent::Position3D, ECSTag::Local&gt;({{0.0f, 0.0f, 0.0f}});</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                                 localObserver.enable();</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                             }</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                         });</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>}</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>}; <span class="comment">// namespace ECSObserver</span></div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="comment">//  GameWorld Functions</span></div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>GameWorld::GameWorld()</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>{</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>}</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>GameWorld::~GameWorld()</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>{</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>}</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="foldopen" id="foldopen00210" data-start="{" data-end="}">
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">  210</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">GameWorld::Initialize</a>(<span class="keywordtype">bool</span> connectSignals)</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>{</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    ECSTag::RegisterTags(*<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Tags registered.&quot;</span>);</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    ECSComponent::RegisterComponents(*<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Components registered.&quot;</span>);</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    ECSPrefab::RegisterPrefabs(*<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Prefabs registered.&quot;</span>);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    ECSObserver::RegisterObservers(*<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Observers registered.&quot;</span>);</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="keywordflow">if</span> (connectSignals)</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    {</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        QueuePostUpdateCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt;([<span class="keyword">this</span>](<span class="keywordtype">double</span> delta) { <a class="code hl_function" href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">PostUpdateQueryExecution</a>(delta); }));</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        QueuePostPhysicsUpdateCallback(</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt;([<span class="keyword">this</span>](<span class="keywordtype">double</span> delta) { <a class="code hl_function" href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">PostPhysicsUpdateQueryExecution</a>(delta); }));</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        QueuePostDrawCallback(std::function&lt;<span class="keywordtype">void</span>()&gt;([<span class="keyword">this</span>]() { <a class="code hl_function" href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">PostDrawQueryExecution</a>(); }));</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        QueuePostDrawUICallback(std::function&lt;<span class="keywordtype">void</span>()&gt;([<span class="keyword">this</span>]() { <a class="code hl_function" href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">PostDrawUIQueryExecution</a>(); }));</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    }</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>}</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    world.<a class="code hl_function" href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">Component</a>&lt;Camera&gt;();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="comment">// Register components with the inspector (idempotent — skips if already registered)</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keyword">auto</span> &amp;inspector = duin::ComponentInspector::Get();</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    inspector.RegisterComponent&lt;ECSComponent::Position2D&gt;(<span class="stringliteral">&quot;Position2D&quot;</span>);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    inspector.RegisterComponent&lt;ECSComponent::Rotation2D&gt;(<span class="stringliteral">&quot;Rotation2D&quot;</span>);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    inspector.RegisterComponent&lt;ECSComponent::Scale2D&gt;(<span class="stringliteral">&quot;Scale2D&quot;</span>);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    inspector.RegisterComponent&lt;ECSComponent::Velocity2D&gt;(<span class="stringliteral">&quot;Velocity2D&quot;</span>);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    inspector.RegisterComponent&lt;ECSComponent::Transform3D&gt;(<span class="stringliteral">&quot;Transform3D&quot;</span>);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    inspector.RegisterComponent&lt;ECSComponent::Position3D&gt;(<span class="stringliteral">&quot;Position3D&quot;</span>);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    inspector.RegisterComponent&lt;ECSComponent::Rotation3D&gt;(<span class="stringliteral">&quot;Rotation3D&quot;</span>);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    inspector.RegisterComponent&lt;ECSComponent::Scale3D&gt;(<span class="stringliteral">&quot;Scale3D&quot;</span>);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    inspector.RegisterComponent&lt;ECSComponent::Velocity3D&gt;(<span class="stringliteral">&quot;Velocity3D&quot;</span>);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    inspector.RegisterComponent&lt;ECSComponent::CubeComponent&gt;(<span class="stringliteral">&quot;CubeComponent&quot;</span>);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    inspector.RegisterComponent&lt;ECSComponent::StaticBodyComponent&gt;(<span class="stringliteral">&quot;StaticBodyComponent&quot;</span>);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    inspector.RegisterComponent&lt;ECSComponent::KinematicBodyComponent&gt;(<span class="stringliteral">&quot;KinematicBodyComponent&quot;</span>);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    inspector.RegisterComponent&lt;ECSComponent::DynamicBodyComponent&gt;(<span class="stringliteral">&quot;DynamicBodyComponent&quot;</span>);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    inspector.RegisterComponent&lt;ECSComponent::CharacterBodyComponent&gt;(<span class="stringliteral">&quot;CharacterBodyComponent&quot;</span>);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    inspector.RegisterComponent&lt;ECSComponent::DebugCapsuleComponent&gt;(<span class="stringliteral">&quot;DebugCapsuleComponent&quot;</span>);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    inspector.RegisterComponent&lt;ECSComponent::DebugCubeComponent&gt;(<span class="stringliteral">&quot;DebugCubeComponent&quot;</span>);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    inspector.RegisterComponent&lt;Camera&gt;(<span class="stringliteral">&quot;Camera&quot;</span>);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>} <span class="comment">// namespace ECSComponent</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceECSPrefab.html">ECSPrefab</a></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>{</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment">/* --- Prefabs --- */</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Node;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Node2D;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Node3D;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsStaticBody;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsKinematicBody;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsDynamicBody;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> PhysicsCharacterBody;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Camera3D;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> Cube;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> DebugCapsule;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="keywordtype">void</span> RegisterPrefabs(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>{</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    Node = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Node&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;<a class="code hl_struct" href="structUUID.html">UUID</a>&gt;();</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    Node2D = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Node2D&quot;</span>);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    Node2D.<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        .<a class="code hl_function" href="classduin_1_1Entity.html#a2c8228c51547918b8ca5913cbb6f55c6">SetPair</a>&lt;ECSComponent::Position2D, ECSTag::Local&gt;(ECSComponent::Position2D{0.0f, 0.0f})</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        .SetPair&lt;ECSComponent::Rotation2D, ECSTag::Local&gt;(ECSComponent::Rotation2D{0.0f})</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        .SetPair&lt;ECSComponent::Scale2D, ECSTag::Local&gt;(ECSComponent::Scale2D{0.0f, 0.0f})</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        .SetPair&lt;ECSComponent::Position2D, ECSTag::Global&gt;(ECSComponent::Position2D{0.0f, 0.0f})</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        .SetPair&lt;ECSComponent::Rotation2D, ECSTag::Global&gt;(ECSComponent::Rotation2D{0.0f})</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        .SetPair&lt;ECSComponent::Scale2D, ECSTag::Global&gt;(ECSComponent::Scale2D{0.0f, 0.0f});</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    Node3D = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Node3D&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node).<a class="code hl_function" href="classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89">Set</a>&lt;ECSComponent::Transform3D&gt;(ECSComponent::Transform3D{});</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    PhysicsStaticBody = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsStaticBody&quot;</span>)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                            .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                            .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxStatic&gt;()</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                            .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                            .Set&lt;ECSComponent::StaticBodyComponent&gt;(ECSComponent::StaticBodyComponent{<span class="keyword">nullptr</span>});</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    PhysicsKinematicBody =</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsKinematicBody&quot;</span>)</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxKinematic&gt;()</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            .Set&lt;ECSComponent::KinematicBodyComponent&gt;(ECSComponent::KinematicBodyComponent{<span class="keyword">nullptr</span>});</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    PhysicsDynamicBody = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsDynamicBody&quot;</span>)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                             .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                             .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxDynamic&gt;()</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                             .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                             .Set&lt;ECSComponent::DynamicBodyComponent&gt;(ECSComponent::DynamicBodyComponent{<span class="keyword">nullptr</span>});</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    PhysicsCharacterBody =</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;PhysicsCharacterBody&quot;</span>)</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            .<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;ECSTag::PxKinematic&gt;()</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            .Set&lt;ECSComponent::Velocity3D&gt;(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            .Set&lt;ECSComponent::CharacterBodyComponent&gt;(ECSComponent::CharacterBodyComponent{<span class="keyword">nullptr</span>});</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    Camera3D = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Camera3D&quot;</span>)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                   .<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                   .<a class="code hl_function" href="classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89">Set</a>&lt;Camera&gt;(Camera{</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                       <span class="comment">/* .uuid =  */</span> <a class="code hl_struct" href="structUUID.html">UUID</a>(),</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                       <span class="comment">/* .position =  */</span> {0.0f, 0.0f, 0.0f},</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                       <span class="comment">/* .target =  */</span> {0.0f, 0.0f, 0.0f},</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                       <span class="comment">/* .up =  */</span> {0.0f, 1.0f, 0.0f},</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>                       <span class="comment">/* .fovy =  */</span> 72.0f</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                       <span class="comment">// .projection = ::CAMERA_PERSPECTIVE</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                   });</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    Cube = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;Cube&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    <span class="comment">// .Set&lt;ECSComponent::CubeComponent&gt;({...})</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    DebugCapsule = world.<a class="code hl_function" href="classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f">Prefab</a>(<span class="stringliteral">&quot;DebugCapsule&quot;</span>).<a class="code hl_function" href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">IsA</a>(Node3D);</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <span class="comment">// .Set&lt;ECSComponent::DebugCapsuleComponent&gt;({...})</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Node&quot;</span>, Node);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Node2D&quot;</span>, Node2D);</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Node3D&quot;</span>, Node3D);</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsStaticBody&quot;</span>, PhysicsStaticBody);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsKinematicBody&quot;</span>, PhysicsKinematicBody);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsDynamicBody&quot;</span>, PhysicsDynamicBody);</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;PhysicsCharacterBody&quot;</span>, PhysicsCharacterBody);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Camera3D&quot;</span>, Camera3D);</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;Cube&quot;</span>, Cube);</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    PrefabRegistry::Get().RegisterPrefabEntity(<span class="stringliteral">&quot;DebugCapsule&quot;</span>, DebugCapsule);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>}</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>} <span class="comment">// namespace ECSPrefab</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="keyword">namespace </span>ECSObserver</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>{</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="keywordtype">void</span> RegisterObservers(<a class="code hl_class" href="classduin_1_1World.html">duin::World</a> &amp;world)</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>{</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    flecs::world &amp;flecsWorld = world.GetFlecsWorld();</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    ECSComponent::Transform3D::RegisterOnAddObserver(flecsWorld);</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    ECSComponent::Transform3D::RegisterOnSetObserver(flecsWorld);</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    flecs::observer localObserver;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    flecs::observer globalObserver;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="comment">// On .set&lt;Position3D, Local&gt;</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    localObserver = flecsWorld.observer&lt;flecs::pair&lt;ECSComponent::Position3D, ECSTag::Local&gt;&gt;()</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                        .event(flecs::OnSet)</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                        .each([globalObserver](flecs::iter &amp;it, <span class="keywordtype">size_t</span> i, ECSComponent::Position3D &amp;lPos) {</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                            <span class="comment">// DN_CORE_INFO(&quot;.set&lt;Position3D, Local&gt;&quot;);</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                            <span class="keywordflow">if</span> (globalObserver.is_valid())</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                            {</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                                globalObserver.disable();</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                                <span class="comment">// DN_CORE_INFO(&quot;syncinc global&quot;);</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                                Vector3 gPos = it.entity(i).try_get&lt;ECSComponent::Position3D, ECSTag::Global&gt;()-&gt;value;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                                it.entity(i).set&lt;ECSComponent::Position3D, ECSTag::Global&gt;({{0.0f, 0.0f, 0.0f}});</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                                globalObserver.enable();</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                            }</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                        });</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="comment">// On .set&lt;Position3D, Global&gt;</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    globalObserver = flecsWorld.observer&lt;flecs::pair&lt;ECSComponent::Position3D, ECSTag::Global&gt;&gt;()</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                         .event(flecs::OnSet)</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                         .each([localObserver](flecs::iter &amp;it, <span class="keywordtype">size_t</span> i, ECSComponent::Position3D &amp;gPos) {</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                             <span class="comment">// DN_CORE_INFO(&quot;.set&lt;Position3D, Global&gt;&quot;);</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                             <span class="keywordflow">if</span> (localObserver.is_valid())</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                             {</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                                 localObserver.disable();</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                                 <span class="comment">// DN_CORE_INFO(&quot;syncinc local&quot;);</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                                 it.entity(i).set&lt;ECSComponent::Position3D, ECSTag::Local&gt;({{0.0f, 0.0f, 0.0f}});</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                                 localObserver.enable();</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                             }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                         });</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>}</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>}; <span class="comment">// namespace ECSObserver</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="comment">//  GameWorld Functions</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="comment">/*----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>GameWorld::GameWorld()</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>{</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>}</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>GameWorld::~GameWorld()</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>{</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>}</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="foldopen" id="foldopen00246" data-start="{" data-end="}">
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">  246</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">GameWorld::Initialize</a>(<span class="keywordtype">bool</span> connectSignals)</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>{</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    ECSTag::RegisterTags(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Tags registered.&quot;</span>);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    ECSComponent::RegisterComponents(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Components registered.&quot;</span>);</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    ECSPrefab::RegisterPrefabs(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Prefabs registered.&quot;</span>);</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    ECSObserver::RegisterObservers(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Observers registered.&quot;</span>);</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="keywordflow">if</span> (connectSignals)</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        QueuePostUpdateCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt;([<span class="keyword">this</span>](<span class="keywordtype">double</span> delta) { <a class="code hl_function" href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">PostUpdateQueryExecution</a>(delta); }));</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        QueuePostPhysicsUpdateCallback(</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>            std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt;([<span class="keyword">this</span>](<span class="keywordtype">double</span> delta) { <a class="code hl_function" href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">PostPhysicsUpdateQueryExecution</a>(delta); }));</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        QueuePostDrawCallback(std::function&lt;<span class="keywordtype">void</span>()&gt;([<span class="keyword">this</span>]() { <a class="code hl_function" href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">PostDrawQueryExecution</a>(); }));</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        QueuePostDrawUICallback(std::function&lt;<span class="keywordtype">void</span>()&gt;([<span class="keyword">this</span>]() { <a class="code hl_function" href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">PostDrawUIQueryExecution</a>(); }));</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    }</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    InitializeQueries();</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>}</div>
 </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="foldopen" id="foldopen00231" data-start="{" data-end="}">
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#ad35ea18ffaeb2ad0bd17260f752641f3">  231</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1GameWorld.html#ad35ea18ffaeb2ad0bd17260f752641f3">GameWorld::CreateEntityFromJSON</a>(<a class="code hl_class" href="classduin_1_1JSONMember.html">JSONMember</a> &amp;member)</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>{</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    std::string ecsData = member.GetMemberDataAsString();</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> entity = this-&gt;<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>();</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    entity.GetFlecsEntity().from_json(ecsData.c_str());</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordflow">return</span> entity;</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>}</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="keywordtype">void</span> GameWorld::InitializeQueries()</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>{</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    queryTransform3DHierarchicalUpdate =</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        this-&gt;GetFlecsWorld()</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            .query_builder&lt;<a class="code hl_struct" href="structduin_1_1ECSComponent_1_1Transform3D.html">ECSComponent::Transform3D</a>, <span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1ECSComponent_1_1Transform3D.html">ECSComponent::Transform3D</a> *&gt;()</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            .term_at(1)</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            .parent()</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            .cascade()</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            .cached()</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>            .build();</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    queryCharacterBody3DUpdateTransform =</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        this-&gt;<a class="code hl_class" href="classduin_1_1QueryBuilder.html">QueryBuilder</a>&lt;<a class="code hl_struct" href="structduin_1_1ECSComponent_1_1CharacterBodyComponent.html">ECSComponent::CharacterBodyComponent</a>, <a class="code hl_struct" href="structduin_1_1ECSComponent_1_1Transform3D.html">ECSComponent::Transform3D</a>,</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                           <a class="code hl_struct" href="structduin_1_1ECSComponent_1_1Velocity3D.html">ECSComponent::Velocity3D</a>&gt;()</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            .With&lt;ECSTag::PxKinematic&gt;()</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>            .Cached()</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>            .Build();</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    querySyncDynamicBody3DTransform =</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        this-&gt;<a class="code hl_class" href="classduin_1_1QueryBuilder.html">QueryBuilder&lt;const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D&gt;</a>()</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>            .<a class="code hl_function" href="classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44">Cached</a>()</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            .Build();</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    queryControlCamera =</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        this-&gt;<a class="code hl_class" href="classduin_1_1QueryBuilder.html">QueryBuilder&lt;Camera, const ECSComponent::Transform3D&gt;</a>().<a class="code hl_function" href="classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44">Cached</a>().Build();</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    querySetCameraAsActive =</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        this-&gt;<a class="code hl_class" href="classduin_1_1QueryBuilder.html">QueryBuilder&lt;Camera&gt;</a>().With&lt;<a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>&gt;().Build();</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    queryDrawDebugCapsule =</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        this-&gt;<a class="code hl_class" href="classduin_1_1QueryBuilder.html">QueryBuilder&lt;const ECSComponent::DebugCapsuleComponent, const ECSComponent::Transform3D&gt;</a>()</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>            .<a class="code hl_function" href="classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44">Cached</a>()</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>            .Build();</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    queryDrawDebugCube =</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        this-&gt;<a class="code hl_class" href="classduin_1_1QueryBuilder.html">QueryBuilder&lt;const ECSComponent::DebugCubeComponent, const ECSComponent::Transform3D&gt;</a>()</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>            .<a class="code hl_function" href="classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44">Cached</a>()</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>            .Build();</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>}</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
+<div class="foldopen" id="foldopen00309" data-start="{" data-end="}">
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#ad35ea18ffaeb2ad0bd17260f752641f3">  309</a></span><a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> <a class="code hl_function" href="classduin_1_1GameWorld.html#ad35ea18ffaeb2ad0bd17260f752641f3">GameWorld::CreateEntityFromJSON</a>(<a class="code hl_class" href="classduin_1_1JSONMember.html">JSONMember</a> &amp;member)</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>{</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    std::string ecsData = member.GetMemberDataAsString();</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    <a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> entity = this-&gt;<a class="code hl_class" href="classduin_1_1Entity.html">Entity</a>();</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    entity.GetFlecsEntity().from_json(ecsData.c_str());</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keywordflow">return</span> entity;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>}</div>
 </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="foldopen" id="foldopen00239" data-start="{" data-end="}">
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611">  239</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611">GameWorld::ActivateCameraEntity</a>(<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> entity)</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>{</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordflow">if</span> (entity.<a class="code hl_function" href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">Has</a>&lt;<a class="code hl_struct" href="structduin_1_1Camera.html">Camera</a>&gt;())</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    {</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        this-&gt;<a class="code hl_function" href="classduin_1_1World.html#a475f2d4b926dafc8dbffc49b8f928a87">DeferBegin</a>();</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        this-&gt;GetFlecsWorld().each([](flecs::entity e, <a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>) { e.remove&lt;<a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>&gt;(); });</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        entity.<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;<a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>&gt;();</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        this-&gt;<a class="code hl_function" href="classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a">DeferEnd</a>();</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    }</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>}</div>
-</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
-<div class="foldopen" id="foldopen00250" data-start="{" data-end="}">
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">  250</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">GameWorld::PostUpdateQueryExecution</a>(<span class="keywordtype">double</span> delta)</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>{</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>}</div>
-</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
-<div class="foldopen" id="foldopen00254" data-start="{" data-end="}">
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">  254</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">GameWorld::PostPhysicsUpdateQueryExecution</a>(<span class="keywordtype">double</span> delta)</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>{</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="comment">/* Update physics-objects&#39; positions first */</span></div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    ExecuteQueryCharacterBody3DUpdateTransform();</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    ExecuteQuerySyncDynamicBody3DTransform();</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    ExecuteQueryTransform3DHierarchicalUpdate();</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    ExecuteQueryControlCamera();</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <a class="code hl_function" href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">ExecuteQuerySetCameraAsActive</a>();</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>}</div>
-</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
-<div class="foldopen" id="foldopen00265" data-start="{" data-end="}">
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">  265</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">GameWorld::PostDrawQueryExecution</a>()</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>{</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    ExecuteQueryDrawCube();</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    ExecuteQueryDrawDebugCapsule();</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    ExecuteQueryDrawDebugCube();</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>}</div>
-</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
-<div class="foldopen" id="foldopen00272" data-start="{" data-end="}">
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">  272</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">GameWorld::PostDrawUIQueryExecution</a>()</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>{</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>}</div>
-</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
-<div class="foldopen" id="foldopen00276" data-start="{" data-end="}">
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">  276</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">GameWorld::Clear</a>()</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>{</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    this-&gt;GetFlecsWorld().reset();</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>}</div>
-</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span><span class="keywordtype">void</span> GameWorld::InitializeRemoteExplorer()</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>{</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>}</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="comment">/*----------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="comment"> * Transform Updates</span></div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="comment">----------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>{</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    <span class="keyword">static</span> <span class="keyword">auto</span> q =</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        this-&gt;QueryBuilder&lt;ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D&gt;()</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>            .With&lt;ECSTag::PxKinematic&gt;()</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>            .Cached()</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            .Build();</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    q.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, ECSComponent::CharacterBodyComponent &amp;cb, ECSComponent::Transform3D &amp;tx,</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>              ECSComponent::Velocity3D &amp;velocity) {</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        <span class="comment">// Move CharacterBody3D and get physics-resolved global position</span></div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        <span class="keywordtype">double</span> delta = GetPhysicsFrameTime();</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        <span class="keywordflow">if</span> (!cb.body)</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        {</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            DN_WARN(<span class="stringliteral">&quot;CharacterBody pointer is nullptr!&quot;</span>);</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        }</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        Vector3 oldPos = cb.body-&gt;GetFootPosition();</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        cb.body-&gt;Move(vDelta, delta);</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        Vector3 newPos = cb.body-&gt;GetFootPosition();</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        <span class="comment">// add distance between current globalPos (old) and pxBody global pos (new) to localPos</span></div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        Vector3 globalDelta = Vector3Subtract(newPos, ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity()));</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        Vector3 newLocalPos = Vector3Add(globalDelta, tx.GetPosition());</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        tx.SetPosition(newLocalPos);</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        velocity.value = cb.body-&gt;GetCurrentVelocity();</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        <span class="comment">// If autostep has happened, cap Y velocity</span></div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">float</span> AUTOSTEP_FACTOR = 5.0f;</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        <span class="keywordflow">if</span> (std::abs(distanceMoved.y) &gt; std::abs(vDelta.y * AUTOSTEP_FACTOR))</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        {</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            velocity.value.y = vDelta.y;</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        }</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    });</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
+<div class="foldopen" id="foldopen00317" data-start="{" data-end="}">
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611">  317</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611">GameWorld::ActivateCameraEntity</a>(<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> entity)</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>{</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    <span class="keywordflow">if</span> (entity.<a class="code hl_function" href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">Has</a>&lt;<a class="code hl_struct" href="structduin_1_1Camera.html">Camera</a>&gt;())</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    {</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        this-&gt;<a class="code hl_function" href="classduin_1_1World.html#a475f2d4b926dafc8dbffc49b8f928a87">DeferBegin</a>();</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        this-&gt;GetFlecsWorld().each([](flecs::entity e, <a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>) { e.remove&lt;<a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>&gt;(); });</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        entity.<a class="code hl_function" href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">Add</a>&lt;<a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>&gt;();</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        this-&gt;<a class="code hl_function" href="classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a">DeferEnd</a>();</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    }</div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>}</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="keywordtype">void</span> GameWorld::ExecuteQuerySyncDynamicBody3DTransform()</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>{</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keyword">static</span> <span class="keyword">auto</span> q =</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        this-&gt;QueryBuilder&lt;const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D&gt;().Cached().Build();</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    q.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, <span class="keyword">const</span> ECSComponent::DynamicBodyComponent &amp;dynamicBodyComponent,</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>              ECSComponent::Transform3D &amp;tx) {</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        Vector3 newGPos = dynamicBodyComponent.body-&gt;GetPosition();</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        ECSComponent::Transform3D::SetGlobalPosition(e.GetFlecsEntity(), newGPos);</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>        Quaternion newGRot = dynamicBodyComponent.body-&gt;GetRotation();</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        ECSComponent::Transform3D::SetGlobalRotation(e.GetFlecsEntity(), newGRot);</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    });</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>}</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span> </div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryTransform3DHierarchicalUpdate()</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>{</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>    flecs::world &amp;flecsWorld = this-&gt;GetFlecsWorld();</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    <span class="keyword">static</span> flecs::query q = flecsWorld.query_builder&lt;ECSComponent::Transform3D, <span class="keyword">const</span> ECSComponent::Transform3D *&gt;()</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                                .term_at(1)</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>                                .parent()</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                                .cascade()</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>                                .cached()</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>                                .build();</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span> </div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    q.each([](flecs::entity e, ECSComponent::Transform3D &amp;tx, <span class="keyword">const</span> ECSComponent::Transform3D *parent_tx) {</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>        <span class="comment">// ECSComponent::Transform3D::SetGlobalPosition(e, tx.GetPosition());</span></div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>        <span class="comment">// tx.SetGlobalPosition(tx.GetPosition());</span></div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>        <span class="keywordflow">if</span> (parent_tx)</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        {</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>            <span class="comment">// Vector3 sum = Vector3Add(tx.GetPosition(), parent_tx-&gt;GetGlobalPosition());</span></div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            <span class="comment">// tx.SetGlobalPosition(sum);</span></div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            <span class="comment">//  Vector3 sum = Vector3Add(ECSComponent::Transform3D::GetGlobalPosition(e), parent_tx-&gt;GetPosition());</span></div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            <span class="comment">// ECSComponent::Transform3D::SetGlobalPosition(e, sum);</span></div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>            tx.InvalidateCacheFlags();</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>            <span class="comment">// Force a recalculation by accessing the global position:</span></div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>            ECSComponent::Transform3D::GetGlobalPosition(e);</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        }</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    });</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>}</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryControlCamera()</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>{</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    <span class="keyword">static</span> <span class="keyword">auto</span> q = this-&gt;QueryBuilder&lt;Camera, const ECSComponent::Transform3D&gt;().Cached().Build();</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>    q.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, Camera &amp;c, <span class="keyword">const</span> ECSComponent::Transform3D &amp;tx) {</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e.GetFlecsEntity());</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span> </div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        <span class="comment">// Rotate the default forward by gRot to get the new target position of the camera</span></div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        Vector3 defaultForward = {0.0f, 0.0f, -1.0f};</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span> </div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        c.position = gPos;</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        c.target = Vector3Add(gPos, forward);</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        c.up = {0.0f, 1.0f, 0.0f};</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>    });</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>}</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span> </div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryDrawCube()</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>{</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> </div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    <span class="comment">// static flecs::query q = world.query_builder&lt;</span></div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    <span class="comment">//     const ECSComponent::CubeComponent,</span></div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>    <span class="comment">//     const ECSComponent::Transform3D</span></div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    <span class="comment">// &gt;()</span></div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    <span class="comment">// .cached()</span></div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>    <span class="comment">// .build();</span></div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>    <span class="comment">// q.each([](</span></div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>    <span class="comment">//     flecs::entity e,</span></div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="comment">//     const ECSComponent::CubeComponent&amp; cube,</span></div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>    <span class="comment">//     const ECSComponent::Transform3D&amp; tx</span></div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>    <span class="comment">//     ) {</span></div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    <span class="comment">//        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);</span></div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="comment">//        ::DrawCube(gPos.ToRaylib(),</span></div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    <span class="comment">//                   cube.width,</span></div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    <span class="comment">//                   cube.height,</span></div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>    <span class="comment">//                   cube.length,</span></div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    <span class="comment">//                   cube.color);</span></div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    <span class="comment">//     });</span></div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>}</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span> </div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryDrawDebugCapsule()</div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>{</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    <span class="comment">// static flecs::query q = world.query_builder&lt;</span></div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>    <span class="comment">//     const ECSComponent::DebugCapsuleComponent,</span></div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>    <span class="comment">//     const ECSComponent::Transform3D</span></div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>    <span class="comment">// &gt;()</span></div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    <span class="comment">// .cached()</span></div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>    <span class="comment">// .build();</span></div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>    <span class="comment">// q.each([](</span></div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    <span class="comment">//     flecs::entity e,</span></div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>    <span class="comment">//     const ECSComponent::DebugCapsuleComponent&amp; capsule,</span></div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>    <span class="comment">//     const ECSComponent::Transform3D&amp; tx</span></div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>    <span class="comment">//     ) {</span></div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>    <span class="comment">//         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);</span></div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>    <span class="comment">//         ::DrawCapsuleWires(gPos.ToRaylib(),</span></div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    <span class="comment">//             Vector3Add(gPos, { 0.0f, capsule.height, 0.0f }).ToRaylib(),</span></div>
-<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>    <span class="comment">//             capsule.radius,</span></div>
-<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>    <span class="comment">//             capsule.slices,</span></div>
-<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>    <span class="comment">//             capsule.rings,</span></div>
-<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>    <span class="comment">//             capsule.color</span></div>
-<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>    <span class="comment">//         );</span></div>
-<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>    <span class="comment">//     });</span></div>
-<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>}</div>
-<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span> </div>
-<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryDrawDebugCube()</div>
-<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>{</div>
-<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
-<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>    <span class="comment">// static flecs::query q = world.query_builder&lt;</span></div>
-<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>    <span class="comment">//     const ECSComponent::DebugCubeComponent,</span></div>
-<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>    <span class="comment">//     const ECSComponent::Transform3D</span></div>
-<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>    <span class="comment">// &gt;()</span></div>
-<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>    <span class="comment">// .cached()</span></div>
-<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>    <span class="comment">// .build();</span></div>
-<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>    <span class="comment">// q.each([](</span></div>
-<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>    <span class="comment">//     flecs::entity e,</span></div>
-<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>    <span class="comment">//     const ECSComponent::DebugCubeComponent&amp; cube,</span></div>
-<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>    <span class="comment">//     const ECSComponent::Transform3D&amp; tx</span></div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>    <span class="comment">//     ) {</span></div>
-<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>    <span class="comment">//         Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);</span></div>
-<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>    <span class="comment">//         ::DrawCubeWires(</span></div>
-<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>    <span class="comment">//             Vector3Add(gPos, { cube.width / 2.0f, cube.height / 2.0f, cube.length / 2.0f }).ToRaylib(),</span></div>
-<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>    <span class="comment">//             cube.width,</span></div>
-<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>    <span class="comment">//             cube.height,</span></div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    <span class="comment">//             cube.length,</span></div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    <span class="comment">//             cube.color</span></div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>    <span class="comment">//         );</span></div>
-<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    <span class="comment">//     });</span></div>
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>}</div>
-<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span> </div>
-<div class="foldopen" id="foldopen00465" data-start="{" data-end="}">
-<div class="line"><a id="l00465" name="l00465"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">  465</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">GameWorld::ExecuteQuerySetCameraAsActive</a>()</div>
-<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>{</div>
-<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>    <span class="keyword">static</span> <span class="keyword">auto</span> q = this-&gt;<a class="code hl_class" href="classduin_1_1QueryBuilder.html">QueryBuilder&lt;Camera&gt;</a>().With&lt;<a class="code hl_struct" href="structduin_1_1ECSTag_1_1ActiveCamera.html">ECSTag::ActiveCamera</a>&gt;().Build();</div>
-<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span> </div>
-<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>    q.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, <a class="code hl_struct" href="structduin_1_1Camera.html">Camera</a> &amp;camera) { SetActiveCamera(&amp;camera); });</div>
-<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span>}</div>
 </div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
+<div class="foldopen" id="foldopen00328" data-start="{" data-end="}">
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">  328</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">GameWorld::PostUpdateQueryExecution</a>(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>{</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>}</div>
+</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> </div>
+<div class="foldopen" id="foldopen00332" data-start="{" data-end="}">
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">  332</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">GameWorld::PostPhysicsUpdateQueryExecution</a>(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>{</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    <span class="comment">/* Update physics-objects&#39; positions first */</span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    ExecuteQueryCharacterBody3DUpdateTransform();</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    ExecuteQuerySyncDynamicBody3DTransform();</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    ExecuteQueryTransform3DHierarchicalUpdate();</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    ExecuteQueryControlCamera();</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    <a class="code hl_function" href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">ExecuteQuerySetCameraAsActive</a>();</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>}</div>
+</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span> </div>
+<div class="foldopen" id="foldopen00343" data-start="{" data-end="}">
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">  343</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">GameWorld::PostDrawQueryExecution</a>()</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>{</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    ExecuteQueryDrawCube();</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    ExecuteQueryDrawDebugCapsule();</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    ExecuteQueryDrawDebugCube();</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>}</div>
+</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> </div>
+<div class="foldopen" id="foldopen00350" data-start="{" data-end="}">
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">  350</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">GameWorld::PostDrawUIQueryExecution</a>()</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>{</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>}</div>
+</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span> </div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span><span class="keywordtype">void</span> GameWorld::ResetQueries()</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>{</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    queryTransform3DHierarchicalUpdate = {};</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    queryCharacterBody3DUpdateTransform = {};</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>    querySyncDynamicBody3DTransform = {};</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    queryControlCamera = {};</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    querySetCameraAsActive = {};</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>    queryDrawDebugCapsule = {};</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>    queryDrawDebugCube = {};</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>}</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
+<div class="foldopen" id="foldopen00365" data-start="{" data-end="}">
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">  365</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">GameWorld::Clear</a>()</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>{</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    <span class="comment">// Reset all cached queries before resetting the world — they hold pointers</span></div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="comment">// into the old ecs_world_t* and must not outlive it.</span></div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    ResetQueries();</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span> </div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    this-&gt;GetFlecsWorld().reset();</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>}</div>
+</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span><span class="keywordtype">void</span> GameWorld::Reset(<span class="keywordtype">bool</span> connectSignals)</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>{</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    <a class="code hl_function" href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">Clear</a>();</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <a class="code hl_function" href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">Initialize</a>(connectSignals);</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>}</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span><span class="keywordtype">void</span> GameWorld::InitializeRemoteExplorer()</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>{</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>}</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span><span class="comment">/*----------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span><span class="comment"> * Transform Updates</span></div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span><span class="comment">----------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>{</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>    queryCharacterBody3DUpdateTransform.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, ECSComponent::CharacterBodyComponent &amp;cb, ECSComponent::Transform3D &amp;tx,</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>              ECSComponent::Velocity3D &amp;velocity) {</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        <span class="comment">// Move CharacterBody3D and get physics-resolved global position</span></div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>        <span class="keywordtype">double</span> delta = <a class="code hl_function" href="Application_8h.html#afa3ae93bbe35e54553d3eaa67f0781ec">GetPhysicsFrameTime</a>();</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>        Vector3 vDelta = Vector3Scale(velocity.value, <a class="code hl_function" href="Application_8h.html#afa3ae93bbe35e54553d3eaa67f0781ec">GetPhysicsFrameTime</a>());</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span> </div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        <span class="keywordflow">if</span> (!cb.body)</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        {</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>            DN_WARN(<span class="stringliteral">&quot;CharacterBody pointer is nullptr!&quot;</span>);</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        }</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        cb.body-&gt;SetPosition(tx.GetGlobalPosition());</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        Vector3 oldPos = cb.body-&gt;GetFootPosition();</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        cb.body-&gt;Move(vDelta, delta);</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>        Vector3 newPos = cb.body-&gt;GetFootPosition();</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>        <span class="comment">// add distance between current globalPos (old) and pxBody global pos (new) to localPos</span></div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>        Vector3 globalDelta = Vector3Subtract(newPos, ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity()));</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>        Vector3 newLocalPos = Vector3Add(globalDelta, tx.GetPosition());</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>        tx.SetPosition(newLocalPos);</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span> </div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>        velocity.value = cb.body-&gt;GetCurrentVelocity();</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> </div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        <span class="comment">// If autostep has happened, cap Y velocity</span></div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>        Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">float</span> AUTOSTEP_FACTOR = 5.0f;</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <span class="keywordflow">if</span> (std::abs(distanceMoved.y) &gt; std::abs(vDelta.y * AUTOSTEP_FACTOR))</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        {</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>            velocity.value.y = vDelta.y;</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        }</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>    });</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>}</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span> </div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span><span class="keywordtype">void</span> GameWorld::ExecuteQuerySyncDynamicBody3DTransform()</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>{</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    querySyncDynamicBody3DTransform.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, <span class="keyword">const</span> ECSComponent::DynamicBodyComponent &amp;dynamicBodyComponent,</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>              ECSComponent::Transform3D &amp;tx) {</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>        Vector3 newGPos = dynamicBodyComponent.body-&gt;GetPosition();</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>        ECSComponent::Transform3D::SetGlobalPosition(e.GetFlecsEntity(), newGPos);</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>        Quaternion newGRot = dynamicBodyComponent.body-&gt;GetRotation();</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>        ECSComponent::Transform3D::SetGlobalRotation(e.GetFlecsEntity(), newGRot);</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    });</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>}</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span> </div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryTransform3DHierarchicalUpdate()</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>{</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>    queryTransform3DHierarchicalUpdate.each([](flecs::entity e, ECSComponent::Transform3D &amp;tx, <span class="keyword">const</span> ECSComponent::Transform3D *parent_tx) {</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>        <span class="comment">// ECSComponent::Transform3D::SetGlobalPosition(e, tx.GetPosition());</span></div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        <span class="comment">// tx.SetGlobalPosition(tx.GetPosition());</span></div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>        <span class="keywordflow">if</span> (parent_tx)</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>        {</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>            <span class="comment">// Vector3 sum = Vector3Add(tx.GetPosition(), parent_tx-&gt;GetGlobalPosition());</span></div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>            <span class="comment">// tx.SetGlobalPosition(sum);</span></div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>            <span class="comment">//  Vector3 sum = Vector3Add(ECSComponent::Transform3D::GetGlobalPosition(e), parent_tx-&gt;GetPosition());</span></div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>            <span class="comment">// ECSComponent::Transform3D::SetGlobalPosition(e, sum);</span></div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span> </div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>            tx.InvalidateCacheFlags();</div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span> </div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>            <span class="comment">// Force a recalculation by accessing the global position:</span></div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>            ECSComponent::Transform3D::GetGlobalPosition(e);</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>        }</div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>    });</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>}</div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span> </div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryControlCamera()</div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>{</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>    queryControlCamera.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, Camera &amp;c, <span class="keyword">const</span> ECSComponent::Transform3D &amp;tx) {</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>        Quaternion gRot = ECSComponent::Transform3D::GetGlobalRotation(e.GetFlecsEntity());</div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span> </div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        <span class="comment">// Rotate the default forward by gRot to get the new target position of the camera</span></div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>        Vector3 defaultForward = {0.0f, 0.0f, -1.0f};</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span> </div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        c.position = gPos;</div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>        c.target = Vector3Add(gPos, forward);</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>        c.up = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>    });</div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>}</div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span> </div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryDrawCube()</div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span>{</div>
 <div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span> </div>
-<div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>    <span class="comment">// TODO REPLACE_RAYLIB</span></div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>    <span class="comment">// static flecs::query q = world.query_builder&lt;</span></div>
+<div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span>    <span class="comment">//     const ECSComponent::CubeComponent,</span></div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>    <span class="comment">//     const ECSComponent::Transform3D</span></div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>    <span class="comment">// &gt;()</span></div>
+<div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span>    <span class="comment">// .cached()</span></div>
+<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span>    <span class="comment">// .build();</span></div>
+<div class="line"><a id="l00479" name="l00479"></a><span class="lineno">  479</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00480" name="l00480"></a><span class="lineno">  480</span>    <span class="comment">// q.each([](</span></div>
+<div class="line"><a id="l00481" name="l00481"></a><span class="lineno">  481</span>    <span class="comment">//     flecs::entity e,</span></div>
+<div class="line"><a id="l00482" name="l00482"></a><span class="lineno">  482</span>    <span class="comment">//     const ECSComponent::CubeComponent&amp; cube,</span></div>
+<div class="line"><a id="l00483" name="l00483"></a><span class="lineno">  483</span>    <span class="comment">//     const ECSComponent::Transform3D&amp; tx</span></div>
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>    <span class="comment">//     ) {</span></div>
+<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>    <span class="comment">//        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e);</span></div>
+<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>    <span class="comment">//        ::DrawCube(gPos.ToRaylib(),</span></div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>    <span class="comment">//                   cube.width,</span></div>
+<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span>    <span class="comment">//                   cube.height,</span></div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>    <span class="comment">//                   cube.length,</span></div>
+<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>    <span class="comment">//                   cube.color);</span></div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>    <span class="comment">//     });</span></div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>}</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span> </div>
+<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryDrawDebugCapsule()</div>
+<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>{</div>
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>    queryDrawDebugCapsule.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e,</div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>              <span class="keyword">const</span> ECSComponent::DebugCapsuleComponent &amp;capsule,</div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>              <span class="keyword">const</span> ECSComponent::Transform3D &amp;tx) {</div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());</div>
+<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>        Vector3 top = { gPos.x, gPos.y + capsule.height, gPos.z };</div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>        DrawDebugCapsule(gPos, top, capsule.radius);</div>
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>    });</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>}</div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span> </div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span><span class="keywordtype">void</span> GameWorld::ExecuteQueryDrawDebugCube()</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>{</div>
+<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    queryDrawDebugCube.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e,</div>
+<div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>              <span class="keyword">const</span> ECSComponent::DebugCubeComponent &amp;cube,</div>
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>              <span class="keyword">const</span> ECSComponent::Transform3D &amp;tx) {</div>
+<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());</div>
+<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>        Vector3 halfSize = { cube.width * 0.5f, cube.height * 0.5f, cube.length * 0.5f };</div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>        Vector3 min = Vector3Subtract(gPos, halfSize);</div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>        Vector3 max = Vector3Add(gPos, halfSize);</div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>        DrawDebugBox(min, max);</div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>    });</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>}</div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span> </div>
+<div class="foldopen" id="foldopen00518" data-start="{" data-end="}">
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno"><a class="line" href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">  518</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">GameWorld::ExecuteQuerySetCameraAsActive</a>()</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>{</div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>    querySetCameraAsActive.Each([](<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e, <a class="code hl_struct" href="structduin_1_1Camera.html">Camera</a> &amp;camera) { SetActiveCamera(&amp;camera); });</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>}</div>
+</div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span> </div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
+<div class="ttc" id="aApplication_8h_html_afa3ae93bbe35e54553d3eaa67f0781ec"><div class="ttname"><a href="Application_8h.html#afa3ae93bbe35e54553d3eaa67f0781ec">duin::GetPhysicsFrameTime</a></div><div class="ttdeci">float GetPhysicsFrameTime()</div><div class="ttdoc">Returns time spent on last physics frame in seconds.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00168">Application.cpp:168</a></div></div>
 <div class="ttc" id="aCamera_8h_html"><div class="ttname"><a href="Camera_8h.html">Camera.h</a></div><div class="ttdoc">3D camera for rendering.</div></div>
 <div class="ttc" id="aGameWorld_8h_html"><div class="ttname"><a href="GameWorld_8h.html">GameWorld.h</a></div><div class="ttdoc">Entity Component System manager and component definitions.</div></div>
+<div class="ttc" id="aRenderer_8h_html"><div class="ttname"><a href="Renderer_8h.html">Renderer.h</a></div><div class="ttdoc">Core rendering system and utilities.</div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html"><div class="ttname"><a href="classduin_1_1Entity.html">duin::Entity</a></div><div class="ttdoc">Represents an entity in the ECS world.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00020">Entity.h:21</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a2c8228c51547918b8ca5913cbb6f55c6"><div class="ttname"><a href="classduin_1_1Entity.html#a2c8228c51547918b8ca5913cbb6f55c6">duin::Entity::SetPair</a></div><div class="ttdeci">Entity &amp; SetPair(const PairStorageType_t&lt; First, Second &gt; &amp;value)</div><div class="ttdoc">Set the value of a pair component. Storage type is automatically determined:</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00867">Entity.h:867</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a537de7ca63c0877259d234b6b8f8cd84"><div class="ttname"><a href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a></div><div class="ttdeci">Entity &amp; Add()</div><div class="ttdoc">Add a component to the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00528">Entity.h:528</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a2c8228c51547918b8ca5913cbb6f55c6"><div class="ttname"><a href="classduin_1_1Entity.html#a2c8228c51547918b8ca5913cbb6f55c6">duin::Entity::SetPair</a></div><div class="ttdeci">Entity &amp; SetPair(const PairStorageType_t&lt; First, Second &gt; &amp;value)</div><div class="ttdoc">Set the value of a pair component. Storage type is automatically determined:</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l01019">Entity.h:1019</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a537de7ca63c0877259d234b6b8f8cd84"><div class="ttname"><a href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a></div><div class="ttdeci">Entity &amp; Add()</div><div class="ttdoc">Add a component to the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00533">Entity.h:533</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html_a60815f2c735bdf18348e2d8ca066b9f4"><div class="ttname"><a href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">duin::Entity::Has</a></div><div class="ttdeci">bool Has() const</div><div class="ttdoc">Check if the entity has a component.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00444">Entity.h:444</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html_ad4b449e33056cb2fc41b131425be6137"><div class="ttname"><a href="classduin_1_1Entity.html#ad4b449e33056cb2fc41b131425be6137">duin::Entity::IsA</a></div><div class="ttdeci">Entity &amp; IsA(const Entity &amp;second)</div><div class="ttdoc">Set this entity as an instance of another entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00192">Entity.cpp:192</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_ad856326f85d286d3e3f36cbacabeba89"><div class="ttname"><a href="classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89">duin::Entity::Set</a></div><div class="ttdeci">Entity &amp; Set(const T &amp;value)</div><div class="ttdoc">Set the value of a component (adds if doesn't exist).</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00655">Entity.h:655</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_a0532566ca2ffb5b73301fbe1c66383ee"><div class="ttname"><a href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">duin::GameWorld::PostDrawUIQueryExecution</a></div><div class="ttdeci">void PostDrawUIQueryExecution()</div><div class="ttdoc">Runs post-draw-UI queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00272">GameWorld.cpp:272</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_a12e1eb9bf6dba1752335fe6cab47f427"><div class="ttname"><a href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">duin::GameWorld::PostUpdateQueryExecution</a></div><div class="ttdeci">void PostUpdateQueryExecution(double delta)</div><div class="ttdoc">Runs post-update queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00250">GameWorld.cpp:250</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_a44342598a5d0659b4351edde8cac6611"><div class="ttname"><a href="classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611">duin::GameWorld::ActivateCameraEntity</a></div><div class="ttdeci">void ActivateCameraEntity(duin::Entity entity)</div><div class="ttdoc">Sets the given entity as the active camera.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00239">GameWorld.cpp:239</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_a73a2ce6b4409dd28258764f9d2a35ffb"><div class="ttname"><a href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">duin::GameWorld::ExecuteQuerySetCameraAsActive</a></div><div class="ttdeci">void ExecuteQuerySetCameraAsActive()</div><div class="ttdoc">Processes camera activation requests.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00465">GameWorld.cpp:465</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_a795a578fc55757b0a0ca1da0dc3e2313"><div class="ttname"><a href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">duin::GameWorld::PostDrawQueryExecution</a></div><div class="ttdeci">void PostDrawQueryExecution()</div><div class="ttdoc">Runs post-draw queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00265">GameWorld.cpp:265</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_aa45d73f776ae24b631b953da028c7957"><div class="ttname"><a href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">duin::GameWorld::Clear</a></div><div class="ttdeci">void Clear()</div><div class="ttdoc">Clears all entities from the world.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00276">GameWorld.cpp:276</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_ad35ea18ffaeb2ad0bd17260f752641f3"><div class="ttname"><a href="classduin_1_1GameWorld.html#ad35ea18ffaeb2ad0bd17260f752641f3">duin::GameWorld::CreateEntityFromJSON</a></div><div class="ttdeci">duin::Entity CreateEntityFromJSON(JSONMember &amp;member)</div><div class="ttdoc">Creates entity from JSON data.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00231">GameWorld.cpp:231</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_ae69ba1ff0a5318d40268a0bdbeeb2601"><div class="ttname"><a href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">duin::GameWorld::PostPhysicsUpdateQueryExecution</a></div><div class="ttdeci">void PostPhysicsUpdateQueryExecution(double delta)</div><div class="ttdoc">Runs post-physics queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00254">GameWorld.cpp:254</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameWorld_html_afd125edcd34384538fa3a1814403b1b6"><div class="ttname"><a href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">duin::GameWorld::Initialize</a></div><div class="ttdeci">void Initialize(bool connectSignals=true)</div><div class="ttdoc">Initializes the ECS world and registers components.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00210">GameWorld.cpp:210</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_ad856326f85d286d3e3f36cbacabeba89"><div class="ttname"><a href="classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89">duin::Entity::Set</a></div><div class="ttdeci">Entity &amp; Set(const T &amp;value)</div><div class="ttdoc">Set the value of a component (adds if doesn't exist).</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00660">Entity.h:660</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_a0532566ca2ffb5b73301fbe1c66383ee"><div class="ttname"><a href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">duin::GameWorld::PostDrawUIQueryExecution</a></div><div class="ttdeci">virtual void PostDrawUIQueryExecution()</div><div class="ttdoc">Runs post-draw-UI queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00350">GameWorld.cpp:350</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_a12e1eb9bf6dba1752335fe6cab47f427"><div class="ttname"><a href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">duin::GameWorld::PostUpdateQueryExecution</a></div><div class="ttdeci">virtual void PostUpdateQueryExecution(double delta)</div><div class="ttdoc">Runs post-update queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00328">GameWorld.cpp:328</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_a44342598a5d0659b4351edde8cac6611"><div class="ttname"><a href="classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611">duin::GameWorld::ActivateCameraEntity</a></div><div class="ttdeci">void ActivateCameraEntity(duin::Entity entity)</div><div class="ttdoc">Sets the given entity as the active camera.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00317">GameWorld.cpp:317</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_a73a2ce6b4409dd28258764f9d2a35ffb"><div class="ttname"><a href="classduin_1_1GameWorld.html#a73a2ce6b4409dd28258764f9d2a35ffb">duin::GameWorld::ExecuteQuerySetCameraAsActive</a></div><div class="ttdeci">void ExecuteQuerySetCameraAsActive()</div><div class="ttdoc">Processes camera activation requests.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00518">GameWorld.cpp:518</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_a795a578fc55757b0a0ca1da0dc3e2313"><div class="ttname"><a href="classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313">duin::GameWorld::PostDrawQueryExecution</a></div><div class="ttdeci">virtual void PostDrawQueryExecution()</div><div class="ttdoc">Runs post-draw queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00343">GameWorld.cpp:343</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_aa45d73f776ae24b631b953da028c7957"><div class="ttname"><a href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">duin::GameWorld::Clear</a></div><div class="ttdeci">void Clear()</div><div class="ttdoc">Clears all entities from the world.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00365">GameWorld.cpp:365</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_ad35ea18ffaeb2ad0bd17260f752641f3"><div class="ttname"><a href="classduin_1_1GameWorld.html#ad35ea18ffaeb2ad0bd17260f752641f3">duin::GameWorld::CreateEntityFromJSON</a></div><div class="ttdeci">duin::Entity CreateEntityFromJSON(JSONMember &amp;member)</div><div class="ttdoc">Creates entity from JSON data.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00309">GameWorld.cpp:309</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_ae69ba1ff0a5318d40268a0bdbeeb2601"><div class="ttname"><a href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">duin::GameWorld::PostPhysicsUpdateQueryExecution</a></div><div class="ttdeci">virtual void PostPhysicsUpdateQueryExecution(double delta)</div><div class="ttdoc">Runs post-physics queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00332">GameWorld.cpp:332</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameWorld_html_afd125edcd34384538fa3a1814403b1b6"><div class="ttname"><a href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">duin::GameWorld::Initialize</a></div><div class="ttdeci">void Initialize(bool connectSignals=true)</div><div class="ttdoc">Initializes the ECS world and registers components.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00246">GameWorld.cpp:246</a></div></div>
 <div class="ttc" id="aclassduin_1_1JSONMember_html"><div class="ttname"><a href="classduin_1_1JSONMember.html">duin::JSONMember</a></div><div class="ttdef"><b>Definition</b> <a href="SerialisationManager_8h_source.html#l00012">SerialisationManager.h:13</a></div></div>
 <div class="ttc" id="aclassduin_1_1QueryBuilder_html"><div class="ttname"><a href="classduin_1_1QueryBuilder.html">duin::QueryBuilder</a></div><div class="ttdoc">Wrapper for flecs::query_builder to provide a unified query builder API.</div><div class="ttdef"><b>Definition</b> <a href="Query_8h_source.html#l00281">Query.h:282</a></div></div>
+<div class="ttc" id="aclassduin_1_1QueryBuilder_html_a9bc3926d719148dda5045b1b88d8ed44"><div class="ttname"><a href="classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44">duin::QueryBuilder::Cached</a></div><div class="ttdeci">QueryBuilder&lt; Components... &gt; &amp; Cached()</div><div class="ttdoc">Mark the query as cached.</div><div class="ttdef"><b>Definition</b> <a href="Query_8h_source.html#l00307">Query.h:307</a></div></div>
 <div class="ttc" id="aclassduin_1_1World_html"><div class="ttname"><a href="classduin_1_1World.html">duin::World</a></div><div class="ttdef"><b>Definition</b> <a href="World_8h_source.html#l00018">World.h:19</a></div></div>
 <div class="ttc" id="aclassduin_1_1World_html_a026ce4e2f49543aaeded80467ac50ea6"><div class="ttname"><a href="classduin_1_1World.html#a026ce4e2f49543aaeded80467ac50ea6">duin::World::Component</a></div><div class="ttdeci">duin::Entity Component()</div><div class="ttdoc">Register a component type with the world.</div><div class="ttdef"><b>Definition</b> <a href="World_8h_source.html#l00211">World.h:211</a></div></div>
 <div class="ttc" id="aclassduin_1_1World_html_a2bf5807fc0ce1e71375b7f30bf9ea79a"><div class="ttname"><a href="classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a">duin::World::DeferEnd</a></div><div class="ttdeci">void DeferEnd()</div><div class="ttdoc">End deferred execution of commands.</div><div class="ttdef"><b>Definition</b> <a href="World_8cpp_source.html#l00077">World.cpp:77</a></div></div>
@@ -636,6 +690,9 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="ttc" id="anamespaceECSTag_html"><div class="ttname"><a href="namespaceECSTag.html">ECSTag</a></div><div class="ttdoc">Tag components for entity categorization.</div></div>
 <div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
 <div class="ttc" id="astructduin_1_1Camera_html"><div class="ttname"><a href="structduin_1_1Camera.html">duin::Camera</a></div><div class="ttdoc">3D camera with position, target, and orientation.</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00030">Camera.h:31</a></div></div>
+<div class="ttc" id="astructduin_1_1ECSComponent_1_1CharacterBodyComponent_html"><div class="ttname"><a href="structduin_1_1ECSComponent_1_1CharacterBodyComponent.html">duin::ECSComponent::CharacterBodyComponent</a></div><div class="ttdoc">Character controller body component.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8h_source.html#l01021">GameWorld.h:1022</a></div></div>
+<div class="ttc" id="astructduin_1_1ECSComponent_1_1Transform3D_html"><div class="ttname"><a href="structduin_1_1ECSComponent_1_1Transform3D.html">duin::ECSComponent::Transform3D</a></div><div class="ttdoc">Hierarchical 3D transform with caching.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8h_source.html#l00349">GameWorld.h:350</a></div></div>
+<div class="ttc" id="astructduin_1_1ECSComponent_1_1Velocity3D_html"><div class="ttname"><a href="structduin_1_1ECSComponent_1_1Velocity3D.html">duin::ECSComponent::Velocity3D</a></div><div class="ttdoc">3D velocity component (always in global coordinates).</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8h_source.html#l00969">GameWorld.h:970</a></div></div>
 <div class="ttc" id="astructduin_1_1ECSTag_1_1ActiveCamera_html"><div class="ttname"><a href="structduin_1_1ECSTag_1_1ActiveCamera.html">duin::ECSTag::ActiveCamera</a></div><div class="ttdoc">Singleton tag for the active camera entity.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8h_source.html#l00087">GameWorld.h:88</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

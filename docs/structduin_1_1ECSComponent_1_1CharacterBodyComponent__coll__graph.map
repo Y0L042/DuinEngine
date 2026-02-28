@@ -1,8 +1,8 @@
 <map id="duin::ECSComponent::CharacterBodyComponent" name="duin::ECSComponent::CharacterBodyComponent">
-<area shape="rect" id="Node000001" title="Character controller body component." alt="" coords="5,332,207,372"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1CharacterBodyDesc.html" title=" " alt="" coords="13,244,199,269"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,283,109,332,103,332,103,283"/>
+<area shape="rect" id="Node000001" title="Character controller body component." alt="" coords="5,317,207,357"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1CharacterBodyDesc.html" title=" " alt="" coords="13,229,199,255"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,268,109,317,103,317,103,268"/>
 <area shape="rect" id="Node000003" href="$structduin_1_1Vector3.html" title=" " alt="" coords="53,73,159,99"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,113,109,244,103,244,103,113"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="133,65,152,61,169,63,181,72,186,86,179,102,163,110,142,109,121,101,123,96,143,104,162,105,176,99,181,86,177,75,167,68,152,67,134,70"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,112,109,229,103,229,103,112"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="135,65,153,62,169,65,181,72,186,86,180,101,164,109,143,109,122,101,124,96,144,103,162,104,176,98,181,86,177,76,167,70,153,68,136,71"/>
 </map>

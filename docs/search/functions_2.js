@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['cached_0',['cached',['../classduin_1_1Query.html#ab8a0003c858c55667ec00c40972f37b1',1,'duin::Query::Cached()'],['../classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44',1,'duin::QueryBuilder::Cached()']]],
+  ['cached_0',['Cached',['../classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44',1,'duin::QueryBuilder']]],
   ['capacity_1',['Capacity',['../classduin_1_1JSONValue.html#a029927ed882aa27a943635ce8100864c',1,'duin::JSONValue']]],
   ['capturemouse_2',['CaptureMouse',['../namespaceduin_1_1Input.html#abb44090b33cbcfb4b27326da213f4e7e',1,'duin::Input']]],
   ['childof_3',['ChildOf',['../classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32',1,'duin::Entity']]],

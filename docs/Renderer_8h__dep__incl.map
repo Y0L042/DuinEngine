@@ -1,15 +1,17 @@
 <map id="Renderer.h" name="Renderer.h">
-<area shape="rect" id="Node000001" title="Core rendering system and utilities." alt="" coords="251,5,343,31"/>
+<area shape="rect" id="Node000001" title="Core rendering system and utilities." alt="" coords="323,5,415,31"/>
 <area shape="rect" id="Node000002" href="$Application_8cpp_source.html" title=" " alt="" coords="5,79,128,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,37,105,81,103,76,246,32"/>
-<area shape="rect" id="Node000003" href="$RenderIncludes_8h_source.html" title=" " alt="" coords="153,79,287,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="277,42,234,80,231,76,273,38"/>
-<area shape="rect" id="Node000004" href="$RenderModule_8h_source.html" title=" " alt="" coords="312,79,440,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="322,38,365,76,361,80,318,42"/>
-<area shape="rect" id="Node000007" href="$Renderer_8cpp_source.html" title=" " alt="" coords="464,79,571,104"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="347,32,483,76,481,81,345,37"/>
-<area shape="rect" id="Node000005" href="$Duin_8h_source.html" title=" " alt="" coords="344,152,408,177"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="379,118,379,152,373,152,373,118"/>
-<area shape="rect" id="Node000006" href="$Duin_8cpp_source.html" title=" " alt="" coords="337,225,415,251"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="379,191,379,225,373,225,373,191"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="310,36,116,81,115,76,309,31"/>
+<area shape="rect" id="Node000003" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="152,79,277,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="333,39,241,81,239,76,331,34"/>
+<area shape="rect" id="Node000004" href="$RenderIncludes_8h_source.html" title=" " alt="" coords="302,79,437,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="372,44,372,79,367,79,367,44"/>
+<area shape="rect" id="Node000005" href="$RenderModule_8h_source.html" title=" " alt="" coords="461,79,589,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="408,34,501,76,499,81,406,39"/>
+<area shape="rect" id="Node000008" href="$Renderer_8cpp_source.html" title=" " alt="" coords="613,79,720,104"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="430,31,619,76,618,81,428,36"/>
+<area shape="rect" id="Node000006" href="$Duin_8h_source.html" title=" " alt="" coords="493,152,557,177"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="528,118,528,152,523,152,523,118"/>
+<area shape="rect" id="Node000007" href="$Duin_8cpp_source.html" title=" " alt="" coords="486,225,565,251"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="528,191,528,225,523,225,523,191"/>
 </map>
