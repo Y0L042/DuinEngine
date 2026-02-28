@@ -30,7 +30,7 @@
 				{
 					"relationship": "IsA",
 					"relationshipUUID": "0xED87D1DD350293F2",
-					"target": "CharacterBody",
+					"target": "PhysicsCharacterBody",
 					"targetUUID": "0xA7377B5EBD23154E"
 				}
 			],
