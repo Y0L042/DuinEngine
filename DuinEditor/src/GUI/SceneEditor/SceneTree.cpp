@@ -15,16 +15,11 @@ SceneTree::~SceneTree()
 void SceneTree::Init()
 {
     imguiWindowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
-
-    if (!GetParent().expired())
-    {
-        sceneEditor = dynamic_pointer_cast<State_SceneEditor>(GetParent().lock());
-        sceneEditor->onSetActiveScene.Connect([&](duin::PackedScene &pscn) {});
-    }
 }
 
 void SceneTree::PhysicsUpdate(double delta)
 {
+    UpdateTree();
 }
 
 void SceneTree::Draw()
@@ -41,6 +36,11 @@ void SceneTree::DrawUI()
     }
 
     ImGui::End();
+}
+
+void SceneTree::SetActiveWorld(std::weak_ptr<duin::World> world)
+{
+    activeWorld = world;
 }
 
 void SceneTree::DrawEntityNode(const EntityNode &node)
@@ -67,14 +67,14 @@ void SceneTree::DrawEntityNode(const EntityNode &node)
     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
     {
         selectedEntityId = node.entityId;
-        if (sceneEditor && activeWorld && activeWorld->IsAlive(node.entityId))
+        if (!activeWorld.expired() && activeWorld.lock()->IsAlive(node.entityId))
         {
-            duin::Entity e(node.entityId, activeWorld);
+            duin::Entity e(node.entityId, activeWorld.lock().get());
             if (!e.IsValid())
             {
                 DN_FATAL("Entity {} is not valid!", e.GetID());
             }
-            sceneEditor->onSelectEntity.Emit(e);
+            onSelectEntity.Emit(e);
             DN_INFO("Entity {} [{}] double-clicked.", e.GetName(), e.GetID());
         }
     }
@@ -89,27 +89,27 @@ void SceneTree::DrawEntityNode(const EntityNode &node)
     }
 }
 
-void SceneTree::UpdateTree(duin::World *world)
+void SceneTree::UpdateTree()
 {
-     activeWorld = world;
-     std::vector<duin::Entity> vec;
-     world->IterateChildren([&](duin::Entity e) {
-         //if (!e.HasPair(flecs::ChildOf, flecs::Wildcard))
-         if (!e.GetParent().IsValid())
-         {
-             vec.push_back(e);
-         }
-     });
-     UpdateTreeImpl(vec);
+    if (activeWorld.expired()) return;
+    std::shared_ptr<duin::World> world_ = activeWorld.lock();
+    std::vector<duin::Entity> vec;
+    world_->IterateChildren([&](duin::Entity e) {
+        if (!e.GetParent().IsValid() && !e.Has(flecs::Prefab) && (e.GetName() != ""))
+        {
+            vec.push_back(e);
+        }
+    });
+    UpdateTreeImpl(vec);
 }
 
 void SceneTree::UpdateTreeImpl(std::vector<duin::Entity> entities)
 {
-     entityTree.clear();
-     for (duin::Entity &child : entities)
+    entityTree.clear();
+    for (duin::Entity &child : entities)
     {
-         entityTree.emplace_back(UpdateChild(child));
-     }
+        entityTree.emplace_back(UpdateChild(child));
+    }
 }
 
 SceneTree::EntityNode SceneTree::UpdateChild(duin::Entity &child)

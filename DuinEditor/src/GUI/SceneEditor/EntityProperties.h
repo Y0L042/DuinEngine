@@ -1,7 +1,6 @@
 #pragma once
 #include <external/imgui.h>
 #include <memory>
-#include <vector>
 #include <Duin/ECS/DECS/World.h>
 #include <string>
 #include <Duin/ECS/DECS/Entity.h>
@@ -11,12 +10,6 @@ class State_SceneEditor;
 class EntityProperties : public duin::GameObject
 {
   public:
-    struct ComponentNode
-    {
-        uint64_t cmpID;
-        std::string cmpName;
-    };
-
     EntityProperties();
     ~EntityProperties();
 
@@ -29,8 +22,5 @@ class EntityProperties : public duin::GameObject
 
   private:
     ImGuiWindowFlags imguiWindowFlags;
-    std::shared_ptr<State_SceneEditor> sceneEditor;
     duin::Entity focusedEntity;
-
-    std::vector<ComponentNode> componentNodeList;
 };

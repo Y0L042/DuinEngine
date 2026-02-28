@@ -1,6 +1,10 @@
 #include "EntityProperties.h"
 #include <memory>
 #include <EditorStates/State_SceneEditor.h>
+#include <Duin/ECS/GameWorld.h>
+#include <Duin/ECS/ComponentInspector.h>
+#include <Duin/Core/Maths/DuinMaths.h>
+#include <flecs.h>
 
 EntityProperties::EntityProperties()
 {
@@ -13,12 +17,6 @@ EntityProperties::~EntityProperties()
 void EntityProperties::Init()
 {
     imguiWindowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
-
-    if (!GetParent().expired())
-    {
-        sceneEditor = dynamic_pointer_cast<State_SceneEditor>(GetParent().lock());
-    }
-    sceneEditor->onSelectEntity.Connect([&](duin::Entity e) { SetFocusedEntity(e); });
 }
 
 void EntityProperties::PhysicsUpdate(double delta)
@@ -35,24 +33,37 @@ void EntityProperties::DrawUI()
 
     if (focusedEntity.IsValid())
     {
-        auto& e = focusedEntity;
-        ImGui::SeparatorText(e.GetName().c_str());
+        ImGui::SeparatorText(focusedEntity.GetName().c_str());
 
-        componentNodeList.clear();
-        e.ForEachComponent([&](duin::Entity::ID id) {
-            if (!id.IsEntity())
-            {
+        auto &inspector = duin::ComponentInspector::Get();
+
+        focusedEntity.ForEachComponent([&](duin::Entity::ID id) {
+            if (id.IsPair())
                 return;
-            }
-            duin::Entity cmp = id.GetEntity();
-            ComponentNode n{.cmpID = cmp.GetID(), .cmpName = cmp.GetName()};
-            componentNodeList.push_back(n);
-        });
+            if (!id.IsEntity())
+                return;
 
-        for (const auto &node : componentNodeList)
-        {
-            ImGui::Text("%s", node.cmpName.c_str());
-        }
+            duin::Entity cmpType = id.GetEntity();
+            std::string typeName = cmpType.GetName();
+
+            ImGui::PushID(static_cast<int>(cmpType.GetID()));
+            if (ImGui::CollapsingHeader(typeName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            {
+                // Get mutable pointer to the component data via the flecs C API.
+                // Returns null for zero-size types (tags).
+                void *rawPtr = nullptr;
+                if (!cmpType.IsTag())
+                {
+                    rawPtr = focusedEntity.TryGetMut(id);
+                }
+
+                if (!inspector.Inspect(typeName, rawPtr, focusedEntity))
+                {
+                    ImGui::TextDisabled("(no inspector)");
+                }
+            }
+            ImGui::PopID();
+        });
     }
     else
     {

@@ -35,7 +35,7 @@ void FSNode::Traverse()
         {
             std::cout << dirEntry.path() << "\n";
 
-            subNodes.push_back(std::make_unique<FSNode>(dirEntry.path().string()));
+            subNodes.emplace_back(std::make_shared<FSNode>(dirEntry.path().string()));
             FSNode *child = subNodes.back().get();
             if (child->type == ArcheType::P_DIRECTORY)
             {
@@ -75,7 +75,7 @@ FileManager &FileManager::Get()
     return instance;
 }
 
-FileManager::FileManager(std::string rootPath) : rootPath(rootPath), rootNode(rootPath)
+FileManager::FileManager(std::string rootPath) : rootPath(rootPath), rootNode(std::make_shared<FSNode>(rootPath))
 {
 }
 
@@ -87,23 +87,23 @@ void FileManager::BuildFileSystemTree()
         return;
     }
 
-    rootNode = FSNode(rootPath.string());
-    if (rootNode.type == ArcheType::P_DIRECTORY)
+    rootNode = std::make_shared<FSNode>(rootPath.string());
+    if (rootNode->type == ArcheType::P_DIRECTORY)
     {
-        rootNode.Traverse();
+        rootNode->Traverse();
     }
 }
 
 void FileManager::SetRootPath(const std::string &rootPath)
 {
     this->rootPath = rootPath;
-    rootNode = FSNode(this->rootPath.string());
+    rootNode = std::make_shared<FSNode>(this->rootPath.string());
 }
 
-FSNode &FileManager::GetRootNode()
-{
-    return rootNode;
-}
+//std::weak_ptr<FSNode> FileManager::GetRootNode()
+//{
+//    return rootNode;
+//}
 
 std::vector<std::string> FileManager::GetFilesByExt(const std::string &ext)
 {
@@ -112,28 +112,30 @@ std::vector<std::string> FileManager::GetFilesByExt(const std::string &ext)
     return std::vector<std::string>(array, array + count);
 }
 
-static void RecurseTreePrint(FSNode *node);
+static void RecurseTreePrint(std::weak_ptr<FSNode> node);
 void FileManager::PrintTree()
 {
     std::string depth = "";
     DN_INFO("File Tree:");
-    DN_INFO("{}", rootNode.name);
-    RecurseTreePrint(&rootNode);
+    DN_INFO("{}", rootNode->name);
+    RecurseTreePrint(rootNode);
 }
 
-static void RecurseTreePrint(FSNode *node)
+static void RecurseTreePrint(std::weak_ptr<FSNode> node)
 {
-    for (auto& nodePtr : node->subNodes)
+    if (node.expired()) return;
+
+    for (auto& nodePtr : node.lock()->subNodes)
     {
         if (nodePtr->type == ArcheType::P_DIRECTORY)
         {
             DN_INFO("{}/", nodePtr->path);
-            RecurseTreePrint(nodePtr.get());
+            RecurseTreePrint(nodePtr);
         }
         else
         {
             DN_INFO(" - {}", nodePtr->name);
-            RecurseTreePrint(nodePtr.get());
+            RecurseTreePrint(nodePtr);
         }
     }
 }

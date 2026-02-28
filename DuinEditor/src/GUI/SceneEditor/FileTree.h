@@ -10,10 +10,9 @@ class FSNode;
 class FileTree : public duin::GameObject
 {
   public:
-    duin::Signal<FSNode *> onSceneSelect;
+    duin::Signal<std::weak_ptr<FSNode>> onSceneSelect;
 
     FileTree();
-    FileTree(State_SceneEditor *sceneEditor);
     ~FileTree();
 
     void Init() override;
@@ -21,14 +20,12 @@ class FileTree : public duin::GameObject
     void Draw() override;
     void DrawUI() override;
 
-    void SetSceneEditor(State_SceneEditor *sceneEditor);
-    void SetFileManager(FileManager *fm);
+    void SetFileManager(std::shared_ptr<FileManager> fm);
 
-    void DrawNode(FSNode *node, const std::string &nodeLabel);
+    void DrawNode(std::weak_ptr<FSNode> node, const std::string &nodeLabel);
 
   private:
     ImGuiWindowFlags imguiWindowFlags = 0;
-    State_SceneEditor *sceneEditor = nullptr;
-    FileManager *fm = nullptr;
-    FSNode *selectedNode = nullptr;
+    std::shared_ptr<FileManager> fm = nullptr;
+    std::weak_ptr<FSNode> selectedNode;
 };

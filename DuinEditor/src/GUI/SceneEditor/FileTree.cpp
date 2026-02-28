@@ -6,20 +6,11 @@ FileTree::FileTree()
 {
 }
 
-FileTree::FileTree(State_SceneEditor *sceneEditor) : sceneEditor(sceneEditor)
-{
-}
-
 FileTree::~FileTree()
 {
 }
 
-void FileTree::SetSceneEditor(State_SceneEditor *sceneEditor)
-{
-    this->sceneEditor = sceneEditor;
-}
-
-void FileTree::SetFileManager(FileManager *fm)
+void FileTree::SetFileManager(std::shared_ptr<FileManager> fm)
 {
     this->fm = fm;
 }
@@ -27,10 +18,6 @@ void FileTree::SetFileManager(FileManager *fm)
 void FileTree::Init()
 {
     imguiWindowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
-    if (sceneEditor != nullptr)
-    {
-        sceneEditor->onUpdateFileManager.Connect([&](FileManager *fm) { SetFileManager(fm); });
-    }
 }
 
 void FileTree::PhysicsUpdate(double delta)
@@ -44,40 +31,41 @@ void FileTree::Draw()
 void FileTree::DrawUI()
 {
     ImGui::Begin("FileTree", nullptr, imguiWindowFlags);
-    if (fm != nullptr)
+    if (fm != nullptr && !fm->GetRootNode().expired())
     {
-        DrawNode(&fm->GetRootNode(), fm->GetRootNode().name);
+        DrawNode(fm->GetRootNode(), fm->GetRootNode().lock()->name);
     }
 
     ImGui::End();
 }
 
-void FileTree::DrawNode(FSNode *node, const std::string &nodeLabel)
+void FileTree::DrawNode(std::weak_ptr<FSNode> node, const std::string &nodeLabel)
 {
-    if (node == nullptr)
+    if (node.expired())
     {
         return;
     }
+    std::shared_ptr<FSNode> node_ = node.lock();
 
     ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-    if (node == selectedNode)
+    if (!selectedNode.expired() && node_ == selectedNode.lock())
         flags |= ImGuiTreeNodeFlags_Selected;
 
-    if (node->type == ArcheType::P_DIRECTORY)
+    if (node_->type == ArcheType::P_DIRECTORY)
     {
         // Open a tree node
         bool nodeOpen = ImGui::TreeNodeEx(nodeLabel.c_str(), flags);
 
         if (ImGui::IsItemClicked())
         {
-            selectedNode = node;
+            selectedNode = node_;
         }
 
         if (nodeOpen)
         {
-            for (auto& child : node->subNodes)
+            for (auto& child : node_->subNodes)
             {
-                DrawNode(child.get(), child->name);
+                DrawNode(child, child->name);
             }
             ImGui::TreePop();
         }
@@ -88,21 +76,21 @@ void FileTree::DrawNode(FSNode *node, const std::string &nodeLabel)
         ImGui::TreeNodeEx(nodeLabel.c_str(), leafFlags);
         if (ImGui::IsItemClicked())
         {
-            selectedNode = node;
+            selectedNode = node_;
         }
 
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
         {
-            selectedNode = node;
-            if (node->type == ArcheType::P_FILE && (node->fileExt == FILEEXT_ECST || node->fileExt == FILEEXT_JSON))
+            selectedNode = node_;
+            if (node_->type == ArcheType::P_FILE && (node_->fileExt == FILEEXT_ECST || node_->fileExt == FILEEXT_JSON))
             {
-                onSceneSelect.Emit(node);
+                onSceneSelect.Emit(selectedNode);
             }
         }
 
         if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(1))
         {
-            selectedNode = node;
+            selectedNode = node_;
         }
     }
 }

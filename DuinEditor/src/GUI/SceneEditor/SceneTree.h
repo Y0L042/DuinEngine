@@ -11,13 +11,15 @@ class State_SceneEditor;
 class SceneTree : public duin::GameObject
 {
   public:
-      struct EntityNode
-      {
-          uint64_t entityId = 0;
-          std::string entityName = "Entity";
-          std::string entitySupertype = "None";
-          std::vector<EntityNode> children;
-      };
+    struct EntityNode
+    {
+        uint64_t entityId = 0;
+        std::string entityName = "Entity";
+        std::string entitySupertype = "None";
+        std::vector<EntityNode> children;
+    };
+
+    duin::Signal<duin::Entity> onSelectEntity;
 
     SceneTree();
     ~SceneTree();
@@ -27,16 +29,17 @@ class SceneTree : public duin::GameObject
     void Draw() override;
     void DrawUI() override;
 
-    void UpdateTree(duin::World *world);
+    void SetActiveWorld(std::weak_ptr<duin::World> world);
+
+    void UpdateTree();
 
   private:
     ImGuiWindowFlags imguiWindowFlags;
-    std::shared_ptr<State_SceneEditor> sceneEditor;
     std::vector<EntityNode> entityTree;
-    duin::World *activeWorld = nullptr;
+    std::weak_ptr<duin::World> activeWorld;
     uint64_t selectedEntityId = 0;
 
     void UpdateTreeImpl(std::vector<duin::Entity> entities);
-    EntityNode UpdateChild(duin::Entity& child);
-    void DrawEntityNode(const EntityNode& node);
+    EntityNode UpdateChild(duin::Entity &child);
+    void DrawEntityNode(const EntityNode &node);
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include <string>
 #include <filesystem>
@@ -19,7 +20,7 @@ struct FSNode
     std::string name;
     std::string fileExtension;
 
-    std::vector<std::unique_ptr<FSNode>> subNodes;
+    std::vector<std::shared_ptr<FSNode>> subNodes;
 
     FSNode() = default;
     FSNode(std::string path);
@@ -41,12 +42,12 @@ class FileManager
 
     void BuildFileSystemTree();
     void SetRootPath(const std::string &rootPath);
-    FSNode &GetRootNode();
+    std::weak_ptr<FSNode> GetRootNode() { return rootNode; };
     void PrintTree();
 
     std::vector<std::string> GetFilesByExt(const std::string &ext);
 
   private:
     fs::path rootPath;
-    FSNode rootNode;
+    std::shared_ptr<FSNode> rootNode;
 };
