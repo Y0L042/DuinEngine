@@ -26,7 +26,7 @@ entities by component patterns and process them efficiently.
 
 @code{.cpp}
 // Create entity with components
-flecs::entity e = ecsManager.GetWorld().entity()
+flecs::entity e = GameWorld.GetWorld().entity()
     .set<ECSComponent::Position3D>({0, 0, 0})
     .set<ECSComponent::Rotation3D>({})
     .add<ECSTag::PxDynamic>();

@@ -113,3 +113,8 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 /ExampleProjects/DuinFPS/duinfps.toml
 /Duin.sln
 /ExampleProjects/Sandbox/Sandbox.vcxproj
+/.clang-uml
+*.etl
+/run_tests_coverage.bat
+/run_tests.bat
+/ExampleProjects/Sandbox/imgui.ini
