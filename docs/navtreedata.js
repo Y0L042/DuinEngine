@@ -26,6 +26,46 @@ var NAVTREE =
 [
   [ "Duin", "index.html", [
     [ "Physics", "page_Physics.html", null ],
+    [ "Duin Rendering Pipeline", "md_docs_2RenderingPipeline.html", [
+      [ "Overview", "md_docs_2RenderingPipeline.html#autotoc_md2", null ],
+      [ "Architecture", "md_docs_2RenderingPipeline.html#autotoc_md3", [
+        [ "Core Components", "md_docs_2RenderingPipeline.html#autotoc_md4", null ],
+        [ "BGFX View System", "md_docs_2RenderingPipeline.html#autotoc_md5", null ]
+      ] ],
+      [ "Render State Machine", "md_docs_2RenderingPipeline.html#autotoc_md6", [
+        [ "State Stack", "md_docs_2RenderingPipeline.html#autotoc_md7", null ]
+      ] ],
+      [ "Rendering Modes", "md_docs_2RenderingPipeline.html#autotoc_md8", [
+        [ "1. Main Display Rendering (View 0)", "md_docs_2RenderingPipeline.html#autotoc_md9", null ],
+        [ "2. Render-to-Texture Mode (View 1+)", "md_docs_2RenderingPipeline.html#autotoc_md10", null ],
+        [ "3. Nested Texture Modes", "md_docs_2RenderingPipeline.html#autotoc_md11", null ]
+      ] ],
+      [ "Draw Functions", "md_docs_2RenderingPipeline.html#autotoc_md12", [
+        [ "Internal Flow", "md_docs_2RenderingPipeline.html#autotoc_md13", null ]
+      ] ],
+      [ "RenderTexture", "md_docs_2RenderingPipeline.html#autotoc_md14", [
+        [ "Creating a RenderTexture", "md_docs_2RenderingPipeline.html#autotoc_md15", null ],
+        [ "ViewID Best Practices", "md_docs_2RenderingPipeline.html#autotoc_md16", null ],
+        [ "Cleanup", "md_docs_2RenderingPipeline.html#autotoc_md17", null ]
+      ] ],
+      [ "Camera System", "md_docs_2RenderingPipeline.html#autotoc_md18", [
+        [ "Coordinate System", "md_docs_2RenderingPipeline.html#autotoc_md19", null ],
+        [ "Camera Matrix Computation", "md_docs_2RenderingPipeline.html#autotoc_md20", null ],
+        [ "Camera Movement", "md_docs_2RenderingPipeline.html#autotoc_md21", null ],
+        [ "Camera Rotation", "md_docs_2RenderingPipeline.html#autotoc_md22", null ]
+      ] ],
+      [ "Debug Drawing", "md_docs_2RenderingPipeline.html#autotoc_md23", null ],
+      [ "Frame Lifecycle", "md_docs_2RenderingPipeline.html#autotoc_md24", null ],
+      [ "Geometry System", "md_docs_2RenderingPipeline.html#autotoc_md25", null ],
+      [ "Shader System", "md_docs_2RenderingPipeline.html#autotoc_md26", null ],
+      [ "Test Accessors", "md_docs_2RenderingPipeline.html#autotoc_md27", null ],
+      [ "Common Issues", "md_docs_2RenderingPipeline.html#autotoc_md28", [
+        [ "Render-to-Texture Shows on Main Screen", "md_docs_2RenderingPipeline.html#autotoc_md29", null ],
+        [ "Flickering After EndTextureMode", "md_docs_2RenderingPipeline.html#autotoc_md30", null ],
+        [ "Debug Draws Not Appearing in Texture", "md_docs_2RenderingPipeline.html#autotoc_md31", null ]
+      ] ],
+      [ "File Locations", "md_docs_2RenderingPipeline.html#autotoc_md32", null ]
+    ] ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Categories", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
@@ -65,8 +105,8 @@ var NAVTREEINDEX =
 "Application_8cpp_source.html",
 "classduin_1_1Entity.html#a689706b7897dd7cc9bb59c88485c54a6",
 "classduin_1_1World.html#a233e74dcebf1c77fffac169056ba95ff",
-"structImFontGlyphRangesBuilder.html",
-"structduin_1_1PackedEntity.html"
+"structGraphEditor_1_1Link.html",
+"structduin_1_1Entity_1_1ID.html#a9d88790749ce72f67f6da4e5a5f3d2b3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

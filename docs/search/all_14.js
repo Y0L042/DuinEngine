@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['update_0',['Update',['../classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16',1,'duin::Application']]],
-  ['userdata_1',['userdata',['../structduin_1_1fs_1_1DirCallbackWrapper.html#abb483e9feb8ed76ecfa6fe056323986f',1,'duin::fs::DirCallbackWrapper']]],
-  ['utilities_2',['Utilities',['../group__Core__Utils.html',1,'']]],
-  ['uuid_3',['uuid',['../classduin_1_1UUID.html',1,'duin::UUID'],['../structUUID.html',1,'UUID'],['../classduin_1_1UUID.html#a56b6dfa8d38418093502ad169a814dfb',1,'duin::UUID::UUID()'],['../classduin_1_1UUID.html#a26296e34b489bc7e7ba80fc24725b0e2',1,'duin::UUID::UUID(uint64_t uuid)'],['../structduin_1_1InputDevice.html#a6f880ddc136b797821ffcd86637caed0',1,'duin::InputDevice::uuid'],['../structduin_1_1InputAction.html#a6b261fe14f2962cc68d89c5837548f5d',1,'duin::InputAction::uuid'],['../structduin_1_1PackedEntity.html#a687b616851dac0ff1a599eb681bf5ab6',1,'duin::PackedEntity::uuid'],['../structduin_1_1PackedExternalDependency.html#ae16024361e793156de99b85de7b87450',1,'duin::PackedExternalDependency::uuid'],['../structduin_1_1PackedScene.html#a2fb9513b1e5914e3cd1e59c6d3b77eac',1,'duin::PackedScene::uuid']]],
-  ['uuid_2ecpp_4',['UUID.cpp',['../UUID_8cpp.html',1,'']]],
-  ['uuid_2eh_5',['UUID.h',['../UUID_8h.html',1,'']]]
+  ['query_0',['query',['../classduin_1_1Query.html',1,'duin::Query&lt; Components &gt;'],['../classduin_1_1Query.html#a6b549459169da1d3b689f8b6c86eba48',1,'duin::Query::Query()=default'],['../classduin_1_1Query.html#a90dd868cef2d67116719d9c9677dee05',1,'duin::Query::Query(flecs::query&lt; Components... &gt; &amp;&amp;other, World *world=nullptr)'],['../classduin_1_1Query.html#abbf7fa5f4f6433ff810616b9f237bd24',1,'duin::Query::Query(const flecs::query&lt; Components... &gt; &amp;other, World *world=nullptr)']]],
+  ['query_3c_20const_20duin_3a_3aecscomponent_3a_3adebugcapsulecomponent_2c_20const_20duin_3a_3aecscomponent_3a_3atransform3d_20_3e_1',['Query&lt; const duin::ECSComponent::DebugCapsuleComponent, const duin::ECSComponent::Transform3D &gt;',['../classduin_1_1Query.html',1,'duin']]],
+  ['query_3c_20const_20duin_3a_3aecscomponent_3a_3adebugcubecomponent_2c_20const_20duin_3a_3aecscomponent_3a_3atransform3d_20_3e_2',['Query&lt; const duin::ECSComponent::DebugCubeComponent, const duin::ECSComponent::Transform3D &gt;',['../classduin_1_1Query.html',1,'duin']]],
+  ['query_3c_20const_20duin_3a_3aecscomponent_3a_3adynamicbodycomponent_2c_20duin_3a_3aecscomponent_3a_3atransform3d_20_3e_3',['Query&lt; const duin::ECSComponent::DynamicBodyComponent, duin::ECSComponent::Transform3D &gt;',['../classduin_1_1Query.html',1,'duin']]],
+  ['query_3c_20duin_3a_3acamera_20_3e_4',['Query&lt; duin::Camera &gt;',['../classduin_1_1Query.html',1,'duin']]],
+  ['query_3c_20duin_3a_3acamera_2c_20const_20duin_3a_3aecscomponent_3a_3atransform3d_20_3e_5',['Query&lt; duin::Camera, const duin::ECSComponent::Transform3D &gt;',['../classduin_1_1Query.html',1,'duin']]],
+  ['query_3c_20duin_3a_3aecscomponent_3a_3acharacterbodycomponent_2c_20duin_3a_3aecscomponent_3a_3atransform3d_2c_20duin_3a_3aecscomponent_3a_3avelocity3d_20_3e_6',['Query&lt; duin::ECSComponent::CharacterBodyComponent, duin::ECSComponent::Transform3D, duin::ECSComponent::Velocity3D &gt;',['../classduin_1_1Query.html',1,'duin']]],
+  ['querybuilder_7',['QueryBuilder',['../classduin_1_1QueryBuilder.html',1,'duin']]],
+  ['queueexitcallback_8',['QueueExitCallback',['../Application_8h.html#aaa705c5bc39b275ccfad84374efe3720',1,'duin']]],
+  ['quit_9',['Quit',['../classduin_1_1World.html#ab75a1ae0712f0e82f0ec2ec52b0a9446',1,'duin::World']]]
 ];
