@@ -1,25 +1,37 @@
 #pragma once
 
-#include <Duin/Core/Utils/UUID.h>
 #include <Duin/Scene/SceneBuilder.h>
 
 #include <unordered_map>
 #include <Duin/IO/JSONValue.h>
 
+#include "Scene.h"
+#include <memory>
+#include <vector>
+#include <Duin/Core/Signals/Signal.h>
+
 class SceneManager
 {
   public:
+    duin::Signal<std::shared_ptr<Scene>> onSetActiveScene;
+
     SceneManager();
     ~SceneManager();
 
-    duin::PackedScene &LoadScene(duin::JSONValue sceneJSON);
-    void UnloadScene(duin::PackedScene &scene);
+    SceneHandle LoadSceneFromJSON(duin::JSONValue sceneJSON, bool setActive = false);
+    SceneHandle LoadSceneFromPacked(const duin::PackedScene &scene, bool setActive = false);
 
-    duin::PackedScene &GetActiveScene();
-    duin::PackedScene &SetActiveScene(duin::PackedScene &scene);
+    void UnloadScene(SceneHandle handle);
+
+    std::shared_ptr<Scene> GetScene(SceneHandle handle);
+
+    std::vector<std::shared_ptr<Scene>> GetLoadedScenes();
+    std::shared_ptr<Scene> GetActiveScene();
+    SceneHandle GetActiveSceneHandle();
+    void SetActiveScene(SceneHandle handle);
 
   private:
     duin::PackedScene defaultScene;
-    duin::PackedScene *activeScene;
-    std::unordered_map<duin::UUID, duin::PackedScene> loadedScenes;
+    std::unordered_map<SceneHandle, std::shared_ptr<Scene>> loadedScenes;
+    SceneHandle activeSceneHandle;
 };
