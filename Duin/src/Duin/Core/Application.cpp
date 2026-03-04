@@ -60,16 +60,16 @@ static SDL_Renderer *sdlRenderer = NULL;
 
 static SDL_WindowFlags sdlWindowFlags = 0;
 
-static std::vector<std::function<void(void)>> postReadyCallbacks;
-static std::vector<std::function<void(duin::Event)>> postInputCallbacks;
-static std::vector<std::function<void(double)>> postUpdateCallbacks;
-static std::vector<std::function<void(double)>> postPhysicsUpdateCallbacks;
-static std::vector<std::function<void(void)>> postDrawCallbacks;
-static std::vector<std::function<void(void)>> postDrawUICallbacks;
-static std::vector<std::function<void(void)>> preFrameCallbacks;
-static std::vector<std::function<void(void)>> postFrameCallbacks;
-static std::vector<std::function<void(void)>> postDebugCallbacks;
-static std::vector<std::function<void(void)>> exitCallbacks;
+static duin::Signal<>            postReadySignal;
+static duin::Signal<duin::Event> postInputSignal;
+static duin::Signal<double>      postUpdateSignal;
+static duin::Signal<double>      postPhysicsUpdateSignal;
+static duin::Signal<>            postDrawSignal;
+static duin::Signal<>            postDrawUISignal;
+static duin::Signal<>            preFrameSignal;
+static duin::Signal<>            postFrameSignal;
+static duin::Signal<>            postDebugSignal;
+static duin::Signal<>            exitSignal;
 
 std::string duin::GetRootDirectory()
 {
@@ -274,54 +274,54 @@ SDL_Window *duin::GetSDLWindow()
     return sdlWindow;
 }
 
-void duin::QueuePostReadyCallback(std::function<void(void)> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostReadyCallback(std::function<void(void)> f)
 {
-    postReadyCallbacks.push_back(f);
+    return postReadySignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePostInputCallback(std::function<void(Event)> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostInputCallback(std::function<void(Event)> f)
 {
-    postInputCallbacks.push_back(f);
+    return postInputSignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePostUpdateCallback(std::function<void(double)> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostUpdateCallback(std::function<void(double)> f)
 {
-    postUpdateCallbacks.push_back(f);
+    return postUpdateSignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePostPhysicsUpdateCallback(std::function<void(double)> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostPhysicsUpdateCallback(std::function<void(double)> f)
 {
-    postPhysicsUpdateCallbacks.push_back(f);
+    return postPhysicsUpdateSignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePostDrawCallback(std::function<void()> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostDrawCallback(std::function<void()> f)
 {
-    postDrawCallbacks.push_back(f);
+    return postDrawSignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePostDrawUICallback(std::function<void()> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostDrawUICallback(std::function<void()> f)
 {
-    postDrawUICallbacks.push_back(f);
+    return postDrawUISignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePreFrameCallback(std::function<void()> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePreFrameCallback(std::function<void()> f)
 {
-    preFrameCallbacks.push_back(f);
+    return preFrameSignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePostFrameCallback(std::function<void()> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostFrameCallback(std::function<void()> f)
 {
-    postFrameCallbacks.push_back(f);
+    return postFrameSignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueuePostDebugCallback(std::function<void()> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueuePostDebugCallback(std::function<void()> f)
 {
-    postDebugCallbacks.push_back(f);
+    return postDebugSignal.ConnectScoped(std::move(f));
 }
 
-void duin::QueueExitCallback(std::function<void()> f)
+std::shared_ptr<duin::ScopedConnection> duin::QueueExitCallback(std::function<void()> f)
 {
-    exitCallbacks.push_back(f);
+    return exitSignal.ConnectScoped(std::move(f));
 }
 
 duin::Application::Application()
@@ -598,18 +598,12 @@ void duin::Application::Ready()
 void duin::Application::EnginePostReady()
 {
     rootGameObject->ObjectReady();
-    for (auto &callback : postReadyCallbacks)
-    {
-        callback();
-    }
+    postReadySignal.Emit();
 }
 
 void duin::Application::EnginePreFrame()
 {
-    for (auto &callback : preFrameCallbacks)
-    {
-        callback();
-    }
+    preFrameSignal.Emit();
 }
 
 void duin::Application::EngineOnEvent(Event e)
@@ -621,6 +615,7 @@ void duin::Application::EngineOnEvent(Event e)
     }
 
     rootGameObject->ObjectOnEvent(e);
+    postInputSignal.Emit(e);
 }
 
 void duin::Application::OnEvent(Event e)
@@ -638,10 +633,7 @@ void duin::Application::Update(double delta)
 void duin::Application::EnginePostUpdate(double delta)
 {
     rootGameObject->ObjectUpdate(delta);
-    for (auto &callback : postUpdateCallbacks)
-    {
-        callback(delta);
-    }
+    postUpdateSignal.Emit(delta);
 }
 
 void duin::Application::EnginePhysicsUpdate(double delta)
@@ -655,10 +647,7 @@ void duin::Application::PhysicsUpdate(double delta)
 void duin::Application::EnginePostPhysicsUpdate(double delta)
 {
     rootGameObject->ObjectPhysicsUpdate(delta);
-    for (auto &callback : postPhysicsUpdateCallbacks)
-    {
-        callback(delta);
-    }
+    postPhysicsUpdateSignal.Emit(delta);
 
     duin::PhysicsServer::Get().StepPhysics(delta);
 }
@@ -674,10 +663,7 @@ void duin::Application::Draw()
 void duin::Application::EnginePostDraw()
 {
     rootGameObject->ObjectDraw();
-    for (auto &callback : postDrawCallbacks)
-    {
-        callback();
-    }
+    postDrawSignal.Emit();
 }
 
 void duin::Application::EngineDrawUI()
@@ -691,10 +677,7 @@ void duin::Application::DrawUI()
 void duin::Application::EnginePostDrawUI()
 {
     rootGameObject->ObjectDrawUI();
-    for (auto &callback : postDrawUICallbacks)
-    {
-        callback();
-    }
+    postDrawUISignal.Emit();
 }
 
 void duin::Application::EngineDebug()
@@ -717,26 +700,17 @@ void duin::Application::Debug()
 void duin::Application::EnginePostDebug()
 {
     rootGameObject->ObjectDebug();
-    for (auto &callback : postDebugCallbacks)
-    {
-        callback();
-    }
+    postDebugSignal.Emit();
 }
 
 void duin::Application::EnginePostFrame()
 {
-    for (auto &callback : postFrameCallbacks)
-    {
-        callback();
-    }
+    postFrameSignal.Emit();
 }
 
 void duin::Application::EngineExit()
 {
-    for (auto &callback : exitCallbacks)
-    {
-        callback();
-    }
+    exitSignal.Emit();
 }
 
 void duin::Application::Exit()

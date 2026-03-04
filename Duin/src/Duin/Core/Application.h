@@ -83,21 +83,22 @@ void SetImGuiINIPath(const std::string &newPath);
 /**
  * @name Post-Callback Registration
  * Register callbacks to be invoked after engine lifecycle stages.
+ * Returns a shared_ptr<ScopedConnection> — keep it alive to keep the callback connected.
  * @{
  */
-void QueuePostReadyCallback(std::function<void(void)> f);
-void QueuePostInputCallback(std::function<void(Event)> f);
-void QueuePostUpdateCallback(std::function<void(double)>);
-void QueuePostPhysicsUpdateCallback(std::function<void(double)>);
-void QueuePostDrawCallback(std::function<void()>);
-void QueuePostDrawUICallback(std::function<void()>);
-void QueuePreFrameCallback(std::function<void()>);
-void QueuePostFrameCallback(std::function<void()>);
-void QueuePostDebugCallback(std::function<void()>);
+std::shared_ptr<ScopedConnection> QueuePostReadyCallback(std::function<void(void)> f);
+std::shared_ptr<ScopedConnection> QueuePostInputCallback(std::function<void(Event)> f);
+std::shared_ptr<ScopedConnection> QueuePostUpdateCallback(std::function<void(double)>);
+std::shared_ptr<ScopedConnection> QueuePostPhysicsUpdateCallback(std::function<void(double)>);
+std::shared_ptr<ScopedConnection> QueuePostDrawCallback(std::function<void()>);
+std::shared_ptr<ScopedConnection> QueuePostDrawUICallback(std::function<void()>);
+std::shared_ptr<ScopedConnection> QueuePreFrameCallback(std::function<void()>);
+std::shared_ptr<ScopedConnection> QueuePostFrameCallback(std::function<void()>);
+std::shared_ptr<ScopedConnection> QueuePostDebugCallback(std::function<void()>);
 /** @} */
 
 /** @brief Registers a callback to be invoked on application exit. */
-void QueueExitCallback(std::function<void()>);
+std::shared_ptr<ScopedConnection> QueueExitCallback(std::function<void()>);
 
 /**
  * @class Application
