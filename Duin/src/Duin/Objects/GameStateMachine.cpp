@@ -16,52 +16,27 @@ void duin::GameState::StateEnter()
 
 void duin::GameState::StateOnEvent(Event e)
 {
-    //if (!onEventEnabled)
-    //    return;
-
     ObjectOnEvent(e);
-    //OnEvent(e);
-    OnStateOnEvent.Emit(e);
 }
 
 void duin::GameState::StateUpdate(double delta)
 {
-    //if (!updateEnabled)
-    //    return;
-
     ObjectUpdate(delta);
-    //Update(delta);
-    OnStateUpdate.Emit(delta);
 }
 
 void duin::GameState::StatePhysicsUpdate(double delta)
 {
-    //if (!physicsUpdateEnabled)
-    //    return;
-
     ObjectPhysicsUpdate(delta);
-    //PhysicsUpdate(delta);
-    OnStatePhysicsUpdate.Emit(delta);
 }
 
 void duin::GameState::StateDraw()
 {
-    //if (!drawEnabled)
-    //    return;
-
     ObjectDraw();
-    //Draw();
-    OnStateDraw.Emit();
 }
 
 void duin::GameState::StateDrawUI()
 {
-    //if (!drawUIEnabled)
-    //    return;
-
     ObjectDrawUI();
-    //DrawUI();
-    OnStateDrawUI.Emit();
 }
 
 void duin::GameState::StateExit()
@@ -98,86 +73,27 @@ duin::UUID duin::GameState::ConnectOnStateEnter(std::function<void()> callback)
     return OnStateEnter.Connect(callback);
 }
 
-duin::UUID duin::GameState::ConnectOnStateOnEvent(std::function<void(Event)> callback)
-{
-    return OnStateOnEvent.Connect(callback);
-}
-
-duin::UUID duin::GameState::ConnectOnStateUpdate(std::function<void(double)> callback)
-{
-    return OnStateUpdate.Connect(callback);
-}
-
-duin::UUID duin::GameState::ConnectOnStatePhysicsUpdate(std::function<void(double)> callback)
-{
-    return OnStatePhysicsUpdate.Connect(callback);
-}
-
-duin::UUID duin::GameState::ConnectOnStateDraw(std::function<void()> callback)
-{
-    return OnStateDraw.Connect(callback);
-}
-
-duin::UUID duin::GameState::ConnectOnStateDrawUI(std::function<void()> callback)
-{
-    return OnStateDrawUI.Connect(callback);
-}
-
 duin::UUID duin::GameState::ConnectOnStateExit(std::function<void()> callback)
 {
     return OnStateExit.Connect(callback);
 }
 
 // Signal disconnection functions
-bool duin::GameState::DisconnectOnStateEnter(UUID uuid)
+void duin::GameState::DisconnectOnStateEnter(UUID uuid)
 {
-    return OnStateEnter.Disconnect(uuid);
+    OnStateEnter.Disconnect(uuid);
 }
 
-bool duin::GameState::DisconnectOnStateOnEvent(UUID uuid)
+void duin::GameState::DisconnectOnStateExit(UUID uuid)
 {
-    return OnStateOnEvent.Disconnect(uuid);
-}
-
-bool duin::GameState::DisconnectOnStateUpdate(UUID uuid)
-{
-    return OnStateUpdate.Disconnect(uuid);
-}
-
-bool duin::GameState::DisconnectOnStatePhysicsUpdate(UUID uuid)
-{
-    return OnStatePhysicsUpdate.Disconnect(uuid);
-}
-
-bool duin::GameState::DisconnectOnStateDraw(UUID uuid)
-{
-    return OnStateDraw.Disconnect(uuid);
-}
-
-bool duin::GameState::DisconnectOnStateDrawUI(UUID uuid)
-{
-    return OnStateDrawUI.Disconnect(uuid);
-}
-
-bool duin::GameState::DisconnectOnStateExit(UUID uuid)
-{
-    return OnStateExit.Disconnect(uuid);
+    OnStateExit.Disconnect(uuid);
 }
 
 duin::SignalConnections duin::GameState::ConnectAllSignals(std::function<void()> onEnter,
-                                                           std::function<void(Event)> onEvent,
-                                                           std::function<void(double)> onUpdate,
-                                                           std::function<void(double)> onPhysicsUpdate,
-                                                           std::function<void()> onDraw, std::function<void()> onDrawUI,
                                                            std::function<void()> onExit)
 {
     SignalConnections connections;
     connections.onEnter = ConnectOnStateEnter(onEnter);
-    connections.onEvent = ConnectOnStateOnEvent(onEvent);
-    connections.onUpdate = ConnectOnStateUpdate(onUpdate);
-    connections.onPhysicsUpdate = ConnectOnStatePhysicsUpdate(onPhysicsUpdate);
-    connections.onDraw = ConnectOnStateDraw(onDraw);
-    connections.onDrawUI = ConnectOnStateDrawUI(onDrawUI);
     connections.onExit = ConnectOnStateExit(onExit);
     return connections;
 }
@@ -185,11 +101,6 @@ duin::SignalConnections duin::GameState::ConnectAllSignals(std::function<void()>
 void duin::GameState::DisconnectAllSignals(const SignalConnections &connections)
 {
     DisconnectOnStateEnter(connections.onEnter);
-    DisconnectOnStateOnEvent(connections.onEvent);
-    DisconnectOnStateUpdate(connections.onUpdate);
-    DisconnectOnStatePhysicsUpdate(connections.onPhysicsUpdate);
-    DisconnectOnStateDraw(connections.onDraw);
-    DisconnectOnStateDrawUI(connections.onDrawUI);
     DisconnectOnStateExit(connections.onExit);
 }
 
@@ -239,7 +150,7 @@ void duin::GameStateMachine::PopState()
     }
     stateStack.top()->StateExit();
     std::shared_ptr<GameState> poppedState = stateStack.top();
-    poppedState->GetParent().lock()->RemoveChildObject(poppedState);
+    RemoveChildObject(poppedState);
     stateStack.pop();
 }
 

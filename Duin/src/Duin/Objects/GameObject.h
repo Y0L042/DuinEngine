@@ -115,13 +115,13 @@ class GameObject : public std::enable_shared_from_this<GameObject>
      * @name Signal Disconnections
      * @{
      */
-    bool DisconnectOnObjectReady(UUID uuid);
-    bool DisconnectOnObjectOnEvent(UUID uuid);
-    bool DisconnectOnObjectUpdate(UUID uuid);
-    bool DisconnectOnObjectPhysicsUpdate(UUID uuid);
-    bool DisconnectOnObjectDraw(UUID uuid);
-    bool DisconnectOnObjectDrawUI(UUID uuid);
-    bool DisconnectOnObjectDebug(UUID uuid);
+    void DisconnectOnObjectReady(UUID uuid);
+    void DisconnectOnObjectOnEvent(UUID uuid);
+    void DisconnectOnObjectUpdate(UUID uuid);
+    void DisconnectOnObjectPhysicsUpdate(UUID uuid);
+    void DisconnectOnObjectDraw(UUID uuid);
+    void DisconnectOnObjectDrawUI(UUID uuid);
+    void DisconnectOnObjectDebug(UUID uuid);
     /** @} */
 
     /** @brief Connects all lifecycle signals at once. */

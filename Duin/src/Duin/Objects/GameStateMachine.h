@@ -250,26 +250,13 @@ class GameState : public GameObject
 
     // Signal connection functions
     UUID ConnectOnStateEnter(std::function<void()> callback);
-    UUID ConnectOnStateOnEvent(std::function<void(Event)> callback);
-    UUID ConnectOnStateUpdate(std::function<void(double)> callback);
-    UUID ConnectOnStatePhysicsUpdate(std::function<void(double)> callback);
-    UUID ConnectOnStateDraw(std::function<void()> callback);
-    UUID ConnectOnStateDrawUI(std::function<void()> callback);
     UUID ConnectOnStateExit(std::function<void()> callback);
 
     // Signal disconnection functions
-    bool DisconnectOnStateEnter(UUID uuid);
-    bool DisconnectOnStateOnEvent(UUID uuid);
-    bool DisconnectOnStateUpdate(UUID uuid);
-    bool DisconnectOnStatePhysicsUpdate(UUID uuid);
-    bool DisconnectOnStateDraw(UUID uuid);
-    bool DisconnectOnStateDrawUI(UUID uuid);
-    bool DisconnectOnStateExit(UUID uuid);
+    void DisconnectOnStateEnter(UUID uuid);
+    void DisconnectOnStateExit(UUID uuid);
 
-    SignalConnections ConnectAllSignals(std::function<void()> onEnter, std::function<void(Event)> onEvent,
-                                        std::function<void(double)> onUpdate,
-                                        std::function<void(double)> onPhysicsUpdate, std::function<void()> onDraw,
-                                        std::function<void()> onDrawUI, std::function<void()> onExit);
+    SignalConnections ConnectAllSignals(std::function<void()> onEnter, std::function<void()> onExit);
 
     void DisconnectAllSignals(const SignalConnections &connections);
 
@@ -293,13 +280,7 @@ class GameState : public GameObject
     std::string stateName;
     GameStateMachine &owner;
 
-    // Signals emit after main functions called
     Signal<> OnStateEnter;
-    Signal<Event> OnStateOnEvent;
-    Signal<double> OnStateUpdate;
-    Signal<double> OnStatePhysicsUpdate;
-    Signal<> OnStateDraw;
-    Signal<> OnStateDrawUI;
     Signal<> OnStateExit;
 
   private:

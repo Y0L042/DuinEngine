@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "ObjectManager.h"
 #include <Duin/Core/Debug/DebugModule.h>
+#include <Duin/Core/Debug/DNAssert.h>
 
 duin::GameObject::GameObject()
 {
@@ -21,7 +22,7 @@ void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
     {
         // Guard: Ensure this object is managed by a shared_ptr before calling shared_from_this()
         // This prevents std::bad_weak_ptr when AddChildObject/CreateChildObject is called from a constructor
-        DN_CORE_DEBUG_ASSERT(!weak_from_this().expired(),
+        DN_CORE_ASSERT(!weak_from_this().expired(),
                              "Cannot add child object: parent is not yet managed by a shared_ptr. Move "
                              "CreateChildObject() calls from the constructor to Init() or Ready()");
 
@@ -122,39 +123,39 @@ duin::UUID duin::GameObject::ConnectOnObjectDebug(std::function<void()> callback
 }
 
 // Signal disconnection implementations
-bool duin::GameObject::DisconnectOnObjectReady(UUID uuid)
+void duin::GameObject::DisconnectOnObjectReady(UUID uuid)
 {
-    return OnObjectReady.Disconnect(uuid);
+    OnObjectReady.Disconnect(uuid);
 }
 
-bool duin::GameObject::DisconnectOnObjectOnEvent(UUID uuid)
+void duin::GameObject::DisconnectOnObjectOnEvent(UUID uuid)
 {
-    return OnObjectOnEvent.Disconnect(uuid);
+    OnObjectOnEvent.Disconnect(uuid);
 }
 
-bool duin::GameObject::DisconnectOnObjectUpdate(UUID uuid)
+void duin::GameObject::DisconnectOnObjectUpdate(UUID uuid)
 {
-    return OnObjectUpdate.Disconnect(uuid);
+    OnObjectUpdate.Disconnect(uuid);
 }
 
-bool duin::GameObject::DisconnectOnObjectPhysicsUpdate(UUID uuid)
+void duin::GameObject::DisconnectOnObjectPhysicsUpdate(UUID uuid)
 {
-    return OnObjectPhysicsUpdate.Disconnect(uuid);
+    OnObjectPhysicsUpdate.Disconnect(uuid);
 }
 
-bool duin::GameObject::DisconnectOnObjectDraw(UUID uuid)
+void duin::GameObject::DisconnectOnObjectDraw(UUID uuid)
 {
-    return OnObjectDraw.Disconnect(uuid);
+    OnObjectDraw.Disconnect(uuid);
 }
 
-bool duin::GameObject::DisconnectOnObjectDrawUI(UUID uuid)
+void duin::GameObject::DisconnectOnObjectDrawUI(UUID uuid)
 {
-    return OnObjectDrawUI.Disconnect(uuid);
+    OnObjectDrawUI.Disconnect(uuid);
 }
 
-bool duin::GameObject::DisconnectOnObjectDebug(UUID uuid)
+void duin::GameObject::DisconnectOnObjectDebug(UUID uuid)
 {
-    return OnObjectDebug.Disconnect(uuid);
+    OnObjectDebug.Disconnect(uuid);
 }
 
 // Connect all signals at once
@@ -326,8 +327,8 @@ void duin::GameObject::ObjectReady()
         }
     }
 
-    Ready();
     OnObjectReady.Emit();
+    Ready();
 }
 
 void duin::GameObject::ObjectOnEvent(Event event)
@@ -343,8 +344,8 @@ void duin::GameObject::ObjectOnEvent(Event event)
         }
     }
 
-    OnEvent(event);
     OnObjectOnEvent.Emit(event);
+    OnEvent(event);
 }
 
 void duin::GameObject::ObjectUpdate(double delta)
@@ -360,8 +361,8 @@ void duin::GameObject::ObjectUpdate(double delta)
         }
     }
 
-    Update(delta);
     OnObjectUpdate.Emit(delta);
+    Update(delta);
 }
 
 void duin::GameObject::ObjectPhysicsUpdate(double delta)
@@ -377,8 +378,8 @@ void duin::GameObject::ObjectPhysicsUpdate(double delta)
         }
     }
 
-    PhysicsUpdate(delta);
     OnObjectPhysicsUpdate.Emit(delta);
+    PhysicsUpdate(delta);
 }
 
 void duin::GameObject::ObjectDraw()
@@ -394,8 +395,8 @@ void duin::GameObject::ObjectDraw()
         }
     }
 
-    Draw();
     OnObjectDraw.Emit();
+    Draw();
 }
 
 void duin::GameObject::ObjectDrawUI()
@@ -411,8 +412,8 @@ void duin::GameObject::ObjectDrawUI()
         }
     }
 
-    DrawUI();
     OnObjectDrawUI.Emit();
+    DrawUI();
 }
 
 void duin::GameObject::ObjectDebug()
@@ -428,6 +429,6 @@ void duin::GameObject::ObjectDebug()
         }
     }
 
-    Debug();
     OnObjectDebug.Emit();
+    Debug();
 }
