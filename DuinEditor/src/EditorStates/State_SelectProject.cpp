@@ -1,19 +1,19 @@
 #include "State_SelectProject.h"
 #include <Duin/Core/Debug/DNLog.h>
-#include <Duin/IO/IOModule.h>
-#include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Application.h>
 #include <external/imgui.h>
 
 #include <nfd.h>
-#include <iostream>
 #include <vector>
 #include <string>
 
 #include "FileManager.h"
 #include "Project.h"
 #include "Singleton.h"
-#include "States.h"
+#include <filesystem>
+#include "State_SceneEditor.h"
+#include <Duin/Core/Events/Event.h>
+#include <Duin/IO/ConfigValue.h>
 
 void State_SelectProject::Enter()
 {

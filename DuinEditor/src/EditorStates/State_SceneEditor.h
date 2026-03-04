@@ -7,6 +7,9 @@
 #include "FileManager.h"
 #include "SceneManager.h"
 #include "EditorWorld.h"
+#include "EditorContext.h"
+#include "Scene.h"
+#include "GUI/SceneEditor/EditorUIObjects.h"
 
 // GUI elements
 #include "GUI/SceneEditor/SceneTabs.h"
@@ -14,34 +17,27 @@
 #include "GUI/SceneEditor/SceneViewport.h"
 #include "GUI/SceneEditor/FileTree.h"
 #include "GUI/SceneEditor/EntityProperties.h"
+#include <Duin/Core/Signals/Signal.h>
+
+struct UIObjects
+{
+    std::shared_ptr<FileTree> fileTree;
+    std::shared_ptr<SceneTree> sceneTree;
+    std::shared_ptr<EntityProperties> entityProperties;
+    std::shared_ptr<SceneTabs> sceneTabs;
+    std::shared_ptr<SceneViewport> sceneViewport;
+};
+
+struct Signals
+{
+    duin::Signal<std::shared_ptr<FileManager>> onUpdateFileManager;
+    duin::Signal<duin::PackedScene &> onSetActiveScene;
+    duin::Signal<std::weak_ptr<duin::GameWorld>> onWorldChange;
+};
 
 class State_SceneEditor : public duin::GameState
 {
   public:
-    struct EditorContext
-    {
-        std::shared_ptr<FileManager> fileManager;
-        std::shared_ptr<SceneManager> sceneManager;
-        std::shared_ptr<EditorWorld> editorWorld;
-        std::shared_ptr<duin::SceneBuilder> sceneBuilder;
-    };
-
-    struct UIObjects
-    {
-        std::shared_ptr<FileTree> fileTree;
-        std::shared_ptr<SceneTree> sceneTree;
-        std::shared_ptr<EntityProperties> entityProperties;
-        std::shared_ptr<SceneTabs> sceneTabs;
-        std::shared_ptr<SceneViewport> sceneViewport;
-    };
-
-    struct Signals
-    {
-        duin::Signal<std::shared_ptr<FileManager>> onUpdateFileManager;
-        duin::Signal<duin::PackedScene &> onSetActiveScene;
-        duin::Signal<std::weak_ptr<duin::GameWorld>> onWorldChange;
-    };
-
     State_SceneEditor(duin::GameStateMachine &sm) : duin::GameState(sm) {};
     ~State_SceneEditor() = default;
 
@@ -53,17 +49,28 @@ class State_SceneEditor : public duin::GameState
     void DrawUI() override;
     void Exit() override;
 
-    void CreateEditorContext();
+    void InitializeManagers();
     void ProcessProject(Project project);
     void CreateUIObjects();
 
-    duin::PackedScene &LoadSceneFromFile(const FSNode *sceneFile);
-    void SetActiveScene(duin::PackedScene &scene);
+    void LoadSceneFromFile(const FSNode *sceneFile);
+    void OpenSceneInTab(std::weak_ptr<FSNode> sceneFile);
+    void CacheActiveScene(std::weak_ptr<Scene> scene);
+
+    void ConnectOnActiveTabChanged();
+    void ConnectOnSceneSelect();
+    void ConnectOnSetActiveScene();
+    void ConnectOnSelectEntity();
+    void ConnectOnUpdateFileManager();
 
   private:
-    EditorContext editorContext;
-    UIObjects uiObjects;
     Signals signals;
+    UIObjects uiObjects;
+    std::shared_ptr<FileManager> fileManager;
+    std::shared_ptr<SceneManager> sceneManager;
+    std::shared_ptr<duin::SceneBuilder> sceneBuilder;
+    std::weak_ptr<Scene> cachedActiveScene;
+    std::shared_ptr<duin::ScopedConnection> onSetActiveSceneHandle;
 
     std::function<void(void)> queuedNewScene;
 };
