@@ -256,11 +256,11 @@ void GameWorld::Initialize(bool connectSignals)
 
     if (connectSignals)
     {
-        QueuePostUpdateCallback(std::function<void(double)>([this](double delta) { PostUpdateQueryExecution(delta); }));
-        QueuePostPhysicsUpdateCallback(
-            std::function<void(double)>([this](double delta) { PostPhysicsUpdateQueryExecution(delta); }));
-        QueuePostDrawCallback(std::function<void()>([this]() { PostDrawQueryExecution(); }));
-        QueuePostDrawUICallback(std::function<void()>([this]() { PostDrawUIQueryExecution(); }));
+        connPostUpdate_ = QueuePostUpdateCallback([this](double delta) { PostUpdateQueryExecution(delta); });
+        connPostPhysicsUpdate_ =
+            QueuePostPhysicsUpdateCallback([this](double delta) { PostPhysicsUpdateQueryExecution(delta); });
+        connPostDraw_ = QueuePostDrawCallback([this]() { PostDrawQueryExecution(); });
+        connPostDrawUI_ = QueuePostDrawUICallback([this]() { PostDrawUIQueryExecution(); });
     }
 
     InitializeQueries();
@@ -278,22 +278,17 @@ void GameWorld::InitializeQueries()
             .build();
 
     queryCharacterBody3DUpdateTransform =
-        this->QueryBuilder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D,
-                           ECSComponent::Velocity3D>()
+        this->QueryBuilder<ECSComponent::CharacterBodyComponent, ECSComponent::Transform3D, ECSComponent::Velocity3D>()
             .With<ECSTag::PxKinematic>()
             .Cached()
             .Build();
 
     querySyncDynamicBody3DTransform =
-        this->QueryBuilder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>()
-            .Cached()
-            .Build();
+        this->QueryBuilder<const ECSComponent::DynamicBodyComponent, ECSComponent::Transform3D>().Cached().Build();
 
-    queryControlCamera =
-        this->QueryBuilder<Camera, const ECSComponent::Transform3D>().Cached().Build();
+    queryControlCamera = this->QueryBuilder<Camera, const ECSComponent::Transform3D>().Cached().Build();
 
-    querySetCameraAsActive =
-        this->QueryBuilder<Camera>().With<ECSTag::ActiveCamera>().Build();
+    querySetCameraAsActive = this->QueryBuilder<Camera>().With<ECSTag::ActiveCamera>().Build();
 
     queryDrawDebugCapsule =
         this->QueryBuilder<const ECSComponent::DebugCapsuleComponent, const ECSComponent::Transform3D>()
@@ -301,17 +296,7 @@ void GameWorld::InitializeQueries()
             .Build();
 
     queryDrawDebugCube =
-        this->QueryBuilder<const ECSComponent::DebugCubeComponent, const ECSComponent::Transform3D>()
-            .Cached()
-            .Build();
-}
-
-duin::Entity GameWorld::CreateEntityFromJSON(JSONMember &member)
-{
-    std::string ecsData = member.GetMemberDataAsString();
-    duin::Entity entity = this->Entity();
-    entity.GetFlecsEntity().from_json(ecsData.c_str());
-    return entity;
+        this->QueryBuilder<const ECSComponent::DebugCubeComponent, const ECSComponent::Transform3D>().Cached().Build();
 }
 
 void GameWorld::ActivateCameraEntity(duin::Entity entity)
@@ -386,8 +371,8 @@ void GameWorld::InitializeRemoteExplorer()
 ----------------------------------------------------------------------*/
 void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
 {
-    queryCharacterBody3DUpdateTransform.Each([](duin::Entity e, ECSComponent::CharacterBodyComponent &cb, ECSComponent::Transform3D &tx,
-              ECSComponent::Velocity3D &velocity) {
+    queryCharacterBody3DUpdateTransform.Each([](duin::Entity e, ECSComponent::CharacterBodyComponent &cb,
+                                                ECSComponent::Transform3D &tx, ECSComponent::Velocity3D &velocity) {
         // Move CharacterBody3D and get physics-resolved global position
         double delta = GetPhysicsFrameTime();
         Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
@@ -421,8 +406,9 @@ void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
 
 void GameWorld::ExecuteQuerySyncDynamicBody3DTransform()
 {
-    querySyncDynamicBody3DTransform.Each([](duin::Entity e, const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
-              ECSComponent::Transform3D &tx) {
+    querySyncDynamicBody3DTransform.Each([](duin::Entity e,
+                                            const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
+                                            ECSComponent::Transform3D &tx) {
         Vector3 newGPos = dynamicBodyComponent.body->GetPosition();
         ECSComponent::Transform3D::SetGlobalPosition(e.GetFlecsEntity(), newGPos);
         Quaternion newGRot = dynamicBodyComponent.body->GetRotation();
@@ -432,22 +418,23 @@ void GameWorld::ExecuteQuerySyncDynamicBody3DTransform()
 
 void GameWorld::ExecuteQueryTransform3DHierarchicalUpdate()
 {
-    queryTransform3DHierarchicalUpdate.each([](flecs::entity e, ECSComponent::Transform3D &tx, const ECSComponent::Transform3D *parent_tx) {
-        // ECSComponent::Transform3D::SetGlobalPosition(e, tx.GetPosition());
-        // tx.SetGlobalPosition(tx.GetPosition());
-        if (parent_tx)
-        {
-            // Vector3 sum = Vector3Add(tx.GetPosition(), parent_tx->GetGlobalPosition());
-            // tx.SetGlobalPosition(sum);
-            //  Vector3 sum = Vector3Add(ECSComponent::Transform3D::GetGlobalPosition(e), parent_tx->GetPosition());
-            // ECSComponent::Transform3D::SetGlobalPosition(e, sum);
+    queryTransform3DHierarchicalUpdate.each(
+        [](flecs::entity e, ECSComponent::Transform3D &tx, const ECSComponent::Transform3D *parent_tx) {
+            // ECSComponent::Transform3D::SetGlobalPosition(e, tx.GetPosition());
+            // tx.SetGlobalPosition(tx.GetPosition());
+            if (parent_tx)
+            {
+                // Vector3 sum = Vector3Add(tx.GetPosition(), parent_tx->GetGlobalPosition());
+                // tx.SetGlobalPosition(sum);
+                //  Vector3 sum = Vector3Add(ECSComponent::Transform3D::GetGlobalPosition(e), parent_tx->GetPosition());
+                // ECSComponent::Transform3D::SetGlobalPosition(e, sum);
 
-            tx.InvalidateCacheFlags();
+                tx.InvalidateCacheFlags();
 
-            // Force a recalculation by accessing the global position:
-            ECSComponent::Transform3D::GetGlobalPosition(e);
-        }
-    });
+                // Force a recalculation by accessing the global position:
+                ECSComponent::Transform3D::GetGlobalPosition(e);
+            }
+        });
 }
 
 void GameWorld::ExecuteQueryControlCamera()
@@ -493,26 +480,24 @@ void GameWorld::ExecuteQueryDrawCube()
 
 void GameWorld::ExecuteQueryDrawDebugCapsule()
 {
-    queryDrawDebugCapsule.Each([](duin::Entity e,
-              const ECSComponent::DebugCapsuleComponent &capsule,
-              const ECSComponent::Transform3D &tx) {
-        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
-        Vector3 top = { gPos.x, gPos.y + capsule.height, gPos.z };
-        DrawDebugCapsule(gPos, top, capsule.radius);
-    });
+    queryDrawDebugCapsule.Each(
+        [](duin::Entity e, const ECSComponent::DebugCapsuleComponent &capsule, const ECSComponent::Transform3D &tx) {
+            Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
+            Vector3 top = {gPos.x, gPos.y + capsule.height, gPos.z};
+            DrawDebugCapsule(gPos, top, capsule.radius);
+        });
 }
 
 void GameWorld::ExecuteQueryDrawDebugCube()
 {
-    queryDrawDebugCube.Each([](duin::Entity e,
-              const ECSComponent::DebugCubeComponent &cube,
-              const ECSComponent::Transform3D &tx) {
-        Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
-        Vector3 halfSize = { cube.width * 0.5f, cube.height * 0.5f, cube.length * 0.5f };
-        Vector3 min = Vector3Subtract(gPos, halfSize);
-        Vector3 max = Vector3Add(gPos, halfSize);
-        DrawDebugBox(min, max);
-    });
+    queryDrawDebugCube.Each(
+        [](duin::Entity e, const ECSComponent::DebugCubeComponent &cube, const ECSComponent::Transform3D &tx) {
+            Vector3 gPos = ECSComponent::Transform3D::GetGlobalPosition(e.GetFlecsEntity());
+            Vector3 halfSize = {cube.width * 0.5f, cube.height * 0.5f, cube.length * 0.5f};
+            Vector3 min = Vector3Subtract(gPos, halfSize);
+            Vector3 max = Vector3Add(gPos, halfSize);
+            DrawDebugBox(min, max);
+        });
 }
 
 void GameWorld::ExecuteQuerySetCameraAsActive()

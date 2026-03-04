@@ -20,6 +20,7 @@
 #include "Duin/Core/Maths/DuinMaths.h"
 #include "Duin/Core/Debug/DNLog.h"
 #include "Duin/Core/Utils/UUID.h"
+#include "Duin/Core/Signals/Signal.h"
 #include "Duin/Physics/PhysicsIncludes.h"
 #include "Duin/Render/Camera.h"
 
@@ -1210,9 +1211,6 @@ class GameWorld : public World
     /** @brief Initializes the ECS world and registers components. */
     void Initialize(bool connectSignals = true);
 
-    /** @brief Creates entity from JSON data. @deprecated Use SceneBuilder. */
-    duin::Entity CreateEntityFromJSON(JSONMember &member);
-
     /** @brief Sets the given entity as the active camera. */
     void ActivateCameraEntity(duin::Entity entity);
 
@@ -1257,6 +1255,11 @@ class GameWorld : public World
 
   private:
     void InitializeRemoteExplorer();
+
+    std::shared_ptr<ScopedConnection> connPostUpdate_;
+    std::shared_ptr<ScopedConnection> connPostPhysicsUpdate_;
+    std::shared_ptr<ScopedConnection> connPostDraw_;
+    std::shared_ptr<ScopedConnection> connPostDrawUI_;
 
     flecs::query<ECSComponent::Transform3D, const ECSComponent::Transform3D *>
         queryTransform3DHierarchicalUpdate;

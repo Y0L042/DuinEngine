@@ -14,6 +14,11 @@ duin::World::~World() {};
 
 duin::Entity duin::World::Entity(const std::string &name)
 {
+    if (!flecsWorld)
+    {
+        DN_CORE_FATAL("World is uninitialized!");
+        return duin::Entity();
+    }
     duin::Entity e;
     flecs::entity flecsEntity = flecsWorld.entity(name.c_str());
     e.SetWorld(this);
