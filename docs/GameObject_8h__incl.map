@@ -1,34 +1,48 @@
 <map id="GameObject.h" name="GameObject.h">
-<area shape="rect" id="Node000001" title="Scene graph node with lifecycle callbacks." alt="" coords="375,5,490,31"/>
-<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="102,240,273,265"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="375,24,328,29,275,39,221,56,171,81,137,105,111,129,103,143,99,157,100,173,107,191,126,214,150,231,147,236,122,218,102,193,95,174,94,157,98,141,107,126,134,100,169,76,219,51,274,34,327,23,375,18"/>
-<area shape="rect" id="Node000007" href="$Event_8h.html" title="Event wrapper classes for SDL events." alt="" coords="495,86,682,111"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="457,28,555,78,553,82,454,33"/>
-<area shape="rect" id="Node000009" href="$SignalsModule_8h_source.html" title=" " alt="" coords="181,79,369,119"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="411,33,327,75,324,70,409,28"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="348,240,411,265"/>
-<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="433,32,388,227,382,226,427,31"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="435,240,495,265"/>
-<area shape="poly" id="edge18_Node000001_Node000013" title=" " alt="" coords="437,31,464,226,459,227,432,32"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="706,86,783,111"/>
-<area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="491,28,587,48,695,76,703,79,702,84,693,81,586,53,490,33"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="267,313,353,339"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="208,263,280,304,277,309,206,268"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="93,313,159,339"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="179,267,147,305,143,301,175,264"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="183,313,242,339"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="194,265,207,300,202,301,189,267"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="5,313,68,339"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="164,268,75,310,73,305,162,263"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="515,167,662,192"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="591,112,591,153,586,153,586,112"/>
-<area shape="rect" id="Node000010" href="$SignalConnections_8h.html" title="Bundle of signal connection UUIDs for lifecycle events." alt="" coords="117,167,271,192"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="257,121,218,159,214,155,254,117"/>
-<area shape="rect" id="Node000011" href="$Signal_8h_source.html" title=" " alt="" coords="295,167,370,192"/>
-<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="291,117,318,154,314,157,287,120"/>
-<area shape="poly" id="edge10_Node000010_Node000002" title=" " alt="" coords="196,193,192,227,187,226,190,192"/>
-<area shape="poly" id="edge12_Node000011_Node000002" title=" " alt="" coords="310,194,224,236,222,232,308,190"/>
-<area shape="poly" id="edge14_Node000011_Node000003" title=" " alt="" coords="333,193,317,300,311,299,328,192"/>
-<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="343,191,366,227,362,230,338,194"/>
-<area shape="poly" id="edge15_Node000011_Node000013" title=" " alt="" coords="355,190,432,231,430,236,353,194"/>
+<area shape="rect" id="Node000001" title="Scene graph node with lifecycle callbacks." alt="" coords="967,5,1081,31"/>
+<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="103,240,273,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="966,28,825,47,741,62,658,81,533,119,411,162,228,237,226,232,409,157,531,114,657,76,740,57,824,42,966,23"/>
+<area shape="rect" id="Node000007" href="$Event_8h.html" title="Event wrapper classes for SDL events." alt="" coords="1195,86,1381,111"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1063,28,1237,80,1236,85,1062,33"/>
+<area shape="rect" id="Node000009" href="$SignalsModule_8h_source.html" title=" " alt="" coords="670,79,858,119"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="987,33,840,77,839,72,985,28"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="807,313,870,339"/>
+<area shape="poly" id="edge24_Node000001_Node000017" title=" " alt="" coords="1039,29,1080,71,1126,132,1143,166,1152,201,1150,235,1134,267,1117,281,1092,292,1025,309,950,319,884,325,884,320,949,314,1024,303,1090,287,1114,276,1130,264,1145,234,1147,202,1138,168,1121,134,1076,74,1035,33"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="958,240,1018,265"/>
+<area shape="poly" id="edge26_Node000001_Node000018" title=" " alt="" coords="1025,32,994,227,989,226,1020,31"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="1043,240,1120,265"/>
+<area shape="poly" id="edge25_Node000001_Node000020" title=" " alt="" coords="1030,31,1078,226,1073,227,1024,32"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="267,313,354,339"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,263,280,304,278,309,206,268"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="176,313,243,339"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="194,265,205,299,199,301,189,266"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,313,64,339"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="164,268,73,310,71,305,162,263"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="89,313,151,339"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="179,268,143,305,139,301,175,264"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1215,167,1361,192"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="1291,112,1291,153,1285,153,1285,112"/>
+<area shape="rect" id="Node000010" href="$SignalConnections_8h.html" title="Bundle of signal connection UUIDs for lifecycle events." alt="" coords="456,167,611,192"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="710,121,581,165,579,160,708,116"/>
+<area shape="rect" id="Node000011" href="$Signal_8h_source.html" title=" " alt="" coords="727,167,801,192"/>
+<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="767,119,767,153,761,153,761,119"/>
+<area shape="poly" id="edge10_Node000010_Node000002" title=" " alt="" coords="478,195,258,240,257,235,477,189"/>
+<area shape="poly" id="edge12_Node000011_Node000002" title=" " alt="" coords="727,188,288,242,287,237,726,183"/>
+<area shape="poly" id="edge20_Node000011_Node000003" title=" " alt="" coords="727,186,506,208,396,224,358,233,338,242,327,254,320,269,314,300,309,299,315,267,323,251,334,238,356,228,395,219,505,203,726,181"/>
+<area shape="rect" id="Node000012" href="$DNAssert_8h.html" title="Assertion macros for debugging and error checking." alt="" coords="349,240,558,265"/>
+<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="727,192,517,240,516,234,726,187"/>
+<area shape="rect" id="Node000014" href="$DNLog_8h.html" title="Logging system and macros." alt="" coords="582,240,773,265"/>
+<area shape="poly" id="edge15_Node000011_Node000014" title=" " alt="" coords="752,194,704,233,700,229,748,190"/>
+<area shape="poly" id="edge19_Node000011_Node000017" title=" " alt="" coords="772,191,829,300,824,302,768,194"/>
+<area shape="poly" id="edge21_Node000011_Node000018" title=" " alt="" coords="801,189,946,235,944,240,799,195"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="848,240,933,265"/>
+<area shape="poly" id="edge22_Node000011_Node000019" title=" " alt="" coords="786,190,859,231,857,235,783,194"/>
+<area shape="poly" id="edge23_Node000011_Node000020" title=" " alt="" coords="802,186,1030,237,1029,242,801,192"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="396,313,479,339"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="453,266,445,301,440,300,448,265"/>
+<area shape="rect" id="Node000015" href="$Core_8h_source.html" title=" " alt="" coords="651,313,783,339"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="686,264,706,300,702,303,682,267"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="503,313,627,339"/>
+<area shape="poly" id="edge17_Node000014_Node000016" title=" " alt="" coords="661,268,597,308,594,303,658,263"/>
+<area shape="poly" id="edge18_Node000014_Node000017" title=" " alt="" coords="704,263,801,305,799,310,702,268"/>
 </map>

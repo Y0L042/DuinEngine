@@ -66,7 +66,6 @@ var NAVTREE =
       ] ],
       [ "File Locations", "md_docs_2RenderingPipeline.html#autotoc_md32", null ]
     ] ],
-    [ "Deprecated List", "deprecated.html", null ],
     [ "Categories", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -85,8 +84,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ]
+        [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -103,10 +101,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"classduin_1_1Entity.html#a689706b7897dd7cc9bb59c88485c54a6",
-"classduin_1_1World.html#a233e74dcebf1c77fffac169056ba95ff",
-"structGraphEditor_1_1Link.html",
-"structduin_1_1Entity_1_1ID.html#a9d88790749ce72f67f6da4e5a5f3d2b3"
+"classduin_1_1Entity.html#a6618af7bd3bd025d2e5978236810a4b5",
+"classduin_1_1World.html#a02e8e39cdd6d1fe77cc443b526e31772",
+"structGeometryT_1_1Geometry.html",
+"structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

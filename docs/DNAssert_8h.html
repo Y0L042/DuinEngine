@@ -109,31 +109,23 @@ $(document).ready(function(){initNavTree('DNAssert_8h.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">DNAssert.h File Reference<div class="ingroups"><a class="el" href="group__Core.html">Core Module</a> &raquo; <a class="el" href="group__Core__Debug.html">Debugging</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Assertion macros for debugging and error checking.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="DNLog_8h_source.html">DNLog.h</a>&quot;</code><br />
-<code>#include &lt;csignal&gt;</code><br />
+<div class="textblock"><code>#include &lt;doctest.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for DNAssert.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="DNAssert_8h__incl.png" border="0" usemap="#aDNAssert_8h" alt=""/></div>
 <map name="aDNAssert_8h" id="aDNAssert_8h">
-<area shape="rect" title="Assertion macros for debugging and error checking." alt="" coords="224,5,319,31"/>
-<area shape="rect" href="DNLog_8h.html" title="Logging system and macros." alt="" coords="185,79,262,104"/>
-<area shape="poly" title=" " alt="" coords="266,33,241,69,236,66,261,30"/>
-<area shape="rect" title=" " alt="" coords="287,79,355,104"/>
-<area shape="poly" title=" " alt="" coords="282,29,307,66,303,69,277,33"/>
-<area shape="rect" href="Core_8h_source.html" title=" " alt="" coords="5,152,137,177"/>
-<area shape="poly" title=" " alt="" coords="200,106,109,149,107,144,198,102"/>
-<area shape="rect" title=" " alt="" coords="161,152,285,177"/>
-<area shape="poly" title=" " alt="" coords="226,104,226,138,221,138,221,104"/>
-<area shape="rect" title=" " alt="" coords="309,152,372,177"/>
-<area shape="poly" title=" " alt="" coords="244,102,311,142,308,147,241,106"/>
+<area shape="rect" title="Assertion macros for debugging and error checking." alt="" coords="5,5,100,31"/>
+<area shape="rect" title=" " alt="" coords="11,79,94,104"/>
+<area shape="poly" title=" " alt="" coords="55,31,55,65,50,65,50,31"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -141,61 +133,98 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="DNAssert_8h__dep__incl.png" border="0" usemap="#aDNAssert_8hdep" alt=""/></div>
 <map name="aDNAssert_8hdep" id="aDNAssert_8hdep">
-<area shape="rect" title="Assertion macros for debugging and error checking." alt="" coords="361,5,456,31"/>
-<area shape="rect" href="DebugModule_8h_source.html" title=" " alt="" coords="347,79,471,104"/>
-<area shape="poly" title=" " alt="" coords="411,44,411,79,406,79,406,44"/>
-<area shape="rect" href="ConfigValue_8h_source.html" title=" " alt="" coords="149,152,260,177"/>
-<area shape="poly" title=" " alt="" coords="364,111,239,154,237,149,362,106"/>
-<area shape="rect" href="GameObject_8cpp_source.html" title=" " alt="" coords="343,152,474,177"/>
-<area shape="poly" title=" " alt="" coords="411,118,411,152,406,152,406,118"/>
-<area shape="rect" href="JSONValue_8h.html" title="Defines the duin::JSONValue class for manipulating JSON data using RapidJSON." alt="" coords="528,152,631,177"/>
-<area shape="poly" title=" " alt="" coords="450,107,552,149,550,154,448,112"/>
-<area shape="rect" href="ConfigValue_8cpp_source.html" title=" " alt="" coords="5,225,132,251"/>
-<area shape="poly" title=" " alt="" coords="172,186,92,227,90,223,170,181"/>
-<area shape="rect" href="IOModule_8h_source.html" title=" " alt="" coords="157,225,253,251"/>
-<area shape="poly" title=" " alt="" coords="207,191,207,225,202,225,202,191"/>
-<area shape="rect" href="Duin_8h_source.html" title=" " alt="" coords="274,519,338,544"/>
-<area shape="poly" title=" " alt="" coords="204,265,201,306,203,359,212,416,220,443,232,469,256,497,284,516,281,521,253,501,228,472,215,445,207,417,197,359,196,306,199,264"/>
-<area shape="rect" href="Duin_8cpp_source.html" title=" " alt="" coords="267,592,345,617"/>
-<area shape="poly" title=" " alt="" coords="309,558,309,592,303,592,303,558"/>
-<area shape="poly" title=" " alt="" coords="515,181,265,228,254,230,253,225,264,223,514,176"/>
-<area shape="rect" href="Component_8h_source.html" title=" " alt="" coords="277,225,386,251"/>
-<area shape="poly" title=" " alt="" coords="527,184,372,228,371,223,526,179"/>
-<area shape="rect" href="SceneBuilder_8cpp_source.html" title=" " alt="" coords="753,519,886,544"/>
-<area shape="poly" title=" " alt="" coords="645,163,729,171,775,180,818,193,858,212,890,237,911,269,917,289,919,310,919,386,915,432,894,472,868,500,841,520,838,516,865,496,889,469,910,430,914,386,914,310,912,290,907,272,886,240,855,216,817,198,773,185,728,176,645,169"/>
-<area shape="rect" href="SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="760,445,879,471"/>
-<area shape="poly" title=" " alt="" coords="644,169,701,176,760,187,810,203,830,212,843,224,859,252,866,282,867,315,863,347,846,405,828,446,823,444,841,404,857,346,862,314,861,283,854,254,839,227,827,217,809,208,759,193,700,182,644,174"/>
-<area shape="rect" href="src_2Duin_2IO_2JSONValue_8cpp_source.html" title=" " alt="" coords="410,225,527,251"/>
-<area shape="poly" title=" " alt="" coords="551,187,488,227,485,223,549,183"/>
-<area shape="rect" href="docs_2examples_2JSONValue_8cpp.html" title="Comprehensive usage examples for duin::JSONValue class." alt="" coords="551,225,669,251"/>
-<area shape="poly" title=" " alt="" coords="592,189,607,224,603,226,587,191"/>
-<area shape="rect" href="SceneDefinition_8h_source.html" title=" " alt="" coords="693,225,829,251"/>
-<area shape="poly" title=" " alt="" coords="622,180,732,223,730,228,620,185"/>
-<area shape="rect" href="Component_8cpp_source.html" title=" " alt="" coords="417,299,541,324"/>
-<area shape="poly" title=" " alt="" coords="368,254,456,296,454,301,366,259"/>
-<area shape="rect" href="DECS_8h_source.html" title=" " alt="" coords="323,299,393,324"/>
-<area shape="poly" title=" " alt="" coords="343,263,356,298,351,299,338,265"/>
-<area shape="rect" href="DECS_8cpp_source.html" title=" " alt="" coords="507,372,591,397"/>
-<area shape="poly" title=" " alt="" coords="402,326,518,369,517,374,401,331"/>
-<area shape="rect" href="ECSModule_8h_source.html" title=" " alt="" coords="354,445,461,471"/>
-<area shape="poly" title=" " alt="" coords="367,337,386,396,405,444,400,446,381,398,362,338"/>
-<area shape="rect" href="GameWorld_8h.html" title="Entity Component System manager and component definitions." alt="" coords="615,372,725,397"/>
-<area shape="poly" title=" " alt="" coords="407,322,618,369,617,375,406,327"/>
-<area shape="rect" href="Scene_8h_source.html" title=" " alt="" coords="247,372,320,397"/>
-<area shape="poly" title=" " alt="" coords="338,335,297,374,294,370,334,331"/>
-<area shape="rect" href="World_8cpp_source.html" title=" " alt="" coords="396,372,483,397"/>
-<area shape="poly" title=" " alt="" coords="383,331,428,370,424,374,380,335"/>
-<area shape="poly" title=" " alt="" coords="381,481,324,521,321,516,378,476"/>
-<area shape="poly" title=" " alt="" coords="615,403,451,448,449,443,614,398"/>
-<area shape="rect" href="GameWorld_8cpp_source.html" title=" " alt="" coords="610,445,735,471"/>
-<area shape="poly" title=" " alt="" coords="674,411,675,445,670,445,668,411"/>
-<area shape="poly" title=" " alt="" coords="637,407,618,421,602,437,595,453,600,469,623,485,661,499,753,518,752,524,660,504,621,490,596,472,590,453,598,434,615,417,634,402"/>
-<area shape="poly" title=" " alt="" coords="707,401,796,443,794,448,705,406"/>
-<area shape="poly" title=" " alt="" coords="822,484,822,519,817,519,817,484"/>
-<area shape="rect" href="Scene_8cpp_source.html" title=" " alt="" coords="242,445,330,471"/>
-<area shape="poly" title=" " alt="" coords="287,411,288,445,283,445,282,411"/>
-<area shape="rect" href="SceneDefinition_8cpp_source.html" title=" " alt="" coords="677,299,828,324"/>
-<area shape="poly" title=" " alt="" coords="760,265,757,299,751,298,755,264"/>
+<area shape="rect" title="Assertion macros for debugging and error checking." alt="" coords="967,5,1062,31"/>
+<area shape="rect" href="DNAssert_8cpp_source.html" title=" " alt="" coords="815,79,926,104"/>
+<area shape="poly" title=" " alt="" coords="981,39,895,81,893,76,978,34"/>
+<area shape="rect" href="DebugModule_8h_source.html" title=" " alt="" coords="1226,79,1350,104"/>
+<area shape="poly" title=" " alt="" coords="1072,32,1244,76,1243,81,1071,37"/>
+<area shape="rect" href="GameObject_8cpp_source.html" title=" " alt="" coords="977,372,1108,397"/>
+<area shape="poly" title=" " alt="" coords="1017,44,1017,163,1017,239,1020,277,1027,315,1041,371,1036,373,1021,316,1015,278,1012,239,1012,163,1012,44"/>
+<area shape="rect" href="SceneBuilder_8cpp_source.html" title=" " alt="" coords="1549,519,1683,544"/>
+<area shape="poly" title=" " alt="" coords="1076,19,1325,30,1487,40,1655,55,1812,74,1943,97,1994,111,2033,126,2059,143,2066,153,2068,163,2068,386,2065,401,2056,416,2025,441,1978,462,1922,481,1796,509,1683,525,1682,520,1795,503,1920,476,1976,458,2022,436,2052,412,2060,399,2063,386,2063,164,2061,155,2055,147,2031,131,1992,116,1942,102,1811,79,1654,60,1487,46,1325,35,1075,24"/>
+<area shape="rect" href="Signal_8h_source.html" title=" " alt="" coords="873,152,948,177"/>
+<area shape="poly" title=" " alt="" coords="1000,44,921,153,917,150,996,41"/>
+<area shape="rect" href="ConfigValue_8h_source.html" title=" " alt="" coords="1773,152,1883,177"/>
+<area shape="poly" title=" " alt="" coords="1364,100,1773,153,1772,159,1363,105"/>
+<area shape="poly" title=" " alt="" coords="1249,112,1211,131,1169,157,1128,189,1093,227,1072,265,1058,306,1046,372,1041,371,1053,305,1067,263,1089,224,1124,185,1166,152,1209,126,1246,107"/>
+<area shape="rect" href="JSONValue_8h.html" title="Defines the duin::JSONValue class for manipulating JSON data using RapidJSON." alt="" coords="1477,152,1579,177"/>
+<area shape="poly" title=" " alt="" coords="1341,105,1490,149,1488,154,1339,110"/>
+<area shape="rect" href="ConfigValue_8cpp_source.html" title=" " alt="" coords="1901,225,2027,251"/>
+<area shape="poly" title=" " alt="" coords="1863,181,1943,223,1941,227,1860,186"/>
+<area shape="rect" href="IOModule_8h_source.html" title=" " alt="" coords="1780,225,1876,251"/>
+<area shape="poly" title=" " alt="" coords="1831,191,1831,225,1825,225,1825,191"/>
+<area shape="rect" href="Duin_8h_source.html" title=" " alt="" coords="1109,519,1173,544"/>
+<area shape="poly" title=" " alt="" coords="1822,265,1802,311,1771,368,1728,426,1701,452,1672,473,1630,490,1572,504,1429,522,1282,530,1174,533,1174,527,1282,525,1428,516,1571,499,1628,485,1669,468,1698,448,1724,423,1766,366,1797,308,1817,263"/>
+<area shape="rect" href="Duin_8cpp_source.html" title=" " alt="" coords="1102,592,1181,617"/>
+<area shape="poly" title=" " alt="" coords="1144,558,1144,592,1139,592,1139,558"/>
+<area shape="poly" title=" " alt="" coords="1590,178,1781,223,1779,228,1589,183"/>
+<area shape="rect" href="Component_8h_source.html" title=" " alt="" coords="1404,225,1513,251"/>
+<area shape="poly" title=" " alt="" coords="1509,189,1472,227,1468,223,1505,185"/>
+<area shape="poly" title=" " alt="" coords="1593,173,1646,191,1672,205,1694,223,1708,241,1714,258,1720,298,1721,325,1718,354,1702,409,1673,472,1653,499,1631,520,1628,517,1649,496,1668,469,1697,407,1713,353,1716,325,1715,299,1709,259,1703,244,1690,227,1669,210,1644,196,1592,178"/>
+<area shape="rect" href="SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="1427,445,1546,471"/>
+<area shape="poly" title=" " alt="" coords="1594,175,1635,193,1654,206,1669,224,1693,270,1702,312,1700,333,1694,354,1669,399,1649,414,1619,427,1545,448,1544,443,1617,422,1647,410,1665,396,1689,352,1695,332,1697,312,1688,271,1664,227,1650,210,1632,197,1592,180"/>
+<area shape="rect" href="src_2Duin_2IO_2JSONValue_8cpp_source.html" title=" " alt="" coords="1537,225,1655,251"/>
+<area shape="poly" title=" " alt="" coords="1550,185,1587,223,1583,227,1547,189"/>
+<area shape="rect" href="docs_2examples_2JSONValue_8cpp.html" title="Comprehensive usage examples for duin::JSONValue class." alt="" coords="1103,225,1220,251"/>
+<area shape="poly" title=" " alt="" coords="1464,181,1221,228,1220,223,1463,176"/>
+<area shape="rect" href="SceneDefinition_8h_source.html" title=" " alt="" coords="1244,225,1380,251"/>
+<area shape="poly" title=" " alt="" coords="1481,184,1348,228,1346,223,1479,179"/>
+<area shape="rect" href="Component_8cpp_source.html" title=" " alt="" coords="1486,299,1610,324"/>
+<area shape="poly" title=" " alt="" coords="1485,257,1535,296,1532,301,1482,261"/>
+<area shape="rect" href="DECS_8h_source.html" title=" " alt="" coords="1392,299,1461,324"/>
+<area shape="poly" title=" " alt="" coords="1450,264,1434,300,1429,297,1445,262"/>
+<area shape="rect" href="DECS_8cpp_source.html" title=" " alt="" coords="1473,372,1557,397"/>
+<area shape="poly" title=" " alt="" coords="1453,330,1502,370,1499,374,1450,335"/>
+<area shape="rect" href="ECSModule_8h_source.html" title=" " alt="" coords="1232,445,1339,471"/>
+<area shape="poly" title=" " alt="" coords="1379,327,1277,354,1218,374,1214,383,1214,392,1224,411,1244,429,1265,443,1262,447,1240,433,1220,414,1208,393,1209,382,1214,370,1276,349,1378,322"/>
+<area shape="rect" href="GameWorld_8h.html" title="Entity Component System manager and component definitions." alt="" coords="1227,372,1338,397"/>
+<area shape="poly" title=" " alt="" coords="1393,332,1307,374,1305,369,1390,328"/>
+<area shape="rect" href="Scene_8h_source.html" title=" " alt="" coords="1581,372,1654,397"/>
+<area shape="poly" title=" " alt="" coords="1471,326,1587,369,1585,374,1469,331"/>
+<area shape="rect" href="World_8cpp_source.html" title=" " alt="" coords="1362,372,1449,397"/>
+<area shape="poly" title=" " alt="" coords="1422,338,1411,373,1406,371,1417,337"/>
+<area shape="poly" title=" " alt="" coords="1251,479,1166,521,1164,516,1249,474"/>
+<area shape="poly" title=" " alt="" coords="1286,411,1288,445,1282,445,1281,411"/>
+<area shape="rect" href="GameWorld_8cpp_source.html" title=" " alt="" coords="1083,445,1208,471"/>
+<area shape="poly" title=" " alt="" coords="1250,406,1169,447,1167,443,1247,401"/>
+<area shape="poly" title=" " alt="" coords="1310,403,1358,436,1417,468,1493,497,1564,516,1562,521,1491,502,1415,473,1356,441,1307,407"/>
+<area shape="poly" title=" " alt="" coords="1329,399,1455,443,1453,448,1327,404"/>
+<area shape="poly" title=" " alt="" coords="1521,475,1596,516,1594,521,1518,480"/>
+<area shape="rect" href="Scene_8cpp_source.html" title=" " alt="" coords="1571,445,1659,471"/>
+<area shape="poly" title=" " alt="" coords="1619,411,1618,445,1612,445,1614,411"/>
+<area shape="rect" href="SceneDefinition_8cpp_source.html" title=" " alt="" coords="1217,299,1367,324"/>
+<area shape="poly" title=" " alt="" coords="1308,265,1298,299,1293,298,1302,263"/>
+<area shape="poly" title=" " alt="" coords="943,182,1264,370,1262,374,941,187"/>
+<area shape="rect" href="Signal_8cpp_source.html" title=" " alt="" coords="837,225,926,251"/>
+<area shape="poly" title=" " alt="" coords="903,191,889,226,884,224,898,189"/>
+<area shape="rect" href="SignalsModule_8h_source.html" title=" " alt="" coords="683,225,813,251"/>
+<area shape="poly" title=" " alt="" coords="873,185,776,228,774,223,871,180"/>
+<area shape="rect" href="Application_8h.html" title="Main application class and engine utility functions." alt="" coords="532,372,639,397"/>
+<area shape="poly" title=" " alt="" coords="726,262,600,374,597,370,723,258"/>
+<area shape="rect" href="GameObject_8h.html" title="Scene graph node with lifecycle callbacks." alt="" coords="764,299,879,324"/>
+<area shape="poly" title=" " alt="" coords="772,258,811,297,808,300,768,262"/>
+<area shape="poly" title=" " alt="" coords="614,403,672,441,721,468,774,485,830,499,940,516,1037,525,1109,527,1109,533,1037,530,939,522,829,504,773,490,719,473,669,446,611,407"/>
+<area shape="poly" title=" " alt="" coords="653,391,1070,443,1083,444,1082,450,1069,448,652,396"/>
+<area shape="rect" href="Application_8cpp_source.html" title=" " alt="" coords="243,445,365,471"/>
+<area shape="poly" title=" " alt="" coords="528,403,350,448,349,443,526,398"/>
+<area shape="rect" href="Camera_8cpp_source.html" title=" " alt="" coords="390,445,490,471"/>
+<area shape="poly" title=" " alt="" coords="551,406,465,448,463,443,549,401"/>
+<area shape="rect" href="CharacterBody_8cpp_source.html" title=" " alt="" coords="514,445,657,471"/>
+<area shape="poly" title=" " alt="" coords="588,411,588,445,583,445,583,411"/>
+<area shape="rect" href="Input_8cpp_source.html" title=" " alt="" coords="5,445,88,471"/>
+<area shape="poly" title=" " alt="" coords="518,395,330,416,100,448,89,450,88,445,100,443,329,410,518,390"/>
+<area shape="rect" href="Renderer_8cpp_source.html" title=" " alt="" coords="112,445,219,471"/>
+<area shape="poly" title=" " alt="" coords="519,400,231,448,219,450,218,445,230,443,518,394"/>
+<area shape="poly" title=" " alt="" coords="870,326,1008,369,1006,374,869,331"/>
+<area shape="poly" title=" " alt="" coords="771,330,624,374,623,369,770,325"/>
+<area shape="rect" href="GameStateMachine_8h.html" title="Stack&#45;based state machine for application states." alt="" coords="740,372,903,397"/>
+<area shape="poly" title=" " alt="" coords="824,338,824,372,819,372,819,338"/>
+<area shape="rect" href="ObjectModule_8h_source.html" title=" " alt="" coords="934,445,1058,471"/>
+<area shape="poly" title=" " alt="" coords="856,329,916,370,958,409,988,443,984,447,954,413,913,374,853,333"/>
+<area shape="rect" href="GameStateMachine_8cpp_source.html" title=" " alt="" coords="733,445,910,471"/>
+<area shape="poly" title=" " alt="" coords="824,411,824,445,819,445,819,411"/>
+<area shape="poly" title=" " alt="" coords="863,400,968,443,966,448,861,405"/>
+<area shape="poly" title=" " alt="" coords="1033,474,1119,516,1116,521,1030,479"/>
 </map>
 </div>
 </div>
@@ -203,29 +232,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad41e7ffcb6f4e1c2c545449caf43fa48" id="r_ad41e7ffcb6f4e1c2c545449caf43fa48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#ad41e7ffcb6f4e1c2c545449caf43fa48">DN_DEBUG_BREAK</a>()&#160;&#160;&#160;std::raise(SIGTRAP)</td></tr>
-<tr class="separator:ad41e7ffcb6f4e1c2c545449caf43fa48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a182c0780535eccde0c9e57237f68efc9" id="r_a182c0780535eccde0c9e57237f68efc9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a182c0780535eccde0c9e57237f68efc9">DN_ASSERT_FAIL_CORE_</a>(condition,  msg)</td></tr>
-<tr class="separator:a182c0780535eccde0c9e57237f68efc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aa7bd4928fd9be59c5a915eb0b98549" id="r_a1aa7bd4928fd9be59c5a915eb0b98549"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a1aa7bd4928fd9be59c5a915eb0b98549">DN_ASSERT_FAIL_</a>(condition,  msg)</td></tr>
-<tr class="separator:a1aa7bd4928fd9be59c5a915eb0b98549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Core Assert Macros</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>For engine/core code assertions. Always active. </p>
-</div></td></tr>
-<tr class="memitem:a68b9b0b2e95736038e38ea513471205c" id="r_a68b9b0b2e95736038e38ea513471205c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a68b9b0b2e95736038e38ea513471205c">DN_CORE_ASSERT</a>(condition,  msg)&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_CORE_(condition, msg))</td></tr>
+<tr class="memitem:a68b9b0b2e95736038e38ea513471205c" id="r_a68b9b0b2e95736038e38ea513471205c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a68b9b0b2e95736038e38ea513471205c">DN_CORE_ASSERT</a>(condition,  msg)&#160;&#160;&#160;CHECK_MESSAGE(condition, msg)</td></tr>
 <tr class="separator:a68b9b0b2e95736038e38ea513471205c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10fa2919d72dd2fd72ad79c38aacd688" id="r_a10fa2919d72dd2fd72ad79c38aacd688"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a10fa2919d72dd2fd72ad79c38aacd688">DN_CORE_ASSERT_NOMSG</a>(condition)&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_CORE_(condition, &quot;&quot;))</td></tr>
+<tr class="memitem:a10fa2919d72dd2fd72ad79c38aacd688" id="r_a10fa2919d72dd2fd72ad79c38aacd688"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a10fa2919d72dd2fd72ad79c38aacd688">DN_CORE_ASSERT_NOMSG</a>(condition)&#160;&#160;&#160;CHECK(condition)</td></tr>
 <tr class="separator:a10fa2919d72dd2fd72ad79c38aacd688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Client Assert Macros</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>For application code assertions. Always active. </p>
-</div></td></tr>
-<tr class="memitem:a49e601c57610e325c1dbc371243dc8d4" id="r_a49e601c57610e325c1dbc371243dc8d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a49e601c57610e325c1dbc371243dc8d4">DN_ASSERT</a>(condition,  msg)&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_(condition, msg))</td></tr>
+<tr class="memitem:a49e601c57610e325c1dbc371243dc8d4" id="r_a49e601c57610e325c1dbc371243dc8d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a49e601c57610e325c1dbc371243dc8d4">DN_ASSERT</a>(condition,  msg)&#160;&#160;&#160;CHECK_MESSAGE(condition, msg)</td></tr>
 <tr class="separator:a49e601c57610e325c1dbc371243dc8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75ca99dc158b2fa2de4f5b76ced74ad2" id="r_a75ca99dc158b2fa2de4f5b76ced74ad2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a75ca99dc158b2fa2de4f5b76ced74ad2">DN_ASSERT_NOMSG</a>(condition)&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_(condition, &quot;&quot;))</td></tr>
+<tr class="memitem:a75ca99dc158b2fa2de4f5b76ced74ad2" id="r_a75ca99dc158b2fa2de4f5b76ced74ad2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a75ca99dc158b2fa2de4f5b76ced74ad2">DN_ASSERT_NOMSG</a>(condition)&#160;&#160;&#160;CHECK(condition)</td></tr>
 <tr class="separator:a75ca99dc158b2fa2de4f5b76ced74ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Debug-Only Assert Macros</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>Only active when DN_DEBUG is defined. Compile to nothing in release builds. </p>
-</div></td></tr>
 <tr class="memitem:aaacc1f15c075ea08542fef601edec3f8" id="r_aaacc1f15c075ea08542fef601edec3f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#aaacc1f15c075ea08542fef601edec3f8">DN_CORE_DEBUG_ASSERT</a>(condition,  msg)&#160;&#160;&#160;((void)0)</td></tr>
 <tr class="separator:aaacc1f15c075ea08542fef601edec3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a024a429baab9c724b3cc0deb735ed83e" id="r_a024a429baab9c724b3cc0deb735ed83e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a024a429baab9c724b3cc0deb735ed83e">DN_CORE_DEBUG_ASSERT_NOMSG</a>(condition)&#160;&#160;&#160;((void)0)</td></tr>
@@ -234,13 +248,15 @@ Macros</h2></td></tr>
 <tr class="separator:a76732be1233fa120278d04534ead75b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d42dd516d34dcbd4e8ffcb2fb13a06e" id="r_a3d42dd516d34dcbd4e8ffcb2fb13a06e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a3d42dd516d34dcbd4e8ffcb2fb13a06e">DN_DEBUG_ASSERT_NOMSG</a>(condition)&#160;&#160;&#160;((void)0)</td></tr>
 <tr class="separator:a3d42dd516d34dcbd4e8ffcb2fb13a06e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Verify Macros</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>Like asserts, but always evaluate the condition (even in release). Use when the condition has side effects that must always execute. </p>
-</div></td></tr>
-<tr class="memitem:a2a558b571d6c113e35b83d1ce29735dc" id="r_a2a558b571d6c113e35b83d1ce29735dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a2a558b571d6c113e35b83d1ce29735dc">DN_VERIFY</a>(condition,  msg)&#160;&#160;&#160;((void)(condition))</td></tr>
-<tr class="separator:a2a558b571d6c113e35b83d1ce29735dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae40b23bd23160ad096ebc3753cfeb323" id="r_ae40b23bd23160ad096ebc3753cfeb323"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#ae40b23bd23160ad096ebc3753cfeb323">DN_CORE_VERIFY</a>(condition,  msg)&#160;&#160;&#160;((void)(condition))</td></tr>
 <tr class="separator:ae40b23bd23160ad096ebc3753cfeb323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a558b571d6c113e35b83d1ce29735dc" id="r_a2a558b571d6c113e35b83d1ce29735dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a2a558b571d6c113e35b83d1ce29735dc">DN_VERIFY</a>(condition,  msg)&#160;&#160;&#160;((void)(condition))</td></tr>
+<tr class="separator:a2a558b571d6c113e35b83d1ce29735dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a88a6b414d9e853ff35156d46f8e7bfc4" id="r_a88a6b414d9e853ff35156d46f8e7bfc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="DNAssert_8h.html#a88a6b414d9e853ff35156d46f8e7bfc4">duin::InitAsserts</a> ()</td></tr>
+<tr class="separator:a88a6b414d9e853ff35156d46f8e7bfc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Assertion macros for debugging and error checking. </p>
@@ -278,77 +294,12 @@ Macros</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_(condition, msg))</td>
+          <td></td><td>&#160;&#160;&#160;CHECK_MESSAGE(condition, msg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00064">64</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
-
-</div>
-</div>
-<a id="a1aa7bd4928fd9be59c5a915eb0b98549" name="a1aa7bd4928fd9be59c5a915eb0b98549"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1aa7bd4928fd9be59c5a915eb0b98549">&#9670;&#160;</a></span>DN_ASSERT_FAIL_</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DN_ASSERT_FAIL_</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">condition, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">msg&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    (DN_FATAL(<span class="stringliteral">&quot;Assertion failed: {}&quot;</span>, #condition), DN_FATAL(<span class="stringliteral">&quot;  Location: {}:{} in {}&quot;</span>, __FILE__, __LINE__, __func__),  \</div>
-<div class="line">     DN_FATAL(<span class="stringliteral">&quot;  Message: {}&quot;</span>, msg), DN_DEBUG_BREAK())</div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00042">42</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
-
-</div>
-</div>
-<a id="a182c0780535eccde0c9e57237f68efc9" name="a182c0780535eccde0c9e57237f68efc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a182c0780535eccde0c9e57237f68efc9">&#9670;&#160;</a></span>DN_ASSERT_FAIL_CORE_</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DN_ASSERT_FAIL_CORE_</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">condition, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">msg&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    (DN_CORE_FATAL(<span class="stringliteral">&quot;Assertion failed: {}&quot;</span>, #condition),                                                                \</div>
-<div class="line">     DN_CORE_FATAL(<span class="stringliteral">&quot;  Location: {}:{} in {}&quot;</span>, __FILE__, __LINE__, __func__), DN_CORE_FATAL(<span class="stringliteral">&quot;  Message: {}&quot;</span>, msg),      \</div>
-<div class="line">     DN_DEBUG_BREAK())</div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00037">37</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00023">23</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -363,12 +314,12 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">condition</td><td>)</td>
-          <td>&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_(condition, &quot;&quot;))</td>
+          <td>&#160;&#160;&#160;CHECK(condition)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00066">66</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00024">24</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -393,12 +344,12 @@ Macros</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_CORE_(condition, msg))</td>
+          <td></td><td>&#160;&#160;&#160;CHECK_MESSAGE(condition, msg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00052">52</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00021">21</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -413,12 +364,12 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">condition</td><td>)</td>
-          <td>&#160;&#160;&#160;((condition) ? (void)0 : DN_ASSERT_FAIL_CORE_(condition, &quot;&quot;))</td>
+          <td>&#160;&#160;&#160;CHECK(condition)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00054">54</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00022">22</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -448,7 +399,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00085">85</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00045">45</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -468,7 +419,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00086">86</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00046">46</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -498,7 +449,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00110">110</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00060">60</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -528,7 +479,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00087">87</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00047">47</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -548,26 +499,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00088">88</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
-
-</div>
-</div>
-<a id="ad41e7ffcb6f4e1c2c545449caf43fa48" name="ad41e7ffcb6f4e1c2c545449caf43fa48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad41e7ffcb6f4e1c2c545449caf43fa48">&#9670;&#160;</a></span>DN_DEBUG_BREAK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DN_DEBUG_BREAK</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;std::raise(SIGTRAP)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00033">33</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00048">48</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
 
 </div>
 </div>
@@ -597,7 +529,27 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00109">109</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DNAssert_8h_source.html#l00061">61</a> of file <a class="el" href="DNAssert_8h_source.html">DNAssert.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a88a6b414d9e853ff35156d46f8e7bfc4" name="a88a6b414d9e853ff35156d46f8e7bfc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88a6b414d9e853ff35156d46f8e7bfc4">&#9670;&#160;</a></span>InitAsserts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::InitAsserts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="DNAssert_8cpp_source.html#l00049">49</a> of file <a class="el" href="DNAssert_8cpp_source.html">DNAssert.cpp</a>.</p>
 
 </div>
 </div>

@@ -44,7 +44,7 @@ var searchData=
   ['getinputvector_41',['GetInputVector',['../namespaceduin_1_1Input.html#a0fb28052967a3ce464629769db24f954',1,'duin::Input']]],
   ['getint_42',['GetInt',['../classduin_1_1JSONValue.html#ab92b04c14a9cc7193b302133cebb45cf',1,'duin::JSONValue']]],
   ['getkeypressed_43',['GetKeyPressed',['../namespaceduin_1_1Input.html#a964cf48d82226e5f1726868c37f3a4de',1,'duin::Input']]],
-  ['getlistenercount_44',['GetListenerCount',['../classduin_1_1Signal.html#a0cd01203f3736144bb247e1285fc865e',1,'duin::Signal']]],
+  ['getlistenercount_44',['GetListenerCount',['../classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b',1,'duin::Signal']]],
   ['getmember_45',['GetMember',['../classduin_1_1JSONValue.html#ae307c708ace460fca79b3851b8e9f959',1,'duin::JSONValue']]],
   ['getmousedelta_46',['GetMouseDelta',['../namespaceduin_1_1Input.html#a338bfd0bdb930df1699caa1f7596292c',1,'duin::Input']]],
   ['getmouseglobalposition_47',['GetMouseGlobalPosition',['../namespaceduin_1_1Input.html#a3f99a08cbba6a6fcbe7e5b57761a2361',1,'duin::Input']]],

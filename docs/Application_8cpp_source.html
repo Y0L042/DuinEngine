@@ -178,16 +178,16 @@ $(document).ready(function(){initNavTree('Application_8cpp_source.html',''); ini
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">static</span> SDL_WindowFlags sdlWindowFlags = 0;</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">void</span>)&gt;&gt; postReadyCallbacks;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<a class="code hl_class" href="classduin_1_1Event.html">duin::Event</a>)&gt;&gt; postInputCallbacks;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">double</span>)&gt;&gt; postUpdateCallbacks;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">double</span>)&gt;&gt; postPhysicsUpdateCallbacks;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">void</span>)&gt;&gt; postDrawCallbacks;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">void</span>)&gt;&gt; postDrawUICallbacks;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">void</span>)&gt;&gt; preFrameCallbacks;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">void</span>)&gt;&gt; postFrameCallbacks;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">void</span>)&gt;&gt; postDebugCallbacks;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword">static</span> std::vector&lt;std::function&lt;void(<span class="keywordtype">void</span>)&gt;&gt; exitCallbacks;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;&gt;</a>            postReadySignal;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;duin::Event&gt;</a> postInputSignal;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;double&gt;</a>      postUpdateSignal;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;double&gt;</a>      postPhysicsUpdateSignal;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;&gt;</a>            postDrawSignal;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;&gt;</a>            postDrawUISignal;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;&gt;</a>            preFrameSignal;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;&gt;</a>            postFrameSignal;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;&gt;</a>            postDebugSignal;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword">static</span> <a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;&gt;</a>            exitSignal;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
 <div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="Application_8h.html#afb8840e3b2602e2d7b9cc0d185f3d796">   74</a></span>std::string <a class="code hl_function" href="Application_8h.html#afb8840e3b2602e2d7b9cc0d185f3d796">duin::GetRootDirectory</a>()</div>
@@ -446,55 +446,55 @@ $(document).ready(function(){initNavTree('Application_8cpp_source.html',''); ini
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>}</div>
 </div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="keywordtype">void</span> duin::QueuePostReadyCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">void</span>)&gt; f)</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostReadyCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">void</span>)&gt; f)</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>{</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    postReadyCallbacks.push_back(f);</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <span class="keywordflow">return</span> postReadySignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>}</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span><span class="keywordtype">void</span> duin::QueuePostInputCallback(std::function&lt;<span class="keywordtype">void</span>(Event)&gt; f)</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostInputCallback(std::function&lt;<span class="keywordtype">void</span>(Event)&gt; f)</div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>{</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    postInputCallbacks.push_back(f);</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    <span class="keywordflow">return</span> postInputSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>}</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="keywordtype">void</span> duin::QueuePostUpdateCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; f)</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostUpdateCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; f)</div>
 <div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>{</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    postUpdateCallbacks.push_back(f);</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <span class="keywordflow">return</span> postUpdateSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>}</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="keywordtype">void</span> duin::QueuePostPhysicsUpdateCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; f)</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostPhysicsUpdateCallback(std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; f)</div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>{</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    postPhysicsUpdateCallbacks.push_back(f);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keywordflow">return</span> postPhysicsUpdateSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>}</div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="keywordtype">void</span> duin::QueuePostDrawCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostDrawCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>{</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    postDrawCallbacks.push_back(f);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    <span class="keywordflow">return</span> postDrawSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>}</div>
 <div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span><span class="keywordtype">void</span> duin::QueuePostDrawUICallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostDrawUICallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
 <div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>{</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    postDrawUICallbacks.push_back(f);</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="keywordflow">return</span> postDrawUISignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>}</div>
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span><span class="keywordtype">void</span> duin::QueuePreFrameCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePreFrameCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
 <div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>{</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    preFrameCallbacks.push_back(f);</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    <span class="keywordflow">return</span> preFrameSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>}</div>
 <div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="keywordtype">void</span> duin::QueuePostFrameCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostFrameCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
 <div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>{</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    postFrameCallbacks.push_back(f);</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keywordflow">return</span> postFrameSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>}</div>
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span><span class="keywordtype">void</span> duin::QueuePostDebugCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>std::shared_ptr&lt;duin::ScopedConnection&gt; duin::QueuePostDebugCallback(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>{</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    postDebugCallbacks.push_back(f);</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    <span class="keywordflow">return</span> postDebugSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>}</div>
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> </div>
 <div class="foldopen" id="foldopen00322" data-start="{" data-end="}">
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno"><a class="line" href="Application_8h.html#aaa705c5bc39b275ccfad84374efe3720">  322</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="Application_8h.html#aaa705c5bc39b275ccfad84374efe3720">duin::QueueExitCallback</a>(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno"><a class="line" href="Application_8h.html#a75037cccb45543b0b940e7e57da16272">  322</a></span>std::shared_ptr&lt;duin::ScopedConnection&gt; <a class="code hl_function" href="Application_8h.html#a75037cccb45543b0b940e7e57da16272">duin::QueueExitCallback</a>(std::function&lt;<span class="keywordtype">void</span>()&gt; f)</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>{</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    exitCallbacks.push_back(f);</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    <span class="keywordflow">return</span> exitSignal.<a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::move(f));</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>}</div>
 </div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
@@ -784,177 +784,151 @@ $(document).ready(function(){initNavTree('Application_8cpp_source.html',''); ini
 <div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span><span class="keywordtype">void</span> duin::Application::EnginePostReady()</div>
 <div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>{</div>
 <div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>    rootGameObject-&gt;ObjectReady();</div>
-<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : postReadyCallbacks)</div>
-<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>    {</div>
-<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>        callback();</div>
-<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>    }</div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>}</div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span> </div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span><span class="keywordtype">void</span> duin::Application::EnginePreFrame()</div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>{</div>
-<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : preFrameCallbacks)</div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>    {</div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>        callback();</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    }</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>}</div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span> </div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span><span class="keywordtype">void</span> duin::Application::EngineOnEvent(Event e)</div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>{</div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">duin::Input::IsKeyDown</a>(DN_KEY_ESCAPE))</div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>    {</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>        DN_CORE_INFO(<span class="stringliteral">&quot;Quit event called... {}&quot;</span>, e.sdlEvent.key.key);</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>        gameShouldQuit = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>    }</div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span> </div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>    rootGameObject-&gt;ObjectOnEvent(e);</div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>}</div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span> </div>
-<div class="foldopen" id="foldopen00626" data-start="{" data-end="}">
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c">  626</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c">duin::Application::OnEvent</a>(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> e)</div>
-<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>{</div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>}</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>    postReadySignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>();</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>}</div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span> </div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span><span class="keywordtype">void</span> duin::Application::EnginePreFrame()</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>{</div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>    preFrameSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>();</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>}</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span> </div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span><span class="keywordtype">void</span> duin::Application::EngineOnEvent(Event e)</div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>{</div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">duin::Input::IsKeyDown</a>(DN_KEY_ESCAPE))</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    {</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        DN_CORE_INFO(<span class="stringliteral">&quot;Quit event called... {}&quot;</span>, e.sdlEvent.key.key);</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        gameShouldQuit = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>    }</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span> </div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>    rootGameObject-&gt;ObjectOnEvent(e);</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>    postInputSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>(e);</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>}</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span> </div>
+<div class="foldopen" id="foldopen00621" data-start="{" data-end="}">
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c">  621</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c">duin::Application::OnEvent</a>(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> e)</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>{</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>}</div>
 </div>
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span> </div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span><span class="keywordtype">void</span> duin::Application::EngineUpdate(<span class="keywordtype">double</span> delta)</div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>{</div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>}</div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span> </div>
-<div class="foldopen" id="foldopen00634" data-start="{" data-end="}">
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16">  634</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16">duin::Application::Update</a>(<span class="keywordtype">double</span> delta)</div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>{</div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>}</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span> </div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span><span class="keywordtype">void</span> duin::Application::EngineUpdate(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>{</div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>}</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span> </div>
+<div class="foldopen" id="foldopen00629" data-start="{" data-end="}">
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16">  629</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16">duin::Application::Update</a>(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>{</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>}</div>
 </div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span> </div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span><span class="keywordtype">void</span> duin::Application::EnginePostUpdate(<span class="keywordtype">double</span> delta)</div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>{</div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>    rootGameObject-&gt;ObjectUpdate(delta);</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : postUpdateCallbacks)</div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>    {</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>        callback(delta);</div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>    }</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span> </div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span><span class="keywordtype">void</span> duin::Application::EnginePostUpdate(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>{</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>    rootGameObject-&gt;ObjectUpdate(delta);</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>    postUpdateSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>(delta);</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>}</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span> </div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span><span class="keywordtype">void</span> duin::Application::EnginePhysicsUpdate(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>{</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>}</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span> </div>
+<div class="foldopen" id="foldopen00643" data-start="{" data-end="}">
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a">  643</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a">duin::Application::PhysicsUpdate</a>(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>{</div>
 <div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>}</div>
+</div>
 <div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span> </div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span><span class="keywordtype">void</span> duin::Application::EnginePhysicsUpdate(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span><span class="keywordtype">void</span> duin::Application::EnginePostPhysicsUpdate(<span class="keywordtype">double</span> delta)</div>
 <div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>{</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>}</div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span> </div>
-<div class="foldopen" id="foldopen00651" data-start="{" data-end="}">
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a">  651</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a">duin::Application::PhysicsUpdate</a>(<span class="keywordtype">double</span> delta)</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>{</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>    rootGameObject-&gt;ObjectPhysicsUpdate(delta);</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    postPhysicsUpdateSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>(delta);</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span> </div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>    <a class="code hl_function" href="classduin_1_1PhysicsServer.html#a9a3467ec90a96ffc69574afdc90f6dce">duin::PhysicsServer::Get</a>().<a class="code hl_function" href="classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb">StepPhysics</a>(delta);</div>
 <div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>}</div>
-</div>
 <div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span> </div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span><span class="keywordtype">void</span> duin::Application::EnginePostPhysicsUpdate(<span class="keywordtype">double</span> delta)</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span><span class="keywordtype">void</span> duin::Application::EngineDraw()</div>
 <div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>{</div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>    rootGameObject-&gt;ObjectPhysicsUpdate(delta);</div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : postPhysicsUpdateCallbacks)</div>
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>    {</div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>        callback(delta);</div>
-<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>    }</div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span> </div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>    <a class="code hl_function" href="classduin_1_1PhysicsServer.html#a9a3467ec90a96ffc69574afdc90f6dce">duin::PhysicsServer::Get</a>().<a class="code hl_function" href="classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb">StepPhysics</a>(delta);</div>
-<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>}</div>
-<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span> </div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span><span class="keywordtype">void</span> duin::Application::EngineDraw()</div>
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>{</div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>}</div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span> </div>
-<div class="foldopen" id="foldopen00670" data-start="{" data-end="}">
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9">  670</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9">duin::Application::Draw</a>()</div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>{</div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>}</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>}</div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span> </div>
+<div class="foldopen" id="foldopen00659" data-start="{" data-end="}">
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9">  659</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9">duin::Application::Draw</a>()</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>{</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>}</div>
 </div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span> </div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span><span class="keywordtype">void</span> duin::Application::EnginePostDraw()</div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>{</div>
-<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>    rootGameObject-&gt;ObjectDraw();</div>
-<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : postDrawCallbacks)</div>
-<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>    {</div>
-<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>        callback();</div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>    }</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span> </div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span><span class="keywordtype">void</span> duin::Application::EnginePostDraw()</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>{</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>    rootGameObject-&gt;ObjectDraw();</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>    postDrawSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>();</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>}</div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span> </div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span><span class="keywordtype">void</span> duin::Application::EngineDrawUI()</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>{</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>}</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span> </div>
+<div class="foldopen" id="foldopen00673" data-start="{" data-end="}">
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440">  673</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440">duin::Application::DrawUI</a>()</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>{</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>}</div>
+</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span> </div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span><span class="keywordtype">void</span> duin::Application::EnginePostDrawUI()</div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>{</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>    rootGameObject-&gt;ObjectDrawUI();</div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>    postDrawUISignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>();</div>
 <div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>}</div>
 <div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span> </div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span><span class="keywordtype">void</span> duin::Application::EngineDrawUI()</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span><span class="keywordtype">void</span> duin::Application::EngineDebug()</div>
 <div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>{</div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>}</div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span> </div>
-<div class="foldopen" id="foldopen00687" data-start="{" data-end="}">
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440">  687</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440">duin::Application::DrawUI</a>()</div>
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>{</div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>}</div>
-</div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span> </div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span><span class="keywordtype">void</span> duin::Application::EnginePostDrawUI()</div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>{</div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>    rootGameObject-&gt;ObjectDrawUI();</div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : postDrawUICallbacks)</div>
-<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>    {</div>
-<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>        callback();</div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>    }</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span><span class="preprocessor">#ifdef DN_DEBUG</span></div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>    <span class="comment">// if (IsKeyPressed(KEY_GRAVE)) {</span></div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>    <span class="comment">//     if (DebugIsGamePaused()) {</span></div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>    <span class="comment">//  DebugResumeGame();</span></div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>    <span class="comment">//     } else {</span></div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>    <span class="comment">//         DebugPauseGame();</span></div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>    <span class="comment">//   }</span></div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>    <span class="comment">// }</span></div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span><span class="preprocessor">#endif </span><span class="comment">/* DN_DEBUG */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>}</div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span> </div>
+<div class="foldopen" id="foldopen00696" data-start="{" data-end="}">
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190">  696</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190">duin::Application::Debug</a>()</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>{</div>
 <div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>}</div>
+</div>
 <div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span> </div>
-<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span><span class="keywordtype">void</span> duin::Application::EngineDebug()</div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span><span class="keywordtype">void</span> duin::Application::EnginePostDebug()</div>
 <div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>{</div>
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span><span class="preprocessor">#ifdef DN_DEBUG</span></div>
-<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span>    <span class="comment">// if (IsKeyPressed(KEY_GRAVE)) {</span></div>
-<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>    <span class="comment">//     if (DebugIsGamePaused()) {</span></div>
-<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>    <span class="comment">//  DebugResumeGame();</span></div>
-<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>    <span class="comment">//     } else {</span></div>
-<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>    <span class="comment">//         DebugPauseGame();</span></div>
-<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>    <span class="comment">//   }</span></div>
-<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>    <span class="comment">// }</span></div>
-<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span><span class="preprocessor">#endif </span><span class="comment">/* DN_DEBUG */</span><span class="preprocessor"></span></div>
-<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>}</div>
-<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span> </div>
-<div class="foldopen" id="foldopen00713" data-start="{" data-end="}">
-<div class="line"><a id="l00713" name="l00713"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190">  713</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190">duin::Application::Debug</a>()</div>
-<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>{</div>
-<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>}</div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span>    rootGameObject-&gt;ObjectDebug();</div>
+<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span>    postDebugSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>();</div>
+<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>}</div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span> </div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span><span class="keywordtype">void</span> duin::Application::EnginePostFrame()</div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>{</div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>    postFrameSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>();</div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>}</div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span> </div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span><span class="keywordtype">void</span> duin::Application::EngineExit()</div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>{</div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>    exitSignal.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>();</div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>}</div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span> </div>
+<div class="foldopen" id="foldopen00716" data-start="{" data-end="}">
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6">  716</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6">duin::Application::Exit</a>()</div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>{</div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>}</div>
 </div>
-<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span> </div>
-<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span><span class="keywordtype">void</span> duin::Application::EnginePostDebug()</div>
-<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>{</div>
-<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>    rootGameObject-&gt;ObjectDebug();</div>
-<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : postDebugCallbacks)</div>
-<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>    {</div>
-<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>        callback();</div>
-<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>    }</div>
-<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>}</div>
-<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span> </div>
-<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span><span class="keywordtype">void</span> duin::Application::EnginePostFrame()</div>
-<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>{</div>
-<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : postFrameCallbacks)</div>
-<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>    {</div>
-<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span>        callback();</div>
-<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>    }</div>
-<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>}</div>
-<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span> </div>
-<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span><span class="keywordtype">void</span> duin::Application::EngineExit()</div>
-<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>{</div>
-<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;callback : exitCallbacks)</div>
-<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>    {</div>
-<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>        callback();</div>
-<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>    }</div>
-<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>}</div>
-<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span> </div>
-<div class="foldopen" id="foldopen00742" data-start="{" data-end="}">
-<div class="line"><a id="l00742" name="l00742"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6">  742</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6">duin::Application::Exit</a>()</div>
-<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>{</div>
-<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>}</div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span> </div>
+<div class="foldopen" id="foldopen00720" data-start="{" data-end="}">
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b">  720</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b">duin::Application::AddChildObject</a>(std::shared_ptr&lt;GameObject&gt; child)</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>{</div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>    rootGameObject-&gt;AddChildObject(child);</div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>}</div>
 </div>
-<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span> </div>
-<div class="foldopen" id="foldopen00746" data-start="{" data-end="}">
-<div class="line"><a id="l00746" name="l00746"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b">  746</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b">duin::Application::AddChildObject</a>(std::shared_ptr&lt;GameObject&gt; child)</div>
-<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>{</div>
-<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>    rootGameObject-&gt;AddChildObject(child);</div>
-<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>}</div>
-</div>
-<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span> </div>
-<div class="foldopen" id="foldopen00751" data-start="{" data-end="}">
-<div class="line"><a id="l00751" name="l00751"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">  751</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">duin::Application::RemoveChildObject</a>(std::shared_ptr&lt;GameObject&gt; child)</div>
-<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>{</div>
-<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>    rootGameObject-&gt;RemoveChildObject(child);</div>
-<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>}</div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span> </div>
+<div class="foldopen" id="foldopen00725" data-start="{" data-end="}">
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno"><a class="line" href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">  725</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">duin::Application::RemoveChildObject</a>(std::shared_ptr&lt;GameObject&gt; child)</div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>{</div>
+<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>    rootGameObject-&gt;RemoveChildObject(child);</div>
+<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span>}</div>
 </div>
 <div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
 <div class="ttc" id="aApplication_8h_html_a06657e4114fe3254de76c06662ca0d30"><div class="ttname"><a href="Application_8h.html#a06657e4114fe3254de76c06662ca0d30">duin::DebugIsGamePaused</a></div><div class="ttdeci">int DebugIsGamePaused()</div><div class="ttdoc">Checks if game is paused.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00090">Application.cpp:90</a></div></div>
@@ -971,10 +945,10 @@ $(document).ready(function(){initNavTree('Application_8cpp_source.html',''); ini
 <div class="ttc" id="aApplication_8h_html_a55e1aa953e36ea6cbe2895e33e1df4bd"><div class="ttname"><a href="Application_8h.html#a55e1aa953e36ea6cbe2895e33e1df4bd">duin::SetAllowDockingInMain</a></div><div class="ttdeci">void SetAllowDockingInMain(bool enable)</div><div class="ttdoc">Enables or disables ImGui docking in main viewport.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00258">Application.cpp:258</a></div></div>
 <div class="ttc" id="aApplication_8h_html_a56daf91a3353537ae8b8a81def736cb3"><div class="ttname"><a href="Application_8h.html#a56daf91a3353537ae8b8a81def736cb3">duin::GetTicksNano</a></div><div class="ttdeci">double GetTicksNano()</div><div class="ttdoc">Returns elapsed time in nanoseconds since SDL init.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00213">Application.cpp:213</a></div></div>
 <div class="ttc" id="aApplication_8h_html_a62446673e5e806e310ac470542c2ace9"><div class="ttname"><a href="Application_8h.html#a62446673e5e806e310ac470542c2ace9">duin::GetWindowWidth</a></div><div class="ttdeci">int GetWindowWidth()</div><div class="ttdoc">Returns window width in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00227">Application.cpp:227</a></div></div>
+<div class="ttc" id="aApplication_8h_html_a75037cccb45543b0b940e7e57da16272"><div class="ttname"><a href="Application_8h.html#a75037cccb45543b0b940e7e57da16272">duin::QueueExitCallback</a></div><div class="ttdeci">std::shared_ptr&lt; ScopedConnection &gt; QueueExitCallback(std::function&lt; void()&gt;)</div><div class="ttdoc">Registers a callback to be invoked on application exit.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00322">Application.cpp:322</a></div></div>
 <div class="ttc" id="aApplication_8h_html_a794171dbf4077b756a1aa1a0de3948f4"><div class="ttname"><a href="Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4">duin::GetWindowHeight</a></div><div class="ttdeci">int GetWindowHeight()</div><div class="ttdoc">Returns window height in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00232">Application.cpp:232</a></div></div>
 <div class="ttc" id="aApplication_8h_html_aa3a8d563198006f0624a69a158a928e9"><div class="ttname"><a href="Application_8h.html#aa3a8d563198006f0624a69a158a928e9">duin::MaximizeWindow</a></div><div class="ttdeci">void MaximizeWindow()</div><div class="ttdoc">Maximizes the application window.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00243">Application.cpp:243</a></div></div>
 <div class="ttc" id="aApplication_8h_html_aa905fb66eef95eb73b4d153691ca529f"><div class="ttname"><a href="Application_8h.html#aa905fb66eef95eb73b4d153691ca529f">duin::DebugPauseGame</a></div><div class="ttdeci">void DebugPauseGame()</div><div class="ttdoc">Pauses game updates (debug feature).</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00080">Application.cpp:80</a></div></div>
-<div class="ttc" id="aApplication_8h_html_aaa705c5bc39b275ccfad84374efe3720"><div class="ttname"><a href="Application_8h.html#aaa705c5bc39b275ccfad84374efe3720">duin::QueueExitCallback</a></div><div class="ttdeci">void QueueExitCallback(std::function&lt; void()&gt;)</div><div class="ttdoc">Registers a callback to be invoked on application exit.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00322">Application.cpp:322</a></div></div>
 <div class="ttc" id="aApplication_8h_html_abcea3cb41f726c5889b85a897865c547"><div class="ttname"><a href="Application_8h.html#abcea3cb41f726c5889b85a897865c547">duin::DelayProcessMilli</a></div><div class="ttdeci">void DelayProcessMilli(float milliseconds)</div><div class="ttdoc">Delays execution for specified milliseconds.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00222">Application.cpp:222</a></div></div>
 <div class="ttc" id="aApplication_8h_html_ac0cbf88f2a926d339b057fdb7c12371b"><div class="ttname"><a href="Application_8h.html#ac0cbf88f2a926d339b057fdb7c12371b">duin::SetWindowResizable</a></div><div class="ttdeci">void SetWindowResizable(bool enable)</div><div class="ttdoc">Enables or disables window resizing.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00237">Application.cpp:237</a></div></div>
 <div class="ttc" id="aApplication_8h_html_aca1d01670279cef4e7dbaf3323fe9753"><div class="ttname"><a href="Application_8h.html#aca1d01670279cef4e7dbaf3323fe9753">duin::SetFramerate</a></div><div class="ttdeci">void SetFramerate(int framerate)</div><div class="ttdoc">Sets the target framerate.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00105">Application.cpp:105</a></div></div>
@@ -988,21 +962,21 @@ $(document).ready(function(){initNavTree('Application_8cpp_source.html',''); ini
 <div class="ttc" id="aEventHandler_8h_html"><div class="ttname"><a href="EventHandler_8h.html">EventHandler.h</a></div><div class="ttdoc">Event polling and dispatch system.</div></div>
 <div class="ttc" id="aInput_8h_html"><div class="ttname"><a href="Input_8h.html">Input.h</a></div><div class="ttdoc">Low-level input query functions.</div></div>
 <div class="ttc" id="aRenderer_8h_html"><div class="ttname"><a href="Renderer_8h.html">Renderer.h</a></div><div class="ttdoc">Core rendering system and utilities.</div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_a28b881c1330c89e598136a631a12536a"><div class="ttname"><a href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a">duin::Application::PhysicsUpdate</a></div><div class="ttdeci">virtual void PhysicsUpdate(double delta)</div><div class="ttdoc">Override for fixed-timestep physics logic.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00651">Application.cpp:651</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_a30d7def0ba4af5c30c4a60d9d71a2190"><div class="ttname"><a href="classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190">duin::Application::Debug</a></div><div class="ttdeci">virtual void Debug()</div><div class="ttdoc">Override for debug rendering and logic.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00713">Application.cpp:713</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_a28b881c1330c89e598136a631a12536a"><div class="ttname"><a href="classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a">duin::Application::PhysicsUpdate</a></div><div class="ttdeci">virtual void PhysicsUpdate(double delta)</div><div class="ttdoc">Override for fixed-timestep physics logic.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00643">Application.cpp:643</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_a30d7def0ba4af5c30c4a60d9d71a2190"><div class="ttname"><a href="classduin_1_1Application.html#a30d7def0ba4af5c30c4a60d9d71a2190">duin::Application::Debug</a></div><div class="ttdeci">virtual void Debug()</div><div class="ttdoc">Override for debug rendering and logic.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00696">Application.cpp:696</a></div></div>
 <div class="ttc" id="aclassduin_1_1Application_html_a5b0b785b01aa16b43dc3506716aaa522"><div class="ttname"><a href="classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522">duin::Application::Run</a></div><div class="ttdeci">void Run()</div><div class="ttdoc">Starts the main loop. Call once after configuration.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00352">Application.cpp:352</a></div></div>
 <div class="ttc" id="aclassduin_1_1Application_html_a5c485974f6ba4ebacdf2d24d930bdb34"><div class="ttname"><a href="classduin_1_1Application.html#a5c485974f6ba4ebacdf2d24d930bdb34">duin::Application::EngineInitialize</a></div><div class="ttdeci">void EngineInitialize()</div><div class="ttdoc">Internal engine initialization. Do not call directly.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00580">Application.cpp:580</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_a78b6fbf25fa86f5852d16ba8c1fa40b9"><div class="ttname"><a href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9">duin::Application::Draw</a></div><div class="ttdeci">virtual void Draw()</div><div class="ttdoc">Override for 3D rendering.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00670">Application.cpp:670</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_a89ca5b444c0dbbaf1d0cbe6436d9d440"><div class="ttname"><a href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440">duin::Application::DrawUI</a></div><div class="ttdeci">virtual void DrawUI()</div><div class="ttdoc">Override for ImGui UI rendering.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00687">Application.cpp:687</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_a78b6fbf25fa86f5852d16ba8c1fa40b9"><div class="ttname"><a href="classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9">duin::Application::Draw</a></div><div class="ttdeci">virtual void Draw()</div><div class="ttdoc">Override for 3D rendering.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00659">Application.cpp:659</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_a89ca5b444c0dbbaf1d0cbe6436d9d440"><div class="ttname"><a href="classduin_1_1Application.html#a89ca5b444c0dbbaf1d0cbe6436d9d440">duin::Application::DrawUI</a></div><div class="ttdeci">virtual void DrawUI()</div><div class="ttdoc">Override for ImGui UI rendering.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00673">Application.cpp:673</a></div></div>
 <div class="ttc" id="aclassduin_1_1Application_html_abab5d7d437975459a1d4d16e6e5d1255"><div class="ttname"><a href="classduin_1_1Application.html#abab5d7d437975459a1d4d16e6e5d1255">duin::Application::SetWindowName</a></div><div class="ttdeci">void SetWindowName(const char *string)</div><div class="ttdoc">Sets the window title.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00347">Application.cpp:347</a></div></div>
 <div class="ttc" id="aclassduin_1_1Application_html_ac39d5885beb8dba6e1fc22ac9ad07257"><div class="ttname"><a href="classduin_1_1Application.html#ac39d5885beb8dba6e1fc22ac9ad07257">duin::Application::SetWindowStartupSize</a></div><div class="ttdeci">void SetWindowStartupSize(int width, int height)</div><div class="ttdoc">Sets initial window dimensions before Run().</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00336">Application.cpp:336</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_ace06bcd04c322681914235e800c782e6"><div class="ttname"><a href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6">duin::Application::Exit</a></div><div class="ttdeci">virtual void Exit()</div><div class="ttdoc">Override for cleanup before shutdown.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00742">Application.cpp:742</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_ace06bcd04c322681914235e800c782e6"><div class="ttname"><a href="classduin_1_1Application.html#ace06bcd04c322681914235e800c782e6">duin::Application::Exit</a></div><div class="ttdeci">virtual void Exit()</div><div class="ttdoc">Override for cleanup before shutdown.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00716">Application.cpp:716</a></div></div>
 <div class="ttc" id="aclassduin_1_1Application_html_ad1509250d55438ec832e886d0a6caa89"><div class="ttname"><a href="classduin_1_1Application.html#ad1509250d55438ec832e886d0a6caa89">duin::Application::Ready</a></div><div class="ttdeci">virtual void Ready()</div><div class="ttdoc">Override to perform setup after all systems are initialized.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00594">Application.cpp:594</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_ad2fdd5e8818eece60d84960591f57954"><div class="ttname"><a href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">duin::Application::RemoveChildObject</a></div><div class="ttdeci">void RemoveChildObject(std::shared_ptr&lt; GameObject &gt; child)</div><div class="ttdoc">Removes a child GameObject from the root.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00751">Application.cpp:751</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_adf554167ffd21e5a9213f1bd585f977c"><div class="ttname"><a href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c">duin::Application::OnEvent</a></div><div class="ttdeci">virtual void OnEvent(Event event)</div><div class="ttdoc">Override to handle input events.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00626">Application.cpp:626</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_ad2fdd5e8818eece60d84960591f57954"><div class="ttname"><a href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">duin::Application::RemoveChildObject</a></div><div class="ttdeci">void RemoveChildObject(std::shared_ptr&lt; GameObject &gt; child)</div><div class="ttdoc">Removes a child GameObject from the root.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00725">Application.cpp:725</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_adf554167ffd21e5a9213f1bd585f977c"><div class="ttname"><a href="classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c">duin::Application::OnEvent</a></div><div class="ttdeci">virtual void OnEvent(Event event)</div><div class="ttdoc">Override to handle input events.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00621">Application.cpp:621</a></div></div>
 <div class="ttc" id="aclassduin_1_1Application_html_adfda04cdbdd2923dc25f509f2c285dd8"><div class="ttname"><a href="classduin_1_1Application.html#adfda04cdbdd2923dc25f509f2c285dd8">duin::Application::Initialize</a></div><div class="ttdeci">virtual void Initialize()</div><div class="ttdoc">Override to perform one-time setup. Called before Ready().</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00586">Application.cpp:586</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_af61542473b27e8b2310686b8c16daa8b"><div class="ttname"><a href="classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b">duin::Application::AddChildObject</a></div><div class="ttdeci">void AddChildObject(std::shared_ptr&lt; GameObject &gt; child)</div><div class="ttdoc">Adds an existing GameObject as a child of the root.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00746">Application.cpp:746</a></div></div>
-<div class="ttc" id="aclassduin_1_1Application_html_afd6937e69d6e0cde5dff4f5787a17f16"><div class="ttname"><a href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16">duin::Application::Update</a></div><div class="ttdeci">virtual void Update(double delta)</div><div class="ttdoc">Override for per-frame logic.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00634">Application.cpp:634</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_af61542473b27e8b2310686b8c16daa8b"><div class="ttname"><a href="classduin_1_1Application.html#af61542473b27e8b2310686b8c16daa8b">duin::Application::AddChildObject</a></div><div class="ttdeci">void AddChildObject(std::shared_ptr&lt; GameObject &gt; child)</div><div class="ttdoc">Adds an existing GameObject as a child of the root.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00720">Application.cpp:720</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html_afd6937e69d6e0cde5dff4f5787a17f16"><div class="ttname"><a href="classduin_1_1Application.html#afd6937e69d6e0cde5dff4f5787a17f16">duin::Application::Update</a></div><div class="ttdeci">virtual void Update(double delta)</div><div class="ttdoc">Override for per-frame logic.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00629">Application.cpp:629</a></div></div>
 <div class="ttc" id="aclassduin_1_1EventHandler_html_a411010a6d6654f54e896e3e87ed5d1c8"><div class="ttname"><a href="classduin_1_1EventHandler.html#a411010a6d6654f54e896e3e87ed5d1c8">duin::EventHandler::IsCloseRequested</a></div><div class="ttdeci">bool IsCloseRequested()</div><div class="ttdoc">Returns true if a close/quit event was received.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00030">EventHandler.cpp:30</a></div></div>
 <div class="ttc" id="aclassduin_1_1EventHandler_html_ab235871edc1d4f7a97cda10af81cd95c"><div class="ttname"><a href="classduin_1_1EventHandler.html#ab235871edc1d4f7a97cda10af81cd95c">duin::EventHandler::GetPolledEvent</a></div><div class="ttdeci">static void GetPolledEvent(::SDL_Event e)</div><div class="ttdoc">Called by engine to process a polled SDL event.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00037">EventHandler.cpp:37</a></div></div>
 <div class="ttc" id="aclassduin_1_1EventHandler_html_abc7346c66f5d6e910082e1a2e8a8b652"><div class="ttname"><a href="classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652">duin::EventHandler::Get</a></div><div class="ttdeci">static EventHandler &amp; Get()</div><div class="ttdoc">Returns the singleton instance.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00015">EventHandler.cpp:15</a></div></div>
@@ -1010,6 +984,9 @@ $(document).ready(function(){initNavTree('Application_8cpp_source.html',''); ini
 <div class="ttc" id="aclassduin_1_1Event_html"><div class="ttname"><a href="classduin_1_1Event.html">duin::Event</a></div><div class="ttdoc">Base wrapper for SDL events.</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00025">Event.h:26</a></div></div>
 <div class="ttc" id="aclassduin_1_1PhysicsServer_html_a9a3467ec90a96ffc69574afdc90f6dce"><div class="ttname"><a href="classduin_1_1PhysicsServer.html#a9a3467ec90a96ffc69574afdc90f6dce">duin::PhysicsServer::Get</a></div><div class="ttdeci">static PhysicsServer &amp; Get()</div><div class="ttdoc">Returns the singleton instance.</div><div class="ttdef"><b>Definition</b> <a href="PhysicsServer_8cpp_source.html#l00011">PhysicsServer.cpp:11</a></div></div>
 <div class="ttc" id="aclassduin_1_1PhysicsServer_html_af9c5bdf4e040c3eff5b28b7cdc53fabb"><div class="ttname"><a href="classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb">duin::PhysicsServer::StepPhysics</a></div><div class="ttdeci">void StepPhysics(double delta)</div><div class="ttdoc">Advances physics simulation.</div><div class="ttdef"><b>Definition</b> <a href="PhysicsServer_8cpp_source.html#l00093">PhysicsServer.cpp:93</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html"><div class="ttname"><a href="classduin_1_1Signal.html">duin::Signal</a></div><div class="ttdoc">Signal class for event-driven programming.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00250">Signal.h:251</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_a1fa85bf2128a44759af4e880e19790ff"><div class="ttname"><a href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">duin::Signal::ConnectScoped</a></div><div class="ttdeci">std::shared_ptr&lt; ScopedConnection &gt; ConnectScoped(std::function&lt; void(types...)&gt; callback)</div><div class="ttdoc">Connects a listener and returns a shared_ptr&lt;ScopedConnection&gt; that auto-disconnects.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00289">Signal.h:289</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_af0d3d6e3a9efebc1bc61d15b500a35b6"><div class="ttname"><a href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">duin::Signal::Emit</a></div><div class="ttdeci">void Emit(types... args)</div><div class="ttdoc">Emits the signal to all connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00323">Signal.h:323</a></div></div>
 <div class="ttc" id="anamespaceduin_1_1Input_html_a161ffb71e8fc5f3aa18fbafeb61a7889"><div class="ttname"><a href="namespaceduin_1_1Input.html#a161ffb71e8fc5f3aa18fbafeb61a7889">duin::Input::ProcessSDLKeyboardEvent</a></div><div class="ttdeci">void ProcessSDLKeyboardEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a keyboard event, then process the event. This function is called ...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00071">Input.cpp:71</a></div></div>
 <div class="ttc" id="anamespaceduin_1_1Input_html_a4ad600a8fc36f8a1b98966126326cea6"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">duin::Input::ProcessSDLMouseEvent</a></div><div class="ttdeci">void ProcessSDLMouseEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a mouse event, then process the event. This function is called fro...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00154">Input.cpp:154</a></div></div>
 <div class="ttc" id="anamespaceduin_1_1Input_html_a5250c280ea0d2cead62882bdc9400a87"><div class="ttname"><a href="namespaceduin_1_1Input.html#a5250c280ea0d2cead62882bdc9400a87">duin::Input::IsKeyDown</a></div><div class="ttdeci">int IsKeyDown(DN_Keycode code)</div><div class="ttdoc">Checks if key is currently held down.</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00118">Input.cpp:118</a></div></div>

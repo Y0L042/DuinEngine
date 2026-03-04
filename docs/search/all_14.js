@@ -8,6 +8,6 @@ var searchData=
   ['query_3c_20duin_3a_3acamera_2c_20const_20duin_3a_3aecscomponent_3a_3atransform3d_20_3e_5',['Query&lt; duin::Camera, const duin::ECSComponent::Transform3D &gt;',['../classduin_1_1Query.html',1,'duin']]],
   ['query_3c_20duin_3a_3aecscomponent_3a_3acharacterbodycomponent_2c_20duin_3a_3aecscomponent_3a_3atransform3d_2c_20duin_3a_3aecscomponent_3a_3avelocity3d_20_3e_6',['Query&lt; duin::ECSComponent::CharacterBodyComponent, duin::ECSComponent::Transform3D, duin::ECSComponent::Velocity3D &gt;',['../classduin_1_1Query.html',1,'duin']]],
   ['querybuilder_7',['QueryBuilder',['../classduin_1_1QueryBuilder.html',1,'duin']]],
-  ['queueexitcallback_8',['QueueExitCallback',['../Application_8h.html#aaa705c5bc39b275ccfad84374efe3720',1,'duin']]],
+  ['queueexitcallback_8',['QueueExitCallback',['../Application_8h.html#a75037cccb45543b0b940e7e57da16272',1,'duin']]],
   ['quit_9',['Quit',['../classduin_1_1World.html#ab75a1ae0712f0e82f0ec2ec52b0a9446',1,'duin::World']]]
 ];

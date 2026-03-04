@@ -19,7 +19,7 @@ var searchData=
   ['destruct_16',['Destruct',['../classduin_1_1Entity.html#a03122d63a5d4ee5c350e462da9dc4d00',1,'duin::Entity']]],
   ['disable_17',['Disable',['../classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4',1,'duin::Entity']]],
   ['disablecomponent_18',['DisableComponent',['../classduin_1_1Entity.html#a689706b7897dd7cc9bb59c88485c54a6',1,'duin::Entity']]],
-  ['disconnect_19',['Disconnect',['../classduin_1_1Signal.html#aa623b253e57b0dbc493c6478d5c05093',1,'duin::Signal']]],
+  ['disconnect_19',['Disconnect',['../classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7',1,'duin::Signal']]],
   ['disconnectallsignals_20',['DisconnectAllSignals',['../classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2',1,'duin::GameObject']]],
   ['draw_21',['Draw',['../classduin_1_1Application.html#a78b6fbf25fa86f5852d16ba8c1fa40b9',1,'duin::Application']]],
   ['drawphysicsfps_22',['DrawPhysicsFPS',['../Application_8h.html#a07ff31a350ce2643e20d249929bb496d',1,'duin']]],

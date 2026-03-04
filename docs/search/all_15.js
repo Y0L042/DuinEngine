@@ -6,7 +6,7 @@ var searchData=
   ['relationshipiscomponent_3',['relationshipIsComponent',['../structduin_1_1PackedPair.html#a19a3783ff4f39f18322e9a29c223f0f0',1,'duin::PackedPair']]],
   ['relationshipname_4',['relationshipName',['../structduin_1_1PackedPair.html#ac6f328dccefa46e07023e7cdf64c7a9f',1,'duin::PackedPair']]],
   ['relationshippath_5',['relationshipPath',['../structduin_1_1PackedPair.html#ac4bf16594206a1024da8a6b9ee0349a6',1,'duin::PackedPair']]],
-  ['release_6',['Release',['../classduin_1_1World.html#a8af88ebe2e1ac521e250b4a69d0d1930',1,'duin::World']]],
+  ['release_6',['release',['../classduin_1_1World.html#a8af88ebe2e1ac521e250b4a69d0d1930',1,'duin::World::Release()'],['../classduin_1_1ScopedConnection.html#aff0ba1250cba480000183e5a8cfc02ef',1,'duin::ScopedConnection::Release()']]],
   ['released_7',['RELEASED',['../namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa1c302a4a4d7160390e7c7437cf5ca810',1,'duin::Input']]],
   ['remove_8',['remove',['../classduin_1_1Entity.html#a9276a935d07319ec303fa5974fe99edb',1,'duin::Entity::Remove()'],['../classduin_1_1LookupVector.html#ae9ebdbf0b9eec2a89bc1ca4eaf3070bf',1,'duin::LookupVector::Remove()']]],
   ['removeall_9',['removeall',['../classduin_1_1World.html#aa4d6f1aca7e06b4197ad3a9ab6330aa6',1,'duin::World::RemoveAll(uint64_t first, uint64_t second)'],['../classduin_1_1World.html#a02e8e39cdd6d1fe77cc443b526e31772',1,'duin::World::RemoveAll(uint64_t id)'],['../classduin_1_1World.html#ac1ab2ec052397515d1798d2408ebaa86',1,'duin::World::RemoveAll()']]],

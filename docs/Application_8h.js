@@ -23,7 +23,7 @@ var Application_8h =
     [ "GetWindowWidth", "Application_8h.html#a62446673e5e806e310ac470542c2ace9", null ],
     [ "MaximizeWindow", "Application_8h.html#aa3a8d563198006f0624a69a158a928e9", null ],
     [ "MinimizeWindow", "Application_8h.html#a51621b8447399099a7931d47605b7547", null ],
-    [ "QueueExitCallback", "Application_8h.html#aaa705c5bc39b275ccfad84374efe3720", null ],
+    [ "QueueExitCallback", "Application_8h.html#a75037cccb45543b0b940e7e57da16272", null ],
     [ "SetAllowDockingInMain", "Application_8h.html#a55e1aa953e36ea6cbe2895e33e1df4bd", null ],
     [ "SetFramerate", "Application_8h.html#aca1d01670279cef4e7dbaf3323fe9753", null ],
     [ "SetImGuiINIPath", "Application_8h.html#a1214bda8b3a7ce2955cb1e24f044072e", null ],

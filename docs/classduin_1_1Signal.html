@@ -124,31 +124,50 @@ $(document).ready(function(){initNavTree('classduin_1_1Signal.html',''); initRes
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a1dbb5d8c74af75932603dbcaa009ae39" id="r_a1dbb5d8c74af75932603dbcaa009ae39"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#a1dbb5d8c74af75932603dbcaa009ae39">Listener</a> = std::pair&lt; <a class="el" href="classduin_1_1UUID.html">UUID</a>, std::function&lt; void(types...)&gt; &gt;</td></tr>
-<tr class="memdesc:a1dbb5d8c74af75932603dbcaa009ae39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listener type: a pair of <a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a> and callback function.  <br /></td></tr>
 <tr class="separator:a1dbb5d8c74af75932603dbcaa009ae39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aa153f60ea5b8c5cc6255012258699d61" id="r_aa153f60ea5b8c5cc6255012258699d61"><td class="memItemLeft" align="right" valign="top"><a id="aa153f60ea5b8c5cc6255012258699d61" name="aa153f60ea5b8c5cc6255012258699d61"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Signal</b> (const <a class="el" href="classduin_1_1Signal.html">Signal</a> &amp;)=delete</td></tr>
+<tr class="separator:aa153f60ea5b8c5cc6255012258699d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add184bbfdf841a3bcfeaff22bfcb0063" id="r_add184bbfdf841a3bcfeaff22bfcb0063"><td class="memItemLeft" align="right" valign="top"><a id="add184bbfdf841a3bcfeaff22bfcb0063" name="add184bbfdf841a3bcfeaff22bfcb0063"></a>
+<a class="el" href="classduin_1_1Signal.html">Signal</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classduin_1_1Signal.html">Signal</a> &amp;)=delete</td></tr>
+<tr class="separator:add184bbfdf841a3bcfeaff22bfcb0063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd68efa56e22a09bd5fee78145941ebb" id="r_acd68efa56e22a09bd5fee78145941ebb"><td class="memItemLeft" align="right" valign="top"><a id="acd68efa56e22a09bd5fee78145941ebb" name="acd68efa56e22a09bd5fee78145941ebb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Signal</b> (<a class="el" href="classduin_1_1Signal.html">Signal</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:acd68efa56e22a09bd5fee78145941ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b382c6d238db29e4e55f19519414b6" id="r_a68b382c6d238db29e4e55f19519414b6"><td class="memItemLeft" align="right" valign="top"><a id="a68b382c6d238db29e4e55f19519414b6" name="a68b382c6d238db29e4e55f19519414b6"></a>
+<a class="el" href="classduin_1_1Signal.html">Signal</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classduin_1_1Signal.html">Signal</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a68b382c6d238db29e4e55f19519414b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0cd0f876530cda5cee9f4683336a944" id="r_ae0cd0f876530cda5cee9f4683336a944"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">Connect</a> (std::function&lt; void(types...)&gt; callback)</td></tr>
-<tr class="memdesc:ae0cd0f876530cda5cee9f4683336a944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects a listener to the signal.  <br /></td></tr>
+<tr class="memdesc:ae0cd0f876530cda5cee9f4683336a944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects a listener to the signal (unsafe).  <br /></td></tr>
 <tr class="separator:ae0cd0f876530cda5cee9f4683336a944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa623b253e57b0dbc493c6478d5c05093" id="r_aa623b253e57b0dbc493c6478d5c05093"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#aa623b253e57b0dbc493c6478d5c05093">Disconnect</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
-<tr class="memdesc:aa623b253e57b0dbc493c6478d5c05093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects a listener by <a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a>.  <br /></td></tr>
-<tr class="separator:aa623b253e57b0dbc493c6478d5c05093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa85bf2128a44759af4e880e19790ff" id="r_a1fa85bf2128a44759af4e880e19790ff"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1ScopedConnection.html">ScopedConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a> (std::function&lt; void(types...)&gt; callback)</td></tr>
+<tr class="memdesc:a1fa85bf2128a44759af4e880e19790ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects a listener and returns a shared_ptr&lt;ScopedConnection&gt; that auto-disconnects.  <br /></td></tr>
+<tr class="separator:a1fa85bf2128a44759af4e880e19790ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6b09be01d0082ca6dc06ee1d5c35ae7" id="r_ab6b09be01d0082ca6dc06ee1d5c35ae7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">Disconnect</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> uuid)</td></tr>
+<tr class="memdesc:ab6b09be01d0082ca6dc06ee1d5c35ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects a listener by <a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a>.  <br /></td></tr>
+<tr class="separator:ab6b09be01d0082ca6dc06ee1d5c35ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63a682f2c9b4b425740321f69a2dc0b2" id="r_a63a682f2c9b4b425740321f69a2dc0b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#a63a682f2c9b4b425740321f69a2dc0b2">Disconnect</a> (std::weak_ptr&lt; <a class="el" href="classduin_1_1ScopedConnection.html">ScopedConnection</a> &gt; sc)</td></tr>
+<tr class="separator:a63a682f2c9b4b425740321f69a2dc0b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cc22a0d8ad9a2b738570021f6729114" id="r_a4cc22a0d8ad9a2b738570021f6729114"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#a4cc22a0d8ad9a2b738570021f6729114">DisconnectAll</a> ()</td></tr>
+<tr class="separator:a4cc22a0d8ad9a2b738570021f6729114"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0d3d6e3a9efebc1bc61d15b500a35b6" id="r_af0d3d6e3a9efebc1bc61d15b500a35b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a> (types... args)</td></tr>
 <tr class="memdesc:af0d3d6e3a9efebc1bc61d15b500a35b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits the signal to all connected listeners.  <br /></td></tr>
 <tr class="separator:af0d3d6e3a9efebc1bc61d15b500a35b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa09bccea9fb3078cd90269ecf314ac7a" id="r_aa09bccea9fb3078cd90269ecf314ac7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">GetUUID</a> ()</td></tr>
 <tr class="memdesc:aa09bccea9fb3078cd90269ecf314ac7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a> of this <a class="el" href="classduin_1_1Signal.html" title="Signal class for event-driven programming.">Signal</a> instance.  <br /></td></tr>
 <tr class="separator:aa09bccea9fb3078cd90269ecf314ac7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd01203f3736144bb247e1285fc865e" id="r_a0cd01203f3736144bb247e1285fc865e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#a0cd01203f3736144bb247e1285fc865e">GetListenerCount</a> ()</td></tr>
-<tr class="memdesc:a0cd01203f3736144bb247e1285fc865e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns count of connected listeners.  <br /></td></tr>
-<tr class="separator:a0cd01203f3736144bb247e1285fc865e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad118847bcc4b6af1c1fe133533f8ae7b" id="r_ad118847bcc4b6af1c1fe133533f8ae7b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b">GetListenerCount</a> ()</td></tr>
+<tr class="memdesc:ad118847bcc4b6af1c1fe133533f8ae7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns count of connected listeners.  <br /></td></tr>
+<tr class="separator:ad118847bcc4b6af1c1fe133533f8ae7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... types&gt;<br />
 class duin::Signal&lt; types &gt;</div><p><a class="el" href="classduin_1_1Signal.html" title="Signal class for event-driven programming.">Signal</a> class for event-driven programming. </p>
-<p>A type-safe signal/slot system supporting multiple listeners. Listeners are identified by UUIDs and can be connected, disconnected, and notified with arbitrary arguments.</p>
+<p>A type-safe signal/slot system supporting multiple listeners. Listeners are identified by UUIDs and can be connected, disconnected, and notified with arbitrary arguments. NOT THREAD-SAFE!</p>
+<p>Move-only: moving a <a class="el" href="classduin_1_1Signal.html" title="Signal class for event-driven programming.">Signal</a> preserves all existing ScopedConnections.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">types</td><td>Argument types passed to listeners when the signal is emitted.</td></tr>
@@ -158,14 +177,14 @@ class duin::Signal&lt; types &gt;</div><p><a class="el" href="classduin_1_1Signa
 <div class="fragment"><div class="line"><a class="code hl_class" href="classduin_1_1Signal.html">duin::Signal&lt;int, std::string&gt;</a> sig;</div>
 <div class="line"><a class="code hl_class" href="classduin_1_1UUID.html">duin::UUID</a> <span class="keywordtype">id</span> = sig.<a class="code hl_function" href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">Connect</a>([](<span class="keywordtype">int</span> a, <span class="keyword">const</span> std::string&amp; b) { ... });</div>
 <div class="line">sig.<a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>(42, <span class="stringliteral">&quot;hello&quot;</span>);</div>
-<div class="line">sig.<a class="code hl_function" href="classduin_1_1Signal.html#aa623b253e57b0dbc493c6478d5c05093">Disconnect</a>(<span class="keywordtype">id</span>);</div>
-<div class="ttc" id="aclassduin_1_1Signal_html"><div class="ttname"><a href="classduin_1_1Signal.html">duin::Signal</a></div><div class="ttdoc">Signal class for event-driven programming.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00028">Signal.h:29</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_aa623b253e57b0dbc493c6478d5c05093"><div class="ttname"><a href="classduin_1_1Signal.html#aa623b253e57b0dbc493c6478d5c05093">duin::Signal::Disconnect</a></div><div class="ttdeci">bool Disconnect(UUID uuid)</div><div class="ttdoc">Disconnects a listener by UUID.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00061">Signal.h:61</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_ae0cd0f876530cda5cee9f4683336a944"><div class="ttname"><a href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">duin::Signal::Connect</a></div><div class="ttdeci">UUID Connect(std::function&lt; void(types...)&gt; callback)</div><div class="ttdoc">Connects a listener to the signal.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00045">Signal.h:45</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_af0d3d6e3a9efebc1bc61d15b500a35b6"><div class="ttname"><a href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">duin::Signal::Emit</a></div><div class="ttdeci">void Emit(types... args)</div><div class="ttdoc">Emits the signal to all connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00084">Signal.h:84</a></div></div>
+<div class="line">sig.<a class="code hl_function" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">Disconnect</a>(<span class="keywordtype">id</span>);</div>
+<div class="ttc" id="aclassduin_1_1Signal_html"><div class="ttname"><a href="classduin_1_1Signal.html">duin::Signal</a></div><div class="ttdoc">Signal class for event-driven programming.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00250">Signal.h:251</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_ab6b09be01d0082ca6dc06ee1d5c35ae7"><div class="ttname"><a href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">duin::Signal::Disconnect</a></div><div class="ttdeci">void Disconnect(UUID uuid)</div><div class="ttdoc">Disconnects a listener by UUID.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00301">Signal.h:301</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_ae0cd0f876530cda5cee9f4683336a944"><div class="ttname"><a href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">duin::Signal::Connect</a></div><div class="ttdeci">UUID Connect(std::function&lt; void(types...)&gt; callback)</div><div class="ttdoc">Connects a listener to the signal (unsafe).</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00276">Signal.h:276</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_af0d3d6e3a9efebc1bc61d15b500a35b6"><div class="ttname"><a href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">duin::Signal::Emit</a></div><div class="ttdeci">void Emit(types... args)</div><div class="ttdoc">Emits the signal to all connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00323">Signal.h:323</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00028">28</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00250">250</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a1dbb5d8c74af75932603dbcaa009ae39" name="a1dbb5d8c74af75932603dbcaa009ae39"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1dbb5d8c74af75932603dbcaa009ae39">&#9670;&#160;</a></span>Listener</h2>
@@ -181,9 +200,37 @@ template&lt;typename... types&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Listener type: a pair of <a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a> and callback function. </p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00253">253</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00034">34</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a10b9329f1c5e7b35ad69cd90839210a7" name="a10b9329f1c5e7b35ad69cd90839210a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10b9329f1c5e7b35ad69cd90839210a7">&#9670;&#160;</a></span>Signal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... types&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Signal </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00255">255</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
@@ -214,7 +261,7 @@ template&lt;typename... types&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Connects a listener to the signal. </p>
+<p>Connects a listener to the signal (unsafe). </p>
 <p>Registers a callback to be invoked when the signal is emitted. Returns a unique <a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a> for the listener, which can be used to disconnect it later.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -224,12 +271,12 @@ template&lt;typename... types&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a> assigned to the listener. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00045">45</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00276">276</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
-<a id="aa623b253e57b0dbc493c6478d5c05093" name="aa623b253e57b0dbc493c6478d5c05093"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa623b253e57b0dbc493c6478d5c05093">&#9670;&#160;</a></span>Disconnect()</h2>
+<a id="a1fa85bf2128a44759af4e880e19790ff" name="a1fa85bf2128a44759af4e880e19790ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa85bf2128a44759af4e880e19790ff">&#9670;&#160;</a></span>ConnectScoped()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,7 +287,77 @@ template&lt;typename... types&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Disconnect </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1ScopedConnection.html">ScopedConnection</a> &gt; <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::ConnectScoped </td>
+          <td>(</td>
+          <td class="paramtype">std::function&lt; void(types...)&gt;&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Connects a listener and returns a shared_ptr&lt;ScopedConnection&gt; that auto-disconnects. </p>
+<p>The listener is removed when the returned shared_ptr is destroyed (unless Release() was called).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>The function to call when the signal is emitted. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>shared_ptr&lt;ScopedConnection&gt; that owns the connection lifetime. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00289">289</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+
+</div>
+</div>
+<a id="a63a682f2c9b4b425740321f69a2dc0b2" name="a63a682f2c9b4b425740321f69a2dc0b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63a682f2c9b4b425740321f69a2dc0b2">&#9670;&#160;</a></span>Disconnect() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... types&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Disconnect </td>
+          <td>(</td>
+          <td class="paramtype">std::weak_ptr&lt; <a class="el" href="classduin_1_1ScopedConnection.html">ScopedConnection</a> &gt;&#160;</td>
+          <td class="paramname"><em>sc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00306">306</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+
+</div>
+</div>
+<a id="ab6b09be01d0082ca6dc06ee1d5c35ae7" name="ab6b09be01d0082ca6dc06ee1d5c35ae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6b09be01d0082ca6dc06ee1d5c35ae7">&#9670;&#160;</a></span>Disconnect() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... types&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::Disconnect </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td>
           <td class="paramname"><em>uuid</em></td><td>)</td>
@@ -262,9 +379,37 @@ template&lt;typename... types&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a listener was removed, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00061">61</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00301">301</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+
+</div>
+</div>
+<a id="a4cc22a0d8ad9a2b738570021f6729114" name="a4cc22a0d8ad9a2b738570021f6729114"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cc22a0d8ad9a2b738570021f6729114">&#9670;&#160;</a></span>DisconnectAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... types&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::DisconnectAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00311">311</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
@@ -303,12 +448,12 @@ template&lt;typename... types&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00084">84</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00323">323</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
-<a id="a0cd01203f3736144bb247e1285fc865e" name="a0cd01203f3736144bb247e1285fc865e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cd01203f3736144bb247e1285fc865e">&#9670;&#160;</a></span>GetListenerCount()</h2>
+<a id="ad118847bcc4b6af1c1fe133533f8ae7b" name="ad118847bcc4b6af1c1fe133533f8ae7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad118847bcc4b6af1c1fe133533f8ae7b">&#9670;&#160;</a></span>GetListenerCount()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -319,7 +464,7 @@ template&lt;typename... types&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::GetListenerCount </td>
+          <td class="memname">size_t <a class="el" href="classduin_1_1Signal.html">duin::Signal</a>&lt; types &gt;::GetListenerCount </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -335,7 +480,7 @@ template&lt;typename... types&gt; </div>
 <p>Returns count of connected listeners. </p>
 <dl class="section return"><dt>Returns</dt><dd>Int count of listeners. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00110">110</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00343">343</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
@@ -367,7 +512,7 @@ template&lt;typename... types&gt; </div>
 <p>Gets the <a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a> of this <a class="el" href="classduin_1_1Signal.html" title="Signal class for event-driven programming.">Signal</a> instance. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1UUID.html" title="A 64-bit universally unique identifier.">UUID</a> of the signal. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00100">100</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Signal_8h_source.html#l00333">333</a> of file <a class="el" href="Signal_8h_source.html">Signal.h</a>.</p>
 
 </div>
 </div>
