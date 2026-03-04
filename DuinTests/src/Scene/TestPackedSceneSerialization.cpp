@@ -18,7 +18,7 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
         scene.uuid = duin::UUID::FromStringHex("abc123def456");
         scene.name = "EmptyScene";
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
 
         CHECK(json.IsObject());
@@ -41,7 +41,7 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
         scene.metadata.lastModified = "2025-11-16T12:00:00Z";
         scene.metadata.author = "DuinEditor";
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
 
         CHECK(json.IsObject());
@@ -76,7 +76,7 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
         scene.externalDependencies.push_back(dep1);
         scene.externalDependencies.push_back(dep2);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
 
         CHECK(json.HasMember("externalDependencies"));
@@ -116,7 +116,7 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
 
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
 
         CHECK(json.HasMember("entities"));
@@ -166,7 +166,7 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
 
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
 
         CHECK(json.IsObject());
@@ -202,7 +202,7 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
 
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
 
         CHECK(json.IsObject());
@@ -224,7 +224,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("abc123def456"));
@@ -247,7 +247,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("def456abc789"));
@@ -276,7 +276,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("aabbccdd11223344"));
@@ -309,7 +309,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("fedcba9876543210"));
@@ -359,7 +359,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("550e8400e29b41d4"));
@@ -405,7 +405,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.entities.size() == 1);
@@ -452,7 +452,7 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.entities.size() == 1);
@@ -482,7 +482,7 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         original.uuid = duin::UUID::FromStringHex("abc123def456");
         original.name = "EmptyScene";
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(original);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -502,7 +502,7 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         original.metadata.lastModified = "2025-11-16T12:00:00Z";
         original.metadata.author = "DuinEditor";
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(original);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -530,7 +530,7 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         dep2.type = "asset";
         original.externalDependencies.push_back(dep2);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(original);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -569,7 +569,7 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         entity.tags.push_back(tag2);
         original.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(original);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -627,7 +627,7 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
 
         original.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(original);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -681,7 +681,7 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         parent.children.push_back(child);
         original.entities.push_back(parent);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(original);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -718,7 +718,7 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
 
         original.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(original);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 

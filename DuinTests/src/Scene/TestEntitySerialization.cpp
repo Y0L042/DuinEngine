@@ -17,7 +17,7 @@ TEST_SUITE("Simple Entity Serialization")
     {
         duin::JSONValue v = duin::JSONValue::Parse(SIMPLE_ENTITY_JSON);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedEntity p = builder.DeserializeEntity(v);
 
         CHECK(p.uuid == duin::UUID::FromStringHex("1a2b3c4d5e6f7890"));
@@ -86,7 +86,7 @@ TEST_SUITE("Simple Entity Serialization")
         p.components.push_back(cameraComp);
 
         // Serialize to JSON
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeEntity(p);
 
         // Verify JSON structure
@@ -126,7 +126,7 @@ TEST_SUITE("Simple Entity Serialization")
         duin::Entity e =
             world.Entity("TestCamera").Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(75.0f, 0.1f, 1000.0f, true);
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedEntity pe = builder.PackEntity(e);
 
         CHECK(pe.name == "TestCamera");
@@ -153,7 +153,7 @@ TEST_SUITE("Simple Entity Serialization")
         duin::Entity child = world.Entity("Child").Set<Camera>(60.0f, 0.1f, 500.0f, false);
         child.ChildOf(parent);
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedEntity pe = builder.PackEntity(parent);
 
         CHECK(pe.name == "Parent");
@@ -187,7 +187,7 @@ TEST_SUITE("Simple Entity Serialization")
         pe.components.push_back(camComp);
 
         duin::Entity e = world.Entity();
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         builder.InstantiateEntity(pe, e);
 
         MSG_CHECK(e.GetName(), e.GetName() == "InstantiatedEntity");
@@ -224,7 +224,7 @@ TEST_SUITE("Simple Entity Serialization")
         pe.children.push_back(childPe);
 
         duin::Entity e = world.Entity();
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         builder.InstantiateEntity(pe, e);
 
         CHECK(e.GetName().starts_with("Parent"));
@@ -255,7 +255,7 @@ TEST_SUITE("Simple Entity Serialization")
         pe.components.push_back(comp);
 
         duin::Entity e = world.Entity();
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         builder.InstantiateEntity(pe, e);
 
         CHECK(e.GetName() == "DisabledEntity");

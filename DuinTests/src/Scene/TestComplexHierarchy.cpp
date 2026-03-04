@@ -55,7 +55,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         greatGrandchildB1.ChildOf(grandchildB1);
 
         // Pack root as scene entity; root itself is ps.entities[0]
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({root});
 
         CHECK(ps.entities.size() == 1);
@@ -66,7 +66,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -182,7 +182,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         light2.ChildOf(environment);
 
         // Pack the three root entities as separate scene entities
-        duin::SceneBuilder sceneBuilder(&world);
+        duin::SceneBuilder sceneBuilder;
         duin::PackedScene ps = sceneBuilder.PackScene({player, enemy, environment});
         ps.uuid = duin::UUID::FromStringHex("c0ab1e5cee111111");
         ps.name = "ComplexScene";
@@ -199,7 +199,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         duin::Entity newRoot = world2.Entity("NewSceneRoot");
         sb2.InstantiateSceneAsChildren(ps2, newRoot);
 
@@ -320,7 +320,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         }
 
         // Pack parent as scene entity; parent is ps.entities[0]
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent});
 
         CHECK(ps.entities.size() == 1);
@@ -330,7 +330,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -417,7 +417,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         }
 
         // Pack root as scene entity
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({root});
 
         CHECK(ps.entities.size() == 1);
@@ -427,7 +427,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -511,7 +511,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         mediumChild.ChildOf(mediumRoot);
 
         // Pack all world-root entities (4 entities: 2 standalone + deepRoot + mediumRoot)
-        duin::SceneBuilder sceneBuilder(&world);
+        duin::SceneBuilder sceneBuilder;
         duin::PackedScene ps = sceneBuilder.PackScene(&world);
         CHECK(ps.entities.size() == 4);
 
@@ -523,7 +523,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         duin::Entity newRoot = world2.Entity("NewSceneRoot");
         sb2.InstantiateSceneAsChildren(ps2, newRoot);
 
@@ -601,7 +601,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         CHECK(grandchild1.GetParent() == child1);
 
         // Pack, serialize, deserialize via SceneBuilder instance
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({root});
         duin::JSONValue json = sb.SerializeScene(ps);
         std::string jsonStr = json.Write();
@@ -613,7 +613,7 @@ TEST_SUITE("Complex Hierarchy Tests")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps2, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();

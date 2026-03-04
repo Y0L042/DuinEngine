@@ -21,7 +21,7 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
     TEST_CASE("JSON string -> PackedScene -> Instantiate entities")
     {
         duin::World world;
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         world.Component<Vec3>();
         world.Component<Camera>();
         world.Component<TAG_Main>();
@@ -146,7 +146,7 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         // Instantiate: EntityA and EntityB appear at world root
@@ -159,7 +159,7 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
     TEST_CASE("JSON string -> Deserialize -> Serialize -> Deserialize consistency")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         std::string jsonStr = R"({
             "sceneUUID": "eeff112233aabb00",
@@ -247,7 +247,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         duin::Entity weapon = world.Entity("Weapon").Set<Vec3>(0.5f, 1.0f, 0.3f);
         weapon.ChildOf(player);
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene ps = builder.PackScene({player});
         ps.uuid = duin::UUID::FromStringHex("scene111111111111");
         ps.name = "GameScene";
@@ -298,7 +298,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         duin::Entity obj =
             world.Entity("Object").Set<Vec3>(3.0f, 6.0f, 9.0f).Set<Camera>(45.0f, 0.5f, 100.0f, false);
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene ps = builder.PackScene({obj});
         ps.uuid = duin::UUID::FromStringHex("roundtrip111111");
         ps.name = "RoundTripScene";
@@ -321,7 +321,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder builder2(&world2);
+        duin::SceneBuilder builder2;
         builder2.InstantiateScene(ps2, &world2);
 
         std::vector<duin::Entity> children = world2.GetChildren();
@@ -350,7 +350,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         grandchild.ChildOf(child);
 
         // Pack parent as scene root entity
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene ps = builder.PackScene({parent});
         ps.uuid = duin::UUID::FromStringHex("fullpipe11111111");
         ps.name = "FullPipelineScene";
@@ -375,7 +375,7 @@ TEST_SUITE("Full Pipeline: Instantiation to String")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder builder2(&world2);
+        duin::SceneBuilder builder2;
         builder2.InstantiateScene(ps2, &world2);
 
         // Verify hierarchy

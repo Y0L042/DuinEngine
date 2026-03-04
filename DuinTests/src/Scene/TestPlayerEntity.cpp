@@ -148,7 +148,7 @@ TEST_SUITE("Complex Player Entity Tests")
                                   .Add<OnGroundTag>();
 
         // Pack player as scene entity; inspect packed component data
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({player});
 
         CHECK(ps.entities.size() == 1);
@@ -224,7 +224,7 @@ TEST_SUITE("Complex Player Entity Tests")
                                   .Add<OnGroundTag>();
 
         // Pack as scene entity
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({player});
 
         CHECK(ps.entities.size() == 1);
@@ -237,7 +237,7 @@ TEST_SUITE("Complex Player Entity Tests")
         world2.Component<CanGravity>();
         world2.Component<OnGroundTag>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -289,7 +289,7 @@ TEST_SUITE("Complex Player Entity Tests")
                                         .Add<ActiveCameraTag>();
 
         // Pack player hierarchy as scene entity; inspect packed structure
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({player});
 
         CHECK(ps.entities.size() == 1);
@@ -354,7 +354,7 @@ TEST_SUITE("Complex Player Entity Tests")
                                         .Set<VelocityBob>({10.0f, 1.0f});
 
         // Pack, serialize, deserialize via SceneBuilder instance
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({player});
         duin::JSONValue json = sb.SerializeScene(ps);
         duin::PackedScene deserialized = sb.DeserializeScene(json);
@@ -398,7 +398,7 @@ TEST_SUITE("Complex Player Entity Tests")
                                         .Set<VelocityBob>({10.0f, 1.0f});
 
         // Pack, serialize, deserialize, instantiate via SceneBuilder instance
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({player});
         duin::JSONValue json = sb.SerializeScene(ps);
         duin::PackedScene deserialized = sb.DeserializeScene(json);
@@ -410,7 +410,7 @@ TEST_SUITE("Complex Player Entity Tests")
         world2.Component<VelocityBob>();
         world2.Component<CameraPitchComponent>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(deserialized, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -446,7 +446,7 @@ TEST_SUITE("Complex Player Entity Tests")
     TEST_CASE("PackedScene with Player Hierarchy")
     {
         duin::World world;
-        duin::SceneBuilder sceneBuilder(&world);
+        duin::SceneBuilder sceneBuilder;
         world.Component<Vec3>();
         world.Component<Camera>();
         world.Component<Mass>();
@@ -500,7 +500,7 @@ TEST_SUITE("Complex Player Entity Tests")
                                   .Set<Mass>({80.5f});
 
         // Pack and verify exact values in JSON
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({entity});
 
         for (const auto &comp : ps.entities[0].components)
@@ -528,7 +528,7 @@ TEST_SUITE("Complex Player Entity Tests")
         world2.Component<CanRunComponent>();
         world2.Component<Mass>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();

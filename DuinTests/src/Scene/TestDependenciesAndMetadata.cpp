@@ -14,7 +14,7 @@ TEST_SUITE("External Dependency Serialization")
     TEST_CASE("Deserialize External Dependency")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         std::string jsonStr = R"({
             "uuid": "a1b2c3d4e5f67890",
@@ -31,7 +31,7 @@ TEST_SUITE("External Dependency Serialization")
     TEST_CASE("Serialize External Dependency")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         duin::PackedExternalDependency dep;
         dep.uuid = duin::UUID::FromStringHex("a1b2c3d4e5f67890");
@@ -49,7 +49,7 @@ TEST_SUITE("External Dependency Serialization")
     TEST_CASE("Round-trip External Dependency")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         duin::PackedExternalDependency original;
         original.uuid = duin::UUID::FromStringHex("fedcba9876543210");
@@ -68,7 +68,7 @@ TEST_SUITE("Scene Metadata Serialization")
     TEST_CASE("Deserialize Scene Metadata")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         std::string jsonStr = R"({
             "editorVersion": "1.0.5",
@@ -89,7 +89,7 @@ TEST_SUITE("Scene Metadata Serialization")
     TEST_CASE("Serialize Scene Metadata")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         duin::PackedSceneMetadata meta;
         meta.editorVersion = "2.0.0";
@@ -113,7 +113,7 @@ TEST_SUITE("Scene Metadata Serialization")
     TEST_CASE("Round-trip Scene Metadata")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         duin::PackedSceneMetadata original;
         original.editorVersion = "3.1.4";
@@ -133,7 +133,7 @@ TEST_SUITE("Scene Metadata Serialization")
     TEST_CASE("Deserialize Partial Metadata")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         std::string jsonStr = R"({
             "editorVersion": "1.0",

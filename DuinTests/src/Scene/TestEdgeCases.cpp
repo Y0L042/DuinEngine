@@ -20,7 +20,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("abc123def456"));
@@ -37,7 +37,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("def456abc789"));
@@ -53,7 +53,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         })";
 
         duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.DeserializeScene(json);
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("aabbccdd11223344"));
@@ -78,7 +78,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.name = "TestScene";
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -101,7 +101,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.name = "DisabledTest";
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -127,7 +127,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
             scene.entities.push_back(entity);
         }
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -147,7 +147,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.uuid = testUUID;
         scene.name = "UUIDTest";
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -167,7 +167,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.name = "SpecialCharsTest";
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -183,7 +183,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.uuid = duin::UUID::FromStringHex("9999999999999999");
         scene.name = std::string(1000, 'A');
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -203,7 +203,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.name = "EmptyComponentTest";
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -234,7 +234,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.name = "MultiTagTest";
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -273,7 +273,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.name = "DeepHierarchy";
         scene.entities.push_back(level1);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 
@@ -318,7 +318,7 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         scene.name = "MultiComponentTest";
         scene.entities.push_back(entity);
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeScene(scene);
         duin::PackedScene deserialized = builder.DeserializeScene(json);
 

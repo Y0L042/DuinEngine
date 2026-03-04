@@ -39,7 +39,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Armor>({50.0f})
             .Add<Prefab>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({soldierPrefab});
 
         CHECK(ps.entities.size() == 1);
@@ -53,7 +53,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Armor>();
         world2.Component<Prefab>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -90,7 +90,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Health>({150.0f})  // Override health
             .Set<Armor>({75.0f});
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({heavySoldier});
 
         CHECK(ps.entities.size() == 1);
@@ -104,7 +104,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Damage>();
         world2.Component<Armor>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -138,7 +138,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
                 .Set<Speed>({3.0f});
         }
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.PackScene({root});
         scene.name = "EnemySpawnScene";
 
@@ -175,7 +175,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Vec3>(0.0f, 0.5f, 0.0f)
             .Set<Camera>(60.0f, 0.1f, 500.0f, false);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({vehiclePrefab});
 
         CHECK(ps.entities.size() == 1);
@@ -191,7 +191,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Health>();
         world2.Component<Camera>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -234,7 +234,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Health>({200.0f})
             .Set<Speed>({3.0f});
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.PackScene({weakMonster, strongMonster});
 
         // Instantiate scene
@@ -243,7 +243,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Health>();
         world2.Component<Speed>();
 
-        duin::SceneBuilder builder2(&world2);
+        duin::SceneBuilder builder2;
         builder2.InstantiateScene(scene, &world2);
 
         std::vector<duin::Entity> children = world2.GetChildren();
@@ -282,7 +282,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
             .Set<Vec3>(0.5f, 1.0f, 0.0f)
             .Set<Damage>({10.0f});
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({characterPrefab});
 
         CHECK(ps.entities.size() == 1);
@@ -296,7 +296,7 @@ TEST_SUITE("Prefab and Inheritance Tests")
         world2.Component<Health>();
         world2.Component<Damage>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();

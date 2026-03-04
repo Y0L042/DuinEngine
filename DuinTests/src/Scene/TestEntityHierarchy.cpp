@@ -14,7 +14,7 @@ TEST_SUITE("Full Entity Hierarchy Serialization")
     TEST_CASE("Deserialize Entity with Children")
     {
         duin::JSONValue v = duin::JSONValue::Parse(FULL_ENTITY_JSON);
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::PackedEntity p = builder.DeserializeEntity(v);
 
         // Parent entity checks
@@ -77,7 +77,7 @@ TEST_SUITE("Full Entity Hierarchy Serialization")
         parent.children.push_back(child);
 
         // Serialize
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeEntity(parent);
 
         CHECK(json.IsObject());
@@ -111,7 +111,7 @@ TEST_SUITE("Full Entity Hierarchy Serialization")
         original.children.push_back(child);
 
         // Round-trip
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializeEntity(original);
         duin::PackedEntity deserialized = builder.DeserializeEntity(json);
 

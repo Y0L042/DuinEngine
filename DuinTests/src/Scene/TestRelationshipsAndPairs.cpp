@@ -96,7 +96,7 @@ TEST_SUITE("Relationship and Pair Tests")
         player.Add<Targets>(battie);
 
         // Pack player and enemy together for cross-entity relationship resolution
-        duin::SceneBuilder sceneBuilder(&world);
+        duin::SceneBuilder sceneBuilder;
         duin::PackedScene ps = sceneBuilder.PackScene({player, enemy, battie});
 
         // Verify player's pair is packed
@@ -117,7 +117,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world2.Component<Vec3>();
         duin::Entity te = world2.Component<Targets>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -150,7 +150,7 @@ TEST_SUITE("Relationship and Pair Tests")
         CHECK(child.GetParent() == parent);
         CHECK(parent.GetChildren().size() == 1);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent});
 
         CHECK(ps.entities.size() == 1);
@@ -161,7 +161,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world2;
         world2.Component<Vec3>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -194,7 +194,7 @@ TEST_SUITE("Relationship and Pair Tests")
         player.Add<Targets>(foe);
 
         // Pack all three together for cross-entity relationship resolution
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({player, weapon, foe});
 
         CHECK(ps.entities.size() == 3);
@@ -214,10 +214,10 @@ TEST_SUITE("Relationship and Pair Tests")
         alice.Add<Likes>(bob);
         bob.Add<Likes>(alice);
 
-        duin::SceneBuilder sbAlice(&world);
+        duin::SceneBuilder sbAlice;
         duin::PackedScene psAlice = sbAlice.PackScene({alice});
 
-        duin::SceneBuilder sbBob(&world);
+        duin::SceneBuilder sbBob;
         duin::PackedScene psBob = sbBob.PackScene({bob});
 
         CHECK(psAlice.entities[0].name == "Alice");
@@ -250,7 +250,7 @@ TEST_SUITE("Relationship and Pair Tests")
         original.jsonData = "";
 
         // Serialize to JSON
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializePair(original);
 
         // Verify JSON structure
@@ -281,7 +281,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity enemy1 = world.Entity("Enemy1").IsA(enemyPrefab);
 
         // Pack the entity
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({enemy1});
 
         // Verify IsA relationship is packed
@@ -310,7 +310,7 @@ TEST_SUITE("Relationship and Pair Tests")
         player.Add<Targets>(foe);
 
         // Pack player and enemy together for cross-entity relationship resolution
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({player, foe});
 
         // Serialize to JSON
@@ -373,7 +373,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (Targets, Ally): both are zero-size tag types
         unit.Add<Targets, Ally>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         REQUIRE(ps.entities.size() == 1);
@@ -415,14 +415,14 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity unit = world.Entity("Unit");
         unit.Add<Targets, Ally>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         duin::World world2;
         world2.Component<Targets>();
         world2.Component<Ally>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity unit2 = world2.Lookup("Unit");
@@ -441,7 +441,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (Targets, Health): rel=tag, tgt=component
         unit.Add<Targets, Health>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         REQUIRE(ps.entities.size() == 1);
@@ -478,14 +478,14 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity unit = world.Entity("Unit");
         unit.Add<Targets, Health>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         duin::World world2;
         world2.Component<Targets>();
         world2.Component<Health>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity unit2 = world2.Lookup("Unit");
@@ -504,7 +504,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity foe = world.Entity("Foe").Set<Vec3>(5.0f, 0.0f, 0.0f);
         attacker.Add<Targets>(foe);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({attacker, foe});
 
         REQUIRE(ps.entities.size() == 2);
@@ -531,7 +531,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world2.Component<Vec3>();
         world2.Component<Targets>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity attacker2 = world2.Lookup("Attacker");
@@ -552,7 +552,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (Damage, Ally): rel=component, tgt=tag
         unit.Add<Damage, Ally>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         REQUIRE(ps.entities.size() == 1);
@@ -589,14 +589,14 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity unit = world.Entity("Unit");
         unit.Add<Damage, Ally>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         duin::World world2;
         world2.Component<Damage>();
         world2.Component<Ally>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity unit2 = world2.Lookup("Unit");
@@ -615,7 +615,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (Damage, Health): both components
         unit.Add<Damage, Health>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         REQUIRE(ps.entities.size() == 1);
@@ -657,14 +657,14 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity unit = world.Entity("Unit");
         unit.Add<Damage, Health>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         duin::World world2;
         world2.Component<Damage>();
         world2.Component<Health>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity unit2 = world2.Lookup("Unit");
@@ -683,7 +683,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (Damage, victim): rel=component, tgt=runtime entity
         attacker.Add<Damage>(victim);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({attacker, victim});
 
         REQUIRE(ps.entities.size() == 2);
@@ -720,13 +720,13 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity victim = world.Entity("Victim");
         attacker.Add<Damage>(victim);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({attacker, victim});
 
         duin::World world2;
         duin::Entity damageType = world2.Component<Damage>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity attacker2 = world2.Lookup("Attacker");
@@ -747,7 +747,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (weapon, Ally): rel=runtime entity, tgt=tag
         holder.Add(weapon, world.Component<Ally>());
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({holder, weapon});
 
         REQUIRE(ps.entities.size() == 2);
@@ -788,13 +788,13 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity holder = world.Entity("Holder");
         holder.Add(weapon, world.Component<Ally>());
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({holder, weapon});
 
         duin::World world2;
         duin::Entity allyType = world2.Component<Ally>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity holder2 = world2.Lookup("Holder");
@@ -815,7 +815,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (buff, Health): rel=runtime entity, tgt=component
         unit.Add(buff, world.Component<Health>());
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit, buff});
 
         REQUIRE(ps.entities.size() == 2);
@@ -851,13 +851,13 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity unit = world.Entity("Unit");
         unit.Add(buff, world.Component<Health>());
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit, buff});
 
         duin::World world2;
         duin::Entity healthType = world2.Component<Health>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity unit2 = world2.Lookup("Unit");
@@ -878,7 +878,7 @@ TEST_SUITE("Relationship and Pair Tests")
         // (weapon entity, enemy entity): both runtime entities
         unit.Add(relation, target);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit, relation, target});
 
         REQUIRE(ps.entities.size() == 3);
@@ -919,11 +919,11 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity unit = world.Entity("Unit");
         unit.Add(relation, target);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit, relation, target});
 
         duin::World world2;
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity unit2 = world2.Lookup("Unit");
@@ -949,7 +949,7 @@ TEST_SUITE("Relationship and Pair Tests")
 
         CHECK(child.GetParent() == parent);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent});
 
         REQUIRE(ps.entities.size() == 1);
@@ -960,7 +960,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::World world2;
         world2.Component<Vec3>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> roots = world2.GetChildren();
@@ -979,7 +979,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity mid = world.Entity("Mid").ChildOf(root);
         duin::Entity leaf = world.Entity("Leaf").ChildOf(mid);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({root});
 
         REQUIRE(ps.entities.size() == 1);
@@ -998,7 +998,7 @@ TEST_SUITE("Relationship and Pair Tests")
 
         // Instantiate
         duin::World world2;
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> roots = world2.GetChildren();
@@ -1021,7 +1021,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world.Entity("ChildB").ChildOf(parent);
         world.Entity("ChildC").ChildOf(parent);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent});
 
         REQUIRE(ps.entities.size() == 1);
@@ -1035,7 +1035,7 @@ TEST_SUITE("Relationship and Pair Tests")
         CHECK(std::find(names.begin(), names.end(), "ChildC") != names.end());
 
         duin::World world2;
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> roots = world2.GetChildren();
@@ -1052,7 +1052,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity parent = world.Entity("Boss").Set<Vec3>(0.0f, 0.0f, 0.0f).Set<Health>({500.0f});
         duin::Entity minion = world.Entity("Minion").ChildOf(parent).Set<Vec3>(1.0f, 0.0f, 0.0f).Set<Health>({50.0f});
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent});
 
         REQUIRE(ps.entities[0].children.size() == 1);
@@ -1062,7 +1062,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world2.Component<Vec3>();
         world2.Component<Health>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> roots = world2.GetChildren();
@@ -1088,7 +1088,7 @@ TEST_SUITE("Relationship and Pair Tests")
 
         duin::Entity instance = world.Entity("Instance").IsA(basePrefab);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({instance});
 
         REQUIRE(ps.entities.size() == 1);
@@ -1145,7 +1145,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity baseB = world.Entity("BaseB").IsA(baseA).Set<Damage>({5.0f});
         duin::Entity leaf = world.Entity("LeafUnit").IsA(baseB);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({leaf});
 
         REQUIRE(ps.entities.size() == 1);
@@ -1175,7 +1175,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity inst2 = world.Entity("Enemy2").IsA(prefab).Set<Vec3>(2.0f, 0.0f, 0.0f);
         duin::Entity standalone = world.Entity("Soldier").Set<Health>({120.0f});
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({inst1, inst2, standalone});
 
         CHECK(ps.entities.size() == 3);
@@ -1211,7 +1211,7 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity target = world.Entity("TargetMan").Set<Vec3>(5.0f, 0.0f, 0.0f);
         child.Add<Targets>(target);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent, target});
 
         REQUIRE(ps.entities.size() == 2);
@@ -1228,7 +1228,7 @@ TEST_SUITE("Relationship and Pair Tests")
 
         world2.Component<Vec3>();
         world2.Component<Targets>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
 
         sb2.InstantiateScene(ps, &world2);
 
@@ -1262,7 +1262,7 @@ TEST_SUITE("Relationship and Pair Tests")
         CHECK(inst.Has<Health>());
         CHECK(inst.GetParent() == group);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({group});
 
         REQUIRE(ps.entities.size() == 1);
@@ -1292,7 +1292,7 @@ TEST_SUITE("Relationship and Pair Tests")
         unit.Add<Owns>(b);
         unit.Add<Follows>(c);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit, a, b, c});
 
         REQUIRE(ps.entities.size() == 4);
@@ -1336,7 +1336,7 @@ TEST_SUITE("Relationship and Pair Tests")
         unit.Add<Owns>(b);
         unit.Add<Follows>(c);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit, a, b, c});
 
         duin::World world2;
@@ -1344,7 +1344,7 @@ TEST_SUITE("Relationship and Pair Tests")
         world2.Component<Owns>();
         world2.Component<Follows>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         duin::Entity unit2 = world2.Lookup("Unit");
@@ -1375,7 +1375,7 @@ TEST_SUITE("Relationship and Pair Tests")
         original.targetPath = "/MyTarget";
         original.jsonData = "{\"key\":\"value\"}";
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializePair(original);
         duin::PackedPair restored = builder.DeserializePair(json);
 
@@ -1397,7 +1397,7 @@ TEST_SUITE("Relationship and Pair Tests")
         pp.targetName = "";
         pp.jsonData = "";
 
-        duin::SceneBuilder builder(nullptr);
+        duin::SceneBuilder builder;
         duin::JSONValue json = builder.SerializePair(pp);
         duin::PackedPair restored = builder.DeserializePair(json);
 
@@ -1417,7 +1417,7 @@ TEST_SUITE("Relationship and Pair Tests")
         unit.Add<Targets>(outsider);
 
         // Pack only unit — outsider is NOT in the packed set
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({unit});
 
         // The pair should still be packed (with whatever information is available)
@@ -1436,14 +1436,14 @@ TEST_SUITE("Relationship and Pair Tests")
         duin::Entity a = world.Entity("A").Set<Vec3>(1.0f, 0.0f, 0.0f);
         duin::Entity b = world.Entity("B").Set<Vec3>(2.0f, 0.0f, 0.0f);
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({a, b});
 
         duin::World world2;
         world2.Component<Vec3>();
 
         duin::Entity sceneRoot = world2.Entity("SceneRoot");
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateSceneAsChildren(ps, sceneRoot);
 
         std::vector<duin::Entity> children = sceneRoot.GetChildren();

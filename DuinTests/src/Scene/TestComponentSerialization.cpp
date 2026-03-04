@@ -15,7 +15,7 @@ TEST_SUITE("Component Serialization")
     TEST_CASE("Deserialize Component")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         std::string jsonStr = R"(
         {   
@@ -33,7 +33,7 @@ TEST_SUITE("Component Serialization")
     TEST_CASE("Serialize Component")
     {
         duin::World world;
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
 
         std::string jsonStr = R"({"type":"TestStructX","x":"3"})";
         duin::PackedComponent p{.jsonData = jsonStr};
@@ -53,7 +53,7 @@ TEST_SUITE("Component Instantiation")
         duin::World world;
         world.Component<Vec3>();
         world.Component<Camera>();
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::Entity e = world.Entity().Set<Vec3>(1.0f, 2.0f, 3.0f).Set<Camera>(3.0f, 2.0f, 4.0f, true);
         std::vector<duin::PackedComponent> cmpList;
         e.ForEachComponent([&](duin::Entity::ID cmpID) {
@@ -87,7 +87,7 @@ TEST_SUITE("Component Instantiation")
         duin::World world;
         world.Component<Vec3>();
         world.Component<Camera>();
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         std::vector<duin::PackedComponent> cmpList{2};
         cmpList[0].componentTypeName = "Vec3";
         cmpList[0].jsonData = R"({"type":"Vec3","x":1.0,"y":2.0,"z":3.0})";

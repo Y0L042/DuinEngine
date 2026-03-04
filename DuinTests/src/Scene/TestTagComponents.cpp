@@ -39,7 +39,7 @@ TEST_SUITE("Tag Component Tests")
             .Add<PlayerTag>()
             .Add<ActiveTag>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({entity});
 
         MSG_CHECK(ps.entities.size(), ps.entities.size() == 1);
@@ -52,7 +52,7 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<PlayerTag>();
         world2.Component<ActiveTag>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -91,7 +91,7 @@ TEST_SUITE("Tag Component Tests")
             .Set<Vec3>(5.0f, 0.0f, 5.0f)
             .Add<CollectibleTag>();
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.PackScene(&world);
         scene.name = "TaggedScene";
 
@@ -103,7 +103,7 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<CollectibleTag>();
         world2.Component<ActiveTag>();
 
-        duin::SceneBuilder builder2(&world2);
+        duin::SceneBuilder builder2;
         builder2.InstantiateScene(scene, &world2);
 
         std::vector<duin::Entity> children = world2.GetChildren();
@@ -129,7 +129,7 @@ TEST_SUITE("Tag Component Tests")
             .Add<PlayerTag>()
             .Add<DestroyableTag>();
 
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({entity});
         duin::JSONValue json = sb.SerializeScene(ps);
         duin::PackedScene deserialized = sb.DeserializeScene(json);
@@ -145,7 +145,7 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<EnemyTag>();
         world2.Component<DestroyableTag>();
 
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(deserialized, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -172,7 +172,7 @@ TEST_SUITE("Tag Component Tests")
             .Add<ActiveTag>()
             .Add<DestroyableTag>();
 
-        duin::SceneBuilder builder(&world);
+        duin::SceneBuilder builder;
         duin::PackedScene scene = builder.PackScene(&world);
         scene.name = "TagPersistenceTest";
         scene.uuid = duin::UUID::FromStringHex("tagtest11111111");
@@ -188,7 +188,7 @@ TEST_SUITE("Tag Component Tests")
         world2.Component<ActiveTag>();
         world2.Component<DestroyableTag>();
 
-        duin::SceneBuilder builder2(&world2);
+        duin::SceneBuilder builder2;
         builder2.InstantiateScene(scene2, &world2);
 
         std::vector<duin::Entity> children = world2.GetChildren();

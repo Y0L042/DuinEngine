@@ -29,7 +29,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
             world.Entity("Player").Set<Vec3>(10.0f, 20.0f, 30.0f).Set<Camera>(90.0f, 0.1f, 1000.0f, true);
 
         // Pack as scene entity; original is ps.entities[0]
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({original});
 
         CHECK(ps.entities.size() == 1);
@@ -40,7 +40,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -67,7 +67,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         child.ChildOf(parent);
 
         // Pack parent as scene entity; child is nested inside
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent});
 
         CHECK(ps.entities.size() == 1);
@@ -80,7 +80,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -114,7 +114,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         leaf.ChildOf(mid);
 
         // Pack root as scene entity
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({root});
 
         CHECK(ps.entities.size() == 1);
@@ -129,7 +129,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         // Instantiate
         duin::World world2;
         world2.Component<Vec3>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
@@ -170,7 +170,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         childB.ChildOf(parent);
 
         // Pack parent as scene entity
-        duin::SceneBuilder sb(&world);
+        duin::SceneBuilder sb;
         duin::PackedScene ps = sb.PackScene({parent});
 
         CHECK(ps.entities.size() == 1);
@@ -180,7 +180,7 @@ TEST_SUITE("Entity Pack-Instantiate Round-trip")
         duin::World world2;
         world2.Component<Vec3>();
         world2.Component<Camera>();
-        duin::SceneBuilder sb2(&world2);
+        duin::SceneBuilder sb2;
         sb2.InstantiateScene(ps, &world2);
 
         std::vector<duin::Entity> worldEntities = world2.GetChildren();
