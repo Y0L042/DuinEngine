@@ -31,6 +31,7 @@
 
 #include <rapidjson/rapidjson.h>
 #include <toml.hpp>
+#include <rfl.hpp>
 
 #include <flecs.h>
 

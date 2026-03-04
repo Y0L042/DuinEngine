@@ -26,6 +26,15 @@ project "Duin"
     pchheader "dnpch.h"
     pchsource "./src/dnpch.cpp"
 
+    -- DNAssert.cpp must opt out of the PCH so that DOCTEST_CONFIG_IMPLEMENT
+    -- and DOCTEST_CONFIG_SUPER_FAST_ASSERTS are defined before doctest.h is
+    -- first included. MSVC ignores any #defines that precede #include "dnpch.h"
+    -- in a PCH-enabled translation unit.
+    filter "files:**/Core/Debug/DNAssert.cpp"
+        flags { "NoPCH" }
+        pchheader ""
+    filter {}
+
     -- Exclude precompiled headers for C files
     filter "files:**.c"
         flags { "NoPCH" }
@@ -80,6 +89,7 @@ project "Duin"
         SolutionRoot .. "/%{IncludeDir.toml11}",
 		SolutionRoot .. "/%{IncludeDir.physx}",
         SolutionRoot .. "/%{IncludeDir.reflectcpp}",
+        SolutionRoot .. "/%{IncludeDir.doctest}",
     }
     -- libdirs(global_libdirs) 
     libdirs 

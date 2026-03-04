@@ -3,6 +3,9 @@
 
 #ifdef DN_PLATFORM_WINDOWS
 
+#include "Duin/Core/Debug/DNLog.h"
+#include "Duin/Core/Debug/DNAssert.h"
+
 extern duin::Application *duin::CreateApplication();
 
 int main(int argc, char **argv)
@@ -10,6 +13,10 @@ int main(int argc, char **argv)
     duin::Log::Init();
     DN_CORE_WARN("Initialized Log.");
     DN_INFO("Initialized Log.");
+
+    duin::InitAsserts();
+    DN_CORE_WARN("Initialized Asserts.");
+    DN_INFO("Initialized Asserts.");
 
     auto app = duin::CreateApplication();
     app->Run();
