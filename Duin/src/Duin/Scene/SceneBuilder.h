@@ -152,7 +152,7 @@ struct PackedScene
 class SceneBuilder
 {
   public:
-    SceneBuilder(duin::World *world);
+    SceneBuilder();
     ~SceneBuilder() = default;
 
     PackedScene PackScene(const std::vector<Entity> &vecEntities);
@@ -188,12 +188,11 @@ class SceneBuilder
     PackedExternalDependency DeserializeExternalDependency(const JSONValue &exdep);
 
   private:
-    duin::World *world = nullptr;
     std::unordered_map<uint64_t, UUID> instanceToPackedEntityMap;
     std::unordered_map<UUID, uint64_t> packedEntityToInstanceMap;
 
     void PrePassEntity(Entity e);
-    void PrePassInstantiate(const PackedEntity &pe, Entity parent);
+    void PrePassInstantiate(const PackedEntity &pe, World *world, Entity parent);
 };
 
 } // namespace duin

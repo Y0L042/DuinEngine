@@ -7,6 +7,7 @@
 #include <flecs.h>
 #include "Duin/ECS/ComponentSerializer.h"
 #include "Duin/ECS/PrefabRegistry.h"
+#include "Duin/Core/Debug/DNAssert.h"
 
 #include <functional>
 #include <unordered_map>
@@ -68,7 +69,7 @@ const std::string duin::PackedScene::TAG_ENTITIES = "entities";
 // SceneBuilder
 // ============================================================
 
-duin::SceneBuilder::SceneBuilder(duin::World *world) : world(world)
+duin::SceneBuilder::SceneBuilder()
 {
 }
 
@@ -504,6 +505,9 @@ duin::PackedEntity duin::SceneBuilder::PackEntity(Entity e)
 
 void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
 {
+    DN_CORE_ASSERT(e.IsValid(), "Entity is not valid!");
+
+    World *world = e.GetWorld();
     packedEntityToInstanceMap[pe.uuid] = e.GetID();
 
     if (!pe.name.empty())
@@ -512,7 +516,7 @@ void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
         // Only append a disambiguation suffix when another entity (not this one) already
         // holds the same name.  world->Lookup returns the pre-pass entity itself which
         // already has this name, so we must exclude it from the duplicate check.
-        Entity existing = world->Lookup(pe.name);
+        Entity existing = e.GetWorld()->Lookup(pe.name);
         if (existing.IsValid() && existing.GetID() != e.GetID())
         {
             name = name + "#" + static_cast<std::string>(UUID::ToStringHex(e.GetID()));
@@ -899,7 +903,7 @@ void duin::SceneBuilder::PrePassEntity(Entity e)
         PrePassEntity(child);
 }
 
-void duin::SceneBuilder::PrePassInstantiate(const PackedEntity &pe, Entity parent)
+void duin::SceneBuilder::PrePassInstantiate(const PackedEntity &pe, World *world, Entity parent)
 {
     Entity e = world->Entity();
     if (parent.IsValid())
@@ -908,18 +912,20 @@ void duin::SceneBuilder::PrePassInstantiate(const PackedEntity &pe, Entity paren
         e.SetName(pe.name);
     packedEntityToInstanceMap[pe.uuid] = e.GetID();
     for (const PackedEntity &child : pe.children)
-        PrePassInstantiate(child, e);
+        PrePassInstantiate(child, world, e);
 }
 
 void duin::SceneBuilder::InstantiateScene(PackedScene &pscn, World *world)
 {
+    DN_CORE_ASSERT(world != nullptr, "World is nullptr!");
+
     instanceToPackedEntityMap.clear();
     packedEntityToInstanceMap.clear();
 
     // Pre-pass: create all entities so pair references can be resolved across root entities.
     for (PackedEntity &pEntity : pscn.entities)
     {
-        PrePassInstantiate(pEntity, Entity{});
+        PrePassInstantiate(pEntity, world, Entity{});
     }
 
     // Main pass: apply components and pairs using the populated map.
@@ -928,7 +934,7 @@ void duin::SceneBuilder::InstantiateScene(PackedScene &pscn, World *world)
         auto it = packedEntityToInstanceMap.find(pEntity.uuid);
         if (it != packedEntityToInstanceMap.end())
         {
-            Entity e = this->world->MakeAlive(it->second);
+            Entity e = world->MakeAlive(it->second);
             InstantiateEntity(pEntity, e);
         }
     }
@@ -949,7 +955,7 @@ void duin::SceneBuilder::InstantiateSceneAsChildren(PackedScene &pscn, Entity pa
     // Pre-pass: create all entities as children of parent.
     for (PackedEntity &pEntity : pscn.entities)
     {
-        PrePassInstantiate(pEntity, parent);
+        PrePassInstantiate(pEntity, w, parent);
     }
 
     // Main pass: apply components and pairs.
