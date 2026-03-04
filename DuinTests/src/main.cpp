@@ -1,5 +1,6 @@
 // #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#define DOCTEST_CONFIG_IMPLEMENT
+// DOCTEST_CONFIG_IMPLEMENT is now defined in Duin/src/Duin/Core/Debug/DNAssert.cpp
+// so the doctest runtime lives in Duin.lib. Do not redefine it here.
 #define DN_DISABLE_ALL_LOGGING
 #include <doctest.h>
 #include <iostream>
