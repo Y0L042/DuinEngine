@@ -88,7 +88,10 @@ void SceneViewport::EndTextureRender()
     duin::EndTextureMode();
 }
 
-void SceneViewport::SetActiveWorld(std::weak_ptr<duin::GameWorld> world)
+void SceneViewport::CacheActiveScene(std::weak_ptr<Scene> scene)
 {
-    activeWorld = world;
+    if (!scene.expired())
+    {
+        cachedActiveScene = scene;
+    }
 }

@@ -38,9 +38,9 @@ void SceneTree::DrawUI()
     ImGui::End();
 }
 
-void SceneTree::SetActiveWorld(std::weak_ptr<duin::World> world)
+void SceneTree::CacheActiveScene(std::weak_ptr<Scene> scene)
 {
-    activeWorld = world;
+    cachedActiveScene = scene;
 }
 
 void SceneTree::DrawEntityNode(const EntityNode &node)
@@ -67,9 +67,10 @@ void SceneTree::DrawEntityNode(const EntityNode &node)
     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
     {
         selectedEntityId = node.entityId;
-        if (!activeWorld.expired() && activeWorld.lock()->IsAlive(node.entityId))
+        if (!cachedActiveScene.expired())
         {
-            duin::Entity e(node.entityId, activeWorld.lock().get());
+            std::shared_ptr<EditorWorld> activeWorld = cachedActiveScene.lock()->ctx.editorWorld;
+            duin::Entity e(node.entityId, activeWorld.get());
             if (!e.IsValid())
             {
                 DN_FATAL("Entity {} is not valid!", e.GetID());
@@ -91,8 +92,9 @@ void SceneTree::DrawEntityNode(const EntityNode &node)
 
 void SceneTree::UpdateTree()
 {
-    if (activeWorld.expired()) return;
-    std::shared_ptr<duin::World> world_ = activeWorld.lock();
+    if (cachedActiveScene.expired())
+        return;
+    std::shared_ptr<EditorWorld> world_ = cachedActiveScene.lock()->ctx.editorWorld;
     std::vector<duin::Entity> vec;
     world_->IterateChildren([&](duin::Entity e) {
         if (!e.GetParent().IsValid() && !e.Has(flecs::Prefab) && (e.GetName() != ""))

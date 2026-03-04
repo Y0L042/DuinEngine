@@ -3,11 +3,12 @@
 #include <Duin/Objects/ObjectModule.h>
 #include <Duin/Core/Signals/Signal.h>
 #include <memory>
+#include "GUI/UIObject.h"
 
 class State_SceneEditor;
 class FileManager;
 class FSNode;
-class FileTree : public duin::GameObject
+class FileTree : public duin::GameObject, public UIObject
 {
   public:
     duin::Signal<std::weak_ptr<FSNode>> onSceneSelect;

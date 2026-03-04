@@ -6,9 +6,11 @@
 #include <string>
 #include <Duin/ECS/DECS/Entity.h>
 #include <Duin/Objects/GameObject.h>
+#include "Scene.h"
+#include "GUI/UIObject.h"
 
 class State_SceneEditor;
-class SceneTree : public duin::GameObject
+class SceneTree : public duin::GameObject, public UIObject
 {
   public:
     struct EntityNode
@@ -29,14 +31,15 @@ class SceneTree : public duin::GameObject
     void Draw() override;
     void DrawUI() override;
 
-    void SetActiveWorld(std::weak_ptr<duin::World> world);
+    void CacheActiveScene(std::weak_ptr<Scene> scene);
 
     void UpdateTree();
 
   private:
     ImGuiWindowFlags imguiWindowFlags;
+    std::weak_ptr<Scene> cachedActiveScene;
     std::vector<EntityNode> entityTree;
-    std::weak_ptr<duin::World> activeWorld;
+
     uint64_t selectedEntityId = 0;
 
     void UpdateTreeImpl(std::vector<duin::Entity> entities);

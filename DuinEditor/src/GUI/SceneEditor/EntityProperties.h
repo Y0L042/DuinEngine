@@ -5,9 +5,10 @@
 #include <string>
 #include <Duin/ECS/DECS/Entity.h>
 #include <Duin/Objects/GameObject.h>
+#include "GUI/UIObject.h"
 
 class State_SceneEditor;
-class EntityProperties : public duin::GameObject
+class EntityProperties : public duin::GameObject, public UIObject
 {
   public:
     EntityProperties();
