@@ -166,7 +166,7 @@ void SandboxScene::Test_FlecsJSON()
 void SandboxScene::Test_SceneBuilder_01()
 {
     duin::World world;
-    duin::SceneBuilder sceneBuilder(&world);
+    duin::SceneBuilder sceneBuilder;
 
     world.Component<TagA>();
     world.Component<TagB>();
@@ -185,7 +185,7 @@ void SandboxScene::Test_SceneBuilder_01()
     DN_INFO("pscn:\n{}\n", sceneBuilder.SerializeScene(pscn).Write());
 
     duin::World world2;
-    duin::SceneBuilder sceneBuilder2(&world2);
+    duin::SceneBuilder sceneBuilder2;
 
     world2.Component<TagA>();
     world2.Component<TagB>();

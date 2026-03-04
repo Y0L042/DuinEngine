@@ -35,7 +35,7 @@ void Player::Init()
     std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc, playerPosition);
 #endif
 
-    duin::SceneBuilder sceneBuilder(world.get());
+    duin::SceneBuilder sceneBuilder;
     duin::Entity root = world->Entity();
 #if !WRITE_ENT
     duin::JSONValue scnJSON = duin::JSONValue::ParseFromFile(
