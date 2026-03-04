@@ -5,135 +5,41 @@ namespace TestGameStateMachine
 
 TEST_SUITE("GameState - Signal Connection and Disconnection")
 {
-    TEST_CASE("ConnectOnStateDraw and callback")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool drawSignalCalled = false;
-        state->ConnectOnStateDraw([&drawSignalCalled]() { drawSignalCalled = true; });
-
-        sm->Draw();
-        MSG_CHECK(drawSignalCalled, drawSignalCalled);
-    }
-
-    TEST_CASE("ConnectOnStateDrawUI and callback")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool drawUISignalCalled = false;
-        state->ConnectOnStateDrawUI([&drawUISignalCalled]() { drawUISignalCalled = true; });
-
-        sm->DrawUI();
-        MSG_CHECK(drawUISignalCalled, drawUISignalCalled);
-    }
-
     TEST_CASE("ConnectOnStateEnter and callback")
     {
         std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
 
         bool enterSignalCalled = false;
-        state->ConnectOnStateEnter([&enterSignalCalled]() { enterSignalCalled = true; });
+        auto stateHolder = sm->CreateState<TestStateA>();
+        stateHolder->ConnectOnStateEnter([&enterSignalCalled]() { enterSignalCalled = true; });
+        sm->PushState(stateHolder);
 
-        // Enter was already called during PushState, push another state to test
+        MSG_CHECK(enterSignalCalled, enterSignalCalled);
+    }
+
+    TEST_CASE("ConnectOnStateExit and callback")
+    {
+        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
+        auto *state = sm->PushState<TestStateA>();
+
+        bool exitSignalCalled = false;
+        state->ConnectOnStateExit([&exitSignalCalled]() { exitSignalCalled = true; });
+
         sm->PopState();
-        sm->PushState<TestStateA>();
-        // The signal should have been connected on the previous instance, so test with new state
-    }
-
-    TEST_CASE("ConnectOnStateOnEvent and callback")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool eventSignalCalled = false;
-        state->ConnectOnStateOnEvent([&eventSignalCalled](duin::Event) { eventSignalCalled = true; });
-
-        duin::Event testEvent{};
-        sm->OnEvent(testEvent);
-        MSG_CHECK(eventSignalCalled, eventSignalCalled);
-    }
-
-    TEST_CASE("ConnectOnStatePhysicsUpdate and callback")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool physicsUpdateSignalCalled = false;
-        state->ConnectOnStatePhysicsUpdate([&physicsUpdateSignalCalled](double) { physicsUpdateSignalCalled = true; });
-
-        sm->PhysicsUpdate(0.016);
-        MSG_CHECK(physicsUpdateSignalCalled, physicsUpdateSignalCalled);
-    }
-
-    TEST_CASE("ConnectOnStateUpdate and callback")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool updateSignalCalled = false;
-        state->ConnectOnStateUpdate([&updateSignalCalled](double) { updateSignalCalled = true; });
-
-        sm->Update(0.016);
-        MSG_CHECK(updateSignalCalled, updateSignalCalled);
-    }
-
-    TEST_CASE("ConnectAllSignals")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        int signalCallCount = 0;
-        state->ConnectAllSignals([&signalCallCount]() { signalCallCount++; },            // Enter
-                                 [&signalCallCount](duin::Event) { signalCallCount++; }, // OnEvent
-                                 [&signalCallCount](double) { signalCallCount++; },      // Update
-                                 [&signalCallCount](double) { signalCallCount++; },      // PhysicsUpdate
-                                 [&signalCallCount]() { signalCallCount++; },            // Draw
-                                 [&signalCallCount]() { signalCallCount++; },            // DrawUI
-                                 [&signalCallCount]() { signalCallCount++; }             // Exit
-        );
-
-        sm->Update(0.016);
-        MSG_CHECK(signalCallCount, signalCallCount >= 1);
-    }
-
-    TEST_CASE("DisconnectOnStateDraw")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool drawSignalCalled = false;
-        auto uuid = state->ConnectOnStateDraw([&drawSignalCalled]() { drawSignalCalled = true; });
-        state->DisconnectOnStateDraw(uuid);
-
-        sm->Draw();
-        MSG_CHECK_FALSE(drawSignalCalled, drawSignalCalled);
-    }
-
-    TEST_CASE("DisconnectOnStateDrawUI")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool drawUISignalCalled = false;
-        auto uuid = state->ConnectOnStateDrawUI([&drawUISignalCalled]() { drawUISignalCalled = true; });
-        state->DisconnectOnStateDrawUI(uuid);
-
-        sm->DrawUI();
-        MSG_CHECK_FALSE(drawUISignalCalled, drawUISignalCalled);
+        MSG_CHECK(exitSignalCalled, exitSignalCalled);
     }
 
     TEST_CASE("DisconnectOnStateEnter")
     {
         std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
 
-        auto uuid = state->ConnectOnStateEnter([]() {});
-        state->DisconnectOnStateEnter(uuid);
-        // Test passes if no crash
-        CHECK(true);
+        bool enterSignalCalled = false;
+        auto stateHolder = sm->CreateState<TestStateA>();
+        auto uuid = stateHolder->ConnectOnStateEnter([&enterSignalCalled]() { enterSignalCalled = true; });
+        stateHolder->DisconnectOnStateEnter(uuid);
+        sm->PushState(stateHolder);
+
+        MSG_CHECK_FALSE(enterSignalCalled, enterSignalCalled);
     }
 
     TEST_CASE("DisconnectOnStateExit")
@@ -141,75 +47,48 @@ TEST_SUITE("GameState - Signal Connection and Disconnection")
         std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
         auto *state = sm->PushState<TestStateA>();
 
-        auto uuid = state->ConnectOnStateExit([]() {});
+        bool exitSignalCalled = false;
+        auto uuid = state->ConnectOnStateExit([&exitSignalCalled]() { exitSignalCalled = true; });
         state->DisconnectOnStateExit(uuid);
-        // Test passes if no crash
-        CHECK(true);
+
+        sm->PopState();
+        MSG_CHECK_FALSE(exitSignalCalled, exitSignalCalled);
     }
 
-    TEST_CASE("DisconnectOnStateOnEvent")
+    TEST_CASE("ConnectAllSignals")
     {
         std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
 
-        bool eventSignalCalled = false;
-        auto uuid = state->ConnectOnStateOnEvent([&eventSignalCalled](duin::Event) { eventSignalCalled = true; });
-        state->DisconnectOnStateOnEvent(uuid);
+        int enterCount = 0;
+        int exitCount  = 0;
 
-        duin::Event testEvent{};
-        sm->OnEvent(testEvent);
-        MSG_CHECK_FALSE(eventSignalCalled, eventSignalCalled);
-    }
+        auto stateHolder = sm->CreateState<TestStateA>();
+        stateHolder->ConnectAllSignals([&enterCount]() { enterCount++; },
+                                       [&exitCount]()  { exitCount++;  });
+        sm->PushState(stateHolder);
+        sm->PopState();
 
-    TEST_CASE("DisconnectOnStatePhysicsUpdate")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool physicsUpdateSignalCalled = false;
-        auto uuid = state->ConnectOnStatePhysicsUpdate(
-            [&physicsUpdateSignalCalled](double) { physicsUpdateSignalCalled = true; });
-        state->DisconnectOnStatePhysicsUpdate(uuid);
-
-        sm->PhysicsUpdate(0.016);
-        MSG_CHECK_FALSE(physicsUpdateSignalCalled, physicsUpdateSignalCalled);
-    }
-
-    TEST_CASE("DisconnectOnStateUpdate")
-    {
-        std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
-
-        bool updateSignalCalled = false;
-        auto uuid = state->ConnectOnStateUpdate([&updateSignalCalled](double) { updateSignalCalled = true; });
-        state->DisconnectOnStateUpdate(uuid);
-
-        sm->Update(0.016);
-        MSG_CHECK_FALSE(updateSignalCalled, updateSignalCalled);
+        MSG_CHECK(enterCount, enterCount == 1);
+        MSG_CHECK(exitCount,  exitCount  == 1);
     }
 
     TEST_CASE("DisconnectAllSignals")
     {
         std::shared_ptr<duin::GameStateMachine> sm = std::make_shared<duin::GameStateMachine>();
-        auto *state = sm->PushState<TestStateA>();
 
-        int signalCallCount = 0;
-        auto connections = state->ConnectAllSignals(
-            [&signalCallCount]() { signalCallCount++; }, [&signalCallCount](duin::Event) { signalCallCount++; },
-            [&signalCallCount](double) { signalCallCount++; }, [&signalCallCount](double) { signalCallCount++; },
-            [&signalCallCount]() { signalCallCount++; }, [&signalCallCount]() { signalCallCount++; },
-            [&signalCallCount]() { signalCallCount++; });
+        int enterCount = 0;
+        int exitCount  = 0;
 
-        state->DisconnectAllSignals(connections);
+        auto stateHolder = sm->CreateState<TestStateA>();
+        auto connections = stateHolder->ConnectAllSignals([&enterCount]() { enterCount++; },
+                                                          [&exitCount]()  { exitCount++;  });
+        stateHolder->DisconnectAllSignals(connections);
 
-        sm->Update(0.016);
-        sm->PhysicsUpdate(0.016);
-        sm->Draw();
-        sm->DrawUI();
-        duin::Event testEvent{};
-        sm->OnEvent(testEvent);
+        sm->PushState(stateHolder);
+        sm->PopState();
 
-        MSG_CHECK(signalCallCount, signalCallCount == 0);
+        MSG_CHECK(enterCount, enterCount == 0);
+        MSG_CHECK(exitCount,  exitCount  == 0);
     }
 }
 

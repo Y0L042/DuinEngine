@@ -258,7 +258,7 @@ TEST_SUITE("GameStateMachine - Hierarchy Edge Cases")
         std::vector<std::string> order;
 
         auto stateHolder = sm->CreateState<TestStateA>();
-        stateHolder->ConnectOnStateUpdate([&order](double) { order.push_back("state"); });
+        stateHolder->ConnectOnObjectUpdate([&order](double) { order.push_back("state"); });
 
         auto child = stateHolder->CreateChildObject<TrackingObject>();
         child->ConnectOnObjectUpdate([&order](double) { order.push_back("child"); });

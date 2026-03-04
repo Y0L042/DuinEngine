@@ -1744,8 +1744,7 @@ TEST_SUITE("GameObject")
         obj->ObjectUpdate(0.016);
         CHECK(callCount == 1);
 
-        bool disconnected = obj->DisconnectOnObjectUpdate(uuid);
-        CHECK(disconnected);
+        obj->DisconnectOnObjectUpdate(uuid);
 
         obj->ObjectUpdate(0.016);
         CHECK(callCount == 1); // Still 1, not incremented
@@ -1761,8 +1760,7 @@ TEST_SUITE("GameObject")
         obj->ObjectReady();
         CHECK(callCount == 1);
 
-        bool disconnected = obj->DisconnectOnObjectReady(uuid);
-        CHECK(disconnected);
+        obj->DisconnectOnObjectReady(uuid);
 
         obj->ObjectReady();
         CHECK(callCount == 1);
@@ -1778,8 +1776,7 @@ TEST_SUITE("GameObject")
         obj->ObjectPhysicsUpdate(0.016);
         CHECK(callCount == 1);
 
-        bool disconnected = obj->DisconnectOnObjectPhysicsUpdate(uuid);
-        CHECK(disconnected);
+        obj->DisconnectOnObjectPhysicsUpdate(uuid);
 
         obj->ObjectPhysicsUpdate(0.016);
         CHECK(callCount == 1);
@@ -1795,8 +1792,7 @@ TEST_SUITE("GameObject")
         obj->ObjectDraw();
         CHECK(callCount == 1);
 
-        bool disconnected = obj->DisconnectOnObjectDraw(uuid);
-        CHECK(disconnected);
+        obj->DisconnectOnObjectDraw(uuid);
 
         obj->ObjectDraw();
         CHECK(callCount == 1);
@@ -1812,8 +1808,7 @@ TEST_SUITE("GameObject")
         obj->ObjectDrawUI();
         CHECK(callCount == 1);
 
-        bool disconnected = obj->DisconnectOnObjectDrawUI(uuid);
-        CHECK(disconnected);
+        obj->DisconnectOnObjectDrawUI(uuid);
 
         obj->ObjectDrawUI();
         CHECK(callCount == 1);
@@ -1829,8 +1824,7 @@ TEST_SUITE("GameObject")
         obj->ObjectDebug();
         CHECK(callCount == 1);
 
-        bool disconnected = obj->DisconnectOnObjectDebug(uuid);
-        CHECK(disconnected);
+        obj->DisconnectOnObjectDebug(uuid);
 
         obj->ObjectDebug();
         CHECK(callCount == 1);
@@ -1847,42 +1841,10 @@ TEST_SUITE("GameObject")
         obj->ObjectOnEvent(testEvent);
         CHECK(callCount == 1);
 
-        bool disconnected = obj->DisconnectOnObjectOnEvent(uuid);
-        CHECK(disconnected);
+        obj->DisconnectOnObjectOnEvent(uuid);
 
         obj->ObjectOnEvent(testEvent);
         CHECK(callCount == 1);
-    }
-
-    TEST_CASE("Disconnect returns false for invalid UUID")
-    {
-        auto obj = std::make_shared<SignalTrackerObject>();
-
-        bool result = obj->DisconnectOnObjectUpdate(duin::UUID::INVALID);
-        CHECK_FALSE(result);
-    }
-
-    TEST_CASE("Disconnect returns false for non-existent UUID")
-    {
-        auto obj = std::make_shared<SignalTrackerObject>();
-
-        duin::UUID fakeUUID;
-        bool result = obj->DisconnectOnObjectUpdate(fakeUUID);
-        CHECK_FALSE(result);
-    }
-
-    TEST_CASE("Multiple disconnect attempts on same UUID")
-    {
-        auto obj = std::make_shared<SignalTrackerObject>();
-        int callCount = 0;
-
-        auto uuid = obj->ConnectOnObjectUpdate([&callCount](double delta) { callCount++; });
-
-        bool firstDisconnect = obj->DisconnectOnObjectUpdate(uuid);
-        CHECK(firstDisconnect);
-
-        bool secondDisconnect = obj->DisconnectOnObjectUpdate(uuid);
-        CHECK_FALSE(secondDisconnect);
     }
 
     TEST_CASE("Disconnect specific listener among multiple listeners")

@@ -99,7 +99,7 @@ TEST_SUITE("GameStateMachine - Double Call Prevention")
         int updateSignalCount = 0;
 
         auto stateHolder = sm->CreateState<TestStateA>();
-        stateHolder->ConnectOnStateUpdate([&updateSignalCount](double) { updateSignalCount++; });
+        stateHolder->ConnectOnObjectUpdate([&updateSignalCount](double) { updateSignalCount++; });
         auto *state = sm->PushState(stateHolder);
 
         MSG_CHECK(state->updateCalls, state->updateCalls == 0);
@@ -123,7 +123,7 @@ TEST_SUITE("GameStateMachine - Double Call Prevention")
         int physicsUpdateSignalCount = 0;
 
         auto stateHolder = sm->CreateState<TestStateA>();
-        stateHolder->ConnectOnStatePhysicsUpdate([&physicsUpdateSignalCount](double) { physicsUpdateSignalCount++; });
+        stateHolder->ConnectOnObjectPhysicsUpdate([&physicsUpdateSignalCount](double) { physicsUpdateSignalCount++; });
         auto *state = sm->PushState(stateHolder);
 
         MSG_CHECK(state->physicsUpdateCalls, state->physicsUpdateCalls == 0);
@@ -147,7 +147,7 @@ TEST_SUITE("GameStateMachine - Double Call Prevention")
         int drawSignalCount = 0;
 
         auto stateHolder = sm->CreateState<TestStateA>();
-        stateHolder->ConnectOnStateDraw([&drawSignalCount]() { drawSignalCount++; });
+        stateHolder->ConnectOnObjectDraw([&drawSignalCount]() { drawSignalCount++; });
         auto *state = sm->PushState(stateHolder);
 
         MSG_CHECK(state->drawCalls, state->drawCalls == 0);
@@ -171,7 +171,7 @@ TEST_SUITE("GameStateMachine - Double Call Prevention")
         int drawUISignalCount = 0;
 
         auto stateHolder = sm->CreateState<TestStateA>();
-        stateHolder->ConnectOnStateDrawUI([&drawUISignalCount]() { drawUISignalCount++; });
+        stateHolder->ConnectOnObjectDrawUI([&drawUISignalCount]() { drawUISignalCount++; });
         auto *state = sm->PushState(stateHolder);
 
         MSG_CHECK(state->drawUICalls, state->drawUICalls == 0);
@@ -195,7 +195,7 @@ TEST_SUITE("GameStateMachine - Double Call Prevention")
         int eventSignalCount = 0;
 
         auto stateHolder = sm->CreateState<TestStateA>();
-        stateHolder->ConnectOnStateOnEvent([&eventSignalCount](duin::Event) { eventSignalCount++; });
+        stateHolder->ConnectOnObjectOnEvent([&eventSignalCount](duin::Event) { eventSignalCount++; });
         auto *state = sm->PushState(stateHolder);
 
         MSG_CHECK(state->eventCalls, state->eventCalls == 0);
@@ -224,11 +224,11 @@ TEST_SUITE("GameStateMachine - Double Call Prevention")
         int eventCount = 0;
 
         auto stateHolder = sm->CreateState<TestStateA>();
-        stateHolder->ConnectOnStateUpdate([&updateCount](double) { updateCount++; });
-        stateHolder->ConnectOnStatePhysicsUpdate([&physicsCount](double) { physicsCount++; });
-        stateHolder->ConnectOnStateDraw([&drawCount]() { drawCount++; });
-        stateHolder->ConnectOnStateDrawUI([&drawUICount]() { drawUICount++; });
-        stateHolder->ConnectOnStateOnEvent([&eventCount](duin::Event) { eventCount++; });
+        stateHolder->ConnectOnObjectUpdate([&updateCount](double) { updateCount++; });
+        stateHolder->ConnectOnObjectPhysicsUpdate([&physicsCount](double) { physicsCount++; });
+        stateHolder->ConnectOnObjectDraw([&drawCount]() { drawCount++; });
+        stateHolder->ConnectOnObjectDrawUI([&drawUICount]() { drawUICount++; });
+        stateHolder->ConnectOnObjectOnEvent([&eventCount](duin::Event) { eventCount++; });
         auto *state = sm->PushState(stateHolder);
 
         // Simulate one frame
@@ -623,6 +623,211 @@ TEST_SUITE("GameStateMachine - Child Count as States are Pushed and Popped")
         MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
         MSG_CHECK(sm->GetChildrenCount(), sm->GetChildrenCount() == 0);
         MSG_CHECK(sm->GetChildren().size(), sm->GetChildren().size() == 0);
+    }
+}
+
+TEST_SUITE("GameStateMachine - Self-Destruction During Dispatch")
+{
+    // Helper: make a GameStateMachine managed by a shared_ptr so shared_from_this works.
+    static std::shared_ptr<duin::GameStateMachine> makeSM()
+    {
+        return std::make_shared<duin::GameStateMachine>();
+    }
+
+    // ── DrawUI ────────────────────────────────────────────────────────────────
+
+    TEST_CASE("SwitchState called from DrawUI does not crash")
+    {
+        auto sm = makeSM();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->drawUIAction = SelfDestructingState::Action::Switch;
+
+        // This must not crash even though the state destroys itself mid-dispatch.
+        sm->DrawUI();
+
+        // After the switch the sm should be running TestStateB.
+        auto *next = sm->GetActiveState<TestStateB>();
+        MSG_CHECK(next, next != nullptr);
+    }
+
+    TEST_CASE("PopState called from DrawUI does not crash")
+    {
+        auto sm = makeSM();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->drawUIAction = SelfDestructingState::Action::Pop;
+
+        sm->DrawUI();
+
+        // Stack must be empty and sm healthy.
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    TEST_CASE("FlushStack called from DrawUI does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<TestStateA>();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->drawUIAction = SelfDestructingState::Action::Flush;
+
+        sm->DrawUI();
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    // ── Update ────────────────────────────────────────────────────────────────
+
+    TEST_CASE("SwitchState called from Update does not crash")
+    {
+        auto sm = makeSM();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->updateAction = SelfDestructingState::Action::Switch;
+
+        sm->Update(0.016);
+
+        auto *next = sm->GetActiveState<TestStateB>();
+        MSG_CHECK(next, next != nullptr);
+    }
+
+    TEST_CASE("PopState called from Update does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<SelfDestructingState>();
+
+        auto *state = sm->GetActiveState<SelfDestructingState>();
+        state->updateAction = SelfDestructingState::Action::Pop;
+
+        sm->Update(0.016);
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    TEST_CASE("FlushStack called from Update does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<TestStateA>();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->updateAction = SelfDestructingState::Action::Flush;
+
+        sm->Update(0.016);
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    // ── PhysicsUpdate ─────────────────────────────────────────────────────────
+
+    TEST_CASE("SwitchState called from PhysicsUpdate does not crash")
+    {
+        auto sm = makeSM();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->physicsUpdateAction = SelfDestructingState::Action::Switch;
+
+        sm->PhysicsUpdate(0.016);
+
+        auto *next = sm->GetActiveState<TestStateB>();
+        MSG_CHECK(next, next != nullptr);
+    }
+
+    TEST_CASE("PopState called from PhysicsUpdate does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<SelfDestructingState>();
+
+        auto *state = sm->GetActiveState<SelfDestructingState>();
+        state->physicsUpdateAction = SelfDestructingState::Action::Pop;
+
+        sm->PhysicsUpdate(0.016);
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    TEST_CASE("FlushStack called from PhysicsUpdate does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<TestStateA>();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->physicsUpdateAction = SelfDestructingState::Action::Flush;
+
+        sm->PhysicsUpdate(0.016);
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    // ── Draw ──────────────────────────────────────────────────────────────────
+
+    TEST_CASE("SwitchState called from Draw does not crash")
+    {
+        auto sm = makeSM();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->drawAction = SelfDestructingState::Action::Switch;
+
+        sm->Draw();
+
+        auto *next = sm->GetActiveState<TestStateB>();
+        MSG_CHECK(next, next != nullptr);
+    }
+
+    TEST_CASE("PopState called from Draw does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<SelfDestructingState>();
+
+        auto *state = sm->GetActiveState<SelfDestructingState>();
+        state->drawAction = SelfDestructingState::Action::Pop;
+
+        sm->Draw();
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    TEST_CASE("FlushStack called from Draw does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<TestStateA>();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->drawAction = SelfDestructingState::Action::Flush;
+
+        sm->Draw();
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    // ── OnEvent ───────────────────────────────────────────────────────────────
+
+    TEST_CASE("SwitchState called from OnEvent does not crash")
+    {
+        auto sm = makeSM();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->onEventAction = SelfDestructingState::Action::Switch;
+
+        sm->OnEvent(duin::Event{});
+
+        auto *next = sm->GetActiveState<TestStateB>();
+        MSG_CHECK(next, next != nullptr);
+    }
+
+    TEST_CASE("PopState called from OnEvent does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<SelfDestructingState>();
+
+        auto *state = sm->GetActiveState<SelfDestructingState>();
+        state->onEventAction = SelfDestructingState::Action::Pop;
+
+        sm->OnEvent(duin::Event{});
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
+    }
+
+    TEST_CASE("FlushStack called from OnEvent does not crash")
+    {
+        auto sm = makeSM();
+        sm->PushState<TestStateA>();
+        auto *state = sm->PushState<SelfDestructingState>();
+        state->onEventAction = SelfDestructingState::Action::Flush;
+
+        sm->OnEvent(duin::Event{});
+
+        MSG_CHECK(sm->GetStateStack().size(), sm->GetStateStack().size() == 0);
     }
 }
 

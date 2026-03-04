@@ -150,3 +150,69 @@ class SwitchingState : public duin::GameState
     bool enterCalled = false;
     bool shouldSwitch = false;
 };
+
+// State that calls SwitchState/PopState/FlushStack from inside each dispatch method.
+// The action is controlled by the action* flags so each dispatch path can be tested
+// independently.
+class SelfDestructingState : public duin::GameState
+{
+  public:
+    SelfDestructingState(duin::GameStateMachine &owner) : duin::GameState(owner)
+    {
+        stateName = "SelfDestructingState";
+    }
+
+    enum class Action { None, Switch, Pop, Flush };
+
+    void DrawUI() override
+    {
+        drawUICalled = true;
+        if (drawUIAction == Action::Switch)  SwitchState<TestStateB>();
+        else if (drawUIAction == Action::Pop)   PopState();
+        else if (drawUIAction == Action::Flush) FlushStack();
+    }
+
+    void Update(double) override
+    {
+        updateCalled = true;
+        if (updateAction == Action::Switch)  SwitchState<TestStateB>();
+        else if (updateAction == Action::Pop)   PopState();
+        else if (updateAction == Action::Flush) FlushStack();
+    }
+
+    void PhysicsUpdate(double) override
+    {
+        physicsUpdateCalled = true;
+        if (physicsUpdateAction == Action::Switch)  SwitchState<TestStateB>();
+        else if (physicsUpdateAction == Action::Pop)   PopState();
+        else if (physicsUpdateAction == Action::Flush) FlushStack();
+    }
+
+    void Draw() override
+    {
+        drawCalled = true;
+        if (drawAction == Action::Switch)  SwitchState<TestStateB>();
+        else if (drawAction == Action::Pop)   PopState();
+        else if (drawAction == Action::Flush) FlushStack();
+    }
+
+    void OnEvent(duin::Event) override
+    {
+        onEventCalled = true;
+        if (onEventAction == Action::Switch)  SwitchState<TestStateB>();
+        else if (onEventAction == Action::Pop)   PopState();
+        else if (onEventAction == Action::Flush) FlushStack();
+    }
+
+    bool drawUICalled        = false;
+    bool updateCalled        = false;
+    bool physicsUpdateCalled = false;
+    bool drawCalled          = false;
+    bool onEventCalled       = false;
+
+    Action drawUIAction        = Action::None;
+    Action updateAction        = Action::None;
+    Action physicsUpdateAction = Action::None;
+    Action drawAction          = Action::None;
+    Action onEventAction       = Action::None;
+};
