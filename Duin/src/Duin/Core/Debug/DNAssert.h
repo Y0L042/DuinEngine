@@ -1,84 +1,44 @@
-/**
- * @file DNAssert.h
- * @brief Assertion macros for debugging and error checking.
- * @ingroup Core_Debug
- *
- * Provides assertion macros that log detailed error messages before failing.
- * These macros can be used in expressions, just like standard assert().
- *
- * Two variants are available:
- * - DN_ASSERT / DN_CORE_ASSERT: Always active, use for critical invariants
- * - DN_DEBUG_ASSERT / DN_CORE_DEBUG_ASSERT: Only active in debug builds
- *
- * @code
- * DN_ASSERT(ptr != nullptr, "Pointer must not be null");
- * DN_CORE_ASSERT(index < size, "Index out of bounds");
- *
- * // Can be used in expressions:
- * int value = (DN_ASSERT(x > 0, "x must be positive"), x);
- * @endcode
- */
-
 #pragma once
 
-#include "DNLog.h"
+#include <doctest.h>
 
-// Platform-specific debug break
-#if defined(_MSC_VER)
-#define DN_DEBUG_BREAK() __debugbreak()
-#elif defined(__clang__) || defined(__GNUC__)
-#define DN_DEBUG_BREAK() __builtin_trap()
+namespace duin
+{
+void InitAsserts();
+} // namespace duin
+
+// DN_CORE_ASSERT / DN_ASSERT: always active.
+// Inside a doctest test case  -> CHECK (test failure) or WARN (logged only).
+// Outside a test case (runtime) -> calls the assert handler set by InitAsserts().
+//
+// Define DN_ALLOW_ASSERT_FAILS as a project-wide build define (e.g. in DuinTests)
+// to downgrade all DN asserts to WARN level — failures are logged but do NOT
+// count as test failures. Use this for test projects where assert firing is an
+// expected and intentional behaviour being verified.
+
+#ifndef DN_ALLOW_ASSERT_FAILS
+
+#define DN_CORE_ASSERT(condition, msg)  CHECK_MESSAGE(condition, msg)
+#define DN_CORE_ASSERT_NOMSG(condition) CHECK(condition)
+#define DN_ASSERT(condition, msg)       CHECK_MESSAGE(condition, msg)
+#define DN_ASSERT_NOMSG(condition)      CHECK(condition)
+
 #else
-#include <csignal>
-#define DN_DEBUG_BREAK() std::raise(SIGTRAP)
+
+#define DN_CORE_ASSERT(condition, msg)  WARN_MESSAGE(condition, msg)
+#define DN_CORE_ASSERT_NOMSG(condition) WARN(condition)
+#define DN_ASSERT(condition, msg)       WARN_MESSAGE(condition, msg)
+#define DN_ASSERT_NOMSG(condition)      WARN(condition)
+
 #endif
 
-// Internal helper that logs and breaks, returns void
-#define DN_ASSERT_FAIL_CORE_(condition, msg)                                                                           \
-    (DN_CORE_FATAL("Assertion failed: {}", #condition),                                                                \
-     DN_CORE_FATAL("  Location: {}:{} in {}", __FILE__, __LINE__, __func__), DN_CORE_FATAL("  Message: {}", msg),      \
-     DN_DEBUG_BREAK())
-
-#define DN_ASSERT_FAIL_(condition, msg)                                                                                \
-    (DN_FATAL("Assertion failed: {}", #condition), DN_FATAL("  Location: {}:{} in {}", __FILE__, __LINE__, __func__),  \
-     DN_FATAL("  Message: {}", msg), DN_DEBUG_BREAK())
-
-/**
- * @name Core Assert Macros
- * For engine/core code assertions. Always active.
- * @{
- */
-
-#define DN_CORE_ASSERT(condition, msg) ((condition) ? (void)0 : DN_ASSERT_FAIL_CORE_(condition, msg))
-
-#define DN_CORE_ASSERT_NOMSG(condition) ((condition) ? (void)0 : DN_ASSERT_FAIL_CORE_(condition, ""))
-
-/** @} */
-
-/**
- * @name Client Assert Macros
- * For application code assertions. Always active.
- * @{
- */
-
-#define DN_ASSERT(condition, msg) ((condition) ? (void)0 : DN_ASSERT_FAIL_(condition, msg))
-
-#define DN_ASSERT_NOMSG(condition) ((condition) ? (void)0 : DN_ASSERT_FAIL_(condition, ""))
-
-/** @} */
-
-/**
- * @name Debug-Only Assert Macros
- * Only active when DN_DEBUG is defined. Compile to nothing in release builds.
- * @{
- */
-
+// Debug-only variants: compiled out in non-debug builds.
 #ifdef DN_DEBUG
 
-#define DN_CORE_DEBUG_ASSERT(condition, msg) DN_CORE_ASSERT(condition, msg)
-#define DN_CORE_DEBUG_ASSERT_NOMSG(condition) DN_CORE_ASSERT_NOMSG(condition)
-#define DN_DEBUG_ASSERT(condition, msg) DN_ASSERT(condition, msg)
-#define DN_DEBUG_ASSERT_NOMSG(condition) DN_ASSERT_NOMSG(condition)
+#define DN_CORE_DEBUG_ASSERT(condition, msg) CHECK_MESSAGE(condition, msg)
+#define DN_CORE_DEBUG_ASSERT_NOMSG(condition) CHECK(condition)
+#define DN_DEBUG_ASSERT(condition, msg) CHECK_MESSAGE(condition, msg)
+#define DN_DEBUG_ASSERT_NOMSG(condition) CHECK(condition)
 
 #else
 
@@ -89,26 +49,15 @@
 
 #endif
 
-/** @} */
-
-/**
- * @name Verify Macros
- * Like asserts, but always evaluate the condition (even in release).
- * Use when the condition has side effects that must always execute.
- * @{
- */
-
+// Verify variants: condition always evaluated; only the failure action is debug-gated.
 #ifdef DN_DEBUG
 
-#define DN_VERIFY(condition, msg) ((condition) ? (void)0 : DN_ASSERT_FAIL_(condition, msg))
-
-#define DN_CORE_VERIFY(condition, msg) ((condition) ? (void)0 : DN_ASSERT_FAIL_CORE_(condition, msg))
+#define DN_CORE_VERIFY(condition, msg) CHECK_MESSAGE(condition, msg)
+#define DN_VERIFY(condition, msg) CHECK_MESSAGE(condition, msg)
 
 #else
 
-#define DN_VERIFY(condition, msg) ((void)(condition))
 #define DN_CORE_VERIFY(condition, msg) ((void)(condition))
+#define DN_VERIFY(condition, msg) ((void)(condition))
 
 #endif
-
-/** @} */
