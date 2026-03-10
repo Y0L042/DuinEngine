@@ -102,8 +102,8 @@ project "Duin"
         ProjectRoot .. "/vendor/reflectcpp/build/Debug",
     }
     -- defines(global_defines)
-    defines 
-    { 
+    defines
+    {
         -- TODO
         "flecs_STATIC",
         "DN_BUILD_STATIC",
@@ -111,6 +111,7 @@ project "Duin"
         "PX_PHYSX_STATIC_LIB",
         "BX_CONFIG_DEBUG=0",
 		--"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
+        "DN_HEADLESS",
     }
     -- links(global_links)
     links 

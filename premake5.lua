@@ -73,6 +73,7 @@ workspace "Duin"
     }
     global_defines = 
     {
+        "DN_TESTING",
         "DN_PLATFORM_WINDOWS",
         "DN_BUILD_STATIC",
         "flecs_STATIC",
