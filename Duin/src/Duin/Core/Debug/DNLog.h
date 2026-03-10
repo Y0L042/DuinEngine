@@ -93,6 +93,28 @@ class DAPI Log
 #define DN_TRACE(...)
 /** @} */
 
+/**
+ * @name Core Conditional Log Macros (Disabled)
+ * @{
+ */
+#define DN_CORE_FATAL_IF(condition, ...)
+#define DN_CORE_ERROR_IF(condition, ...)
+#define DN_CORE_WARN_IF(condition, ...)
+#define DN_CORE_INFO_IF(condition, ...)
+#define DN_CORE_TRACE_IF(condition, ...)
+/** @} */
+
+/**
+ * @name Client Conditional Log Macros (Disabled)
+ * @{
+ */
+#define DN_FATAL_IF(condition, ...)
+#define DN_ERROR_IF(condition, ...)
+#define DN_WARN_IF(condition, ...)
+#define DN_INFO_IF(condition, ...)
+#define DN_TRACE_IF(condition, ...)
+/** @} */
+
 #else
 
 /**
@@ -108,6 +130,28 @@ class DAPI Log
 /** @} */
 
 /**
+ * @name Core Conditional Log Macros
+ * Log at the given level only when @p condition is true.
+ * @{
+ */
+#define DN_CORE_FATAL_IF(condition, ...)                                                                               \
+    if (condition)                                                                                                     \
+    DN_CORE_FATAL(__VA_ARGS__)
+#define DN_CORE_ERROR_IF(condition, ...)                                                                               \
+    if (condition)                                                                                                     \
+    DN_CORE_ERROR(__VA_ARGS__)
+#define DN_CORE_WARN_IF(condition, ...)                                                                                \
+    if (condition)                                                                                                     \
+    DN_CORE_WARN(__VA_ARGS__)
+#define DN_CORE_INFO_IF(condition, ...)                                                                                \
+    if (condition)                                                                                                     \
+    DN_CORE_INFO(__VA_ARGS__)
+#define DN_CORE_TRACE_IF(condition, ...)                                                                               \
+    if (condition)                                                                                                     \
+    DN_CORE_TRACE(__VA_ARGS__)
+/** @} */
+
+/**
  * @name Client Log Macros
  * For application code logging.
  * @{
@@ -117,6 +161,28 @@ class DAPI Log
 #define DN_WARN(...) SPDLOG_LOGGER_WARN(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_INFO(...) SPDLOG_LOGGER_INFO(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_TRACE(...) SPDLOG_LOGGER_TRACE(::duin::Log::GetClientLogger(), __VA_ARGS__)
+/** @} */
+
+/**
+ * @name Client Conditional Log Macros
+ * Log at the given level only when @p condition is true.
+ * @{
+ */
+#define DN_FATAL_IF(condition, ...)                                                                                    \
+    if (condition)                                                                                                     \
+    DN_FATAL(__VA_ARGS__)
+#define DN_ERROR_IF(condition, ...)                                                                                    \
+    if (condition)                                                                                                     \
+    DN_ERROR(__VA_ARGS__)
+#define DN_WARN_IF(condition, ...)                                                                                     \
+    if (condition)                                                                                                     \
+    DN_WARN(__VA_ARGS__)
+#define DN_INFO_IF(condition, ...)                                                                                     \
+    if (condition)                                                                                                     \
+    DN_INFO(__VA_ARGS__)
+#define DN_TRACE_IF(condition, ...)                                                                                    \
+    if (condition)                                                                                                     \
+    DN_TRACE(__VA_ARGS__)
 /** @} */
 
 #endif
