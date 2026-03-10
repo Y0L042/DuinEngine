@@ -195,6 +195,11 @@ class UUID
         return uuid_;
     }
 
+    explicit operator bool() const
+    {
+        return *this != INVALID;
+    }
+
     using ReflectionType = struct UUIDImpl
     {
         uint64_t uuid;
