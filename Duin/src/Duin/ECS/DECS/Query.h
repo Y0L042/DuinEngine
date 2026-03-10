@@ -286,6 +286,12 @@ class QueryBuilder
     {
     }
 
+    QueryBuilder<Components...> &TermAt(size_t i)
+    {
+        flecsQueryBuilder.term_at(i);
+        return *this;
+    }
+
     template <typename... Comps>
     QueryBuilder<Components...> &With()
     {
@@ -307,6 +313,18 @@ class QueryBuilder
     QueryBuilder<Components...> &Cached()
     {
         flecsQueryBuilder.cached();
+        return *this;
+    }
+
+    QueryBuilder<Components...> &Parent()
+    {
+        flecsQueryBuilder.parent();
+        return *this;
+    }
+
+    QueryBuilder<Components...> &Cascade()
+    {
+        flecsQueryBuilder.cascade();
         return *this;
     }
 
@@ -343,7 +361,7 @@ class Query
      */
     Query(flecs::query<Components...> &&other, World *world = nullptr) : rawQuery(std::move(other)), world_(world)
     {
-        DN_CORE_INFO("Constructing query using r-value move");
+        //DN_CORE_INFO("Constructing query using r-value move");
     }
 
     /**
@@ -401,7 +419,12 @@ class Query
     {
         if (!IsValid())
             return;
-        rawQuery.each([&func, this](flecs::entity flecsEntity, Components &...comps) {
+        // Use std::conditional so pointer components (optional terms) are passed
+        // by value (T*) rather than by reference (T*&), which flecs requires.
+        rawQuery.each([&func, this](flecs::entity flecsEntity,
+                                    std::conditional_t<std::is_pointer_v<Components>,
+                                                       Components,
+                                                       Components &>...comps) {
             Entity duinEntity;
             duinEntity.flecsEntity = flecsEntity;
             duinEntity.world = world_;

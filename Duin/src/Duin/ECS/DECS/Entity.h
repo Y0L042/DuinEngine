@@ -6,6 +6,7 @@
 #include <string>
 #include <type_traits>
 #include "Duin/Core/Debug/DNLog.h"
+#include "Duin/Core/Debug/DNAssert.h"
 
 namespace duin
 {
@@ -307,6 +308,11 @@ class Entity
     explicit operator bool() const
     {
         return IsValid();
+    }
+
+    Entity Parent() const
+    {
+        return Entity(flecsEntity.parent(), world);
     }
 
     /**

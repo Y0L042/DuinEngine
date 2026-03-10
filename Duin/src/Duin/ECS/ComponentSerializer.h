@@ -99,10 +99,10 @@ class ComponentSerializer
             }
 
             typeAliases_[unqualifiedName] = typeName;
-            DN_CORE_INFO("Registered type alias: {} -> {}", unqualifiedName, typeName);
+            //DN_CORE_INFO("Registered type alias: {} -> {}", unqualifiedName, typeName);
         }
 
-        DN_CORE_INFO("Registered {} {}", isTag ? "Tag" : "Component", typeName);
+        //DN_CORE_INFO("Registered {} {}", isTag ? "Tag" : "Component", typeName);
     }
 
     std::string Serialize(const std::string &typeName, const void *componentPtr) const

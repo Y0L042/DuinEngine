@@ -18,7 +18,7 @@ class PrefabRegistry
     void RegisterPrefabEntity(const std::string &name, Entity prefab)
     {
         prefabs_[name] = prefab;
-        DN_CORE_INFO("Registered prefab entity: {}", name);
+        //DN_CORE_INFO("Registered prefab entity: {}", name);
     }
 
     Entity Find(const std::string &name) const

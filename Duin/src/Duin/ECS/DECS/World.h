@@ -164,7 +164,8 @@ class World
      */
     void Quit();
 
-    duin::Entity Lookup(const std::string &name, const std::string &sep = "::", const std::string &root_sep = "::", bool recursive = true);
+    duin::Entity Lookup(const std::string &name,
+                        const std::string &sep = "::", const std::string &root_sep = "::", bool recursive = true);
 
     /**
      * @brief Iterate over the children of the root entity.
@@ -198,7 +199,7 @@ class World
     std::vector<duin::Entity> GetChildren(bool filterBuiltins = true);
 
     template <typename Func>
-    void Each(Func&& func) const
+    void Each(Func &&func) const
     {
         flecsWorld.each(std::forward<Func>(func));
     }
@@ -226,6 +227,13 @@ class World
     duin::QueryBuilder<Comps...> QueryBuilder() const
     {
         return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>(), const_cast<World *>(this));
+    }
+
+    template <typename T>
+    duin::Entity::ID IDIfRegistered()
+    {
+        flecs::id_t f_id = flecsWorld.id_if_registered<T>();
+        return duin::Entity::ID(this, f_id);
     }
 
     /**
