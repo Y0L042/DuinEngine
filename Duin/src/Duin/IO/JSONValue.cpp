@@ -42,7 +42,7 @@ JSONValue JSONValue::ParseFromFile(const std::string &filePath)
     std::stringstream buffer;
     buffer << ifs.rdbuf();
     std::string content = buffer.str();
-    DN_CORE_INFO("Content:\n{}", content);
+    //DN_CORE_INFO("Content:\n{}", content);
 
     return Parse(content); // Reuse Parse logic
 }
