@@ -246,6 +246,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a9661b7d96f952bb5a06770088c8b099c" id="r_a9661b7d96f952bb5a06770088c8b099c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#a9661b7d96f952bb5a06770088c8b099c">duin::CleanRenderer</a> ()</td></tr>
 <tr class="memdesc:a9661b7d96f952bb5a06770088c8b099c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the rendering system.  <br /></td></tr>
 <tr class="separator:a9661b7d96f952bb5a06770088c8b099c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf9ef8d8e167cce61e076f940d24269d" id="r_adf9ef8d8e167cce61e076f940d24269d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#adf9ef8d8e167cce61e076f940d24269d">duin::ResetRenderer</a> ()</td></tr>
+<tr class="memdesc:adf9ef8d8e167cce61e076f940d24269d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys GPU resources and resets all static state. Safe to call before bgfx::shutdown().  <br /></td></tr>
+<tr class="separator:adf9ef8d8e167cce61e076f940d24269d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa028fe6e803b6358832e4f2741b6e064" id="r_aa028fe6e803b6358832e4f2741b6e064"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#aa028fe6e803b6358832e4f2741b6e064">duin::IsRenderContextAvailable</a> ()</td></tr>
 <tr class="memdesc:aa028fe6e803b6358832e4f2741b6e064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if rendering context is available.  <br /></td></tr>
 <tr class="separator:aa028fe6e803b6358832e4f2741b6e064"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -284,6 +287,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ab3f95bdf0518e2c36c2f35f66da9711a" id="r_ab3f95bdf0518e2c36c2f35f66da9711a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#ab3f95bdf0518e2c36c2f35f66da9711a">duin::EndDebugDraw</a> ()</td></tr>
 <tr class="memdesc:ab3f95bdf0518e2c36c2f35f66da9711a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends debug draw mode.  <br /></td></tr>
 <tr class="separator:ab3f95bdf0518e2c36c2f35f66da9711a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83472d351dfde755bf6f3f57bdcfe674" id="r_a83472d351dfde755bf6f3f57bdcfe674"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#a83472d351dfde755bf6f3f57bdcfe674">duin::BeginEncoderFrame</a> ()</td></tr>
+<tr class="memdesc:a83472d351dfde755bf6f3f57bdcfe674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins a minimal render frame (encoder + debug draw). For testing use.  <br /></td></tr>
+<tr class="separator:a83472d351dfde755bf6f3f57bdcfe674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1009e81158b848aa931a4834fc8935d" id="r_ad1009e81158b848aa931a4834fc8935d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#ad1009e81158b848aa931a4834fc8935d">duin::EndEncoderFrame</a> ()</td></tr>
+<tr class="memdesc:ad1009e81158b848aa931a4834fc8935d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends a minimal render frame. Submits frame to bgfx. For testing use.  <br /></td></tr>
+<tr class="separator:ad1009e81158b848aa931a4834fc8935d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Render Queue</div></td></tr>
 <tr class="memitem:a4c453bf9b549a0766f4b1f52afa51416" id="r_a4c453bf9b549a0766f4b1f52afa51416"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Renderer_8cpp.html#a4c453bf9b549a0766f4b1f52afa51416">duin::QueueRender</a> (RenderGeometryType::Type type)</td></tr>
 <tr class="separator:a4c453bf9b549a0766f4b1f52afa51416"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -343,7 +352,7 @@ Variables</h2></td></tr>
 
 <p>Begins debug draw mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00213">213</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00256">256</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -365,7 +374,28 @@ Variables</h2></td></tr>
 
 <p>Begins 3D rendering with the specified camera. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00087">87</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00130">130</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a83472d351dfde755bf6f3f57bdcfe674" name="a83472d351dfde755bf6f3f57bdcfe674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83472d351dfde755bf6f3f57bdcfe674">&#9670;&#160;</a></span>BeginEncoderFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::BeginEncoderFrame </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Begins a minimal render frame (encoder + debug draw). For testing use. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00268">268</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -387,7 +417,7 @@ Variables</h2></td></tr>
 
 <p>Begins rendering to a texture. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00150">150</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00193">193</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -430,7 +460,7 @@ Variables</h2></td></tr>
 
 <p>Clears the background to a solid color. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00311">311</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00368">368</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -452,7 +482,7 @@ Variables</h2></td></tr>
 
 <p>Destroys a render texture and frees its resources. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00326">326</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00383">383</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -488,7 +518,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00336">336</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00393">393</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -518,7 +548,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00366">366</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00423">423</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -554,7 +584,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00361">361</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00418">418</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -584,7 +614,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00356">356</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00413">413</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -604,7 +634,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00351">351</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00408">408</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -636,7 +666,7 @@ Variables</h2></td></tr>
 
 <p>Draws a RenderTexture as an ImGui image. Returns texture ID. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00317">317</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00374">374</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -656,7 +686,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00374">374</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00431">431</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -692,7 +722,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00341">341</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00398">398</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -728,7 +758,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00346">346</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00403">403</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -747,7 +777,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00304">304</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00361">361</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -768,7 +798,7 @@ Variables</h2></td></tr>
 
 <p>Ends debug draw mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00219">219</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00262">262</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -789,7 +819,28 @@ Variables</h2></td></tr>
 
 <p>Ends 3D rendering mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00122">122</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00165">165</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad1009e81158b848aa931a4834fc8935d" name="ad1009e81158b848aa931a4834fc8935d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1009e81158b848aa931a4834fc8935d">&#9670;&#160;</a></span>EndEncoderFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::EndEncoderFrame </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ends a minimal render frame. Submits frame to bgfx. For testing use. </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00274">274</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -810,7 +861,7 @@ Variables</h2></td></tr>
 
 <p>Ends texture rendering mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00196">196</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00239">239</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -829,7 +880,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00282">282</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00339">339</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -848,7 +899,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00331">331</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00388">388</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -890,7 +941,7 @@ Variables</h2></td></tr>
 
 <p>Returns true if rendering context is available. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00077">77</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00120">120</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -910,7 +961,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00225">225</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00282">282</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -952,7 +1003,28 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00247">247</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00304">304</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="adf9ef8d8e167cce61e076f940d24269d" name="adf9ef8d8e167cce61e076f940d24269d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf9ef8d8e167cce61e076f940d24269d">&#9670;&#160;</a></span>ResetRenderer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::ResetRenderer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroys GPU resources and resets all static state. Safe to call before bgfx::shutdown(). </p>
+
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00077">77</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -974,7 +1046,7 @@ Variables</h2></td></tr>
 
 <p>Sets rendering context availability flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00082">82</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Renderer_8cpp_source.html#l00125">125</a> of file <a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a>.</p>
 
 </div>
 </div>

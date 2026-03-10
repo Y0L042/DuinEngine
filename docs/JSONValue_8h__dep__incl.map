@@ -22,7 +22,7 @@
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="361,190,371,224,366,226,356,192"/>
 <area shape="rect" id="Node000006" href="$ECSModule_8h_source.html" title=" " alt="" coords="239,299,345,324"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="338,190,320,226,306,266,297,299,292,298,301,264,315,224,334,188"/>
-<area shape="rect" id="Node000009" href="$GameWorld_8h.html" title="Entity Component System manager and component definitions." alt="" coords="438,225,549,251"/>
+<area shape="rect" id="Node000009" href="$GameWorld_8h.html" title="ECS world manager." alt="" coords="438,225,549,251"/>
 <area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="387,181,471,223,469,227,384,186"/>
 <area shape="rect" id="Node000013" href="$Scene_8h_source.html" title=" " alt="" coords="181,225,254,251"/>
 <area shape="poly" id="edge14_Node000004_Node000013" title=" " alt="" coords="319,186,240,227,238,223,316,181"/>

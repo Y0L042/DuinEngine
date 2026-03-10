@@ -171,37 +171,42 @@ $(document).ready(function(){initNavTree('UUID_8h_source.html',''); initResizabl
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    }</div>
 </div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keyword">using </span>ReflectionType = <span class="keyword">struct </span>UUIDImpl</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    {</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        uint64_t uuid;</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    };</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <a class="code hl_function" href="classduin_1_1UUID.html#a56b6dfa8d38418093502ad169a814dfb">UUID</a>(<span class="keyword">const</span> ReflectionType &amp;impl) : <a class="code hl_struct" href="structUUID.html">UUID</a>(impl.uuid)</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    {</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    }</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    ReflectionType reflection()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordflow">return</span> UUIDImpl{uuid_};</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    uint64_t uuid_; </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>};</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keyword">explicit</span> <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span> != <a class="code hl_variable" href="classduin_1_1UUID.html#a19962111b37df807cada7d74e5e49357">INVALID</a>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    }</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keyword">using </span>ReflectionType = <span class="keyword">struct </span>UUIDImpl</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        uint64_t uuid;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    };</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <a class="code hl_function" href="classduin_1_1UUID.html#a56b6dfa8d38418093502ad169a814dfb">UUID</a>(<span class="keyword">const</span> ReflectionType &amp;impl) : <a class="code hl_struct" href="structUUID.html">UUID</a>(impl.uuid)</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    {</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    ReflectionType reflection()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keywordflow">return</span> UUIDImpl{uuid_};</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    }</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    uint64_t uuid_; </div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>};</div>
 </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>} <span class="comment">// namespace duin</span></div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
-<div class="foldopen" id="foldopen00221" data-start="{" data-end="}">
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno"><a class="line" href="namespacestd.html">  221</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacestd.html">std</a></div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>{</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="keyword">struct </span>hash&lt;duin::<a class="code hl_struct" href="structUUID.html">UUID</a>&gt;</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>{</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    std::size_t operator()(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1UUID.html">duin::UUID</a> &amp;uuid)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keywordflow">return</span> std::hash&lt;uint64_t&gt;()(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(uuid));</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    }</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>};</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>} <span class="comment">// namespace std</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+<div class="foldopen" id="foldopen00226" data-start="{" data-end="}">
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="namespacestd.html">  226</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacestd.html">std</a></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>{</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="keyword">struct </span>hash&lt;duin::<a class="code hl_struct" href="structUUID.html">UUID</a>&gt;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>{</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    std::size_t operator()(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1UUID.html">duin::UUID</a> &amp;uuid)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="keywordflow">return</span> std::hash&lt;uint64_t&gt;()(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(uuid));</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    }</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>};</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>} <span class="comment">// namespace std</span></div>
 </div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html_a19962111b37df807cada7d74e5e49357"><div class="ttname"><a href="classduin_1_1UUID.html#a19962111b37df807cada7d74e5e49357">duin::UUID::INVALID</a></div><div class="ttdeci">static const UUID INVALID</div><div class="ttdoc">Invalid/null UUID constant with value 0.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00073">UUID.h:73</a></div></div>
@@ -213,7 +218,7 @@ $(document).ready(function(){initNavTree('UUID_8h_source.html',''); initResizabl
 <div class="ttc" id="aclassduin_1_1UUID_html_abaea49c9c6d7c80714ff489652b95ca4"><div class="ttname"><a href="classduin_1_1UUID.html#abaea49c9c6d7c80714ff489652b95ca4">duin::UUID::FromStringHex</a></div><div class="ttdeci">static UUID FromStringHex(const std::string &amp;string)</div><div class="ttdoc">Parses a UUID from a hexadecimal string.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8cpp_source.html#l00082">UUID.cpp:82</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html_ac29335c4d03a825b3974ef1224aa5a14"><div class="ttname"><a href="classduin_1_1UUID.html#ac29335c4d03a825b3974ef1224aa5a14">duin::UUID::ToStringDec</a></div><div class="ttdeci">static std::string ToStringDec(UUID uuid)</div><div class="ttdoc">Converts a UUID to a decimal string representation.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8cpp_source.html#l00045">UUID.cpp:45</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html_afea88e3126226b85c1815cd3537d8237"><div class="ttname"><a href="classduin_1_1UUID.html#afea88e3126226b85c1815cd3537d8237">duin::UUID::operator!=</a></div><div class="ttdeci">bool operator!=(const UUID &amp;uuid) const</div><div class="ttdoc">Inequality comparison operator.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00181">UUID.h:181</a></div></div>
-<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">Hash specialization for duin::UUID.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00221">UUID.h:222</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">Hash specialization for duin::UUID.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00226">UUID.h:227</a></div></div>
 <div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

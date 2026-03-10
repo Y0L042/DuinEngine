@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('src_2Duin_2IO_2JSONValue_8cpp_source.h
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    std::stringstream buffer;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    buffer &lt;&lt; ifs.rdbuf();</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    std::string content = buffer.str();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    DN_CORE_INFO(<span class="stringliteral">&quot;Content:\n{}&quot;</span>, content);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="comment">//DN_CORE_INFO(&quot;Content:\n{}&quot;, content);</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classduin_1_1JSONValue.html#a22303fd30f552de6048c4e305a17d219">Parse</a>(content); <span class="comment">// Reuse Parse logic</span></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>

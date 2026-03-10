@@ -2,7 +2,7 @@ var searchData=
 [
   ['each_0',['Each',['../classduin_1_1Query.html#a4e54e8d236ca3058dc4f8dfce43860eb',1,'duin::Query']]],
   ['eachchild_1',['EachChild',['../classduin_1_1Entity.html#a2f2c9e905e744447ae99aa2144614168',1,'duin::Entity']]],
-  ['emit_2',['emit',['../classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6',1,'duin::Signal::Emit()'],['../classduin_1_1Entity.html#a9b6fa02c5592b4c2fa9b13622b69a0bd',1,'duin::Entity::Emit(Args &amp;&amp;...args) const']]],
+  ['emit_2',['emit',['../classduin_1_1Signal.html#a776b91cd0e3a3ca19a11f7318352a5ba',1,'duin::Signal::Emit()'],['../classduin_1_1Entity.html#a9b6fa02c5592b4c2fa9b13622b69a0bd',1,'duin::Entity::Emit(Args &amp;&amp;...args) const']]],
   ['emplace_3',['Emplace',['../classduin_1_1Entity.html#aa4573c6ecff5395f51a9d8e3d1654f41',1,'duin::Entity']]],
   ['empty_4',['Empty',['../classduin_1_1JSONValue.html#ad9525bb02243fbb6ba53eff2a9ce0cd5',1,'duin::JSONValue']]],
   ['enable_5',['Enable',['../classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2',1,'duin::Entity']]],

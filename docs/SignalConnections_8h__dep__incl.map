@@ -1,36 +1,37 @@
 <map id="SignalConnections.h" name="SignalConnections.h">
-<area shape="rect" id="Node000001" title="Bundle of signal connection UUIDs for lifecycle events." alt="" coords="564,5,719,31"/>
-<area shape="rect" id="Node000002" href="$SignalsModule_8h_source.html" title=" " alt="" coords="577,79,706,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="644,44,644,79,639,79,639,44"/>
-<area shape="rect" id="Node000003" href="$Application_8h.html" title="Main application class and engine utility functions." alt="" coords="504,225,611,251"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="630,118,566,226,562,224,625,115"/>
-<area shape="rect" id="Node000012" href="$GameObject_8h.html" title="Scene graph node with lifecycle callbacks." alt="" coords="705,152,820,177"/>
-<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="674,109,744,149,741,154,672,113"/>
-<area shape="rect" id="Node000004" href="$Application_8cpp_source.html" title=" " alt="" coords="5,299,128,324"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="491,251,140,301,129,303,128,298,140,296,490,246"/>
-<area shape="rect" id="Node000005" href="$Camera_8cpp_source.html" title=" " alt="" coords="153,299,253,324"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="491,255,254,303,253,297,490,250"/>
-<area shape="rect" id="Node000006" href="$CharacterBody_8cpp_source.html" title=" " alt="" coords="277,299,419,324"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="511,258,383,301,381,296,510,253"/>
-<area shape="rect" id="Node000007" href="$Duin_8h_source.html" title=" " alt="" coords="769,372,833,397"/>
-<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="524,260,504,274,487,290,479,307,480,314,485,322,504,337,533,349,612,366,699,375,769,380,769,385,698,381,611,371,532,354,501,341,481,326,475,316,474,306,483,287,500,270,521,255"/>
-<area shape="rect" id="Node000009" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="495,299,620,324"/>
-<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="560,264,560,299,555,299,555,264"/>
-<area shape="rect" id="Node000010" href="$Input_8cpp_source.html" title=" " alt="" coords="644,299,727,324"/>
-<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="591,255,666,296,663,301,589,260"/>
-<area shape="rect" id="Node000011" href="$Renderer_8cpp_source.html" title=" " alt="" coords="751,299,857,324"/>
-<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="611,252,765,296,763,301,609,257"/>
-<area shape="rect" id="Node000008" href="$Duin_8cpp_source.html" title=" " alt="" coords="762,445,841,471"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="804,411,804,445,799,445,799,411"/>
-<area shape="poly" id="edge12_Node000012_Node000003" title=" " alt="" coords="718,184,591,228,590,223,716,179"/>
-<area shape="rect" id="Node000013" href="$GameObject_8cpp_source.html" title=" " alt="" coords="697,225,828,251"/>
-<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="765,191,765,225,760,225,760,191"/>
-<area shape="rect" id="Node000014" href="$GameStateMachine_8h.html" title="Stack&#45;based state machine for application states." alt="" coords="889,225,1052,251"/>
-<area shape="poly" id="edge14_Node000012_Node000014" title=" " alt="" coords="810,179,938,223,936,228,808,184"/>
-<area shape="rect" id="Node000016" href="$ObjectModule_8h_source.html" title=" " alt="" coords="1083,299,1207,324"/>
-<area shape="poly" id="edge18_Node000012_Node000016" title=" " alt="" coords="834,165,887,171,947,181,1008,198,1065,223,1089,240,1111,260,1140,297,1136,300,1107,264,1086,244,1063,228,1006,203,945,186,886,176,834,171"/>
-<area shape="rect" id="Node000015" href="$GameStateMachine_8cpp_source.html" title=" " alt="" coords="882,299,1059,324"/>
-<area shape="poly" id="edge15_Node000014_Node000015" title=" " alt="" coords="973,264,973,299,968,299,968,264"/>
-<area shape="poly" id="edge16_Node000014_Node000016" title=" " alt="" coords="1012,253,1118,296,1116,301,1010,258"/>
-<area shape="poly" id="edge17_Node000016_Node000007" title=" " alt="" coords="1077,329,834,379,833,374,1076,324"/>
+<area shape="rect" id="Node000001" title="Bundle of signal connection UUIDs for lifecycle events." alt="" coords="347,5,502,31"/>
+<area shape="rect" id="Node000002" href="$SignalsModule_8h_source.html" title=" " alt="" coords="360,79,489,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="427,44,427,79,422,79,422,44"/>
+<area shape="rect" id="Node000003" href="$Application_8h.html" title="Main application class and engine utility functions." alt="" coords="639,225,746,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="459,108,673,223,670,228,457,113"/>
+<area shape="rect" id="Node000012" href="$GameObject_8h.html" title="Scene graph node with lifecycle callbacks." alt="" coords="321,152,435,177"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="412,117,388,153,383,150,407,114"/>
+<area shape="rect" id="Node000004" href="$Application_8cpp_source.html" title=" " alt="" coords="355,299,478,324"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="636,257,462,301,461,296,634,251"/>
+<area shape="rect" id="Node000005" href="$Camera_8cpp_source.html" title=" " alt="" coords="889,299,989,324"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="746,252,900,296,899,301,745,257"/>
+<area shape="rect" id="Node000006" href="$CharacterBody_8cpp_source.html" title=" " alt="" coords="1013,299,1156,324"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="760,249,1022,296,1021,301,759,254"/>
+<area shape="rect" id="Node000007" href="$Duin_8h_source.html" title=" " alt="" coords="598,372,662,397"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="760,238,892,244,1039,258,1102,269,1150,283,1166,291,1175,301,1178,313,1171,326,1143,340,1091,351,944,368,783,379,662,385,662,380,783,374,944,363,1090,346,1141,335,1167,322,1172,312,1171,304,1162,296,1148,288,1101,274,1039,263,892,249,759,243"/>
+<area shape="rect" id="Node000009" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="502,299,627,324"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="661,260,587,301,584,296,659,255"/>
+<area shape="rect" id="Node000010" href="$Input_8cpp_source.html" title=" " alt="" coords="651,299,734,324"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="695,264,695,299,690,299,690,264"/>
+<area shape="rect" id="Node000011" href="$Renderer_8cpp_source.html" title=" " alt="" coords="758,299,865,324"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="725,255,793,296,791,301,722,260"/>
+<area shape="rect" id="Node000008" href="$Duin_8cpp_source.html" title=" " alt="" coords="591,445,669,471"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="633,411,633,445,627,445,627,411"/>
+<area shape="poly" id="edge13_Node000012_Node000003" title=" " alt="" coords="442,178,642,223,641,228,441,183"/>
+<area shape="poly" id="edge12_Node000012_Node000004" title=" " alt="" coords="397,187,415,225,421,265,421,298,415,298,416,265,410,226,392,190"/>
+<area shape="rect" id="Node000013" href="$GameObject_8cpp_source.html" title=" " alt="" coords="83,225,214,251"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="329,184,187,228,185,223,327,179"/>
+<area shape="rect" id="Node000014" href="$GameStateMachine_8h.html" title="Stack&#45;based state machine for application states." alt="" coords="238,225,401,251"/>
+<area shape="poly" id="edge15_Node000012_Node000014" title=" " alt="" coords="362,190,331,227,327,224,358,186"/>
+<area shape="rect" id="Node000016" href="$ObjectModule_8h_source.html" title=" " alt="" coords="5,299,129,324"/>
+<area shape="poly" id="edge19_Node000012_Node000016" title=" " alt="" coords="307,173,240,179,170,189,110,205,88,216,73,227,65,244,62,263,67,298,61,299,57,263,60,242,69,224,85,211,108,200,169,184,240,174,306,167"/>
+<area shape="rect" id="Node000015" href="$GameStateMachine_8cpp_source.html" title=" " alt="" coords="153,299,331,324"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="299,262,256,300,253,296,295,258"/>
+<area shape="poly" id="edge17_Node000014_Node000016" title=" " alt="" coords="266,257,109,301,107,296,265,252"/>
+<area shape="poly" id="edge18_Node000016_Node000007" title=" " alt="" coords="143,322,598,377,598,382,143,327"/>
 </map>

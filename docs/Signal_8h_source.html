@@ -271,155 +271,178 @@ $(document).ready(function(){initNavTree('Signal_8h_source.html',''); initResiza
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            callbacks_.clear();</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    }</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordtype">void</span> Emit(types... args)</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordtype">bool</span> Emit(types... args)</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    {</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        DN_CORE_ASSERT(!emitExecuting_,</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                       <span class="stringliteral">&quot;Recursive infinite emition detected! Do not re-emit signal while it is still emitting&quot;</span>);</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        emitExecuting_ = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        DN_CORE_WARN_IF(emitExecuting_,</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                         <span class="stringliteral">&quot;Recursive infinite emition detected! Do not re-emit signal while it is still emitting&quot;</span>);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="comment">//DN_CORE_ASSERT(!emitExecuting_,</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="comment">//               &quot;Recursive infinite emition detected! Do not re-emit signal while it is still emitting&quot;);</span></div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; callbacks_.size(); i++)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <span class="keywordflow">if</span> (!emitExecuting_)</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        {</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            <span class="keyword">auto</span> &amp;[id, fn] = callbacks_[i];</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            <span class="keywordflow">if</span> (fn)</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                fn(args...);</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                Disconnect(<span class="keywordtype">id</span>);</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        }</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        emitExecuting_ = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keywordflow">if</span> (queueEraseAll_)</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        {</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            callbacks_.clear();</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            queueEraseAll_ = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        }</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            recursionLimitHit = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        }</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        ++recursiveEmissionCount;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keywordflow">if</span> (recursiveEmissionCount &gt;= 30)</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        {</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            DN_CORE_FATAL(<span class="stringliteral">&quot;Recursive emittion exceeded 30! Preventing recursion loop.&quot;</span>);</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            --recursiveEmissionCount;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            recursionLimitHit = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        }</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        emitExecuting_ = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; callbacks_.size(); i++)</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        {</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            EraseQueue();</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        }</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    }</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keywordtype">size_t</span> GetListenerCount()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordflow">return</span> callbacks_.size();</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            <span class="keyword">auto</span> &amp;[id, fn] = callbacks_[i];</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>            <span class="keywordflow">if</span> (fn)</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                fn(args...);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                Disconnect(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        }</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        emitExecuting_ = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    std::vector&lt;Listener&gt; callbacks_;</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    std::vector&lt;std::pair&lt;UUID, std::weak_ptr&lt;ScopedConnection&gt;&gt;&gt; scopedConnections_;</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    std::vector&lt;UUID&gt; eraseQueue_;</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <span class="keywordtype">bool</span> emitExecuting_ = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordtype">bool</span> queueEraseAll_ = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keywordtype">void</span> EraseQueue()</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    {</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="comment">// O(N^2) &#39;cause why not</span></div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;uuid : eraseQueue_)</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        {</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            std::erase_if(callbacks_, [uuid](<span class="keyword">const</span> Listener &amp;l) { <span class="keywordflow">return</span> l.first == uuid; });</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        }</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        eraseQueue_.clear();</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    }</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>};</div>
-</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="comment">// ─── Signal ──────────────────────────────────────────────────────────────────</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        <span class="keywordflow">if</span> (queueEraseAll_)</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>            callbacks_.clear();</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            queueEraseAll_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        {</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            EraseQueue();</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        }</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="keywordtype">bool</span> res = recursionLimitHit;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        --recursiveEmissionCount;</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keywordflow">return</span> !res;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    }</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keywordtype">size_t</span> GetListenerCount()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keywordflow">return</span> callbacks_.size();</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    }</div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... types&gt;</div>
-<div class="foldopen" id="foldopen00250" data-start="{" data-end="};">
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html">  250</a></span><span class="keyword">class </span><a class="code hl_class" href="classduin_1_1Signal.html">Signal</a></div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>{</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keyword">using </span>Listener = std::pair&lt;<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a>, std::function&lt;void(types...)&gt;&gt;;</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a>() : impl_(std::make_shared&lt;<a class="code hl_class" href="classduin_1_1SignalImpl.html">SignalImpl&lt;types...&gt;</a>&gt;())</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    {</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    }</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <a class="code hl_class" href="classduin_1_1Signal.html">~Signal</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;operator=(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a>(<a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;operator=(<a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
-<div class="foldopen" id="foldopen00276" data-start="{" data-end="}">
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">  276</a></span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> <a class="code hl_function" href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">Connect</a>(std::function&lt;<span class="keywordtype">void</span>(types...)&gt; callback)</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    {</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <span class="keywordflow">return</span> impl_-&gt;Connect(std::move(callback));</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    std::vector&lt;Listener&gt; callbacks_;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    std::vector&lt;std::pair&lt;UUID, std::weak_ptr&lt;ScopedConnection&gt;&gt;&gt; scopedConnections_;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    std::vector&lt;UUID&gt; eraseQueue_;</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordtype">bool</span> emitExecuting_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keywordtype">bool</span> queueEraseAll_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keywordtype">bool</span> recursionLimitHit = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <span class="keywordtype">size_t</span> recursiveEmissionCount = 0;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordtype">void</span> EraseQueue()</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    {</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <span class="comment">// O(N^2) &#39;cause why not</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;uuid : eraseQueue_)</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        {</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            std::erase_if(callbacks_, [uuid](<span class="keyword">const</span> Listener &amp;l) { <span class="keywordflow">return</span> l.first == uuid; });</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        eraseQueue_.clear();</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    }</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>};</div>
 </div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="foldopen" id="foldopen00289" data-start="{" data-end="}">
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">  289</a></span>    std::shared_ptr&lt;ScopedConnection&gt; <a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::function&lt;<span class="keywordtype">void</span>(types...)&gt; callback)</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    {</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        <span class="keywordflow">return</span> impl_-&gt;ConnectScoped(impl_, std::move(callback));</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    }</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span><span class="comment">// ─── Signal ──────────────────────────────────────────────────────────────────</span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... types&gt;</div>
+<div class="foldopen" id="foldopen00273" data-start="{" data-end="};">
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html">  273</a></span><span class="keyword">class </span><a class="code hl_class" href="classduin_1_1Signal.html">Signal</a></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>{</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    <span class="keyword">using </span>Listener = std::pair&lt;<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a>, std::function&lt;void(types...)&gt;&gt;;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> </div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a>() : impl_(std::make_shared&lt;<a class="code hl_class" href="classduin_1_1SignalImpl.html">SignalImpl&lt;types...&gt;</a>&gt;())</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    }</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <a class="code hl_class" href="classduin_1_1Signal.html">~Signal</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a>(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;operator=(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a>(<a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;operator=(<a class="code hl_class" href="classduin_1_1Signal.html">Signal</a> &amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
+<div class="foldopen" id="foldopen00299" data-start="{" data-end="}">
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">  299</a></span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> <a class="code hl_function" href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">Connect</a>(std::function&lt;<span class="keywordtype">void</span>(types...)&gt; callback)</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    {</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        <span class="keywordflow">return</span> impl_-&gt;Connect(std::move(callback));</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    }</div>
 </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
-<div class="foldopen" id="foldopen00301" data-start="{" data-end="}">
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">  301</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">Disconnect</a>(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid)</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    {</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        impl_-&gt;Disconnect(uuid);</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    }</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
+<div class="foldopen" id="foldopen00312" data-start="{" data-end="}">
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">  312</a></span>    std::shared_ptr&lt;ScopedConnection&gt; <a class="code hl_function" href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">ConnectScoped</a>(std::function&lt;<span class="keywordtype">void</span>(types...)&gt; callback)</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        <span class="keywordflow">return</span> impl_-&gt;ConnectScoped(impl_, std::move(callback));</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    }</div>
 </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">Disconnect</a>(std::weak_ptr&lt;ScopedConnection&gt; sc)</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    {</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        impl_-&gt;Disconnect(sc);</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    }</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keywordtype">void</span> DisconnectAll()</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    {</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        impl_-&gt;DisconnectAll();</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    }</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
-<div class="foldopen" id="foldopen00323" data-start="{" data-end="}">
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">  323</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">Emit</a>(types... args)</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    {</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        impl_-&gt;Emit(args...);</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    }</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
+<div class="foldopen" id="foldopen00324" data-start="{" data-end="}">
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">  324</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">Disconnect</a>(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid)</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    {</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        impl_-&gt;Disconnect(uuid);</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    }</div>
 </div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
-<div class="foldopen" id="foldopen00333" data-start="{" data-end="}">
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">  333</a></span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> <a class="code hl_function" href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">GetUUID</a>()</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    {</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        <span class="keywordflow">return</span> uuid_;</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    }</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">Disconnect</a>(std::weak_ptr&lt;ScopedConnection&gt; sc)</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    {</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        impl_-&gt;Disconnect(sc);</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    }</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    <span class="keywordtype">void</span> DisconnectAll()</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    {</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        impl_-&gt;DisconnectAll();</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    }</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
+<div class="foldopen" id="foldopen00346" data-start="{" data-end="}">
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#a776b91cd0e3a3ca19a11f7318352a5ba">  346</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1Signal.html#a776b91cd0e3a3ca19a11f7318352a5ba">Emit</a>(types... args)</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    {</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>        <span class="keywordflow">return</span> impl_-&gt;Emit(args...);</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    }</div>
 </div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span> </div>
-<div class="foldopen" id="foldopen00343" data-start="{" data-end="}">
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b">  343</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b">GetListenerCount</a>()</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>    {</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        <span class="keywordflow">return</span> impl_-&gt;GetListenerCount();</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    }</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
+<div class="foldopen" id="foldopen00356" data-start="{" data-end="}">
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">  356</a></span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> <a class="code hl_function" href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">GetUUID</a>()</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    {</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>        <span class="keywordflow">return</span> uuid_;</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    }</div>
 </div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid_;</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    std::shared_ptr&lt;<a class="code hl_class" href="classduin_1_1SignalImpl.html">SignalImpl</a>&lt;types...&gt;&gt; impl_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>};</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span> </div>
+<div class="foldopen" id="foldopen00366" data-start="{" data-end="}">
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno"><a class="line" href="classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b">  366</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b">GetListenerCount</a>()</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    {</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        <span class="keywordflow">return</span> impl_-&gt;GetListenerCount();</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    }</div>
 </div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> </div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span> </div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid_;</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    std::shared_ptr&lt;<a class="code hl_class" href="classduin_1_1SignalImpl.html">SignalImpl</a>&lt;types...&gt;&gt; impl_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>};</div>
+</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aDNAssert_8h_html"><div class="ttname"><a href="DNAssert_8h.html">DNAssert.h</a></div><div class="ttdoc">Assertion macros for debugging and error checking.</div></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aUUID_8h_html"><div class="ttname"><a href="UUID_8h.html">UUID.h</a></div><div class="ttdoc">Defines the UUID class for generating and managing unique identifiers.</div></div>
 <div class="ttc" id="aclassduin_1_1ScopedConnection_html"><div class="ttname"><a href="classduin_1_1ScopedConnection.html">duin::ScopedConnection</a></div><div class="ttdoc">RAII wrapper that automatically disconnects a signal listener on destruction.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00043">Signal.h:44</a></div></div>
 <div class="ttc" id="aclassduin_1_1ScopedConnection_html_aff0ba1250cba480000183e5a8cfc02ef"><div class="ttname"><a href="classduin_1_1ScopedConnection.html#aff0ba1250cba480000183e5a8cfc02ef">duin::ScopedConnection::Release</a></div><div class="ttdeci">void Release()</div><div class="ttdoc">Releases ownership — the listener will NOT be disconnected on destruction.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00060">Signal.h:60</a></div></div>
 <div class="ttc" id="aclassduin_1_1SignalImpl_html"><div class="ttname"><a href="classduin_1_1SignalImpl.html">duin::SignalImpl</a></div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00090">Signal.h:91</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html"><div class="ttname"><a href="classduin_1_1Signal.html">duin::Signal</a></div><div class="ttdoc">Signal class for event-driven programming.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00250">Signal.h:251</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_a1fa85bf2128a44759af4e880e19790ff"><div class="ttname"><a href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">duin::Signal::ConnectScoped</a></div><div class="ttdeci">std::shared_ptr&lt; ScopedConnection &gt; ConnectScoped(std::function&lt; void(types...)&gt; callback)</div><div class="ttdoc">Connects a listener and returns a shared_ptr&lt;ScopedConnection&gt; that auto-disconnects.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00289">Signal.h:289</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_aa09bccea9fb3078cd90269ecf314ac7a"><div class="ttname"><a href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">duin::Signal::GetUUID</a></div><div class="ttdeci">UUID GetUUID()</div><div class="ttdoc">Gets the UUID of this Signal instance.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00333">Signal.h:333</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_ab6b09be01d0082ca6dc06ee1d5c35ae7"><div class="ttname"><a href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">duin::Signal::Disconnect</a></div><div class="ttdeci">void Disconnect(UUID uuid)</div><div class="ttdoc">Disconnects a listener by UUID.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00301">Signal.h:301</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_ad118847bcc4b6af1c1fe133533f8ae7b"><div class="ttname"><a href="classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b">duin::Signal::GetListenerCount</a></div><div class="ttdeci">size_t GetListenerCount()</div><div class="ttdoc">Returns count of connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00343">Signal.h:343</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_ae0cd0f876530cda5cee9f4683336a944"><div class="ttname"><a href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">duin::Signal::Connect</a></div><div class="ttdeci">UUID Connect(std::function&lt; void(types...)&gt; callback)</div><div class="ttdoc">Connects a listener to the signal (unsafe).</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00276">Signal.h:276</a></div></div>
-<div class="ttc" id="aclassduin_1_1Signal_html_af0d3d6e3a9efebc1bc61d15b500a35b6"><div class="ttname"><a href="classduin_1_1Signal.html#af0d3d6e3a9efebc1bc61d15b500a35b6">duin::Signal::Emit</a></div><div class="ttdeci">void Emit(types... args)</div><div class="ttdoc">Emits the signal to all connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00323">Signal.h:323</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html"><div class="ttname"><a href="classduin_1_1Signal.html">duin::Signal</a></div><div class="ttdoc">Signal class for event-driven programming.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00273">Signal.h:274</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_a1fa85bf2128a44759af4e880e19790ff"><div class="ttname"><a href="classduin_1_1Signal.html#a1fa85bf2128a44759af4e880e19790ff">duin::Signal::ConnectScoped</a></div><div class="ttdeci">std::shared_ptr&lt; ScopedConnection &gt; ConnectScoped(std::function&lt; void(types...)&gt; callback)</div><div class="ttdoc">Connects a listener and returns a shared_ptr&lt;ScopedConnection&gt; that auto-disconnects.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00312">Signal.h:312</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_a776b91cd0e3a3ca19a11f7318352a5ba"><div class="ttname"><a href="classduin_1_1Signal.html#a776b91cd0e3a3ca19a11f7318352a5ba">duin::Signal::Emit</a></div><div class="ttdeci">bool Emit(types... args)</div><div class="ttdoc">Emits the signal to all connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00346">Signal.h:346</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_aa09bccea9fb3078cd90269ecf314ac7a"><div class="ttname"><a href="classduin_1_1Signal.html#aa09bccea9fb3078cd90269ecf314ac7a">duin::Signal::GetUUID</a></div><div class="ttdeci">UUID GetUUID()</div><div class="ttdoc">Gets the UUID of this Signal instance.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00356">Signal.h:356</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_ab6b09be01d0082ca6dc06ee1d5c35ae7"><div class="ttname"><a href="classduin_1_1Signal.html#ab6b09be01d0082ca6dc06ee1d5c35ae7">duin::Signal::Disconnect</a></div><div class="ttdeci">void Disconnect(UUID uuid)</div><div class="ttdoc">Disconnects a listener by UUID.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00324">Signal.h:324</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_ad118847bcc4b6af1c1fe133533f8ae7b"><div class="ttname"><a href="classduin_1_1Signal.html#ad118847bcc4b6af1c1fe133533f8ae7b">duin::Signal::GetListenerCount</a></div><div class="ttdeci">size_t GetListenerCount()</div><div class="ttdoc">Returns count of connected listeners.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00366">Signal.h:366</a></div></div>
+<div class="ttc" id="aclassduin_1_1Signal_html_ae0cd0f876530cda5cee9f4683336a944"><div class="ttname"><a href="classduin_1_1Signal.html#ae0cd0f876530cda5cee9f4683336a944">duin::Signal::Connect</a></div><div class="ttdeci">UUID Connect(std::function&lt; void(types...)&gt; callback)</div><div class="ttdoc">Connects a listener to the signal (unsafe).</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00299">Signal.h:299</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
-<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">Hash specialization for duin::UUID.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00221">UUID.h:222</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">Hash specialization for duin::UUID.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00226">UUID.h:227</a></div></div>
 <div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

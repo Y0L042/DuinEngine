@@ -371,12 +371,6 @@ var hierarchy =
     [ "duin::ECSTag::PxKinematic", "structduin_1_1ECSTag_1_1PxKinematic.html", null ],
     [ "duin::ECSTag::PxStatic", "structduin_1_1ECSTag_1_1PxStatic.html", null ],
     [ "duin::Query< Components >", "classduin_1_1Query.html", null ],
-    [ "duin::Query< const duin::ECSComponent::DebugCapsuleComponent, const duin::ECSComponent::Transform3D >", "classduin_1_1Query.html", null ],
-    [ "duin::Query< const duin::ECSComponent::DebugCubeComponent, const duin::ECSComponent::Transform3D >", "classduin_1_1Query.html", null ],
-    [ "duin::Query< const duin::ECSComponent::DynamicBodyComponent, duin::ECSComponent::Transform3D >", "classduin_1_1Query.html", null ],
-    [ "duin::Query< duin::Camera >", "classduin_1_1Query.html", null ],
-    [ "duin::Query< duin::Camera, const duin::ECSComponent::Transform3D >", "classduin_1_1Query.html", null ],
-    [ "duin::Query< duin::ECSComponent::CharacterBodyComponent, duin::ECSComponent::Transform3D, duin::ECSComponent::Velocity3D >", "classduin_1_1Query.html", null ],
     [ "duin::QueryBuilder< Components >", "classduin_1_1QueryBuilder.html", null ],
     [ "RENDERDOC_API_1_6_0", "structRENDERDOC__API__1__6__0.html", null ],
     [ "duin::RenderGeometry", "structduin_1_1RenderGeometry.html", [

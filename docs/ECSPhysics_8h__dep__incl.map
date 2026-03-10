@@ -1,0 +1,22 @@
+<map id="ECSPhysics.h" name="ECSPhysics.h">
+<area shape="rect" id="Node000001" title="Physics body and debug/visual component structs." alt="" coords="193,5,301,31"/>
+<area shape="rect" id="Node000002" href="$ECSComponents_8cpp_source.html" title=" " alt="" coords="5,79,161,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,39,111,81,109,76,207,34"/>
+<area shape="rect" id="Node000003" href="$ECSPrefabs_8cpp_source.html" title=" " alt="" coords="186,79,309,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="250,44,250,79,245,79,245,44"/>
+<area shape="rect" id="Node000004" href="$GameWorld_8h.html" title="ECS world manager." alt="" coords="333,79,444,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="283,34,367,76,364,81,281,39"/>
+<area shape="rect" id="Node000005" href="$ECSModule_8h_source.html" title=" " alt="" coords="146,152,253,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="346,111,231,154,229,149,345,106"/>
+<area shape="rect" id="Node000008" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="277,152,402,177"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="375,117,350,153,345,150,371,114"/>
+<area shape="rect" id="Node000009" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="421,225,554,251"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="407,114,482,224,477,227,402,117"/>
+<area shape="rect" id="Node000010" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="477,152,596,177"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="426,107,514,149,511,154,423,112"/>
+<area shape="rect" id="Node000006" href="$Duin_8h_source.html" title=" " alt="" coords="167,225,231,251"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="202,191,202,225,197,225,197,191"/>
+<area shape="rect" id="Node000007" href="$Duin_8cpp_source.html" title=" " alt="" coords="160,299,239,324"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="202,264,202,299,197,299,197,264"/>
+<area shape="poly" id="edge10_Node000010_Node000009" title=" " alt="" coords="523,190,498,227,493,224,519,187"/>
+</map>

@@ -181,6 +181,11 @@ $(document).ready(function(){initNavTree('_2home_2runner_2work_2DuinEngine_2Duin
 <div class="line">        <span class="keywordflow">return</span> uuid_;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    <span class="keyword">explicit</span> <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
+<div class="line"><span class="keyword">    </span>{</div>
+<div class="line">        <span class="keywordflow">return</span> *<span class="keyword">this</span> != <a class="code hl_variable" href="classduin_1_1UUID.html#a19962111b37df807cada7d74e5e49357">INVALID</a>;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
 <div class="line">    <span class="keyword">using </span>ReflectionType = <span class="keyword">struct </span>UUIDImpl</div>
 <div class="line">    {</div>
 <div class="line">        uint64_t uuid;</div>
@@ -219,7 +224,7 @@ $(document).ready(function(){initNavTree('_2home_2runner_2work_2DuinEngine_2Duin
 <div class="ttc" id="aclassduin_1_1UUID_html_abaea49c9c6d7c80714ff489652b95ca4"><div class="ttname"><a href="classduin_1_1UUID.html#abaea49c9c6d7c80714ff489652b95ca4">duin::UUID::FromStringHex</a></div><div class="ttdeci">static UUID FromStringHex(const std::string &amp;string)</div><div class="ttdoc">Parses a UUID from a hexadecimal string.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8cpp_source.html#l00082">UUID.cpp:82</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html_ac29335c4d03a825b3974ef1224aa5a14"><div class="ttname"><a href="classduin_1_1UUID.html#ac29335c4d03a825b3974ef1224aa5a14">duin::UUID::ToStringDec</a></div><div class="ttdeci">static std::string ToStringDec(UUID uuid)</div><div class="ttdoc">Converts a UUID to a decimal string representation.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8cpp_source.html#l00045">UUID.cpp:45</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html_afea88e3126226b85c1815cd3537d8237"><div class="ttname"><a href="classduin_1_1UUID.html#afea88e3126226b85c1815cd3537d8237">duin::UUID::operator!=</a></div><div class="ttdeci">bool operator!=(const UUID &amp;uuid) const</div><div class="ttdoc">Inequality comparison operator.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00181">UUID.h:181</a></div></div>
-<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">Hash specialization for duin::UUID.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00221">UUID.h:222</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">Hash specialization for duin::UUID.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00226">UUID.h:227</a></div></div>
 <div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
