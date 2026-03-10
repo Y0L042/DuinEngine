@@ -173,10 +173,26 @@ class SignalImpl
             callbacks_.clear();
     }
 
-    void Emit(types... args)
+    bool Emit(types... args)
     {
-        DN_CORE_ASSERT(!emitExecuting_,
-                       "Recursive infinite emition detected! Do not re-emit signal while it is still emitting");
+        DN_CORE_WARN_IF(emitExecuting_,
+                         "Recursive infinite emition detected! Do not re-emit signal while it is still emitting");
+        //DN_CORE_ASSERT(!emitExecuting_,
+        //               "Recursive infinite emition detected! Do not re-emit signal while it is still emitting");
+
+        if (!emitExecuting_)
+        {
+            recursionLimitHit = false;
+        }
+
+        ++recursiveEmissionCount;
+        if (recursiveEmissionCount >= 30)
+        {
+            DN_CORE_FATAL("Recursive emittion exceeded 30! Preventing recursion loop.");
+            --recursiveEmissionCount;
+            recursionLimitHit = true;
+            return false;
+        }
 
         emitExecuting_ = true;
 
@@ -200,6 +216,11 @@ class SignalImpl
         {
             EraseQueue();
         }
+
+        bool res = recursionLimitHit;
+
+        --recursiveEmissionCount;
+        return !res;
     }
 
     size_t GetListenerCount() const
@@ -214,6 +235,8 @@ class SignalImpl
 
     bool emitExecuting_ = false;
     bool queueEraseAll_ = false;
+    bool recursionLimitHit = false;
+    size_t recursiveEmissionCount = 0;
 
     void EraseQueue()
     {
@@ -320,9 +343,9 @@ class Signal
      *
      * @param args Arguments to pass to each listener.
      */
-    void Emit(types... args)
+    bool Emit(types... args)
     {
-        impl_->Emit(args...);
+        return impl_->Emit(args...);
     }
 
     /**
