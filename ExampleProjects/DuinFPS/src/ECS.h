@@ -2,6 +2,7 @@
 
 #include <Duin/Core/Maths/MathsModule.h>
 #include <Duin/ECS/ECSModule.h>
+#include <Duin/ECS/GameWorld.h>
 #include <Duin/Core/Debug/DebugModule.h>
 
 #include <vector>
@@ -123,12 +124,12 @@ void RegisterComponents(duin::World &world);
 
 void ExecuteQueryUpdatePlayerYaw(duin::World &world);
 void ExecuteQueryUpdateCameraPitch(duin::World &world);
-void ExecuteQueryComputePlayerInputVelocity(duin::World &world);
+void ExecuteQueryComputePlayerInputVelocity(duin::GameWorld &world);
 void ExecuteQueryGravity(duin::World &world);
 void ExecuteQueryDebugCameraTarget(duin::World &world);
 void ExecuteQueryVelocityBob(duin::World &world);
 
-void ExecuteQueryMoveDebugCamera(duin::World &world);
+void ExecuteQueryMoveDebugCamera(duin::GameWorld &world);
 
 void ExecuteQueryIdle(duin::World &world);
 void ExecuteQueryRun(duin::World &world);

@@ -41,13 +41,13 @@ void RegisterComponents(duin::World &world)
     world.Component<CanGravity>();
 }
 
-void ExecuteQueryComputePlayerInputVelocity(duin::World &world)
+void ExecuteQueryComputePlayerInputVelocity(duin::GameWorld &world)
 {
     static auto q =
         world.QueryBuilder<PlayerMovementInputVec3, InputVelocityDirection, const Transform3D>().Cached().Build();
 
-    q.Each([](duin::Entity e, PlayerMovementInputVec3 &input, InputVelocityDirection &iDir, const Transform3D &tx) {
-        duin::Quaternion r = Transform3D::GetGlobalRotation(e.GetFlecsEntity());
+    q.Each([&world](duin::Entity e, PlayerMovementInputVec3 &input, InputVelocityDirection &iDir, const Transform3D &tx) {
+        duin::Quaternion r = world.GetGlobalRotation(e.GetFlecsEntity());
         duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r);
         iDir.value = duin::Vector3(alignedInput.x, 0.0f, alignedInput.z);
     });
@@ -319,7 +319,7 @@ void ExecuteQueryVelocityBob(duin::World &world)
     world.DeferEnd();
 }
 
-void ExecuteQueryMoveDebugCamera(duin::World &world)
+void ExecuteQueryMoveDebugCamera(duin::GameWorld &world)
 {
     flecs::world &flecsWorld = world.GetFlecsWorld();
     static flecs::query q = flecsWorld
@@ -331,14 +331,14 @@ void ExecuteQueryMoveDebugCamera(duin::World &world)
                                 .build();
 
     flecsWorld.defer_begin();
-    q.each([](flecs::entity e, Movement3DInput &input,
+    q.each([&world](flecs::entity e, Movement3DInput &input,
               // Position3D& gPos
               Transform3D &tx) {
         double delta = duin::GetPhysicsFrameTime();
         duin::Vector3 inputV(input.x, input.y, input.z);
         inputV = duin::Vector3Scale(inputV, 5.0f);
-        Transform3D::SetGlobalPosition(
-            e, duin::Vector3Add(Transform3D::GetGlobalPosition(e), duin::Vector3Scale(inputV, (float)delta)));
+        world.SetGlobalPosition(
+            e, duin::Vector3Add(world.GetGlobalPosition(e), duin::Vector3Scale(inputV, (float)delta)));
         // e.remove<Movement3DInput>();
         input.x = 0.0f;
         input.y = 0.0f;
