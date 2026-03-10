@@ -37,6 +37,8 @@ const bgfx::ViewId RENDER_3D_RENDERTEXTURE_VIEWID = 1;
 void InitRenderer();
 /** @brief Shuts down the rendering system. */
 void CleanRenderer();
+/** @brief Destroys GPU resources and resets all static state. Safe to call before bgfx::shutdown(). */
+void ResetRenderer();
 /** @brief Returns true if rendering context is available. */
 bool IsRenderContextAvailable();
 /** @brief Sets rendering context availability flag. */
@@ -181,6 +183,10 @@ void EndTextureMode();
 void BeginDebugDraw();
 /** @brief Ends debug draw mode. */
 void EndDebugDraw();
+/** @brief Begins a minimal render frame (encoder + debug draw). For testing use. */
+void BeginEncoderFrame();
+/** @brief Ends a minimal render frame. Submits frame to bgfx. For testing use. */
+void EndEncoderFrame();
 /** @} */
 
 /**

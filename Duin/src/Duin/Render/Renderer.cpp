@@ -74,6 +74,49 @@ void CleanRenderer()
     // Clean bgfx buffers
 }
 
+void ResetRenderer()
+{
+    RENDER_CONTEXT_AVAILABLE = false;
+
+    for (auto &buf : bgfxBufferList)
+    {
+        if (bgfx::isValid(buf.vbh))
+            bgfx::destroy(buf.vbh);
+        if (bgfx::isValid(buf.ibh))
+            bgfx::destroy(buf.ibh);
+    }
+    bgfxBufferList.clear();
+
+    for (auto &[uuid, prog] : shaderProgramMap)
+    {
+        if (bgfx::isValid(prog.program))
+            bgfx::destroy(prog.program);
+    }
+    shaderProgramMap.clear();
+    DEFAULT_SHADERPROGRAM_UUID = UUID{0};
+
+    dde.end();
+    ddShutdown();
+
+    // Force-reconstruct dde and debugDrawState so their internal DebugDrawEncoder
+    // instances re-capture s_dde.m_defaultEncoder on the next ddInit().
+    dde.~DebugDrawEncoder();
+    new (&dde) DebugDrawEncoder();
+    debugDrawState.~DebugDrawState();
+    new (&debugDrawState) DebugDrawState();
+
+    if (encoder)
+    {
+        bgfx::end(encoder);
+        encoder = nullptr;
+    }
+    globalRenderState = RenderState{};
+    globalRenderStateStack.clear();
+    pcvDecl = bgfx::VertexLayout{};
+
+
+}
+
 bool IsRenderContextAvailable()
 {
     return RENDER_CONTEXT_AVAILABLE;
@@ -220,6 +263,20 @@ void EndDebugDraw()
 {
     dde.end();
     // DN_CORE_TRACE("Debug draw ended");
+}
+
+void BeginEncoderFrame()
+{
+    encoder = bgfx::begin(false);
+    dde.begin(globalRenderState.viewID, true, encoder);
+}
+
+void EndEncoderFrame()
+{
+    dde.end();
+    bgfx::end(encoder);
+    bgfx::frame();
+    encoder = nullptr;
 }
 
 void QueueRender(RenderGeometryType::Type type)
