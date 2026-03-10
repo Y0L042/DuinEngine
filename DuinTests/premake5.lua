@@ -40,7 +40,12 @@ project "DuinTests"
 	}
 
     defines(global_defines)
-    defines { "DN_ALLOW_ASSERT_FAILS" }
+    defines
+    {
+        "DN_ALLOW_ASSERT_FAILS",
+        "DN_HEADLESS",
+        "DN_TESTING"
+    }
 
     links(global_links)
 	links
