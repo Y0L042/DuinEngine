@@ -1297,6 +1297,233 @@ TEST_SUITE("Signal - Core")
         CHECK_FALSE(conn->IsValid());
     }
 
+    // -----------------------------------------------------------------------
+    // --- Cross-signal chains & recursion depth limit ---
+    // -----------------------------------------------------------------------
+
+    TEST_CASE("Emit returns true when no recursion occurs")
+    {
+        duin::Signal<int> sig;
+        sig.Connect([](int) {});
+        CHECK(sig.Emit(1) == true);
+    }
+
+    TEST_CASE("Signal_A emits Signal_B from listener — both return true, B fires correctly")
+    {
+        // A -> B (one hop, no cycle): both emits succeed and return true.
+        duin::Signal<int> sigA, sigB;
+        int bReceived = -1;
+        bool bResult = false;
+        sigB.Connect([&](int v) { bReceived = v; });
+        sigA.Connect([&](int v) { bResult = sigB.Emit(v * 10); });
+
+        bool aResult = sigA.Emit(3);
+        CHECK(aResult == true);
+        CHECK(bResult == true);
+        CHECK(bReceived == 30);
+    }
+
+    TEST_CASE("Signal_A -> Signal_B -> Signal_C chain: all emits return true")
+    {
+        // A -> B -> C (two hops, no cycle): all three emits must return true.
+        duin::Signal<int> sigA, sigB, sigC;
+        bool cResult = false, bResult = false;
+        std::vector<int> order;
+
+        sigC.Connect([&](int) { order.push_back(3); });
+        sigB.Connect([&](int v) {
+            order.push_back(2);
+            cResult = sigC.Emit(v);
+        });
+        sigA.Connect([&](int v) {
+            order.push_back(1);
+            bResult = sigB.Emit(v);
+        });
+
+        bool aResult = sigA.Emit(0);
+        CHECK(aResult == true);
+        CHECK(bResult == true);
+        CHECK(cResult == true);
+        REQUIRE(order.size() == 3);
+        CHECK(order[0] == 1);
+        CHECK(order[1] == 2);
+        CHECK(order[2] == 3);
+    }
+
+    TEST_CASE("Signal_A -> Signal_B -> Signal_C: each signal is independent after chain")
+    {
+        // After the chain completes, each signal must still work independently.
+        duin::Signal<int> sigA, sigB, sigC;
+        int cCount = 0;
+
+        sigC.Connect([&](int) { ++cCount; });
+        sigB.Connect([&](int v) { sigC.Emit(v); });
+        sigA.Connect([&](int v) { sigB.Emit(v); });
+
+        CHECK(sigA.Emit(1) == true);
+        CHECK(cCount == 1);
+
+        // Each signal still works on its own
+        CHECK(sigC.Emit(1) == true);
+        CHECK(cCount == 2);
+        CHECK(sigB.Emit(1) == true);
+        CHECK(cCount == 3);
+        CHECK(sigA.Emit(1) == true);
+        CHECK(cCount == 4);
+    }
+
+    TEST_CASE("Signal_A -> Signal_B: B listener disconnects from B during A's emit")
+    {
+        // While A is emitting it calls B. B's listener disconnects itself mid-flight.
+        duin::Signal<int> sigA, sigB;
+        int bCount = 0;
+        duin::UUID bId;
+
+        bId = sigB.Connect([&](int) {
+            ++bCount;
+            sigB.Disconnect(bId); // self-disconnect inside nested signal
+        });
+
+        sigA.Connect([&](int v) { sigB.Emit(v); });
+
+        CHECK(sigA.Emit(1) == true);
+        CHECK(bCount == 1);
+        CHECK(sigB.GetListenerCount() == 0);
+
+        // A second emit of A must not invoke B's old listener
+        CHECK(sigA.Emit(1) == true);
+        CHECK(bCount == 1);
+    }
+
+    TEST_CASE("Signal_A -> Signal_B: multiple listeners on B all fire during A's emit")
+    {
+        duin::Signal<int> sigA, sigB;
+        int b1 = 0, b2 = 0, b3 = 0;
+
+        sigB.Connect([&](int v) { b1 += v; });
+        sigB.Connect([&](int v) { b2 += v; });
+        sigB.Connect([&](int v) { b3 += v; });
+        sigA.Connect([&](int v) { sigB.Emit(v); });
+
+        CHECK(sigA.Emit(5) == true);
+        CHECK(b1 == 5);
+        CHECK(b2 == 5);
+        CHECK(b3 == 5);
+    }
+
+    TEST_CASE("Signal_A -> Signal_B -> Signal_C: disconnect from C during B's handler")
+    {
+        // Three-signal chain where the C listener disconnects itself.
+        duin::Signal<int> sigA, sigB, sigC;
+        int cCount = 0;
+        duin::UUID cId;
+
+        cId = sigC.Connect([&](int) {
+            ++cCount;
+            sigC.Disconnect(cId);
+        });
+        sigB.Connect([&](int v) { sigC.Emit(v); });
+        sigA.Connect([&](int v) { sigB.Emit(v); });
+
+        CHECK(sigA.Emit(1) == true);
+        CHECK(cCount == 1);
+        CHECK(sigC.GetListenerCount() == 0);
+
+        // A and B still work; C is now empty
+        CHECK(sigA.Emit(1) == true);
+        CHECK(cCount == 1); // C listener was removed
+    }
+
+    TEST_CASE("Same-signal self-recursion returns false at depth 30")
+    {
+        // A listener that re-emits its own signal will trigger the depth guard.
+        // Emit returns false once recursiveEmissionCount reaches 30.
+        duin::Signal<int> sig;
+        int depth = 0;
+        bool hitLimit = false;
+
+        sig.Connect([&](int v) {
+            ++depth;
+            bool result = sig.Emit(v); // re-emit same signal
+            if (!result)
+                hitLimit = true;
+        });
+
+        sig.Emit(0); // kick off the chain
+        CHECK(hitLimit == true);
+    }
+
+    TEST_CASE("Same-signal self-recursion: signal is still usable after hitting depth limit")
+    {
+        // After the recursive chain unwinds, the signal must accept new emits normally.
+        duin::Signal<int> sig;
+        int depth = 0;
+        sig.Connect([&](int v) {
+            if (depth < 0)
+                return;
+            depth++;
+            sig.Emit(0); // will hit limit and return false, then unwind
+        });
+        bool res = sig.Emit(0);
+        MSG_CHECK_FALSE(res, res);
+
+        // Reset depth and verify a fresh emit works
+        depth = -1;
+        CHECK(sig.Emit(1));
+    }
+
+    TEST_CASE("Signal_A -> Signal_B -> Signal_A: second-order cycle detected via A's depth limit")
+    {
+        // A emits B, B emits A. Each signal tracks its own depth independently.
+        // A is re-entered while still executing, so A returns false from B's handler.
+        duin::Signal<int> sigA, sigB;
+        int aDepth = 0, bDepth = 0;
+        bool aHitLimit = false;
+
+        sigB.Connect([&](int v) {
+            ++bDepth;
+            bool result = sigA.Emit(v); // re-enter A while A is executing
+            if (!result)
+                aHitLimit = true;
+        });
+
+        sigA.Connect([&](int v) {
+            ++aDepth;
+            sigB.Emit(v); // A -> B -> A -> B -> ... until A's depth guard fires
+        });
+
+        sigA.Emit(0);
+        CHECK(aHitLimit == true);  // A's depth guard was hit from inside B
+    }
+
+    TEST_CASE("Signal_A -> Signal_B -> Signal_C -> Signal_A: third-order cycle hits depth limit")
+    {
+        // A -> B -> C -> A -> B -> C -> ... until A's per-signal depth guard fires.
+        duin::Signal<int> sigA, sigB, sigC;
+        int aDepth = 0, bDepth = 0, cDepth = 0;
+        bool aHitLimit = false;
+
+        sigC.Connect([&](int v) {
+            ++cDepth;
+            bool result = sigA.Emit(v); // close the cycle back to A
+            if (!result)
+                aHitLimit = true;
+        });
+
+        sigB.Connect([&](int v) {
+            ++bDepth;
+            sigC.Emit(v);
+        });
+
+        sigA.Connect([&](int v) {
+            ++aDepth;
+            sigB.Emit(v); // A -> B -> C -> A -> ...
+        });
+
+        sigA.Emit(0);
+        CHECK(aHitLimit == true); // A's depth guard was triggered from inside C
+    }
+
 } // TEST_SUITE("Signal - Core")
 
 } // namespace TestSignal
