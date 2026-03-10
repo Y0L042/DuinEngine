@@ -27,7 +27,7 @@ void EditorCamera::SetupInput()
 
 void EditorCamera::Render()
 {
-    duin::DrawSphere(camera.target);
+    //duin::DrawSphere(camera.target);
 }
 
 void EditorCamera::Enable(bool enable)

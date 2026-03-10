@@ -31,7 +31,8 @@ struct UIObjects
 struct Signals
 {
     duin::Signal<std::shared_ptr<FileManager>> onUpdateFileManager;
-    duin::Signal<duin::PackedScene &> onSetActiveScene;
+    duin::Signal<std::shared_ptr<Scene>> onSetActiveScene;
+    duin::Signal<std::shared_ptr<Scene>> onSetSceneFromFile;
     duin::Signal<std::weak_ptr<duin::GameWorld>> onWorldChange;
 };
 
@@ -52,23 +53,17 @@ class State_SceneEditor : public duin::GameState
     void InitializeManagers();
     void ProcessProject(Project project);
     void CreateUIObjects();
+    void ConnectSignals();
 
     void LoadSceneFromFile(const FSNode *sceneFile);
-    void OpenSceneInTab(std::weak_ptr<FSNode> sceneFile);
+    void EnsureInstantiatedScene(std::weak_ptr<FSNode> sceneFile);
     void CacheActiveScene(std::weak_ptr<Scene> scene);
-
-    void ConnectOnActiveTabChanged();
-    void ConnectOnSceneSelect();
-    void ConnectOnSetActiveScene();
-    void ConnectOnSelectEntity();
-    void ConnectOnUpdateFileManager();
 
   private:
     Signals signals;
     UIObjects uiObjects;
     std::shared_ptr<FileManager> fileManager;
     std::shared_ptr<SceneManager> sceneManager;
-    std::shared_ptr<duin::SceneBuilder> sceneBuilder;
     std::weak_ptr<Scene> cachedActiveScene;
     std::shared_ptr<duin::ScopedConnection> onSetActiveSceneHandle;
 

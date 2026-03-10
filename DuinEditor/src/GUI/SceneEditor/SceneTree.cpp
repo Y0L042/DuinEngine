@@ -95,6 +95,11 @@ void SceneTree::UpdateTree()
     if (cachedActiveScene.expired())
         return;
     std::shared_ptr<EditorWorld> world_ = cachedActiveScene.lock()->ctx.editorWorld;
+    if (!world_)
+    {
+        DN_WARN("EditorWorld is null!");
+        return;
+    }
     std::vector<duin::Entity> vec;
     world_->IterateChildren([&](duin::Entity e) {
         if (!e.GetParent().IsValid() && !e.Has(flecs::Prefab) && (e.GetName() != ""))

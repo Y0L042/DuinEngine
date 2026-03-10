@@ -10,7 +10,7 @@
 class SceneTabs : public duin::GameObject, public UIObject
 {
   public:
-    duin::Signal<std::weak_ptr<Scene>> onActiveTabChanged;
+    duin::Signal<std::weak_ptr<Scene>> onSceneTabSelect;
 
     SceneTabs();
     ~SceneTabs();

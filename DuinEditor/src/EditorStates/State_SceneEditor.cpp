@@ -28,9 +28,6 @@ void State_SceneEditor::Draw()
 
 void State_SceneEditor::DrawUI()
 {
-    uiObjects.sceneViewport->StartTextureRender();
-
-    uiObjects.sceneViewport->EndTextureRender();
 }
 
 void State_SceneEditor::Exit()
@@ -42,7 +39,6 @@ void State_SceneEditor::InitializeManagers()
     fileManager = std::make_shared<FileManager>();
     sceneManager = std::make_shared<SceneManager>();
     auto scene = sceneManager->GetActiveScene();
-    sceneBuilder = std::make_shared<duin::SceneBuilder>();
 }
 
 void State_SceneEditor::ProcessProject(Project project)
@@ -60,11 +56,84 @@ void State_SceneEditor::CreateUIObjects()
     uiObjects.fileTree = CreateChildObject<FileTree>();
     uiObjects.entityProperties = CreateChildObject<EntityProperties>();
 
-    ConnectOnActiveTabChanged();
-    ConnectOnSceneSelect();
-    ConnectOnSetActiveScene();
-    ConnectOnSelectEntity();
-    ConnectOnUpdateFileManager();
+    ConnectSignals();
+}
+
+void State_SceneEditor::ConnectSignals()
+{
+    std::shared_ptr<duin::ScopedConnection> conn = nullptr;
+
+    // --- onSetActiveScene ---
+    // Scoped
+    // Local activeScene handle
+    onSetActiveSceneHandle =
+        signals.onSetActiveScene.ConnectScoped([&](std::shared_ptr<Scene> scene) { CacheActiveScene(scene); });
+
+    // set sceneViewport activeScene
+    conn = signals.onSetActiveScene.ConnectScoped(
+        [&](std::shared_ptr<Scene> scene) { uiObjects.sceneViewport->CacheActiveScene(scene); });
+    uiObjects.sceneViewport->AddConnectionHandle(conn);
+
+    // Set entityProperties activeScene
+    conn = signals.onSetActiveScene.ConnectScoped([&](std::shared_ptr<Scene> scene) {
+        uiObjects.entityProperties->CacheActiveScene(scene);
+        uiObjects.entityProperties->SetFocusedEntity(duin::Entity()); // clear
+    });
+    uiObjects.entityProperties->AddConnectionHandle(conn);
+
+    // Set sceneTree activeScene
+    conn = signals.onSetActiveScene.ConnectScoped([&](std::shared_ptr<Scene> scene) {
+        DN_INFO("onSetActiveScene - sceneTree cache active scene");
+        uiObjects.sceneTree->CacheActiveScene(scene);
+    });
+    uiObjects.sceneTree->AddConnectionHandle(conn);
+
+    conn = signals.onSetSceneFromFile.ConnectScoped(
+        [&](std::shared_ptr<Scene> scene) { uiObjects.sceneTabs->AddTab(scene); });
+    uiObjects.sceneTabs->AddConnectionHandle(conn);
+
+    // --- SceneTabs ---
+    // Unscoped
+    // Set sceneManager activeScene from sceneTabs
+    uiObjects.sceneTabs->onSceneTabSelect.Connect([&](std::weak_ptr<Scene> scene) {
+        if (!scene.expired())
+        {
+            auto handle = sceneManager->SetActiveScene(scene.lock()->uuid);
+
+            if (handle)
+            {
+                signals.onSetActiveScene.Emit(sceneManager->GetScene(handle));
+            }
+        }
+    });
+
+    // --- FileTree ---
+    // Scoped
+    // Open selected packedScene in /
+    conn = uiObjects.fileTree->onPackedSceneFileSelect.ConnectScoped([&](std::weak_ptr<FSNode> sceneFile) {
+        if (sceneFile.expired())
+        {
+            DN_WARN("onPackedSceneFileSelect - Scenefile expired!");
+            return;
+        }
+        auto sf = sceneFile.lock();
+        DN_INFO("onPackedSceneFileSelect - Scenefile selected: {}", sf->name);
+        EnsureInstantiatedScene(sf);
+        DN_INFO("onPackedSceneFileSelect - Scene opened in tab: {}", sf->name);
+    });
+    uiObjects.sceneTabs->AddConnectionHandle(conn);
+
+    // --- SceneTree ---
+    // Scoped
+    conn = uiObjects.sceneTree->onSelectEntity.ConnectScoped(
+        [&](duin::Entity e) { uiObjects.entityProperties->SetFocusedEntity(e); });
+    uiObjects.entityProperties->AddConnectionHandle(conn);
+
+    // --- onUpdateFileManager ---
+    // Scoped
+    conn = signals.onUpdateFileManager.ConnectScoped(
+        [&](std::shared_ptr<FileManager> fm) { uiObjects.fileTree->SetFileManager(fm); });
+    uiObjects.fileTree->AddConnectionHandle(conn);
 }
 
 void State_SceneEditor::LoadSceneFromFile(const FSNode *sceneFile)
@@ -73,7 +142,11 @@ void State_SceneEditor::LoadSceneFromFile(const FSNode *sceneFile)
     sceneManager->LoadSceneFromJSON(v);
 }
 
-void State_SceneEditor::OpenSceneInTab(std::weak_ptr<FSNode> sceneFile)
+/* 
+* If scene already loaded, set as active.
+* Else load scene, then set as active.
+ */
+void State_SceneEditor::EnsureInstantiatedScene(std::weak_ptr<FSNode> sceneFile)
 {
     if (sceneFile.expired())
     {
@@ -82,69 +155,30 @@ void State_SceneEditor::OpenSceneInTab(std::weak_ptr<FSNode> sceneFile)
     }
     auto sf = sceneFile.lock();
     duin::JSONValue v = duin::JSONValue::ParseFromFile(sf->path);
-    auto handle = sceneManager->LoadSceneFromJSON(v, true);
-    auto scene = sceneManager->GetScene(handle);
-    sceneBuilder->InstantiateScene(scene->packedScene, scene->ctx.editorWorld.get());
+    auto uuid = duin::UUID::FromStringHex(v[duin::PackedScene::TAG_SCENEUUID].GetString());
+    if (sceneManager->GetScene(uuid))
+    {
+        sceneManager->SetActiveScene(uuid);
+        signals.onSetActiveScene.Emit(sceneManager->GetActiveScene());
+        signals.onSetSceneFromFile.Emit(sceneManager->GetActiveScene());
+    }
+    else
+    {
+        auto handle = sceneManager->LoadSceneFromJSON(v, true);
+        if (sceneManager->InstantiateScene(handle))
+        {
+            sceneManager->SetActiveScene(handle);
+            //signals.onSetActiveScene.Emit(sceneManager->GetActiveScene());
+            signals.onSetSceneFromFile.Emit(sceneManager->GetActiveScene());
+        }
+        else
+        {
+            DN_WARN("Scene {} failed to instantiate!", handle.ToStrHex());
+        }
+    }
 }
 
 void State_SceneEditor::CacheActiveScene(std::weak_ptr<Scene> scene)
 {
     cachedActiveScene = scene;
-}
-
-void State_SceneEditor::ConnectOnActiveTabChanged()
-{
-    uiObjects.sceneTabs->onActiveTabChanged.Connect([&](std::weak_ptr<Scene> scene) {
-        if (!scene.expired())
-            sceneManager->SetActiveScene(scene.lock()->uuid);
-    });
-}
-
-void State_SceneEditor::ConnectOnSceneSelect()
-{
-    uiObjects.fileTree->onSceneSelect.Connect([&](std::weak_ptr<FSNode> sceneFile) {
-        if (sceneFile.expired())
-        {
-            DN_WARN("Scenefile expired!");
-            return;
-        }
-        auto sf = sceneFile.lock();
-        DN_INFO("Scenefile selected: {}", sf->name);
-        OpenSceneInTab(sf);
-        DN_INFO("Scene opened in tab: {}", sf->name);
-    });
-}
-
-void State_SceneEditor::ConnectOnSetActiveScene()
-{
-    std::shared_ptr<duin::ScopedConnection> conn = nullptr;
-
-    onSetActiveSceneHandle =
-        sceneManager->onSetActiveScene.ConnectScoped([&](std::shared_ptr<Scene> scene) { CacheActiveScene(scene); });
-
-    conn = sceneManager->onSetActiveScene.ConnectScoped(
-        [&](std::shared_ptr<Scene> scene) { uiObjects.sceneTree->CacheActiveScene(scene); });
-    uiObjects.sceneTree->AddConnectionHandle(conn);
-
-    conn = sceneManager->onSetActiveScene.ConnectScoped(
-        [&](std::shared_ptr<Scene> scene) { uiObjects.sceneViewport->CacheActiveScene(scene); });
-    uiObjects.sceneViewport->AddConnectionHandle(conn);
-}
-
-void State_SceneEditor::ConnectOnSelectEntity()
-{
-    std::shared_ptr<duin::ScopedConnection> conn = nullptr;
-
-    conn = uiObjects.sceneTree->onSelectEntity.ConnectScoped(
-        [&](duin::Entity e) { uiObjects.entityProperties->SetFocusedEntity(e); });
-    uiObjects.entityProperties->AddConnectionHandle(conn);
-}
-
-void State_SceneEditor::ConnectOnUpdateFileManager()
-{
-    std::shared_ptr<duin::ScopedConnection> conn = nullptr;
-
-    conn = signals.onUpdateFileManager.ConnectScoped(
-        [&](std::shared_ptr<FileManager> fm) { uiObjects.fileTree->SetFileManager(fm); });
-    uiObjects.fileTree->AddConnectionHandle(conn);
 }

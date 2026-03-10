@@ -33,8 +33,6 @@ void FSNode::Traverse()
     {
         for (const auto &dirEntry : fs::directory_iterator(path))
         {
-            std::cout << dirEntry.path() << "\n";
-
             subNodes.emplace_back(std::make_shared<FSNode>(dirEntry.path().string()));
             FSNode *child = subNodes.back().get();
             if (child->type == ArcheType::P_DIRECTORY)

@@ -21,6 +21,15 @@ struct Scene
         return res;
     }
 
+    std::weak_ptr<EditorWorld> GetWorld()
+    {
+        if (IsCtxValid())
+        {
+            return ctx.editorWorld;
+        }
+        return std::weak_ptr<EditorWorld>();
+    }
+
     bool operator==(Scene &other) const
     {
         bool uuidEq = this->uuid == other.uuid;

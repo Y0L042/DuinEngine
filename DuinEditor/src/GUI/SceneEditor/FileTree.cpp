@@ -84,7 +84,7 @@ void FileTree::DrawNode(std::weak_ptr<FSNode> node, const std::string &nodeLabel
             selectedNode = node_;
             if (node_->type == ArcheType::P_FILE && (node_->fileExt == FILEEXT_ECST || node_->fileExt == FILEEXT_JSON))
             {
-                onSceneSelect.Emit(selectedNode);
+                onPackedSceneFileSelect.Emit(selectedNode);
             }
         }
 

@@ -73,6 +73,11 @@ void EntityProperties::DrawUI()
     ImGui::End();
 }
 
+void EntityProperties::CacheActiveScene(std::weak_ptr<Scene> scene)
+{
+    cachedActiveScene = scene;
+}
+
 void EntityProperties::SetFocusedEntity(duin::Entity entity)
 {
     if (!entity.IsValid())

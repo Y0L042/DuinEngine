@@ -11,7 +11,7 @@ class FSNode;
 class FileTree : public duin::GameObject, public UIObject
 {
   public:
-    duin::Signal<std::weak_ptr<FSNode>> onSceneSelect;
+    duin::Signal<std::weak_ptr<FSNode>> onPackedSceneFileSelect;
 
     FileTree();
     ~FileTree();

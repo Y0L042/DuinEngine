@@ -25,21 +25,23 @@ void SceneTabs::DrawUI()
 {
     ImGui::Begin("Scenes", nullptr, imguiWindowFlags);
 
-    if (ImGui::BeginTabBar("SceneTabBar"))
+    if (ImGui::BeginTabBar("SceneTabBar##"))
     {
         for (int i = 0; i < (int)tabs.size(); ++i)
         {
-            if (tabs[i].expired()) continue;
+            if (tabs[i].expired())
+                continue;
 
             const std::string &name = tabs[i].lock()->sceneName;
+            const std::string &uuidStr = tabs[i].lock()->uuid.ToStrHex();
             ImGuiTabItemFlags flags = (i == pendingActiveIdx) ? ImGuiTabItemFlags_SetSelected : 0;
 
-            if (ImGui::BeginTabItem(name.c_str(), nullptr, flags))
+            if (ImGui::BeginTabItem((name + " " + uuidStr).c_str(), nullptr, flags))
             {
                 if (i != activeTabIdx)
                 {
                     activeTabIdx = i;
-                    onActiveTabChanged.Emit(tabs[i]);
+                    onSceneTabSelect.Emit(tabs[i]);
                 }
                 ImGui::EndTabItem();
             }
@@ -53,9 +55,22 @@ void SceneTabs::DrawUI()
 
 void SceneTabs::AddTab(std::weak_ptr<Scene> scene)
 {
+    if (scene.expired())
+        return;
+
+    for (int i = 0; i < (int)tabs.size(); ++i)
+    {
+        if (!tabs[i].expired() && tabs[i].lock()->uuid == scene.lock()->uuid)
+        {
+            SetActiveTabIdx(i);
+            onSceneTabSelect.Emit(tabs[i]);
+            return;
+        }
+    }
+
     tabs.push_back(scene);
     SetActiveTabIdx((int)tabs.size() - 1);
-    onActiveTabChanged.Emit(scene   );
+    onSceneTabSelect.Emit(scene);
 }
 
 void SceneTabs::SetActiveTabIdx(int idx)

@@ -29,6 +29,17 @@ void SceneViewport::PhysicsUpdate(double delta)
 
 void SceneViewport::Draw()
 {
+    StartTextureRender();
+    duin::DrawGrid(100.0f);
+    if (cachedActiveScene.lock())
+    {
+        auto world = cachedActiveScene.lock()->GetWorld().lock();
+        if (world)
+        {
+            world->PostDrawQueryExecution();
+        }
+    }
+    EndTextureRender();
 }
 
 void SceneViewport::DrawUI()
@@ -79,7 +90,6 @@ void SceneViewport::StartTextureRender()
 {
     duin::BeginTextureMode(renderTarget);
     duin::ClearBackground(duin::GRAY);
-    duin::DrawGrid(100.0f);
 }
 
 void SceneViewport::EndTextureRender()

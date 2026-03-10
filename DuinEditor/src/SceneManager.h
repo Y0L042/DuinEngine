@@ -9,16 +9,16 @@
 #include <memory>
 #include <vector>
 #include <Duin/Core/Signals/Signal.h>
+#include "FileManager.h"
 
 class SceneManager
 {
   public:
-    duin::Signal<std::shared_ptr<Scene>> onSetActiveScene;
-
     SceneManager();
     ~SceneManager();
 
     SceneHandle LoadSceneFromJSON(duin::JSONValue sceneJSON, bool setActive = false);
+    SceneHandle LoadSceneFromFSNode(std::weak_ptr<FSNode> node, bool setActive = false);
     SceneHandle LoadSceneFromPacked(const duin::PackedScene &scene, bool setActive = false);
 
     void UnloadScene(SceneHandle handle);
@@ -28,7 +28,8 @@ class SceneManager
     std::vector<std::shared_ptr<Scene>> GetLoadedScenes();
     std::shared_ptr<Scene> GetActiveScene();
     SceneHandle GetActiveSceneHandle();
-    void SetActiveScene(SceneHandle handle);
+    SceneHandle SetActiveScene(SceneHandle handle);
+    SceneHandle InstantiateScene(SceneHandle handle);
 
   private:
     duin::PackedScene defaultScene;

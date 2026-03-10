@@ -19,6 +19,18 @@ SceneHandle SceneManager::LoadSceneFromJSON(duin::JSONValue sceneJSON, bool setA
     return LoadSceneFromPacked(pscn, setActive);
 }
 
+SceneHandle SceneManager::LoadSceneFromFSNode(std::weak_ptr<FSNode> node, bool setActive)
+{
+    if (node.expired())
+        return duin::UUID::INVALID;
+
+    duin::JSONValue v = duin::JSONValue::ParseFromFile(node.lock()->path);
+    duin::SceneBuilder builder;
+    duin::PackedScene pscn = builder.DeserializeScene(v);
+
+    return LoadSceneFromPacked(pscn, setActive);
+}
+
 SceneHandle SceneManager::LoadSceneFromPacked(const duin::PackedScene &scene, bool setActive)
 {
     auto scn = std::make_shared<Scene>();
@@ -47,7 +59,11 @@ void SceneManager::UnloadScene(SceneHandle handle)
 
 std::shared_ptr<Scene> SceneManager::GetScene(SceneHandle handle)
 {
-    return loadedScenes[handle];
+    if (loadedScenes.find(handle) != loadedScenes.end())
+    {
+        return loadedScenes[handle];
+    }
+    return nullptr;
 }
 
 std::vector<std::shared_ptr<Scene>> SceneManager::GetLoadedScenes()
@@ -69,8 +85,28 @@ SceneHandle SceneManager::GetActiveSceneHandle()
     return activeSceneHandle;
 }
 
-void SceneManager::SetActiveScene(SceneHandle handle)
+SceneHandle SceneManager::SetActiveScene(SceneHandle handle)
 {
-    activeSceneHandle = handle;
-    onSetActiveScene.Emit(GetScene(activeSceneHandle));
+    SceneHandle res = duin::UUID::INVALID;
+
+    bool found = loadedScenes.find(handle) != loadedScenes.end();
+    if (found)
+    {
+        res = handle;
+        activeSceneHandle = res;
+    }
+
+    return activeSceneHandle;
+}
+
+SceneHandle SceneManager::InstantiateScene(SceneHandle handle)
+{
+    auto scene = GetScene(handle);
+    if (scene)
+    {
+        std::shared_ptr<duin::SceneBuilder> sceneBuilder =
+            std::make_shared<duin::SceneBuilder>();
+        sceneBuilder->InstantiateScene(scene->packedScene, scene->ctx.editorWorld.get());
+    }
+    return SceneHandle();
 }
