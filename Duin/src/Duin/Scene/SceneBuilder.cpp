@@ -220,8 +220,8 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
         if (targetEntity.IsValid())
         {
             e.IsA(targetEntity);
-            DN_CORE_INFO("Instantiated IsA pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName,
-                         e.GetName());
+            //DN_CORE_INFO("Instantiated IsA pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName,
+            //             e.GetName());
             return;
         }
     }
@@ -290,7 +290,7 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
         // what has<Relation>(target) and Has<Relation>(target) check.
         //e.Add(flecs::id(w->GetFlecsWorld().c_ptr(), relationship.GetID(), target.GetID()));
         e.Add(relationship, target);
-        DN_CORE_INFO("Instantiated pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName, e.GetName());
+        //DN_CORE_INFO("Instantiated pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName, e.GetName());
     }
     else
     {
