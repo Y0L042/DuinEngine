@@ -19,6 +19,8 @@
 #include "Duin/Objects/GameObject.h"
 #include "Duin/Core/Signals/SignalsModule.h"
 
+#include "DEBUG_DEFINES.h"
+
 namespace duin
 {
 
@@ -151,6 +153,28 @@ class DAPI Application
     /** @brief Starts the main loop. Call once after configuration. */
     void Run();
 
+#ifdef DN_HEADLESS
+    /** @brief Enables headless mode (no window/ImGui). Call before Run() or InitSDL(). */
+    void SetHeadless(bool headless);
+#endif /* DN_HEADLESS */
+
+#ifdef DN_TESTING
+    void InitSDL();
+    void InitBGFX();
+    void InitImGui();
+    void InitRenderer();
+    void CleanRenderer();
+    void ShutdownImGui();
+    void ShutdownBGFX();
+    void ShutdownSDL();
+
+    void BeginRenderFrame();
+    void EndRenderFrame();
+
+    bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
+                      double &physicsAccumTime);
+#endif
+
     /** @brief Internal engine initialization. Do not call directly. */
     void EngineInitialize();
     /** @brief Override to perform one-time setup. Called before Ready(). */
@@ -216,8 +240,31 @@ class DAPI Application
     void RemoveChildObject(std::shared_ptr<GameObject> child);
 
   private:
+#ifdef DN_HEADLESS
+    bool headlessMode = false;
+#endif /* DN_HEADLESS */
+
     std::string windowName = "Game";
     std::shared_ptr<GameObject> rootGameObject;
+
+#ifndef DN_TESTING
+    // Init / shutdown
+    void InitSDL();
+    void InitBGFX();
+    void InitImGui();
+    void ShutdownImGui();
+    void ShutdownBGFX();
+    void ShutdownSDL();
+
+    bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
+                      double &physicsAccumTime);
+#endif
+
+    // Per-frame
+    void ProcessEvents();
+    void RunUpdate(double delta);
+    void RunPhysics(double &physicsCurrentTime, double &physicsPreviousTime, double &physicsAccumTime);
+    void RunRender();
 };
 
 /**
