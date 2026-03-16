@@ -5,10 +5,11 @@
       <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0">
         <Configuration>
           <CodeCoverage>
-            <!-- Only include DuinTests.exe -->
             <ModulePaths>
               <Include>
                 <ModulePath>.*\\DuinTests\.exe$</ModulePath>
+                <ModulePath>.*\\DuinEditorTests\.exe$</ModulePath>
+                <ModulePath>.*\\DuinFPSTests\.exe$</ModulePath>
               </Include>
             </ModulePaths>
             
@@ -38,6 +39,10 @@
               <Include>
                 <Source>.*\\Duin\\src\\Duin\\.*</Source>
                 <Source>.*\\DuinTests\\src\\.*</Source>
+                <Source>.*\\DuinEditor\\src\\.*</Source>
+                <Source>.*\\DuinEditorTests\\src\\.*</Source>
+                <Source>.*\\DuinFPS\\src\\.*</Source>
+                <Source>.*\\DuinFPSTests\\src\\.*</Source>
               </Include>
             </Sources>
           </CodeCoverage>
