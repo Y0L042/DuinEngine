@@ -31,12 +31,12 @@ void State_InAir_Strafe::PhysicsUpdate(double delta)
 {
     duin::Entity& player = *GetBlackboard()->player;
 
-    if (!duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D))
+    if (duin::Input::IsInputVectorPressed(DN_SCANCODE_W, DN_SCANCODE_S, DN_SCANCODE_A, DN_SCANCODE_D))
     {
         SwitchState<State_InAir_Idle>();
     }
 
-    duin::Vector2 input = duin::Input::GetInputVector(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D);
+    duin::Vector2 input = duin::Input::GetInputVector(DN_SCANCODE_W, DN_SCANCODE_S, DN_SCANCODE_A, DN_SCANCODE_D);
     player.Set<PlayerMovementInputVec3>({{input.x, 0.0f, input.y}});
 }
 

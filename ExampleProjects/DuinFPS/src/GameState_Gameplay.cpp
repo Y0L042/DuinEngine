@@ -15,7 +15,7 @@ std::shared_ptr<Player> playerObj;
 void GameState_Gameplay::Enter()
 {
     debugConsole.Log("GameState_Gameplay: Entering GameState_Gameplay");
-    duin::Input::CaptureMouse(true);
+    //duin::Input::CaptureMouse(true);
     world = std::make_unique<duin::GameWorld>();
     world->Initialize();
     RegisterComponents(*world);

@@ -28,7 +28,7 @@ void State_OnGround::OnEvent(duin::Event e)
 {
     duin::Entity& player = *GetBlackboard()->player;
 
-    if (duin::Input::IsKeyPressed(DN_KEY_SPACE))
+    if (duin::Input::IsKeyPressed(DN_SCANCODE_SPACE))
     {
         player.Add<JumpTag>();
     }

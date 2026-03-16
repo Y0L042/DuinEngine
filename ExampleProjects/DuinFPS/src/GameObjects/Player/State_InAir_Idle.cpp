@@ -29,7 +29,7 @@ void State_InAir_Idle::Update(double delta)
 
 void State_InAir_Idle::PhysicsUpdate(double delta)
 {
-    if (duin::Input::IsInputVectorPressed(DN_KEY_W, DN_KEY_S, DN_KEY_A, DN_KEY_D))
+    if (duin::Input::IsInputVectorPressed(DN_SCANCODE_W, DN_SCANCODE_S, DN_SCANCODE_A, DN_SCANCODE_D))
     {
         SwitchState<State_InAir_Strafe>();
     }
