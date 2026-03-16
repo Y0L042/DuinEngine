@@ -16,6 +16,7 @@
 
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Events/Event.h"
+#include "Duin/Core/Events/EventHandler.h"
 #include "Duin/Objects/GameObject.h"
 #include "Duin/Core/Signals/SignalsModule.h"
 
@@ -171,9 +172,16 @@ class DAPI Application
     void BeginRenderFrame();
     void EndRenderFrame();
 
+
+#ifdef DN_HEADLESS
     bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
                       double &physicsAccumTime);
-#endif
+    bool PushSDLEvent(::SDL_Event *e);
+#else
+    bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
+                      double &physicsAccumTime);
+#endif /* DN_HEADLESS */
+#endif /* DN_TESTING */
 
     /** @brief Internal engine initialization. Do not call directly. */
     void EngineInitialize();
@@ -246,6 +254,7 @@ class DAPI Application
 
     std::string windowName = "Game";
     std::shared_ptr<GameObject> rootGameObject;
+    EventHandler eventHandler;
 
 #ifndef DN_TESTING
     // Init / shutdown
