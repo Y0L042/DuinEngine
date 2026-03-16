@@ -27,44 +27,44 @@ var NAVTREE =
   [ "Duin", "index.html", [
     [ "Physics", "page_Physics.html", null ],
     [ "Duin Rendering Pipeline", "md_docs_2RenderingPipeline.html", [
-      [ "Overview", "md_docs_2RenderingPipeline.html#autotoc_md2", null ],
-      [ "Architecture", "md_docs_2RenderingPipeline.html#autotoc_md3", [
-        [ "Core Components", "md_docs_2RenderingPipeline.html#autotoc_md4", null ],
-        [ "BGFX View System", "md_docs_2RenderingPipeline.html#autotoc_md5", null ]
+      [ "Overview", "md_docs_2RenderingPipeline.html#autotoc_md3", null ],
+      [ "Architecture", "md_docs_2RenderingPipeline.html#autotoc_md4", [
+        [ "Core Components", "md_docs_2RenderingPipeline.html#autotoc_md5", null ],
+        [ "BGFX View System", "md_docs_2RenderingPipeline.html#autotoc_md6", null ]
       ] ],
-      [ "Render State Machine", "md_docs_2RenderingPipeline.html#autotoc_md6", [
-        [ "State Stack", "md_docs_2RenderingPipeline.html#autotoc_md7", null ]
+      [ "Render State Machine", "md_docs_2RenderingPipeline.html#autotoc_md7", [
+        [ "State Stack", "md_docs_2RenderingPipeline.html#autotoc_md8", null ]
       ] ],
-      [ "Rendering Modes", "md_docs_2RenderingPipeline.html#autotoc_md8", [
-        [ "1. Main Display Rendering (View 0)", "md_docs_2RenderingPipeline.html#autotoc_md9", null ],
-        [ "2. Render-to-Texture Mode (View 1+)", "md_docs_2RenderingPipeline.html#autotoc_md10", null ],
-        [ "3. Nested Texture Modes", "md_docs_2RenderingPipeline.html#autotoc_md11", null ]
+      [ "Rendering Modes", "md_docs_2RenderingPipeline.html#autotoc_md9", [
+        [ "1. Main Display Rendering (View 0)", "md_docs_2RenderingPipeline.html#autotoc_md10", null ],
+        [ "2. Render-to-Texture Mode (View 1+)", "md_docs_2RenderingPipeline.html#autotoc_md11", null ],
+        [ "3. Nested Texture Modes", "md_docs_2RenderingPipeline.html#autotoc_md12", null ]
       ] ],
-      [ "Draw Functions", "md_docs_2RenderingPipeline.html#autotoc_md12", [
-        [ "Internal Flow", "md_docs_2RenderingPipeline.html#autotoc_md13", null ]
+      [ "Draw Functions", "md_docs_2RenderingPipeline.html#autotoc_md13", [
+        [ "Internal Flow", "md_docs_2RenderingPipeline.html#autotoc_md14", null ]
       ] ],
-      [ "RenderTexture", "md_docs_2RenderingPipeline.html#autotoc_md14", [
-        [ "Creating a RenderTexture", "md_docs_2RenderingPipeline.html#autotoc_md15", null ],
-        [ "ViewID Best Practices", "md_docs_2RenderingPipeline.html#autotoc_md16", null ],
-        [ "Cleanup", "md_docs_2RenderingPipeline.html#autotoc_md17", null ]
+      [ "RenderTexture", "md_docs_2RenderingPipeline.html#autotoc_md15", [
+        [ "Creating a RenderTexture", "md_docs_2RenderingPipeline.html#autotoc_md16", null ],
+        [ "ViewID Best Practices", "md_docs_2RenderingPipeline.html#autotoc_md17", null ],
+        [ "Cleanup", "md_docs_2RenderingPipeline.html#autotoc_md18", null ]
       ] ],
-      [ "Camera System", "md_docs_2RenderingPipeline.html#autotoc_md18", [
-        [ "Coordinate System", "md_docs_2RenderingPipeline.html#autotoc_md19", null ],
-        [ "Camera Matrix Computation", "md_docs_2RenderingPipeline.html#autotoc_md20", null ],
-        [ "Camera Movement", "md_docs_2RenderingPipeline.html#autotoc_md21", null ],
-        [ "Camera Rotation", "md_docs_2RenderingPipeline.html#autotoc_md22", null ]
+      [ "Camera System", "md_docs_2RenderingPipeline.html#autotoc_md19", [
+        [ "Coordinate System", "md_docs_2RenderingPipeline.html#autotoc_md20", null ],
+        [ "Camera Matrix Computation", "md_docs_2RenderingPipeline.html#autotoc_md21", null ],
+        [ "Camera Movement", "md_docs_2RenderingPipeline.html#autotoc_md22", null ],
+        [ "Camera Rotation", "md_docs_2RenderingPipeline.html#autotoc_md23", null ]
       ] ],
-      [ "Debug Drawing", "md_docs_2RenderingPipeline.html#autotoc_md23", null ],
-      [ "Frame Lifecycle", "md_docs_2RenderingPipeline.html#autotoc_md24", null ],
-      [ "Geometry System", "md_docs_2RenderingPipeline.html#autotoc_md25", null ],
-      [ "Shader System", "md_docs_2RenderingPipeline.html#autotoc_md26", null ],
-      [ "Test Accessors", "md_docs_2RenderingPipeline.html#autotoc_md27", null ],
-      [ "Common Issues", "md_docs_2RenderingPipeline.html#autotoc_md28", [
-        [ "Render-to-Texture Shows on Main Screen", "md_docs_2RenderingPipeline.html#autotoc_md29", null ],
-        [ "Flickering After EndTextureMode", "md_docs_2RenderingPipeline.html#autotoc_md30", null ],
-        [ "Debug Draws Not Appearing in Texture", "md_docs_2RenderingPipeline.html#autotoc_md31", null ]
+      [ "Debug Drawing", "md_docs_2RenderingPipeline.html#autotoc_md24", null ],
+      [ "Frame Lifecycle", "md_docs_2RenderingPipeline.html#autotoc_md25", null ],
+      [ "Geometry System", "md_docs_2RenderingPipeline.html#autotoc_md26", null ],
+      [ "Shader System", "md_docs_2RenderingPipeline.html#autotoc_md27", null ],
+      [ "Test Accessors", "md_docs_2RenderingPipeline.html#autotoc_md28", null ],
+      [ "Common Issues", "md_docs_2RenderingPipeline.html#autotoc_md29", [
+        [ "Render-to-Texture Shows on Main Screen", "md_docs_2RenderingPipeline.html#autotoc_md30", null ],
+        [ "Flickering After EndTextureMode", "md_docs_2RenderingPipeline.html#autotoc_md31", null ],
+        [ "Debug Draws Not Appearing in Texture", "md_docs_2RenderingPipeline.html#autotoc_md32", null ]
       ] ],
-      [ "File Locations", "md_docs_2RenderingPipeline.html#autotoc_md32", null ]
+      [ "File Locations", "md_docs_2RenderingPipeline.html#autotoc_md33", null ]
     ] ],
     [ "Categories", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
@@ -101,10 +101,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"classduin_1_1Entity.html#a471c5755bca0422b83c6cbfe9b50cb6b",
-"classduin_1_1UUID.html",
-"structExampleAppLog.html",
-"structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0"
+"classduin_1_1Entity.html#a3cd74944b0325a2d9d83ee0bc6fe010e",
+"classduin_1_1StaticBody.html",
+"structDebugVertex.html",
+"structduin_1_1Entity_1_1ID.html#a2a4f6cd83989d6c8bb8d671d1def27e8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -147,55 +147,60 @@ $(document).ready(function(){initNavTree('EventHandler_8cpp_source.html',''); in
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>{</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="foldopen" id="foldopen00030" data-start="{" data-end="}">
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classduin_1_1EventHandler.html#a411010a6d6654f54e896e3e87ed5d1c8">   30</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classduin_1_1EventHandler.html#a411010a6d6654f54e896e3e87ed5d1c8">EventHandler::IsCloseRequested</a>()</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">bool</span> EventHandler::IsCloseRequested()</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">bool</span> res = closeRequested;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    closeRequested = 0;</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordflow">return</span> res;</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}</div>
-</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classduin_1_1EventHandler.html#ab235871edc1d4f7a97cda10af81cd95c">   37</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1EventHandler.html#ab235871edc1d4f7a97cda10af81cd95c">EventHandler::GetPolledEvent</a>(::SDL_Event e)</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>{</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_class" href="classduin_1_1EventHandler.html">EventHandler</a> &amp;instance = <a class="code hl_function" href="classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652">Get</a>();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">if</span> (EVENT_IS_KEYBOARD(e.type) || EVENT_IS_MOUSE(e.type))</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    {</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <a class="code hl_class" href="classduin_1_1InputEvent.html">InputEvent</a> event;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">event</span>.SetSDLEvent(e);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        instance.CallInputEventListeners(event);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">if</span> (e.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED)</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <a class="code hl_function" href="classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652">Get</a>().closeRequested = 1;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    instance.<a class="code hl_function" href="classduin_1_1EventHandler.html#af0ecef1acd99e47738883008f48c028c">PollEvent</a>(e);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}</div>
 </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="foldopen" id="foldopen00053" data-start="{" data-end="}">
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727">   53</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727">EventHandler::RegisterInputEventListener</a>(std::function&lt;<span class="keywordtype">void</span>(<a class="code hl_class" href="classduin_1_1Event.html">Event</a>)&gt; listener)</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>{</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    inputEventListeners.push_back(listener);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classduin_1_1EventHandler.html#af0ecef1acd99e47738883008f48c028c">   43</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1EventHandler.html#af0ecef1acd99e47738883008f48c028c">EventHandler::PollEvent</a>(::SDL_Event e)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">if</span> (EVENT_IS_KEYBOARD(e.type) || EVENT_IS_MOUSE(e.type))</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <a class="code hl_class" href="classduin_1_1InputEvent.html">InputEvent</a> event;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keyword">event</span>.SetSDLEvent(e);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        CallInputEventListeners(event);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">if</span> (e.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        closeRequested = 1;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
 </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keywordtype">void</span> EventHandler::CallInputEventListeners(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> event)</div>
+<div class="foldopen" id="foldopen00058" data-start="{" data-end="}">
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727">   58</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727">EventHandler::RegisterInputEventListener</a>(std::function&lt;<span class="keywordtype">void</span>(<a class="code hl_class" href="classduin_1_1Event.html">Event</a>)&gt; listener)</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>{</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;listener : inputEventListeners)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        listener(event);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    inputEventListeners.push_back(listener);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>}</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keywordtype">void</span> EventHandler::CallInputEventListeners(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> event)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>{</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;listener : inputEventListeners)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        listener(event);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aEventHandler_8h_html"><div class="ttname"><a href="EventHandler_8h.html">EventHandler.h</a></div><div class="ttdoc">Event polling and dispatch system.</div></div>
 <div class="ttc" id="aInput_8h_html"><div class="ttname"><a href="Input_8h.html">Input.h</a></div><div class="ttdoc">Low-level input query functions.</div></div>
 <div class="ttc" id="aclassduin_1_1EventHandler_html"><div class="ttname"><a href="classduin_1_1EventHandler.html">duin::EventHandler</a></div><div class="ttdoc">Singleton that polls SDL events and dispatches them to listeners.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8h_source.html#l00027">EventHandler.h:28</a></div></div>
-<div class="ttc" id="aclassduin_1_1EventHandler_html_a411010a6d6654f54e896e3e87ed5d1c8"><div class="ttname"><a href="classduin_1_1EventHandler.html#a411010a6d6654f54e896e3e87ed5d1c8">duin::EventHandler::IsCloseRequested</a></div><div class="ttdeci">bool IsCloseRequested()</div><div class="ttdoc">Returns true if a close/quit event was received.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00030">EventHandler.cpp:30</a></div></div>
 <div class="ttc" id="aclassduin_1_1EventHandler_html_ab235871edc1d4f7a97cda10af81cd95c"><div class="ttname"><a href="classduin_1_1EventHandler.html#ab235871edc1d4f7a97cda10af81cd95c">duin::EventHandler::GetPolledEvent</a></div><div class="ttdeci">static void GetPolledEvent(::SDL_Event e)</div><div class="ttdoc">Called by engine to process a polled SDL event.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00037">EventHandler.cpp:37</a></div></div>
 <div class="ttc" id="aclassduin_1_1EventHandler_html_abc7346c66f5d6e910082e1a2e8a8b652"><div class="ttname"><a href="classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652">duin::EventHandler::Get</a></div><div class="ttdeci">static EventHandler &amp; Get()</div><div class="ttdoc">Returns the singleton instance.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00015">EventHandler.cpp:15</a></div></div>
-<div class="ttc" id="aclassduin_1_1EventHandler_html_ae815faf18ba95fcd9898de2abb96d727"><div class="ttname"><a href="classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727">duin::EventHandler::RegisterInputEventListener</a></div><div class="ttdeci">void RegisterInputEventListener(std::function&lt; void(Event)&gt; listener)</div><div class="ttdoc">Registers a callback for input events.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00053">EventHandler.cpp:53</a></div></div>
+<div class="ttc" id="aclassduin_1_1EventHandler_html_ae815faf18ba95fcd9898de2abb96d727"><div class="ttname"><a href="classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727">duin::EventHandler::RegisterInputEventListener</a></div><div class="ttdeci">void RegisterInputEventListener(std::function&lt; void(Event)&gt; listener)</div><div class="ttdoc">Registers a callback for input events.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00058">EventHandler.cpp:58</a></div></div>
+<div class="ttc" id="aclassduin_1_1EventHandler_html_af0ecef1acd99e47738883008f48c028c"><div class="ttname"><a href="classduin_1_1EventHandler.html#af0ecef1acd99e47738883008f48c028c">duin::EventHandler::PollEvent</a></div><div class="ttdeci">void PollEvent(::SDL_Event e)</div><div class="ttdoc">Returns true if a close/quit event was received.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00043">EventHandler.cpp:43</a></div></div>
 <div class="ttc" id="aclassduin_1_1Event_html"><div class="ttname"><a href="classduin_1_1Event.html">duin::Event</a></div><div class="ttdoc">Base wrapper for SDL events.</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00025">Event.h:26</a></div></div>
 <div class="ttc" id="aclassduin_1_1InputEvent_html"><div class="ttname"><a href="classduin_1_1InputEvent.html">duin::InputEvent</a></div><div class="ttdoc">Event class for keyboard and mouse input.</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00040">Event.h:41</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

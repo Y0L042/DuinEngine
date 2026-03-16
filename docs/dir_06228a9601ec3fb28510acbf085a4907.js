@@ -14,5 +14,6 @@ var dir_06228a9601ec3fb28510acbf085a4907 =
     [ "InputDevice_Mouse.h", "InputDevice__Mouse_8h.html", null ],
     [ "InputDevices.cpp", "InputDevices_8cpp_source.html", null ],
     [ "InputDevices.h", "InputDevices_8h_source.html", null ],
-    [ "Keys.h", "Keys_8h_source.html", null ]
+    [ "Keys.h", "Keys_8h_source.html", null ],
+    [ "ScanCodes.h", "ScanCodes_8h_source.html", null ]
 ];

@@ -8,5 +8,7 @@ var dir_e929981daf984fe98eaef57e7e1c872f =
     [ "Utils", "dir_cd463a93d1524e455358c0c423bc7a1b.html", "dir_cd463a93d1524e455358c0c423bc7a1b" ],
     [ "Application.cpp", "Application_8cpp_source.html", null ],
     [ "Application.h", "Application_8h.html", "Application_8h" ],
+    [ "Application_HeadlessImpl.hpp", "Application__HeadlessImpl_8hpp_source.html", null ],
+    [ "Application_Impl.hpp", "Application__Impl_8hpp_source.html", null ],
     [ "Core.h", "Core_8h_source.html", null ]
 ];
