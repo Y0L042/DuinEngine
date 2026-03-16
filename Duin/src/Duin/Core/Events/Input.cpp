@@ -36,10 +36,14 @@ static const int MAX_MOUSE_KEYS = DN_MOUSE_BUTTON_CNT;
 static KeyState previousMouseKeyState[MAX_MOUSE_KEYS];
 static KeyState currentMouseKeyState[MAX_MOUSE_KEYS];
 
+static DN_Keymod currentModifierState = DN_KEY_MOD_NONE;
+static DN_Keymod previousModifierState = DN_KEY_MOD_NONE;
+
 static Vector2 previousMouseLocalPos;
 static Vector2 currentMouseLocalPos;
 static Vector2 mouseFrameDelta;
 static Vector2 mouseScrollDelta;
+static float mouseDeltaX = 0.0f, mouseDeltaY = 0.0f;
 
 void CacheCurrentKeyState()
 {
@@ -58,9 +62,48 @@ void CacheCurrentMouseKeyState()
     memcpy(previousMouseKeyState, currentMouseKeyState, sizeof(previousMouseKeyState));
 }
 
+void ClearCurrentModKeyState()
+{
+    currentModifierState = DN_KEY_MOD_NONE;
+}
+
+void CacheCurrentModifierState()
+{
+    previousModifierState = currentModifierState;
+}
+
 void ClearCurrentMouseKeyState()
 {
     memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
+}
+
+void ClearCurrentMouseDelta()
+{
+    mouseScrollDelta = Vector2();
+}
+
+void ResetMouseFrameState()
+{
+    previousMouseLocalPos = currentMouseLocalPos;
+    mouseDeltaX = 0.0f;
+    mouseDeltaY = 0.0f;
+    mouseScrollDelta = Vector2();
+}
+
+void ResetAllInputState()
+{
+    memset(previousKeyState, 0, sizeof(previousKeyState));
+    memset(currentKeyState, 0, sizeof(currentKeyState));
+    memset(previousMouseKeyState, 0, sizeof(previousMouseKeyState));
+    memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
+    currentModifierState = DN_KEY_MOD_NONE;
+    previousModifierState = DN_KEY_MOD_NONE;
+    previousMouseLocalPos = Vector2();
+    currentMouseLocalPos = Vector2();
+    mouseFrameDelta = Vector2();
+    mouseScrollDelta = Vector2();
+    mouseDeltaX = 0.0f;
+    mouseDeltaY = 0.0f;
 }
 
 /**
@@ -94,56 +137,102 @@ void ProcessSDLKeyboardEvent(::SDL_Event e)
     currentKeyState[code] = state;
 }
 
-int IsKeyPressed(DN_Keycode code)
+int IsKeyPressed(DN_Scancode code)
 {
-    // Review modstate param
-    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-    return (currentKeyState[scanCode] && !previousKeyState[scanCode]);
+    return (currentKeyState[code] && !previousKeyState[code]);
 }
 
-int IsKeyPressedAgain(DN_Keycode code)
+int IsKeyPressedAgain(DN_Scancode code)
 {
     // TODO
 
     return 0;
 }
 
-int IsKeyReleased(DN_Keycode code)
+int IsKeyReleased(DN_Scancode code)
 {
-    // Review modstate param
-    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-    return (!currentKeyState[scanCode] && previousKeyState[scanCode]);
+    return (!currentKeyState[code] && previousKeyState[code]);
 }
 
-int IsKeyDown(DN_Keycode code)
+int IsKeyDown(DN_Scancode code)
 {
-    // Review modstate param
-    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-    return currentKeyState[scanCode];
+    return currentKeyState[code];
 }
 
-int IsKeyUp(DN_Keycode code)
+int IsKeyUp(DN_Scancode code)
 {
-    // Review modstate param
-    ::SDL_Scancode scanCode = ::SDL_GetScancodeFromKey(code, NULL);
-    return !currentKeyState[scanCode];
+    return !currentKeyState[code];
 }
 
-int IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
+int IsInputVectorPressed(DN_Scancode up, DN_Scancode down, DN_Scancode left, DN_Scancode right)
 {
     return (IsKeyDown(up) || IsKeyDown(down) || IsKeyDown(left) || IsKeyDown(right));
 }
 
-Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right)
+Vector2 GetInputVector(DN_Scancode up, DN_Scancode down, DN_Scancode left, DN_Scancode right)
 {
     return Vector2NormalizeF(
         Vector2((float)(IsKeyDown(left) - IsKeyDown(right)), (float)(IsKeyDown(down) - IsKeyDown(up))));
 }
 
-DN_Keycode GetKeyPressed()
+DN_Scancode GetKeyPressed()
 {
     // TODO
-    return 0;
+    return DN_SCANCODE_UNKNOWN;
+}
+
+// Expand a modifier mask: replace each combined alias (CTRL, SHIFT, ALT, GUI) with
+// any of its individual components that are present in `active`.
+// This allows DN_KEY_MOD_CTRL to match when either LCTRL or RCTRL is active,
+// while keeping LCTRL and RCTRL bindings side-specific.
+static DN_Keymod ExpandBinding(DN_Keymod binding, DN_Keymod active)
+{
+    DN_Keymod expanded = binding;
+    // For each combined pair: if the binding requests the combined bit but not a specific
+    // side, replace the combined bits with whichever individual bits are active.
+    auto expandPair = [&](DN_Keymod combined, DN_Keymod left, DN_Keymod right) {
+        DN_Keymod both = left | right;
+        if ((binding & both) == both) {
+            // Binding uses the combined alias (both bits set) — satisfied by any active side
+            if (active & left)  expanded = (expanded & ~both) | left;
+            else if (active & right) expanded = (expanded & ~both) | right;
+        }
+    };
+    expandPair(DN_KEY_MOD_CTRL,  DN_KEY_MOD_LCTRL,  DN_KEY_MOD_RCTRL);
+    expandPair(DN_KEY_MOD_SHIFT, DN_KEY_MOD_LSHIFT, DN_KEY_MOD_RSHIFT);
+    expandPair(DN_KEY_MOD_ALT,   DN_KEY_MOD_LALT,   DN_KEY_MOD_RALT);
+    expandPair(DN_KEY_MOD_GUI,   DN_KEY_MOD_LGUI,   DN_KEY_MOD_RGUI);
+    return expanded;
+}
+
+int IsModifierDown(DN_Keymod code)
+{
+    DN_Keymod active = (DN_Keymod)::SDL_GetModState();
+    DN_Keymod binding = ExpandBinding(code, active);
+    return (active & binding) == binding;
+}
+
+int IsModifierExact(DN_Keymod code)
+{
+    return (DN_Keymod)::SDL_GetModState() == code;
+}
+
+int IsModifierDown(DN_Scancode code)
+{
+    DN_Keymod mod = DN_KEY_MOD_NONE;
+    switch (code)
+    {
+    case DN_SCANCODE_LCTRL:  mod = DN_KEY_MOD_LCTRL;  break;
+    case DN_SCANCODE_RCTRL:  mod = DN_KEY_MOD_RCTRL;  break;
+    case DN_SCANCODE_LSHIFT: mod = DN_KEY_MOD_LSHIFT; break;
+    case DN_SCANCODE_RSHIFT: mod = DN_KEY_MOD_RSHIFT; break;
+    case DN_SCANCODE_LALT:   mod = DN_KEY_MOD_LALT;   break;
+    case DN_SCANCODE_RALT:   mod = DN_KEY_MOD_RALT;   break;
+    case DN_SCANCODE_LGUI:   mod = DN_KEY_MOD_LGUI;   break;
+    case DN_SCANCODE_RGUI:   mod = DN_KEY_MOD_RGUI;   break;
+    default: return 0;
+    }
+    return (currentModifierState & mod) != 0;
 }
 
 /**
@@ -153,13 +242,14 @@ DN_Keycode GetKeyPressed()
  */
 void ProcessSDLMouseEvent(::SDL_Event e)
 {
-    previousMouseLocalPos = currentMouseLocalPos;
-
     if (e.type == SDL_EVENT_MOUSE_MOTION)
     {
-        float x, y = 0;
-        ::SDL_GetMouseState(&x, &y);
+        float x = e.motion.x;
+        float y = e.motion.y;
         currentMouseLocalPos = Vector2(x, y);
+
+        mouseDeltaX += e.motion.xrel;
+        mouseDeltaY += e.motion.yrel;
     }
 
     KeyState state = KeyState::UP;
@@ -176,20 +266,19 @@ void ProcessSDLMouseEvent(::SDL_Event e)
         currentMouseKeyState[btnIdx] = state;
     }
 
-    mouseScrollDelta = Vector2();
     if (e.type == SDL_EVENT_MOUSE_WHEEL)
     {
         DN_CORE_INFO("MOUSE_WHEEL {} {}", e.wheel.x, e.wheel.y);
-        mouseScrollDelta.x = e.wheel.x;
-        mouseScrollDelta.y = e.wheel.y;
+        mouseScrollDelta.x += e.wheel.x;
+        mouseScrollDelta.y += e.wheel.y;
     }
+
+
 }
 
 void UpdateMouseFrameDelta()
 {
-    float x, y = 0;
-    ::SDL_GetRelativeMouseState(&x, &y);
-    mouseFrameDelta = Vector2(-x, y); // Invert x-axis
+    mouseFrameDelta = Vector2(mouseDeltaX, mouseDeltaY);
 }
 
 void CaptureMouse(int enable)
@@ -219,7 +308,7 @@ int IsMouseButtonUp(DN_MouseButtonFlags button)
 
 Vector2 GetMouseGlobalPosition(void)
 {
-    float x, y = 0;
+    float x = 0, y = 0;
     ::SDL_GetGlobalMouseState(&x, &y);
 
     return Vector2(x, y);
@@ -227,10 +316,7 @@ Vector2 GetMouseGlobalPosition(void)
 
 Vector2 GetMousePosition(void)
 {
-    float x, y = 0;
-    ::SDL_GetMouseState(&x, &y);
-
-    return Vector2(x, y);
+    return currentMouseLocalPos;
 }
 
 Vector2 GetMouseDelta(void)

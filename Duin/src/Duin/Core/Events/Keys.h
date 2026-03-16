@@ -52,6 +52,8 @@
  * \since This datatype is available since SDL 3.2.0.
  */
 
+using DN_InputCode = uint32_t;
+
 typedef Uint32 DN_MouseButtonFlags;
 
 #define DN_MOUSE_BUTTON_LEFT 1

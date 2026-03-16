@@ -37,6 +37,7 @@ class EventHandler
     ~EventHandler();
 
     /** @brief Returns true if a close/quit event was received. */
+    void PollEvent(::SDL_Event e);
     bool IsCloseRequested();
 
     /**

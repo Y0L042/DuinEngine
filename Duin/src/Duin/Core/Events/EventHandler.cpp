@@ -37,16 +37,21 @@ bool EventHandler::IsCloseRequested()
 void EventHandler::GetPolledEvent(::SDL_Event e)
 {
     EventHandler &instance = Get();
+    instance.PollEvent(e);
+}
+
+void EventHandler::PollEvent(::SDL_Event e)
+{
     if (EVENT_IS_KEYBOARD(e.type) || EVENT_IS_MOUSE(e.type))
     {
         InputEvent event;
         event.SetSDLEvent(e);
-        instance.CallInputEventListeners(event);
+        CallInputEventListeners(event);
     }
 
     if (e.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED)
     {
-        Get().closeRequested = 1;
+        closeRequested = 1;
     }
 }
 

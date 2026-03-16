@@ -26,23 +26,41 @@ struct InputDevice_Keyboard : public InputDevice
     {
     }
 
-    bool GetEvent(DN_Keycode key, Input::KeyEvent event) override
+    bool GetEvent(DN_InputCode key, Input::KeyEvent event, DN_InputCode modifier) override
     {
+        bool keyInput = false;
+        bool modInput = false;
+        DN_Scancode scancode = static_cast<DN_Scancode>(key);
+
         switch (event)
         {
         case Input::KeyEvent::HELD:
-            return Input::IsKeyDown(key);
+            keyInput = Input::IsKeyDown(scancode);
+            break;
         case Input::KeyEvent::IDLE:
-            return Input::IsKeyUp(key);
+            keyInput = Input::IsKeyUp(scancode);
+            break;
         case Input::KeyEvent::PRESSED:
-            return Input::IsKeyPressed(key);
+            keyInput = Input::IsKeyPressed(scancode);
+            break;
         case Input::KeyEvent::PRESSED_REPEATED:
-            return Input::IsKeyPressedAgain(key);
+            keyInput = Input::IsKeyPressedAgain(scancode);
+            break;
         case Input::KeyEvent::RELEASED:
-            return Input::IsKeyReleased(key);
+            keyInput = Input::IsKeyReleased(scancode);
+            break;
         default:
-            return false;
+            keyInput = false;
+            break;
         }
+
+        if (modifier)
+        {
+            modInput = Input::IsModifierDown(static_cast<DN_Keymod>(modifier));
+            return keyInput && modInput;
+        }
+
+        return keyInput;
     }
 };
 

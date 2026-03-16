@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Keys.h"
+#include "ScanCodes.h"
 
 /** @name Key Event Macros
  * Shorthand for key event types.
@@ -54,22 +55,26 @@ enum KeyEvent
  */
 
 /** @brief Checks if key was pressed this frame (not held). */
-int IsKeyPressed(DN_Keycode code);
+int IsKeyPressed(DN_Scancode code);
 /** @brief Checks if key was pressed again (repeat). */
-int IsKeyPressedAgain(DN_Keycode code);
+int IsKeyPressedAgain(DN_Scancode code);
 /** @brief Checks if key is currently held down. */
-int IsKeyDown(DN_Keycode code);
+int IsKeyDown(DN_Scancode code);
 /** @brief Checks if key is not held down. */
-int IsKeyUp(DN_Keycode code);
+int IsKeyUp(DN_Scancode code);
 /** @brief Checks if key was released this frame. */
-int IsKeyReleased(DN_Keycode code);
+int IsKeyReleased(DN_Scancode code);
 /** @brief Checks if any directional key is pressed. */
-int IsInputVectorPressed(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right);
+int IsInputVectorPressed(DN_Scancode up, DN_Scancode down, DN_Scancode left, DN_Scancode right);
 /** @brief Returns normalized direction vector from WASD-style keys. */
-Vector2 GetInputVector(DN_Keycode up, DN_Keycode down, DN_Keycode left, DN_Keycode right);
+Vector2 GetInputVector(DN_Scancode up, DN_Scancode down, DN_Scancode left, DN_Scancode right);
 /** @brief Returns next pressed key code (0 when queue empty). */
-DN_Keycode GetKeyPressed();
-/** @} */
+DN_Scancode GetKeyPressed();
+int IsModifierDown(DN_Keymod code);
+int IsModifierDown(DN_Scancode code);
+/** @brief True only when the active modifier state is exactly the given mask. */
+int IsModifierExact(DN_Keymod code);
+    /** @} */
 
 /**
  * @name Mouse Functions

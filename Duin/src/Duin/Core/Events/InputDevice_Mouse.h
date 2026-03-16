@@ -26,20 +26,21 @@ struct InputDevice_Mouse : public InputDevice
     {
     }
 
-    bool GetEvent(DN_Keycode key, Input::KeyEvent event) override
+    bool GetEvent(DN_InputCode key, Input::KeyEvent event, DN_InputCode modifier = 0) override
     {
+        DN_MouseButtonFlags button = static_cast<DN_MouseButtonFlags>(key);
         switch (event)
         {
         case Input::KeyEvent::HELD:
-            return Input::IsMouseButtonDown(key);
+            return Input::IsMouseButtonDown(button);
         case Input::KeyEvent::IDLE:
-            return Input::IsMouseButtonUp(key);
+            return Input::IsMouseButtonUp(button);
         case Input::KeyEvent::PRESSED:
-            return Input::IsMouseButtonPressed(key);
+            return Input::IsMouseButtonPressed(button);
         case Input::KeyEvent::PRESSED_REPEATED:
-            return Input::IsMouseButtonPressed(key);
+            return Input::IsMouseButtonPressed(button);
         case Input::KeyEvent::RELEASED:
-            return Input::IsMouseButtonReleased(key);
+            return Input::IsMouseButtonReleased(button);
         default:
             return false;
         }

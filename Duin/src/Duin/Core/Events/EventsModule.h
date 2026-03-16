@@ -4,6 +4,7 @@
  * Events Module
  */
 
+#include "ScanCodes.h"
 #include "Keys.h"
 #include "EventHandler.h"
 #include "Event.h"

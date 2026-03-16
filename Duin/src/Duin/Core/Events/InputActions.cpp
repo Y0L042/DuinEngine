@@ -19,10 +19,10 @@ void duin::CreateInputAction(const std::string &actionName)
     }
 }
 
-void duin::AddInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_Keycode key,
-                                 Input::KeyEvent event)
+void duin::AddInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_InputCode key,
+                                 Input::KeyEvent event, DN_InputCode modifier)
 {
-    AddInputActionBinding(actionName, InputBinding(device, key, event));
+    AddInputActionBinding(actionName, InputBinding(device, key, event, modifier));
 }
 
 void duin::AddInputActionBinding(const std::string &actionName, const InputBinding &newBinding)
@@ -51,10 +51,10 @@ void duin::AddInputActionBinding(const std::string &actionName, const InputBindi
     action.inputBindings.push_back(newBinding);
 }
 
-void duin::RemoveInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_Keycode key,
-                                    Input::KeyEvent event)
+void duin::RemoveInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_InputCode key,
+                                    Input::KeyEvent event, DN_InputCode modifier)
 {
-    RemoveInputActionBinding(actionName, InputBinding(device, key, event));
+    RemoveInputActionBinding(actionName, InputBinding(device, key, event, modifier));
 }
 
 void duin::RemoveInputActionBinding(const std::string &actionName, const InputBinding &binding)

@@ -23,6 +23,7 @@
 
 #include "Input.h"
 #include "Duin/Core/Utils/UUID.h"
+#include "Duin/Core/Debug/DNLog.h"
 
 #include <vector>
 #include <string>
@@ -49,7 +50,7 @@ struct InputDevice
      * @param event The event type to check (pressed, released, held).
      * @return True if the condition is met.
      */
-    virtual bool GetEvent(DN_Keycode key, Input::KeyEvent event)
+    virtual bool GetEvent(DN_InputCode key, Input::KeyEvent event, DN_InputCode modifier)
     {
         return false;
     }
@@ -66,24 +67,29 @@ struct InputDevice
 struct InputBinding
 {
     std::shared_ptr<InputDevice> device; ///< The input device.
-    DN_Keycode key;                      ///< Key or button code.
+    DN_InputCode key;                    ///< Key or button code (device-agnostic).
+    DN_InputCode modifier;               ///< Modifier key flags (device-agnostic).
     Input::KeyEvent event;               ///< Event type (pressed, released, held).
     size_t bindingHash;                  ///< Precomputed hash for fast comparison.
 
     /**
-     * @brief Constructs a binding.
+     * @brief Constructs a binding from a scancode (keyboard keys).
      * @param device The input device.
-     * @param key The key code.
+     * @param key The scancode.
      * @param event The event type.
+     * @param modifier Optional modifier key flags.
      */
-    InputBinding(std::shared_ptr<InputDevice> device, DN_Keycode key, Input::KeyEvent event)
-        : device(device), key(key), event(event)
+    InputBinding(std::shared_ptr<InputDevice> device, DN_InputCode key, Input::KeyEvent event,
+                 DN_InputCode modifier = 0)
+        : device(device), key(key), modifier(modifier), event(event)
     {
         size_t h1 = std::hash<UUID>()(device->uuid);
-        size_t h2 = std::hash<DN_Keycode>()(key);
+        size_t h2 = std::hash<DN_InputCode>()(key);
         size_t h3 = std::hash<Input::KeyEvent>()(event);
+        size_t h4 = std::hash<DN_InputCode>()(modifier);
         bindingHash = h1 ^ (h2 + 0x9e3779b97f4a7c15ULL + (h1 << 6) + (h1 >> 2)) ^
-                      (h3 + 0x9e3779b97f4a7c15ULL + (h2 << 6) + (h2 >> 2));
+                      (h3 + 0x9e3779b97f4a7c15ULL + (h2 << 6) + (h2 >> 2)) ^
+                      (h4 + 0x9e3779b97f4a7c15ULL + (h3 << 6) + (h3 >> 2));
     }
 
     /** @brief Checks if this binding's condition is currently met. */
@@ -91,10 +97,11 @@ struct InputBinding
     {
         if (device == nullptr)
         {
+            DN_CORE_WARN("Device is null!");
             return false;
         }
 
-        return device->GetEvent(key, event);
+        return device->GetEvent(key, event, modifier);
     }
 };
 
@@ -126,15 +133,15 @@ void CreateInputAction(const std::string &actionName);
  * @param key The key code.
  * @param event The event type.
  */
-void AddInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_Keycode key,
-                           Input::KeyEvent event);
+void AddInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_InputCode key,
+                           Input::KeyEvent event, DN_InputCode modifier = 0);
 
 /** @brief Adds an existing InputBinding to an action. */
 void AddInputActionBinding(const std::string &actionName, const InputBinding &newBinding);
 
 /** @brief Removes a specific binding from an action. */
-void RemoveInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_Keycode key,
-                              Input::KeyEvent event);
+void RemoveInputActionBinding(const std::string &actionName, std::shared_ptr<InputDevice> device, DN_InputCode key,
+                              Input::KeyEvent event, DN_InputCode modifier = 0);
 
 /** @brief Removes a binding from an action by InputBinding. */
 void RemoveInputActionBinding(const std::string &actionName, const InputBinding &binding);
