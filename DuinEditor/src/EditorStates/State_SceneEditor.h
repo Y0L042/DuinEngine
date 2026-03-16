@@ -9,6 +9,7 @@
 #include "EditorWorld.h"
 #include "EditorContext.h"
 #include "Scene.h"
+#include "CommandManager.h"
 #include "GUI/SceneEditor/EditorUIObjects.h"
 
 // GUI elements
@@ -54,6 +55,7 @@ class State_SceneEditor : public duin::GameState
     void ProcessProject(Project project);
     void CreateUIObjects();
     void ConnectSignals();
+    void SetupInput();
 
     void LoadSceneFromFile(const FSNode *sceneFile);
     void EnsureInstantiatedScene(std::weak_ptr<FSNode> sceneFile);
@@ -68,4 +70,5 @@ class State_SceneEditor : public duin::GameState
     std::shared_ptr<duin::ScopedConnection> onSetActiveSceneHandle;
 
     std::function<void(void)> queuedNewScene;
+    std::shared_ptr<CommandManager> commandManager = std::make_shared<CommandManager>();
 };

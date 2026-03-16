@@ -1,12 +1,23 @@
 #pragma once
+#include <functional>
 
 class EditorCommand
 {
   public:
     virtual ~EditorCommand() = default;
 
-    virtual void Execute() = 0;
-    virtual void Undo() = 0;
+    std::function<void(void)> Do;
+    std::function<void(void)> Undo;
+
+    bool IsValid() const
+    {
+        return (Do && Undo);
+    }
+
+    explicit operator bool() const
+    {
+        return IsValid();
+    }
 
   private:
 };

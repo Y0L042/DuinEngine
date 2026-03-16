@@ -33,7 +33,7 @@ project "DuinEditor"
     externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
 	externalincludedirs
 	{
-        "%{LocalIncludeDir.nativefiledialog}",
+        "./vendor/nativefiledialog-extended/src/include",
 	}
 
     libdirs(prependRoot(SolutionRoot, global_libdirs))

@@ -1,11 +1,14 @@
 #include "State_SceneEditor.h"
 #include "Singleton.h"
+#include "EditorCommands/SceneTreeCommands.h"
 #include <Duin/Core/Debug/DNLog.h>
+#include <Duin/Core/Events/EventsModule.h>
 
 void State_SceneEditor::Enter()
 {
     InitializeManagers();
     CreateUIObjects();
+    SetupInput();
 
     ProcessProject(Singleton::GetActiveProject());
 }
@@ -20,6 +23,19 @@ void State_SceneEditor::Update(double delta)
 
 void State_SceneEditor::PhysicsUpdate(double delta)
 {
+    if (duin::IsInputActionTriggered("EditorRedo"))
+    {
+        commandManager->Redo();
+    }
+    else if (duin::IsInputActionTriggered("EditorUndo"))
+    {
+        commandManager->Undo();
+    }
+
+    if (duin::IsInputActionTriggered("TestA"))
+    {
+        DN_INFO("Input TestA held.");
+    }
 }
 
 void State_SceneEditor::Draw()
@@ -57,6 +73,8 @@ void State_SceneEditor::CreateUIObjects()
     uiObjects.entityProperties = CreateChildObject<EntityProperties>();
 
     ConnectSignals();
+
+    uiObjects.entityProperties->SetCommandManager(commandManager);
 }
 
 void State_SceneEditor::ConnectSignals()
@@ -129,11 +147,60 @@ void State_SceneEditor::ConnectSignals()
         [&](duin::Entity e) { uiObjects.entityProperties->SetFocusedEntity(e); });
     uiObjects.entityProperties->AddConnectionHandle(conn);
 
+    // Unscoped
+    uiObjects.sceneTree->onAddEntity.Connect([&]() {
+        auto scene = cachedActiveScene.lock();
+        if (scene && scene->GetWorld().lock())
+        {
+            commandManager->Do(std::make_shared<AddEntityCommand>(scene->GetWorld().lock()));
+        }
+    });
+
+    uiObjects.sceneTree->onAddChildEntity.Connect([&](duin::Entity parent) {
+        auto scene = cachedActiveScene.lock();
+        if (scene && scene->GetWorld().lock())
+        {
+            commandManager->Do(std::make_shared<AddChildEntityCommand>(scene->GetWorld().lock(), parent));
+        }
+    });
+
+    uiObjects.sceneTree->onRemoveEntity.Connect([&](duin::Entity e) {
+        auto scene = cachedActiveScene.lock();
+        if (scene && scene->GetWorld().lock())
+        {
+            commandManager->Do(std::make_shared<RemoveEntityCommand>(scene->GetWorld().lock(), e));
+        }
+    });
+
+    uiObjects.sceneTree->onReparentEntity.Connect([&](duin::Entity child, duin::Entity newParent) {
+        auto scene = cachedActiveScene.lock();
+        if (scene && scene->GetWorld().lock())
+        {
+            commandManager->Do(std::make_shared<ReparentEntityCommand>(scene->GetWorld().lock(), child, newParent));
+        }
+    });
+
+    uiObjects.sceneTree->onReparentEntityToRoot.Connect([&](duin::Entity child) {
+        auto scene = cachedActiveScene.lock();
+        if (scene && scene->GetWorld().lock())
+        {
+            commandManager->Do(std::make_shared<ReparentEntityToRootCommand>(scene->GetWorld().lock(), child));
+        }
+    });
+
     // --- onUpdateFileManager ---
     // Scoped
     conn = signals.onUpdateFileManager.ConnectScoped(
         [&](std::shared_ptr<FileManager> fm) { uiObjects.fileTree->SetFileManager(fm); });
     uiObjects.fileTree->AddConnectionHandle(conn);
+}
+
+void State_SceneEditor::SetupInput()
+{
+    duin::AddInputActionBinding("EditorUndo", DN_KEYBOARD_01, DN_SCANCODE_Z, DN_KEVENT_PRESSED, DN_KEY_MOD_LCTRL);
+    duin::AddInputActionBinding("EditorRedo", DN_KEYBOARD_01, DN_SCANCODE_Z, DN_KEVENT_PRESSED,
+                                DN_KEY_MOD_LCTRL | DN_KEY_MOD_LSHIFT);
+    duin::AddInputActionBinding("TestA", DN_KEYBOARD_01, DN_SCANCODE_Z, DN_KEVENT_HELD);
 }
 
 void State_SceneEditor::LoadSceneFromFile(const FSNode *sceneFile)
@@ -142,9 +209,9 @@ void State_SceneEditor::LoadSceneFromFile(const FSNode *sceneFile)
     sceneManager->LoadSceneFromJSON(v);
 }
 
-/* 
-* If scene already loaded, set as active.
-* Else load scene, then set as active.
+/*
+ * If scene already loaded, set as active.
+ * Else load scene, then set as active.
  */
 void State_SceneEditor::EnsureInstantiatedScene(std::weak_ptr<FSNode> sceneFile)
 {
@@ -168,7 +235,7 @@ void State_SceneEditor::EnsureInstantiatedScene(std::weak_ptr<FSNode> sceneFile)
         if (sceneManager->InstantiateScene(handle))
         {
             sceneManager->SetActiveScene(handle);
-            //signals.onSetActiveScene.Emit(sceneManager->GetActiveScene());
+            // signals.onSetActiveScene.Emit(sceneManager->GetActiveScene());
             signals.onSetSceneFromFile.Emit(sceneManager->GetActiveScene());
         }
         else

@@ -21,7 +21,12 @@ class SceneTree : public duin::GameObject, public UIObject
         std::vector<EntityNode> children;
     };
 
-    duin::Signal<duin::Entity> onSelectEntity;
+    duin::Signal<duin::Entity>                  onSelectEntity;
+    duin::Signal<>                              onAddEntity;
+    duin::Signal<duin::Entity>                  onAddChildEntity;
+    duin::Signal<duin::Entity>                  onRemoveEntity;
+    duin::Signal<duin::Entity, duin::Entity>    onReparentEntity;
+    duin::Signal<duin::Entity>                  onReparentEntityToRoot;
 
     SceneTree();
     ~SceneTree();
@@ -41,6 +46,7 @@ class SceneTree : public duin::GameObject, public UIObject
     std::vector<EntityNode> entityTree;
 
     uint64_t selectedEntityId = 0;
+    uint64_t dragSourceEntityId = 0;
 
     void UpdateTreeImpl(std::vector<duin::Entity> entities);
     EntityNode UpdateChild(duin::Entity &child);

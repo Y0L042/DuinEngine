@@ -13,14 +13,15 @@ EditorCamera::EditorCamera(duin::Vector3 pos, duin::Vector3 target)
 void EditorCamera::SetupInput()
 {
     duin::AddInputActionBinding("OnEditorCameraOrbit", DN_MOUSE_01, DN_MOUSE_BUTTON_RIGHT, DN_KEVENT_HELD);
-    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_KEYBOARD_01, DN_KEY_LALT, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraOrbit", DN_KEYBOARD_01, DN_SCANCODE_LALT, DN_KEVENT_HELD);
 
-    duin::AddInputActionBinding("OnEditorCameraMoveLeft", DN_KEYBOARD_01, DN_KEY_LEFT, DN_KEVENT_HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveRight", DN_KEYBOARD_01, DN_KEY_RIGHT, DN_KEVENT_HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveForward", DN_KEYBOARD_01, DN_KEY_UP, DN_KEVENT_HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveBackward", DN_KEYBOARD_01, DN_KEY_DOWN, DN_KEVENT_HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_LCTRL, DN_KEVENT_HELD);
-    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_KEY_RCTRL, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveLeft", DN_KEYBOARD_01, DN_SCANCODE_LEFT, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveRight", DN_KEYBOARD_01, DN_SCANCODE_RIGHT, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveForward", DN_KEYBOARD_01, DN_SCANCODE_UP, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveBackward", DN_KEYBOARD_01, DN_SCANCODE_DOWN, DN_KEVENT_HELD);
+
+    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_SCANCODE_LCTRL, DN_KEVENT_HELD);
+    duin::AddInputActionBinding("OnEditorCameraMoveAxisLock", DN_KEYBOARD_01, DN_SCANCODE_RCTRL, DN_KEVENT_HELD);
 
     duin::AddInputActionBinding("OnEditorCameraZoom", DN_MOUSE_01, DN_MOUSE_WHEEL, DN_KEVENT_PRESSED);
 }
@@ -81,7 +82,7 @@ void EditorCamera::MovePosition(double delta)
     if (duin::IsInputActionTriggered("OnEditorCameraOrbit"))
     {
         duin::Input::CaptureMouse(true);
-        float mouseXDelta = duin::Input::GetMouseDelta().x;
+        float mouseXDelta = -duin::Input::GetMouseDelta().x;
         float angleXDelta = mouseXDelta * SENSITIVITY_X;
         Yaw(angleXDelta, true);
 
