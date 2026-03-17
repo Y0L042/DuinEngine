@@ -5,18 +5,20 @@
 #include <string>
 #include <filesystem>
 #include <Duin/IO/IOModule.h>
-#include "FileTypes.h"
+#include <Duin/Assets/FileTypes.h>
+
+// TODO use virtual paths
 
 namespace fs = std::filesystem;
 
 struct FSNode
 {
   public:
-    ArcheType type;
+    duin::ArcheType type;
     std::string path;
 
-    FileType fileType;
-    FileExt fileExt;
+    duin::FileType fileType;
+    duin::FileExt fileExt;
     std::string name;
     std::string fileExtension;
 
@@ -36,13 +38,19 @@ struct FSNode
 class FileManager
 {
   public:
+    using FSNodeFN_ = std::function<void(std::shared_ptr<FSNode>)>;
+
     static FileManager &Get();
     FileManager() = default;
     FileManager(std::string rootPath);
 
     void BuildFileSystemTree();
+    void WalkTree(FSNodeFN_ fn, std::shared_ptr<FSNode> currentNode = nullptr);
     void SetRootPath(const std::string &rootPath);
-    std::weak_ptr<FSNode> GetRootNode() { return rootNode; };
+    std::weak_ptr<FSNode> GetRootNode()
+    {
+        return rootNode;
+    };
     void PrintTree();
 
     std::vector<std::string> GetFilesByExt(const std::string &ext);

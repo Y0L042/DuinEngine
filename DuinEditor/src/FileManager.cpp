@@ -13,16 +13,16 @@
 
 #include "Singleton.h"
 
-FSNode::FSNode(std::string path) : path(path), fileType(FileType::INVALID_EXT), fileExt(FileExt::FILEEXT_NULL)
+FSNode::FSNode(std::string path) : path(path), fileType(duin::FileType::FS_FILETYPE_INVALID_EXT), fileExt(duin::FileExt::FS_FILEEXT_NULL)
 {
     if (fs::is_directory(path))
     {
-        type = ArcheType::P_DIRECTORY;
+        type = duin::ArcheType::FS_ARCHETYPE_DIRECTORY;
         name = fs::path(path).filename().string();
     }
     else
     {
-        type = ArcheType::P_FILE;
+        type = duin::ArcheType::FS_ARCHETYPE_FILE;
         SetFileType();
     }
 }
@@ -35,7 +35,7 @@ void FSNode::Traverse()
         {
             subNodes.emplace_back(std::make_shared<FSNode>(dirEntry.path().string()));
             FSNode *child = subNodes.back().get();
-            if (child->type == ArcheType::P_DIRECTORY)
+            if (child->type == duin::ArcheType::FS_ARCHETYPE_DIRECTORY)
             {
                 child->Traverse();
             }
@@ -52,7 +52,7 @@ void FSNode::SetFileType()
 {
     name = std::string(::duin::fs::GetFileName(path));
     fileExtension = std::string(::duin::fs::GetFileExtension(name));
-    for (const FileExtension &type : AllExtensions)
+    for (const duin::FileExtension &type : duin::AllExtensions)
     {
         if (fileExtension.compare(type.extension) == 0)
         {
@@ -86,9 +86,25 @@ void FileManager::BuildFileSystemTree()
     }
 
     rootNode = std::make_shared<FSNode>(rootPath.string());
-    if (rootNode->type == ArcheType::P_DIRECTORY)
+    if (rootNode->type == duin::ArcheType::FS_ARCHETYPE_DIRECTORY)
     {
         rootNode->Traverse();
+    }
+}
+
+void FileManager::WalkTree(FSNodeFN_ fn, std::shared_ptr<FSNode> currentNode)
+{
+    if (currentNode)
+    {
+        fn(currentNode);
+        for (auto child : currentNode->subNodes)
+        {
+            WalkTree(fn, child);
+        }
+    }
+    else
+    {
+        WalkTree(fn, rootNode);
     }
 }
 
@@ -125,7 +141,7 @@ static void RecurseTreePrint(std::weak_ptr<FSNode> node)
 
     for (auto& nodePtr : node.lock()->subNodes)
     {
-        if (nodePtr->type == ArcheType::P_DIRECTORY)
+        if (nodePtr->type == duin::ArcheType::FS_ARCHETYPE_DIRECTORY)
         {
             DN_INFO("{}/", nodePtr->path);
             RecurseTreePrint(nodePtr);
