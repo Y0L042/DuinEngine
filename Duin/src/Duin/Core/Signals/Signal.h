@@ -198,7 +198,7 @@ class SignalImpl
 
         for (size_t i = 0; i < callbacks_.size(); i++)
         {
-            auto &[id, fn] = callbacks_[i];
+            auto [id, fn] = callbacks_[i];
             if (fn)
                 fn(args...);
             else
