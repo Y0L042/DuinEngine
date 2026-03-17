@@ -50,9 +50,10 @@ const std::string duin::PackedEntity::TAG_CHILDREN = "children";
 const std::string duin::PackedEntity::TAG_COMPONENTS = "components";
 const std::string duin::PackedEntity::TAG_TAGS = "tags";
 const std::string duin::PackedEntity::TAG_PAIRS = "pairs";
+const std::string duin::PackedEntity::TAG_INSTANCEOF = "instanceOf";
+const std::string duin::PackedEntity::TAG_OVERRIDES = "overrides";
 
 const std::string duin::PackedExternalDependency::TAG_UUID = "uuid";
-const std::string duin::PackedExternalDependency::TAG_TYPE = "type";
 
 const std::string duin::PackedSceneMetadata::TAG_EDITORVERSION = "editorVersion";
 const std::string duin::PackedSceneMetadata::TAG_ENGINEVERSION = "engineVersion";
@@ -724,7 +725,6 @@ duin::JSONValue duin::SceneBuilder::SerializeExternalDependency(const PackedExte
     json.SetObject();
 
     json.AddMember(PackedExternalDependency::TAG_UUID, UUID::ToStringHex(ped.uuid));
-    json.AddMember(PackedExternalDependency::TAG_TYPE, ped.type);
 
     return json;
 }
@@ -736,11 +736,6 @@ duin::PackedExternalDependency duin::SceneBuilder::DeserializeExternalDependency
     if (exdep.HasMember(PackedExternalDependency::TAG_UUID))
     {
         ped.uuid = UUID::FromStringHex(exdep.GetMember(PackedExternalDependency::TAG_UUID).GetString());
-    }
-
-    if (exdep.HasMember(PackedExternalDependency::TAG_TYPE))
-    {
-        ped.type = exdep.GetMember(PackedExternalDependency::TAG_TYPE).GetString();
     }
 
     return ped;
@@ -810,14 +805,6 @@ duin::JSONValue duin::SceneBuilder::SerializeScene(const PackedScene &pscn)
     // External dependencies
     JSONValue depsArray;
     depsArray.SetArray();
-    for (const auto &dep : pscn.externalDependencies)
-    {
-        JSONValue depJSON;
-        depJSON.SetObject();
-        depJSON.AddMember(PackedExternalDependency::TAG_UUID, UUID::ToStringHex(dep.uuid));
-        depJSON.AddMember(PackedExternalDependency::TAG_TYPE, dep.type);
-        depsArray.PushBack(depJSON);
-    }
     json.AddMember(PackedScene::TAG_EXTERNALDEPENDENCIES, depsArray);
 
     // Entities
@@ -857,24 +844,6 @@ duin::PackedScene duin::SceneBuilder::DeserializeScene(const JSONValue &scene)
             ps.metadata.lastModified = meta.GetMember(PackedSceneMetadata::TAG_LASTMODIFIED).GetString();
         if (meta.HasMember(PackedSceneMetadata::TAG_AUTHOR))
             ps.metadata.author = meta.GetMember(PackedSceneMetadata::TAG_AUTHOR).GetString();
-    }
-
-    if (scene.HasMember(PackedScene::TAG_EXTERNALDEPENDENCIES))
-    {
-        JSONValue depsArray = scene.GetMember(PackedScene::TAG_EXTERNALDEPENDENCIES);
-        if (depsArray.IsArray())
-        {
-            for (auto it = depsArray.Begin(); it != depsArray.End(); ++it)
-            {
-                JSONValue depJSON(it.GetValue());
-                PackedExternalDependency dep;
-                if (depJSON.HasMember(PackedExternalDependency::TAG_UUID))
-                    dep.uuid = UUID::FromStringHex(depJSON.GetMember(PackedExternalDependency::TAG_UUID).GetString());
-                if (depJSON.HasMember(PackedExternalDependency::TAG_TYPE))
-                    dep.type = depJSON.GetMember(PackedExternalDependency::TAG_TYPE).GetString();
-                ps.externalDependencies.push_back(dep);
-            }
-        }
     }
 
     if (scene.HasMember(PackedScene::TAG_ENTITIES))

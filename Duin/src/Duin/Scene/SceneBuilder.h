@@ -13,12 +13,14 @@
 #include "Duin/IO/JSONValue.h"
 #include "Duin/ECS/GameWorld.h"
 #include "Duin/ECS/DECS/World.h"
+#include "Duin/Assets/AssetRef.h"
 
 #include <rfl.hpp>
 
 #include <flecs.h>
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace duin
 {
@@ -35,6 +37,13 @@ struct PackedComponent
     std::string componentTypeName;
     std::string jsonData;
 };
+
+/**
+ * @struct PackedExternalDependency
+ * @brief Reference to external scene or asset.
+ * @ingroup ECS_Scene
+ */
+using PackedExternalDependency = AssetRef;
 
 /**
  * @struct PackedPair
@@ -83,6 +92,8 @@ struct PackedEntity
     static const std::string TAG_COMPONENTS;
     static const std::string TAG_TAGS;
     static const std::string TAG_PAIRS;
+    static const std::string TAG_INSTANCEOF;
+    static const std::string TAG_OVERRIDES;
 
     UUID uuid;                               ///< Entity unique identifier.
     std::string name;                        ///< Entity display name.
@@ -91,21 +102,10 @@ struct PackedEntity
     std::vector<PackedPair> pairs;           ///< FLECS pairs (relationships).
     std::vector<PackedComponent> components; ///< Attached components.
     std::vector<PackedEntity> children;      ///< Child entities.
+    std::optional<PackedExternalDependency> instanceOf;
 };
 
-/**
- * @struct PackedExternalDependency
- * @brief Reference to external scene or asset.
- * @ingroup ECS_Scene
- */
-struct PackedExternalDependency
-{
-    static const std::string TAG_UUID;
-    static const std::string TAG_TYPE;
 
-    UUID uuid;        ///< Dependency identifier.
-    std::string type; ///< Dependency type (scene, asset).
-};
 
 /**
  * @struct PackedSceneMetadata
@@ -145,7 +145,6 @@ struct PackedScene
     UUID uuid;                                                  ///< Scene identifier.
     std::string name;                                           ///< Scene name.
     PackedSceneMetadata metadata;                               ///< Version/author info.
-    std::vector<PackedExternalDependency> externalDependencies; ///< External refs.
     std::vector<PackedEntity> entities;                         ///< Root entities.
 };
 
