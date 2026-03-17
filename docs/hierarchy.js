@@ -3,7 +3,10 @@ var hierarchy =
     [ "duin::ECSTag::ActiveCamera", "structduin_1_1ECSTag_1_1ActiveCamera.html", null ],
     [ "duin::ECSTag::ActiveExternalRef", "structduin_1_1ECSTag_1_1ActiveExternalRef.html", null ],
     [ "duin::Application", "classduin_1_1Application.html", null ],
+    [ "duin::Asset", "structduin_1_1Asset.html", null ],
+    [ "duin::AssetIndex", "classduin_1_1AssetIndex.html", null ],
     [ "duin::AssetManager", "classduin_1_1AssetManager.html", null ],
+    [ "duin::AssetRef", "structduin_1_1AssetRef.html", null ],
     [ "Attrib", "structAttrib.html", null ],
     [ "Axis", "structAxis.html", null ],
     [ "duin::BGFXBufferHandle", "structduin_1_1BGFXBufferHandle.html", null ],
@@ -93,6 +96,7 @@ var hierarchy =
     [ "std::false_type", null, [
       [ "duin::Entity::IsSingleEntityArg< Args >", "structduin_1_1Entity_1_1IsSingleEntityArg.html", null ]
     ] ],
+    [ "duin::FileExtension", "structduin_1_1FileExtension.html", null ],
     [ "duin::FileUtils", "classduin_1_1FileUtils.html", null ],
     [ "duin::float16", "structduin_1_1float16.html", null ],
     [ "duin::float3", "structduin_1_1float3.html", null ],
@@ -237,6 +241,7 @@ var hierarchy =
     [ "ImGuiWindowStackData", "structImGuiWindowStackData.html", null ],
     [ "ImGuiWindowTempData", "structImGuiWindowTempData.html", null ],
     [ "ImNewWrapper", "structImNewWrapper.html", null ],
+    [ "duin::AssetIndex::Impl", "structduin_1_1AssetIndex_1_1Impl.html", null ],
     [ "ImPool< T >", "structImPool.html", null ],
     [ "ImPool< ImGuiMultiSelectState >", "structImPool.html", null ],
     [ "ImPool< ImGuiTabBar >", "structImPool.html", null ],
@@ -327,6 +332,7 @@ var hierarchy =
       [ "duin::InputDevice_Mouse", "structduin_1_1InputDevice__Mouse.html", null ]
     ] ],
     [ "InputVector2DKeys", "structInputVector2DKeys.html", null ],
+    [ "duin::io::IOStream", "classduin_1_1io_1_1IOStream.html", null ],
     [ "std::is_same", null, [
       [ "duin::Entity::IsSingleEntityArg< T >", "structduin_1_1Entity_1_1IsSingleEntityArg_3_01T_01_4.html", null ]
     ] ],
@@ -352,10 +358,12 @@ var hierarchy =
     [ "GraphEditor::Options", "structGraphEditor_1_1Options.html", null ],
     [ "duin::PackedComponent", "structduin_1_1PackedComponent.html", null ],
     [ "duin::PackedEntity", "structduin_1_1PackedEntity.html", null ],
-    [ "duin::PackedExternalDependency", "structduin_1_1PackedExternalDependency.html", null ],
+    [ "PackedExternalDependency", "structPackedExternalDependency.html", null ],
     [ "duin::PackedPair", "structduin_1_1PackedPair.html", null ],
     [ "duin::PackedScene", "structduin_1_1PackedScene.html", null ],
     [ "duin::PackedSceneMetadata", "structduin_1_1PackedSceneMetadata.html", null ],
+    [ "duin::fs::PathInfo", "structduin_1_1fs_1_1PathInfo.html", null ],
+    [ "duin::PathInfo", "structduin_1_1PathInfo.html", null ],
     [ "duin::PhysicsMaterial", "classduin_1_1PhysicsMaterial.html", null ],
     [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", null ],
     [ "duin::ECSComponent::PhysicsStaticCubeComponent", "structduin_1_1ECSComponent_1_1PhysicsStaticCubeComponent.html", null ],

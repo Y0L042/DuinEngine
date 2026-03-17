@@ -1,0 +1,6 @@
+<map id="duin::AssetRef" name="duin::AssetRef">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,121,119"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="17,5,109,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,45,66,93,61,93,61,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="124,9,136,18,128,26,110,29,109,23,125,21,131,18,121,14"/>
+</map>

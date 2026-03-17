@@ -125,6 +125,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1fs_1_1DirCallbackWrapper.html">DirCallbackWrapper</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal wrapper structure for bridging custom callbacks to SDL callbacks.  <a href="structduin_1_1fs_1_1DirCallbackWrapper.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1fs_1_1PathInfo.html">PathInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Information about a filesystem path.  <a href="structduin_1_1fs_1_1PathInfo.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -137,6 +140,12 @@ Typedefs</h2></td></tr>
 <tr class="memitem:aed46d3f9f264e72ab0a3665d24e03871" id="r_aed46d3f9f264e72ab0a3665d24e03871"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">EnumerationResult</a>(_cdecl *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#aed46d3f9f264e72ab0a3665d24e03871">EnumerateDirectoryCallback</a>) (void *userdata, const char *dirname, const char *fname)</td></tr>
 <tr class="memdesc:aed46d3f9f264e72ab0a3665d24e03871"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function signature for directory enumeration.  <br /></td></tr>
 <tr class="separator:aed46d3f9f264e72ab0a3665d24e03871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc02268c660b1c84c017d7444b05b0a8" id="r_afc02268c660b1c84c017d7444b05b0a8"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2">duin::fs::PathType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#afc02268c660b1c84c017d7444b05b0a8">PathType</a></td></tr>
+<tr class="memdesc:afc02268c660b1c84c017d7444b05b0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Types of filesystem entries.  <br /></td></tr>
+<tr class="separator:afc02268c660b1c84c017d7444b05b0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae32b23bb051a91eee33166bbbd46af7d" id="r_ae32b23bb051a91eee33166bbbd46af7d"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">duin::fs::UserFolder</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#ae32b23bb051a91eee33166bbbd46af7d">UserFolder</a></td></tr>
+<tr class="memdesc:ae32b23bb051a91eee33166bbbd46af7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Well-known user folder types.  <br /></td></tr>
+<tr class="separator:ae32b23bb051a91eee33166bbbd46af7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -146,6 +155,31 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:af1d9c3469ee0d51bd768b4226bc9a6b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return values for directory enumeration callbacks.  <a href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7">More...</a><br /></td></tr>
 <tr class="separator:af1d9c3469ee0d51bd768b4226bc9a6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acec420adaf4a8239d261a2e4e1c9a8d2" id="r_acec420adaf4a8239d261a2e4e1c9a8d2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2">PathType</a> { <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2add0dec72ddaed3eab6b006477f77bead">DNFS_PATHTYPE_NONE</a>
+, <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2ac48ee665d8c9992a03a8906e6d2342a2">DNFS_PATHTYPE_FILE</a>
+, <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2a1857c863977d156eeb868dd1e56dade7">DNFS_PATHTYPE_DIRECTORY</a>
+, <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2a9396f1b292cd2d92eadd08be853d4a52">DNFS_PATHTYPE_OTHER</a>
+ }</td></tr>
+<tr class="memdesc:acec420adaf4a8239d261a2e4e1c9a8d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Types of filesystem entries.  <a href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2">More...</a><br /></td></tr>
+<tr class="separator:acec420adaf4a8239d261a2e4e1c9a8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac558df3c8d4e281423e95fe3a2706b77" id="r_ac558df3c8d4e281423e95fe3a2706b77"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">UserFolder</a> { <br />
+&#160;&#160;<b>DNFS_FOLDER_HOME</b>
+, <b>DNFS_FOLDER_DESKTOP</b>
+, <b>DNFS_FOLDER_DOCUMENTS</b>
+, <b>DNFS_FOLDER_DOWNLOADS</b>
+, <br />
+&#160;&#160;<b>DNFS_FOLDER_MUSIC</b>
+, <b>DNFS_FOLDER_PICTURES</b>
+, <b>DNFS_FOLDER_PUBLICSHARE</b>
+, <b>DNFS_FOLDER_SAVEDGAMES</b>
+, <br />
+&#160;&#160;<b>DNFS_FOLDER_SCREENSHOTS</b>
+, <b>DNFS_FOLDER_TEMPLATES</b>
+, <b>DNFS_FOLDER_VIDEOS</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:ac558df3c8d4e281423e95fe3a2706b77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Well-known user folder types.  <a href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">More...</a><br /></td></tr>
+<tr class="separator:ac558df3c8d4e281423e95fe3a2706b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -197,6 +231,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ac6a15102ae9e7ac7987e2a60be5c295c" id="r_ac6a15102ae9e7ac7987e2a60be5c295c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c">EnumerateDirectory</a> (const char *path, <a class="el" href="namespaceduin_1_1fs.html#aed46d3f9f264e72ab0a3665d24e03871">EnumerateDirectoryCallback</a> callback, void *userdata)</td></tr>
 <tr class="memdesc:ac6a15102ae9e7ac7987e2a60be5c295c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerate directory contents through a callback function.  <br /></td></tr>
 <tr class="separator:ac6a15102ae9e7ac7987e2a60be5c295c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c086c59aaffca3624ac35a1cc103944" id="r_a5c086c59aaffca3624ac35a1cc103944"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#a5c086c59aaffca3624ac35a1cc103944">GetPathInfo</a> (const std::string &amp;path, <a class="el" href="structduin_1_1fs_1_1PathInfo.html">PathInfo</a> *info=nullptr)</td></tr>
+<tr class="memdesc:a5c086c59aaffca3624ac35a1cc103944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information about a filesystem path.  <br /></td></tr>
+<tr class="separator:a5c086c59aaffca3624ac35a1cc103944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6827161529f3cb7858f0e07756ad761" id="r_aa6827161529f3cb7858f0e07756ad761"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#aa6827161529f3cb7858f0e07756ad761">GetUserFolder</a> (<a class="el" href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">UserFolder</a> folder)</td></tr>
+<tr class="memdesc:aa6827161529f3cb7858f0e07756ad761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the path to a well-known user folder.  <br /></td></tr>
+<tr class="separator:aa6827161529f3cb7858f0e07756ad761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47a9e3d6a1fd88211f84d33f5ab81d66" id="r_a47a9e3d6a1fd88211f84d33f5ab81d66"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#a47a9e3d6a1fd88211f84d33f5ab81d66">SetWorkspacePath</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a47a9e3d6a1fd88211f84d33f5ab81d66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the workspace path for wrk:// virtual path resolution.  <br /></td></tr>
+<tr class="separator:a47a9e3d6a1fd88211f84d33f5ab81d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c0989ddb540e1d7942577051cf040d6" id="r_a8c0989ddb540e1d7942577051cf040d6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceduin_1_1fs.html#a8c0989ddb540e1d7942577051cf040d6">GetWorkspacePath</a> ()</td></tr>
+<tr class="memdesc:a8c0989ddb540e1d7942577051cf040d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current workspace path.  <br /></td></tr>
+<tr class="separator:a8c0989ddb540e1d7942577051cf040d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Filesystem utilities for file and directory operations. </p>
@@ -238,7 +284,7 @@ Return DNFS_ENUM_SUCCESS to stop early without error </dd>
 Return DNFS_ENUM_FAILURE to stop with error</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c" title="Enumerate directory contents through a callback function.">EnumerateDirectory()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00497">497</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00504">504</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
 
 </div>
 </div>
@@ -277,7 +323,42 @@ Return DNFS_ENUM_FAILURE to stop with error</dd></dl>
 </ul>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586" title="Search for files matching a pattern in a directory tree.">GlobDirectory()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00422">422</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00429">429</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+
+</div>
+</div>
+<a id="afc02268c660b1c84c017d7444b05b0a8" name="afc02268c660b1c84c017d7444b05b0a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc02268c660b1c84c017d7444b05b0a8">&#9670;&#160;</a></span>PathType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2">duin::fs::PathType</a> <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2">duin::fs::PathType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Types of filesystem entries. </p>
+<p>Used by FsPathInfo to indicate what kind of item exists at a path. </p>
+
+</div>
+</div>
+<a id="ae32b23bb051a91eee33166bbbd46af7d" name="ae32b23bb051a91eee33166bbbd46af7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae32b23bb051a91eee33166bbbd46af7d">&#9670;&#160;</a></span>UserFolder</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">duin::fs::UserFolder</a> <a class="el" href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">duin::fs::UserFolder</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Well-known user folder types. </p>
+<p>Mirrors SDL_Folder enum values in the same order, allowing direct static_cast.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#aa6827161529f3cb7858f0e07756ad761" title="Get the path to a well-known user folder.">GetUserFolder()</a> </dd></dl>
 
 </div>
 </div>
@@ -305,7 +386,56 @@ Return DNFS_ENUM_FAILURE to stop with error</dd></dl>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00473">473</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00480">480</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+
+</div>
+</div>
+<a id="acec420adaf4a8239d261a2e4e1c9a8d2" name="acec420adaf4a8239d261a2e4e1c9a8d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acec420adaf4a8239d261a2e4e1c9a8d2">&#9670;&#160;</a></span>PathType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespaceduin_1_1fs.html#acec420adaf4a8239d261a2e4e1c9a8d2">duin::fs::PathType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Types of filesystem entries. </p>
+<p>Used by FsPathInfo to indicate what kind of item exists at a path. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acec420adaf4a8239d261a2e4e1c9a8d2add0dec72ddaed3eab6b006477f77bead" name="acec420adaf4a8239d261a2e4e1c9a8d2add0dec72ddaed3eab6b006477f77bead"></a>DNFS_PATHTYPE_NONE&#160;</td><td class="fielddoc"><p>Path does not exist </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acec420adaf4a8239d261a2e4e1c9a8d2ac48ee665d8c9992a03a8906e6d2342a2" name="acec420adaf4a8239d261a2e4e1c9a8d2ac48ee665d8c9992a03a8906e6d2342a2"></a>DNFS_PATHTYPE_FILE&#160;</td><td class="fielddoc"><p>A normal file </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acec420adaf4a8239d261a2e4e1c9a8d2a1857c863977d156eeb868dd1e56dade7" name="acec420adaf4a8239d261a2e4e1c9a8d2a1857c863977d156eeb868dd1e56dade7"></a>DNFS_PATHTYPE_DIRECTORY&#160;</td><td class="fielddoc"><p>A directory </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acec420adaf4a8239d261a2e4e1c9a8d2a9396f1b292cd2d92eadd08be853d4a52" name="acec420adaf4a8239d261a2e4e1c9a8d2a9396f1b292cd2d92eadd08be853d4a52"></a>DNFS_PATHTYPE_OTHER&#160;</td><td class="fielddoc"><p>Something else (device node, etc.) </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00588">588</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
+
+</div>
+</div>
+<a id="ac558df3c8d4e281423e95fe3a2706b77" name="ac558df3c8d4e281423e95fe3a2706b77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac558df3c8d4e281423e95fe3a2706b77">&#9670;&#160;</a></span>UserFolder</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">duin::fs::UserFolder</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Well-known user folder types. </p>
+<p>Mirrors SDL_Folder enum values in the same order, allowing direct static_cast.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#aa6827161529f3cb7858f0e07756ad761" title="Get the path to a well-known user folder.">GetUserFolder()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8h_source.html#l00634">634</a> of file <a class="el" href="Filesystem_8h_source.html">Filesystem.h</a>.</p>
 
 </div>
 </div>
@@ -360,7 +490,7 @@ Performs type conversion: DNFS_ENUM_* -&gt; SDL_ENUM_*</dd></dl>
 <dd>
 <a class="el" href="structduin_1_1fs_1_1DirCallbackWrapper.html" title="Internal wrapper structure for bridging custom callbacks to SDL callbacks.">DirCallbackWrapper</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00194">194</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00231">231</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -401,9 +531,9 @@ Returns false if path is empty or invalid</dd></dl>
 <div class="line"><span class="keywordflow">if</span> (success) {</div>
 <div class="line">    <span class="comment">// Directory and all parents created successfully</span></div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a08310e525fc80e8d8f652941344677de"><div class="ttname"><a href="namespaceduin_1_1fs.html#a08310e525fc80e8d8f652941344677de">duin::fs::CreateDir</a></div><div class="ttdeci">bool CreateDir(const std::string &amp;path)</div><div class="ttdoc">Create a directory, including any missing parent directories.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00071">Filesystem.cpp:71</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a08310e525fc80e8d8f652941344677de"><div class="ttname"><a href="namespaceduin_1_1fs.html#a08310e525fc80e8d8f652941344677de">duin::fs::CreateDir</a></div><div class="ttdeci">bool CreateDir(const std::string &amp;path)</div><div class="ttdoc">Create a directory, including any missing parent directories.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00084">Filesystem.cpp:84</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00071">71</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00084">84</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -454,9 +584,9 @@ Works with UNC paths: "\\\\server\\share" becomes "//server/share"</dd></dl>
 <div class="line">std::string alreadyUnix = <span class="stringliteral">&quot;path/to/file.txt&quot;</span>;</div>
 <div class="line">std::string unchanged = <a class="code hl_function" href="namespaceduin_1_1fs.html#a34824b1612a2df17c4382d1a40d67c25">duin::fs::EnsureUnixPath</a>(alreadyUnix);</div>
 <div class="line"><span class="comment">// unchanged = &quot;path/to/file.txt&quot;</span></div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a34824b1612a2df17c4382d1a40d67c25"><div class="ttname"><a href="namespaceduin_1_1fs.html#a34824b1612a2df17c4382d1a40d67c25">duin::fs::EnsureUnixPath</a></div><div class="ttdeci">std::string EnsureUnixPath(const std::string &amp;path)</div><div class="ttdoc">Convert Windows-style paths to Unix-style paths.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00144">Filesystem.cpp:144</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a34824b1612a2df17c4382d1a40d67c25"><div class="ttname"><a href="namespaceduin_1_1fs.html#a34824b1612a2df17c4382d1a40d67c25">duin::fs::EnsureUnixPath</a></div><div class="ttdeci">std::string EnsureUnixPath(const std::string &amp;path)</div><div class="ttdoc">Convert Windows-style paths to Unix-style paths.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00159">Filesystem.cpp:159</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00144">144</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00159">159</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -528,10 +658,10 @@ Unlike <a class="el" href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c9
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">bool</span> success = <a class="code hl_function" href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c">duin::fs::EnumerateDirectory</a>(<span class="stringliteral">&quot;./data&quot;</span>, callback, <span class="keyword">nullptr</span>);</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_ac6a15102ae9e7ac7987e2a60be5c295c"><div class="ttname"><a href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c">duin::fs::EnumerateDirectory</a></div><div class="ttdeci">bool EnumerateDirectory(const char *path, EnumerateDirectoryCallback callback, void *userdata)</div><div class="ttdoc">Enumerate directory contents through a callback function.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00200">Filesystem.cpp:200</a></div></div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844"><div class="ttname"><a href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844">duin::fs::DNFS_ENUM_CONTINUE</a></div><div class="ttdeci">@ DNFS_ENUM_CONTINUE</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8h_source.html#l00475">Filesystem.h:475</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_ac6a15102ae9e7ac7987e2a60be5c295c"><div class="ttname"><a href="namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c">duin::fs::EnumerateDirectory</a></div><div class="ttdeci">bool EnumerateDirectory(const char *path, EnumerateDirectoryCallback callback, void *userdata)</div><div class="ttdoc">Enumerate directory contents through a callback function.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00237">Filesystem.cpp:237</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844"><div class="ttname"><a href="namespaceduin_1_1fs.html#af1d9c3469ee0d51bd768b4226bc9a6b7a04f4948694da15ad97f1f7f0c5969844">duin::fs::DNFS_ENUM_CONTINUE</a></div><div class="ttdeci">@ DNFS_ENUM_CONTINUE</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8h_source.html#l00482">Filesystem.h:482</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00200">200</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00237">237</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -583,9 +713,9 @@ File permissions and metadata may not be preserved</dd></dl>
 <div class="line"><span class="keywordflow">if</span> (success) {</div>
 <div class="line">    <span class="comment">// File copied successfully</span></div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_aeaa457d2c205f23d18ddc558b0f936c1"><div class="ttname"><a href="namespaceduin_1_1fs.html#aeaa457d2c205f23d18ddc558b0f936c1">duin::fs::FileCopy</a></div><div class="ttdeci">bool FileCopy(const std::string &amp;oldPath, const std::string &amp;newPath)</div><div class="ttdoc">Copy a file from one location to another.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00063">Filesystem.cpp:63</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_aeaa457d2c205f23d18ddc558b0f936c1"><div class="ttname"><a href="namespaceduin_1_1fs.html#aeaa457d2c205f23d18ddc558b0f936c1">duin::fs::FileCopy</a></div><div class="ttdeci">bool FileCopy(const std::string &amp;oldPath, const std::string &amp;newPath)</div><div class="ttdoc">Copy a file from one location to another.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00076">Filesystem.cpp:76</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00063">63</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00076">76</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -620,9 +750,9 @@ On some platforms, this may be a sandbox or app bundle directory</dd></dl>
 <a class="el" href="namespaceduin_1_1fs.html#a431d26fe7b91c927803098285aca83fb" title="Get the current working directory.">GetCurrentDir()</a></dd></dl>
 <p>Example: </p><div class="fragment"><div class="line">std::string basePath = <a class="code hl_function" href="namespaceduin_1_1fs.html#a728b2a4e2019bec9e1af7c235dfce55f">duin::fs::GetBasePath</a>();</div>
 <div class="line">std::string configPath = basePath + <span class="stringliteral">&quot;config.ini&quot;</span>;</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a728b2a4e2019bec9e1af7c235dfce55f"><div class="ttname"><a href="namespaceduin_1_1fs.html#a728b2a4e2019bec9e1af7c235dfce55f">duin::fs::GetBasePath</a></div><div class="ttdeci">std::string GetBasePath(void)</div><div class="ttdoc">Get the directory where the application executable is located.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00079">Filesystem.cpp:79</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a728b2a4e2019bec9e1af7c235dfce55f"><div class="ttname"><a href="namespaceduin_1_1fs.html#a728b2a4e2019bec9e1af7c235dfce55f">duin::fs::GetBasePath</a></div><div class="ttdeci">std::string GetBasePath(void)</div><div class="ttdoc">Get the directory where the application executable is located.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00092">Filesystem.cpp:92</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00079">79</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00092">92</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -655,9 +785,9 @@ May change during application execution if directories are changed</dd></dl>
 <a class="el" href="namespaceduin_1_1fs.html#a728b2a4e2019bec9e1af7c235dfce55f" title="Get the directory where the application executable is located.">GetBasePath()</a></dd></dl>
 <p>Example: </p><div class="fragment"><div class="line">std::string cwd = <a class="code hl_function" href="namespaceduin_1_1fs.html#a431d26fe7b91c927803098285aca83fb">duin::fs::GetCurrentDir</a>();</div>
 <div class="line">DN_INFO(<span class="stringliteral">&quot;Working directory: {}&quot;</span>, cwd);</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a431d26fe7b91c927803098285aca83fb"><div class="ttname"><a href="namespaceduin_1_1fs.html#a431d26fe7b91c927803098285aca83fb">duin::fs::GetCurrentDir</a></div><div class="ttdeci">std::string GetCurrentDir(void)</div><div class="ttdoc">Get the current working directory.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00089">Filesystem.cpp:89</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a431d26fe7b91c927803098285aca83fb"><div class="ttname"><a href="namespaceduin_1_1fs.html#a431d26fe7b91c927803098285aca83fb">duin::fs::GetCurrentDir</a></div><div class="ttdeci">std::string GetCurrentDir(void)</div><div class="ttdoc">Get the current working directory.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00102">Filesystem.cpp:102</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00089">89</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00102">102</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -696,9 +826,9 @@ For files with multiple dots (e.g., "archive.tar.gz"), returns only the last ext
 <p>Example: </p><div class="fragment"><div class="line">std::string ext1 = <a class="code hl_function" href="namespaceduin_1_1fs.html#a6d693d2c74b67cb771e9c1eec7a33bca">duin::fs::GetFileExtension</a>(<span class="stringliteral">&quot;document.pdf&quot;</span>);  <span class="comment">// ext1 = &quot;pdf&quot;</span></div>
 <div class="line">std::string ext2 = <a class="code hl_function" href="namespaceduin_1_1fs.html#a6d693d2c74b67cb771e9c1eec7a33bca">duin::fs::GetFileExtension</a>(<span class="stringliteral">&quot;archive.tar.gz&quot;</span>); <span class="comment">// ext2 = &quot;gz&quot;</span></div>
 <div class="line">std::string ext3 = <a class="code hl_function" href="namespaceduin_1_1fs.html#a6d693d2c74b67cb771e9c1eec7a33bca">duin::fs::GetFileExtension</a>(<span class="stringliteral">&quot;README&quot;</span>);         <span class="comment">// ext3 = INVALID_PATH</span></div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a6d693d2c74b67cb771e9c1eec7a33bca"><div class="ttname"><a href="namespaceduin_1_1fs.html#a6d693d2c74b67cb771e9c1eec7a33bca">duin::fs::GetFileExtension</a></div><div class="ttdeci">std::string GetFileExtension(const std::string &amp;filename)</div><div class="ttdoc">Extract the file extension from a filename.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00041">Filesystem.cpp:41</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a6d693d2c74b67cb771e9c1eec7a33bca"><div class="ttname"><a href="namespaceduin_1_1fs.html#a6d693d2c74b67cb771e9c1eec7a33bca">duin::fs::GetFileExtension</a></div><div class="ttdeci">std::string GetFileExtension(const std::string &amp;filename)</div><div class="ttdoc">Extract the file extension from a filename.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00046">Filesystem.cpp:46</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00041">41</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00046">46</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -737,9 +867,52 @@ Returns an empty string if the path ends with a separator</dd></dl>
 <div class="line"> </div>
 <div class="line">std::string invalid = <a class="code hl_function" href="namespaceduin_1_1fs.html#ad2518903d0f32057af18b0409be168e9">duin::fs::GetFileName</a>(<span class="stringliteral">&quot;file.txt&quot;</span>); <span class="comment">// No separator</span></div>
 <div class="line"><span class="comment">// invalid = INVALID_PATH</span></div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_ad2518903d0f32057af18b0409be168e9"><div class="ttname"><a href="namespaceduin_1_1fs.html#ad2518903d0f32057af18b0409be168e9">duin::fs::GetFileName</a></div><div class="ttdeci">std::string GetFileName(const std::string &amp;path)</div><div class="ttdoc">Extract the filename from a full path.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00028">Filesystem.cpp:28</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_ad2518903d0f32057af18b0409be168e9"><div class="ttname"><a href="namespaceduin_1_1fs.html#ad2518903d0f32057af18b0409be168e9">duin::fs::GetFileName</a></div><div class="ttdeci">std::string GetFileName(const std::string &amp;path)</div><div class="ttdoc">Extract the filename from a full path.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00033">Filesystem.cpp:33</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00028">28</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00033">33</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5c086c59aaffca3624ac35a1cc103944" name="a5c086c59aaffca3624ac35a1cc103944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c086c59aaffca3624ac35a1cc103944">&#9670;&#160;</a></span>GetPathInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::fs::GetPathInfo </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structduin_1_1fs_1_1PathInfo.html">PathInfo</a> *&#160;</td>
+          <td class="paramname"><em>info</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get information about a filesystem path. </p>
+<p>Retrieves the type, size, and timestamps for the specified path.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The filesystem path to query </td></tr>
+    <tr><td class="paramname">info</td><td>Pointer to FsPathInfo struct to fill with results </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true on success, false on error</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Uses SDL_GetPathInfo internally</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://wiki.libsdl.org/SDL3/SDL_GetPathInfo">https://wiki.libsdl.org/SDL3/SDL_GetPathInfo</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00243">243</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -798,9 +971,64 @@ The path is guaranteed to be writable by the user</dd></dl>
 <a class="el" href="namespaceduin_1_1fs.html#ab850f1508d5e66f30104b06ae772d064" title="Set global organization and application names for virtual path resolution.">SetPrefPath()</a></dd></dl>
 <p>Example: </p><div class="fragment"><div class="line">std::string prefPath = <a class="code hl_function" href="namespaceduin_1_1fs.html#a66aa2c0cbab3dfa4bf220b1d8d6282fb">duin::fs::GetPrefPath</a>(<span class="stringliteral">&quot;MyCompany&quot;</span>, <span class="stringliteral">&quot;MyGame&quot;</span>);</div>
 <div class="line">std::string savePath = prefPath + <span class="stringliteral">&quot;savegame.dat&quot;</span>;</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a66aa2c0cbab3dfa4bf220b1d8d6282fb"><div class="ttname"><a href="namespaceduin_1_1fs.html#a66aa2c0cbab3dfa4bf220b1d8d6282fb">duin::fs::GetPrefPath</a></div><div class="ttdeci">std::string GetPrefPath(const std::string &amp;org, const std::string &amp;app)</div><div class="ttdoc">Get the user's preference/settings directory for the application.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00099">Filesystem.cpp:99</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a66aa2c0cbab3dfa4bf220b1d8d6282fb"><div class="ttname"><a href="namespaceduin_1_1fs.html#a66aa2c0cbab3dfa4bf220b1d8d6282fb">duin::fs::GetPrefPath</a></div><div class="ttdeci">std::string GetPrefPath(const std::string &amp;org, const std::string &amp;app)</div><div class="ttdoc">Get the user's preference/settings directory for the application.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00112">Filesystem.cpp:112</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00099">99</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00112">112</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa6827161529f3cb7858f0e07756ad761" name="aa6827161529f3cb7858f0e07756ad761"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6827161529f3cb7858f0e07756ad761">&#9670;&#160;</a></span>GetUserFolder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string duin::fs::GetUserFolder </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceduin_1_1fs.html#ac558df3c8d4e281423e95fe3a2706b77">UserFolder</a>&#160;</td>
+          <td class="paramname"><em>folder</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the path to a well-known user folder. </p>
+<p>Returns the platform-specific path for standard user folders such as Documents, Downloads, Desktop, etc.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">folder</td><td>The user folder type to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The folder path with a trailing slash, or INVALID_PATH on error</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Uses SDL_GetUserFolder internally</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://wiki.libsdl.org/SDL3/SDL_GetUserFolder">https://wiki.libsdl.org/SDL3/SDL_GetUserFolder</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00264">264</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8c0989ddb540e1d7942577051cf040d6" name="a8c0989ddb540e1d7942577051cf040d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c0989ddb540e1d7942577051cf040d6">&#9670;&#160;</a></span>GetWorkspacePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string duin::fs::GetWorkspacePath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current workspace path. </p>
+<dl class="section return"><dt>Returns</dt><dd>The stored workspace path, or INVALID_PATH if not set</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#a47a9e3d6a1fd88211f84d33f5ab81d66" title="Set the workspace path for wrk:// virtual path resolution.">SetWorkspacePath()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00288">288</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -879,9 +1107,9 @@ Thread-safe</dd></dl>
 <div class="line">    }</div>
 <div class="line">    SDL_free(results);</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a5da0e36c95e9ec24c41d77ee3c975586"><div class="ttname"><a href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586">duin::fs::GlobDirectory</a></div><div class="ttdeci">char ** GlobDirectory(const std::string &amp;path, const std::string &amp;pattern, GlobFlags flags, int *count)</div><div class="ttdoc">Search for files matching a pattern in a directory tree.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00189">Filesystem.cpp:189</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a5da0e36c95e9ec24c41d77ee3c975586"><div class="ttname"><a href="namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586">duin::fs::GlobDirectory</a></div><div class="ttdeci">char ** GlobDirectory(const std::string &amp;path, const std::string &amp;pattern, GlobFlags flags, int *count)</div><div class="ttdoc">Search for files matching a pattern in a directory tree.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00226">Filesystem.cpp:226</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00189">189</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00226">226</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -917,9 +1145,9 @@ Only exact matches to INVALID_PATH return true</dd></dl>
 <div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="namespaceduin_1_1fs.html#af0a7c673b411e7583d3e377a67f42b61">duin::fs::IsPathInvalid</a>(path)) {</div>
 <div class="line">    <span class="comment">// Handle error - path extraction failed</span></div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_af0a7c673b411e7583d3e377a67f42b61"><div class="ttname"><a href="namespaceduin_1_1fs.html#af0a7c673b411e7583d3e377a67f42b61">duin::fs::IsPathInvalid</a></div><div class="ttdeci">bool IsPathInvalid(const std::string &amp;path)</div><div class="ttdoc">Check if a path string represents an invalid/error state.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00136">Filesystem.cpp:136</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_af0a7c673b411e7583d3e377a67f42b61"><div class="ttname"><a href="namespaceduin_1_1fs.html#af0a7c673b411e7583d3e377a67f42b61">duin::fs::IsPathInvalid</a></div><div class="ttdeci">bool IsPathInvalid(const std::string &amp;path)</div><div class="ttdoc">Check if a path string represents an invalid/error state.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00151">Filesystem.cpp:151</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00136">136</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00151">151</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -944,7 +1172,8 @@ Only exact matches to INVALID_PATH return true</dd></dl>
 <p>Supported virtual path prefixes:</p><ul>
 <li><b>bin://</b> - Maps to the application's base directory (executable location)</li>
 <li><b>app://</b> - Maps to the application's user data directory (requires SetPrefPath)</li>
-<li><b>usr://</b> - Maps to the user's folder (NOT YET IMPLEMENTED - returns INVALID_PATH)</li>
+<li><b>usr://</b> - Maps to the user's home folder (via GetUserFolder)</li>
+<li><b>wrk://</b> - Maps to a custom workspace directory (requires SetWorkspacePath)</li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -958,8 +1187,6 @@ Only exact matches to INVALID_PATH return true</dd></dl>
 For "app://", you must call <a class="el" href="namespaceduin_1_1fs.html#ab850f1508d5e66f30104b06ae772d064" title="Set global organization and application names for virtual path resolution.">SetPrefPath()</a> first to set org/app names </dd>
 <dd>
 If <a class="el" href="namespaceduin_1_1fs.html#ab850f1508d5e66f30104b06ae772d064" title="Set global organization and application names for virtual path resolution.">SetPrefPath()</a> wasn't called, "app://" paths will fail (GetPrefPath returns INVALID_PATH) </dd>
-<dd>
-Returns INVALID_PATH for "usr://" (not yet implemented) </dd>
 <dd>
 Returns INVALID_PATH if path is shorter than minimum length </dd>
 <dd>
@@ -990,13 +1217,19 @@ If the virtual prefix doesn't match any known prefix, returns INVALID_PATH</dd><
 <div class="line">std::string invalid2 = <a class="code hl_function" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a>(<span class="stringliteral">&quot;xyz://file.txt&quot;</span>);</div>
 <div class="line"><span class="comment">// invalid2 = INVALID_PATH</span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Not yet implemented</span></div>
-<div class="line">std::string notImpl = <a class="code hl_function" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a>(<span class="stringliteral">&quot;usr://documents/file.txt&quot;</span>);</div>
-<div class="line"><span class="comment">// notImpl = INVALID_PATH</span></div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a17fd6691c1dc6c88412a73e29cd0f12c"><div class="ttname"><a href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a></div><div class="ttdeci">std::string MapVirtualToSystemPath(const std::string &amp;path)</div><div class="ttdoc">Map a virtual path to an absolute system path.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00153">Filesystem.cpp:153</a></div></div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_ab850f1508d5e66f30104b06ae772d064"><div class="ttname"><a href="namespaceduin_1_1fs.html#ab850f1508d5e66f30104b06ae772d064">duin::fs::SetPrefPath</a></div><div class="ttdeci">bool SetPrefPath(const std::string &amp;org, const std::string &amp;app)</div><div class="ttdoc">Set global organization and application names for virtual path resolution.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00110">Filesystem.cpp:110</a></div></div>
+<div class="line"><span class="comment">// Map usr:// to user home directory</span></div>
+<div class="line">std::string homePath = <a class="code hl_function" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a>(<span class="stringliteral">&quot;usr://documents/file.txt&quot;</span>);</div>
+<div class="line"><span class="comment">// homePath = &quot;C:/Users/Name/documents/file.txt&quot; (on Windows)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Map wrk:// to workspace directory (requires SetWorkspacePath)</span></div>
+<div class="line"><a class="code hl_function" href="namespaceduin_1_1fs.html#a47a9e3d6a1fd88211f84d33f5ab81d66">duin::fs::SetWorkspacePath</a>(<span class="stringliteral">&quot;C:/Projects/MyProject&quot;</span>);</div>
+<div class="line">std::string wrkPath = <a class="code hl_function" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a>(<span class="stringliteral">&quot;wrk://assets/texture.png&quot;</span>);</div>
+<div class="line"><span class="comment">// wrkPath = &quot;C:/Projects/MyProject/assets/texture.png&quot;</span></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a17fd6691c1dc6c88412a73e29cd0f12c"><div class="ttname"><a href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a></div><div class="ttdeci">std::string MapVirtualToSystemPath(const std::string &amp;path)</div><div class="ttdoc">Map a virtual path to an absolute system path.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00168">Filesystem.cpp:168</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a47a9e3d6a1fd88211f84d33f5ab81d66"><div class="ttname"><a href="namespaceduin_1_1fs.html#a47a9e3d6a1fd88211f84d33f5ab81d66">duin::fs::SetWorkspacePath</a></div><div class="ttdeci">bool SetWorkspacePath(const std::string &amp;path)</div><div class="ttdoc">Set the workspace path for wrk:// virtual path resolution.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00272">Filesystem.cpp:272</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_ab850f1508d5e66f30104b06ae772d064"><div class="ttname"><a href="namespaceduin_1_1fs.html#ab850f1508d5e66f30104b06ae772d064">duin::fs::SetPrefPath</a></div><div class="ttdeci">bool SetPrefPath(const std::string &amp;org, const std::string &amp;app)</div><div class="ttdoc">Set global organization and application names for virtual path resolution.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00123">Filesystem.cpp:123</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00153">153</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00168">168</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -1039,9 +1272,9 @@ Use with caution - removed files cannot be recovered</dd></dl>
 <div class="line"><span class="keywordflow">if</span> (success) {</div>
 <div class="line">    <span class="comment">// Directory and all contents removed</span></div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a926a05ceadabd252b36ef1e9ec636ff2"><div class="ttname"><a href="namespaceduin_1_1fs.html#a926a05ceadabd252b36ef1e9ec636ff2">duin::fs::RemovePath</a></div><div class="ttdeci">bool RemovePath(const std::string &amp;path)</div><div class="ttdoc">Remove a file or directory.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00120">Filesystem.cpp:120</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a926a05ceadabd252b36ef1e9ec636ff2"><div class="ttname"><a href="namespaceduin_1_1fs.html#a926a05ceadabd252b36ef1e9ec636ff2">duin::fs::RemovePath</a></div><div class="ttdeci">bool RemovePath(const std::string &amp;path)</div><div class="ttdoc">Remove a file or directory.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00133">Filesystem.cpp:133</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00120">120</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00133">133</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -1099,9 +1332,9 @@ Atomic operation on most platforms</dd></dl>
 <div class="line"><span class="keywordflow">if</span> (success) {</div>
 <div class="line">    <span class="comment">// File renamed successfully</span></div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceduin_1_1fs_html_a96dee00fab2e90a1c516607d6295dc17"><div class="ttname"><a href="namespaceduin_1_1fs.html#a96dee00fab2e90a1c516607d6295dc17">duin::fs::RenamePath</a></div><div class="ttdeci">bool RenamePath(const std::string &amp;oldPath, const std::string &amp;newPath)</div><div class="ttdoc">Rename or move a file or directory.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00128">Filesystem.cpp:128</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1fs_html_a96dee00fab2e90a1c516607d6295dc17"><div class="ttname"><a href="namespaceduin_1_1fs.html#a96dee00fab2e90a1c516607d6295dc17">duin::fs::RenamePath</a></div><div class="ttdeci">bool RenamePath(const std::string &amp;oldPath, const std::string &amp;newPath)</div><div class="ttdoc">Rename or move a file or directory.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00141">Filesystem.cpp:141</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00128">128</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00141">141</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>
@@ -1158,7 +1391,40 @@ Thread safety: Not thread-safe - set before multi-threaded operation begins</dd>
 <div class="line">std::string sysPath = <a class="code hl_function" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a>(<span class="stringliteral">&quot;app://settings.json&quot;</span>);</div>
 <div class="line"><span class="comment">// sysPath = &quot;/home/user/.local/share/MyCompany/MyGame/settings.json&quot; (on Linux)</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00110">110</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00123">123</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a47a9e3d6a1fd88211f84d33f5ab81d66" name="a47a9e3d6a1fd88211f84d33f5ab81d66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47a9e3d6a1fd88211f84d33f5ab81d66">&#9670;&#160;</a></span>SetWorkspacePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::fs::SetWorkspacePath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the workspace path for wrk:// virtual path resolution. </p>
+<p>Stores a workspace directory path used by <a class="el" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c" title="Map a virtual path to an absolute system path.">MapVirtualToSystemPath()</a> when resolving "wrk://" virtual paths. Useful for editors and tools that need a custom working directory.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The workspace directory path </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true on success, false if path is empty</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceduin_1_1fs.html#a8c0989ddb540e1d7942577051cf040d6" title="Get the current workspace path.">GetWorkspacePath()</a> </dd>
+<dd>
+<a class="el" href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c" title="Map a virtual path to an absolute system path.">MapVirtualToSystemPath()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Filesystem_8cpp_source.html#l00272">272</a> of file <a class="el" href="Filesystem_8cpp_source.html">Filesystem.cpp</a>.</p>
 
 </div>
 </div>

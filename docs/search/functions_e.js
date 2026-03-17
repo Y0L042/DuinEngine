@@ -1,20 +1,15 @@
 var searchData=
 [
-  ['packedabgr_0',['PackedABGR',['../structduin_1_1Color.html#a577160c0c964f954e42d38bc0ed986ae',1,'duin::Color']]],
-  ['parse_1',['Parse',['../classduin_1_1JSONValue.html#a22303fd30f552de6048c4e305a17d219',1,'duin::JSONValue']]],
-  ['parsefromfile_2',['ParseFromFile',['../classduin_1_1JSONValue.html#ae7cdfb230e9ae2084d73e85111dca848',1,'duin::JSONValue']]],
-  ['physicsmaterial_3',['PhysicsMaterial',['../classduin_1_1PhysicsMaterial.html#a2fc17281db639a204072980163e11c92',1,'duin::PhysicsMaterial']]],
-  ['physicsupdate_4',['PhysicsUpdate',['../classduin_1_1Application.html#a28b881c1330c89e598136a631a12536a',1,'duin::Application']]],
-  ['pollevent_5',['PollEvent',['../classduin_1_1EventHandler.html#af0ecef1acd99e47738883008f48c028c',1,'duin::EventHandler']]],
-  ['popstate_6',['PopState',['../classduin_1_1GameStateMachine.html#a045b22b2414f922bf8c4aa148986d5fa',1,'duin::GameStateMachine']]],
-  ['postdrawqueryexecution_7',['PostDrawQueryExecution',['../classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313',1,'duin::GameWorld']]],
-  ['postdrawuiqueryexecution_8',['PostDrawUIQueryExecution',['../classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee',1,'duin::GameWorld']]],
-  ['postphysicsupdatequeryexecution_9',['PostPhysicsUpdateQueryExecution',['../classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601',1,'duin::GameWorld']]],
-  ['postupdatequeryexecution_10',['PostUpdateQueryExecution',['../classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427',1,'duin::GameWorld']]],
-  ['prefab_11',['Prefab',['../classduin_1_1World.html#aee4fe3e09d24eb8aba0f936e9531286f',1,'duin::World']]],
-  ['processsdlkeyboardevent_12',['ProcessSDLKeyboardEvent',['../namespaceduin_1_1Input.html#a161ffb71e8fc5f3aa18fbafeb61a7889',1,'duin::Input']]],
-  ['processsdlmouseevent_13',['ProcessSDLMouseEvent',['../namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6',1,'duin::Input']]],
-  ['progress_14',['Progress',['../classduin_1_1World.html#a2b14f69e148eb0439f583e75b1e57631',1,'duin::World']]],
-  ['pushback_15',['pushback',['../classduin_1_1JSONValue.html#a2be6fdf390283212840511d8d877a62d',1,'duin::JSONValue::PushBack(JSONValue dv)'],['../classduin_1_1JSONValue.html#a10016989d8c7c13219951cdb869c8e1a',1,'duin::JSONValue::PushBack(T val)']]],
-  ['pushstate_16',['PushState',['../classduin_1_1GameStateMachine.html#aa2ed1c9402257e1646ee7775a0d3686c',1,'duin::GameStateMachine']]]
+  ['onevent_0',['OnEvent',['../classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c',1,'duin::Application']]],
+  ['oninputactiontriggered_1',['OnInputActionTriggered',['../InputActions_8h.html#ada37d50b857c7da8147fc6392c31a94d',1,'duin']]],
+  ['open_2',['Open',['../classduin_1_1io_1_1IOStream.html#ac6c573ea4e9d7a0f3d093db124becb72',1,'duin::io::IOStream']]],
+  ['operator_20bool_3',['operator bool',['../classduin_1_1Entity.html#a11a3f5903cbbc56d67ed4f2e29aacd7f',1,'duin::Entity']]],
+  ['operator_20flecs_3a_3aid_5ft_4',['id_t',['../structduin_1_1Entity_1_1ID.html#a9d88790749ce72f67f6da4e5a5f3d2b3',1,'duin::Entity::ID']]],
+  ['operator_20uint64_5ft_5',['operator uint64_t',['../classduin_1_1UUID.html#a318030f33f00457480df84cea31612a1',1,'duin::UUID']]],
+  ['operator_21_3d_6',['operator!=',['../classduin_1_1JSONValue_1_1DataIterator.html#a6908baa9012cecd81b92519ad3f9da7b',1,'duin::JSONValue::DataIterator::operator!=()'],['../classduin_1_1UUID.html#afea88e3126226b85c1815cd3537d8237',1,'duin::UUID::operator!=()'],['../classduin_1_1JSONValue.html#a3c71cae2f289dc6fefa5a3aef9bb5b60',1,'duin::JSONValue::operator!=()'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html#a46b3450d34657d82bdfe761a73e2d8f1',1,'duin::JSONValue::ConstDataIterator::operator!=()'],['../classduin_1_1Entity.html#a94d73e470447aa6983129902a2aa271a',1,'duin::Entity::operator!=()']]],
+  ['operator_2a_7',['operator*',['../classduin_1_1JSONValue_1_1DataIterator.html#a086f181837975a13a70ce119c0f514c3',1,'duin::JSONValue::DataIterator::operator*()'],['../classduin_1_1JSONValue.html#a0f39c85521049f85225e4b1859567927',1,'duin::JSONValue::operator*()'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html#a8de4979916593cad9632e0d690ab1590',1,'duin::JSONValue::ConstDataIterator::operator*()']]],
+  ['operator_2b_2b_8',['operator++',['../classduin_1_1JSONValue_1_1DataIterator.html#a00ebda3b5af01dc3c46a0cd9a20de8a9',1,'duin::JSONValue::DataIterator::operator++()'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html#a83c3d716cdaa19169e75e9733694e8ff',1,'duin::JSONValue::ConstDataIterator::operator++()']]],
+  ['operator_3d_9',['operator=',['../classduin_1_1Entity.html#a0c7b0ded6fdc2ed341df1d34f163d31c',1,'duin::Entity::operator=(const Entity &amp;other)'],['../classduin_1_1Entity.html#a98e9b92eb17ace2752c12af656369cfe',1,'duin::Entity::operator=(Entity &amp;&amp;other) noexcept'],['../classduin_1_1io_1_1IOStream.html#a5a2da1aecd85338cdf11cb94a01ed704',1,'duin::io::IOStream::operator=()']]],
+  ['operator_3d_3d_10',['operator==',['../classduin_1_1UUID.html#aa107cb8beae590069534753e559d5074',1,'duin::UUID::operator==()'],['../classduin_1_1Entity.html#a42d7275f30e0f8563e65f2f306ac5c29',1,'duin::Entity::operator==()'],['../classduin_1_1JSONValue_1_1DataIterator.html#a71709999009b3c335dfa89e01542e276',1,'duin::JSONValue::DataIterator::operator==()'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html#a86d9101fb52db998aae3b9d949eb8756',1,'duin::JSONValue::ConstDataIterator::operator==()'],['../classduin_1_1JSONValue.html#a23c6e2a093a3ffd16a5adcf78972cb26',1,'duin::JSONValue::operator==(const JSONValue &amp;other) const']]],
+  ['operator_5b_5d_11',['operator[]',['../classduin_1_1JSONValue.html#af42cf40a8d470ea3ba646f7f862370fa',1,'duin::JSONValue::operator[](const std::string &amp;member)'],['../classduin_1_1JSONValue.html#a1962f58ca1e76aaf35687a345656d893',1,'duin::JSONValue::operator[](int idx)']]]
 ];

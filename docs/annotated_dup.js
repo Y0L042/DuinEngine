@@ -36,11 +36,18 @@ var annotated_dup =
         [ "SetCameraAsActive", "structduin_1_1ECSTag_1_1SetCameraAsActive.html", null ]
       ] ],
       [ "fs", "namespaceduin_1_1fs.html", [
-        [ "DirCallbackWrapper", "structduin_1_1fs_1_1DirCallbackWrapper.html", "structduin_1_1fs_1_1DirCallbackWrapper" ]
+        [ "DirCallbackWrapper", "structduin_1_1fs_1_1DirCallbackWrapper.html", "structduin_1_1fs_1_1DirCallbackWrapper" ],
+        [ "PathInfo", "structduin_1_1fs_1_1PathInfo.html", "structduin_1_1fs_1_1PathInfo" ]
+      ] ],
+      [ "io", null, [
+        [ "IOStream", "classduin_1_1io_1_1IOStream.html", "classduin_1_1io_1_1IOStream" ]
       ] ],
       [ "Application", "classduin_1_1Application.html", "classduin_1_1Application" ],
       [ "Area", "classduin_1_1Area.html", null ],
+      [ "Asset", "structduin_1_1Asset.html", null ],
+      [ "AssetIndex", "classduin_1_1AssetIndex.html", "classduin_1_1AssetIndex" ],
       [ "AssetManager", "classduin_1_1AssetManager.html", null ],
+      [ "AssetRef", "structduin_1_1AssetRef.html", null ],
       [ "BGFXBufferHandle", "structduin_1_1BGFXBufferHandle.html", null ],
       [ "BoxGeometry", "classduin_1_1BoxGeometry.html", null ],
       [ "BoxRenderGeometry", "structduin_1_1BoxRenderGeometry.html", null ],
@@ -70,6 +77,7 @@ var annotated_dup =
       [ "Event", "classduin_1_1Event.html", "classduin_1_1Event" ],
       [ "EventHandler", "classduin_1_1EventHandler.html", "classduin_1_1EventHandler" ],
       [ "ExternalSceneDependency", "classduin_1_1ExternalSceneDependency.html", null ],
+      [ "FileExtension", "structduin_1_1FileExtension.html", null ],
       [ "FileUtils", "classduin_1_1FileUtils.html", null ],
       [ "float16", "structduin_1_1float16.html", null ],
       [ "float3", "structduin_1_1float3.html", null ],
@@ -95,10 +103,10 @@ var annotated_dup =
       [ "ObjectManager", "classduin_1_1ObjectManager.html", null ],
       [ "PackedComponent", "structduin_1_1PackedComponent.html", null ],
       [ "PackedEntity", "structduin_1_1PackedEntity.html", "structduin_1_1PackedEntity" ],
-      [ "PackedExternalDependency", "structduin_1_1PackedExternalDependency.html", "structduin_1_1PackedExternalDependency" ],
       [ "PackedPair", "structduin_1_1PackedPair.html", "structduin_1_1PackedPair" ],
       [ "PackedScene", "structduin_1_1PackedScene.html", "structduin_1_1PackedScene" ],
       [ "PackedSceneMetadata", "structduin_1_1PackedSceneMetadata.html", "structduin_1_1PackedSceneMetadata" ],
+      [ "PathInfo", "structduin_1_1PathInfo.html", null ],
       [ "PhysicsMaterial", "classduin_1_1PhysicsMaterial.html", "classduin_1_1PhysicsMaterial" ],
       [ "PhysicsObject", "classduin_1_1PhysicsObject.html", null ],
       [ "PhysicsServer", "classduin_1_1PhysicsServer.html", "classduin_1_1PhysicsServer" ],
@@ -332,6 +340,7 @@ var annotated_dup =
     [ "ImVector", "structImVector.html", null ],
     [ "InputVector2DKeys", "structInputVector2DKeys.html", null ],
     [ "MyDocument", "structMyDocument.html", null ],
+    [ "PackedExternalDependency", "structPackedExternalDependency.html", null ],
     [ "Program", "structProgram.html", null ],
     [ "RENDERDOC_API_1_6_0", "structRENDERDOC__API__1__6__0.html", null ],
     [ "SM_Machine", "structSM__Machine.html", null ],

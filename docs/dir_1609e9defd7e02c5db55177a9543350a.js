@@ -1,5 +1,7 @@
 var dir_1609e9defd7e02c5db55177a9543350a =
 [
+    [ "AsyncIOStream.cpp", "AsyncIOStream_8cpp_source.html", null ],
+    [ "AsyncIOStream.h", "AsyncIOStream_8h_source.html", null ],
     [ "ConfigValue.cpp", "ConfigValue_8cpp_source.html", null ],
     [ "ConfigValue.h", "ConfigValue_8h_source.html", null ],
     [ "DuinIO.cpp", "DuinIO_8cpp_source.html", null ],
@@ -9,8 +11,14 @@ var dir_1609e9defd7e02c5db55177a9543350a =
     [ "FileUtils.cpp", "FileUtils_8cpp_source.html", null ],
     [ "FileUtils.h", "FileUtils_8h_source.html", null ],
     [ "IOModule.h", "IOModule_8h_source.html", null ],
+    [ "IOStream.cpp", "IOStream_8cpp.html", null ],
+    [ "IOStream.h", "IOStream_8h.html", "IOStream_8h" ],
     [ "src/Duin/IO/JSONValue.cpp", "src_2Duin_2IO_2JSONValue_8cpp_source.html", null ],
     [ "JSONValue.h", "JSONValue_8h.html", "JSONValue_8h" ],
     [ "Serializer.cpp", "Serializer_8cpp_source.html", null ],
-    [ "Serializer.h", "Serializer_8h_source.html", null ]
+    [ "Serializer.h", "Serializer_8h_source.html", null ],
+    [ "VirtualFilesystem.cpp", "VirtualFilesystem_8cpp_source.html", null ],
+    [ "VirtualFilesystem.h", "VirtualFilesystem_8h_source.html", null ],
+    [ "VirtualIOStream.cpp", "VirtualIOStream_8cpp_source.html", null ],
+    [ "VirtualIOStream.h", "VirtualIOStream_8h.html", null ]
 ];

@@ -21,9 +21,10 @@ var searchData=
   ['modified_18',['Modified',['../classduin_1_1Entity.html#a00463119307148a5b112b70bc5fe613f',1,'duin::Entity']]],
   ['modifier_19',['modifier',['../structduin_1_1InputBinding.html#ae7ef00cc17ea50e7ce3fa18d484bf9d6',1,'duin::InputBinding']]],
   ['modify_20',['Modify',['../classduin_1_1Entity.html#a2b7d06a01da8d41dd5f077a9c6ab4e04',1,'duin::Entity']]],
-  ['module_21',['module',['../group__Assets.html',1,'Assets Module'],['../group__Core.html',1,'Core Module'],['../group__IO.html',1,'Input/Output Module'],['../group__Objects.html',1,'Objects Module'],['../group__Physics.html',1,'Physics Module'],['../group__Render.html',1,'Render Module']]],
-  ['modules_22',['Modules',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#modules',1,'']]],
-  ['modules_2edox_23',['modules.dox',['../modules_8dox.html',1,'']]],
-  ['movement_24',['Camera Movement',['../md_docs_2RenderingPipeline.html#autotoc_md22',1,'']]],
-  ['mydocument_25',['MyDocument',['../structMyDocument.html',1,'']]]
+  ['modifytime_21',['modifyTime',['../structduin_1_1fs_1_1PathInfo.html#a6242883e6c2cec8285c9fe2e31e26a2d',1,'duin::fs::PathInfo']]],
+  ['module_22',['module',['../group__Assets.html',1,'Assets Module'],['../group__Core.html',1,'Core Module'],['../group__IO.html',1,'Input/Output Module'],['../group__Objects.html',1,'Objects Module'],['../group__Physics.html',1,'Physics Module'],['../group__Render.html',1,'Render Module']]],
+  ['modules_23',['Modules',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#modules',1,'']]],
+  ['modules_2edox_24',['modules.dox',['../modules_8dox.html',1,'']]],
+  ['movement_25',['Camera Movement',['../md_docs_2RenderingPipeline.html#autotoc_md22',1,'']]],
+  ['mydocument_26',['MyDocument',['../structMyDocument.html',1,'']]]
 ];
