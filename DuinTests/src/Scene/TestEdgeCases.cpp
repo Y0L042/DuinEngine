@@ -42,7 +42,6 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
 
         CHECK(scene.uuid == duin::UUID::FromStringHex("def456abc789"));
         CHECK(scene.name == "NoDepsScene");
-        CHECK(scene.externalDependencies.empty());
     }
 
     TEST_CASE("Missing optional fields")
@@ -59,7 +58,6 @@ TEST_SUITE("SceneBuilder - Edge Cases & Validation")
         CHECK(scene.uuid == duin::UUID::FromStringHex("aabbccdd11223344"));
         CHECK(scene.name == "MinimalScene");
         CHECK(scene.entities.empty());
-        CHECK(scene.externalDependencies.empty());
         CHECK(scene.metadata.editorVersion.empty());
         CHECK(scene.metadata.engineVersion.empty());
         CHECK(scene.metadata.lastModified.empty());

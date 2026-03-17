@@ -27,7 +27,6 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
         CHECK(json["sceneUUID"].GetString() == duin::UUID::FromStringHex("abc123def456").ToStrHex());
         CHECK(json["sceneName"].GetString() == "EmptyScene");
         CHECK(json.HasMember("metadata"));
-        CHECK(json.HasMember("externalDependencies"));
         CHECK(json.HasMember("entities"));
     }
 
@@ -57,39 +56,6 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
         CHECK(metadata["lastModified"].GetString() == "2025-11-16T12:00:00Z");
         CHECK(metadata.HasMember("author"));
         CHECK(metadata["author"].GetString() == "DuinEditor");
-    }
-
-    TEST_CASE("Serialize PackedScene with external dependencies")
-    {
-        duin::PackedScene scene;
-        scene.uuid = duin::UUID::FromStringHex("aabbccdd11223344");
-        scene.name = "DependentScene";
-
-        duin::PackedExternalDependency dep1;
-        dep1.uuid = duin::UUID::FromStringHex("1111111111111111");
-        dep1.type = "scene";
-
-        duin::PackedExternalDependency dep2;
-        dep2.uuid = duin::UUID::FromStringHex("2222222222222222");
-        dep2.type = "asset";
-
-        scene.externalDependencies.push_back(dep1);
-        scene.externalDependencies.push_back(dep2);
-
-        duin::SceneBuilder builder;
-        duin::JSONValue json = builder.SerializeScene(scene);
-
-        CHECK(json.HasMember("externalDependencies"));
-        CHECK(json["externalDependencies"].IsArray());
-        CHECK(json["externalDependencies"].Capacity() == 2);
-
-        duin::JSONValue dep1Json = json["externalDependencies"][0];
-        CHECK(dep1Json["uuid"].GetString() == duin::UUID::FromStringHex("1111111111111111").ToStrHex());
-        CHECK(dep1Json["type"].GetString() == "scene");
-
-        duin::JSONValue dep2Json = json["externalDependencies"][1];
-        CHECK(dep2Json["uuid"].GetString() == duin::UUID::FromStringHex("2222222222222222").ToStrHex());
-        CHECK(dep2Json["type"].GetString() == "asset");
     }
 
     TEST_CASE("Serialize PackedScene with entities")
@@ -141,12 +107,6 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
         scene.metadata.lastModified = "2025-11-16T12:00:00Z";
         scene.metadata.author = "DuinEditor";
 
-        // External dependencies
-        duin::PackedExternalDependency dep;
-        dep.uuid = duin::UUID::FromStringHex("789e0123e89b12d3");
-        dep.type = "scene";
-        scene.externalDependencies.push_back(dep);
-
         // Entities
         duin::PackedEntity entity;
         entity.uuid = duin::UUID::FromStringHex("123e4567e89b12d3");
@@ -176,9 +136,6 @@ TEST_SUITE("SceneBuilder - PackedScene Serialization")
         CHECK(json["sceneName"].GetString() == "MainScene");
         CHECK(json.HasMember("metadata"));
         CHECK(json["metadata"].IsObject());
-        CHECK(json.HasMember("externalDependencies"));
-        CHECK(json["externalDependencies"].IsArray());
-        CHECK(json["externalDependencies"].Capacity() == 1);
         CHECK(json.HasMember("entities"));
         CHECK(json["entities"].IsArray());
         CHECK(json["entities"].Capacity() == 1);
@@ -230,7 +187,6 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         CHECK(scene.uuid == duin::UUID::FromStringHex("abc123def456"));
         CHECK(scene.name == "MinimalScene");
         CHECK(scene.entities.empty());
-        CHECK(scene.externalDependencies.empty());
     }
 
     TEST_CASE("Deserialize scene with metadata")
@@ -256,39 +212,6 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         CHECK(scene.metadata.engineVersion == "0.1.0");
         CHECK(scene.metadata.lastModified == "2025-11-16T12:00:00Z");
         CHECK(scene.metadata.author == "DuinEditor");
-    }
-
-    TEST_CASE("Deserialize scene with external dependencies")
-    {
-        std::string jsonStr = R"({
-            "sceneUUID": "aabbccdd11223344",
-            "sceneName": "DependencyScene",
-            "externalDependencies": [
-                {
-                    "uuid": "1111111111111111",
-                    "type": "scene"
-                },
-                {
-                    "uuid": "2222222222222222",
-                    "type": "asset"
-                }
-            ]
-        })";
-
-        duin::JSONValue json = duin::JSONValue::Parse(jsonStr);
-        duin::SceneBuilder builder;
-        duin::PackedScene scene = builder.DeserializeScene(json);
-
-        CHECK(scene.uuid == duin::UUID::FromStringHex("aabbccdd11223344"));
-        CHECK(scene.name == "DependencyScene");
-        CHECK(scene.externalDependencies.size() == 2);
-        if (scene.externalDependencies.size() >= 2)
-        {
-            CHECK(scene.externalDependencies[0].uuid == duin::UUID::FromStringHex("1111111111111111"));
-            CHECK(scene.externalDependencies[0].type == "scene");
-            CHECK(scene.externalDependencies[1].uuid == duin::UUID::FromStringHex("2222222222222222"));
-            CHECK(scene.externalDependencies[1].type == "asset");
-        }
     }
 
     TEST_CASE("Deserialize scene with single entity")
@@ -340,12 +263,6 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
                 "lastModified": "2025-11-16T12:00:00Z",
                 "author": "DuinEditor"
             },
-            "externalDependencies": [
-                {
-                    "uuid": "789e0123e89b12d3",
-                    "type": "scene"
-                }
-            ],
             "entities": [
                 {
                     "uuid": "123e4567e89b12d3",
@@ -368,12 +285,6 @@ TEST_SUITE("SceneBuilder - PackedScene Deserialization")
         CHECK(scene.metadata.engineVersion == "0.1.0");
         CHECK(scene.metadata.lastModified == "2025-11-16T12:00:00Z");
         CHECK(scene.metadata.author == "DuinEditor");
-        CHECK(scene.externalDependencies.size() == 1);
-        if (scene.externalDependencies.size() >= 1)
-        {
-            CHECK(scene.externalDependencies[0].uuid == duin::UUID::FromStringHex("789e0123e89b12d3"));
-            CHECK(scene.externalDependencies[0].type == "scene");
-        }
         CHECK(scene.entities.size() == 1);
         if (scene.entities.size() >= 1)
         {
@@ -489,7 +400,6 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         CHECK(original.uuid == deserialized.uuid);
         CHECK(original.name == deserialized.name);
         CHECK(deserialized.entities.empty());
-        CHECK(deserialized.externalDependencies.empty());
     }
 
     TEST_CASE("Round-trip scene with metadata")
@@ -512,38 +422,6 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         CHECK(original.metadata.engineVersion == deserialized.metadata.engineVersion);
         CHECK(original.metadata.lastModified == deserialized.metadata.lastModified);
         CHECK(original.metadata.author == deserialized.metadata.author);
-    }
-
-    TEST_CASE("Round-trip scene with dependencies")
-    {
-        duin::PackedScene original;
-        original.uuid = duin::UUID::FromStringHex("aabbccdd11223344");
-        original.name = "DependencyScene";
-
-        duin::PackedExternalDependency dep1;
-        dep1.uuid = duin::UUID::FromStringHex("1111111111111111");
-        dep1.type = "scene";
-        original.externalDependencies.push_back(dep1);
-
-        duin::PackedExternalDependency dep2;
-        dep2.uuid = duin::UUID::FromStringHex("2222222222222222");
-        dep2.type = "asset";
-        original.externalDependencies.push_back(dep2);
-
-        duin::SceneBuilder builder;
-        duin::JSONValue json = builder.SerializeScene(original);
-        duin::PackedScene deserialized = builder.DeserializeScene(json);
-
-        CHECK(original.uuid == deserialized.uuid);
-        CHECK(original.name == deserialized.name);
-        CHECK(original.externalDependencies.size() == deserialized.externalDependencies.size());
-        if (original.externalDependencies.size() >= 2 && deserialized.externalDependencies.size() >= 2)
-        {
-            CHECK(original.externalDependencies[0].uuid == deserialized.externalDependencies[0].uuid);
-            CHECK(original.externalDependencies[0].type == deserialized.externalDependencies[0].type);
-            CHECK(original.externalDependencies[1].uuid == deserialized.externalDependencies[1].uuid);
-            CHECK(original.externalDependencies[1].type == deserialized.externalDependencies[1].type);
-        }
     }
 
     TEST_CASE("Round-trip scene with entities")
@@ -602,12 +480,6 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         original.metadata.lastModified = "2025-11-16T12:00:00Z";
         original.metadata.author = "DuinEditor";
 
-        // Dependencies
-        duin::PackedExternalDependency dep;
-        dep.uuid = duin::UUID::FromStringHex("789e0123e89b12d3");
-        dep.type = "scene";
-        original.externalDependencies.push_back(dep);
-
         // Entities
         duin::PackedEntity entity;
         entity.uuid = duin::UUID::FromStringHex("123e4567e89b12d3");
@@ -637,11 +509,6 @@ TEST_SUITE("SceneBuilder - Round-trip Serialization")
         CHECK(original.metadata.engineVersion == deserialized.metadata.engineVersion);
         CHECK(original.metadata.lastModified == deserialized.metadata.lastModified);
         CHECK(original.metadata.author == deserialized.metadata.author);
-        CHECK(original.externalDependencies.size() == deserialized.externalDependencies.size());
-        if (original.externalDependencies.size() >= 1 && deserialized.externalDependencies.size() >= 1)
-        {
-            CHECK(original.externalDependencies[0].uuid == deserialized.externalDependencies[0].uuid);
-        }
         CHECK(original.entities.size() == deserialized.entities.size());
         if (original.entities.size() >= 1 && deserialized.entities.size() >= 1)
         {

@@ -209,12 +209,6 @@ TEST_SUITE("Full Pipeline: String to Instantiation")
         CHECK(scene1.metadata.engineVersion == scene2.metadata.engineVersion);
         CHECK(scene1.metadata.lastModified == scene2.metadata.lastModified);
         CHECK(scene1.metadata.author == scene2.metadata.author);
-        CHECK(scene1.externalDependencies.size() == scene2.externalDependencies.size());
-        if (scene1.externalDependencies.size() >= 1)
-        {
-            CHECK(scene1.externalDependencies[0].uuid == scene2.externalDependencies[0].uuid);
-            CHECK(scene1.externalDependencies[0].type == scene2.externalDependencies[0].type);
-        }
         CHECK(scene1.entities.size() == scene2.entities.size());
         if (scene1.entities.size() >= 1)
         {
