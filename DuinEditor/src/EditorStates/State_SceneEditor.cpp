@@ -3,6 +3,110 @@
 #include "EditorCommands/SceneTreeCommands.h"
 #include <Duin/Core/Debug/DNLog.h>
 #include <Duin/Core/Events/EventsModule.h>
+#include <Duin/Assets/AssetsModule.h>
+#include <Duin/IO/Filesystem.h>
+#include <Duin/IO/VirtualFilesystem.h>
+#include <Duin/IO/IOStream.h>
+#include <Duin/IO/VirtualIOStream.h>
+#include <rfl/json.hpp>
+#include <Duin/Assets/AssetRef.h>
+
+const std::string DEBUG_data = R"({
+	"version": 2,
+	"refs": [
+		{
+			"uuid": "0xC011E1BE3B65B8CA",
+			"hintPath": "assets/item_11",
+			"fileType": "FS_FILETYPE_AUDIO_EXT",
+			"fileExt": "FS_FILEEXT_JPEG"
+		},
+		{
+			"uuid": "0x2A74A270C25EDC46",
+			"hintPath": "assets/item_5",
+			"fileType": "FS_FILETYPE_TEXT_EXT",
+			"fileExt": "FS_FILEEXT_CFG"
+		},
+		{
+			"uuid": "0xC4C5CDE8D305C517",
+			"hintPath": "assets/item_4",
+			"fileType": "FS_FILETYPE_MODEL_EXT",
+			"fileExt": "FS_FILEEXT_OGG"
+		},
+		{
+			"uuid": "0xB13EBE8D0F09722E",
+			"hintPath": "assets/item_0",
+			"fileType": "FS_FILETYPE_TEXT_EXT",
+			"fileExt": "FS_FILEEXT_WMA"
+		},
+		{
+			"uuid": "0x410800E0962553AF",
+			"hintPath": "assets/item_1",
+			"fileType": "FS_FILETYPE_MODEL_EXT",
+			"fileExt": "FS_FILEEXT_NULL"
+		},
+		{
+			"uuid": "0x179BB5BF1E09AC62",
+			"hintPath": "assets/item_2",
+			"fileType": "FS_FILETYPE_TEXT_EXT",
+			"fileExt": "FS_FILEEXT_MKV"
+		},
+		{
+			"uuid": "0xD35877B4D2AEF162",
+			"hintPath": "assets/item_7",
+			"fileType": "FS_FILETYPE_IMAGE_EXT",
+			"fileExt": "FS_FILEEXT_LUA"
+		},
+		{
+			"uuid": "0x85ABDAB11A7E3E00",
+			"hintPath": "assets/item_6",
+			"fileType": "FS_FILETYPE_IMAGE_EXT",
+			"fileExt": "FS_FILEEXT_MPEG"
+		},
+		{
+			"uuid": "0x4CB1CC044A2101A0",
+			"hintPath": "assets/item_3",
+			"fileType": "FS_FILETYPE_INVALID_EXT",
+			"fileExt": "FS_FILEEXT_TIFF"
+		},
+		{
+			"uuid": "0x97B171270A66798E",
+			"hintPath": "assets/item_12",
+			"fileType": "FS_FILETYPE_MODEL_EXT",
+			"fileExt": "FS_FILEEXT_BLEND"
+		},
+		{
+			"uuid": "0xDD713A66D9FACD91",
+			"hintPath": "assets/item_8",
+			"fileType": "FS_FILETYPE_IMAGE_EXT",
+			"fileExt": "FS_FILEEXT_CSV"
+		},
+		{
+			"uuid": "0x76A853AE110E737B",
+			"hintPath": "assets/item_9",
+			"fileType": "FS_FILETYPE_VIDEO_EXT",
+			"fileExt": "FS_FILEEXT_MB"
+		},
+		{
+			"uuid": "0x89C755F0E398A84B",
+			"hintPath": "assets/item_14",
+			"fileType": "FS_FILETYPE_AUDIO_EXT",
+			"fileExt": "FS_FILEEXT_CFG"
+		},
+		{
+			"uuid": "0xAEDCD136592455C2",
+			"hintPath": "assets/item_10",
+			"fileType": "FS_FILETYPE_VIDEO_EXT",
+			"fileExt": "FS_FILEEXT_BMP"
+		},
+		{
+			"uuid": "0x7D360065E083C08F",
+			"hintPath": "assets/item_13",
+			"fileType": "FS_FILETYPE_VIDEO_EXT",
+			"fileExt": "FS_FILEEXT_AAC"
+		}
+	]
+}
+)";
 
 void State_SceneEditor::Enter()
 {
@@ -11,6 +115,9 @@ void State_SceneEditor::Enter()
     SetupInput();
 
     ProcessProject(Singleton::GetActiveProject());
+    UpdateAssetIndex();
+
+    duin::AssetManager::Get().CatalogueAssets();
 }
 
 void State_SceneEditor::OnEvent(duin::Event e)
@@ -59,6 +166,7 @@ void State_SceneEditor::InitializeManagers()
 
 void State_SceneEditor::ProcessProject(Project project)
 {
+    duin::fs::SetWorkspacePath(project.GetPathAsString());
     fileManager->SetRootPath(project.GetPathAsString());
     fileManager->BuildFileSystemTree();
     signals.onUpdateFileManager.Emit(fileManager);
@@ -201,6 +309,57 @@ void State_SceneEditor::SetupInput()
     duin::AddInputActionBinding("EditorRedo", DN_KEYBOARD_01, DN_SCANCODE_Z, DN_KEVENT_PRESSED,
                                 DN_KEY_MOD_LCTRL | DN_KEY_MOD_LSHIFT);
     duin::AddInputActionBinding("TestA", DN_KEYBOARD_01, DN_SCANCODE_Z, DN_KEVENT_HELD);
+}
+
+void State_SceneEditor::UpdateAssetIndex()
+{
+    std::string idxPath = "wrk://.dncfg/assetIndex.json";
+
+    // Read assetIndex
+    duin::JSONValue v = duin::JSONValue::ParseFromFile(duin::fs::MapVirtualToSystemPath(idxPath));
+    assetIndex.Deserialize(v.Write());
+
+    // stream.Write(DEBUG_data.c_str(), DEBUG_data.size());
+    // stream.Flush();
+    std::vector<std::shared_ptr<FSNode>> assetFiles;
+
+    // Get list of asset files
+    fileManager->WalkTree([&assetFiles](std::shared_ptr<FSNode> node) {
+        if (node->fileExt == duin::FS_FILEEXT_JSON)
+        {
+            assetFiles.push_back(node);
+        }
+    });
+
+    // For each asset file, check metafile for AssetRef data. Else generate metafile.
+    // If has metafile, match and update assetIndex
+    for (auto assetFile : assetFiles)
+    {
+        std::string assetMetaFile = assetFile->path + ".meta";
+        if (duin::fs::GetPathInfo(assetMetaFile))
+        {
+            // Metafile exist
+            size_t fileSize = 0;
+            char *raw = (char *)duin::io::IOStream::LoadFile(assetMetaFile, &fileSize);
+            std::string data(raw); 
+            duin::AssetRef ref = rfl::json::read<duin::AssetRef>(data).value();
+            assetIndex.EnsureAsset(ref);
+        }
+        else
+        {
+            // Metafile does not exist
+            duin::io::IOStream stream = duin::io::IOStream::FromFile(assetMetaFile, "w");
+            duin::AssetRef ref(assetFile->path, assetFile->fileType, assetFile->fileExt);
+            assetIndex.EnsureAsset(ref);
+            std::string strRef = rfl::json::write(ref);
+            stream.Write(strRef.c_str(), strRef.size());
+            stream.Flush();
+        }
+    }
+
+    std::string out;
+    assetIndex.Serialize(out);
+    DN_INFO("UPDATED assetIndex: \n\n\n{}\n\n\n", out);
 }
 
 void State_SceneEditor::LoadSceneFromFile(const FSNode *sceneFile)

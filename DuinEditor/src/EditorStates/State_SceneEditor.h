@@ -2,6 +2,7 @@
 #include <memory>
 #include <Duin/Objects/GameStateMachine.h>
 #include <Duin/Scene/SceneBuilder.h>
+#include <Duin/Assets/AssetIndex.h>
 
 #include "Project.h"
 #include "FileManager.h"
@@ -56,6 +57,7 @@ class State_SceneEditor : public duin::GameState
     void CreateUIObjects();
     void ConnectSignals();
     void SetupInput();
+    void UpdateAssetIndex();
 
     void LoadSceneFromFile(const FSNode *sceneFile);
     void EnsureInstantiatedScene(std::weak_ptr<FSNode> sceneFile);
@@ -64,6 +66,7 @@ class State_SceneEditor : public duin::GameState
   private:
     Signals signals;
     UIObjects uiObjects;
+    duin::AssetIndex assetIndex;
     std::shared_ptr<FileManager> fileManager;
     std::shared_ptr<SceneManager> sceneManager;
     std::weak_ptr<Scene> cachedActiveScene;
