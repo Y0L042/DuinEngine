@@ -51,7 +51,7 @@ void FileTree::DrawNode(std::weak_ptr<FSNode> node, const std::string &nodeLabel
     if (!selectedNode.expired() && node_ == selectedNode.lock())
         flags |= ImGuiTreeNodeFlags_Selected;
 
-    if (node_->type == ArcheType::P_DIRECTORY)
+    if (node_->type == duin::ArcheType::FS_ARCHETYPE_DIRECTORY)
     {
         // Open a tree node
         bool nodeOpen = ImGui::TreeNodeEx(nodeLabel.c_str(), flags);
@@ -82,7 +82,7 @@ void FileTree::DrawNode(std::weak_ptr<FSNode> node, const std::string &nodeLabel
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
         {
             selectedNode = node_;
-            if (node_->type == ArcheType::P_FILE && (node_->fileExt == FILEEXT_ECST || node_->fileExt == FILEEXT_JSON))
+            if (node_->type == duin::ArcheType::FS_ARCHETYPE_FILE && (node_->fileExt == duin::FS_FILEEXT_ECST || node_->fileExt == duin::FS_FILEEXT_JSON))
             {
                 onPackedSceneFileSelect.Emit(selectedNode);
             }
