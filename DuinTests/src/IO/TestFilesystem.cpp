@@ -1064,13 +1064,38 @@ TEST_SUITE("Filesystem - MapVirtualToSystemPath")
         CHECK(sysPath == INVALID_PATH);
     }
 
-    TEST_CASE("Map usr:// path - not yet implemented")
+    TEST_CASE("Map usr:// path to user home directory")
     {
         std::string virtualPath = "usr://documents/file.txt";
         std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
 
-        // Should return INVALID_PATH (not implemented)
-        CHECK(sysPath == INVALID_PATH);
+        // usr:// resolves via GetUserFolder(DNFS_FOLDER_HOME)
+        std::string homePath = duin::fs::GetUserFolder(duin::fs::DNFS_FOLDER_HOME);
+
+        // Should resolve to home directory + relative path
+        CHECK(sysPath != INVALID_PATH);
+        CHECK_FALSE(sysPath.empty());
+        CHECK(sysPath.find("documents/file.txt") != std::string::npos);
+
+        // Verify it starts with the user's home path
+        if (!duin::fs::IsPathInvalid(homePath))
+        {
+            CHECK(sysPath == homePath + "documents/file.txt");
+        }
+    }
+
+    TEST_CASE("Map usr:// with just prefix")
+    {
+        std::string virtualPath = "usr://";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(virtualPath);
+
+        std::string homePath = duin::fs::GetUserFolder(duin::fs::DNFS_FOLDER_HOME);
+
+        CHECK(sysPath != INVALID_PATH);
+        if (!duin::fs::IsPathInvalid(homePath))
+        {
+            CHECK(sysPath == homePath);
+        }
     }
 
     TEST_CASE("Invalid: path too short")
