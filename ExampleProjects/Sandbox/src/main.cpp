@@ -5,6 +5,7 @@
 #include <memory>
 #include <Duin/Objects/GameStateMachine.h>
 #include "Sandboxes/Scenes/SandboxScene.h"
+#include "Sandboxes/Scenes/SceneBuilder.h"
 #include "Sandboxes/GUI/ImGuiSandbox.h"
 
 duin::Application *duin::CreateApplication()
@@ -23,7 +24,8 @@ void Game::Ready()
 {
     sm = CreateChildObject<duin::GameStateMachine>();
     // sm->SwitchState<SandboxScene>();
-    sm->SwitchState<ImGuiSandbox>();
+    //sm->SwitchState<ImGuiSandbox>();
+    sm->SwitchState<SceneBuilder>();
 }
 
 void Game::OnEvent(duin::Event e)
