@@ -319,6 +319,8 @@ bool RenamePath(const std::string &oldPath, const std::string &newPath);
  * }
  * @endcode
  */
+// TODO fucking stupid function naming. It doesn't check the validity of the path, 
+// it just checks string matching against INVALID constant
 bool IsPathInvalid(const std::string &path);
 
 /**
@@ -365,7 +367,8 @@ std::string EnsureUnixPath(const std::string &path);
  * Supported virtual path prefixes:
  * - **bin://** - Maps to the application's base directory (executable location)
  * - **app://** - Maps to the application's user data directory (requires SetPrefPath)
- * - **usr://** - Maps to the user's folder (NOT YET IMPLEMENTED - returns INVALID_PATH)
+ * - **usr://** - Maps to the user's home folder (via GetUserFolder)
+ * - **wrk://** - Maps to a custom workspace directory (requires SetWorkspacePath)
  *
  * @param path Virtual path starting with a recognized prefix (e.g., "bin://config.ini")
  * @return Absolute system path, or INVALID_PATH if the prefix is unrecognized or path is too short
@@ -373,7 +376,6 @@ std::string EnsureUnixPath(const std::string &path);
  * @note Path must be at least 6 characters ("bin://x")
  * @note For "app://", you must call SetPrefPath() first to set org/app names
  * @note If SetPrefPath() wasn't called, "app://" paths will fail (GetPrefPath returns INVALID_PATH)
- * @note Returns INVALID_PATH for "usr://" (not yet implemented)
  * @note Returns INVALID_PATH if path is shorter than minimum length
  * @note The returned path uses Unix-style separators (forward slashes)
  * @note If the virtual prefix doesn't match any known prefix, returns INVALID_PATH
@@ -403,9 +405,14 @@ std::string EnsureUnixPath(const std::string &path);
  * std::string invalid2 = duin::fs::MapVirtualToSystemPath("xyz://file.txt");
  * // invalid2 = INVALID_PATH
  *
- * // Not yet implemented
- * std::string notImpl = duin::fs::MapVirtualToSystemPath("usr://documents/file.txt");
- * // notImpl = INVALID_PATH
+ * // Map usr:// to user home directory
+ * std::string homePath = duin::fs::MapVirtualToSystemPath("usr://documents/file.txt");
+ * // homePath = "C:/Users/Name/documents/file.txt" (on Windows)
+ *
+ * // Map wrk:// to workspace directory (requires SetWorkspacePath)
+ * duin::fs::SetWorkspacePath("C:/Projects/MyProject");
+ * std::string wrkPath = duin::fs::MapVirtualToSystemPath("wrk://assets/texture.png");
+ * // wrkPath = "C:/Projects/MyProject/assets/texture.png"
  * @endcode
  */
 std::string MapVirtualToSystemPath(const std::string &path);
@@ -573,8 +580,109 @@ SDL_EnumerationResult AdapterDirCallback(void *userdata, const char *dirname, co
  */
 bool EnumerateDirectory(const char *path, EnumerateDirectoryCallback callback, void *userdata);
 
-// TODO: Future SDL3 filesystem functions to wrap:
-// GetPathInfo - Get information about a filesystem path
-// GetUserFolder - Get a specific user folder (Documents, Downloads, etc.)
+/**
+ * @brief Types of filesystem entries.
+ *
+ * Used by FsPathInfo to indicate what kind of item exists at a path.
+ */
+typedef enum PathType
+{
+    DNFS_PATHTYPE_NONE,      /**< Path does not exist */
+    DNFS_PATHTYPE_FILE,      /**< A normal file */
+    DNFS_PATHTYPE_DIRECTORY, /**< A directory */
+    DNFS_PATHTYPE_OTHER      /**< Something else (device node, etc.) */
+} PathType;
+
+/**
+ * @brief Information about a filesystem path.
+ *
+ * Named FsPathInfo to avoid collision with duin::PathInfo in FileTypes.h.
+ *
+ * @see GetFsPathInfo()
+ */
+struct PathInfo
+{
+    PathType type;       /**< The path type */
+    uint64_t size;       /**< File size in bytes */
+    int64_t createTime;  /**< Creation time in nanoseconds */
+    int64_t modifyTime;  /**< Last modification time in nanoseconds */
+    int64_t accessTime;  /**< Last access time in nanoseconds */
+};
+
+/**
+ * @brief Get information about a filesystem path.
+ *
+ * Retrieves the type, size, and timestamps for the specified path.
+ *
+ * @param path The filesystem path to query
+ * @param info Pointer to FsPathInfo struct to fill with results
+ * @return true on success, false on error
+ *
+ * @note Uses SDL_GetPathInfo internally
+ *
+ * @see https://wiki.libsdl.org/SDL3/SDL_GetPathInfo
+ */
+bool GetPathInfo(const std::string &path, PathInfo *info = nullptr);
+
+/**
+ * @brief Well-known user folder types.
+ *
+ * Mirrors SDL_Folder enum values in the same order, allowing direct static_cast.
+ *
+ * @see GetUserFolder()
+ */
+typedef enum UserFolder
+{
+    DNFS_FOLDER_HOME,
+    DNFS_FOLDER_DESKTOP,
+    DNFS_FOLDER_DOCUMENTS,
+    DNFS_FOLDER_DOWNLOADS,
+    DNFS_FOLDER_MUSIC,
+    DNFS_FOLDER_PICTURES,
+    DNFS_FOLDER_PUBLICSHARE,
+    DNFS_FOLDER_SAVEDGAMES,
+    DNFS_FOLDER_SCREENSHOTS,
+    DNFS_FOLDER_TEMPLATES,
+    DNFS_FOLDER_VIDEOS
+} UserFolder;
+
+/**
+ * @brief Get the path to a well-known user folder.
+ *
+ * Returns the platform-specific path for standard user folders such as
+ * Documents, Downloads, Desktop, etc.
+ *
+ * @param folder The user folder type to retrieve
+ * @return The folder path with a trailing slash, or INVALID_PATH on error
+ *
+ * @note Uses SDL_GetUserFolder internally
+ *
+ * @see https://wiki.libsdl.org/SDL3/SDL_GetUserFolder
+ */
+std::string GetUserFolder(UserFolder folder);
+
+/**
+ * @brief Set the workspace path for wrk:// virtual path resolution.
+ *
+ * Stores a workspace directory path used by MapVirtualToSystemPath() when
+ * resolving "wrk://" virtual paths. Useful for editors and tools that need
+ * a custom working directory.
+ *
+ * @param path The workspace directory path
+ * @return true on success, false if path is empty
+ *
+ * @see GetWorkspacePath()
+ * @see MapVirtualToSystemPath()
+ */
+bool SetWorkspacePath(const std::string &path);
+
+/**
+ * @brief Get the current workspace path.
+ *
+ * @return The stored workspace path, or INVALID_PATH if not set
+ *
+ * @see SetWorkspacePath()
+ */
+std::string GetWorkspacePath();
 
 } // namespace duin::fs

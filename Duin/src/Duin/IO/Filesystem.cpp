@@ -18,12 +18,17 @@ static const std::string sep = "/";
 // Virtual path prefixes (Godot-style virtual filesystem)
 static const std::string APPROOT = "bin://"; // Application executable directory
 static const std::string APPDATA = "app://"; // Application user data directory
-static const std::string USRDATA = "usr://"; // User's home folder (not yet implemented)
+static const std::string USRDATA = "usr://"; // User's home folder
+static const std::string WRKDATA = "wrk://"; // Workspace directory set by app/editor
 
 // Global variables for app:// virtual path resolution
 // Set via SetPrefPath(), used by MapVirtualToSystemPath()
 static std::string ORG = "";
 static std::string APP = "";
+
+// Global variable for wrk:// virtual path resolution
+// Set via SetWorkspacePath(), used by MapVirtualToSystemPath()
+static std::string WORKSPACE_PATH = "";
 
 std::string duin::fs::GetFileName(const std::string &path)
 {
@@ -41,20 +46,28 @@ std::string duin::fs::GetFileName(const std::string &path)
 std::string duin::fs::GetFileExtension(const std::string &filename)
 {
     if (filename.empty())
+    {
         return INVALID_PATH;
+    }
     if (filename == ".")
+    {
         return INVALID_PATH;
+    }
 
     const char *dot = strrchr(filename.c_str(), '.');
     if (!dot)
+    {
         return INVALID_PATH;
+    }
 
     size_t dotPos = dot - filename.c_str();
     if (dotPos == 0)
     {
         std::string ext = dot + 1;
         if (ext.empty())
+        {
             return INVALID_PATH;
+        }
         return ext;
     }
     return dot + 1;
@@ -133,6 +146,8 @@ bool duin::fs::RenamePath(const std::string &oldPath, const std::string &newPath
     return res;
 }
 
+
+
 bool duin::fs::IsPathInvalid(const std::string &path)
 {
     // Compare against INVALID_PATH constant
@@ -155,7 +170,9 @@ std::string duin::fs::MapVirtualToSystemPath(const std::string &path)
     // Virtual paths must be at least "xxx://" (6 chars minimum)
     // Paths received from SDL contains trailing '/'
     if (path.size() < vpathSize - 1)
+    {
         return INVALID_PATH;
+    }
 
     std::string drive = path.substr(0, vpathSize);
     std::string sysPath = INVALID_PATH;
@@ -180,13 +197,33 @@ std::string duin::fs::MapVirtualToSystemPath(const std::string &path)
 
     if (drive == USRDATA)
     {
-        sysPath = INVALID_PATH;
+        std::string home = GetUserFolder(DNFS_FOLDER_HOME);
+        if (IsPathInvalid(home))
+        {
+            sysPath = INVALID_PATH;
+        }
+        else
+        {
+            sysPath = home + path.substr(vpathSize, path.size());
+        }
+    }
+
+    if (drive == WRKDATA)
+    {
+        if (WORKSPACE_PATH.empty())
+        {
+            sysPath = INVALID_PATH;
+        }
+        else
+        {
+            sysPath = WORKSPACE_PATH + path.substr(vpathSize, path.size());
+        }
     }
 
     return sysPath;
 }
 
-char **duin::fs::GlobDirectory(const std::string &path, const std::string& pattern, GlobFlags flags, int *count)
+char **duin::fs::GlobDirectory(const std::string &path, const std::string &pattern, GlobFlags flags, int *count)
 {
     return ::SDL_GlobDirectory(path.c_str(), pattern.c_str(), flags, count);
 }
@@ -201,4 +238,58 @@ bool duin::fs::EnumerateDirectory(const char *path, EnumerateDirectoryCallback c
 {
     DirCallbackWrapper wrapper{callback, userdata};
     return ::SDL_EnumerateDirectory(path, AdapterDirCallback, &wrapper);
+}
+
+bool duin::fs::GetPathInfo(const std::string &path, PathInfo *info)
+{
+    if (!info)
+    {
+        return false;
+    }
+
+    SDL_PathInfo sdlInfo;
+    if (!SDL_GetPathInfo(path.c_str(), &sdlInfo))
+    {
+        return false;
+    }
+
+    info->type = static_cast<PathType>(sdlInfo.type);
+    info->size = sdlInfo.size;
+    info->createTime = sdlInfo.create_time;
+    info->modifyTime = sdlInfo.modify_time;
+    info->accessTime = sdlInfo.access_time;
+    return true;
+}
+
+std::string duin::fs::GetUserFolder(UserFolder folder)
+{
+    const char *res = SDL_GetUserFolder(static_cast<SDL_Folder>(folder));
+    std::string out = (res != NULL) ? res : INVALID_PATH;
+    out = EnsureUnixPath(out);
+    return out;
+}
+
+bool duin::fs::SetWorkspacePath(const std::string &path)
+{
+    if (path.empty())
+    {
+        return false;
+    }
+
+    WORKSPACE_PATH = EnsureUnixPath(path);
+    if (WORKSPACE_PATH.back() != '/')
+    {
+        WORKSPACE_PATH += '/';
+    }
+
+    return true;
+}
+
+std::string duin::fs::GetWorkspacePath()
+{
+    if (WORKSPACE_PATH.empty())
+    {
+        return INVALID_PATH;
+    }
+    return WORKSPACE_PATH;
 }
