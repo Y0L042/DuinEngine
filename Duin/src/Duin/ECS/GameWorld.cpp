@@ -49,6 +49,7 @@ void GameWorld::Initialize(bool connectSignals)
         connPostDrawUI_ = QueuePostDrawUICallback([this]() { PostDrawUIQueryExecution(); });
     }
 
+    //InitializeRemoteExplorer(); // Causes tests to crash
 }
 
 void GameWorld::ActivateCameraEntity(duin::Entity entity)
@@ -80,6 +81,8 @@ void GameWorld::PostPhysicsUpdateQueryExecution(double delta)
 
     ExecuteQuerySetCameraAsActive();
     ExecuteQueryControlCamera();
+
+    Progress(); // TODO testing for remote viewing
 }
 
 void GameWorld::PostDrawQueryExecution()
@@ -110,6 +113,19 @@ void GameWorld::Reset(bool connectSignals)
 
 void GameWorld::InitializeRemoteExplorer()
 {
+    // Remote viewing
+     GetFlecsWorld().import <flecs::stats>();
+     GetFlecsWorld().set<flecs::Rest>({});
+    //while (GetFlecsWorld().progress())
+    //{
+    //}
+
+    //GetFlecsWorld()
+    //    .app()
+    //    // Optional, gather statistics for explorer
+    //    .enable_stats()
+    //    .enable_rest()
+    //    .run();
 }
 
 /*----------------------------------------------------------------------

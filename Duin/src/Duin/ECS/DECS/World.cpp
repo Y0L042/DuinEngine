@@ -7,8 +7,7 @@ duin::World::World()
 {
 }
 
-duin::World::World(flecs::world &&w)
-    : flecsWorld(std::move(w)) {};
+duin::World::World(flecs::world &&w) : flecsWorld(std::move(w)) {};
 
 duin::World::~World() {};
 
@@ -137,7 +136,8 @@ void duin::World::Quit()
     flecsWorld.quit();
 }
 
-duin::Entity duin::World::Lookup(const std::string &name, const std::string &sep, const std::string &root_sep, bool recursive)
+duin::Entity duin::World::Lookup(const std::string &name, const std::string &sep, const std::string &root_sep,
+                                 bool recursive)
 {
     duin::Entity e;
     e.SetWorld(this);

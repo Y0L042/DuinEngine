@@ -38,9 +38,6 @@
 
 namespace duin
 {
-
-class JSONMember;
-
 /**
  * @class GameWorld
  * @brief Central ECS world manager.
