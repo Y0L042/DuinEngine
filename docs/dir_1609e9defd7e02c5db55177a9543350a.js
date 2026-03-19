@@ -6,6 +6,7 @@ var dir_1609e9defd7e02c5db55177a9543350a =
     [ "ConfigValue.h", "ConfigValue_8h_source.html", null ],
     [ "DuinIO.cpp", "DuinIO_8cpp_source.html", null ],
     [ "DuinIO.h", "DuinIO_8h_source.html", null ],
+    [ "FileModule.h", "FileModule_8h_source.html", null ],
     [ "Filesystem.cpp", "Filesystem_8cpp.html", null ],
     [ "Filesystem.h", "Filesystem_8h_source.html", null ],
     [ "FileUtils.cpp", "FileUtils_8cpp_source.html", null ],

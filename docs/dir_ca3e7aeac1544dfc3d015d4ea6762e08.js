@@ -1,8 +1,6 @@
 var dir_ca3e7aeac1544dfc3d015d4ea6762e08 =
 [
     [ "Asset.h", "Asset_8h_source.html", null ],
-    [ "AssetIndex.cpp", "AssetIndex_8cpp_source.html", null ],
-    [ "AssetIndex.h", "AssetIndex_8h_source.html", null ],
     [ "AssetManager.cpp", "AssetManager_8cpp_source.html", null ],
     [ "AssetManager.h", "AssetManager_8h_source.html", null ],
     [ "AssetRef.cpp", "AssetRef_8cpp_source.html", null ],

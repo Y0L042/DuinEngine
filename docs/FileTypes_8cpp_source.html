@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('FileTypes_8cpp_source.html',''); initR
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>duin</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">const</span> std::array&lt;FileExtension, 49&gt; AllExtensions = {{<span class="comment">// Image Extensions</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">const</span> std::array&lt;FileExtension, 50&gt; AllExtensions = {{<span class="comment">// Image Extensions</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>                                                      {<span class="stringliteral">&quot;png&quot;</span>, FS_FILETYPE_IMAGE_EXT, FS_FILEEXT_PNG},</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>                                                      {<span class="stringliteral">&quot;jpg&quot;</span>, FS_FILETYPE_IMAGE_EXT, FS_FILEEXT_JPG},</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>                                                      {<span class="stringliteral">&quot;jpeg&quot;</span>, FS_FILETYPE_IMAGE_EXT, FS_FILEEXT_JPEG},</div>
@@ -185,36 +185,37 @@ $(document).ready(function(){initNavTree('FileTypes_8cpp_source.html',''); initR
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                                                      {<span class="stringliteral">&quot;frag&quot;</span>, FS_FILETYPE_TEXT_EXT, FS_FILEEXT_FRAG},</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                                                      <span class="comment">// Editor Extensions</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                                                      {<span class="stringliteral">&quot;ecst&quot;</span>, FS_FILETYPE_TEXT_EXT, FS_FILEEXT_ECST}}};</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>PathInfo GetPathInfo(<span class="keyword">const</span> std::string &amp;path)</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>{</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    PathInfo pathInfo;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    std::filesystem::path fsPath(path);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    std::error_code ec;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordflow">if</span> (std::filesystem::is_directory(fsPath, ec))</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        pathInfo.archeType = FS_ARCHETYPE_DIRECTORY;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    {</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        pathInfo.archeType = FS_ARCHETYPE_FILE;</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        std::string ext = fsPath.extension().string();</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        ext.erase(std::remove(ext.begin(), ext.end(), <span class="charliteral">&#39;.&#39;</span>), ext.end());</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> FileExtension&amp; fext : AllExtensions)</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        {</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="keywordflow">if</span> (ext == fext.extension)</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                pathInfo.fileInfo = fext;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            }</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        }</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    }</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordflow">return</span> pathInfo;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>}</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                                                      {<span class="stringliteral">&quot;pscn&quot;</span>, FS_FILETYPE_TEXT_EXT, FS_FILEEXT_PSCN},</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                                                      {<span class="stringliteral">&quot;ecst&quot;</span>, FS_FILETYPE_TEXT_EXT, FS_FILEEXT_ECST}}};</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>PathInfo GetPathInfo(<span class="keyword">const</span> std::string &amp;path)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>{</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    PathInfo pathInfo;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    std::filesystem::path fsPath(path);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    std::error_code ec;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordflow">if</span> (std::filesystem::is_directory(fsPath, ec))</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        pathInfo.archeType = FS_ARCHETYPE_DIRECTORY;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        pathInfo.archeType = FS_ARCHETYPE_FILE;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        std::string ext = fsPath.extension().string();</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        ext.erase(std::remove(ext.begin(), ext.end(), <span class="charliteral">&#39;.&#39;</span>), ext.end());</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> FileExtension&amp; fext : AllExtensions)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keywordflow">if</span> (ext == fext.extension)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                pathInfo.fileInfo = fext;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    }</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordflow">return</span> pathInfo;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

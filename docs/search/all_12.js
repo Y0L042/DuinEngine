@@ -8,7 +8,7 @@ var searchData=
   ['ondraw_5',['onDraw',['../structduin_1_1SignalConnections.html#a46b2caaf3eefc3830c2cbd7cc2dcd008',1,'duin::SignalConnections']]],
   ['ondrawui_6',['onDrawUI',['../structduin_1_1SignalConnections.html#ac0da608b0870ae1eafb0f8db4cbaa2a4',1,'duin::SignalConnections']]],
   ['onenter_7',['onEnter',['../structduin_1_1SignalConnections.html#ae4b429af47a36bd9f63d49a6c759ec2a',1,'duin::SignalConnections']]],
-  ['onevent_8',['onevent',['../classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c',1,'duin::Application::OnEvent()'],['../structduin_1_1SignalConnections.html#adbab4bb5f175ec1fbeed56ad86ceedfc',1,'duin::SignalConnections::onEvent']]],
+  ['onevent_8',['onevent',['../structduin_1_1SignalConnections.html#adbab4bb5f175ec1fbeed56ad86ceedfc',1,'duin::SignalConnections::onEvent'],['../classduin_1_1Application.html#adf554167ffd21e5a9213f1bd585f977c',1,'duin::Application::OnEvent()']]],
   ['onexit_9',['onExit',['../structduin_1_1SignalConnections.html#af5b5415ebb1d1c0a5ce8e7717bd63dcb',1,'duin::SignalConnections']]],
   ['oninputactiontriggered_10',['OnInputActionTriggered',['../InputActions_8h.html#ada37d50b857c7da8147fc6392c31a94d',1,'duin']]],
   ['onphysicsupdate_11',['onPhysicsUpdate',['../structduin_1_1SignalConnections.html#a3e7588a71b2ab02e03dff563847f02bd',1,'duin::SignalConnections']]],

@@ -175,6 +175,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af4ae33e7a6168d1b08492b038a777e27" id="r_af4ae33e7a6168d1b08492b038a777e27"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1JSONValue.html#af4ae33e7a6168d1b08492b038a777e27">IsValid</a> ()</td></tr>
 <tr class="memdesc:af4ae33e7a6168d1b08492b038a777e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a> is valid (not marked invalid).  <br /></td></tr>
 <tr class="separator:af4ae33e7a6168d1b08492b038a777e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea8233a86f4fd2092588b335e78eab94" id="r_aea8233a86f4fd2092588b335e78eab94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1JSONValue.html#aea8233a86f4fd2092588b335e78eab94">IsEmpty</a> ()</td></tr>
+<tr class="memdesc:aea8233a86f4fd2092588b335e78eab94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a> is empty (i.e. {}).  <br /></td></tr>
+<tr class="separator:aea8233a86f4fd2092588b335e78eab94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a975e2d4a7faa4071ac02bb6c5e876d3d" id="r_a975e2d4a7faa4071ac02bb6c5e876d3d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1JSONValue.html#a975e2d4a7faa4071ac02bb6c5e876d3d">GetMemberCount</a> ()</td></tr>
+<tr class="separator:a975e2d4a7faa4071ac02bb6c5e876d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7798e8708c3258587055a1d1b7e107a7" id="r_a7798e8708c3258587055a1d1b7e107a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1JSONValue.html#a7798e8708c3258587055a1d1b7e107a7">IsNull</a> () const</td></tr>
 <tr class="memdesc:a7798e8708c3258587055a1d1b7e107a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this value is null.  <br /></td></tr>
 <tr class="separator:a7798e8708c3258587055a1d1b7e107a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -550,7 +555,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="JSONValue_8h_source.html#l00467">467</a> of file <a class="el" href="JSONValue_8h_source.html">JSONValue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="JSONValue_8h_source.html#l00475">475</a> of file <a class="el" href="JSONValue_8h_source.html">JSONValue.h</a>.</p>
 
 </div>
 </div>
@@ -571,10 +576,10 @@ template&lt;typename T &gt; </div>
 
 <p>Returns iterator to beginning of array. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue_1_1ConstDataIterator.html" title="Iterator for const traversal of JSON arrays.">ConstDataIterator</a> to beginning. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a45">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a46">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00629">629</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00641">641</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -595,10 +600,10 @@ template&lt;typename T &gt; </div>
 
 <p>Returns iterator to beginning of array (mutable). </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue_1_1DataIterator.html" title="Iterator for mutable traversal of JSON arrays.">DataIterator</a> to beginning. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a57">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a58">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00682">682</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00694">694</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -620,7 +625,7 @@ template&lt;typename T &gt; </div>
 <p>Returns iterator to beginning of array (const). </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue_1_1ConstDataIterator.html" title="Iterator for const traversal of JSON arrays.">ConstDataIterator</a> to beginning. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00726">726</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00738">738</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -641,10 +646,10 @@ template&lt;typename T &gt; </div>
 
 <p>Gets the capacity of the array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Array capacity. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a44">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a45">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00610">610</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00622">622</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -689,10 +694,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if the array is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if empty. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a42">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a43">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00588">588</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00600">600</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -713,10 +718,10 @@ template&lt;typename T &gt; </div>
 
 <p>Returns iterator to end of array. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue_1_1ConstDataIterator.html" title="Iterator for const traversal of JSON arrays.">ConstDataIterator</a> to end. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a46">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a47">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00655">655</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00667">667</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -737,10 +742,10 @@ template&lt;typename T &gt; </div>
 
 <p>Returns iterator to end of array (mutable). </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue_1_1DataIterator.html" title="Iterator for mutable traversal of JSON arrays.">DataIterator</a> to end. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a58">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a59">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00704">704</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00716">716</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -762,7 +767,7 @@ template&lt;typename T &gt; </div>
 <p>Returns iterator to end of array (const). </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue_1_1ConstDataIterator.html" title="Iterator for const traversal of JSON arrays.">ConstDataIterator</a> to end. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00748">748</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00760">760</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -790,10 +795,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue_1_1ConstDataIterator.html" title="Iterator for const traversal of JSON arrays.">ConstDataIterator</a> to member, or end if not found. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a47">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a48">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00771">771</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00783">783</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -814,10 +819,10 @@ template&lt;typename T &gt; </div>
 
 <p>Gets the boolean value. </p>
 <dl class="section return"><dt>Returns</dt><dd>Boolean value, or false if not a boolean. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a36">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a37">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00462">462</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00474">474</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -838,10 +843,10 @@ template&lt;typename T &gt; </div>
 
 <p>Gets the double value. </p>
 <dl class="section return"><dt>Returns</dt><dd>Double value, or 0.0 if not a double. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a40">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a41">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00551">551</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00563">563</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -865,7 +870,7 @@ template&lt;typename T &gt; </div>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a3">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00514">514</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00526">526</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -897,6 +902,25 @@ template&lt;typename T &gt; </div>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00300">300</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a975e2d4a7faa4071ac02bb6c5e876d3d" name="a975e2d4a7faa4071ac02bb6c5e876d3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a975e2d4a7faa4071ac02bb6c5e876d3d">&#9670;&#160;</a></span>GetMemberCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t duin::JSONValue::GetMemberCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00380">380</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -944,7 +968,7 @@ template&lt;typename T &gt; </div>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a2">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00424">424</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00436">436</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1028,10 +1052,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is an array. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if array. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a41">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a42">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00573">573</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00585">585</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1052,10 +1076,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is a boolean. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if boolean. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a35">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a36">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00447">447</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00459">459</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1076,10 +1100,34 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is a double. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if double. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a39">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a40">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00536">536</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00548">548</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aea8233a86f4fd2092588b335e78eab94" name="aea8233a86f4fd2092588b335e78eab94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea8233a86f4fd2092588b335e78eab94">&#9670;&#160;</a></span>IsEmpty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::JSONValue::IsEmpty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a> is empty (i.e. {}). </p>
+<dl class="section return"><dt>Returns</dt><dd>True if empty. </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a32">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00375">375</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1100,10 +1148,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is an integer. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if integer. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a38">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a39">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00499">499</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00511">511</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1124,10 +1172,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is null. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if null. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a32">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a33">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00379">379</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00391">391</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1148,10 +1196,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is a number. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if number. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a37">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a38">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00484">484</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00496">496</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1172,10 +1220,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is an object. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if object. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a33">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a34">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00394">394</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00406">406</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1220,10 +1268,10 @@ template&lt;typename T &gt; </div>
 
 <p>Checks if this value is a string. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if string. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a34">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a35">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00409">409</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00421">421</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1275,10 +1323,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if not equal. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a56">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a57">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00970">970</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00982">982</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1299,10 +1347,10 @@ template&lt;typename T &gt; </div>
 
 <p>Dereference operator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a54">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a55">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00935">935</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00947">947</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1330,10 +1378,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if equal. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a55">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a56">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00950">950</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00962">962</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1361,10 +1409,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a> of member, or empty if not found. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a53">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a54">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00885">885</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00897">897</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1393,7 +1441,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a> of element, or empty if not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00911">911</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00923">923</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1513,10 +1561,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a43">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a44">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00866">866</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00878">878</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1561,7 +1609,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="JSONValue_8h_source.html#l00509">509</a> of file <a class="el" href="JSONValue_8h_source.html">JSONValue.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="JSONValue_8h_source.html#l00517">517</a> of file <a class="el" href="JSONValue_8h_source.html">JSONValue.h</a>.</p>
 
 </div>
 </div>
@@ -1620,10 +1668,10 @@ template&lt;typename T &gt; </div>
 
 <p>Sets this value to an array type. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a52">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a53">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00855">855</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00867">867</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1651,10 +1699,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a51">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a52">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00845">845</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00857">857</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1682,10 +1730,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a50">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a51">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00834">834</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00846">846</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1716,7 +1764,7 @@ template&lt;typename T &gt; </div>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a4">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00812">812</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00824">824</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1737,10 +1785,10 @@ template&lt;typename T &gt; </div>
 
 <p>Sets this value to an object type. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a48">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a49">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00801">801</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00813">813</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>
@@ -1768,10 +1816,10 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to this <a class="el" href="classduin_1_1JSONValue.html" title="Wrapper for RapidJSON Document/Value, providing type-safe JSON manipulation.">JSONValue</a>. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a49">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2IO_2JSONValue_8h-example.html#a50">/home/runner/work/DuinEngine/DuinEngine/Duin/src/Duin/IO/JSONValue.h</a>.</dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00823">823</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html#l00835">835</a> of file <a class="el" href="src_2Duin_2IO_2JSONValue_8cpp_source.html">src/Duin/IO/JSONValue.cpp</a>.</p>
 
 </div>
 </div>

@@ -45,7 +45,6 @@ var annotated_dup =
       [ "Application", "classduin_1_1Application.html", "classduin_1_1Application" ],
       [ "Area", "classduin_1_1Area.html", null ],
       [ "Asset", "structduin_1_1Asset.html", null ],
-      [ "AssetIndex", "classduin_1_1AssetIndex.html", "classduin_1_1AssetIndex" ],
       [ "AssetManager", "classduin_1_1AssetManager.html", null ],
       [ "AssetRef", "structduin_1_1AssetRef.html", null ],
       [ "BGFXBufferHandle", "structduin_1_1BGFXBufferHandle.html", null ],

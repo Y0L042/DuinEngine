@@ -117,27 +117,18 @@ $(document).ready(function(){initNavTree('structduin_1_1AssetRef.html',''); init
   <div class="headertitle"><div class="title">duin::AssetRef Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Collaboration diagram for duin::AssetRef:</div>
-<div class="dyncontent">
-<div class="center"><img src="structduin_1_1AssetRef__coll__graph.png" border="0" usemap="#aduin_1_1AssetRef_coll__map" alt="Collaboration graph"/></div>
-<map name="aduin_1_1AssetRef_coll__map" id="aduin_1_1AssetRef_coll__map">
-<area shape="rect" title=" " alt="" coords="5,93,121,119"/>
-<area shape="rect" href="classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="17,5,109,31"/>
-<area shape="poly" title=" " alt="" coords="66,45,66,93,61,93,61,45"/>
-<area shape="poly" title=" " alt="" coords="124,9,136,18,128,26,110,29,109,23,125,21,131,18,121,14"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aa0dd409e86d922a4e5adbf5bed06188b" id="r_aa0dd409e86d922a4e5adbf5bed06188b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#aa0dd409e86d922a4e5adbf5bed06188b">ReflectionType</a> = AssetRefImpl { std::string uuid</td></tr>
-<tr class="separator:aa0dd409e86d922a4e5adbf5bed06188b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96c008ca2dc7591cf3838c7ead502e78" id="r_a96c008ca2dc7591cf3838c7ead502e78"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a96c008ca2dc7591cf3838c7ead502e78">ReflectionType</a> = AssetRefImpl { std::string rPath</td></tr>
+<tr class="separator:a96c008ca2dc7591cf3838c7ead502e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5ae0be834a6d61c481a754b8c67c195f" id="r_a5ae0be834a6d61c481a754b8c67c195f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a5ae0be834a6d61c481a754b8c67c195f">AssetRef</a> (const std::string &amp;hintPath, FileType fileType, FileExt fileExt)</td></tr>
-<tr class="separator:a5ae0be834a6d61c481a754b8c67c195f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a238de50957bb492a516815d2b5e4742f" id="r_a238de50957bb492a516815d2b5e4742f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a238de50957bb492a516815d2b5e4742f">AssetRef</a> (const std::string &amp;rPath)</td></tr>
+<tr class="separator:a238de50957bb492a516815d2b5e4742f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ae22e92588cbfc5e96a2d48c01a90f5" id="r_a3ae22e92588cbfc5e96a2d48c01a90f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a3ae22e92588cbfc5e96a2d48c01a90f5">AssetRef</a> (const std::string &amp;rPath, FileType fileType, FileExt fileExt)</td></tr>
+<tr class="separator:a3ae22e92588cbfc5e96a2d48c01a90f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04cb64567f947675b5b7a6c07d74d232" id="r_a04cb64567f947675b5b7a6c07d74d232"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a04cb64567f947675b5b7a6c07d74d232">IsValid</a> () const</td></tr>
 <tr class="separator:a04cb64567f947675b5b7a6c07d74d232"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0505f9c93e48323d17df1e7e6b5e1870" id="r_a0505f9c93e48323d17df1e7e6b5e1870"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a0505f9c93e48323d17df1e7e6b5e1870">operator==</a> (const <a class="el" href="structduin_1_1AssetRef.html">AssetRef</a> &amp;other) const</td></tr>
@@ -151,21 +142,23 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ab2f964713a23bc76e5d1b323b61032de" id="r_ab2f964713a23bc76e5d1b323b61032de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#ab2f964713a23bc76e5d1b323b61032de">uuid</a> = UUID::INVALID</td></tr>
-<tr class="separator:ab2f964713a23bc76e5d1b323b61032de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad98b1992d30132c3fd6fcdf09c7124cd" id="r_ad98b1992d30132c3fd6fcdf09c7124cd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#ad98b1992d30132c3fd6fcdf09c7124cd">hintPath</a></td></tr>
-<tr class="separator:ad98b1992d30132c3fd6fcdf09c7124cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34bc0cdf67cb3e5c15052e0ca3d49757" id="r_a34bc0cdf67cb3e5c15052e0ca3d49757"><td class="memItemLeft" align="right" valign="top">FileType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a34bc0cdf67cb3e5c15052e0ca3d49757">fileType</a></td></tr>
-<tr class="separator:a34bc0cdf67cb3e5c15052e0ca3d49757"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67120370ee7d6db5a2400fbaced8cbae" id="r_a67120370ee7d6db5a2400fbaced8cbae"><td class="memItemLeft" align="right" valign="top">FileExt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a67120370ee7d6db5a2400fbaced8cbae">fileExt</a></td></tr>
-<tr class="separator:a67120370ee7d6db5a2400fbaced8cbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17e8ea8e72ab0a1e9bb5ee1012460aed" id="r_a17e8ea8e72ab0a1e9bb5ee1012460aed"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a17e8ea8e72ab0a1e9bb5ee1012460aed">rPath</a></td></tr>
+<tr class="separator:a17e8ea8e72ab0a1e9bb5ee1012460aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e55fa966dafb4292f6b401d22b62c52" id="r_a2e55fa966dafb4292f6b401d22b62c52"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="classduin_1_1UUID.html">UUID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a2e55fa966dafb4292f6b401d22b62c52">uuid</a></td></tr>
+<tr class="separator:a2e55fa966dafb4292f6b401d22b62c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f82bdc1817364c5201b0e0cd97b2318" id="r_a8f82bdc1817364c5201b0e0cd97b2318"><td class="memItemLeft" align="right" valign="top">std::optional&lt; FileType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a8f82bdc1817364c5201b0e0cd97b2318">fileType</a></td></tr>
+<tr class="separator:a8f82bdc1817364c5201b0e0cd97b2318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f7ee628278f9b2857522999bba235eb" id="r_a3f7ee628278f9b2857522999bba235eb"><td class="memItemLeft" align="right" valign="top">std::optional&lt; FileExt &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a3f7ee628278f9b2857522999bba235eb">fileExt</a></td></tr>
+<tr class="separator:a3f7ee628278f9b2857522999bba235eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ded275e93dfaccf1607dcb79bccfbc" id="r_a08ded275e93dfaccf1607dcb79bccfbc"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a08ded275e93dfaccf1607dcb79bccfbc">uuid</a></td></tr>
+<tr class="separator:a08ded275e93dfaccf1607dcb79bccfbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
+<tr class="memitem:a4f71f51c0c23a6e1030a245b08e2376e" id="r_a4f71f51c0c23a6e1030a245b08e2376e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a4f71f51c0c23a6e1030a245b08e2376e">TAG_RPATH</a> = &quot;rPath&quot;</td></tr>
+<tr class="separator:a4f71f51c0c23a6e1030a245b08e2376e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec2d90d64a456104bcbfe41d8ad71569" id="r_aec2d90d64a456104bcbfe41d8ad71569"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#aec2d90d64a456104bcbfe41d8ad71569">TAG_UUID</a> = &quot;uuid&quot;</td></tr>
 <tr class="separator:aec2d90d64a456104bcbfe41d8ad71569"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8640ab3eda6bdbca62ceeaed9894d29d" id="r_a8640ab3eda6bdbca62ceeaed9894d29d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a8640ab3eda6bdbca62ceeaed9894d29d">TAG_HINTPATH</a> = &quot;hintPath&quot;</td></tr>
-<tr class="separator:a8640ab3eda6bdbca62ceeaed9894d29d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2856e81d8a28cc312378fc8764c28b89" id="r_a2856e81d8a28cc312378fc8764c28b89"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a2856e81d8a28cc312378fc8764c28b89">TAG_FILETYPE</a> = &quot;fileType&quot;</td></tr>
 <tr class="separator:a2856e81d8a28cc312378fc8764c28b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1accc7d2929e6350bd8eb2d4b16c4742" id="r_a1accc7d2929e6350bd8eb2d4b16c4742"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structduin_1_1AssetRef.html#a1accc7d2929e6350bd8eb2d4b16c4742">TAG_FILEEXT</a> = &quot;fileExt&quot;</td></tr>
@@ -173,27 +166,27 @@ Static Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00009">9</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00010">10</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="aa0dd409e86d922a4e5adbf5bed06188b" name="aa0dd409e86d922a4e5adbf5bed06188b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0dd409e86d922a4e5adbf5bed06188b">&#9670;&#160;</a></span>ReflectionType</h2>
+<a id="a96c008ca2dc7591cf3838c7ead502e78" name="a96c008ca2dc7591cf3838c7ead502e78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96c008ca2dc7591cf3838c7ead502e78">&#9670;&#160;</a></span>ReflectionType</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using duin::AssetRef::ReflectionType =  AssetRefImpl { std::string uuid</td>
+          <td class="memname">using duin::AssetRef::ReflectionType =  AssetRefImpl { std::string rPath</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00043">43</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00047">47</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5ae0be834a6d61c481a754b8c67c195f" name="a5ae0be834a6d61c481a754b8c67c195f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ae0be834a6d61c481a754b8c67c195f">&#9670;&#160;</a></span>AssetRef() <span class="overload">[1/2]</span></h2>
+<a id="a238de50957bb492a516815d2b5e4742f" name="a238de50957bb492a516815d2b5e4742f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a238de50957bb492a516815d2b5e4742f">&#9670;&#160;</a></span>AssetRef() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,7 +198,35 @@ Static Public Attributes</h2></td></tr>
           <td class="memname">duin::AssetRef::AssetRef </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>hintPath</em>, </td>
+          <td class="paramname"><em>rPath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00023">23</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+
+</div>
+</div>
+<a id="a3ae22e92588cbfc5e96a2d48c01a90f5" name="a3ae22e92588cbfc5e96a2d48c01a90f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ae22e92588cbfc5e96a2d48c01a90f5">&#9670;&#160;</a></span>AssetRef() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">duin::AssetRef::AssetRef </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>rPath</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -232,12 +253,12 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00022">22</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00026">26</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
 <a id="aa45db884d2dce558dba2d2bd072db4da" name="aa45db884d2dce558dba2d2bd072db4da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa45db884d2dce558dba2d2bd072db4da">&#9670;&#160;</a></span>AssetRef() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa45db884d2dce558dba2d2bd072db4da">&#9670;&#160;</a></span>AssetRef() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +281,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00050">50</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00054">54</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
@@ -288,7 +309,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00028">28</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00032">32</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
@@ -316,7 +337,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00038">38</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00042">42</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
@@ -344,7 +365,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00033">33</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00037">37</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
@@ -371,19 +392,35 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00054">54</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00059">59</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a67120370ee7d6db5a2400fbaced8cbae" name="a67120370ee7d6db5a2400fbaced8cbae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67120370ee7d6db5a2400fbaced8cbae">&#9670;&#160;</a></span>fileExt</h2>
+<a id="a3f7ee628278f9b2857522999bba235eb" name="a3f7ee628278f9b2857522999bba235eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f7ee628278f9b2857522999bba235eb">&#9670;&#160;</a></span>fileExt</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">FileExt duin::AssetRef::fileExt</td>
+          <td class="memname">std::optional&lt; FileExt &gt; duin::AssetRef::fileExt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00020">20</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+
+</div>
+</div>
+<a id="a8f82bdc1817364c5201b0e0cd97b2318" name="a8f82bdc1817364c5201b0e0cd97b2318"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f82bdc1817364c5201b0e0cd97b2318">&#9670;&#160;</a></span>fileType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; FileType &gt; duin::AssetRef::fileType</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -392,30 +429,14 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a34bc0cdf67cb3e5c15052e0ca3d49757" name="a34bc0cdf67cb3e5c15052e0ca3d49757"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34bc0cdf67cb3e5c15052e0ca3d49757">&#9670;&#160;</a></span>fileType</h2>
+<a id="a17e8ea8e72ab0a1e9bb5ee1012460aed" name="a17e8ea8e72ab0a1e9bb5ee1012460aed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17e8ea8e72ab0a1e9bb5ee1012460aed">&#9670;&#160;</a></span>rPath</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">FileType duin::AssetRef::fileType</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00018">18</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
-
-</div>
-</div>
-<a id="ad98b1992d30132c3fd6fcdf09c7124cd" name="ad98b1992d30132c3fd6fcdf09c7124cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad98b1992d30132c3fd6fcdf09c7124cd">&#9670;&#160;</a></span>hintPath</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string duin::AssetRef::hintPath</td>
+          <td class="memname">std::string duin::AssetRef::rPath</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -444,7 +465,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00014">14</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00015">15</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
@@ -468,12 +489,12 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00013">13</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00014">14</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
-<a id="a8640ab3eda6bdbca62ceeaed9894d29d" name="a8640ab3eda6bdbca62ceeaed9894d29d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8640ab3eda6bdbca62ceeaed9894d29d">&#9670;&#160;</a></span>TAG_HINTPATH</h2>
+<a id="a4f71f51c0c23a6e1030a245b08e2376e" name="a4f71f51c0c23a6e1030a245b08e2376e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f71f51c0c23a6e1030a245b08e2376e">&#9670;&#160;</a></span>TAG_RPATH</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -482,7 +503,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string duin::AssetRef::TAG_HINTPATH = &quot;hintPath&quot;</td>
+          <td class="memname">const std::string duin::AssetRef::TAG_RPATH = &quot;rPath&quot;</td>
         </tr>
       </table>
   </td>
@@ -516,23 +537,39 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00011">11</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00013">13</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>
-<a id="ab2f964713a23bc76e5d1b323b61032de" name="ab2f964713a23bc76e5d1b323b61032de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2f964713a23bc76e5d1b323b61032de">&#9670;&#160;</a></span>uuid</h2>
+<a id="a2e55fa966dafb4292f6b401d22b62c52" name="a2e55fa966dafb4292f6b401d22b62c52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e55fa966dafb4292f6b401d22b62c52">&#9670;&#160;</a></span>uuid <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classduin_1_1UUID.html">UUID</a> duin::AssetRef::uuid = UUID::INVALID</td>
+          <td class="memname">std::optional&lt;<a class="el" href="classduin_1_1UUID.html">UUID</a>&gt; duin::AssetRef::uuid</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00016">16</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00018">18</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
+
+</div>
+</div>
+<a id="a08ded275e93dfaccf1607dcb79bccfbc" name="a08ded275e93dfaccf1607dcb79bccfbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08ded275e93dfaccf1607dcb79bccfbc">&#9670;&#160;</a></span>uuid <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;std::string&gt; duin::AssetRef::uuid</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="AssetRef_8h_source.html#l00050">50</a> of file <a class="el" href="AssetRef_8h_source.html">AssetRef.h</a>.</p>
 
 </div>
 </div>

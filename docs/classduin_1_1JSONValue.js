@@ -29,6 +29,7 @@ var classduin_1_1JSONValue =
     [ "IsArray", "classduin_1_1JSONValue.html#a257de70c4026f7ecfb8564c4f34a6aa7", null ],
     [ "IsBool", "classduin_1_1JSONValue.html#adfb59845f3b74a892bd64bb077cb42d4", null ],
     [ "IsDouble", "classduin_1_1JSONValue.html#a7b226df6ac3612eb9180e1fd47420989", null ],
+    [ "IsEmpty", "classduin_1_1JSONValue.html#aea8233a86f4fd2092588b335e78eab94", null ],
     [ "IsInt", "classduin_1_1JSONValue.html#a202b44404ac2ea2cb2c88fefc6041b4b", null ],
     [ "IsNull", "classduin_1_1JSONValue.html#a7798e8708c3258587055a1d1b7e107a7", null ],
     [ "IsNumber", "classduin_1_1JSONValue.html#a424f8b32d90e1cd6007491dd11d0cb49", null ],
