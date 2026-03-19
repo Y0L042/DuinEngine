@@ -306,6 +306,14 @@ class JSONValue
     bool IsValid();
 
     /**
+     * @brief Checks if this JSONValue is empty (i.e. {}).
+     * @return True if empty.
+     */
+    bool IsEmpty();
+
+    size_t GetMemberCount();
+
+    /**
      * @brief Checks if this value is null.
      * @return True if null.
      */

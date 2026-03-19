@@ -63,8 +63,8 @@ JSONValue JSONValue::Parse(const std::string &string)
     // Check for parse errors
     if (dv.jdoc_->HasParseError())
     {
-        DN_CORE_ERROR("JSON parsing failed at offset {}: Error code {}", dv.jdoc_->GetErrorOffset(),
-                      static_cast<int>(dv.jdoc_->GetParseError()));
+        DN_CORE_ERROR("JSON parsing failed at offset {}: Error code {}, Source {}", dv.jdoc_->GetErrorOffset(),
+                      static_cast<int>(dv.jdoc_->GetParseError()), string);
         dv.SetObject(); // Default to empty object on error
         return dv;
     }
@@ -371,6 +371,18 @@ bool JSONValue::IsValid()
 {
     return !INVALID_;
 }
+
+bool JSONValue::IsEmpty()
+{
+    return jvalue_->MemberCount() == 0;
+}
+
+size_t JSONValue::GetMemberCount()
+{
+    return static_cast<size_t>(jvalue_->MemberCount());
+}
+
+
 
 /**
  * @brief Checks if this value is null.

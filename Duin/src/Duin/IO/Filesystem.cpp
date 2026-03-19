@@ -16,10 +16,10 @@ static const int vpathSize = 6;
 static const std::string sep = "/";
 
 // Virtual path prefixes (Godot-style virtual filesystem)
-static const std::string APPROOT = "bin://"; // Application executable directory
-static const std::string APPDATA = "app://"; // Application user data directory
-static const std::string USRDATA = "usr://"; // User's home folder
-static const std::string WRKDATA = "wrk://"; // Workspace directory set by app/editor
+const std::string APPROOT = "bin://"; // Application executable directory
+const std::string APPDATA = "app://"; // Application user data directory
+const std::string USRDATA = "usr://"; // User's home folder
+const std::string WRKDATA = "wrk://"; // Workspace directory set by app/editor
 
 // Global variables for app:// virtual path resolution
 // Set via SetPrefPath(), used by MapVirtualToSystemPath()
@@ -29,6 +29,10 @@ static std::string APP = "";
 // Global variable for wrk:// virtual path resolution
 // Set via SetWorkspacePath(), used by MapVirtualToSystemPath()
 static std::string WORKSPACE_PATH = "";
+
+// When true, bin:// resolves to the current working directory instead of the executable directory.
+// Useful in debug/development to run from a source tree without copying assets next to the binary.
+static bool BIN_USE_CURRENT_DIR = false;
 
 std::string duin::fs::GetFileName(const std::string &path)
 {
@@ -97,6 +101,21 @@ std::string duin::fs::GetBasePath(void)
     std::string out = (res != NULL) ? res : INVALID_PATH;
     out = EnsureUnixPath(out);
     return out;
+}
+
+void duin::fs::SetBinDebugMode(bool enabled)
+{
+    BIN_USE_CURRENT_DIR = enabled;
+}
+
+bool duin::fs::GetBinDebugMode()
+{
+    return BIN_USE_CURRENT_DIR;
+}
+
+std::string duin::fs::GetBinPath()
+{
+    return BIN_USE_CURRENT_DIR ? GetCurrentDir() : GetBasePath();
 }
 
 std::string duin::fs::GetCurrentDir(void)
@@ -179,7 +198,7 @@ std::string duin::fs::MapVirtualToSystemPath(const std::string &path)
 
     if (drive == APPROOT)
     {
-        sysPath = GetBasePath() + path.substr(vpathSize, path.size());
+        sysPath = GetBinPath() + path.substr(vpathSize, path.size());
     }
 
     if (drive == APPDATA)
@@ -221,6 +240,59 @@ std::string duin::fs::MapVirtualToSystemPath(const std::string &path)
     }
 
     return sysPath;
+}
+
+std::string duin::fs::MapSystemToVirtualPath(const std::string &path)
+{
+    if (path.empty())
+    {
+        return INVALID_PATH;
+    }
+
+    std::string normalized = EnsureUnixPath(path);
+
+    // Check wrk:// first (most specific, user-set workspace)
+    if (!WORKSPACE_PATH.empty() && normalized.rfind(WORKSPACE_PATH, 0) == 0)
+    {
+        return WRKDATA + normalized.substr(WORKSPACE_PATH.size());
+    }
+
+    // Check app:// (user data directory)
+    if (!ORG.empty() && !APP.empty())
+    {
+        std::string prefPath = GetPrefPath(ORG, APP);
+        if (!IsPathInvalid(prefPath) && normalized.rfind(prefPath, 0) == 0)
+        {
+            return APPDATA + normalized.substr(prefPath.size());
+        }
+    }
+
+    // Check usr:// (user home directory)
+    std::string home = GetUserFolder(DNFS_FOLDER_HOME);
+    if (!IsPathInvalid(home) && normalized.rfind(home, 0) == 0)
+    {
+        return USRDATA + normalized.substr(home.size());
+    }
+
+    // Check bin:// (executable directory or cwd in debug mode)
+    std::string basePath = GetBinPath();
+    if (!IsPathInvalid(basePath) && normalized.rfind(basePath, 0) == 0)
+    {
+        return APPROOT + normalized.substr(basePath.size());
+    }
+
+    return INVALID_PATH;
+}
+
+bool duin::fs::IsVirtualPath(const std::string &path)
+{
+    if (path.size() < vpathSize)
+    {
+        return false;
+    }
+
+    std::string drive = path.substr(0, vpathSize);
+    return drive == APPROOT || drive == APPDATA || drive == USRDATA || drive == WRKDATA;
 }
 
 char **duin::fs::GlobDirectory(const std::string &path, const std::string &pattern, GlobFlags flags, int *count)

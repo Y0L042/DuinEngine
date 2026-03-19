@@ -5,6 +5,10 @@
 
 namespace duin::vfs
 {
+const std::string APPROOT();
+const std::string APPDATA();
+const std::string USRDATA();
+const std::string WRKDATA();
 
 bool FileCopy(const std::string &oldPath, const std::string &newPath);
 bool CreateDir(const std::string &path);
@@ -13,9 +17,7 @@ bool RenamePath(const std::string &oldPath, const std::string &newPath);
 char **GlobDirectory(const std::string &path, const std::string &pattern, fs::GlobFlags flags, int *count);
 bool EnumerateDirectory(const std::string &path, fs::EnumerateDirectoryCallback callback, void *userdata);
 bool GetPathInfo(const std::string &path, fs::PathInfo *info = nullptr);
-
-
-
+std::string OverridePathPrefix(const std::string &path, const std::string &prefix);
 
 bool IsPathInvalid(const std::string &path); // TODO NUKE THIS!!!
 

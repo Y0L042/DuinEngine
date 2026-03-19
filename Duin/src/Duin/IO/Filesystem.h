@@ -155,6 +155,41 @@ bool CreateDir(const std::string &path);
 std::string GetBasePath(void);
 
 /**
+ * @brief Enable or disable debug mode for bin:// path resolution.
+ *
+ * When enabled, bin:// maps to the current working directory (where the executable
+ * was launched from) instead of the executable's own directory. This is useful
+ * during development when running from a source tree without copying assets next
+ * to the binary.
+ *
+ * @param enabled true to use the current working directory, false to use the executable directory
+ *
+ * @see GetBinDebugMode()
+ * @see GetBinPath()
+ */
+void SetBinDebugMode(bool enabled);
+
+/**
+ * @brief Query whether bin:// debug mode is active.
+ *
+ * @return true if bin:// resolves to the current working directory, false otherwise
+ *
+ * @see SetBinDebugMode()
+ */
+bool GetBinDebugMode();
+
+/**
+ * @brief Get the path that bin:// currently resolves to.
+ *
+ * Returns GetCurrentDir() when debug mode is enabled, otherwise GetBasePath().
+ *
+ * @return The resolved bin:// base path, or INVALID_PATH on error
+ *
+ * @see SetBinDebugMode()
+ */
+std::string GetBinPath();
+
+/**
  * @brief Get the current working directory.
  *
  * Returns the absolute path of the current working directory.
@@ -319,7 +354,7 @@ bool RenamePath(const std::string &oldPath, const std::string &newPath);
  * }
  * @endcode
  */
-// TODO fucking stupid function naming. It doesn't check the validity of the path, 
+// TODO fucking stupid function naming. It doesn't check the validity of the path,
 // it just checks string matching against INVALID constant
 bool IsPathInvalid(const std::string &path);
 
@@ -416,6 +451,8 @@ std::string EnsureUnixPath(const std::string &path);
  * @endcode
  */
 std::string MapVirtualToSystemPath(const std::string &path);
+std::string MapSystemToVirtualPath(const std::string &path);
+bool IsVirtualPath(const std::string &path);
 
 /**
  * @brief Flags for controlling glob directory behavior.
@@ -602,11 +639,11 @@ typedef enum PathType
  */
 struct PathInfo
 {
-    PathType type;       /**< The path type */
-    uint64_t size;       /**< File size in bytes */
-    int64_t createTime;  /**< Creation time in nanoseconds */
-    int64_t modifyTime;  /**< Last modification time in nanoseconds */
-    int64_t accessTime;  /**< Last access time in nanoseconds */
+    PathType type;      /**< The path type */
+    uint64_t size;      /**< File size in bytes */
+    int64_t createTime; /**< Creation time in nanoseconds */
+    int64_t modifyTime; /**< Last modification time in nanoseconds */
+    int64_t accessTime; /**< Last access time in nanoseconds */
 };
 
 /**
