@@ -16,91 +16,91 @@ const std::string DEBUG_data = R"({
 	"refs": [
 		{
 			"uuid": "0xC011E1BE3B65B8CA",
-			"hintPath": "assets/item_11",
+			"rPath": "assets/item_11",
 			"fileType": "FS_FILETYPE_AUDIO_EXT",
 			"fileExt": "FS_FILEEXT_JPEG"
 		},
 		{
 			"uuid": "0x2A74A270C25EDC46",
-			"hintPath": "assets/item_5",
+			"rPath": "assets/item_5",
 			"fileType": "FS_FILETYPE_TEXT_EXT",
 			"fileExt": "FS_FILEEXT_CFG"
 		},
 		{
 			"uuid": "0xC4C5CDE8D305C517",
-			"hintPath": "assets/item_4",
+			"rPath": "assets/item_4",
 			"fileType": "FS_FILETYPE_MODEL_EXT",
 			"fileExt": "FS_FILEEXT_OGG"
 		},
 		{
 			"uuid": "0xB13EBE8D0F09722E",
-			"hintPath": "assets/item_0",
+			"rPath": "assets/item_0",
 			"fileType": "FS_FILETYPE_TEXT_EXT",
 			"fileExt": "FS_FILEEXT_WMA"
 		},
 		{
 			"uuid": "0x410800E0962553AF",
-			"hintPath": "assets/item_1",
+			"rPath": "assets/item_1",
 			"fileType": "FS_FILETYPE_MODEL_EXT",
 			"fileExt": "FS_FILEEXT_NULL"
 		},
 		{
 			"uuid": "0x179BB5BF1E09AC62",
-			"hintPath": "assets/item_2",
+			"rPath": "assets/item_2",
 			"fileType": "FS_FILETYPE_TEXT_EXT",
 			"fileExt": "FS_FILEEXT_MKV"
 		},
 		{
 			"uuid": "0xD35877B4D2AEF162",
-			"hintPath": "assets/item_7",
+			"rPath": "assets/item_7",
 			"fileType": "FS_FILETYPE_IMAGE_EXT",
 			"fileExt": "FS_FILEEXT_LUA"
 		},
 		{
 			"uuid": "0x85ABDAB11A7E3E00",
-			"hintPath": "assets/item_6",
+			"rPath": "assets/item_6",
 			"fileType": "FS_FILETYPE_IMAGE_EXT",
 			"fileExt": "FS_FILEEXT_MPEG"
 		},
 		{
 			"uuid": "0x4CB1CC044A2101A0",
-			"hintPath": "assets/item_3",
+			"rPath": "assets/item_3",
 			"fileType": "FS_FILETYPE_INVALID_EXT",
 			"fileExt": "FS_FILEEXT_TIFF"
 		},
 		{
 			"uuid": "0x97B171270A66798E",
-			"hintPath": "assets/item_12",
+			"rPath": "assets/item_12",
 			"fileType": "FS_FILETYPE_MODEL_EXT",
 			"fileExt": "FS_FILEEXT_BLEND"
 		},
 		{
 			"uuid": "0xDD713A66D9FACD91",
-			"hintPath": "assets/item_8",
+			"rPath": "assets/item_8",
 			"fileType": "FS_FILETYPE_IMAGE_EXT",
 			"fileExt": "FS_FILEEXT_CSV"
 		},
 		{
 			"uuid": "0x76A853AE110E737B",
-			"hintPath": "assets/item_9",
+			"rPath": "assets/item_9",
 			"fileType": "FS_FILETYPE_VIDEO_EXT",
 			"fileExt": "FS_FILEEXT_MB"
 		},
 		{
 			"uuid": "0x89C755F0E398A84B",
-			"hintPath": "assets/item_14",
+			"rPath": "assets/item_14",
 			"fileType": "FS_FILETYPE_AUDIO_EXT",
 			"fileExt": "FS_FILEEXT_CFG"
 		},
 		{
 			"uuid": "0xAEDCD136592455C2",
-			"hintPath": "assets/item_10",
+			"rPath": "assets/item_10",
 			"fileType": "FS_FILETYPE_VIDEO_EXT",
 			"fileExt": "FS_FILEEXT_BMP"
 		},
 		{
 			"uuid": "0x7D360065E083C08F",
-			"hintPath": "assets/item_13",
+			"rPath": "assets/item_13",
 			"fileType": "FS_FILETYPE_VIDEO_EXT",
 			"fileExt": "FS_FILEEXT_AAC"
 		}
@@ -319,13 +319,27 @@ void State_SceneEditor::UpdateAssetIndex()
     duin::JSONValue v = duin::JSONValue::ParseFromFile(duin::fs::MapVirtualToSystemPath(idxPath));
     assetIndex.Deserialize(v.Write());
 
-    // stream.Write(DEBUG_data.c_str(), DEBUG_data.size());
-    // stream.Flush();
     std::vector<std::shared_ptr<FSNode>> assetFiles;
+
+    // Check existance cached AssetRefs in assetIndex
+    // TODO give user a warning/option to resolve missing dependencies
+    std::vector<duin::UUID> missingAssets;
+    for (const auto &asset : assetIndex.GetIndex())
+    {
+        if (!duin::vfs::GetPathInfo(asset.second.rPath))
+        {
+            missingAssets.push_back(asset.first);
+        }
+    }
+    for (const auto &uuid : missingAssets)
+    {
+        assetIndex.RemoveAsset(uuid);
+    }
+    missingAssets.clear();
 
     // Get list of asset files
     fileManager->WalkTree([&assetFiles](std::shared_ptr<FSNode> node) {
-        if (node->fileExt == duin::FS_FILEEXT_JSON)
+        if (node->fileExt == duin::FS_FILEEXT_PSCN)
         {
             assetFiles.push_back(node);
         }
@@ -341,7 +355,7 @@ void State_SceneEditor::UpdateAssetIndex()
             // Metafile exist
             size_t fileSize = 0;
             char *raw = (char *)duin::io::IOStream::LoadFile(assetMetaFile, &fileSize);
-            std::string data(raw); 
+            std::string data(raw);
             duin::AssetRef ref = rfl::json::read<duin::AssetRef>(data).value();
             assetIndex.EnsureAsset(ref);
         }
@@ -349,7 +363,14 @@ void State_SceneEditor::UpdateAssetIndex()
         {
             // Metafile does not exist
             duin::io::IOStream stream = duin::io::IOStream::FromFile(assetMetaFile, "w");
-            duin::AssetRef ref(assetFile->path, assetFile->fileType, assetFile->fileExt);
+            std::string rPath =
+                duin::vfs::OverridePathPrefix(duin::fs::MapSystemToVirtualPath(assetFile->path), duin::vfs::APPROOT());
+            if (rPath.empty())
+            {
+                DN_FATAL("Invalid rPath {}", rPath);
+                return;
+            }
+            duin::AssetRef ref(rPath, assetFile->fileType, assetFile->fileExt);
             assetIndex.EnsureAsset(ref);
             std::string strRef = rfl::json::write(ref);
             stream.Write(strRef.c_str(), strRef.size());
@@ -359,6 +380,9 @@ void State_SceneEditor::UpdateAssetIndex()
 
     std::string out;
     assetIndex.Serialize(out);
+    duin::io::IOStream stream = duin::io::IOStream::FromFile(duin::fs::MapVirtualToSystemPath(idxPath), "w");
+    stream.Write(out.c_str(), out.size());
+    stream.Flush();
     DN_INFO("UPDATED assetIndex: \n\n\n{}\n\n\n", out);
 }
 
@@ -394,7 +418,7 @@ void State_SceneEditor::EnsureInstantiatedScene(std::weak_ptr<FSNode> sceneFile)
         if (sceneManager->InstantiateScene(handle))
         {
             sceneManager->SetActiveScene(handle);
-            // signals.onSetActiveScene.Emit(sceneManager->GetActiveScene());
+            signals.onSetActiveScene.Emit(sceneManager->GetActiveScene());
             signals.onSetSceneFromFile.Emit(sceneManager->GetActiveScene());
         }
         else

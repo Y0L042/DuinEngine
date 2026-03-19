@@ -2,7 +2,7 @@
 #include <memory>
 #include <Duin/Objects/GameStateMachine.h>
 #include <Duin/Scene/SceneBuilder.h>
-#include <Duin/Assets/AssetIndex.h>
+#include "AssetIndex.h"
 
 #include "Project.h"
 #include "FileManager.h"
