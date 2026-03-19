@@ -32,6 +32,7 @@ namespace duin
  */
 struct PackedComponent
 {
+    static const std::string TAG_COMPONENTNAME;
     static const std::string TAG_JSON;
 
     std::string componentTypeName;
@@ -69,11 +70,11 @@ struct PackedPair
     UUID relationshipUUID;
     bool relationshipIsComponent = false; ///< True if relationship is a component/tag type, not a plain entity
     std::string relationshipPath;         ///< Full FLECS path (for component-type lookup across worlds)
-    std::string targetName; ///< Short display name of the target (second element)
+    std::string targetName;               ///< Short display name of the target (second element)
     UUID targetUUID;
     bool targetIsComponent = false; ///< True if target is a component/tag type, not a plain entity
     std::string targetPath;         ///< Full FLECS path (for component-type lookup across worlds)
-    std::string jsonData; ///< Optional data stored with the pair
+    std::string jsonData;           ///< Optional data stored with the pair
 };
 
 /**
@@ -104,8 +105,6 @@ struct PackedEntity
     std::vector<PackedEntity> children;      ///< Child entities.
     std::optional<PackedExternalDependency> instanceOf;
 };
-
-
 
 /**
  * @struct PackedSceneMetadata
@@ -139,13 +138,12 @@ struct PackedScene
     static const std::string TAG_SCENEUUID;
     static const std::string TAG_SCENENAME;
     static const std::string TAG_METADATA;
-    static const std::string TAG_EXTERNALDEPENDENCIES;
     static const std::string TAG_ENTITIES;
 
-    UUID uuid;                                                  ///< Scene identifier.
-    std::string name;                                           ///< Scene name.
-    PackedSceneMetadata metadata;                               ///< Version/author info.
-    std::vector<PackedEntity> entities;                         ///< Root entities.
+    UUID uuid;                          ///< Scene identifier.
+    std::string name;                   ///< Scene name.
+    PackedSceneMetadata metadata;       ///< Version/author info.
+    std::vector<PackedEntity> entities; ///< Root entities.
 };
 
 class SceneBuilder
@@ -157,10 +155,12 @@ class SceneBuilder
     PackedScene PackScene(const std::vector<Entity> &vecEntities);
     PackedScene PackScene(std::shared_ptr<World> world);
     PackedScene PackScene(World *world);
-    void InstantiateScene(PackedScene &pscn, World *world);
-    void InstantiateSceneAsChildren(PackedScene &pscn, Entity parent);
+    Entity InstantiateScene(PackedScene &pscn, World *world);
+    Entity InstantiateSceneAsChildren(PackedScene &pscn, Entity parent);
     JSONValue SerializeScene(const PackedScene &pscn);
+    JSONValue SerializeSceneToFile(const PackedScene &pscn, const std::string& vpath);
     PackedScene DeserializeScene(const JSONValue &scene);
+    PackedScene DeserializeSceneFromFile(const std::string &vpath);
 
     JSONValue SerializeMetadata(const PackedSceneMetadata &metadata);
     PackedSceneMetadata DeserializeMetadata(const JSONValue &metadata);
@@ -185,6 +185,9 @@ class SceneBuilder
 
     JSONValue SerializeExternalDependency(const PackedExternalDependency &ped);
     PackedExternalDependency DeserializeExternalDependency(const JSONValue &exdep);
+
+    bool ValidateExternalDependency(const PackedExternalDependency &exdep);
+    PackedExternalDependency ResolveExternalDependency(const PackedExternalDependency &exdep);
 
   private:
     std::unordered_map<uint64_t, UUID> instanceToPackedEntityMap;

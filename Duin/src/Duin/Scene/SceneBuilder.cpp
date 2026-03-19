@@ -4,13 +4,18 @@
 #include "Duin/ECS/DECS/Entity.h"
 #include "Duin/IO/JSONValue.h"
 #include "Duin/IO/FileUtils.h"
+#include "Duin/IO/Filesystem.h"
 #include <flecs.h>
 #include "Duin/ECS/ComponentSerializer.h"
 #include "Duin/ECS/PrefabRegistry.h"
 #include "Duin/Core/Debug/DNAssert.h"
+#include "Duin/IO/FileModule.h"
+
+#include <rfl/json.hpp>
 
 #include <functional>
 #include <unordered_map>
+#include <unordered_set>
 
 #define PRETTY_WRITE_JSON
 
@@ -31,6 +36,7 @@
 #include <flecs/addons/cpp/entity.hpp>
 
 // Static TAG definitions
+const std::string duin::PackedComponent::TAG_COMPONENTNAME = "type";
 const std::string duin::PackedComponent::TAG_JSON = "json";
 
 const std::string duin::PackedPair::TAG_RELATIONSHIPNAME = "relationship";
@@ -63,7 +69,6 @@ const std::string duin::PackedSceneMetadata::TAG_AUTHOR = "author";
 const std::string duin::PackedScene::TAG_SCENEUUID = "sceneUUID";
 const std::string duin::PackedScene::TAG_SCENENAME = "sceneName";
 const std::string duin::PackedScene::TAG_METADATA = "metadata";
-const std::string duin::PackedScene::TAG_EXTERNALDEPENDENCIES = "externalDependencies";
 const std::string duin::PackedScene::TAG_ENTITIES = "entities";
 
 // ============================================================
@@ -221,8 +226,8 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
         if (targetEntity.IsValid())
         {
             e.IsA(targetEntity);
-            //DN_CORE_INFO("Instantiated IsA pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName,
-            //             e.GetName());
+            // DN_CORE_INFO("Instantiated IsA pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName,
+            //              e.GetName());
             return;
         }
     }
@@ -289,9 +294,9 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
         // Build the pair ID from the two resolved entity IDs.  For component-type
         // relationships this produces (component_type_id, target_id) which matches
         // what has<Relation>(target) and Has<Relation>(target) check.
-        //e.Add(flecs::id(w->GetFlecsWorld().c_ptr(), relationship.GetID(), target.GetID()));
+        // e.Add(flecs::id(w->GetFlecsWorld().c_ptr(), relationship.GetID(), target.GetID()));
         e.Add(relationship, target);
-        //DN_CORE_INFO("Instantiated pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName, e.GetName());
+        // DN_CORE_INFO("Instantiated pair: ({}, {}) on entity {}", pp.relationshipName, pp.targetName, e.GetName());
     }
     else
     {
@@ -530,6 +535,79 @@ void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
         e.Disable();
     }
 
+    // Handle instanceOf: load and instantiate external scene as children
+    if (pe.instanceOf.has_value())
+    {
+        static thread_local std::unordered_set<std::string> loadingPaths;
+
+        const PackedExternalDependency &exdep = *pe.instanceOf;
+        if (ValidateExternalDependency(exdep))
+        {
+            PackedExternalDependency resolved = ResolveExternalDependency(exdep);
+            if (!vfs::GetPathInfo(resolved.rPath))
+            {
+                DN_CORE_FATAL("Invalid rPath! {}", resolved.rPath);
+            }
+
+            if (loadingPaths.count(resolved.rPath))
+            {
+                DN_CORE_WARN("SceneBuilder::InstantiateEntity - Circular reference detected for: {}", resolved.rPath);
+            }
+            else
+            {
+                loadingPaths.insert(resolved.rPath);
+
+                std::string fileContents;
+                if (FileUtils::ReadFileIntoString(resolved.rPath, fileContents))
+                {
+                    JSONValue sceneJSON = JSONValue::Parse(fileContents);
+                    if (sceneJSON.IsObject())
+                    {
+                        PackedScene externalScene = DeserializeScene(sceneJSON);
+
+                        auto savedInstanceToPackedMap = instanceToPackedEntityMap;
+                        auto savedPackedToInstanceMap = packedEntityToInstanceMap;
+
+                        // Merge the external scene's root entity into e.
+                        // Assumes the external scene has exactly one root entity.
+                        if (!externalScene.entities.empty())
+                        {
+                            PackedEntity &extRoot = externalScene.entities[0];
+
+                            // Pre-pass: create child entities of external root under e
+                            for (const PackedEntity &child : extRoot.children)
+                            {
+                                PrePassInstantiate(child, world, e);
+                            }
+
+                            // Apply external root's content (name, tags, components, children) onto e
+                            InstantiateEntity(extRoot, e);
+                        }
+
+                        instanceToPackedEntityMap = std::move(savedInstanceToPackedMap);
+                        packedEntityToInstanceMap = std::move(savedPackedToInstanceMap);
+                    }
+                    else
+                    {
+                        DN_CORE_WARN("SceneBuilder::InstantiateEntity - Failed to parse external scene: {}",
+                                     resolved.rPath);
+                    }
+                }
+                else
+                {
+                    DN_CORE_WARN("SceneBuilder::InstantiateEntity - Failed to read external scene file: {}",
+                                 resolved.rPath);
+                }
+
+                loadingPaths.erase(resolved.rPath);
+            }
+        }
+        else
+        {
+            DN_CORE_WARN("SceneBuilder::InstantiateEntity - Invalid external dependency (empty rPath)");
+        }
+    }
+
     for (const PackedComponent &tag : pe.tags)
     {
         InstantiateComponent(tag, e);
@@ -607,6 +685,11 @@ duin::JSONValue duin::SceneBuilder::SerializeEntity(const PackedEntity &pe)
         childrenArray.PushBack(eJSON);
     }
     json.AddMember(PackedEntity::TAG_CHILDREN, childrenArray);
+
+    if (pe.instanceOf.has_value())
+    {
+        json.AddMember(PackedEntity::TAG_INSTANCEOF, SerializeExternalDependency(*pe.instanceOf));
+    }
 
     return json;
 }
@@ -715,30 +798,53 @@ duin::PackedEntity duin::SceneBuilder::DeserializeEntity(const JSONValue &json)
         }
     }
 
+    if (json.HasMember(PackedEntity::TAG_INSTANCEOF))
+    {
+        pe.instanceOf = DeserializeExternalDependency(json.GetMember(PackedEntity::TAG_INSTANCEOF));
+    }
+
     return pe;
 }
 
 // ExternalDependency
 duin::JSONValue duin::SceneBuilder::SerializeExternalDependency(const PackedExternalDependency &ped)
 {
-    JSONValue json;
-    json.SetObject();
-
-    json.AddMember(PackedExternalDependency::TAG_UUID, UUID::ToStringHex(ped.uuid));
-
-    return json;
+    std::string jsonStr = rfl::json::write(ped);
+    return JSONValue::Parse(jsonStr);
 }
 
 duin::PackedExternalDependency duin::SceneBuilder::DeserializeExternalDependency(const JSONValue &exdep)
 {
-    PackedExternalDependency ped;
-
-    if (exdep.HasMember(PackedExternalDependency::TAG_UUID))
+    std::string jsonStr = exdep.Write();
+    auto result = rfl::json::read<AssetRef>(jsonStr);
+    if (result)
     {
-        ped.uuid = UUID::FromStringHex(exdep.GetMember(PackedExternalDependency::TAG_UUID).GetString());
+        return result.value();
     }
+    DN_CORE_WARN("SceneBuilder::DeserializeExternalDependency - Failed to deserialize: {}", jsonStr);
+    return PackedExternalDependency();
+}
 
-    return ped;
+bool duin::SceneBuilder::ValidateExternalDependency(const PackedExternalDependency &exdep)
+{
+    return !exdep.rPath.empty();
+}
+
+duin::PackedExternalDependency duin::SceneBuilder::ResolveExternalDependency(const PackedExternalDependency &exdep)
+{
+    PackedExternalDependency resolved = exdep;
+    if (fs::IsVirtualPath(resolved.rPath))
+    {
+        std::string systemPath = fs::MapVirtualToSystemPath(resolved.rPath);
+        if (systemPath == INVALID_PATH)
+        {
+            DN_CORE_WARN("SceneBuilder::ResolveExternalDependency - Failed to resolve virtual path: {}",
+                         resolved.rPath);
+            return exdep;
+        }
+        resolved.rPath = systemPath;
+    }
+    return resolved;
 }
 
 // Metadata
@@ -802,11 +908,6 @@ duin::JSONValue duin::SceneBuilder::SerializeScene(const PackedScene &pscn)
         json.AddMember(PackedScene::TAG_METADATA, meta);
     }
 
-    // External dependencies
-    JSONValue depsArray;
-    depsArray.SetArray();
-    json.AddMember(PackedScene::TAG_EXTERNALDEPENDENCIES, depsArray);
-
     // Entities
     JSONValue entitiesArray;
     entitiesArray.SetArray();
@@ -817,6 +918,20 @@ duin::JSONValue duin::SceneBuilder::SerializeScene(const PackedScene &pscn)
     json.AddMember(PackedScene::TAG_ENTITIES, entitiesArray);
 
     return json;
+}
+
+duin::JSONValue duin::SceneBuilder::SerializeSceneToFile(const PackedScene &pscn, const std::string &vpath)
+{
+    duin::JSONValue v = SerializeScene(pscn);
+
+    std::string resolvedPath = duin::fs::MapVirtualToSystemPath(vpath);
+    auto stream = duin::io::IOStream::FromFile(resolvedPath, "w");
+    std::string out = v.Write();
+    stream.Write(out.c_str(), out.size());
+    stream.Flush();
+    stream.Close();
+
+    return v;
 }
 
 duin::PackedScene duin::SceneBuilder::DeserializeScene(const JSONValue &scene)
@@ -862,6 +977,14 @@ duin::PackedScene duin::SceneBuilder::DeserializeScene(const JSONValue &scene)
     return ps;
 }
 
+duin::PackedScene duin::SceneBuilder::DeserializeSceneFromFile(const std::string &vpath)
+{
+    std::string resolvedPath = duin::fs::MapVirtualToSystemPath(vpath);
+    duin::JSONValue v = duin::JSONValue::ParseFromFile(resolvedPath);
+
+    return DeserializeScene(v);
+}
+
 // Pre-pass helpers
 
 void duin::SceneBuilder::PrePassEntity(Entity e)
@@ -884,9 +1007,10 @@ void duin::SceneBuilder::PrePassInstantiate(const PackedEntity &pe, World *world
         PrePassInstantiate(child, world, e);
 }
 
-void duin::SceneBuilder::InstantiateScene(PackedScene &pscn, World *world)
+duin::Entity duin::SceneBuilder::InstantiateScene(PackedScene &pscn, World *world)
 {
     DN_CORE_ASSERT(world != nullptr, "World is nullptr!");
+    Entity rootEntity;
 
     instanceToPackedEntityMap.clear();
     packedEntityToInstanceMap.clear();
@@ -905,21 +1029,30 @@ void duin::SceneBuilder::InstantiateScene(PackedScene &pscn, World *world)
         {
             Entity e = world->MakeAlive(it->second);
             InstantiateEntity(pEntity, e);
+
+            if (!rootEntity.IsValid())
+            {
+                rootEntity = e;
+            }
         }
     }
 
     instanceToPackedEntityMap.clear();
     packedEntityToInstanceMap.clear();
+
+    return rootEntity;
 }
 
-void duin::SceneBuilder::InstantiateSceneAsChildren(PackedScene &pscn, Entity parent)
+duin::Entity duin::SceneBuilder::InstantiateSceneAsChildren(PackedScene &pscn, Entity parent)
 {
+    Entity rootEntity;
+
     instanceToPackedEntityMap.clear();
     packedEntityToInstanceMap.clear();
 
     World *w = parent.GetWorld();
     if (!w)
-        return;
+        return Entity();
 
     // Pre-pass: create all entities as children of parent.
     for (PackedEntity &pEntity : pscn.entities)
@@ -935,11 +1068,18 @@ void duin::SceneBuilder::InstantiateSceneAsChildren(PackedScene &pscn, Entity pa
         {
             Entity e = w->MakeAlive(it->second);
             InstantiateEntity(pEntity, e);
+
+            if (!rootEntity.IsValid())
+            {
+                rootEntity = e;
+            }
         }
     }
 
     instanceToPackedEntityMap.clear();
     packedEntityToInstanceMap.clear();
+
+    return rootEntity;
 }
 
 duin::PackedScene duin::SceneBuilder::PackScene(World *world)
