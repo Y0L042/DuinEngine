@@ -30,8 +30,12 @@ class SceneManager
     SceneHandle GetActiveSceneHandle();
     SceneHandle SetActiveScene(SceneHandle handle);
     SceneHandle InstantiateScene(SceneHandle handle);
+    bool EnsureExternalDependencies(SceneHandle handle);
 
   private:
+    void RemapExternalDependencies(duin::PackedScene &scene);
+    void RemapEntityDependencies(duin::PackedEntity &entity);
+
     duin::PackedScene defaultScene;
     std::unordered_map<SceneHandle, std::shared_ptr<Scene>> loadedScenes;
     SceneHandle activeSceneHandle;

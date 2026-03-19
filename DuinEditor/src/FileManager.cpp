@@ -23,6 +23,7 @@ FSNode::FSNode(std::string path) : path(path), fileType(duin::FileType::FS_FILET
     else
     {
         type = duin::ArcheType::FS_ARCHETYPE_FILE;
+        name = fs::path(path).filename().string();
         SetFileType();
     }
 }
@@ -50,7 +51,6 @@ void FSNode::Traverse()
 
 void FSNode::SetFileType()
 {
-    name = std::string(::duin::fs::GetFileName(path));
     fileExtension = std::string(::duin::fs::GetFileExtension(name));
     for (const duin::FileExtension &type : duin::AllExtensions)
     {

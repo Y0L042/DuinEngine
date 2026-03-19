@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include "EditorWorld.h"
+#include <Duin/IO/VirtualFilesystem.h>
+#include <Duin/IO/Filesystem.h>
 
 SceneManager::SceneManager()
 {
@@ -104,9 +106,38 @@ SceneHandle SceneManager::InstantiateScene(SceneHandle handle)
     auto scene = GetScene(handle);
     if (scene)
     {
-        std::shared_ptr<duin::SceneBuilder> sceneBuilder =
-            std::make_shared<duin::SceneBuilder>();
+        RemapExternalDependencies(scene->packedScene);
+        std::shared_ptr<duin::SceneBuilder> sceneBuilder = std::make_shared<duin::SceneBuilder>();
         sceneBuilder->InstantiateScene(scene->packedScene, scene->ctx.editorWorld.get());
     }
-    return SceneHandle();
+    return handle;
+}
+
+void SceneManager::RemapExternalDependencies(duin::PackedScene &scene)
+{
+    for (auto &entity : scene.entities)
+    {
+        RemapEntityDependencies(entity);
+    }
+}
+
+void SceneManager::RemapEntityDependencies(duin::PackedEntity &entity)
+{
+    if (entity.instanceOf.has_value())
+    {
+        const std::string &rPath = entity.instanceOf->rPath;
+        if (rPath.starts_with(duin::vfs::APPROOT()))
+        {
+            entity.instanceOf->rPath = duin::vfs::OverridePathPrefix(rPath, duin::vfs::WRKDATA());
+        }
+    }
+    for (auto &child : entity.children)
+    {
+        RemapEntityDependencies(child);
+    }
+}
+
+bool SceneManager::EnsureExternalDependencies(SceneHandle handle)
+{
+    return false;
 }
