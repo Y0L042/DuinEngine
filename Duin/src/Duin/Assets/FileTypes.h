@@ -84,6 +84,7 @@ typedef enum FileExt
     FS_FILEEXT_SHADER,
     FS_FILEEXT_VERT,
     FS_FILEEXT_FRAG,
+    FS_FILEEXT_PSCN,
     FS_FILEEXT_ECST,
 
     FS_FILEEXT_COUNT
@@ -105,5 +106,5 @@ struct PathInfo
 
 PathInfo GetPathInfo(const std::string& path);
 
-extern const std::array<FileExtension, 49> AllExtensions;
+extern const std::array<FileExtension, 50> AllExtensions;
 } // namespace duin

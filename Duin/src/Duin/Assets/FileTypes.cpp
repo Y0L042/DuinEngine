@@ -8,7 +8,7 @@
 
 namespace duin
 {
-const std::array<FileExtension, 49> AllExtensions = {{// Image Extensions
+const std::array<FileExtension, 50> AllExtensions = {{// Image Extensions
                                                       {"png", FS_FILETYPE_IMAGE_EXT, FS_FILEEXT_PNG},
                                                       {"jpg", FS_FILETYPE_IMAGE_EXT, FS_FILEEXT_JPG},
                                                       {"jpeg", FS_FILETYPE_IMAGE_EXT, FS_FILEEXT_JPEG},
@@ -67,6 +67,7 @@ const std::array<FileExtension, 49> AllExtensions = {{// Image Extensions
                                                       {"frag", FS_FILETYPE_TEXT_EXT, FS_FILEEXT_FRAG},
 
                                                       // Editor Extensions
+                                                      {"pscn", FS_FILETYPE_TEXT_EXT, FS_FILEEXT_PSCN},
                                                       {"ecst", FS_FILETYPE_TEXT_EXT, FS_FILEEXT_ECST}}};
 
 PathInfo GetPathInfo(const std::string &path)

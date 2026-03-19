@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <optional>
 #include "FileTypes.h"
 #include "Duin/Core/Utils/UUID.h"
 
@@ -8,19 +9,22 @@ namespace duin
 {
 struct AssetRef
 {
+    static const std::string TAG_RPATH;
     static const std::string TAG_UUID;
-    static const std::string TAG_HINTPATH;
     static const std::string TAG_FILETYPE;
     static const std::string TAG_FILEEXT;
 
-    UUID uuid = UUID::INVALID;
-    std::string hintPath;
-    FileType fileType;
-    FileExt fileExt;
+    std::string rPath;
+    std::optional<UUID> uuid;
+    std::optional<FileType> fileType;
+    std::optional<FileExt> fileExt;
 
     AssetRef() = default;
-    AssetRef(const std::string &hintPath, FileType fileType, FileExt fileExt)
-        : uuid(UUID()), hintPath(hintPath), fileType(fileType), fileExt(fileExt)
+    AssetRef(const std::string &rPath) : rPath(rPath)
+    {
+    }
+    AssetRef(const std::string &rPath, FileType fileType, FileExt fileExt)
+        : rPath(rPath), uuid(UUID()), fileType(fileType), fileExt(fileExt)
     {
     }
     ~AssetRef() = default;
@@ -42,18 +46,19 @@ struct AssetRef
 
     using ReflectionType = struct AssetRefImpl
     {
-        std::string uuid;
-        std::string hintPath;
-        FileType fileType;
-        FileExt fileExt;
+        std::string rPath;
+        std::optional<std::string> uuid;
+        std::optional<FileType> fileType;
+        std::optional<FileExt> fileExt;
     };
     AssetRef(const ReflectionType &impl)
-        : uuid(UUID::FromStringHex(impl.uuid)), hintPath(impl.hintPath), fileType(impl.fileType), fileExt(impl.fileExt)
+        : rPath(impl.rPath), uuid(impl.uuid ? std::optional<UUID>(UUID::FromStringHex(*impl.uuid)) : std::nullopt),
+          fileType(impl.fileType), fileExt(impl.fileExt)
     {
     }
     ReflectionType reflection() const
     {
-        return {uuid.ToStrHex(), hintPath, fileType, fileExt};
+        return {rPath, uuid ? std::optional<std::string>(uuid->ToStrHex()) : std::nullopt, fileType, fileExt};
     }
 };
 } // namespace duin
