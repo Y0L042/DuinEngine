@@ -215,6 +215,7 @@ void SceneTree::UpdateTree()
         DN_WARN("EditorWorld is null!");
         return;
     }
+    // Get all root entities
     std::vector<duin::Entity> vec;
     world_->IterateChildren([&](duin::Entity e) {
         if (!e.GetParent().IsValid() && !e.Has(flecs::Prefab) && (e.GetName() != ""))
@@ -228,9 +229,9 @@ void SceneTree::UpdateTree()
 void SceneTree::UpdateTreeImpl(std::vector<duin::Entity> entities)
 {
     entityTree.clear();
-    for (duin::Entity &child : entities)
+    for (duin::Entity &e : entities)
     {
-        entityTree.emplace_back(UpdateChild(child));
+        entityTree.emplace_back(UpdateChild(e));
     }
 }
 
