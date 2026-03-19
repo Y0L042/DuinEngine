@@ -23,7 +23,7 @@ namespace duin
 {
 Camera DEFAULT_CAMERA = {
     UUID(),
-    {0.0f, 0.0f, -1.0f}, // Position
+    {5.0f, 5.0f, 5.0f}, // Position
     {0.0f, 0.0f, 0.0f},  // Target
     {0.0f, 1.0f, 0.0f},  // Up
     60.0f                // FOVY
