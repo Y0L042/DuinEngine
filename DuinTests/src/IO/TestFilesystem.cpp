@@ -1702,6 +1702,177 @@ TEST_SUITE("Filesystem - EnumerateDirectory")
     }
 }
 
+TEST_SUITE("Filesystem - IsVirtualPath")
+{
+    TEST_CASE("Recognizes bin:// as virtual path")
+    {
+        CHECK(duin::fs::IsVirtualPath("bin://config.ini") == true);
+    }
+
+    TEST_CASE("Recognizes app:// as virtual path")
+    {
+        CHECK(duin::fs::IsVirtualPath("app://saves/game.sav") == true);
+    }
+
+    TEST_CASE("Recognizes usr:// as virtual path")
+    {
+        CHECK(duin::fs::IsVirtualPath("usr://documents/file.txt") == true);
+    }
+
+    TEST_CASE("Recognizes wrk:// as virtual path")
+    {
+        CHECK(duin::fs::IsVirtualPath("wrk://assets/texture.png") == true);
+    }
+
+    TEST_CASE("Rejects bare prefix without path")
+    {
+        CHECK(duin::fs::IsVirtualPath("bin://") == true);
+        CHECK(duin::fs::IsVirtualPath("app://") == true);
+    }
+
+    TEST_CASE("Rejects unknown prefix")
+    {
+        CHECK(duin::fs::IsVirtualPath("xyz://file.txt") == false);
+        CHECK(duin::fs::IsVirtualPath("ftp://file.txt") == false);
+        CHECK(duin::fs::IsVirtualPath("data://file.txt") == false);
+    }
+
+    TEST_CASE("Rejects too-short strings")
+    {
+        CHECK(duin::fs::IsVirtualPath("") == false);
+        CHECK(duin::fs::IsVirtualPath("bin") == false);
+        CHECK(duin::fs::IsVirtualPath("bin:/") == false);
+    }
+
+    TEST_CASE("Rejects regular system paths")
+    {
+        CHECK(duin::fs::IsVirtualPath("C:/Users/test/file.txt") == false);
+        CHECK(duin::fs::IsVirtualPath("/home/user/file.txt") == false);
+        CHECK(duin::fs::IsVirtualPath("relative/path/file.txt") == false);
+    }
+}
+
+TEST_SUITE("Filesystem - MapSystemToVirtualPath")
+{
+    TEST_CASE("Maps bin:// path round-trip")
+    {
+        std::string basePath = duin::fs::GetBasePath();
+        if (basePath != INVALID_PATH)
+        {
+            std::string sysPath = basePath + "config.ini";
+            std::string virtualPath = duin::fs::MapSystemToVirtualPath(sysPath);
+
+            CHECK(virtualPath == "bin://config.ini");
+        }
+    }
+
+    TEST_CASE("Maps bin:// nested path round-trip")
+    {
+        std::string basePath = duin::fs::GetBasePath();
+        if (basePath != INVALID_PATH)
+        {
+            std::string sysPath = basePath + "assets/sprites/player.png";
+            std::string virtualPath = duin::fs::MapSystemToVirtualPath(sysPath);
+
+            CHECK(virtualPath == "bin://assets/sprites/player.png");
+        }
+    }
+
+    TEST_CASE("Maps app:// path round-trip")
+    {
+        duin::fs::SetPrefPath("TestOrg", "TestApp");
+        std::string prefPath = duin::fs::GetPrefPath("TestOrg", "TestApp");
+        if (prefPath != INVALID_PATH)
+        {
+            std::string sysPath = prefPath + "settings.json";
+            std::string virtualPath = duin::fs::MapSystemToVirtualPath(sysPath);
+
+            CHECK(virtualPath == "app://settings.json");
+        }
+    }
+
+    TEST_CASE("Maps usr:// path round-trip")
+    {
+        std::string home = duin::fs::GetUserFolder(duin::fs::DNFS_FOLDER_HOME);
+        if (home != INVALID_PATH)
+        {
+            std::string sysPath = home + "documents/file.txt";
+            std::string virtualPath = duin::fs::MapSystemToVirtualPath(sysPath);
+
+            CHECK(virtualPath == "usr://documents/file.txt");
+        }
+    }
+
+    TEST_CASE("Maps wrk:// path round-trip")
+    {
+        duin::fs::SetWorkspacePath("C:/Projects/MyProject");
+        std::string sysPath = "C:/Projects/MyProject/assets/texture.png";
+        std::string virtualPath = duin::fs::MapSystemToVirtualPath(sysPath);
+
+        CHECK(virtualPath == "wrk://assets/texture.png");
+    }
+
+    TEST_CASE("Normalizes backslashes before matching")
+    {
+        duin::fs::SetWorkspacePath("C:/Projects/MyProject");
+        std::string sysPath = "C:\\Projects\\MyProject\\assets\\texture.png";
+        std::string virtualPath = duin::fs::MapSystemToVirtualPath(sysPath);
+
+        CHECK(virtualPath == "wrk://assets/texture.png");
+    }
+
+    TEST_CASE("Returns INVALID_PATH for empty input")
+    {
+        CHECK(duin::fs::MapSystemToVirtualPath("") == INVALID_PATH);
+    }
+
+    TEST_CASE("Returns INVALID_PATH for unrecognized system path")
+    {
+        std::string result = duin::fs::MapSystemToVirtualPath("/some/random/unrelated/path.txt");
+        CHECK(result == INVALID_PATH);
+    }
+
+    TEST_CASE("Round-trip: MapVirtualToSystem then MapSystemToVirtual")
+    {
+        std::string original = "bin://data/levels/level1.json";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(original);
+
+        if (sysPath != INVALID_PATH)
+        {
+            std::string roundTripped = duin::fs::MapSystemToVirtualPath(sysPath);
+            CHECK(roundTripped == original);
+        }
+    }
+
+    TEST_CASE("Round-trip with wrk:// path")
+    {
+        duin::fs::SetWorkspacePath("C:/Projects/TestProject");
+        std::string original = "wrk://scenes/main.json";
+        std::string sysPath = duin::fs::MapVirtualToSystemPath(original);
+
+        if (sysPath != INVALID_PATH)
+        {
+            std::string roundTripped = duin::fs::MapSystemToVirtualPath(sysPath);
+            CHECK(roundTripped == original);
+        }
+    }
+
+    TEST_CASE("Wrk:// takes priority over usr:// when workspace is under home")
+    {
+        std::string home = duin::fs::GetUserFolder(duin::fs::DNFS_FOLDER_HOME);
+        if (home != INVALID_PATH)
+        {
+            std::string workspace = home + "projects/myproject/";
+            duin::fs::SetWorkspacePath(workspace);
+
+            std::string sysPath = workspace + "assets/file.txt";
+            std::string virtualPath = duin::fs::MapSystemToVirtualPath(sysPath);
+
+            CHECK(virtualPath == "wrk://assets/file.txt");
+        }
+    }
+}
+
 // Cleanup test - ensure artifacts directory is present but empty at the end
 TEST_SUITE("Filesystem - Cleanup")
 {

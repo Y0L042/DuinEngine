@@ -511,6 +511,86 @@ TEST_SUITE("VirtualFilesystem - Integration")
 }
 
 // ============================================================================
+// OverridePathPrefix
+// ============================================================================
+
+TEST_SUITE("VirtualFilesystem - OverridePathPrefix")
+{
+    TEST_CASE("Replaces bin:// with wrk://")
+    {
+        duin::fs::SetWorkspacePath("C:/Projects/Test");
+        std::string result = duin::vfs::OverridePathPrefix("bin://assets/texture.png", "wrk://");
+        CHECK(result == "wrk://assets/texture.png");
+    }
+
+    TEST_CASE("Replaces wrk:// with bin://")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("wrk://config/settings.json", "bin://");
+        CHECK(result == "bin://config/settings.json");
+    }
+
+    TEST_CASE("Replaces app:// with usr://")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("app://saves/slot1.sav", "usr://");
+        CHECK(result == "usr://saves/slot1.sav");
+    }
+
+    TEST_CASE("Replaces usr:// with app://")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("usr://documents/file.txt", "app://");
+        CHECK(result == "app://documents/file.txt");
+    }
+
+    TEST_CASE("Same prefix returns identical path")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("bin://data/file.txt", "bin://");
+        CHECK(result == "bin://data/file.txt");
+    }
+
+    TEST_CASE("Preserves deeply nested remainder")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("bin://a/b/c/d/e/f.txt", "wrk://");
+        CHECK(result == "wrk://a/b/c/d/e/f.txt");
+    }
+
+    TEST_CASE("Bare prefix with no remainder")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("bin://", "wrk://");
+        CHECK(result == "wrk://");
+    }
+
+    TEST_CASE("Returns empty for non-virtual input path")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("C:/Users/test/file.txt", "bin://");
+        CHECK(result.empty());
+    }
+
+    TEST_CASE("Returns empty for empty input path")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("", "bin://");
+        CHECK(result.empty());
+    }
+
+    TEST_CASE("Returns empty for too-short input path")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("bin", "wrk://");
+        CHECK(result.empty());
+    }
+
+    TEST_CASE("Returns empty for unrecognized prefix")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("bin://file.txt", "xyz://");
+        CHECK(result.empty());
+    }
+
+    TEST_CASE("Warns but does not crash for oversized prefix")
+    {
+        std::string result = duin::vfs::OverridePathPrefix("bin://file.txt", "longprefix://");
+        CHECK(result.empty());
+    }
+}
+
+// ============================================================================
 // Cleanup
 // ============================================================================
 
