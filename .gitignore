@@ -118,3 +118,4 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 /run_tests_coverage.bat
 /run_tests.bat
 /ExampleProjects/Sandbox/imgui.ini
+/artifacts
