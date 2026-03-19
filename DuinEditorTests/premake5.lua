@@ -26,6 +26,8 @@ project "DuinEditorTests"
         EditorSrc .. "/CommandManager.h",
         EditorSrc .. "/EditorCommand.h",
         EditorSrc .. "/EditorCommand.cpp",
+        EditorSrc .. "/AssetIndex.h",
+        EditorSrc .. "/AssetIndex.cpp",
     }
 
     includedirs(prependRoot(SolutionRoot, global_includedirs))
