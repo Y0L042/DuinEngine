@@ -176,6 +176,7 @@ void duin::Application::ProcessEvents()
 
 void duin::Application::RunRender()
 {
+    // TODO change this to run headless with fake rendering
     if (headlessMode)
         return;
 
