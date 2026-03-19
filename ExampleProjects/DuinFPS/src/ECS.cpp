@@ -47,7 +47,7 @@ void ExecuteQueryComputePlayerInputVelocity(duin::GameWorld &world)
         world.QueryBuilder<PlayerMovementInputVec3, InputVelocityDirection, const Transform3D>().Cached().Build();
 
     q.Each([&world](duin::Entity e, PlayerMovementInputVec3 &input, InputVelocityDirection &iDir, const Transform3D &tx) {
-        duin::Quaternion r = world.GetGlobalRotation(e.GetFlecsEntity());
+        duin::Quaternion r = world.GetGlobalRotation(e);
         duin::Vector3 alignedInput = duin::Vector3RotateByQuaternion(input.value, r);
         iDir.value = duin::Vector3(alignedInput.x, 0.0f, alignedInput.z);
     });

@@ -10,12 +10,15 @@
 
 duin::Application *duin::CreateApplication()
 {
-    return new Game();
+#ifdef DN_DEBUG
+    duin::fs::SetBinDebugMode(true);
+#endif /* DN DEBUG */
+
+        return new Game();
 }
 
 duin::DebugConsole debugConsole;
 duin::DebugWatchlist debugWatchlist;
-
 
 std::shared_ptr<duin::GameStateMachine> mainStateMachine;
 
