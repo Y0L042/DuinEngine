@@ -1,14 +1,11 @@
 #pragma once
 
-#include <Duin/Objects/GameStateMachine.h>
-#include <Duin/Core/Events/EventsModule.h>
-#include "PlayerStateMachine.h"
-#include "PlayerBlackboard.h"
+#include "PlayerState.h"
 
-class State_OnGround_Run : public duin::GameState
+class State_OnGround_Run : public PlayerState
 {
   public:
-    State_OnGround_Run(duin::GameStateMachine &owner) : GameState(owner)
+    State_OnGround_Run(duin::GameStateMachine &owner) : PlayerState(owner)
     {
         stateName = "State_OnGround_Run";
     }
@@ -21,7 +18,4 @@ class State_OnGround_Run : public duin::GameState
     void Draw() override;
     void DrawUI() override;
     void Exit() override;
-
-  private:
-    PlayerBlackboard* GetBlackboard() { return static_cast<PlayerStateMachine*>(&owner)->GetBlackboard(); }
 };

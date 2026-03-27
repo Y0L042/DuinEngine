@@ -2,9 +2,8 @@
 
 #include <Duin/Objects/ObjectModule.h>
 #include <Duin/ECS/ECSModule.h>
+#include <Duin/ECS/GameWorld.h>
 
-#include "Singletons.h"
-#include "GameObjects/Player/Player.h"
 #include "PlayerBlackboard.h"
 #include "PlayerStateMachine.h"
 
@@ -13,11 +12,7 @@
 class Player : public duin::GameObject
 {
   public:
-    duin::Entity player;
-    duin::Entity cameraRoot;
-    duin::Entity playerCamera;
-    PlayerBlackboard blackboard;
-    std::shared_ptr<PlayerStateMachine> playerStateMachine;
+    Player(duin::GameWorld* world) : world(world) {}
 
     void Init() override;
     void Ready() override;
@@ -26,6 +21,10 @@ class Player : public duin::GameObject
     void DrawUI() override;
 
   private:
+    duin::GameWorld* world = nullptr;
+    duin::Entity player;
+    duin::Entity cameraRoot;
+    duin::Entity playerCamera;
+    PlayerBlackboard blackboard;
+    std::shared_ptr<PlayerStateMachine> playerStateMachine;
 };
-
-

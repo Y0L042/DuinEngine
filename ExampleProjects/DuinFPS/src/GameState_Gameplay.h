@@ -2,6 +2,11 @@
 
 #include <Duin/Objects/GameStateMachine.h>
 #include <Duin/Core/Events/EventsModule.h>
+#include <Duin/ECS/GameWorld.h>
+
+#include <memory>
+
+class Player;
 
 class GameState_Gameplay : public duin::GameState
 {
@@ -21,4 +26,6 @@ class GameState_Gameplay : public duin::GameState
     void Exit() override;
 
   private:
+    std::unique_ptr<duin::GameWorld> world;
+    std::shared_ptr<Player> playerObj;
 };

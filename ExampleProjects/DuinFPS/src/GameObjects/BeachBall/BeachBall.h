@@ -8,6 +8,10 @@
 class BeachBall : public duin::GameObject
 {
   public:
+    BeachBall(duin::GameWorld *world) : world(world)
+    {
+    }
+
     void Ready() override;
     void PhysicsUpdate(double delta) override;
     void Draw() override;
@@ -15,5 +19,6 @@ class BeachBall : public duin::GameObject
 
   private:
     duin::Entity entity;
+    duin::GameWorld *world = nullptr;
     std::shared_ptr<duin::DynamicBody> body;
 };

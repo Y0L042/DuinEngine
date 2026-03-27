@@ -10,13 +10,11 @@
 using namespace duin::ECSComponent;
 using namespace duin::ECSTag;
 
-std::shared_ptr<PlayerStateMachine> onGroundStateMachine;
-
 void State_OnGround::Enter()
 {
     debugConsole.Log("State_OnGround: Entering State_OnGround");
 
-    duin::Entity& player = *GetBlackboard()->player;
+    duin::Entity& player = GetPlayer();
 
     player.Add<OnGroundTag>();
     player.Remove<CanGravity>();
@@ -26,13 +24,12 @@ void State_OnGround::Enter()
 
 void State_OnGround::OnEvent(duin::Event e)
 {
-    duin::Entity& player = *GetBlackboard()->player;
+    duin::Entity& player = GetPlayer();
 
     if (duin::Input::IsKeyPressed(DN_SCANCODE_SPACE))
     {
         player.Add<JumpTag>();
     }
-
 }
 
 void State_OnGround::Update(double delta)
@@ -41,7 +38,7 @@ void State_OnGround::Update(double delta)
 
 void State_OnGround::PhysicsUpdate(double delta)
 {
-    duin::Entity& player = *GetBlackboard()->player;
+    duin::Entity& player = GetPlayer();
 
     const CharacterBodyComponent *cbc = player.TryGet<CharacterBodyComponent>();
     if (cbc && cbc->body)
@@ -53,7 +50,6 @@ void State_OnGround::PhysicsUpdate(double delta)
             return;
         }
     }
-
 }
 
 void State_OnGround::Draw()
@@ -67,7 +63,7 @@ void State_OnGround::DrawUI()
 
 void State_OnGround::Exit()
 {
-    duin::Entity& player = *GetBlackboard()->player;
+    duin::Entity& player = GetPlayer();
 
     player.Remove<OnGroundTag>();
 }

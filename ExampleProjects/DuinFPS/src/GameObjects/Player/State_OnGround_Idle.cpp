@@ -14,9 +14,7 @@ void State_OnGround_Idle::Enter()
 {
     debugConsole.Log("State_OnGround_Idle: Entering State_OnGround_Idle");
 
-    duin::Entity& player = *GetBlackboard()->player;
-
-    player.Add<IdleTag>();
+    GetPlayer().Add<IdleTag>();
 }
 
 void State_OnGround_Idle::OnEvent(duin::Event e)
@@ -29,13 +27,9 @@ void State_OnGround_Idle::Update(double delta)
 
 void State_OnGround_Idle::PhysicsUpdate(double delta)
 {
-    if (duin::Input::IsInputVectorPressed(DN_SCANCODE_W, DN_SCANCODE_S, DN_SCANCODE_A, DN_SCANCODE_D))
+    if (IsMovementInputPressed())
     {
-        // if (duin::Input::IsKeyPressed(DN_KEY_MOD_LSHIFT)) {
-        //     owner.SwitchState<PlayerStateOnGroundSprint>();
-        // } else {
         SwitchState<State_OnGround_Run>();
-        // }
     }
 }
 
@@ -50,8 +44,6 @@ void State_OnGround_Idle::DrawUI()
 
 void State_OnGround_Idle::Exit()
 {
-    duin::Entity& player = *GetBlackboard()->player;
-
-    player.Remove<IdleTag>();
+    GetPlayer().Remove<IdleTag>();
     debugWatchlist.Post("PlayerState", "");
 }

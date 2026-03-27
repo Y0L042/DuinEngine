@@ -8,10 +8,6 @@
 #include <Duin/Scene/SceneBuilder.h>
 #include <Duin/IO/IOModule.h>
 
-#define WRITE_ENT 1
-
-flecs::ref<duin::Camera> cameraRef;
-
 void Player::Ready()
 {
 }
@@ -20,62 +16,18 @@ void Player::Init()
 {
     debugConsole.Log("Player: Ready");
 
-    // float playerHeight = 1.75f;
-    // duin::Vector3 playerPosition(0.0f, 50.0f, 5.0f);
-    // duin::CharacterBodyDesc playerDesc = {
-    //     .height = playerHeight,
-    //     .radius = 0.3f,
-    //     .slopeLimit = std::cosf(physx::PxPi / 4.0),
-    //     .stepOffset = 0.5f,
-    //     .contactOffset = 0.1f,
-    //     .upDirection = duin::Vector3(0.0f, 1.0f, 0.0f),
-    // };
-    // duin::PhysicsMaterial playerMaterial(0.5f, 0.5f, 0.5f);
-    // std::shared_ptr<duin::CharacterBody> playerBody = duin::CharacterBody::Create(playerDesc, playerPosition);
-
-    player = world->Lookup("Player"); //.Set<duin::ECSComponent::CharacterBodyComponent>({playerBody});
+    player = world->Lookup("Player");
     cameraRoot = world->Lookup("Player::CameraRoot");
     playerCamera = world->Lookup("Player::CameraRoot::PlayerCamera");
 
-    // player = world->Entity("Player")
-    //              .ChildOf(root)
-    //              .IsA(duin::ECSPrefab::PhysicsCharacterBody)
-    //              .Set<duin::ECSComponent::Transform3D>({playerPosition})
-    //              .Set<Mass>({.value = 80.0f})
-    //              .Set<CanRunComponent>({.speed = 10.0f})
-    //              .Set<CanSprintComponent>({.speed = 17.5f})
-    //              .Set<CanJumpComponent>({.impulse = 625.0f})
-    //              .Set<duin::ECSComponent::CharacterBodyComponent>({playerBody})
-    //              .Add<InputVelocities>()
-    //              .Add<InputForces>()
-    //              .Add<PlayerMovementInputVec3>()
-    //              .Add<InputVelocityDirection>()
-    //              .Add<MouseInputVec2>()
-    //              .Add<CameraYawComponent>()
-    //              .Add<GravityComponent>()
-    //              .Add<CanGravity>()
-    //              .Add<OnGroundTag>();
-    // cameraRoot = world->Entity("CameraRoot")
-    //                  .IsA(duin::ECSPrefab::Node3D)
-    //                  .ChildOf(player)
-    //                  .Set<duin::ECSComponent::Transform3D>({{0.0f, playerHeight, 0.0f}})
-    //                  .Add<MouseInputVec2>()
-    //                  .Add<CameraPitchComponent>();
-    // playerCamera = world->Entity("PlayerCamera")
-    //                    .IsA(duin::ECSPrefab::Camera3D)
-    //                    .ChildOf(cameraRoot)
-    //                    .Set<duin::ECSComponent::Transform3D>({{0.0f, 0.0f, 0.0f}})
-    //                    .Set<duin::Camera>(duin::Camera{
-    //                        duin::UUID(), {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, 72.0f})
-    //                    .Set<VelocityBob>({10.0f, 1.0f})
-    //                    .Add<duin::ECSTag::ActiveCamera>();
-
-    blackboard.player = &player;
-    blackboard.cameraRoot = &cameraRoot;
-    blackboard.playerCamera = &playerCamera;
+    blackboard.world = world;
+    blackboard.player = player;
+    blackboard.cameraRoot = cameraRoot;
+    blackboard.playerCamera = playerCamera;
 
     playerStateMachine = CreateChildObject<PlayerStateMachine>(&blackboard);
     playerStateMachine->SwitchState<State_OnGround>();
+    world->SetGlobalPosition(player, {1, 10, 1});
 }
 
 void Player::OnEvent(duin::Event e)
@@ -93,6 +45,15 @@ void Player::PhysicsUpdate(double delta)
     duin::Vector2 mouseInput(duin::Input::GetMouseDelta());
     player.Set<MouseInputVec2>({{mouseInput}});
     cameraRoot.Set<MouseInputVec2>({{mouseInput}});
+
+    const auto &ppos = world->GetGlobalPosition(player);
+    const auto *cam = cameraRoot.TryGet<duin::Camera>();
+    debugWatchlist.Post("Player Pos", "{ %.2f, %.2f, %.2f }", ppos.x, ppos.y, ppos.z);
+    if (cam)
+    {
+        auto &lookAt = cam->target;
+        debugWatchlist.Post("Player LookAt", "{ %.2f, %.2f, %.2f }", lookAt.x, lookAt.y, lookAt.z);
+    }
 }
 
 void Player::DrawUI()

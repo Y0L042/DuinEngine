@@ -1,10 +1,12 @@
 #pragma once
 
 #include <Duin/ECS/ECSModule.h>
+#include <Duin/ECS/GameWorld.h>
 
 struct PlayerBlackboard
 {
-    duin::Entity* player = nullptr;
-    duin::Entity* cameraRoot = nullptr;
-    duin::Entity* playerCamera = nullptr;
+    duin::GameWorld* world = nullptr;
+    duin::Entity player;
+    duin::Entity cameraRoot;
+    duin::Entity playerCamera;
 };

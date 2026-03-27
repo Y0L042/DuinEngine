@@ -13,7 +13,7 @@
 	"entities": [
 		{
 			"uuid": "0x290F25D657B96ADF",
-			"name": "Player",
+			"name": "PlayerRoot",
 			"enabled": true,
 			"tags": [
 
@@ -38,7 +38,7 @@
 						"type": "Vector3Impl",
 						"x": 0.0,
 						"y": 1.0,
-						"z": 1.0
+						"z": 5.0
 					},
 					"scale": {
 						"type": "Vector3Impl",
@@ -74,7 +74,7 @@
 						"type": "Vector3Impl",
 						"x": 0.0,
 						"y": 1.0,
-						"z": 1.0
+						"z": 5.0
 					},
 					"upDirection": {
 						"type": "Vector3Impl",
@@ -97,7 +97,7 @@
 					"value": {
 						"type": "Vector3Impl",
 						"x": 0.0,
-						"y": -9.8100004196167,
+						"y": -0.98100004196167,
 						"z": 0.0
 					}
 				},

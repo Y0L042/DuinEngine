@@ -1,14 +1,11 @@
 #pragma once
 
-#include <Duin/Objects/GameStateMachine.h>
-#include <Duin/Core/Events/EventsModule.h>
-#include "PlayerStateMachine.h"
-#include "PlayerBlackboard.h"
+#include "PlayerState.h"
 
-class State_InAir : public duin::GameState
+class State_InAir : public PlayerState
 {
   public:
-    State_InAir(duin::GameStateMachine &owner) : GameState(owner)
+    State_InAir(duin::GameStateMachine &owner) : PlayerState(owner)
     {
         stateName = "State_InAir";
     }
@@ -23,5 +20,5 @@ class State_InAir : public duin::GameState
     void Exit() override;
 
   private:
-    PlayerBlackboard* GetBlackboard() { return static_cast<PlayerStateMachine*>(&owner)->GetBlackboard(); }
+    std::shared_ptr<PlayerStateMachine> inAirStateMachine;
 };
