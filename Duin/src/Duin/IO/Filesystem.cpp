@@ -165,8 +165,6 @@ bool duin::fs::RenamePath(const std::string &oldPath, const std::string &newPath
     return res;
 }
 
-
-
 bool duin::fs::IsPathInvalid(const std::string &path)
 {
     // Compare against INVALID_PATH constant
@@ -314,22 +312,21 @@ bool duin::fs::EnumerateDirectory(const char *path, EnumerateDirectoryCallback c
 
 bool duin::fs::GetPathInfo(const std::string &path, PathInfo *info)
 {
-    if (!info)
-    {
-        return false;
-    }
-
     SDL_PathInfo sdlInfo;
     if (!SDL_GetPathInfo(path.c_str(), &sdlInfo))
     {
         return false;
     }
 
-    info->type = static_cast<PathType>(sdlInfo.type);
-    info->size = sdlInfo.size;
-    info->createTime = sdlInfo.create_time;
-    info->modifyTime = sdlInfo.modify_time;
-    info->accessTime = sdlInfo.access_time;
+    if (info)
+    {
+        info->type = static_cast<PathType>(sdlInfo.type);
+        info->size = sdlInfo.size;
+        info->createTime = sdlInfo.create_time;
+        info->modifyTime = sdlInfo.modify_time;
+        info->accessTime = sdlInfo.access_time;
+    }
+
     return true;
 }
 
