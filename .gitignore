@@ -119,3 +119,4 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 /run_tests.bat
 /ExampleProjects/Sandbox/imgui.ini
 /artifacts
+/.claude
