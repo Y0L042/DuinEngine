@@ -19,6 +19,8 @@ local dep_rapidjson = require "dep_rapidjson"
 local dep_flecs = require "dep_flecs"
 local dep_doctest = require "dep_doctest"
 local dep_reflectcpp = require "dep_reflectcpp"
+local dep_angelscript = require "dep_angelscript"
+local dep_daslang = require "dep_daslang"
 
 -- Define dependencies with explicit build order (array part maintains order)
 local dependencies_ordered = {
@@ -35,7 +37,9 @@ local dependencies_ordered = {
     {name = "TOML11", buildFn = dep_toml11.build},
     {name = "IMGUI", buildFn = dep_imgui.build},
     {name = "IMGUIZMO", buildFn = dep_imguizmo.build},
-    {name = "REFLECTCPP", buildFn = dep_reflectcpp.build}
+    {name = "REFLECTCPP", buildFn = dep_reflectcpp.build},
+    {name = "ANGELSCRIPT", buildFn = dep_angelscript.build},
+    {name = "DASLANG", buildFn = dep_daslang.build}
 }
 
 -- Also maintain a hash map for quick lookups
@@ -53,7 +57,9 @@ local dependencies = {
     RAPIDJSON = dep_rapidjson.build,
     FLECS = dep_flecs.build,
     DOCTEST = dep_doctest.build,
-    REFLECTCPP = dep_reflectcpp.build
+    REFLECTCPP = dep_reflectcpp.build,
+    ANGELSCRIPT = dep_angelscript.build,
+    DASLANG = dep_daslang.build
 }
 
 

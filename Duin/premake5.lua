@@ -53,6 +53,12 @@ project "Duin"
         pchheader ""
     filter {}
 
+    -- Script/ files include daScript headers that conflict with the PCH
+    filter "files:**/Script/**"
+        flags { "NoPCH" }
+        pchheader ""
+    filter {}
+
 
     -- files(global_files)
 	files 
@@ -61,6 +67,7 @@ project "Duin"
 		ProjectRoot .. "/src/**.hpp",
 		ProjectRoot .. "/src/**.c",
 		ProjectRoot .. "/src/**.cpp",
+        ProjectRoot .. "/src/**.inc",
 	}
 
     -- includedirs(global_includedirs) 
@@ -90,6 +97,8 @@ project "Duin"
 		SolutionRoot .. "/%{IncludeDir.physx}",
         SolutionRoot .. "/%{IncludeDir.reflectcpp}",
         SolutionRoot .. "/%{IncludeDir.doctest}",
+        SolutionRoot .. "/%{IncludeDir.daslang}",
+        ProjectRoot .. "/vendor/daslang/src/builtin",
     }
     -- libdirs(global_libdirs) 
     libdirs 
@@ -100,6 +109,7 @@ project "Duin"
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
         ProjectRoot .. "/vendor/toml11/build/src/Debug",
         ProjectRoot .. "/vendor/reflectcpp/build/Debug",
+        ProjectRoot .. "/vendor/daslang/lib/Debug",
     }
     -- defines(global_defines)
     defines
@@ -112,6 +122,9 @@ project "Duin"
         "BX_CONFIG_DEBUG=0",
 		--"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
         "DN_HEADLESS",
+        "DAS_SMART_PTR_DEBUG=1",
+        "DAS_ENABLE_DYN_INCLUDES=1",
+        "DAS_ENABLE_EXCEPTIONS=1",
     }
     -- links(global_links)
     links 
@@ -136,6 +149,9 @@ project "Duin"
         "PhysXExtensions_static_64.lib",
         "PhysXCharacterKinematic_static_64.lib",
         "reflectcpp.lib",
+        "libDaScript.lib",
+        "libUriParser.lib",
+        "dbghelp.lib",
     }
 
     filter "action:vs*"

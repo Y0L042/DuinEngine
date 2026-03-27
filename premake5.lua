@@ -34,6 +34,9 @@ workspace "Duin"
     IncludeDir["physx"] = "Duin/vendor/PhysX/physx/include"
     IncludeDir["doctest"] = "Duin/vendor/doctest/doctest"
     IncludeDir["reflectcpp"] = "Duin/vendor/reflectcpp/include"
+    IncludeDir["angelscript"] = "Duin/vendor/angelscript/sdk/angelscript/include"
+    IncludeDir["angelscript_addon"] = "Duin/vendor/angelscript/sdk/add_on"
+    IncludeDir["daslang"] = "Duin/vendor/daslang/include"
 
     global_files = {}
     global_includedirs = 
@@ -113,3 +116,6 @@ workspace "Duin"
     include "ExampleProjects/DuinFPS"
     include "ExampleProjects/DuinFPSTests"
     include "ExampleProjects/Sandbox"
+    include "ExampleProjects/DuinFPSDaslang"
+    include "ScriptTests/AngelScriptTest"
+    include "ScriptTests/DaslangTest"
