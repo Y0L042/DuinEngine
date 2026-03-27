@@ -52,6 +52,8 @@
 // Debug / quit state
 // ---------------------------------------------------------------------------
 static int debugIsGamePaused_ = 0;
+static bool isPhysicsPaused = false;
+static bool isUpdatePaused = false;
 static bool gameShouldQuit = false;
 
 // ---------------------------------------------------------------------------
@@ -114,6 +116,36 @@ void duin::DebugResumeGame()
 int duin::DebugIsGamePaused()
 {
     return debugIsGamePaused_;
+}
+
+void duin::PausePhysics()
+{
+    isPhysicsPaused = true;
+}
+
+void duin::ResumePhysics()
+{
+    isPhysicsPaused = false;
+}
+
+bool duin::IsPhysicsPaused()
+{
+    return isPhysicsPaused;
+}
+
+void duin::PauseUpdate()
+{
+    isUpdatePaused = true;
+}
+
+void duin::ResumeUpdate()
+{
+    isUpdatePaused = false;
+}
+
+bool duin::IsUpdatePaused()
+{
+    return isUpdatePaused;
 }
 
 // --- Timing ---
@@ -406,6 +438,8 @@ void duin::Application::EndRenderFrame()
 
 void duin::Application::RunUpdate(double delta)
 {
+    if (isUpdatePaused)
+        return; // TODO Debugging, refactor
     EngineUpdate(delta);
     Update(delta);
     EnginePostUpdate(delta);
@@ -425,6 +459,8 @@ void duin::Application::RunPhysics(double &physicsCurrentTime, double &physicsPr
         physicsFrameTime = physicsTimeStep;
         ++physicsFrameCount;
 
+        if (isPhysicsPaused)
+            return; // TODO Debugging, refactor
         EnginePhysicsUpdate(physicsDeltaTime);
         PhysicsUpdate(physicsDeltaTime);
         EnginePostPhysicsUpdate(physicsDeltaTime);

@@ -120,3 +120,4 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 /ExampleProjects/Sandbox/imgui.ini
 /artifacts
 /.claude
+/ScriptTests/AngelScriptTest/AS_DEBUG

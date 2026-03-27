@@ -33,6 +33,12 @@ void DebugPauseGame();
 void DebugResumeGame();
 /** @brief Checks if game is paused. @return Non-zero if paused. */
 int DebugIsGamePaused();
+void PausePhysics();
+void ResumePhysics();
+bool IsPhysicsPaused();
+void PauseUpdate();
+void ResumeUpdate();
+bool IsUpdatePaused();
 
 /** @brief Sets the target framerate. @param framerate Target frames per second. */
 void SetFramerate(int framerate);
