@@ -1,43 +1,43 @@
 #include "dnpch.h"
 #include "GameObject.h"
+#include "GameObjectImpl.h"
 #include "ObjectManager.h"
 #include <Duin/Core/Debug/DebugModule.h>
 #include <Duin/Core/Debug/DNAssert.h>
 
-duin::GameObject::GameObject()
+duin::GameObject::GameObject() : impl(std::make_shared<GameObjectImpl>(this))
 {
+    DN_CORE_INFO("Construct GameObject!");
 }
 
 duin::GameObject::~GameObject()
 {
-    for (auto& child : children)
+    if (impl)
     {
-        child.reset();
+        impl->owner = nullptr;
     }
 }
 
 void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
 {
-    if (child)
+    if (child && impl)
     {
-        // Guard: Ensure this object is managed by a shared_ptr before calling shared_from_this()
-        // This prevents std::bad_weak_ptr when AddChildObject/CreateChildObject is called from a constructor
-        DN_CORE_ASSERT(!weak_from_this().expired(),
-                             "Cannot add child object: parent is not yet managed by a shared_ptr. Move "
-                             "CreateChildObject() calls from the constructor to Init() or Ready()");
+        auto childImpl = child->GetImpl();
+        if (!childImpl)
+            return; 
 
         // Check if the child is already present by comparing UUIDs
-        auto it =
-            std::find_if(children.begin(), children.end(), [&child](const std::shared_ptr<GameObject> &existingChild) {
-                return existingChild->GetUUID() == child->GetUUID();
-            });
+        auto &ci = impl->childImpls;
+        auto it = std::find_if(ci.begin(), ci.end(), [&](const std::shared_ptr<GameObjectImpl>& existing) {
+            return existing->uuid == childImpl->uuid;
+        });
 
         // Only add the child if it is not already a child
-        if (it == children.end())
+        if (it == ci.end())
         {
-            children.push_back(child);
-            std::shared_ptr<GameObject> selfPtr = GetSharedPointer<GameObject>();
-            child->SetParent(selfPtr);
+            impl->AddChild(childImpl, child);
+            childImpl->parentImpl = impl.get();
+            child->SetParent(this);
             child->Init();
         }
     }
@@ -45,11 +45,13 @@ void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
 
 void duin::GameObject::RemoveChildObject(std::shared_ptr<GameObject> child)
 {
-    if (child)
+    if (child && impl)
     {
-        children.erase(std::remove(children.begin(), children.end(), child), children.end());
-
-        child->ResetParent();
+        if (auto childImpl = child->GetImpl())
+        {
+            impl->RemoveChild(childImpl);
+            child->ResetParent();
+        }
     }
 }
 
@@ -62,100 +64,164 @@ void duin::GameObject::TransferChildObject(std::shared_ptr<GameObject> child, st
 
 std::vector<std::weak_ptr<duin::GameObject>> duin::GameObject::GetChildren()
 {
-    std::vector<std::weak_ptr<GameObject>> v(children.begin(), children.end());
-    return v;
+    if (impl)
+    {
+        return impl->GetChildOwners();
+    }
+    return {};
 }
 
 size_t duin::GameObject::GetChildrenCount()
 {
-    return children.size();
+    if (impl)
+    {
+        return impl->GetChildrenCount();
+    }
+    return 0;
 }
 
-void duin::GameObject::SetParent(std::shared_ptr<GameObject> parent)
+void duin::GameObject::SetParent(GameObject *parent)
 {
     this->parent = parent;
 }
 
-std::weak_ptr<duin::GameObject> duin::GameObject::GetParent()
+duin::GameObject *duin::GameObject::GetParent()
 {
     return parent;
 }
 
+void duin::GameObject::SetUUID(UUID newUUID)
+{
+    if (impl)
+    {
+        impl->uuid = newUUID;
+    }
+}
+
 void duin::GameObject::ResetParent()
 {
-    this->parent.reset();
+    this->parent = nullptr;
 }
 
 // Signal connection implementations
 duin::UUID duin::GameObject::ConnectOnObjectReady(std::function<void()> callback)
 {
-    return OnObjectReady.Connect(callback);
+    if (impl)
+    {
+        return impl->OnObjectReady.Connect(callback);
+    }
+    return UUID();
 }
 
 duin::UUID duin::GameObject::ConnectOnObjectOnEvent(std::function<void(Event)> callback)
 {
-    return OnObjectOnEvent.Connect(callback);
+    if (impl)
+    {
+        return impl->OnObjectOnEvent.Connect(callback);
+    }
+    return UUID();
 }
 
 duin::UUID duin::GameObject::ConnectOnObjectUpdate(std::function<void(double)> callback)
 {
-    return OnObjectUpdate.Connect(callback);
+    if (impl)
+    {
+        return impl->OnObjectUpdate.Connect(callback);
+    }
+    return UUID();
 }
 
 duin::UUID duin::GameObject::ConnectOnObjectPhysicsUpdate(std::function<void(double)> callback)
 {
-    return OnObjectPhysicsUpdate.Connect(callback);
+    if (impl)
+    {
+        return impl->OnObjectPhysicsUpdate.Connect(callback);
+    }
+    return UUID();
 }
 
 duin::UUID duin::GameObject::ConnectOnObjectDraw(std::function<void()> callback)
 {
-    return OnObjectDraw.Connect(callback);
+    if (impl)
+    {
+        return impl->OnObjectDraw.Connect(callback);
+    }
+    return UUID();
 }
 
 duin::UUID duin::GameObject::ConnectOnObjectDrawUI(std::function<void()> callback)
 {
-    return OnObjectDrawUI.Connect(callback);
+    if (impl)
+    {
+        return impl->OnObjectDrawUI.Connect(callback);
+    }
+    return UUID();
 }
 
 duin::UUID duin::GameObject::ConnectOnObjectDebug(std::function<void()> callback)
 {
-    return OnObjectDebug.Connect(callback);
+    if (impl)
+    {
+        return impl->OnObjectDebug.Connect(callback);
+    }
+    return UUID();
 }
 
 // Signal disconnection implementations
 void duin::GameObject::DisconnectOnObjectReady(UUID uuid)
 {
-    OnObjectReady.Disconnect(uuid);
+    if (impl)
+    {
+        impl->OnObjectReady.Disconnect(uuid);
+    }
 }
 
 void duin::GameObject::DisconnectOnObjectOnEvent(UUID uuid)
 {
-    OnObjectOnEvent.Disconnect(uuid);
+    if (impl)
+    {
+        impl->OnObjectOnEvent.Disconnect(uuid);
+    }
 }
 
 void duin::GameObject::DisconnectOnObjectUpdate(UUID uuid)
 {
-    OnObjectUpdate.Disconnect(uuid);
+    if (impl)
+    {
+        impl->OnObjectUpdate.Disconnect(uuid);
+    }
 }
 
 void duin::GameObject::DisconnectOnObjectPhysicsUpdate(UUID uuid)
 {
-    OnObjectPhysicsUpdate.Disconnect(uuid);
+    if (impl)
+    {
+        impl->OnObjectPhysicsUpdate.Disconnect(uuid);
+    }
 }
 
 void duin::GameObject::DisconnectOnObjectDraw(UUID uuid)
 {
-    OnObjectDraw.Disconnect(uuid);
+    if (impl)
+    {
+        impl->OnObjectDraw.Disconnect(uuid);
+    }
 }
 
 void duin::GameObject::DisconnectOnObjectDrawUI(UUID uuid)
 {
-    OnObjectDrawUI.Disconnect(uuid);
+    if (impl)
+    {
+        impl->OnObjectDrawUI.Disconnect(uuid);
+    }
 }
 
 void duin::GameObject::DisconnectOnObjectDebug(UUID uuid)
 {
-    OnObjectDebug.Disconnect(uuid);
+    if (impl)
+    {
+        impl->OnObjectDebug.Disconnect(uuid);
+    }
 }
 
 // Connect all signals at once
@@ -165,26 +231,32 @@ duin::SignalConnections duin::GameObject::ConnectAllSignals(
     std::function<void()> onDebug)
 {
     SignalConnections connections;
-    connections.onReady = OnObjectReady.Connect(onReady);
-    connections.onEvent = OnObjectOnEvent.Connect(onEvent);
-    connections.onUpdate = OnObjectUpdate.Connect(onUpdate);
-    connections.onPhysicsUpdate = OnObjectPhysicsUpdate.Connect(onPhysicsUpdate);
-    connections.onDraw = OnObjectDraw.Connect(onDraw);
-    connections.onDrawUI = OnObjectDrawUI.Connect(onDrawUI);
-    connections.onDebug = OnObjectDebug.Connect(onDebug);
+    if (impl)
+    {
+        connections.onReady = impl->OnObjectReady.Connect(onReady);
+        connections.onEvent = impl->OnObjectOnEvent.Connect(onEvent);
+        connections.onUpdate = impl->OnObjectUpdate.Connect(onUpdate);
+        connections.onPhysicsUpdate = impl->OnObjectPhysicsUpdate.Connect(onPhysicsUpdate);
+        connections.onDraw = impl->OnObjectDraw.Connect(onDraw);
+        connections.onDrawUI = impl->OnObjectDrawUI.Connect(onDrawUI);
+        connections.onDebug = impl->OnObjectDebug.Connect(onDebug);
+    }
     return connections;
 }
 
 // Disconnect all signals at once
 void duin::GameObject::DisconnectAllSignals(const SignalConnections &connections)
 {
-    OnObjectReady.Disconnect(connections.onReady);
-    OnObjectOnEvent.Disconnect(connections.onEvent);
-    OnObjectUpdate.Disconnect(connections.onUpdate);
-    OnObjectPhysicsUpdate.Disconnect(connections.onPhysicsUpdate);
-    OnObjectDraw.Disconnect(connections.onDraw);
-    OnObjectDrawUI.Disconnect(connections.onDrawUI);
-    OnObjectDebug.Disconnect(connections.onDebug);
+    if (impl)
+    {
+        impl->OnObjectReady.Disconnect(connections.onReady);
+        impl->OnObjectOnEvent.Disconnect(connections.onEvent);
+        impl->OnObjectUpdate.Disconnect(connections.onUpdate);
+        impl->OnObjectPhysicsUpdate.Disconnect(connections.onPhysicsUpdate);
+        impl->OnObjectDraw.Disconnect(connections.onDraw);
+        impl->OnObjectDrawUI.Disconnect(connections.onDrawUI);
+        impl->OnObjectDebug.Disconnect(connections.onDebug);
+    }
 }
 
 void duin::GameObject::Init()
@@ -231,77 +303,135 @@ void duin::GameObject::Enable(bool enable)
 
 void duin::GameObject::EnableOnEvent(bool enable)
 {
-    onEventEnabled = enable;
+    if (impl)
+    {
+        impl->onEventEnabled = enable;
+    }
 }
 
 void duin::GameObject::EnableUpdate(bool enable)
 {
-    updateEnabled = enable;
+    if (impl)
+    {
+        impl->updateEnabled = enable;
+    }
 }
 
 void duin::GameObject::EnablePhysicsUpdate(bool enable)
 {
-    physicsUpdateEnabled = enable;
+    if (impl)
+    {
+        impl->physicsUpdateEnabled = enable;
+    }
 }
 
 void duin::GameObject::EnableDraw(bool enable)
 {
-    drawEnabled = enable;
+    if (impl)
+    {
+        impl->drawEnabled = enable;
+    }
 }
 
 void duin::GameObject::EnableDrawUI(bool enable)
 {
-    drawUIEnabled = enable;
+    if (impl)
+    {
+        impl->drawUIEnabled = enable;
+    }
 }
 
 void duin::GameObject::EnableDebug(bool enable)
 {
-    debugEnabled = enable;
+    if (impl)
+    {
+        impl->debugEnabled = enable;
+    }
 }
 
 void duin::GameObject::EnableChildren(bool enable)
 {
-    childrenEnabled = enable;
+    if (impl)
+    {
+        impl->childrenEnabled = enable;
+    }
 }
 
 bool duin::GameObject::IsOnEventEnabled() const
 {
-    return onEventEnabled;
+    if (impl)
+    {
+        return impl->onEventEnabled;
+    }
+    return false;
 }
 
 bool duin::GameObject::IsUpdateEnabled() const
 {
-    return updateEnabled;
+    if (impl)
+    {
+        return impl->updateEnabled;
+    }
+    return false;
 }
 
 bool duin::GameObject::IsPhysicsUpdateEnabled() const
 {
-    return physicsUpdateEnabled;
+    if (impl)
+    {
+        return impl->physicsUpdateEnabled;
+    }
+    return false;
 }
 
 bool duin::GameObject::IsDrawEnabled() const
 {
-    return drawEnabled;
+    if (impl)
+    {
+        return impl->drawEnabled;
+    }
+    return false;
 }
 
 bool duin::GameObject::IsDrawUIEnabled() const
 {
-    return drawUIEnabled;
+    if (impl)
+    {
+        return impl->drawUIEnabled;
+    }
+    return false;
 }
 
 bool duin::GameObject::IsDebugEnabled() const
 {
-    return debugEnabled;
+    if (impl)
+    {
+        return impl->debugEnabled;
+    }
+    return false;
 }
 
 bool duin::GameObject::IsChildrenEnabled() const
 {
-    return childrenEnabled;
+    if (impl)
+    {
+        return impl->childrenEnabled;
+    }
+    return false;
 }
 
 duin::UUID duin::GameObject::GetUUID() const
 {
-    return uuid;
+    if (impl)
+    {
+        return impl->uuid;
+    }
+    return UUID();
+}
+
+std::shared_ptr<duin::GameObjectImpl> duin::GameObject::GetImpl() const
+{
+    return impl;
 }
 
 bool duin::GameObject::operator==(const GameObject &other) const
@@ -314,121 +444,74 @@ bool duin::GameObject::operator!=(const GameObject &other) const
     return this->GetUUID() != other.GetUUID();
 }
 
+bool duin::GameObject::IsValid()
+{
+    return impl != nullptr;
+}
+
 void duin::GameObject::ObjectReady()
 {
-    if (childrenEnabled)
+    if (impl)
     {
-        for (auto &child : children)
-        {
-            if (child)
-            {
-                child->ObjectReady();
-            }
-        }
+        impl->DispatchReady();
     }
-
-    OnObjectReady.Emit();
-    Ready();
 }
 
 void duin::GameObject::ObjectOnEvent(Event event)
 {
-    if (childrenEnabled)
+    if (impl)
     {
-        for (auto &child : children)
-        {
-            if (child && child->IsOnEventEnabled())
-            {
-                child->ObjectOnEvent(event);
-            }
-        }
+        impl->DispatchOnEvent(event);
     }
-
-    OnObjectOnEvent.Emit(event);
-    OnEvent(event);
 }
 
 void duin::GameObject::ObjectUpdate(double delta)
 {
-    if (childrenEnabled)
+    if (impl)
     {
-        for (auto &child : children)
-        {
-            if (child && child->IsUpdateEnabled())
-            {
-                child->ObjectUpdate(delta);
-            }
-        }
+        impl->DispatchUpdate(delta);
     }
-
-    OnObjectUpdate.Emit(delta);
-    Update(delta);
 }
 
 void duin::GameObject::ObjectPhysicsUpdate(double delta)
 {
-    if (childrenEnabled)
+    if (impl)
     {
-        for (auto &child : children)
-        {
-            if (child && child->IsPhysicsUpdateEnabled())
-            {
-                child->ObjectPhysicsUpdate(delta);
-            }
-        }
+        impl->DispatchPhysicsUpdate(delta);
     }
-
-    OnObjectPhysicsUpdate.Emit(delta);
-    PhysicsUpdate(delta);
 }
 
 void duin::GameObject::ObjectDraw()
 {
-    if (childrenEnabled)
+    if (impl)
     {
-        for (auto &child : children)
-        {
-            if (child && child->IsDrawEnabled())
-            {
-                child->ObjectDraw();
-            }
-        }
+        impl->DispatchDraw();
     }
-
-    OnObjectDraw.Emit();
-    Draw();
 }
 
 void duin::GameObject::ObjectDrawUI()
 {
-    if (childrenEnabled)
+    if (impl)
     {
-        for (auto &child : children)
-        {
-            if (child && child->IsDrawUIEnabled())
-            {
-                child->ObjectDrawUI();
-            }
-        }
+        impl->DispatchDrawUI();
     }
-
-    OnObjectDrawUI.Emit();
-    DrawUI();
 }
 
 void duin::GameObject::ObjectDebug()
 {
-    if (childrenEnabled)
+    if (impl)
     {
-        for (auto &child : children)
-        {
-            if (child && child->IsDebugEnabled())
-            {
-                child->ObjectDebug();
-            }
-        }
+        impl->DispatchDebug();
     }
+}
 
-    OnObjectDebug.Emit();
-    Debug();
+std::shared_ptr<duin::GameObjectImpl> duin::GameObject::EnsureImpl()
+{
+    if (!impl)
+    {
+        impl = std::make_shared<GameObjectImpl>(this);
+
+        return impl;
+    }
+    return nullptr;
 }

@@ -9,6 +9,7 @@
 #include "Duin/Core/Utils/UUID.h"
 #include "Duin/Core/Events/Event.h"
 #include "Duin/Core/Signals/SignalsModule.h"
+#include "Duin/Objects/GameObjectImpl.h"
 
 #include <vector>
 #include <memory>
@@ -49,9 +50,20 @@ class ObjectManager;
  * };
  * @endcode
  */
-class GameObject : public std::enable_shared_from_this<GameObject>
+class GameObject
 {
   public:
+
+    template <typename T, typename... Args>
+    static std::shared_ptr<T> Create(Args &&...args)
+    {
+        static_assert(std::is_base_of<GameObject, T>::value, "T must be a GameObject derived class");
+
+        std::shared_ptr<T> derivedObject = std::make_shared<T>(std::forward<Args>(args)...);
+
+        return derivedObject;
+    }
+
     GameObject();
     virtual ~GameObject();
 
@@ -73,17 +85,6 @@ class GameObject : public std::enable_shared_from_this<GameObject>
         return derivedObject;
     }
 
-    /**
-     * @brief Returns this object as a shared pointer of derived type.
-     * @tparam T The derived type to cast to.
-     */
-    template <typename T, typename... Args>
-    std::shared_ptr<T> GetSharedPointer()
-    {
-        static_assert(std::is_base_of<GameObject, T>::value, "T must be a GameObject derived class");
-        return std::static_pointer_cast<T>(shared_from_this());
-    }
-
     /** @brief Adds an existing object as a child. */
     void AddChildObject(std::shared_ptr<GameObject> child);
     /** @brief Removes a child from this object. */
@@ -95,7 +96,10 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     size_t GetChildrenCount();
 
     /** @brief Returns the parent object, or nullptr if root. */
-    std::weak_ptr<GameObject> GetParent();
+    GameObject *GetParent();
+
+    UUID GetUUID() const;
+    void SetUUID(UUID newUUID);
 
     /**
      * @name Signal Connections
@@ -177,11 +181,13 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     bool IsChildrenEnabled() const;
     /** @} */
 
-    /** @brief Returns this object's unique identifier. */
-    UUID GetUUID() const;
-
     bool operator==(const GameObject &other) const;
     bool operator!=(const GameObject &other) const;
+
+    bool IsValid();
+
+    /** @brief Returns the internal implementation object. */
+    std::shared_ptr<GameObjectImpl> GetImpl() const;
 
 #ifndef __TESTING__
   protected:
@@ -192,16 +198,7 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     friend class GameStateMachine;
     friend class GameState;
 
-    // Signals emit after main functions called: Child functions -> Main functions -> Signal functions
-    Signal<> OnObjectReady;
-    Signal<Event> OnObjectOnEvent;
-    Signal<double> OnObjectUpdate;
-    Signal<double> OnObjectPhysicsUpdate;
-    Signal<> OnObjectDraw;
-    Signal<> OnObjectDrawUI;
-    Signal<> OnObjectDebug;
-
-    void SetParent(std::shared_ptr<GameObject> parent);
+    void SetParent(GameObject *parent = nullptr);
     void ResetParent();
 
     // Runs children's functions first
@@ -213,16 +210,10 @@ class GameObject : public std::enable_shared_from_this<GameObject>
     void ObjectDrawUI();
     void ObjectDebug();
 
+    std::shared_ptr<GameObjectImpl> EnsureImpl();
+
   private:
-    UUID uuid;
-    std::weak_ptr<GameObject> parent;
-    std::vector<std::shared_ptr<GameObject>> children;
-    bool onEventEnabled = true;
-    bool updateEnabled = true;
-    bool physicsUpdateEnabled = true;
-    bool drawEnabled = true;
-    bool drawUIEnabled = true;
-    bool debugEnabled = true;
-    bool childrenEnabled = true;
+    std::shared_ptr<GameObjectImpl> impl;
+    GameObject *parent = nullptr;
 };
 } // namespace duin

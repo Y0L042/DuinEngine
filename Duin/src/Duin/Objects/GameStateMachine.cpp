@@ -134,7 +134,7 @@ duin::GameStateMachine::~GameStateMachine()
 
 duin::UUID duin::GameStateMachine::GetUUID()
 {
-    return uuid;
+    return GameObject::GetUUID();
 }
 
 void duin::GameStateMachine::PopState()
