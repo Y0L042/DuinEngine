@@ -516,18 +516,20 @@ void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
     World *world = e.GetWorld();
     packedEntityToInstanceMap[pe.uuid] = e.GetID();
 
+    std::string cachedName;
     if (!pe.name.empty())
     {
         std::string name = pe.name;
         // Only append a disambiguation suffix when another entity (not this one) already
         // holds the same name.  world->Lookup returns the pre-pass entity itself which
         // already has this name, so we must exclude it from the duplicate check.
-        Entity existing = e.GetWorld()->Lookup(pe.name);
+        Entity existing = world->Lookup(pe.name);
         if (existing.IsValid() && existing.GetID() != e.GetID())
         {
-            name = name + "#" + static_cast<std::string>(UUID::ToStringHex(e.GetID()));
+            name = name + Entity::ID_DELIM + static_cast<std::string>(UUID::ToStringHex(e.GetID()));
         }
         e.SetName(name);
+        cachedName = name;
     }
 
     if (!pe.enabled)
@@ -538,74 +540,7 @@ void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
     // Handle instanceOf: load and instantiate external scene as children
     if (pe.instanceOf.has_value())
     {
-        static thread_local std::unordered_set<std::string> loadingPaths;
-
-        const PackedExternalDependency &exdep = *pe.instanceOf;
-        if (ValidateExternalDependency(exdep))
-        {
-            PackedExternalDependency resolved = ResolveExternalDependency(exdep);
-            if (!vfs::GetPathInfo(resolved.rPath))
-            {
-                DN_CORE_FATAL("Invalid rPath! {}", resolved.rPath);
-            }
-
-            if (loadingPaths.count(resolved.rPath))
-            {
-                DN_CORE_WARN("SceneBuilder::InstantiateEntity - Circular reference detected for: {}", resolved.rPath);
-            }
-            else
-            {
-                loadingPaths.insert(resolved.rPath);
-
-                std::string fileContents;
-                if (FileUtils::ReadFileIntoString(resolved.rPath, fileContents))
-                {
-                    JSONValue sceneJSON = JSONValue::Parse(fileContents);
-                    if (sceneJSON.IsObject())
-                    {
-                        PackedScene externalScene = DeserializeScene(sceneJSON);
-
-                        auto savedInstanceToPackedMap = instanceToPackedEntityMap;
-                        auto savedPackedToInstanceMap = packedEntityToInstanceMap;
-
-                        // Merge the external scene's root entity into e.
-                        // Assumes the external scene has exactly one root entity.
-                        if (!externalScene.entities.empty())
-                        {
-                            PackedEntity &extRoot = externalScene.entities[0];
-
-                            // Pre-pass: create child entities of external root under e
-                            for (const PackedEntity &child : extRoot.children)
-                            {
-                                PrePassInstantiate(child, world, e);
-                            }
-
-                            // Apply external root's content (name, tags, components, children) onto e
-                            InstantiateEntity(extRoot, e);
-                        }
-
-                        instanceToPackedEntityMap = std::move(savedInstanceToPackedMap);
-                        packedEntityToInstanceMap = std::move(savedPackedToInstanceMap);
-                    }
-                    else
-                    {
-                        DN_CORE_WARN("SceneBuilder::InstantiateEntity - Failed to parse external scene: {}",
-                                     resolved.rPath);
-                    }
-                }
-                else
-                {
-                    DN_CORE_WARN("SceneBuilder::InstantiateEntity - Failed to read external scene file: {}",
-                                 resolved.rPath);
-                }
-
-                loadingPaths.erase(resolved.rPath);
-            }
-        }
-        else
-        {
-            DN_CORE_WARN("SceneBuilder::InstantiateEntity - Invalid external dependency (empty rPath)");
-        }
+        InstantiateExternalScene(*pe.instanceOf, e, world, cachedName);
     }
 
     for (const PackedComponent &tag : pe.tags)
@@ -639,6 +574,85 @@ void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
             InstantiateEntity(child, childEntity);
         }
     }
+}
+
+void duin::SceneBuilder::InstantiateExternalScene(const PackedExternalDependency &exdep, Entity e, World *world,
+                                                  const std::string &cachedName)
+{
+    static thread_local std::unordered_set<std::string> loadingPaths;
+
+    if (!ValidateExternalDependency(exdep))
+    {
+        DN_CORE_WARN("SceneBuilder::InstantiateExternalScene - Invalid external dependency (empty rPath)");
+        return;
+    }
+
+    PackedExternalDependency resolved = ResolveExternalDependency(exdep);
+    if (!fs::GetPathInfo(resolved.rPath))
+    {
+        DN_CORE_FATAL("Invalid rPath! {}", resolved.rPath);
+    }
+
+    if (loadingPaths.count(resolved.rPath))
+    {
+        DN_CORE_WARN("SceneBuilder::InstantiateExternalScene - Circular reference detected for: {}", resolved.rPath);
+        return;
+    }
+
+    // RAII guard to ensure loadingPaths cleanup on all return paths.
+    struct PathGuard
+    {
+        std::unordered_set<std::string> &paths;
+        const std::string &path;
+        ~PathGuard()
+        {
+            paths.erase(path);
+        }
+    } guard{loadingPaths, resolved.rPath};
+
+    loadingPaths.insert(resolved.rPath);
+
+    std::string fileContents;
+    if (!FileUtils::ReadFileIntoString(resolved.rPath, fileContents))
+    {
+        DN_CORE_WARN("SceneBuilder::InstantiateExternalScene - Failed to read external scene file: {}", resolved.rPath);
+        return;
+    }
+
+    JSONValue sceneJSON = JSONValue::Parse(fileContents);
+    if (!sceneJSON.IsObject())
+    {
+        DN_CORE_WARN("SceneBuilder::InstantiateExternalScene - Failed to parse external scene: {}", resolved.rPath);
+        return;
+    }
+
+    PackedScene externalScene = DeserializeScene(sceneJSON);
+
+    auto savedInstanceToPackedMap = instanceToPackedEntityMap;
+    auto savedPackedToInstanceMap = packedEntityToInstanceMap;
+
+    // Merge the external scene's root entity into e.
+    // Assumes the external scene has exactly one root entity.
+    if (!externalScene.entities.empty())
+    {
+        PackedEntity &extRoot = externalScene.entities[0];
+
+        // Pre-pass: create child entities of external root under e
+        for (const PackedEntity &child : extRoot.children)
+        {
+            PrePassInstantiate(child, world, e);
+        }
+
+        // Apply external root's content (name, tags, components, children) onto e
+        InstantiateEntity(extRoot, e);
+        if (!cachedName.empty())
+        {
+            e.SetName(cachedName); // Override external scene name
+        }
+    }
+
+    instanceToPackedEntityMap = std::move(savedInstanceToPackedMap);
+    packedEntityToInstanceMap = std::move(savedPackedToInstanceMap);
 }
 
 duin::JSONValue duin::SceneBuilder::SerializeEntity(const PackedEntity &pe)
@@ -992,19 +1006,27 @@ void duin::SceneBuilder::PrePassEntity(Entity e)
     UUID uuid; // fresh random UUID
     instanceToPackedEntityMap[e.GetID()] = uuid;
     for (Entity child : e.GetChildren())
+    {
         PrePassEntity(child);
+    }
 }
 
 void duin::SceneBuilder::PrePassInstantiate(const PackedEntity &pe, World *world, Entity parent)
 {
     Entity e = world->Entity();
     if (parent.IsValid())
+    {
         e.ChildOf(parent);
-    if (!pe.name.empty())
-        e.SetName(pe.name);
+    }
+    //if (!pe.name.empty())
+    //{
+    //    e.SetName(pe.name);
+    //}
     packedEntityToInstanceMap[pe.uuid] = e.GetID();
     for (const PackedEntity &child : pe.children)
+    {
         PrePassInstantiate(child, world, e);
+    }
 }
 
 duin::Entity duin::SceneBuilder::InstantiateScene(PackedScene &pscn, World *world)
@@ -1052,7 +1074,9 @@ duin::Entity duin::SceneBuilder::InstantiateSceneAsChildren(PackedScene &pscn, E
 
     World *w = parent.GetWorld();
     if (!w)
+    {
         return Entity();
+    }
 
     // Pre-pass: create all entities as children of parent.
     for (PackedEntity &pEntity : pscn.entities)

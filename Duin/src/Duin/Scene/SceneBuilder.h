@@ -18,7 +18,10 @@
 #include <rfl.hpp>
 
 #include <flecs.h>
+#include <memory>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include <optional>
 
@@ -195,6 +198,7 @@ class SceneBuilder
 
     void PrePassEntity(Entity e);
     void PrePassInstantiate(const PackedEntity &pe, World *world, Entity parent);
+    void InstantiateExternalScene(const PackedExternalDependency &exdep, Entity e, World *world, const std::string &cachedName);
 };
 
 } // namespace duin
