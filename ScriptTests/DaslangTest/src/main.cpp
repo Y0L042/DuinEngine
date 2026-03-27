@@ -1,70 +1,108 @@
 #include "daScript/daScript.h"
+#include "Module_DuinImGui.h"
+
+#include <Duin.h>
+#include <Duin/EntryPoint.h>
 
 #include <iostream>
-#include <windows.h>
 
-using namespace das;
+// NEED_ALL_DEFAULT_MODULES and NEED_MODULE must be at file scope
+// (they expand to static registrations)
 
-void tutorial()
+class DaslangTestApp : public duin::Application
 {
-    TextPrinter tout;
-    ModuleGroup dummyLibGroup;
-    auto fAccess = make_smart<FsFileAccess>();
+    das::ProgramPtr program;
+    das::Context* ctx = nullptr;
+    das::SimFunction* fnDrawUI = nullptr;
 
-    auto program = compileDaScript("scripts/hello.das", fAccess, tout, dummyLibGroup);
-    if (program->failed())
+    das::TextPrinter tout;
+    das::ModuleGroup libGroup;
+
+    void Initialize() override
     {
-        tout << "Compilation failed:\n";
-        for (auto &err : program->errors)
+        SetWindowStartupSize(1280, 720);
+        SetWindowName("Daslang ImGui Test");
+    }
+
+    void Ready() override
+    {
+NEED_ALL_DEFAULT_MODULES;
+NEED_MODULE(Module_DuinImGui);
+        das::Module::Initialize();
+
+        ReloadScript();
+    }
+
+    void Update(double delta) override
+    {
+        if (duin::Input::IsKeyPressed(DN_SCANCODE_F5))
         {
-            tout << reportError(err.at, err.what, err.extra, err.fixme, err.cerr);
+            ReloadScript();
+            DN_INFO("Reloading script...");
         }
-        return;
     }
 
-    Context ctx(program->getContextStackSize());
-    if (!program->simulate(ctx, tout))
+    void ReloadScript()
     {
-        tout << "Simulation failed:\n";
-        for (auto &err : program->errors)
+        delete ctx;
+        ctx = nullptr;
+        fnDrawUI = nullptr;
+
+        auto fAccess = das::make_smart<das::FsFileAccess>();
+        program = das::compileDaScript("scripts/imgui_demo.das", fAccess, tout, libGroup);
+        if (program->failed())
         {
-            tout << reportError(err.at, err.what, err.extra, err.fixme, err.cerr);
+            tout << "Compilation failed:\n";
+            for (auto& err : program->errors)
+            {
+                tout << das::reportError(err.at, err.what, err.extra, err.fixme, err.cerr);
+            }
+            return;
         }
-        return;
+
+        ctx = new das::Context(program->getContextStackSize());
+        if (!program->simulate(*ctx, tout))
+        {
+            tout << "Simulation failed:\n";
+            for (auto& err : program->errors)
+            {
+                tout << das::reportError(err.at, err.what, err.extra, err.fixme, err.cerr);
+            }
+            delete ctx;
+            ctx = nullptr;
+            return;
+        }
+
+        fnDrawUI = ctx->findFunction("draw_ui");
+        if (!fnDrawUI)
+        {
+            tout << "Function 'draw_ui' not found in script\n";
+        }
     }
 
-    auto fnTest = ctx.findFunction("test");
-    if (!fnTest)
+    void DrawUI() override
     {
-        tout << "Function 'test' not found\n";
-        return;
+        if (fnDrawUI && ctx)
+        {
+            ctx->evalWithCatch(fnDrawUI, nullptr);
+            if (auto ex = ctx->getException())
+            {
+                std::cerr << "Script exception: " << ex << std::endl;
+            }
+        }
     }
 
-    if (!verifyCall<void>(fnTest->debugInfo, dummyLibGroup))
+    void Exit() override
     {
-        tout << "Function 'test' has wrong signature; expected def test() : void\n";
-        return;
+        fnDrawUI = nullptr;
+        program.reset();
+        delete ctx;
+        ctx = nullptr;
+        das::Module::Shutdown();
     }
+};
 
-    ctx.evalWithCatch(fnTest, nullptr);
-    if (auto ex = ctx.getException())
-    {
-        tout << "Script exception: " << ex << "\n";
-    }
-}
-
-int main(int, char *[])
+duin::Application* duin::CreateApplication()
 {
-    NEED_ALL_DEFAULT_MODULES;
-    Module::Initialize();
-
-    size_t x = 100000;
-    while (x-- > 0)
-    {
-        tutorial();
-        Sleep(1000);
-    }
-
-    Module::Shutdown();
-    return 0;
+    return new DaslangTestApp();
 }
