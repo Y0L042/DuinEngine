@@ -32,11 +32,14 @@ project "DuinTests"
     externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
 	externalincludedirs
 	{
+        SolutionRoot .. "/" .. IncludeDir["daslang"],
+        SolutionRoot .. "/Duin/vendor/daslang/src/builtin",
 	}
 
     libdirs(prependRoot(SolutionRoot, global_libdirs))
 	libdirs
 	{
+        SolutionRoot .. "/Duin/vendor/daslang/lib/Debug",
 	}
 
     defines(global_defines)
@@ -44,13 +47,24 @@ project "DuinTests"
     {
         "DN_ALLOW_ASSERT_FAILS",
         "DN_HEADLESS",
-        "DN_TESTING"
+        "DN_TESTING",
+        "DAS_SMART_PTR_DEBUG=1",
+        "DAS_ENABLE_DYN_INCLUDES=1",
+        "DAS_ENABLE_EXCEPTIONS=1",
     }
 
     links(global_links)
 	links
 	{
+        "libDaScript.lib",
+        "libUriParser.lib",
+        "dbghelp.lib",
 	}
+
+    postbuildcommands
+    {
+        '{COPYDIR} "' .. path.getabsolute("scripts") .. '" "%{cfg.targetdir}/scripts"',
+    }
 
     filter { "files:**/external/**" }
         flags { "NoPCH" }
@@ -61,6 +75,12 @@ project "DuinTests"
     filter { "files:**/vendor/**" }
         flags { "NoPCH" }
         warnings "Off"
+        pchheader ""
+    filter {}
+
+    -- Script test files include daScript headers that conflict with any PCH
+    filter "files:**/Script/**"
+        flags { "NoPCH" }
         pchheader ""
     filter {}
 
