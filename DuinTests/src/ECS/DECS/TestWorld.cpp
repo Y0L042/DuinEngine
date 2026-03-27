@@ -173,5 +173,26 @@ TEST_SUITE("World")
         });
         CHECK(count >= 2);
     }
+
+    TEST_CASE("Lookup by plain name")
+    {
+        duin::World w;
+        duin::Entity e = w.Entity("PlainLookup");
+        duin::Entity found = w.Lookup("PlainLookup");
+        CHECK(found.IsValid());
+        CHECK(found.GetID() == e.GetID());
+    }
+
+    TEST_CASE("Entity::Lookup child by plain name")
+    {
+        duin::World w;
+        duin::Entity parent = w.Entity("LookupParent");
+        duin::Entity child = w.Entity("LookupChild");
+        child.ChildOf(parent);
+        duin::Entity found = parent.Lookup("LookupChild");
+        CHECK(found.IsValid());
+        CHECK(found.GetID() == child.GetID());
+    }
+
 }
 } // namespace TestWorld

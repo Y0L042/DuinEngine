@@ -170,7 +170,7 @@ TEST_SUITE("GameObject")
         auto obj = std::make_shared<duin::GameObject>();
 
         bool t1 = obj != nullptr;
-        bool t2 = obj->GetParent().expired();
+        bool t2 = obj->GetParent() == nullptr;
         CAPTURE(t1);
         CAPTURE(t1);
         CHECK(t1);
@@ -193,10 +193,10 @@ TEST_SUITE("GameObject")
         CAPTURE(child->initCalled);
         CAPTURE(child->initCalled);
         CHECK(child->initCalled);
-        CAPTURE(child->GetParent().lock().get());
+        CAPTURE(child->GetParent());
         CAPTURE(parent.get());
-        CAPTURE(child->GetParent().lock().get() == parent.get());
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CAPTURE(child->GetParent() == parent.get());
+        CHECK(child->GetParent() == parent.get());
     }
 
     TEST_CASE("CreateChildObject with constructor arguments")
@@ -232,10 +232,10 @@ TEST_SUITE("GameObject")
 
         parent->AddChildObject(child);
 
-        CAPTURE(child->GetParent().lock().get());
+        CAPTURE(child->GetParent());
         CAPTURE(parent.get());
-        CAPTURE(child->GetParent().lock().get() == parent.get());
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CAPTURE(child->GetParent() == parent.get());
+        CHECK(child->GetParent() == parent.get());
         CAPTURE(child->initCalled);
         CAPTURE(child->initCalled);
         CHECK(child->initCalled);
@@ -250,10 +250,10 @@ TEST_SUITE("GameObject")
         parent->AddChildObject(child); // Try to add again
 
         // Child should still have the parent and Init should only be called once
-        CAPTURE(child->GetParent().lock().get());
+        CAPTURE(child->GetParent());
         CAPTURE(parent.get());
-        CAPTURE(child->GetParent().lock().get() == parent.get());
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CAPTURE(child->GetParent() == parent.get());
+        CHECK(child->GetParent() == parent.get());
     }
 
     TEST_CASE("AddChildObject with nullptr does nothing")
@@ -272,16 +272,16 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
-        CAPTURE(child->GetParent().lock().get());
+        CAPTURE(child->GetParent());
         CAPTURE(parent.get());
-        CAPTURE(child->GetParent().lock().get() == parent.get());
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CAPTURE(child->GetParent() == parent.get());
+        CHECK(child->GetParent() == parent.get());
 
         parent->RemoveChildObject(child);
 
-        CAPTURE(child->GetParent().lock().get());
-        CAPTURE(child->GetParent().lock().get() == nullptr);
-        CHECK(child->GetParent().lock().get() == nullptr);
+        CAPTURE(child->GetParent());
+        CAPTURE(child->GetParent() == nullptr);
+        CHECK(child->GetParent() == nullptr);
     }
 
     TEST_CASE("RemoveChildObject with nullptr does nothing")
@@ -300,21 +300,21 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = std::make_shared<duin::GameObject>();
 
-        child->SetParent(parent);
+        child->SetParent(parent.get());
 
-        CAPTURE(child->GetParent().lock().get());
+        CAPTURE(child->GetParent());
         CAPTURE(parent.get());
-        CAPTURE(child->GetParent().lock().get() == parent.get());
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CAPTURE(child->GetParent() == parent.get());
+        CHECK(child->GetParent() == parent.get());
     }
 
     TEST_CASE("GetParent returns nullptr initially")
     {
         auto obj = std::make_shared<duin::GameObject>();
 
-        CAPTURE(obj->GetParent().lock().get());
-        CAPTURE(obj->GetParent().lock().get() == nullptr);
-        CHECK(obj->GetParent().lock().get() == nullptr);
+        CAPTURE(obj->GetParent());
+        CAPTURE(obj->GetParent() == nullptr);
+        CHECK(obj->GetParent() == nullptr);
     }
 
     TEST_CASE("ResetParent clears parent reference")
@@ -322,31 +322,16 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = std::make_shared<duin::GameObject>();
 
-        child->SetParent(parent);
-        CAPTURE(child->GetParent().lock().get());
+        child->SetParent(parent.get());
+        CAPTURE(child->GetParent());
         CAPTURE(parent.get());
-        CAPTURE(child->GetParent().lock().get() == parent.get());
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CAPTURE(child->GetParent() == parent.get());
+        CHECK(child->GetParent() == parent.get());
 
         child->ResetParent();
-        CAPTURE(child->GetParent().lock().get());
-        CAPTURE(child->GetParent().lock().get() == nullptr);
-        CHECK(child->GetParent().lock().get() == nullptr);
-    }
-
-    TEST_CASE("GetSharedPointer returns valid shared_ptr")
-    {
-        auto obj = std::make_shared<TestObjectA>();
-
-        auto sharedPtr = obj->GetSharedPointer<TestObjectA>();
-
-        CAPTURE(sharedPtr.get());
-        CAPTURE(sharedPtr.get() != nullptr);
-        CHECK(sharedPtr.get() != nullptr);
-        CAPTURE(sharedPtr.get());
-        CAPTURE(obj.get());
-        CAPTURE(sharedPtr == obj);
-        CHECK(sharedPtr == obj);
+        CAPTURE(child->GetParent());
+        CAPTURE(child->GetParent() == nullptr);
+        CHECK(child->GetParent() == nullptr);
     }
 
     TEST_CASE("Equality operator compares UUIDs")
@@ -479,18 +464,18 @@ TEST_SUITE("GameObject")
         auto grandchild1 = child1->CreateChildObject<TestObjectA>();
         auto grandchild2 = child2->CreateChildObject<TestObjectA>();
 
-        CAPTURE(child1->GetParent().lock().get());
+        CAPTURE(child1->GetParent());
         CAPTURE(root.get());
-        CHECK(child1->GetParent().lock().get() == root.get());
-        CAPTURE(child2->GetParent().lock().get());
+        CHECK(child1->GetParent() == root.get());
+        CAPTURE(child2->GetParent());
         CAPTURE(root.get());
-        CHECK(child2->GetParent().lock().get() == root.get());
-        CAPTURE(grandchild1->GetParent().lock().get());
+        CHECK(child2->GetParent() == root.get());
+        CAPTURE(grandchild1->GetParent());
         CAPTURE(child1.get());
-        CHECK(grandchild1->GetParent().lock().get() == child1.get());
-        CAPTURE(grandchild2->GetParent().lock().get());
+        CHECK(grandchild1->GetParent() == child1.get());
+        CAPTURE(grandchild2->GetParent());
         CAPTURE(child2.get());
-        CHECK(grandchild2->GetParent().lock().get() == child2.get());
+        CHECK(grandchild2->GetParent() == child2.get());
     }
 
     TEST_CASE("Nested children receive updates")
@@ -582,17 +567,17 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
-        CAPTURE(child->GetParent().lock().get());
+        CAPTURE(child->GetParent());
         CAPTURE(parent.get());
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CHECK(child->GetParent() == parent.get());
 
         parent->RemoveChildObject(child);
-        CAPTURE(child->GetParent().lock().get());
-        CHECK(child->GetParent().lock().get() == nullptr);
+        CAPTURE(child->GetParent());
+        CHECK(child->GetParent() == nullptr);
 
         // Add back
         parent->AddChildObject(child);
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CHECK(child->GetParent() == parent.get());
     }
 
     TEST_CASE("Init is called only once when adding child")
@@ -704,20 +689,20 @@ TEST_SUITE("GameObject")
         auto child2 = parent->CreateChildObject<TestObjectA>();
         auto child3 = parent->CreateChildObject<TestObjectA>();
 
-        CAPTURE(child1->GetParent().lock().get());
+        CAPTURE(child1->GetParent());
         CAPTURE(parent.get());
-        CAPTURE(child2->GetParent().lock().get());
-        CAPTURE(child3->GetParent().lock().get());
-        CHECK(child1->GetParent().lock().get() == parent.get());
-        CHECK(child2->GetParent().lock().get() == parent.get());
-        CHECK(child3->GetParent().lock().get() == parent.get());
+        CAPTURE(child2->GetParent());
+        CAPTURE(child3->GetParent());
+        CHECK(child1->GetParent() == parent.get());
+        CHECK(child2->GetParent() == parent.get());
+        CHECK(child3->GetParent() == parent.get());
 
         parent->RemoveChildObject(child2);
-        CHECK(child2->GetParent().lock().get() == nullptr);
+        CHECK(child2->GetParent() == nullptr);
 
         // child1 and child3 should still have parent
-        CHECK(child1->GetParent().lock().get() == parent.get());
-        CHECK(child3->GetParent().lock().get() == parent.get());
+        CHECK(child1->GetParent() == parent.get());
+        CHECK(child3->GetParent() == parent.get());
     }
 
     TEST_CASE("CreateChildObject returns correct type")
@@ -825,13 +810,13 @@ TEST_SUITE("GameObject")
         auto parent2 = std::make_shared<duin::GameObject>();
         auto child = parent1->CreateChildObject<TestObjectA>();
 
-        CHECK(child->GetParent().lock().get() == parent1.get());
+        CHECK(child->GetParent() == parent1.get());
 
         // Reparent to parent2
-        child->SetParent(parent2);
+        child->SetParent(parent2.get());
 
-        CHECK(child->GetParent().lock().get() == parent2.get());
-        CHECK(child->GetParent().lock().get() != parent1.get());
+        CHECK(child->GetParent() == parent2.get());
+        CHECK(child->GetParent() != parent1.get());
     }
 
     TEST_CASE("Reparenting updates work correctly")
@@ -869,18 +854,18 @@ TEST_SUITE("GameObject")
         }
 
         // Verify deepest child has root as ancestor
-        auto temp = current;
+        duin::GameObject *temp = current.get();
         int depth = 0;
-        while (temp->GetParent().lock().get() != nullptr)
+        while (temp->GetParent() != nullptr)
         {
-            temp = std::static_pointer_cast<TestObjectA>(temp->GetParent().lock());
+            temp = temp->GetParent();
             depth++;
         }
         CAPTURE(depth);
-        CAPTURE(temp.get());
+        CAPTURE(temp);
         CAPTURE(root.get());
         CHECK(depth == 50);
-        CHECK(temp.get() == root.get());
+        CHECK(temp == root.get());
     }
 
     TEST_CASE("Very deep nesting - update propagation through 50 levels")
@@ -1018,7 +1003,7 @@ TEST_SUITE("GameObject")
         // Parent should still be valid
         CAPTURE(parent->GetUUID());
         CHECK(parent->GetUUID() != duin::UUID::INVALID);
-        CHECK(parent->GetParent().lock().get() == nullptr);
+        CHECK(parent->GetParent() == nullptr);
     }
 
     TEST_CASE("Many rapid updates - 10000 iterations")
@@ -1033,18 +1018,6 @@ TEST_SUITE("GameObject")
         CHECK(obj->updateCalls == 10000);
     }
 
-    TEST_CASE("GetSharedPointer with derived types")
-    {
-        auto objA = std::make_shared<TestObjectA>();
-
-        auto sharedA = objA->GetSharedPointer<TestObjectA>();
-        CHECK(sharedA.get() == objA.get());
-
-        // Verify it's the same instance
-        sharedA->initCalled = true;
-        CHECK(objA->initCalled == true);
-    }
-
     TEST_CASE("Multiple inheritance levels")
     {
         // TestObjectC inherits from GameObject
@@ -1055,9 +1028,9 @@ TEST_SUITE("GameObject")
         auto grandchild1 = child1->CreateChildObject<TestObjectA>();
 
         // All should have correct parents
-        CHECK(child1->GetParent().lock().get() == root.get());
-        CHECK(child2->GetParent().lock().get() == root.get());
-        CHECK(grandchild1->GetParent().lock().get() == child1.get());
+        CHECK(child1->GetParent() == root.get());
+        CHECK(child2->GetParent() == root.get());
+        CHECK(grandchild1->GetParent() == child1.get());
 
         // All should receive updates
         root->ObjectUpdate(0.016);
@@ -1071,11 +1044,11 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CHECK(child->GetParent() == parent.get());
 
         child->SetParent(nullptr);
 
-        CHECK(child->GetParent().lock().get() == nullptr);
+        CHECK(child->GetParent() == nullptr);
     }
 
     TEST_CASE("Adding child that already has same parent")
@@ -1083,7 +1056,7 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CHECK(child->GetParent() == parent.get());
         CHECK(child->initCalled);
 
         // Reset init flag
@@ -1094,7 +1067,7 @@ TEST_SUITE("GameObject")
 
         // Should not call Init again
         CHECK_FALSE(child->initCalled);
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CHECK(child->GetParent() == parent.get());
     }
 
     TEST_CASE("Complex hierarchy removal - remove middle node")
@@ -1103,15 +1076,15 @@ TEST_SUITE("GameObject")
         auto middle = root->CreateChildObject<TestObjectA>();
         auto leaf = middle->CreateChildObject<TestObjectA>();
 
-        CHECK(leaf->GetParent().lock().get() == middle.get());
-        CHECK(middle->GetParent().lock().get() == root.get());
+        CHECK(leaf->GetParent() == middle.get());
+        CHECK(middle->GetParent() == root.get());
 
         // Remove middle node from root
         root->RemoveChildObject(middle);
 
-        CHECK(middle->GetParent().lock().get() == nullptr);
+        CHECK(middle->GetParent() == nullptr);
         // Leaf should still be child of middle
-        CHECK(leaf->GetParent().lock().get() == middle.get());
+        CHECK(leaf->GetParent() == middle.get());
 
         // Update root should not reach leaf anymore
         root->ObjectUpdate(0.016);
@@ -1286,7 +1259,7 @@ TEST_SUITE("GameObject")
         // Verify all added
         for (const auto &child : children)
         {
-            CHECK(child->GetParent().lock().get() == parent.get());
+            CHECK(child->GetParent() == parent.get());
         }
 
         // Remove all
@@ -1298,7 +1271,7 @@ TEST_SUITE("GameObject")
         // Verify all removed
         for (const auto &child : children)
         {
-            CHECK(child->GetParent().lock().get() == nullptr);
+            CHECK(child->GetParent() == nullptr);
         }
     }
 
@@ -1307,22 +1280,22 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
 
         auto child1 = parent->CreateChildObject<TestObjectA>();
-        CHECK(child1->GetParent().lock().get() == parent.get());
+        CHECK(child1->GetParent() == parent.get());
 
         auto child2 = parent->CreateChildObject<TestObjectA>();
-        CHECK(child2->GetParent().lock().get() == parent.get());
+        CHECK(child2->GetParent() == parent.get());
 
         parent->RemoveChildObject(child1);
-        CHECK(child1->GetParent().lock().get() == nullptr);
+        CHECK(child1->GetParent() == nullptr);
 
         auto child3 = parent->CreateChildObject<TestObjectA>();
-        CHECK(child3->GetParent().lock().get() == parent.get());
+        CHECK(child3->GetParent() == parent.get());
 
         parent->RemoveChildObject(child2);
-        CHECK(child2->GetParent().lock().get() == nullptr);
+        CHECK(child2->GetParent() == nullptr);
 
         parent->RemoveChildObject(child3);
-        CHECK(child3->GetParent().lock().get() == nullptr);
+        CHECK(child3->GetParent() == nullptr);
     }
 
     TEST_CASE("Reparent leaf node and remove middle node ")
@@ -1331,12 +1304,12 @@ TEST_SUITE("GameObject")
         auto middle = parent->CreateChildObject<duin::GameObject>();
         auto leaf = middle->CreateChildObject<duin::GameObject>();
 
-        CHECK(leaf->GetParent().lock().get() == middle.get());
+        CHECK(leaf->GetParent() == middle.get());
 
         middle->TransferChildObject(leaf, parent);
         parent->RemoveChildObject(middle);
 
-        CHECK(leaf->GetParent().lock().get() == parent.get());
+        CHECK(leaf->GetParent() == parent.get());
     }
 
     TEST_CASE("Remove middle node and reparent leaf node")
@@ -1345,12 +1318,12 @@ TEST_SUITE("GameObject")
         auto middle = parent->CreateChildObject<duin::GameObject>();
         auto leaf = middle->CreateChildObject<duin::GameObject>();
 
-        CHECK(leaf->GetParent().lock().get() == middle.get());
+        CHECK(leaf->GetParent() == middle.get());
 
         parent->RemoveChildObject(middle);
         middle->TransferChildObject(leaf, parent);
 
-        CHECK(leaf->GetParent().lock().get() == parent.get());
+        CHECK(leaf->GetParent() == parent.get());
     }
 
     TEST_CASE("CreateChildObject with different derived types in sequence")
@@ -1365,9 +1338,9 @@ TEST_SUITE("GameObject")
         CHECK(childB->initCalled);
 
         // All should have same parent
-        CHECK(childA->GetParent().lock().get() == parent.get());
-        CHECK(childB->GetParent().lock().get() == parent.get());
-        CHECK(childC->GetParent().lock().get() == parent.get());
+        CHECK(childA->GetParent() == parent.get());
+        CHECK(childB->GetParent() == parent.get());
+        CHECK(childC->GetParent() == parent.get());
 
         // Type checks
         CHECK(std::dynamic_pointer_cast<TestObjectA>(childA) != nullptr);
@@ -1387,16 +1360,16 @@ TEST_SUITE("GameObject")
         }
 
         // Verify depth by traversing back up
-        auto temp = current;
+        duin::GameObject *temp = current.get();
         int depth = 0;
-        while (!temp->GetParent().expired())
+        while (temp->GetParent() != nullptr)
         {
-            temp = temp->GetParent().lock();
+            temp = temp->GetParent();
             depth++;
         }
 
         CHECK(depth == 100);
-        CHECK(temp.get() == root.get());
+        CHECK(temp == root.get());
     }
 
     TEST_CASE("Extreme width - 500 children")
@@ -1407,7 +1380,7 @@ TEST_SUITE("GameObject")
         for (int i = 0; i < 500; ++i)
         {
             auto child = parent->CreateChildObject<duin::GameObject>();
-            CHECK(child->GetParent().lock().get() == parent.get());
+            CHECK(child->GetParent() == parent.get());
         }
 
         // Parent should still be valid
@@ -1496,10 +1469,10 @@ TEST_SUITE("GameObject")
         auto level3 = level2->CreateChildObject<TestObjectA>();
         auto level4 = level3->CreateChildObject<TestObjectB>();
 
-        CHECK(level4->GetParent().lock().get() == level3.get());
-        CHECK(level3->GetParent().lock().get() == level2.get());
-        CHECK(level2->GetParent().lock().get() == level1.get());
-        CHECK(level1->GetParent().lock().get() == root.get());
+        CHECK(level4->GetParent() == level3.get());
+        CHECK(level3->GetParent() == level2.get());
+        CHECK(level2->GetParent() == level1.get());
+        CHECK(level1->GetParent() == root.get());
     }
 
     TEST_CASE("Empty GameObject default behavior")
@@ -1547,18 +1520,18 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = parent->CreateChildObject<TestObjectA>();
 
-        CHECK(child->GetParent().lock().get() == parent.get());
+        CHECK(child->GetParent() == parent.get());
 
         child->ResetParent();
-        CHECK(child->GetParent().lock().get() == nullptr);
+        CHECK(child->GetParent() == nullptr);
 
         // Reset again should be safe
         child->ResetParent();
-        CHECK(child->GetParent().lock().get() == nullptr);
+        CHECK(child->GetParent() == nullptr);
 
         // Reset once more
         child->ResetParent();
-        CHECK(child->GetParent().lock().get() == nullptr);
+        CHECK(child->GetParent() == nullptr);
     }
 
     TEST_CASE("SetParent to same parent multiple times")
@@ -1566,14 +1539,14 @@ TEST_SUITE("GameObject")
         auto parent = std::make_shared<duin::GameObject>();
         auto child = std::make_shared<duin::GameObject>();
 
-        child->SetParent(parent);
-        CHECK(child->GetParent().lock().get() == parent.get());
+        child->SetParent(parent.get());
+        CHECK(child->GetParent() == parent.get());
 
-        child->SetParent(parent);
-        CHECK(child->GetParent().lock().get() == parent.get());
+        child->SetParent(parent.get());
+        CHECK(child->GetParent() == parent.get());
 
-        child->SetParent(parent);
-        CHECK(child->GetParent().lock().get() == parent.get());
+        child->SetParent(parent.get());
+        CHECK(child->GetParent() == parent.get());
     }
 
     // ========================================================================

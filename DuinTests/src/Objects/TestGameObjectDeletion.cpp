@@ -93,11 +93,11 @@ TEST_SUITE("GameObject - Ownership and Lifetime")
         auto parent = std::make_shared<duin::GameObject>();
         auto child  = parent->CreateChildObject<duin::GameObject>();
 
-        CHECK_MESSAGE(!child->GetParent().expired(), "Sanity check");
+        CHECK_MESSAGE(child->GetParent() != nullptr, "Sanity check");
 
         parent->RemoveChildObject(child);
-        CHECK_FALSE(child->GetParent().lock() == parent);
-        MSG_CHECK(child->GetParent(), child->GetParent().expired());
+        CHECK_FALSE(child->GetParent() == parent.get());
+        MSG_CHECK(child->GetParent(), child->GetParent() == nullptr);
     }
 
     TEST_CASE("Reparented child survives destruction of original parent")
@@ -125,7 +125,7 @@ TEST_SUITE("GameObject - Ownership and Lifetime")
 
         oldParent->TransferChildObject(child, newParent);
 
-        MSG_CHECK(child->GetParent(), child->GetParent().lock() == newParent);
+        MSG_CHECK(child->GetParent(), child->GetParent() == newParent.get());
     }
 
     TEST_CASE("Reparented child's children also survive destruction of original parent")
