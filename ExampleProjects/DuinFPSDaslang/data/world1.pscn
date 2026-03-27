@@ -1,0 +1,68 @@
+{
+	"sceneUUID": "0xB9322953E1B3C459",
+	"sceneName": "World1",
+	"metadata": {
+		"editorVersion": "",
+		"engineVersion": "",
+		"lastModified": "",
+		"author": ""
+	},
+	"entities": [
+		{
+			"uuid": "0xB9322953E1B3C382",
+			"name": "Player",
+			"enabled": true,
+			"instanceOf": {
+				"rPath": "bin://data/playerScene.pscn",
+				"uuid": "0xB9322953E1B3C456",
+				"fileType": "FS_FILETYPE_TEXT_EXT",
+				"fileExt": "FS_FILEEXT_PSCN"
+			}
+		},
+		{
+			"uuid": "0x3B8918EC9D0FFAB",
+			"name": "Bubbles",
+			"enabled": true,
+			"tags": [
+
+			],
+			"pairs": [
+				{
+					"relationship": "Identifier",
+					"target": "Name"
+				},
+				{
+					"relationship": "IsA",
+					"target": "Node3D"
+				}
+			],
+			"components": [
+				{
+					"type": "Transform3DImpl",
+					"pos": {
+						"type": "Vector3Impl",
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
+					},
+					"scale": {
+						"type": "Vector3Impl",
+						"x": 1.0,
+						"y": 1.0,
+						"z": 1.0
+					},
+					"rot": {
+						"type": "Vector4Impl",
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0,
+						"w": 1.0
+					}
+				}
+			],
+			"children": [
+
+			]
+		}
+	]
+}
