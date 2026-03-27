@@ -20,6 +20,7 @@ class GameScript : public Script, public GameObject
     void EnableHotCompile(bool enable, bool halt = false);
     bool IsHotCompileEnabled();
     bool HotCompileAndSimulate();
+    bool SetContextRootObject();
 
     bool CompileAndSimulate(bool skipReady = false);
 

@@ -60,10 +60,25 @@ bool duin::GameScript::HotCompileAndSimulate()
 {
     bool compiled = false;
 
-    compiled = CompileAndSimulate(true);
-    RestartScriptGameObjects();
+    compiled = CompileAndSimulate();
+    if (compiled)
+    {
+        SetContextRootObject();
+        RestartScriptGameObjects();
+    }
 
     return compiled;
+}
+
+bool duin::GameScript::SetContextRootObject()
+{
+    bool res = IsValid() && context;
+    if (res)
+    {
+        context->rootGameObject = this;
+    }
+
+    return res;
 }
 
 bool duin::GameScript::CompileAndSimulate(bool skipReady)
@@ -103,13 +118,9 @@ void duin::GameScript::Init()
 
 void duin::GameScript::Ready()
 {
-    if (IsValid() && context)
+    if (!SetContextRootObject())
     {
-        context->rootGameObject = this;
-    }
-    else
-    {
-        context->rootGameObject = nullptr;
+        DN_CORE_WARN("GameScript has not been added to App root, will not run callbacks!");
     }
 
     if (hotCompileEnabled)
@@ -216,17 +227,22 @@ void duin::GameScript::DrawUI()
 
 void duin::GameScript::RestartScriptGameObjects()
 {
-    if (context && context->rootGameObject)
+    for (auto &child : GetChildren())
     {
-        auto &root = *context->rootGameObject;
-        for (auto &child : root.GetChildren())
-        {
-            if (child.lock())
-            {
-                RestartSGORecurse(child.lock());
-            }
-        }
+        RemoveChildObject(child.lock());
     }
+
+    // if (context && context->rootGameObject)
+    //{
+    //     auto &root = *context->rootGameObject;
+    //     for (auto &child : root.GetChildren())
+    //     {
+    //         if (child.lock())
+    //         {
+    //             RestartSGORecurse(child.lock());
+    //         }
+    //     }
+    // }
 }
 
 void duin::GameScript::RestartSGORecurse(std::shared_ptr<GameObject> obj)
