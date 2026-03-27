@@ -117,6 +117,11 @@ duin::Entity duin::World::MakeAlive(uint64_t id)
     return e;
 }
 
+std::string duin::World::ExportRegisteredComponentMeta()
+{
+    return std::string();
+}
+
 duin::Entity duin::World::GetWorldEntity()
 {
     duin::Entity e;

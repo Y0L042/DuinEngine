@@ -65,6 +65,7 @@ class GameWorld : public World
 
     /** @brief Initializes the ECS world and registers components. */
     void Initialize(bool connectSignals = true);
+    void InitializeRemoteExplorer();
 
     /** @brief Sets the given entity as the active camera. */
     void ActivateCameraEntity(duin::Entity entity);
@@ -148,8 +149,6 @@ class GameWorld : public World
     }
 
   private:
-    void InitializeRemoteExplorer();
-
     std::shared_ptr<ScopedConnection> connPostUpdate_;
     std::shared_ptr<ScopedConnection> connPostPhysicsUpdate_;
     std::shared_ptr<ScopedConnection> connPostDraw_;

@@ -236,6 +236,8 @@ class World
         return duin::Entity::ID(this, f_id);
     }
 
+    std::string ExportRegisteredComponentMeta();
+
     /**
      * @brief Get the world as an entity.
      * @return Entity representing the world itself.

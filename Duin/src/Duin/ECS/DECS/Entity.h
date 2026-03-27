@@ -224,11 +224,18 @@ class Entity
         flecs::id flecsId_; ///< Internal flecs id handle.
     };
 
+    static const std::string ID_DELIM;
+
     /**
      * @brief Default constructor.
      */
     Entity();
 
+    /**
+     * @brief Construct an entity from a raw ID and optional world pointer.
+     * @param id The raw entity ID.
+     * @param world Optional pointer to the world.
+     */
     Entity(uint64_t id, World *world = nullptr);
 
     /**
@@ -310,6 +317,10 @@ class Entity
         return IsValid();
     }
 
+    /**
+     * @brief Get the parent entity.
+     * @return The parent entity.
+     */
     Entity Parent() const
     {
         return Entity(flecsEntity.parent(), world);
@@ -331,8 +342,16 @@ class Entity
      */
     bool IsAlive() const;
 
+    /**
+     * @brief Check if the entity is a tag (has no data).
+     * @return True if the entity is a tag.
+     */
     bool IsTag() const;
 
+    /**
+     * @brief Check if the entity is a pair.
+     * @return True if the entity is a pair.
+     */
     bool IsPair() const;
 
     /**
@@ -353,6 +372,12 @@ class Entity
      */
     std::string GetPath(const std::string &sep = "::", const std::string &init_sep = "::") const;
 
+    /**
+     * @brief Look up a child entity by name.
+     * @param childName The name of the child entity.
+     * @param searchPath If true, search the full path hierarchy.
+     * @return The found entity, or an invalid entity if not found.
+     */
     Entity Lookup(const std::string &childName, bool searchPath = false);
 
     /**
@@ -401,7 +426,16 @@ class Entity
      */
     Entity &IsA(const Entity &second);
 
+    /**
+     * @brief Get the first element of this entity as a pair.
+     * @return The first element entity.
+     */
     Entity First();
+
+    /**
+     * @brief Get the second element of this entity as a pair.
+     * @return The second element entity.
+     */
     Entity Second();
 
     /**
@@ -430,6 +464,13 @@ class Entity
         });
     }
 
+    /**
+     * @brief Iterate over each target of a relationship type.
+     * @tparam First The relationship type to iterate.
+     * @tparam Func The callback type, receives an Entity::ID.
+     * @param func Callback invoked for each matching ID.
+     * @return Reference to this entity.
+     */
     template <typename First, typename Func>
     Entity &Each(Func &&func)
     {
@@ -452,50 +493,101 @@ class Entity
         return flecsEntity.has<T>();
     }
 
+    /**
+     * @brief Check if the entity has a pair of component types.
+     * @tparam First First component type.
+     * @tparam Second Second component type.
+     * @return True if the entity has the pair.
+     */
     template <typename First, typename Second>
     bool Has() const
     {
         return flecsEntity.has<First, Second>();
     }
 
+    /**
+     * @brief Check if the entity has a component by entity.
+     * @param e The component entity.
+     * @return True if the entity has the component.
+     */
     bool Has(Entity e) const
     {
         return flecsEntity.has(e.flecsEntity.raw_id());
     }
 
+    /**
+     * @brief Check if the entity has a pair by two entities.
+     * @param first First element of the pair.
+     * @param second Second element of the pair.
+     * @return True if the entity has the pair.
+     */
     bool Has(Entity first, Entity second)
     {
         return flecsEntity.has(first.GetID(), second.GetID());
     }
 
+    /**
+     * @brief Check if the entity has a component by Entity::ID.
+     * @param id The component ID.
+     * @return True if the entity has the component.
+     */
     bool Has(Entity::ID id) const
     {
         return flecsEntity.has(id.GetID());
     }
 
+    /**
+     * @brief Check if the entity has a component by raw flecs entity ID.
+     * @param id The raw entity ID.
+     * @return True if the entity has the component.
+     */
     bool Has(flecs::entity_t id) const
     {
         return flecsEntity.has(id);
     }
 
+    /**
+     * @brief Check if the entity has a typed relationship with a target entity.
+     * @tparam First The relationship type.
+     * @param second The target entity.
+     * @return True if the entity has the relationship pair.
+     */
     template <typename First>
     bool Has(Entity second) const
     {
         return flecsEntity.has<First>(second.GetFlecsEntity());
     }
 
+    /**
+     * @brief Check if the entity has a typed relationship with a target ID.
+     * @tparam First The relationship type.
+     * @param second The target ID.
+     * @return True if the entity has the relationship pair.
+     */
     template <typename First>
     bool Has(Entity::ID second) const
     {
         return flecsEntity.has<First>(second.GetID());
     }
 
+    /**
+     * @brief Check if the entity has a pair with a typed second element.
+     * @tparam Second The second element type.
+     * @param first The first element entity.
+     * @return True if the entity has the pair.
+     */
     template <typename Second>
     bool HasSecond(Entity first) const
     {
         return flecsEntity.has_second<Second>(first.GetID());
     }
 
+    /**
+     * @brief Check if the entity has a pair with a typed second element by ID.
+     * @tparam Second The second element type.
+     * @param first The first element ID.
+     * @return True if the entity has the pair.
+     */
     template <typename Second>
     bool HasSecond(Entity::ID first) const
     {
@@ -524,6 +616,11 @@ class Entity
         return (flecsEntity.has<Components>() || ...);
     }
 
+    /**
+     * @brief Check if the entity owns a component (not inherited).
+     * @tparam T The component type.
+     * @return True if the entity directly owns the component.
+     */
     template <typename T>
     bool Owns() const
     {
@@ -542,6 +639,12 @@ class Entity
         return *this;
     }
 
+    /**
+     * @brief Add a pair of component types to the entity.
+     * @tparam First First component type.
+     * @tparam Second Second component type.
+     * @return Reference to this entity.
+     */
     template <typename First, typename Second>
     Entity &Add()
     {
@@ -549,6 +652,12 @@ class Entity
         return *this;
     }
 
+    /**
+     * @brief Add a relationship pair to the entity by entity references.
+     * @param relationship The relationship entity.
+     * @param target The target entity.
+     * @return Reference to this entity.
+     */
     Entity &Add(const Entity &relationship, const Entity &target);
 
     /**
@@ -742,6 +851,11 @@ class Entity
         return flecsEntity.get<T>();
     }
 
+    /**
+     * @brief Get untyped const pointer to a component by entity.
+     * @param e The component entity.
+     * @return Const pointer to the component data.
+     */
     const void *Get(Entity e)
     {
         return flecsEntity.get(e.GetID());
@@ -973,12 +1087,24 @@ class Entity
         return flecsEntity.has<First, Second>();
     }
 
+    /**
+     * @brief Check if the entity has a typed pair with a target entity.
+     * @tparam First The relationship type.
+     * @param second The target entity.
+     * @return True if the entity has the pair.
+     */
     template <typename First>
     bool HasPair(Entity second) const
     {
         return flecsEntity.has<First>(second.GetID());
     }
 
+    /**
+     * @brief Check if the entity has a typed pair with a target ID.
+     * @tparam First The relationship type.
+     * @param second The target ID.
+     * @return True if the entity has the pair.
+     */
     template <typename First>
     bool HasPair(Entity::ID second) const
     {
@@ -1182,10 +1308,6 @@ class Entity
     /**
      * @brief Enable a specific component.
      * The component must have the CanToggle trait to be enabled/disabled.
-     * Add the trait when registering: world.Component<T>().Add<flecs::CanToggle>();
-    /**
-     * @brief Enable a specific component.
-     * The component must have the CanToggle trait to be enabled/disabled.
      * Add the trait when registering: world.Component<T>().Add(flecs::CanToggle);
      * @tparam T The component type.
      * @return Reference to this entity.
@@ -1346,6 +1468,11 @@ class Entity
     //    });
     //}
 
+    /**
+     * @brief Iterate over all components on this entity, including inherited ones.
+     * @tparam Func The callback type, receives an Entity::ID for each component.
+     * @param func Callback invoked for each component ID.
+     */
     template <typename Func>
     void ForEachComponent(Func &&func) const
     {
@@ -1371,6 +1498,10 @@ class Entity
      */
     Entity GetTarget(uint64_t relationship, int32_t index = 0) const;
 
+    /**
+     * @brief Get the underlying flecs entity handle.
+     * @return The flecs::entity object.
+     */
     flecs::entity GetFlecsEntity() const;
 
   private:

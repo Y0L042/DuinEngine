@@ -11,6 +11,9 @@
 #include <flecs/addons/cpp/c_types.hpp>
 #include <flecs/addons/cpp/entity.hpp>
 #include <flecs/addons/cpp/mixins/id/decl.hpp>
+#include <Duin/Core/Debug/DNAssert.h>
+
+const std::string duin::Entity::ID_DELIM = "#";
 
 duin::Entity::Entity() : flecsEntity(flecs::entity_t(0))
 {
@@ -80,10 +83,7 @@ duin::World *duin::Entity::GetWorld() const
 
 bool duin::Entity::IsValid() const
 {
-    bool res = true 
-        && world != nullptr && world->flecsWorld.is_valid(flecsEntity)
-        && flecsEntity.is_valid() 
-        ;
+    bool res = true && world != nullptr && world->flecsWorld.is_valid(flecsEntity) && flecsEntity.is_valid();
     return res;
 }
 
@@ -133,7 +133,17 @@ duin::Entity &duin::Entity::ChildOf(const Entity &parent)
 
 duin::Entity &duin::Entity::SetName(const std::string &name)
 {
-    Entity e = world->Lookup(name);
+    Entity e;
+    if (Parent().IsValid())
+    {
+        e = Parent().Lookup(name);
+    }
+    else
+    {
+        e = world->Lookup(name);
+    }
+
+    DN_CORE_ASSERT(!e.IsValid(), "No duplicate names allowed!");
     if (!e.IsValid())
     {
         flecsEntity.set_name(name.c_str());

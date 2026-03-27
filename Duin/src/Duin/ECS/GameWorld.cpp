@@ -48,8 +48,6 @@ void GameWorld::Initialize(bool connectSignals)
         connPostDraw_ = QueuePostDrawCallback([this]() { PostDrawQueryExecution(); });
         connPostDrawUI_ = QueuePostDrawUICallback([this]() { PostDrawUIQueryExecution(); });
     }
-
-    //InitializeRemoteExplorer(); // Causes tests to crash
 }
 
 void GameWorld::ActivateCameraEntity(duin::Entity entity)
@@ -161,7 +159,7 @@ void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
             DN_WARN("CharacterBody pointer is nullptr!");
             return;
         }
-        cb.body->SetPosition(GetGlobalPosition(e));
+        cb.body->SetFootPosition(GetGlobalPosition(e));
         Vector3 oldPos = cb.body->GetFootPosition();
         cb.body->Move(vDelta, delta);
         Vector3 newPos = cb.body->GetFootPosition();
