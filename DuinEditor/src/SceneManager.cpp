@@ -40,9 +40,6 @@ SceneHandle SceneManager::LoadSceneFromPacked(const duin::PackedScene &scene, bo
     scn->uuid = scn->packedScene.uuid;
     loadedScenes[scn->uuid] = scn;
 
-    scn->ctx.editorWorld = std::make_shared<EditorWorld>();
-    scn->ctx.editorWorld->Initialize();
-
     if (setActive)
     {
         SetActiveScene(scn->uuid);
@@ -107,8 +104,12 @@ SceneHandle SceneManager::InstantiateScene(SceneHandle handle)
     if (scene)
     {
         RemapExternalDependencies(scene->packedScene);
-        std::shared_ptr<duin::SceneBuilder> sceneBuilder = std::make_shared<duin::SceneBuilder>();
-        sceneBuilder->InstantiateScene(scene->packedScene, scene->ctx.editorWorld.get());
+        scene->ctx.editorWorld = std::make_shared<EditorWorld>();
+        scene->ctx.editorWorld->Initialize();
+        scene->ctx.editorWorld->InitializeRemoteExplorer();
+
+        duin::SceneBuilder sceneBuilder;
+        sceneBuilder.InstantiateScene(scene->packedScene, scene->ctx.editorWorld.get());
     }
     return handle;
 }

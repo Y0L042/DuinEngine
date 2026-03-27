@@ -11,103 +11,6 @@
 #include <rfl/json.hpp>
 #include <Duin/Assets/AssetRef.h>
 
-const std::string DEBUG_data = R"({
-	"version": 2,
-	"refs": [
-		{
-			"uuid": "0xC011E1BE3B65B8CA",
-			"rPath": "assets/item_11",
-			"fileType": "FS_FILETYPE_AUDIO_EXT",
-			"fileExt": "FS_FILEEXT_JPEG"
-		},
-		{
-			"uuid": "0x2A74A270C25EDC46",
-			"rPath": "assets/item_5",
-			"fileType": "FS_FILETYPE_TEXT_EXT",
-			"fileExt": "FS_FILEEXT_CFG"
-		},
-		{
-			"uuid": "0xC4C5CDE8D305C517",
-			"rPath": "assets/item_4",
-			"fileType": "FS_FILETYPE_MODEL_EXT",
-			"fileExt": "FS_FILEEXT_OGG"
-		},
-		{
-			"uuid": "0xB13EBE8D0F09722E",
-			"rPath": "assets/item_0",
-			"fileType": "FS_FILETYPE_TEXT_EXT",
-			"fileExt": "FS_FILEEXT_WMA"
-		},
-		{
-			"uuid": "0x410800E0962553AF",
-			"rPath": "assets/item_1",
-			"fileType": "FS_FILETYPE_MODEL_EXT",
-			"fileExt": "FS_FILEEXT_NULL"
-		},
-		{
-			"uuid": "0x179BB5BF1E09AC62",
-			"rPath": "assets/item_2",
-			"fileType": "FS_FILETYPE_TEXT_EXT",
-			"fileExt": "FS_FILEEXT_MKV"
-		},
-		{
-			"uuid": "0xD35877B4D2AEF162",
-			"rPath": "assets/item_7",
-			"fileType": "FS_FILETYPE_IMAGE_EXT",
-			"fileExt": "FS_FILEEXT_LUA"
-		},
-		{
-			"uuid": "0x85ABDAB11A7E3E00",
-			"rPath": "assets/item_6",
-			"fileType": "FS_FILETYPE_IMAGE_EXT",
-			"fileExt": "FS_FILEEXT_MPEG"
-		},
-		{
-			"uuid": "0x4CB1CC044A2101A0",
-			"rPath": "assets/item_3",
-			"fileType": "FS_FILETYPE_INVALID_EXT",
-			"fileExt": "FS_FILEEXT_TIFF"
-		},
-		{
-			"uuid": "0x97B171270A66798E",
-			"rPath": "assets/item_12",
-			"fileType": "FS_FILETYPE_MODEL_EXT",
-			"fileExt": "FS_FILEEXT_BLEND"
-		},
-		{
-			"uuid": "0xDD713A66D9FACD91",
-			"rPath": "assets/item_8",
-			"fileType": "FS_FILETYPE_IMAGE_EXT",
-			"fileExt": "FS_FILEEXT_CSV"
-		},
-		{
-			"uuid": "0x76A853AE110E737B",
-			"rPath": "assets/item_9",
-			"fileType": "FS_FILETYPE_VIDEO_EXT",
-			"fileExt": "FS_FILEEXT_MB"
-		},
-		{
-			"uuid": "0x89C755F0E398A84B",
-			"rPath": "assets/item_14",
-			"fileType": "FS_FILETYPE_AUDIO_EXT",
-			"fileExt": "FS_FILEEXT_CFG"
-		},
-		{
-			"uuid": "0xAEDCD136592455C2",
-			"rPath": "assets/item_10",
-			"fileType": "FS_FILETYPE_VIDEO_EXT",
-			"fileExt": "FS_FILEEXT_BMP"
-		},
-		{
-			"uuid": "0x7D360065E083C08F",
-			"rPath": "assets/item_13",
-			"fileType": "FS_FILETYPE_VIDEO_EXT",
-			"fileExt": "FS_FILEEXT_AAC"
-		}
-	]
-}
-)";
-
 void State_SceneEditor::Enter()
 {
     InitializeManagers();
@@ -143,6 +46,8 @@ void State_SceneEditor::PhysicsUpdate(double delta)
     {
         DN_INFO("Input TestA held.");
     }
+
+    //sceneManager->GetActiveScene()->GetWorld().lock()->Progress();
 }
 
 void State_SceneEditor::Draw()
