@@ -1,0 +1,13 @@
+options gen2
+
+def module_dn_log(req, from : string) : module_info {
+    if (req != "dn_log") {
+        return ("", "", "")
+    }
+    return ("dn_log", DAS_PAK_ROOT + "DNLog/dn_log.das", "")
+}
+
+[init]
+def register_dn_log {
+    push(modules, @@module_dn_log)
+}
