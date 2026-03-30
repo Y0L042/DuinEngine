@@ -31,7 +31,10 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_Doctest);
             NEED_MODULE(Module_DnLog);
             NEED_MODULE(Module_DnGameObject);
+            NEED_MODULE(Module_DecsEntity);
             NEED_MODULE(Module_DecsWorld);
+            NEED_MODULE(Module_DecsComponents);
+            NEED_MODULE(Module_DecsQuery);
         });
         mainScript->EnableHotCompile(true, true);
         mainScript->CompileAndSimulate();
@@ -59,7 +62,7 @@ class DuinFPSDaslangApp : public duin::Application
 
     void Exit() override
     {
-        mainScript->Exit();
+        mainScript->ResetScript();
     }
 };
 
