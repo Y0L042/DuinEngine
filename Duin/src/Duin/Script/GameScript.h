@@ -4,9 +4,12 @@
 #include "Script.h"
 #include <string>
 #include <memory>
+#include "external/FileWatch.h"
 
 namespace duin
 {
+class GameWorld;
+
 class GameScript : public Script, public GameObject
 {
   public:
@@ -17,6 +20,8 @@ class GameScript : public Script, public GameObject
     void ResetGameFunctions();
     void ResetMuteWarningFlags();
 
+    void SetGameWorld(GameWorld *gw);
+
     void EnableHotCompile(bool enable, bool halt = false);
     bool IsHotCompileEnabled();
     bool HotCompileAndSimulate();
@@ -24,7 +29,7 @@ class GameScript : public Script, public GameObject
 
     bool CompileAndSimulate(bool skipReady = false);
 
-    void Exit() override;
+    void ResetScript() override;
 
     void Init() override;
     void Ready() override;
@@ -34,8 +39,11 @@ class GameScript : public Script, public GameObject
     void DrawUI() override;
 
   private:
+    GameWorld *gameWorld_ = nullptr;
     bool hotCompileEnabled = false;
     bool haltOnCompilationFail = false;
+    bool queueHotCompileFlag = false;
+    std::unique_ptr<filewatch::FileWatch<std::wstring>> directoryWatch;
     int64_t scriptLastModified = 0;
     bool muteReadyWarning = false;
     bool muteUpdateWarning = false;
@@ -48,7 +56,7 @@ class GameScript : public Script, public GameObject
     das::SimFunction *fnGameDraw = nullptr;
     das::SimFunction *fnGameDrawUI = nullptr;
 
-    void RestartScriptGameObjects();
+    void ClearScriptGameObjects();
     void RestartSGORecurse(std::shared_ptr<GameObject> child);
 };
 } // namespace duin

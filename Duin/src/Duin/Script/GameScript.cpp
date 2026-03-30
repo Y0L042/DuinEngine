@@ -1,7 +1,18 @@
 #include "dnpch.h"
 #include "GameScript.h"
+#include "Duin/ECS/GameWorld.h"
 #include "Duin/IO/FileModule.h"
 #include "./GameObject/Module_DnGameObject.h"
+#include <iostream>
+#include <memory>
+#include <regex>
+#include <string>
+#include <Duin/Core/Debug/DNLog.h>
+#include <Duin/IO/Filesystem.h>
+#include <Duin/IO/VirtualFilesystem.h>
+#include <Duin/Objects/GameObject.h>
+#include "Script.h"
+#include <external/FileWatch.h>
 
 duin::GameScript::GameScript(const std::string &relScriptPath) : Script(relScriptPath), GameObject()
 {
@@ -9,7 +20,7 @@ duin::GameScript::GameScript(const std::string &relScriptPath) : Script(relScrip
 
 duin::GameScript::~GameScript()
 {
-    Exit();
+    ResetScript();
 }
 
 void duin::GameScript::SetGameFunctions()
@@ -36,6 +47,11 @@ void duin::GameScript::ResetGameFunctions()
     fnGameDrawUI = nullptr;
 }
 
+void duin::GameScript::SetGameWorld(GameWorld *gw)
+{
+    gameWorld_ = gw;
+}
+
 void duin::GameScript::ResetMuteWarningFlags()
 {
     muteReadyWarning = false;
@@ -60,11 +76,13 @@ bool duin::GameScript::HotCompileAndSimulate()
 {
     bool compiled = false;
 
-    compiled = CompileAndSimulate();
+    ResetToBaseModules();
+    ClearScriptGameObjects();
+    compiled = CompileAndSimulate(false);
     if (compiled)
     {
         SetContextRootObject();
-        RestartScriptGameObjects();
+        Ready();
     }
 
     return compiled;
@@ -76,6 +94,7 @@ bool duin::GameScript::SetContextRootObject()
     if (res)
     {
         context->rootGameObject = this;
+        context->gameWorld = gameWorld_;
     }
 
     return res;
@@ -92,7 +111,7 @@ bool duin::GameScript::CompileAndSimulate(bool skipReady)
         SetGameFunctions();
         if (!skipReady)
         {
-            Ready();
+            //Ready();
         }
     }
     else
@@ -106,14 +125,20 @@ bool duin::GameScript::CompileAndSimulate(bool skipReady)
     return compiled;
 }
 
-void duin::GameScript::Exit()
+void duin::GameScript::ResetScript()
 {
     ResetGameFunctions();
-    Script::Exit();
+    Script::ResetScript();
 }
 
 void duin::GameScript::Init()
 {
+    std::string path = duin::fs::MapVirtualToSystemPath("bin://");
+    std::wregex wrgx(L".*\\.das$");
+    std::wstring wpath(path.begin(), path.end());
+    directoryWatch = std::make_unique<filewatch::FileWatch<std::wstring>>(
+        wpath, wrgx,
+        [this](const std::wstring &path, const filewatch::Event change_type) { queueHotCompileFlag = true; });
 }
 
 void duin::GameScript::Ready()
@@ -152,8 +177,10 @@ void duin::GameScript::Update(double delta)
     {
         duin::fs::PathInfo pInfo;
         bool scriptFound = duin::vfs::GetPathInfo("bin://" + scriptPath, &pInfo);
-        if (scriptFound && (pInfo.modifyTime != scriptLastModified))
+        // if (scriptFound && (pInfo.modifyTime != scriptLastModified))
+        if (queueHotCompileFlag)
         {
+            queueHotCompileFlag = false;
             scriptLastModified = pInfo.modifyTime;
 
             if (!HotCompileAndSimulate())
@@ -225,7 +252,7 @@ void duin::GameScript::DrawUI()
     }
 }
 
-void duin::GameScript::RestartScriptGameObjects()
+void duin::GameScript::ClearScriptGameObjects()
 {
     for (auto &child : GetChildren())
     {

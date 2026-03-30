@@ -3,6 +3,7 @@
 #include <daScript/simulate/simulate.h>
 #include "module_builtin_rtti.h"
 #include "Duin/Script/Script.h"
+#include "Duin/Objects/GameObject.h"
 
 #include "dn_gameobject.das.inc"
 
@@ -14,7 +15,7 @@ static void *dn_create_gameobject_impl(void *classPtr, const das::StructInfo *in
     DN_CORE_INFO("dn_create_gameobject_impl: created ScriptGameObject for '{}'", info->name);
 
     duin::ScriptContext *dnCtx = static_cast<duin::ScriptContext *>(context);
-    auto *handle = static_cast<void *>(dnCtx->scriptMemory->Add(obj));
+    void *handle = static_cast<void *>(dnCtx->scriptMemory->Add(obj));
 
     return handle;
 }
@@ -176,7 +177,7 @@ static void dn_add_root_object_impl(void *childHandle, das::Context *context)
     if (!(dnCtx && dnCtx->rootGameObject))
         return;
 
-    auto *parent = static_cast<ScriptGameObject *>(dnCtx->rootGameObject);
+    auto *parent = static_cast<duin::GameObject *>(dnCtx->rootGameObject);
     auto *child = static_cast<ScriptGameObject *>(childHandle);
 
     auto parentImpl = parent->GetImpl();
@@ -252,7 +253,7 @@ class Module_DnGameObject : public das::Module
                                                           das::SideEffects::modifyExternal, "dn_add_child_object_impl");
 
         addExtern<DAS_BIND_FUN(dn_add_root_object_impl)>(*this, lib, "dn_add_root_object_impl",
-                                                          das::SideEffects::modifyExternal, "dn_add_root_object_impl");
+                                                         das::SideEffects::modifyExternal, "dn_add_root_object_impl");
 
         addExtern<DAS_BIND_FUN(dn_remove_child_object_impl)>(
             *this, lib, "dn_remove_child_object_impl", das::SideEffects::modifyExternal, "dn_remove_child_object_impl");

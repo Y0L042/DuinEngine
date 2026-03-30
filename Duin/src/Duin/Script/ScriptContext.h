@@ -11,6 +11,8 @@
 namespace duin
 {
 
+class GameWorld;
+
 class ScriptContext : public das::Context
 {
   public:
@@ -19,10 +21,12 @@ class ScriptContext : public das::Context
     ~ScriptContext()
     {
         rootGameObject = nullptr;
+        gameWorld = nullptr;
     }
 
     std::shared_ptr<ScriptMemory> scriptMemory;
     GameObject *rootGameObject = nullptr;
+    GameWorld *gameWorld = nullptr;
 };
 
 } // namespace duin

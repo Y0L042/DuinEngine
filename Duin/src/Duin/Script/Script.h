@@ -3,6 +3,7 @@
 #include <daScript/daScript.h>
 #include <string>
 #include <functional>
+#include <vector>
 #include "ScriptContext.h"
 
 namespace duin
@@ -21,9 +22,8 @@ class Script
     bool Compile();
     bool SimulateContext();
     bool CallScript(das::SimFunction *fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
-    virtual void Exit();
+    virtual void ResetScript();
 
-    void ResetScript();
 
     das::SimFunction *FindFunction(const std::string &func);
 
@@ -36,7 +36,9 @@ class Script
     das::FileAccessPtr fileAccess;
     bool scriptReady = false;
     bool modulesAreInit = false;
+    std::vector<das::Module *> baseModules;
 
+    void ResetToBaseModules();
     void ResetContext();
     std::string SafeErrorReport(const das::Error &err);
 };

@@ -18,23 +18,30 @@ duin::Script::Script(const std::string &relScriptPath) : scriptPath(relScriptPat
 
 duin::Script::~Script()
 {
-    Exit();
+    ResetScript();
 }
 
 void duin::Script::InitModules(std::function<void(void)> initModules)
 {
     NEED_ALL_DEFAULT_MODULES;
 
-    initModules();
+    if (initModules)
+    {
+        initModules();
+    }
+    else
+    {
+        DN_CORE_INFO("No script modules passed.");
+    }
 
     das::Module::Initialize();
     modulesAreInit = true;
+    baseModules = libGroup.getModules();
 }
 
 bool duin::Script::Compile()
 {
     DN_CORE_INFO("Compiling script {}...", scriptPath);
-    // auto fAccess = das::make_smart<das::FsFileAccess>();
     fileAccess = das::make_smart<das::FsFileAccess>();
     auto &fAccess = fileAccess;
     fAccess->addFsRoot("scripts", "scripts");
@@ -105,22 +112,29 @@ bool duin::Script::CallScript(das::SimFunction *fn, vec4f *args, void *res)
     return true;
 }
 
-void duin::Script::Exit()
+void duin::Script::ResetToBaseModules()
+{
+    // libGroup.reset() deletes non-builtIn (script-compiled) modules and clears the list.
+    // builtIn engine modules stay alive in the global linked list, so we can re-add them.
+    libGroup.reset();
+    for (das::Module *m : baseModules)
+    {
+        libGroup.addModule(m);
+    }
+}
+
+void duin::Script::ResetScript()
 {
     ResetContext();
     program.reset();
     fileAccess.reset();
+    //baseModules.clear();
     libGroup = das::ModuleGroup{};
     if (modulesAreInit)
     {
         das::Module::Shutdown();
         modulesAreInit = false;
     }
-}
-
-void duin::Script::ResetScript()
-{
-    Exit();
 }
 
 das::SimFunction *duin::Script::FindFunction(const std::string &func)
