@@ -63,7 +63,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_init");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 
     TEST_CASE("dn_gameobject_finalize is a no-op when _handle is already null")
@@ -101,7 +101,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_finalize_null");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 
     // ──────────────────────────────────────────────────────────────────────────
@@ -147,7 +147,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_add_child");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 
     TEST_CASE("dn_gameobject_remove_child detaches a child")
@@ -191,7 +191,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_remove_child");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 
     TEST_CASE("dn_get_children_count returns 0 for a leaf node")
@@ -228,7 +228,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_count_zero");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 
     // ──────────────────────────────────────────────────────────────────────────
@@ -284,7 +284,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_enable_all");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 
     TEST_CASE("Individual enable functions toggle independently")
@@ -344,7 +344,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_enable_individual");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 
     TEST_CASE("Newly initialised object has all callbacks enabled by default")
@@ -389,7 +389,7 @@ TEST_SUITE("DnGameObjectModule")
         REQUIRE(script.SimulateContext());
         auto *fn = script.FindFunction("test_defaults");
         CHECK(script.CallScript(fn));
-        script.Exit();
+        script.ResetScript();
     }
 }
 

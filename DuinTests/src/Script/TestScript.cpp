@@ -26,7 +26,7 @@ TEST_SUITE("Script")
         duin::Script script(path);
         script.InitModules();
         bool compiled = script.Compile();
-        script.Exit();
+        script.ResetScript();
 
         CHECK(compiled);
     }
@@ -40,7 +40,7 @@ TEST_SUITE("Script")
         duin::Script script(path);
         script.InitModules();
         bool compiled = script.Compile();
-        script.Exit();
+        script.ResetScript();
 
         CHECK_FALSE(compiled);
     }
@@ -55,7 +55,7 @@ TEST_SUITE("Script")
         script.InitModules();
         script.Compile();
         bool simulated = script.SimulateContext();
-        script.Exit();
+        script.ResetScript();
 
         CHECK(simulated);
     }
@@ -72,7 +72,7 @@ TEST_SUITE("Script")
         script.SimulateContext();
 
         das::SimFunction *fn = script.FindFunction("my_func");
-        script.Exit();
+        script.ResetScript();
 
         CHECK(fn != nullptr);
     }
@@ -89,7 +89,7 @@ TEST_SUITE("Script")
         script.SimulateContext();
 
         das::SimFunction *fn = script.FindFunction("does_not_exist");
-        script.Exit();
+        script.ResetScript();
 
         CHECK(fn == nullptr);
     }
@@ -107,7 +107,7 @@ TEST_SUITE("Script")
 
         das::SimFunction *fn = script.FindFunction("do_work");
         bool called = script.CallScript(fn);
-        script.Exit();
+        script.ResetScript();
 
         CHECK(called);
     }
@@ -124,7 +124,7 @@ TEST_SUITE("Script")
         script.SimulateContext();
 
         bool result = script.CallScript(nullptr);
-        script.Exit();
+        script.ResetScript();
 
         CHECK_FALSE(result);
     }
