@@ -24,22 +24,22 @@ local dep_daslang = require "dep_daslang"
 
 -- Define dependencies with explicit build order (array part maintains order)
 local dependencies_ordered = {
-    {name = "FLECS", buildFn = dep_flecs.build},
-    {name = "SPDLOG", buildFn = dep_spdlog.build},
-    {name = "BX", buildFn = dep_bx.build},
     {name = "FMT", buildFn = dep_fmt.build},
-    {name = "DOCTEST", buildFn = dep_doctest.build},
-    {name = "PHYSX", buildFn = dep_physx.build},
+    {name = "SPDLOG", buildFn = dep_spdlog.build},
+    {name = "SDL3", buildFn = dep_sdl3.build},
+    {name = "BX", buildFn = dep_bx.build}, -- BX must be built before BIMG and BGFX
     {name = "BIMG", buildFn = dep_bimg.build},  -- BIMG must be built before BGFX
     {name = "BGFX", buildFn = dep_bgfx.build},
-    {name = "RAPIDJSON", buildFn = dep_rapidjson.build},
-    {name = "SDL3", buildFn = dep_sdl3.build},
-    {name = "TOML11", buildFn = dep_toml11.build},
     {name = "IMGUI", buildFn = dep_imgui.build},
-    {name = "IMGUIZMO", buildFn = dep_imguizmo.build},
+    {name = "IMGUIZMO", buildFn = dep_imguizmo.build}, -- must be built after IMGUI
+    {name = "FLECS", buildFn = dep_flecs.build},
+    {name = "PHYSX", buildFn = dep_physx.build},
+    {name = "DOCTEST", buildFn = dep_doctest.build},
+    {name = "RAPIDJSON", buildFn = dep_rapidjson.build},
+    {name = "TOML11", buildFn = dep_toml11.build},
     {name = "REFLECTCPP", buildFn = dep_reflectcpp.build},
+    {name = "DASLANG", buildFn = dep_daslang.build},
     {name = "ANGELSCRIPT", buildFn = dep_angelscript.build},
-    {name = "DASLANG", buildFn = dep_daslang.build}
 }
 
 -- Also maintain a hash map for quick lookups

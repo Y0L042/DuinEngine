@@ -2,7 +2,7 @@ local utils = require "utils"
 local dep_bx = {}
 
 local repo = "https://github.com/bkaradzic/bx"
-local commit = "d3d4031"  -- Compatible with BGFX 93e6125 (March 2025)
+local commit = "cac72f6" 
 local folder = "bx"
 
 function dep_bx.build()

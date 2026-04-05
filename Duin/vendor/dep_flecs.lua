@@ -28,13 +28,13 @@ function dep_flecs.build()
     print(name .. " downloaded.")
 
 
-    utils.deleteFolder("flecs/build_vs2022")
-    if not os.isdir("flecs/build_vs2022") then
+    utils.deleteFolder("flecs/build_vs2026")
+    if not os.isdir("flecs/build_vs2026") then
         -- makeDir("flecs/build_vs2022")
         -- runCommand('cmake -S flecs -B flecs/build_vs2022 -DBUILD_SHARED_LIBS=OFF -DCMAKE_CXX_FLAGS="/MT" -DCMAKE_C_FLAGS="/MT"')
-        utils.runCommand('cmake -S flecs -B flecs/build_vs2022 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDebug -DCMAKE_C_FLAGS_DEBUG="/MTd" -DCMAKE_CXX_FLAGS_DEBUG="/MTd"')
+        utils.runCommand('cmake -S flecs -B flecs/build_vs2026 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDebug -DCMAKE_C_FLAGS_DEBUG="/MTd" -DCMAKE_CXX_FLAGS_DEBUG="/MTd"')
         -- runCommand("cmake --build flecs/build_vs2022 --config Release")
-        utils.runCommand("cmake --build flecs/build_vs2022 --config Debug")
+        utils.runCommand("cmake --build flecs/build_vs2026 --config Debug")
     end
 
     print("END: " .. name)

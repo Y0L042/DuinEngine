@@ -3,7 +3,7 @@ local dep_physx = {}
 local name = "PHYSX"
 
 local repo = "https://github.com/NVIDIA-Omniverse/PhysX"
-local tag = "106.5-physx-5.5.1-cy"
+local tag = "107.3-physx-5.6.1"
 local folder = "physx"
 
 function dep_physx.build()
@@ -26,46 +26,58 @@ function dep_physx.build()
     print(name .. " downloaded.")
 
 
-    -- Update presets for static libraries and runtime
-    local presetFile = "PhysX/physx/buildtools/presets/public/vc17win64.xml"
-    if utils.fileExists(presetFile) then
-        local presetData = io.open(presetFile, "r"):read("*all")
-        presetData = presetData:gsub(
-            '<cmakeSwitch name="PX_GENERATE_STATIC_LIBRARIES" value="False"',
-            '<cmakeSwitch name="PX_GENERATE_STATIC_LIBRARIES" value="True"'
-        )
-        presetData = presetData:gsub(
-            '<cmakeSwitch name="PX_BUILDSNIPPETS" value="True" comment="Generate the snippets" />',
-            '<cmakeSwitch name="PX_BUILDSNIPPETS" value="False" comment="Generate the snippets" />"'
-        )
+    local presetDir = "PhysX/physx/buildtools/presets/public"
+    local presetFile = presetDir .. "/vc18win64.xml"
+    local sourcePreset = presetDir .. "/vc17win64.xml"
 
-        presetData = presetData:gsub(
-            '<cmakeSwitch name="NV_USE_STATIC_WINCRT" value="False"',
-            '<cmakeSwitch name="NV_USE_STATIC_WINCRT" value="True"'
-        )
+    -- Create vc18win64.xml from vc17win64.xml if it doesn't exist
+    if not utils.fileExists(presetFile) and utils.fileExists(sourcePreset) then
+        local srcData = io.open(sourcePreset, "r"):read("*all")
+        local presetData = srcData:gsub("vc17", "vc18")
         local outFile = io.open(presetFile, "w")
         outFile:write(presetData)
         outFile:close()
-        print("Updated PhysX presets for static libraries and runtime.")
+        print("Created vc18win64.xml preset from vc17win64.xml.")
     end
 
-    -- Generate projects
-    local generateProjects = "PhysX/physx/generate_projects.bat"
-    utils.fixVsWherePath(generateProjects)
-    utils.runBatchScript(generateProjects, "vc17win64")
-    utils.runCommand("cd PhysX/physx/buildtools && python3 cmake_generate_projects.py 1")
-
+    -- Patch: remove PUBLIC_RELEASE from the external DLL copy guard so freeglut/PhysXDevice
+    -- are not required when building without snippets (PX_BUILDSNIPPETS=False).
+    local winCMake = "PhysX/physx/source/compiler/cmake/windows/CMakeLists.txt"
+    if utils.fileExists(winCMake) then
+        local data = io.open(winCMake, "r"):read("*all")
+        local patched = data:gsub(
+            "IF%(PX_COPY_EXTERNAL_DLL OR PUBLIC_RELEASE%)",
+            "IF(PX_COPY_EXTERNAL_DLL)"
+        )
+        if patched ~= data then
+            local out = io.open(winCMake, "w")
+            out:write(patched)
+            out:close()
+            print("Patched windows CMakeLists.txt: freeglut copy now guarded by PX_COPY_EXTERNAL_DLL only.")
+        end
+    end
 
     -- Build projects automatically (if applicable)
+    -- Note: generate_projects.bat / cmake_generate_projects.py require packman + VsWhere
+    -- and have no vc18 support, so we drive cmake directly with the preset flags.
     utils.deleteFolder("PhysX/physx/bin")
     if os.isdir("PhysX/physx/bin") == false then
-        utils.runCommand("cd PhysX/physx && cmake -S compiler/public -B compiler/vc17win64")
-        -- runCommand("cd PhysX/physx && cmake --build compiler/vc17win64 --config Release")
-        utils.runCommand("cd PhysX/physx && cmake --build compiler/vc17win64 --config Debug")
+        local physxRoot = os.getcwd() .. "/PhysX/physx"
+        local cmakeFlags = table.concat({
+            '-DPHYSX_ROOT_DIR="' .. physxRoot .. '"',
+            '-DPX_OUTPUT_LIB_DIR="' .. physxRoot .. '"',
+            '-DPX_OUTPUT_BIN_DIR="' .. physxRoot .. '"',
+            "-DTARGET_BUILD_PLATFORM=windows",
+            "-DPX_GENERATE_STATIC_LIBRARIES=True",
+            "-DPX_BUILDSNIPPETS=False",
+            "-DPX_BUILDPVDRUNTIME=True",
+            "-DNV_USE_STATIC_WINCRT=True",
+            "-DNV_USE_DEBUG_WINCRT=True",
+            "-DPX_FLOAT_POINT_PRECISE_MATH=False",
+        }, " ")
+        utils.runCommand('cd PhysX/physx && cmake -S compiler/public -B compiler/vc18win64 ' .. cmakeFlags)
+        utils.runCommand("cd PhysX/physx && cmake --build compiler/vc18win64 --config Debug")
         utils.printCurrentDir()
-        -- os.execute('cd PhysX/physx && msbuild "compiler/vc17win64/PhysXSDK.sln" /p:Configuration=Debug /p:Platform=x64')
-        -- os.execute('cd PhysX/physx && msbuild "compiler/vc17win64/PhysXSDK.sln" /t:PhysX_static_64 /p:Configuration=Debug /p:Platform=x64')
-        -- os.execute('msbuild "PhysXSDK.sln" /p:Configuration=Debug /p:Platform=x64')
     end
 
     print("END: " .. name)

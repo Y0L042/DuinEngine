@@ -26,6 +26,24 @@ function dep_imgui.build()
     end
     print(name .. " downloaded.")
 
+    -- Copy core ImGui source files to external/
+    local targetDir = "../src/external"
+    print("\t\tCopying core files to " .. targetDir)
+    utils.copyFiles(folder, targetDir, {
+        "imgui.cpp", "imgui.h",
+        "imgui_demo.cpp", "imgui_draw.cpp",
+        "imgui_internal.h", "imgui_tables.cpp", "imgui_widgets.cpp",
+        "imconfig.h",
+        "imstb_rectpack.h", "imstb_textedit.h", "imstb_truetype.h",
+    })
+
+    -- Copy SDL3 backend files to external/backends/
+    local backendsDir = "../src/external/backends"
+    print("\t\tCopying backend files to " .. backendsDir)
+    utils.copyFiles(folder .. "/backends", backendsDir, {
+        "imgui_impl_sdl3.cpp", "imgui_impl_sdl3.h",
+    })
+
     print("END: " .. name)
 end
 

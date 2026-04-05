@@ -29,15 +29,17 @@ function dep_daslang.build()
     -- Build static lib
     utils.pushDir(folder)
 
-    local cmake_flags = "-DCMAKE_BUILD_TYPE=Debug"
+    -- Build daslang as RelWithDebInfo: retains usable debug info while cutting the
+    -- library size dramatically (~908MB Debug → ~200MB RelWithDebInfo). The engine
+    -- does not need to step into daslang interpreter internals during debugging.
+    local build_type = "RelWithDebInfo"
+
+    local cmake_flags = "-DCMAKE_BUILD_TYPE=" .. build_type
         -- .. " -DDAS_TOOLS_DISABLED=ON"
-        -- .. " -DDAS_TUTORIAL_DISABLED=ON"
+        .. " -DDAS_TUTORIAL_DISABLED=ON"
         .. " -DDAS_TESTS_DISABLED=ON"
         .. " -DDAS_AOT_EXAMPLES_DISABLED=ON"
         .. " -DDAS_GLFW_DISABLED=ON"
-        -- .. " -DDAS_STBIMAGE_DISABLED=ON"
-        -- .. " -DDAS_STBTRUETYPE_DISABLED=ON"
-        -- .. " -DDAS_STDDLG_DISABLED=ON"
         .. " -DDAS_IMGUI_DISABLED=OFF"
 
     if os.target() == "windows" then
@@ -54,7 +56,7 @@ function dep_daslang.build()
 
     print("\t\tConfiguring with: " .. cmake_flags)
     utils.runCommand("cmake -S . -B build " .. cmake_flags)
-    utils.runCommand("cmake --build build --config Debug -j 4")
+    utils.runCommand("cmake --build build --config " .. build_type .. " -j 1") -- " -j 1" avoids build concurrency errors
 
     utils.popDir()
     print("END: " .. name)

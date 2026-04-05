@@ -2,7 +2,7 @@ local utils = require "utils"
 local dep_bimg = {}
 
 local repo = "https://github.com/bkaradzic/bimg"
-local commit = "446b9eb"  -- Compatible with BGFX 93e6125 (March 2025)
+local commit = "9114b47"
 local folder = "bimg"
 
 function dep_bimg.build()
