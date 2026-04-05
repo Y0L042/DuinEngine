@@ -68,11 +68,12 @@ workspace "Duin"
     {
         "Duin/bin/" .. outputdir .. "/Duin",  -- Duin's output directory
         "Duin/vendor/sdl/build/Debug",
-        "Duin/vendor/bgfx/.build/win64_vs2022/bin",
-        "Duin/vendor/flecs/build_vs2022/Debug",	
+        "Duin/vendor/bgfx/.build/win64_vs2026/bin",
+        "Duin/vendor/flecs/build_vs2026/Debug",
         "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
         "Duin/vendor/toml11/build/src/Debug",
         "Duin/vendor/reflectcpp/build/Debug",
+        "Duin/vendor/daslang/lib/RelWithDebInfo",
     }
     global_defines = 
     {
@@ -98,15 +99,22 @@ workspace "Duin"
         "bimgDebug.lib",
         "bgfxDebug.lib",
         "Duin.lib",
-        "PhysX_static_64.lib",
-        "PhysXCooking_static_64.lib",
-        "PhysXCommon_static_64.lib",
-        "PhysXFoundation_static_64.lib",
-        "PhysXPvdSDK_static_64.lib",
-        "PhysXExtensions_static_64.lib",
-        "PhysXCharacterKinematic_static_64.lib",
+        "PhysX_static.lib",
+        "PhysXCooking_static.lib",
+        "PhysXCommon_static.lib",
+        "PhysXFoundation_static.lib",
+        "PhysXPvdSDK_static.lib",
+        "PhysXExtensions_static.lib",
+        "PhysXCharacterKinematic_static.lib",
         "reflectcpp.lib",
     }
+
+    -- Debug build size optimisations:
+    --   FastLink PDB — references .obj files instead of copying all symbols in.
+    --                  Cuts PDB size ~80%. Trade-off: keep bin-int/ to use the debugger.
+    filter { "configurations:Debug or DebugCoverage", "system:windows" }
+        symbols "FastLink"
+    filter {}
 
     -- Include sub-Premake files
     include "Duin"
