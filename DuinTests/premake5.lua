@@ -67,20 +67,20 @@ project "DuinTests"
     }
 
     filter { "files:**/external/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
 
     filter { "files:**/vendor/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
 
     -- Script test files include daScript headers that conflict with any PCH
     filter "files:**/Script/**"
-        flags { "NoPCH" }
+        enablepch "Off"
         pchheader ""
     filter {}
 
@@ -94,7 +94,7 @@ project "DuinTests"
             '/Zc:__cplusplus',
             '/Zc:preprocessor' ,
         }
-        flags { "MultiProcessorCompile" }
+        multiprocessorcompile "On"
     filter {}
 
     filter "configurations:Debug"
@@ -111,7 +111,7 @@ project "DuinTests"
         -- Enable code coverage for Debug builds
         buildoptions { "/Z7" }  -- Full symbolic debug information
         linkoptions { "/PROFILE" }  -- Enable profiling/coverage
-        flags { "NoIncrementalLink" }  -- Required for /PROFILE
+        incrementallink "Off"  -- Required for /PROFILE
 
     filter "configurations:Release"
         defines "DN_RELEASE"
