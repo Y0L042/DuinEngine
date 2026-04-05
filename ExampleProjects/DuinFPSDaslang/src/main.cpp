@@ -8,6 +8,8 @@
 #include <Duin/Script/GameScript.h>
 #include <Duin/Script/ScriptModules.h>
 
+#include <flecs_das.h>
+
 #include <iostream>
 
 class DuinFPSDaslangApp : public duin::Application
@@ -35,6 +37,7 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_DecsWorld);
             NEED_MODULE(Module_DecsComponents);
             NEED_MODULE(Module_DecsQuery);
+            NEED_MODULE(Module_flecs);
         });
         mainScript->EnableHotCompile(true, true);
         mainScript->CompileAndSimulate();
