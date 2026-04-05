@@ -56,13 +56,13 @@ project "DuinFPSTests"
     }
 
     filter { "files:**/external/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
 
     filter { "files:**/vendor/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
@@ -77,7 +77,7 @@ project "DuinFPSTests"
             '/Zc:__cplusplus',
             '/Zc:preprocessor',
         }
-        flags { "MultiProcessorCompile" }
+        multiprocessorcompile "On"
     filter {}
 
     filter "configurations:Debug"
@@ -89,7 +89,7 @@ project "DuinFPSTests"
         symbols "On"
         buildoptions { "/Z7" }
         linkoptions { "/PROFILE" }
-        flags { "NoIncrementalLink" }
+        incrementallink "Off"
 
     filter "configurations:Release"
         defines "DN_RELEASE"
