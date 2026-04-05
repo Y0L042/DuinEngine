@@ -31,31 +31,31 @@ project "Duin"
     -- first included. MSVC ignores any #defines that precede #include "dnpch.h"
     -- in a PCH-enabled translation unit.
     filter "files:**/Core/Debug/DNAssert.cpp"
-        flags { "NoPCH" }
+        enablepch "Off"
         pchheader ""
     filter {}
 
     -- Exclude precompiled headers for C files
     filter "files:**.c"
-        flags { "NoPCH" }
+        enablepch "Off"
         pchheader ""  -- Ensures .c files ignore PCH
     filter {} -- Clear the filter
 
     filter { "files:**/external/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
 
     filter { "files:**/vendor/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
 
     -- Script/ files include daScript headers that conflict with the PCH
     filter "files:**/Script/**"
-        flags { "NoPCH" }
+        enablepch "Off"
         pchheader ""
     filter {}
 
@@ -104,12 +104,12 @@ project "Duin"
     libdirs 
     { 
         ProjectRoot .. "/vendor/sdl/build/Debug",
-        ProjectRoot .. "/vendor/bgfx/.build/win64_vs2022/bin",
-		ProjectRoot .. "/vendor/flecs/build_vs2022/Debug",	
+        ProjectRoot .. "/vendor/bgfx/.build/win64_vs2026/bin",
+		ProjectRoot .. "/vendor/flecs/build_vs2026/Debug",
         ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
         ProjectRoot .. "/vendor/toml11/build/src/Debug",
         ProjectRoot .. "/vendor/reflectcpp/build/Debug",
-        ProjectRoot .. "/vendor/daslang/lib/Debug",
+        ProjectRoot .. "/vendor/daslang/lib/RelWithDebInfo",
     }
     -- defines(global_defines)
     defines
@@ -141,13 +141,13 @@ project "Duin"
         "bxDebug.lib",
         "bimgDebug.lib",
         "bgfxDebug.lib",
-        "PhysX_static_64.lib",
-        "PhysXCooking_static_64.lib",
-        "PhysXCommon_static_64.lib",
-        "PhysXFoundation_static_64.lib",
-        "PhysXPvdSDK_static_64.lib",
-        "PhysXExtensions_static_64.lib",
-        "PhysXCharacterKinematic_static_64.lib",
+        "PhysX_static.lib",
+        "PhysXCooking_static.lib",
+        "PhysXCommon_static.lib",
+        "PhysXFoundation_static.lib",
+        "PhysXPvdSDK_static.lib",
+        "PhysXExtensions_static.lib",
+        "PhysXCharacterKinematic_static.lib",
         "reflectcpp.lib",
         "libDaScript.lib",
         "libUriParser.lib",
@@ -161,7 +161,7 @@ project "Duin"
             '/Zc:preprocessor' ,
             '/bigobj'
         }  -- Changed: Added /utf-8 flag for Unicode support
-        flags { "MultiProcessorCompile" }
+        multiprocessorcompile "On"
     filter {}
       
 
@@ -172,6 +172,7 @@ project "Duin"
     filter "configurations:Debug"
         defines { "DN_DEBUG", "_DEBUG" }
         symbols "On"
+        buildoptions { "/Gy" }  -- Function-level linking: enables dead-stripping of unused functions
         -- Enable code coverage for Debug builds
         -- buildoptions { "/Z7" }  -- Full symbolic debug information
         -- linkoptions { "/PROFILE" }  -- Enable profiling/coverage
@@ -183,7 +184,7 @@ project "Duin"
         -- Enable code coverage for Debug builds
         buildoptions { "/Z7" }  -- Full symbolic debug information
         linkoptions { "/PROFILE" }  -- Enable profiling/coverage
-        flags { "NoIncrementalLink" }  -- Required for /PROFILE
+        incrementallink "Off"  -- Required for /PROFILE
 
     filter "configurations:Release"
         defines { "DN_RELEASE", "NDEBUG" }
