@@ -24,8 +24,8 @@
 // SOFTWARE.
 //
 #include "ImGradient.h"
-#include <external/imgui.h>
-#include <external/imgui_internal.h>
+#include "external/imgui.h"
+#include "external/imgui_internal.h"
 
 namespace ImGradient
 {
