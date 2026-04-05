@@ -41,17 +41,20 @@ project "DuinFPSDaslang"
     externalincludedirs
     {
         SolutionRoot .. "/" .. IncludeDir["daslang"],
+        SolutionRoot .. "/" .. IncludeDir["flecs_das"],
     }
 
     libdirs(prependRoot(SolutionRoot, global_libdirs))
     libdirs
     {
         SolutionRoot .. "/Duin/vendor/daslang/lib/Debug",
+        SolutionRoot .. "/Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
     }
 
     links(global_links)
     links
     {
+        "flecs_das.lib",
         "libDaScript.lib",
         "libUriParser.lib",
         "dbghelp.lib",

@@ -36,7 +36,8 @@ workspace "Duin"
     IncludeDir["reflectcpp"] = "Duin/vendor/reflectcpp/include"
     IncludeDir["angelscript"] = "Duin/vendor/angelscript/sdk/angelscript/include"
     IncludeDir["angelscript_addon"] = "Duin/vendor/angelscript/sdk/add_on"
-    IncludeDir["daslang"] = "Duin/vendor/daslang/include"
+    IncludeDir["daslang"]   = "Duin/vendor/daslang/include"
+    IncludeDir["flecs_das"] = "Duin/vendor/flecs-daslang/flecs_das/src"
 
     global_files = {}
     global_includedirs = 

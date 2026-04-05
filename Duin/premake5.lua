@@ -76,8 +76,8 @@ project "Duin"
         ProjectRoot .. "/src",
     }
     -- externalincludedirs(global_externalincludedirs) 
-    externalincludedirs 
-    { 
+    externalincludedirs
+    {
         SolutionRoot .. "/%{IncludeDir.sdl}",
         SolutionRoot .. "/%{IncludeDir.bx}",
         SolutionRoot .. "/%{IncludeDir.bimg}",
@@ -99,6 +99,7 @@ project "Duin"
         SolutionRoot .. "/%{IncludeDir.doctest}",
         SolutionRoot .. "/%{IncludeDir.daslang}",
         ProjectRoot .. "/vendor/daslang/src/builtin",
+        SolutionRoot .. "/%{IncludeDir.flecs_das}",
     }
     -- libdirs(global_libdirs) 
     libdirs 
@@ -110,6 +111,7 @@ project "Duin"
         ProjectRoot .. "/vendor/toml11/build/src/Debug",
         ProjectRoot .. "/vendor/reflectcpp/build/Debug",
         ProjectRoot .. "/vendor/daslang/lib/RelWithDebInfo",
+        ProjectRoot .. "/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
     }
     -- defines(global_defines)
     defines
@@ -127,8 +129,9 @@ project "Duin"
         "DAS_ENABLE_EXCEPTIONS=1",
     }
     -- links(global_links)
-    links 
-    { 
+    links
+    {
+        "flecs_das.lib",
         "flecs_static.lib",
 		"winmm.lib",
         "legacy_stdio_definitions.lib",

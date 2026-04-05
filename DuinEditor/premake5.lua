@@ -34,12 +34,14 @@ project "DuinEditor"
 	externalincludedirs
 	{
         "./vendor/nativefiledialog-extended/src/include",
+        SolutionRoot .. "/" .. IncludeDir["flecs_das"],
 	}
 
     libdirs(prependRoot(SolutionRoot, global_libdirs))
 	libdirs
 	{
         "./vendor/nativefiledialog-extended/build/src/Debug",
+        SolutionRoot .. "/Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
 	}
 
     defines(global_defines)
@@ -47,6 +49,7 @@ project "DuinEditor"
     links(global_links)
 	links
 	{
+        "flecs_das.lib",
         "nfd.lib",
 	}
 
