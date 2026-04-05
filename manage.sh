@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GENERATE_XXD="$SCRIPT_DIR/Duin/src/Duin/Script/generate_xxd.py"
-DASLANG="$SCRIPT_DIR/Duin/vendor/daslang/bin/Debug/daslang_static.exe"
+DASLANG="$SCRIPT_DIR/Duin/vendor/daslang/bin/RelWithDebInfo/daslang_static.exe"
 GEN_ADAPTER_DAS="$SCRIPT_DIR/Duin/src/Duin/Script/gen_adapter.das"
 GEN_BIND_DAS="$SCRIPT_DIR/Duin/src/Duin/Script/gen_bind.das"
 SCRIPT_INC="$SCRIPT_DIR/Duin/src/Duin/Script"
