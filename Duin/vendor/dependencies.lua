@@ -21,6 +21,7 @@ local dep_doctest = require "dep_doctest"
 local dep_reflectcpp = require "dep_reflectcpp"
 local dep_angelscript = require "dep_angelscript"
 local dep_daslang = require "dep_daslang"
+local dep_flecsdaslangbindings = require "dep_flecsdaslangbindings"
 
 -- Define dependencies with explicit build order (array part maintains order)
 local dependencies_ordered = {
@@ -40,6 +41,7 @@ local dependencies_ordered = {
     {name = "REFLECTCPP", buildFn = dep_reflectcpp.build},
     {name = "DASLANG", buildFn = dep_daslang.build},
     {name = "ANGELSCRIPT", buildFn = dep_angelscript.build},
+    {name = "FLECSDASLANGBINDINGS", buildFn = dep_flecsdaslangbindings.build},
 }
 
 -- Also maintain a hash map for quick lookups
@@ -59,7 +61,8 @@ local dependencies = {
     DOCTEST = dep_doctest.build,
     REFLECTCPP = dep_reflectcpp.build,
     ANGELSCRIPT = dep_angelscript.build,
-    DASLANG = dep_daslang.build
+    DASLANG = dep_daslang.build,
+    FLECSDASLANGBINDINGS = dep_flecsdaslangbindings.build,
 }
 
 
