@@ -41,13 +41,13 @@ project "Sandbox"
     links(global_links)
 
     filter { "files:**/external/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
 
     filter { "files:**/vendor/**" }
-        flags { "NoPCH" }
+        enablepch "Off"
         warnings "Off"
         pchheader ""
     filter {}
@@ -62,7 +62,7 @@ project "Sandbox"
             '/Zc:__cplusplus', 
             '/Zc:preprocessor' ,
         }  -- Changed: Added /utf-8 flag for Unicode support
-        flags { "MultiProcessorCompile" }
+        multiprocessorcompile "On"
     filter {}
 
     filter "configurations:Debug"

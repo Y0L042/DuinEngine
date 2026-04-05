@@ -62,7 +62,7 @@ project "AngelScriptTest"
             '/Zc:__cplusplus',
             '/Zc:preprocessor',
         }
-        flags { "MultiProcessorCompile" }
+        multiprocessorcompile "On"
     filter {}
 
     filter "configurations:Debug"
