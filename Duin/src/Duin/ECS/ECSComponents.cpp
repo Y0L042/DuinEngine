@@ -35,6 +35,8 @@ void RegisterComponents(duin::World &world)
 
     world.Component<Camera>();
 
+
+    // TODO Delete this! This is all handled editor-side
     // Register components with the inspector (idempotent — skips if already registered)
     auto &inspector = duin::ComponentInspector::Get();
     inspector.RegisterComponent<ECSComponent::Position2D>("Position2D");

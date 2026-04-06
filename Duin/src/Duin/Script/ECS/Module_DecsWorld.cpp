@@ -5,7 +5,7 @@
 #include "Duin/ECS/DECS/DECS.h"
 #include "decs_world.das.inc"
 
-static void* decs_world_init_impl(das::Context *context)
+static void *decs_world_init_impl(das::Context *context)
 {
     auto world = std::make_shared<duin::World>();
     auto *dnCtx = static_cast<duin::ScriptContext *>(context);
@@ -55,16 +55,20 @@ class Module_DecsWorld : public das::Module
   public:
     Module_DecsWorld() : das::Module("decs_world")
     {
+    }
+
+    bool initDependencies() override
+    {
         das::ModuleLibrary lib(this);
         lib.addBuiltInModule();
+
         auto *entityMod = das::Module::require("decs_entity");
         if (!entityMod)
             DN_CORE_ERROR("decs_world: failed to find required module 'decs_entity'");
         addBuiltinDependency(lib, entityMod);
 
         addExtern<DAS_BIND_FUN(decs_world_init_impl)>(*this, lib, "decs_world_init_impl",
-                                                               das::SideEffects::modifyExternal,
-                                                               "decs_world_init_impl");
+                                                      das::SideEffects::modifyExternal, "decs_world_init_impl");
 
         addExtern<DAS_BIND_FUN(decs_world_create_entity_impl)>(*this, lib, "decs_world_create_entity_impl",
                                                                das::SideEffects::modifyExternal,
