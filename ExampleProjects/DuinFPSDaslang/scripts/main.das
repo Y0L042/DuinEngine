@@ -16,11 +16,10 @@ require frogger
 
 require flecs
 
-var world : dn_World?
 var player : Player?
 var child : Frogger?
 
-var q1 : dn_Query?
+var world : ecs_world_t?
 
 var counter : float = 0.0
 
@@ -37,23 +36,12 @@ struct Velocity {
 
 [export]
 def game_ready() {
-    layer_2b();
     dn_info("Game Ready!")
 
-    world = new dn_World()
-
-    if (!world.is_valid()) {
-        dn_warn("World is invalid!")
-    } else {
-        dn_info("World is valid.")
-    }
-
-
-
-    var entity1 : dn_Entity? = world.create_entity("Player")
-    dn_info("Is entity {entity1.get_name()} {entity1._id} alive? {entity1.is_alive()}")
-
-    //var e2 : dn_Entity? = new dn_Entity().set_name("peter")
+    world = ecs_init();
+    // register_engine_components(world)
+    ecs_component_register(world, type<Position>);
+    ecs_component_register(world, type<Velocity>);
 
     player = dn_gameobject_add_root_child(new Player())
     child = dn_gameobject_add_child(player, new Frogger())
