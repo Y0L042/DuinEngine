@@ -15,17 +15,32 @@ project "DuinEditor"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    files 
+    -- Shared app PCH
+    pchheader "apppch.h"
+    pchsource (SolutionRoot .. "/Duin/extern/apppch.cpp")
+    forceincludes { "apppch.h" }
+
+    -- Exclude .c files from PCH and force-include
+    filter "files:**.c"
+        enablepch "Off"
+        pchheader ""
+        forceincludes {}
+    filter {}
+
+    files
     {
         "./src/**.h",
         "./src/**.hpp",
         "./src/**.cpp",
+        SolutionRoot .. "/Duin/extern/apppch.cpp",
+        SolutionRoot .. "/Duin/extern/apppch.h",
     }
 
     includedirs(prependRoot(SolutionRoot, global_includedirs))
     includedirs
     {
         ProjectRoot .. "/src",
+        SolutionRoot .. "/Duin/extern",
     }
 
     LocalIncludeDir = {}
