@@ -1,7 +1,7 @@
 var searchData=
 [
   ['id_0',['id',['../structduin_1_1Entity_1_1ID.html#af53b0a9adf715b2f38c83bea08887d59',1,'duin::Entity::ID::ID(flecs::id_t value)'],['../structduin_1_1Entity_1_1ID.html#a932a83d26ba53b1fd4192fb168ebcc88',1,'duin::Entity::ID::ID()'],['../structduin_1_1Entity_1_1ID.html#a6e0bad291f25f8fc4164264f2d22f5a0',1,'duin::Entity::ID::ID(const ID &amp;first, const ID &amp;second)'],['../structduin_1_1Entity_1_1ID.html#a3b786fd70905e1e9e396964d44d9971c',1,'duin::Entity::ID::ID(flecs::id_t first, flecs::id_t second)'],['../structduin_1_1Entity_1_1ID.html#a825459a7bf60d990da2325267a52c77d',1,'duin::Entity::ID::ID(World *world, flecs::id_t first, flecs::id_t second)'],['../structduin_1_1Entity_1_1ID.html#a5b7799967ea965a0bdf2690967431da5',1,'duin::Entity::ID::ID(World *world, flecs::id_t value=0)'],['../structduin_1_1Entity_1_1ID.html#ad13a9879ee25102d576a0936141d48f6',1,'duin::Entity::ID::ID(World *world, const char *expr)']]],
-  ['init_1',['Init',['../classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b',1,'duin::Log']]],
+  ['init_1',['init',['../classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b',1,'duin::Log::Init()'],['../classRectanglePacker.html#a3aa3b8c8d4f36ab6cca66f0044870910',1,'RectanglePacker::init()']]],
   ['initialize_2',['initialize',['../classduin_1_1Application.html#adfda04cdbdd2923dc25f509f2c285dd8',1,'duin::Application::Initialize()'],['../classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6',1,'duin::GameWorld::Initialize()'],['../classduin_1_1PhysicsServer.html#a0539ef81e30be42293ca094122ae4903',1,'duin::PhysicsServer::Initialize()']]],
   ['inputbinding_3',['InputBinding',['../structduin_1_1InputBinding.html#a00a2e88fd9981f7a56f30a71fde00c32',1,'duin::InputBinding']]],
   ['insert_4',['Insert',['../classduin_1_1LookupVector.html#ac64d8aa6cbea33af79813152a25db5d7',1,'duin::LookupVector']]],
@@ -34,16 +34,17 @@ var searchData=
   ['isnull_31',['IsNull',['../classduin_1_1JSONValue.html#a7798e8708c3258587055a1d1b7e107a7',1,'duin::JSONValue']]],
   ['isnumber_32',['IsNumber',['../classduin_1_1JSONValue.html#a424f8b32d90e1cd6007491dd11d0cb49',1,'duin::JSONValue']]],
   ['isobject_33',['IsObject',['../classduin_1_1JSONValue.html#a04d424b8f73e6b4b93426127eb0509c8',1,'duin::JSONValue']]],
-  ['ispair_34',['IsPair',['../structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec',1,'duin::Entity::ID']]],
+  ['ispair_34',['ispair',['../structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec',1,'duin::Entity::ID::IsPair()'],['../classduin_1_1Entity.html#ad62f5f0f4d68dcf414881f464defe682',1,'duin::Entity::IsPair()']]],
   ['ispathinvalid_35',['IsPathInvalid',['../namespaceduin_1_1fs.html#af0a7c673b411e7583d3e377a67f42b61',1,'duin::fs']]],
   ['isreadonly_36',['IsReadonly',['../classduin_1_1Iter.html#ae6316a735895666ac0e073af7c2a2fd9',1,'duin::Iter']]],
   ['isreadvalid_37',['IsReadValid',['../classduin_1_1JSONValue.html#a142339fe706498302c22bfb03f0c4791',1,'duin::JSONValue']]],
   ['isself_38',['IsSelf',['../classduin_1_1Iter.html#a1d8b760131c400f9dff1cdad01af02fc',1,'duin::Iter']]],
   ['isset_39',['IsSet',['../classduin_1_1Iter.html#ab7455bdac286fe80088ec01ad2eae019',1,'duin::Iter']]],
   ['isstring_40',['IsString',['../classduin_1_1JSONValue.html#aa2e908f0293495d00023d8b7afb462cb',1,'duin::JSONValue']]],
-  ['istrue_41',['IsTrue',['../classduin_1_1Query.html#a4513b379ed557b76a43d3ec949872b1d',1,'duin::Query']]],
-  ['isvalid_42',['isvalid',['../classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c',1,'duin::Entity::IsValid()'],['../classduin_1_1JSONValue.html#af4ae33e7a6168d1b08492b038a777e27',1,'duin::JSONValue::IsValid()'],['../classduin_1_1Query.html#a781ba758840b2a9da76788a065cf8bc2',1,'duin::Query::IsValid()'],['../classduin_1_1World.html#a1edc0c919ab3fb24b50c98ec02c9c253',1,'duin::World::IsValid()'],['../classduin_1_1io_1_1IOStream.html#ad1875e8d3798100ae5ef241336dec92f',1,'duin::io::IOStream::IsValid()'],['../structduin_1_1RenderTexture.html#a289a927fcbeaa152db213b1fb807d6f1',1,'duin::RenderTexture::IsValid()']]],
-  ['iswildcard_43',['IsWildcard',['../structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5',1,'duin::Entity::ID']]],
-  ['iter_44',['iter',['../classduin_1_1Query.html#a20f4937f5472851567ba762e058f793f',1,'duin::Query::Iter()'],['../classduin_1_1Iter.html#a7b5f74120176a1db87e050b50d216452',1,'duin::Iter::Iter(flecs::iter &amp;it)'],['../classduin_1_1Iter.html#a34d866dcb4bf6e57acaf62a011d25045',1,'duin::Iter::Iter(ecs_iter_t *it)']]],
-  ['iteratechildren_45',['IterateChildren',['../classduin_1_1World.html#a10d8a0714c4268d4ec4475786c39f65a',1,'duin::World']]]
+  ['istag_41',['IsTag',['../classduin_1_1Entity.html#a195c1f23094f197fd61f019bbf59164f',1,'duin::Entity']]],
+  ['istrue_42',['IsTrue',['../classduin_1_1Query.html#a4513b379ed557b76a43d3ec949872b1d',1,'duin::Query']]],
+  ['isvalid_43',['isvalid',['../classduin_1_1World.html#a1edc0c919ab3fb24b50c98ec02c9c253',1,'duin::World::IsValid()'],['../classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c',1,'duin::Entity::IsValid()'],['../classduin_1_1Query.html#a781ba758840b2a9da76788a065cf8bc2',1,'duin::Query::IsValid()'],['../structduin_1_1RenderTexture.html#a289a927fcbeaa152db213b1fb807d6f1',1,'duin::RenderTexture::IsValid()'],['../classduin_1_1JSONValue.html#af4ae33e7a6168d1b08492b038a777e27',1,'duin::JSONValue::IsValid()'],['../classduin_1_1io_1_1IOStream.html#ad1875e8d3798100ae5ef241336dec92f',1,'duin::io::IOStream::IsValid()']]],
+  ['iswildcard_44',['IsWildcard',['../structduin_1_1Entity_1_1ID.html#a13ec73ed0f46812ce1b12dea9f565fe5',1,'duin::Entity::ID']]],
+  ['iter_45',['iter',['../classduin_1_1Query.html#a20f4937f5472851567ba762e058f793f',1,'duin::Query::Iter()'],['../classduin_1_1Iter.html#a7b5f74120176a1db87e050b50d216452',1,'duin::Iter::Iter(flecs::iter &amp;it)'],['../classduin_1_1Iter.html#a34d866dcb4bf6e57acaf62a011d25045',1,'duin::Iter::Iter(ecs_iter_t *it)']]],
+  ['iteratechildren_46',['IterateChildren',['../classduin_1_1World.html#a10d8a0714c4268d4ec4475786c39f65a',1,'duin::World']]]
 ];

@@ -1,0 +1,7 @@
+<map id="ImGui_ImplStbTrueType_FontSrcData" name="ImGui_ImplStbTrueType_FontSrcData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,255,180,295"/>
+<area shape="rect" id="Node000002" href="$structstbtt__fontinfo.html" title=" " alt="" coords="37,167,148,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,206,95,254,90,254,90,206"/>
+<area shape="rect" id="Node000003" href="$structstbtt____buf.html" title=" " alt="" coords="49,5,136,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="95,44,95,166,90,166,90,44"/>
+</map>

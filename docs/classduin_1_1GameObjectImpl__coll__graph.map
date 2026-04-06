@@ -1,0 +1,17 @@
+<map id="duin::GameObjectImpl" name="duin::GameObjectImpl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="445,202,613,227"/>
+<area shape="poly" id="edge5_Node000001_Node000001" title=" " alt="" coords="493,188,504,179,529,175,551,178,563,184,567,194,560,203,556,200,562,193,559,187,549,183,529,181,506,184,496,192"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,236,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="250,45,337,71,381,89,423,110,453,131,481,156,520,200,516,204,477,160,450,135,420,114,379,93,336,76,249,50"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="75,109,167,134"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="181,121,294,133,359,144,422,160,469,179,508,199,506,204,467,184,421,165,358,149,293,138,180,127"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="78,95,90,86,121,82,145,84,160,90,164,100,156,110,152,107,159,100,156,94,144,89,121,87,92,91,81,99"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="51,158,190,183"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="204,174,422,196,447,199,446,205,421,201,204,180"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="39,241,203,266"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="216,262,316,265,369,262,421,255,465,242,503,225,505,230,467,247,422,260,369,267,316,270,216,267"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1Signal.html" title=" " alt="" coords="50,291,191,331"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="205,313,310,309,366,300,420,285,448,273,473,257,513,226,516,230,476,262,450,278,422,291,367,306,310,314,205,318"/>
+<area shape="rect" id="Node000007" href="$classduin_1_1Signal.html" title=" " alt="" coords="35,357,207,382"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="221,380,269,380,321,377,372,366,420,347,456,321,484,287,506,253,520,226,525,229,511,256,489,290,459,325,423,352,373,371,321,382,269,386,220,385"/>
+</map>

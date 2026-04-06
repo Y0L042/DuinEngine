@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['each_0',['Each',['../classduin_1_1Query.html#a4e54e8d236ca3058dc4f8dfce43860eb',1,'duin::Query']]],
+  ['each_0',['each',['../classduin_1_1Entity.html#abec9560ffbe7ebf3aa1d7ca439f7f871',1,'duin::Entity::Each()'],['../classduin_1_1Query.html#a4e54e8d236ca3058dc4f8dfce43860eb',1,'duin::Query::Each()']]],
   ['eachchild_1',['EachChild',['../classduin_1_1Entity.html#a2f2c9e905e744447ae99aa2144614168',1,'duin::Entity']]],
   ['ecs_20data_20oriented_2',['ECS (Data-Oriented)',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#arch_ecs',1,'']]],
   ['ecscomponent_3',['ECSComponent',['../namespaceECSComponent.html',1,'']]],
@@ -13,7 +13,7 @@ var searchData=
   ['ecstag_2eh_10',['ECSTag.h',['../ECSTag_8h.html',1,'']]],
   ['editorversion_11',['editorVersion',['../structduin_1_1PackedSceneMetadata.html#a696d5c7bc0c71814500dd39d9574b62f',1,'duin::PackedSceneMetadata']]],
   ['editpoint_12',['EditPoint',['../structImCurveEdit_1_1EditPoint.html',1,'ImCurveEdit']]],
-  ['emit_13',['emit',['../classduin_1_1Entity.html#a9b6fa02c5592b4c2fa9b13622b69a0bd',1,'duin::Entity::Emit()'],['../classduin_1_1Signal.html#a776b91cd0e3a3ca19a11f7318352a5ba',1,'duin::Signal::Emit()']]],
+  ['emit_13',['emit',['../classduin_1_1Signal.html#a776b91cd0e3a3ca19a11f7318352a5ba',1,'duin::Signal::Emit()'],['../classduin_1_1Entity.html#a9b6fa02c5592b4c2fa9b13622b69a0bd',1,'duin::Entity::Emit(Args &amp;&amp;...args) const']]],
   ['emplace_14',['Emplace',['../classduin_1_1Entity.html#aa4573c6ecff5395f51a9d8e3d1654f41',1,'duin::Entity']]],
   ['empty_15',['Empty',['../classduin_1_1JSONValue.html#ad9525bb02243fbb6ba53eff2a9ce0cd5',1,'duin::JSONValue']]],
   ['enable_16',['Enable',['../classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2',1,'duin::Entity']]],
@@ -26,7 +26,7 @@ var searchData=
   ['ensure_23',['Ensure',['../classduin_1_1Entity.html#a234751dd79e5f68f6cab1e8316d41119',1,'duin::Entity']]],
   ['ensureunixpath_24',['EnsureUnixPath',['../namespaceduin_1_1fs.html#a34824b1612a2df17c4382d1a40d67c25',1,'duin::fs']]],
   ['entities_25',['entities',['../structduin_1_1PackedScene.html#ac53d2df51d7e75fd00623b8c0e45dfd8',1,'duin::PackedScene']]],
-  ['entity_26',['entity',['../classduin_1_1Entity.html',1,'duin::Entity'],['../classduin_1_1Entity.html#af1a8594dcea6f8bd63446ce2db228336',1,'duin::Entity::Entity(Entity &amp;&amp;other) noexcept'],['../classduin_1_1Entity.html#a984ab5849dcbf343dee6b33f1d58eba0',1,'duin::Entity::Entity(const flecs::entity &amp;entity, World *world)'],['../classduin_1_1Entity.html#a70ce2c7be1097450ac148e1920d86559',1,'duin::Entity::Entity(const flecs::entity &amp;entity)'],['../classduin_1_1Entity.html#ad58e3dcc9130d57479aa24e4d21cd458',1,'duin::Entity::Entity(const Entity &amp;other)'],['../classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54',1,'duin::Entity::Entity()'],['../classduin_1_1World.html#a537cb917b6599fa16c030220dd7ce74d',1,'duin::World::Entity()']]],
+  ['entity_26',['entity',['../classduin_1_1Entity.html',1,'duin::Entity'],['../classduin_1_1Entity.html#af1a8594dcea6f8bd63446ce2db228336',1,'duin::Entity::Entity(Entity &amp;&amp;other) noexcept'],['../classduin_1_1Entity.html#a984ab5849dcbf343dee6b33f1d58eba0',1,'duin::Entity::Entity(const flecs::entity &amp;entity, World *world)'],['../classduin_1_1Entity.html#a70ce2c7be1097450ac148e1920d86559',1,'duin::Entity::Entity(const flecs::entity &amp;entity)'],['../classduin_1_1Entity.html#ad58e3dcc9130d57479aa24e4d21cd458',1,'duin::Entity::Entity(const Entity &amp;other)'],['../classduin_1_1Entity.html#a382e632f673e23b887330e46b5e2439d',1,'duin::Entity::Entity(uint64_t id, World *world=nullptr)'],['../classduin_1_1Entity.html#ab19c54f29d625b54c8f5f398b07eda54',1,'duin::Entity::Entity()'],['../classduin_1_1World.html#a537cb917b6599fa16c030220dd7ce74d',1,'duin::World::Entity()']]],
   ['entity_20component_20system_27',['Entity Component System',['../group__ECS.html',1,'']]],
   ['entitydata_28',['EntityData',['../structduin_1_1EntityData.html',1,'duin']]],
   ['enumeratedirectory_29',['EnumerateDirectory',['../namespaceduin_1_1fs.html#ac6a15102ae9e7ac7987e2a60be5c295c',1,'duin::fs']]],

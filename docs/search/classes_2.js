@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['camera_0',['Camera',['../structduin_1_1Camera.html',1,'duin']]],
+  ['camera_0',['camera',['../structduin_1_1Camera.html',1,'duin::Camera'],['../structCamera.html',1,'Camera']]],
   ['cameraimpl_1',['CameraImpl',['../structduin_1_1Camera_1_1CameraImpl.html',1,'duin::Camera']]],
   ['cameraisactive_2',['CameraIsActive',['../structduin_1_1ECSTag_1_1CameraIsActive.html',1,'duin::ECSTag']]],
   ['capsulegeometry_3',['CapsuleGeometry',['../classduin_1_1CapsuleGeometry.html',1,'duin']]],

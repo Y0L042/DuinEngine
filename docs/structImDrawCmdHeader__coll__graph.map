@@ -1,5 +1,14 @@
 <map id="ImDrawCmdHeader" name="ImDrawCmdHeader">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,156,119"/>
-<area shape="rect" id="Node000002" href="$structImVec4.html" title=" " alt="" coords="45,5,116,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,45,83,93,78,93,78,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="9,361,160,387"/>
+<area shape="rect" id="Node000002" href="$structImVec4.html" title=" " alt="" coords="5,273,76,299"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,312,56,336,74,360,70,363,52,339,43,313"/>
+<area shape="rect" id="Node000003" href="$structImTextureRef.html" title=" " alt="" coords="101,273,210,299"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="139,311,97,362,92,359,135,307"/>
+<area shape="rect" id="Node000004" href="$structImTextureData.html" title=" " alt="" coords="96,185,215,211"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="158,225,158,273,153,273,153,225"/>
+<area shape="rect" id="Node000005" href="$structImTextureRect.html" title=" " alt="" coords="97,5,213,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="155,44,150,93,151,144,156,185,151,186,146,145,145,93,149,44"/>
+<area shape="rect" id="Node000006" href="$structImVector.html" title=" " alt="" coords="240,95,444,121"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="193,34,319,93,316,98,191,39"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="306,129,181,188,179,183,304,124"/>
 </map>

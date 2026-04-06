@@ -2,7 +2,7 @@ var searchData=
 [
   ['savefile_0',['SaveFile',['../classduin_1_1io_1_1IOStream.html#a94b99a69ecbf2c43b2186224593830b8',1,'duin::io::IOStream']]],
   ['savefileio_1',['SaveFileIO',['../classduin_1_1io_1_1IOStream.html#ac9dce8f261411ec23a475bb0263e84d5',1,'duin::io::IOStream']]],
-  ['second_2',['Second',['../structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be',1,'duin::Entity::ID']]],
+  ['second_2',['second',['../structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be',1,'duin::Entity::ID::Second()'],['../classduin_1_1Entity.html#a60f08518d58237c7b525711eb3aa94e3',1,'duin::Entity::Second()']]],
   ['seek_3',['Seek',['../classduin_1_1io_1_1IOStream.html#ae8fd757fa74e273f90b88b5c560ed0a5',1,'duin::io::IOStream']]],
   ['set_4',['set',['../classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89',1,'duin::Entity::Set(const T &amp;value)'],['../classduin_1_1Entity.html#ab4f974c7a169d9ecb1ae29d68b8ed548',1,'duin::Entity::Set(T &amp;&amp;value)'],['../classduin_1_1Entity.html#a471c5755bca0422b83c6cbfe9b50cb6b',1,'duin::Entity::Set(Args &amp;&amp;...args)'],['../classduin_1_1Entity.html#a8b0ab45f7102206d6d68cd58e90c727d',1,'duin::Entity::Set(const T1 &amp;val1, const T2 &amp;val2, const Rest &amp;...rest)']]],
   ['setallowdockinginmain_5',['SetAllowDockingInMain',['../Application_8h.html#a55e1aa953e36ea6cbe2895e33e1df4bd',1,'duin']]],

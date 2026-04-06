@@ -131,13 +131,13 @@ Core Components</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>Renderer</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="Renderer_8h.html" title="Core rendering system and utilities.">Renderer.h</a>/cpp</code>   </td><td class="markdownTableBodyNone">Main rendering interface    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>Camera</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="Camera_8h.html" title="3D camera for rendering.">Camera.h</a>/cpp</code>   </td><td class="markdownTableBodyNone">3D camera with view/projection    </td></tr>
+<td class="markdownTableBodyNone"><code><a class="el" href="structCamera.html">Camera</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="Camera_8h.html" title="3D camera for rendering.">Camera.h</a>/cpp</code>   </td><td class="markdownTableBodyNone">3D camera with view/projection    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>RenderTexture</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="Renderer_8h.html" title="Core rendering system and utilities.">Renderer.h</a></code>   </td><td class="markdownTableBodyNone">Offscreen render target    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>RenderState</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="Renderer_8h.html" title="Core rendering system and utilities.">Renderer.h</a></code>   </td><td class="markdownTableBodyNone">Current rendering configuration    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>RenderGeometry</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="RenderGeometry_8h_source.html">RenderGeometry.h</a></code>   </td><td class="markdownTableBodyNone">Primitive geometry definitions    </td></tr>
+<td class="markdownTableBodyNone"><code>RenderGeometry</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="RenderGeometry_8h_source.html">RenderGeometry.h</a></code>   </td><td class="markdownTableBodyNone"><a class="el" href="structPrimitive.html">Primitive</a> geometry definitions    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>ShaderProgram</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="Renderer_8h.html" title="Core rendering system and utilities.">Renderer.h</a></code>   </td><td class="markdownTableBodyNone">Compiled shader programs   </td></tr>
 </table>
@@ -158,7 +158,7 @@ Render State Machine</h1>
 <p>The renderer maintains a global <code>RenderState</code> that tracks the current rendering context:</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>RenderState {</div>
 <div class="line">    RenderTexture *target = <span class="keyword">nullptr</span>;  <span class="comment">// Active render target (nullptr = backbuffer)</span></div>
-<div class="line">    Camera *camera = <span class="keyword">nullptr</span>;         <span class="comment">// Active camera</span></div>
+<div class="line">    <a class="code hl_struct" href="structCamera.html">Camera</a> *camera = <span class="keyword">nullptr</span>;         <span class="comment">// Active camera</span></div>
 <div class="line">    <span class="keywordtype">bool</span> in3DMode = <span class="keyword">false</span>;            <span class="comment">// True between BeginDraw3D/EndDraw3D</span></div>
 <div class="line">    <span class="keywordtype">bool</span> inTextureMode = <span class="keyword">false</span>;       <span class="comment">// True between BeginTextureMode/EndTextureMode</span></div>
 <div class="line">    DebugDrawState debugDrawState;</div>
@@ -167,6 +167,7 @@ Render State Machine</h1>
 <div class="line">    <a class="code hl_struct" href="structUUID.html">UUID</a> stateUUID;</div>
 <div class="line">    <span class="keywordtype">size_t</span> viewID = 0;                <span class="comment">// Current BGFX view ID</span></div>
 <div class="line">};</div>
+<div class="ttc" id="astructCamera_html"><div class="ttname"><a href="structCamera.html">Camera</a></div><div class="ttdef"><b>Definition</b> <a href="camera_8cpp_source.html#l00076">camera.cpp:77</a></div></div>
 <div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
 State Stack</h2>
@@ -323,8 +324,8 @@ Cleanup</h2>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md19"></a>
 Camera System</h1>
-<p>The <code>Camera</code> struct defines 3D view parameters:</p>
-<div class="fragment"><div class="line"><span class="keyword">struct </span>Camera {</div>
+<p>The <code><a class="el" href="structCamera.html">Camera</a></code> struct defines 3D view parameters:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structCamera.html">Camera</a> {</div>
 <div class="line">    <a class="code hl_struct" href="structUUID.html">UUID</a> uuid;</div>
 <div class="line">    Vector3 position;    <span class="comment">// Camera position in world space</span></div>
 <div class="line">    Vector3 target;      <span class="comment">// Point the camera looks at</span></div>
@@ -389,7 +390,7 @@ Frame Lifecycle</h1>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md26"></a>
 Geometry System</h1>
-<p>Primitive geometry is defined in <code><a class="el" href="RenderGeometry_8h_source.html">RenderGeometry.h</a></code>:</p>
+<p><a class="el" href="structPrimitive.html">Primitive</a> geometry is defined in <code><a class="el" href="RenderGeometry_8h_source.html">RenderGeometry.h</a></code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>RenderGeometryType {</div>
 <div class="line">    <span class="keyword">enum</span> Type {</div>
 <div class="line">        BOX = 0,</div>
@@ -464,7 +465,7 @@ File Locations</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Renderer   </td><td class="markdownTableBodyNone"><code><a class="el" href="Renderer_8h.html" title="Core rendering system and utilities.">Duin/src/Duin/Render/Renderer.h</a></code>, <code><a class="el" href="Renderer_8cpp_source.html">Renderer.cpp</a></code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Camera   </td><td class="markdownTableBodyNone"><code><a class="el" href="Camera_8h.html" title="3D camera for rendering.">Duin/src/Duin/Render/Camera.h</a></code>, <code><a class="el" href="Camera_8cpp_source.html">Camera.cpp</a></code>    </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="structCamera.html">Camera</a>   </td><td class="markdownTableBodyNone"><code><a class="el" href="Camera_8h.html" title="3D camera for rendering.">Duin/src/Duin/Render/Camera.h</a></code>, <code><a class="el" href="Camera_8cpp_source.html">Camera.cpp</a></code>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">RenderGeometry   </td><td class="markdownTableBodyNone"><code><a class="el" href="RenderGeometry_8h_source.html">Duin/src/Duin/Render/RenderGeometry.h</a></code>, <code><a class="el" href="RenderGeometry_8cpp_source.html">RenderGeometry.cpp</a></code>    </td></tr>
 <tr class="markdownTableRowEven">

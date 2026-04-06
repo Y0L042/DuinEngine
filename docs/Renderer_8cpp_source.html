@@ -247,7 +247,7 @@ $(document).ready(function(){initNavTree('Renderer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    RENDER_CONTEXT_AVAILABLE = available;</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>}</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="keywordtype">void</span> BeginDraw3D(Camera &amp;camera)</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="keywordtype">void</span> BeginDraw3D(<a class="code hl_struct" href="structCamera.html">Camera</a> &amp;camera)</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>{</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="comment">// DN_CORE_INFO(&quot;BeginDraw3D&quot;);</span></div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="comment">//globalRenderStateStack.clear();</span></div>
@@ -317,7 +317,7 @@ $(document).ready(function(){initNavTree('Renderer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="comment">// Push current state to stack</span></div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    globalRenderStateStack.push_back(globalRenderState);</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    Camera *activeCamera = GetActiveCamera();</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <a class="code hl_struct" href="structCamera.html">Camera</a> *activeCamera = GetActiveCamera();</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="comment">// Set new texture rendering state</span></div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    globalRenderState = RenderState();</div>
@@ -619,14 +619,15 @@ $(document).ready(function(){initNavTree('Renderer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>}</div>
 <div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
-<div class="ttc" id="aApplication_8h_html_a62446673e5e806e310ac470542c2ace9"><div class="ttname"><a href="Application_8h.html#a62446673e5e806e310ac470542c2ace9">duin::GetWindowWidth</a></div><div class="ttdeci">int GetWindowWidth()</div><div class="ttdoc">Returns window width in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00247">Application.cpp:247</a></div></div>
-<div class="ttc" id="aApplication_8h_html_a794171dbf4077b756a1aa1a0de3948f4"><div class="ttname"><a href="Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4">duin::GetWindowHeight</a></div><div class="ttdeci">int GetWindowHeight()</div><div class="ttdoc">Returns window height in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00252">Application.cpp:252</a></div></div>
+<div class="ttc" id="aApplication_8h_html_a62446673e5e806e310ac470542c2ace9"><div class="ttname"><a href="Application_8h.html#a62446673e5e806e310ac470542c2ace9">duin::GetWindowWidth</a></div><div class="ttdeci">int GetWindowWidth()</div><div class="ttdoc">Returns window width in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00279">Application.cpp:279</a></div></div>
+<div class="ttc" id="aApplication_8h_html_a794171dbf4077b756a1aa1a0de3948f4"><div class="ttname"><a href="Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4">duin::GetWindowHeight</a></div><div class="ttdeci">int GetWindowHeight()</div><div class="ttdoc">Returns window height in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00284">Application.cpp:284</a></div></div>
 <div class="ttc" id="aCamera_8h_html"><div class="ttname"><a href="Camera_8h.html">Camera.h</a></div><div class="ttdoc">3D camera for rendering.</div></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aRenderer_8h_html"><div class="ttname"><a href="Renderer_8h.html">Renderer.h</a></div><div class="ttdoc">Core rendering system and utilities.</div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
-<div class="ttc" id="astructDebugDrawEncoder_html"><div class="ttname"><a href="structDebugDrawEncoder.html">DebugDrawEncoder</a></div><div class="ttdef"><b>Definition</b> <a href="debugdraw_8h_source.html#l00068">debugdraw.h:69</a></div></div>
-<div class="ttc" id="astructImVec2_html"><div class="ttname"><a href="structImVec2.html">ImVec2</a></div><div class="ttdef"><b>Definition</b> <a href="imgui_8h_source.html#l00346">imgui.h:347</a></div></div>
+<div class="ttc" id="astructCamera_html"><div class="ttname"><a href="structCamera.html">Camera</a></div><div class="ttdef"><b>Definition</b> <a href="camera_8cpp_source.html#l00076">camera.cpp:77</a></div></div>
+<div class="ttc" id="astructDebugDrawEncoder_html"><div class="ttname"><a href="structDebugDrawEncoder.html">DebugDrawEncoder</a></div><div class="ttdef"><b>Definition</b> <a href="debugdraw_8h_source.html#l00055">debugdraw.h:56</a></div></div>
+<div class="ttc" id="astructImVec2_html"><div class="ttname"><a href="structImVec2.html">ImVec2</a></div><div class="ttdef"><b>Definition</b> <a href="imgui_8h_source.html#l00300">imgui.h:301</a></div></div>
 <div class="ttc" id="astructUUID_html"><div class="ttname"><a href="structUUID.html">UUID</a></div><div class="ttdef"><b>Definition</b> <a href="uuid_8h_source.html#l00012">uuid.h:13</a></div></div>
 <div class="ttc" id="astructduin_1_1BGFXBufferHandle_html"><div class="ttname"><a href="structduin_1_1BGFXBufferHandle.html">duin::BGFXBufferHandle</a></div><div class="ttdef"><b>Definition</b> <a href="Renderer_8cpp_source.html#l00017">Renderer.cpp:18</a></div></div>
 <div class="ttc" id="astructduin_1_1DebugDrawState_html"><div class="ttname"><a href="structduin_1_1DebugDrawState.html">duin::DebugDrawState</a></div><div class="ttdoc">State for debug drawing operations.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00052">Renderer.h:53</a></div></div>

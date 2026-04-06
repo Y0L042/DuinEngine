@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('classduin_1_1GameObject.html',''); ini
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classduin_1_1GameObject-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">duin::GameObject Class Reference<div class="ingroups"><a class="el" href="group__Objects.html">Objects Module</a> &raquo; <a class="el" href="group__Objects__GameObject.html">GameObject</a></div></div></div>
@@ -121,33 +121,13 @@ $(document).ready(function(){initNavTree('classduin_1_1GameObject.html',''); ini
  <a href="classduin_1_1GameObject.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="GameObject_8h_source.html">GameObject.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for duin::GameObject:</div>
-<div class="dyncontent">
-<div class="center"><img src="classduin_1_1GameObject__coll__graph.png" border="0" usemap="#aduin_1_1GameObject_coll__map" alt="Collaboration graph"/></div>
-<map name="aduin_1_1GameObject_coll__map" id="aduin_1_1GameObject_coll__map">
-<area shape="rect" title="Base class for objects in the scene hierarchy." alt="" coords="417,119,556,145"/>
-<area shape="rect" title=" " alt="" coords="5,5,208,45"/>
-<area shape="poly" title=" " alt="" coords="222,14,308,20,352,30,394,44,421,60,444,79,478,117,474,120,441,83,418,64,392,49,351,35,307,26,222,19"/>
-<area shape="rect" href="classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="25,86,189,111"/>
-<area shape="poly" title=" " alt="" coords="203,104,417,123,417,129,202,110"/>
-<area shape="rect" href="classduin_1_1Signal.html" title=" " alt="" coords="36,136,177,176"/>
-<area shape="poly" title=" " alt="" coords="191,154,288,152,393,145,419,142,419,147,394,151,288,158,191,159"/>
-<area shape="rect" href="classduin_1_1Signal.html" title=" " alt="" coords="21,202,193,227"/>
-<area shape="poly" title=" " alt="" coords="207,216,298,210,346,202,392,190,436,168,469,143,473,147,438,172,394,194,347,207,299,215,207,221"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe" id="r_ad95ae2a5c75925c02085b3fce76c21fe"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
-<tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe">CreateChildObject</a> (Args &amp;&amp;...args)</td></tr>
+<tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe">CreateChildObject</a> (<a class="el" href="structArgs.html">Args</a> &amp;&amp;...args)</td></tr>
 <tr class="memdesc:ad95ae2a5c75925c02085b3fce76c21fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and adds a child object.  <br /></td></tr>
 <tr class="separator:ad95ae2a5c75925c02085b3fce76c21fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a010d59d0519af6b0aefb1d1abb54a" id="r_a90a010d59d0519af6b0aefb1d1abb54a"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
-<tr class="memitem:a90a010d59d0519af6b0aefb1d1abb54a"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a90a010d59d0519af6b0aefb1d1abb54a">GetSharedPointer</a> ()</td></tr>
-<tr class="memdesc:a90a010d59d0519af6b0aefb1d1abb54a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this object as a shared pointer of derived type.  <br /></td></tr>
-<tr class="separator:a90a010d59d0519af6b0aefb1d1abb54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c0a2398a7cc491d24b655908e27a4e2" id="r_a9c0a2398a7cc491d24b655908e27a4e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2">AddChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
 <tr class="memdesc:a9c0a2398a7cc491d24b655908e27a4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an existing object as a child.  <br /></td></tr>
 <tr class="separator:a9c0a2398a7cc491d24b655908e27a4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,24 +141,30 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9cdcf98fc6d74060da5d92bb69e478a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ce6cd4080452aeb14b05e97a5b2688b" id="r_a2ce6cd4080452aeb14b05e97a5b2688b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a2ce6cd4080452aeb14b05e97a5b2688b">GetChildrenCount</a> ()</td></tr>
 <tr class="separator:a2ce6cd4080452aeb14b05e97a5b2688b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a014c6c10fabbbd6e26e371f5bc433021" id="r_a014c6c10fabbbd6e26e371f5bc433021"><td class="memItemLeft" align="right" valign="top">std::weak_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a014c6c10fabbbd6e26e371f5bc433021">GetParent</a> ()</td></tr>
-<tr class="memdesc:a014c6c10fabbbd6e26e371f5bc433021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent object, or nullptr if root.  <br /></td></tr>
-<tr class="separator:a014c6c10fabbbd6e26e371f5bc433021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01f2b19206778e38ccf7cae3deff12d8" id="r_a01f2b19206778e38ccf7cae3deff12d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1GameObject.html">GameObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a01f2b19206778e38ccf7cae3deff12d8">GetParent</a> ()</td></tr>
+<tr class="memdesc:a01f2b19206778e38ccf7cae3deff12d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent object, or nullptr if root.  <br /></td></tr>
+<tr class="separator:a01f2b19206778e38ccf7cae3deff12d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9434e5fecafe0fab58dd915ef22c7b37" id="r_a9434e5fecafe0fab58dd915ef22c7b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">GetUUID</a> () const</td></tr>
+<tr class="separator:a9434e5fecafe0fab58dd915ef22c7b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa65267cda43e25c35a066b520ba05852" id="r_aa65267cda43e25c35a066b520ba05852"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aa65267cda43e25c35a066b520ba05852">SetUUID</a> (<a class="el" href="classduin_1_1UUID.html">UUID</a> newUUID)</td></tr>
+<tr class="separator:aa65267cda43e25c35a066b520ba05852"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc88e71a32dc1a84322601bf599bb7d5" id="r_acc88e71a32dc1a84322601bf599bb7d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5">ConnectAllSignals</a> (std::function&lt; void()&gt; onReady, std::function&lt; void(<a class="el" href="classduin_1_1Event.html">Event</a>)&gt; onEvent, std::function&lt; void(double)&gt; onUpdate, std::function&lt; void(double)&gt; onPhysicsUpdate, std::function&lt; void()&gt; onDraw, std::function&lt; void()&gt; onDrawUI, std::function&lt; void()&gt; onDebug)</td></tr>
 <tr class="memdesc:acc88e71a32dc1a84322601bf599bb7d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects all lifecycle signals at once.  <br /></td></tr>
 <tr class="separator:acc88e71a32dc1a84322601bf599bb7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab269640f8a3d5b2f9608559791acf9d2" id="r_ab269640f8a3d5b2f9608559791acf9d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2">DisconnectAllSignals</a> (const <a class="el" href="structduin_1_1SignalConnections.html">SignalConnections</a> &amp;connections)</td></tr>
 <tr class="memdesc:ab269640f8a3d5b2f9608559791acf9d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects all signals from a <a class="el" href="structduin_1_1SignalConnections.html" title="Holds UUIDs for signal connections to lifecycle events.">SignalConnections</a> bundle.  <br /></td></tr>
 <tr class="separator:ab269640f8a3d5b2f9608559791acf9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9434e5fecafe0fab58dd915ef22c7b37" id="r_a9434e5fecafe0fab58dd915ef22c7b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a9434e5fecafe0fab58dd915ef22c7b37">GetUUID</a> () const</td></tr>
-<tr class="memdesc:a9434e5fecafe0fab58dd915ef22c7b37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this object's unique identifier.  <br /></td></tr>
-<tr class="separator:a9434e5fecafe0fab58dd915ef22c7b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56c34bc14d4072cc3277f8d10b473489" id="r_a56c34bc14d4072cc3277f8d10b473489"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a56c34bc14d4072cc3277f8d10b473489">operator==</a> (const <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &amp;other) const</td></tr>
 <tr class="separator:a56c34bc14d4072cc3277f8d10b473489"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08f3b9b9edc611cc78feb5447767ab0b" id="r_a08f3b9b9edc611cc78feb5447767ab0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a08f3b9b9edc611cc78feb5447767ab0b">operator!=</a> (const <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &amp;other) const</td></tr>
 <tr class="separator:a08f3b9b9edc611cc78feb5447767ab0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5da7b56f195430cf7c3eaf579649583" id="r_aa5da7b56f195430cf7c3eaf579649583"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aa5da7b56f195430cf7c3eaf579649583">SetParent</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; parent)</td></tr>
-<tr class="separator:aa5da7b56f195430cf7c3eaf579649583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2936ee72d6feea3e420095608ef9d84" id="r_aa2936ee72d6feea3e420095608ef9d84"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aa2936ee72d6feea3e420095608ef9d84">IsValid</a> ()</td></tr>
+<tr class="separator:aa2936ee72d6feea3e420095608ef9d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8480081c6a79a2e024e6bf7cdb82e226" id="r_a8480081c6a79a2e024e6bf7cdb82e226"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObjectImpl.html">GameObjectImpl</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a8480081c6a79a2e024e6bf7cdb82e226">GetImpl</a> () const</td></tr>
+<tr class="memdesc:a8480081c6a79a2e024e6bf7cdb82e226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the internal implementation object.  <br /></td></tr>
+<tr class="separator:a8480081c6a79a2e024e6bf7cdb82e226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ca15f3927cb2c1e6e311d841780474d" id="r_a6ca15f3927cb2c1e6e311d841780474d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a6ca15f3927cb2c1e6e311d841780474d">SetParent</a> (<a class="el" href="classduin_1_1GameObject.html">GameObject</a> *parent=nullptr)</td></tr>
+<tr class="separator:a6ca15f3927cb2c1e6e311d841780474d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2b56e461f84269f33d6e20af4e7df85" id="r_ac2b56e461f84269f33d6e20af4e7df85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ac2b56e461f84269f33d6e20af4e7df85">ResetParent</a> ()</td></tr>
 <tr class="separator:ac2b56e461f84269f33d6e20af4e7df85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab489f25b320dd545bff88170c71c48c" id="r_aab489f25b320dd545bff88170c71c48c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aab489f25b320dd545bff88170c71c48c">ObjectReady</a> ()</td></tr>
@@ -195,6 +181,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acedf45bf8ada7014b5b6f4aec03282d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a049ced2d522422fc0d3c37e540b61587" id="r_a049ced2d522422fc0d3c37e540b61587"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a049ced2d522422fc0d3c37e540b61587">ObjectDebug</a> ()</td></tr>
 <tr class="separator:a049ced2d522422fc0d3c37e540b61587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6a1b469cce0e8218485cba4572acd5d" id="r_ae6a1b469cce0e8218485cba4572acd5d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObjectImpl.html">GameObjectImpl</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ae6a1b469cce0e8218485cba4572acd5d">EnsureImpl</a> ()</td></tr>
+<tr class="separator:ae6a1b469cce0e8218485cba4572acd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Signal Connections</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Connect callbacks to lifecycle signals. </p>
 </div></td></tr>
@@ -283,22 +271,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af702ab69c30f06f75802d5d6ab7e029f" id="r_af702ab69c30f06f75802d5d6ab7e029f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#af702ab69c30f06f75802d5d6ab7e029f">IsChildrenEnabled</a> () const</td></tr>
 <tr class="separator:af702ab69c30f06f75802d5d6ab7e029f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a5b7dc85c5c65c0857504e4dd8b5d9a4d" id="r_a5b7dc85c5c65c0857504e4dd8b5d9a4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a5b7dc85c5c65c0857504e4dd8b5d9a4d">OnObjectReady</a></td></tr>
-<tr class="separator:a5b7dc85c5c65c0857504e4dd8b5d9a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a099babd3955fb53ca7a9de3e603bcd99" id="r_a099babd3955fb53ca7a9de3e603bcd99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&lt; <a class="el" href="classduin_1_1Event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a099babd3955fb53ca7a9de3e603bcd99">OnObjectOnEvent</a></td></tr>
-<tr class="separator:a099babd3955fb53ca7a9de3e603bcd99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18aa9b012b09630fc6eccca2492a38d7" id="r_a18aa9b012b09630fc6eccca2492a38d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a18aa9b012b09630fc6eccca2492a38d7">OnObjectUpdate</a></td></tr>
-<tr class="separator:a18aa9b012b09630fc6eccca2492a38d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a743026ffb2600368e911dba099a104be" id="r_a743026ffb2600368e911dba099a104be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a743026ffb2600368e911dba099a104be">OnObjectPhysicsUpdate</a></td></tr>
-<tr class="separator:a743026ffb2600368e911dba099a104be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acec13e7045d0e6e12a57f75ff4bdc96b" id="r_acec13e7045d0e6e12a57f75ff4bdc96b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#acec13e7045d0e6e12a57f75ff4bdc96b">OnObjectDraw</a></td></tr>
-<tr class="separator:acec13e7045d0e6e12a57f75ff4bdc96b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0f3a4b60f3d96fb1a09418d267ddd8e" id="r_aa0f3a4b60f3d96fb1a09418d267ddd8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#aa0f3a4b60f3d96fb1a09418d267ddd8e">OnObjectDrawUI</a></td></tr>
-<tr class="separator:aa0f3a4b60f3d96fb1a09418d267ddd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35dc79f68567e3392423ee0b0e0581de" id="r_a35dc79f68567e3392423ee0b0e0581de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a35dc79f68567e3392423ee0b0e0581de">OnObjectDebug</a></td></tr>
-<tr class="separator:a35dc79f68567e3392423ee0b0e0581de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a8c97bc1290ed616c627ec59cd0a833d5" id="r_a8c97bc1290ed616c627ec59cd0a833d5"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
+<tr class="memitem:a8c97bc1290ed616c627ec59cd0a833d5"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#a8c97bc1290ed616c627ec59cd0a833d5">Create</a> (<a class="el" href="structArgs.html">Args</a> &amp;&amp;...args)</td></tr>
+<tr class="separator:a8c97bc1290ed616c627ec59cd0a833d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -328,9 +305,9 @@ Friends</h2></td></tr>
 <div class="line">        <span class="comment">// Per-frame logic</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassduin_1_1GameObject_html"><div class="ttname"><a href="classduin_1_1GameObject.html">duin::GameObject</a></div><div class="ttdoc">Base class for objects in the scene hierarchy.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8h_source.html#l00052">GameObject.h:53</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameObject_html"><div class="ttname"><a href="classduin_1_1GameObject.html">duin::GameObject</a></div><div class="ttdoc">Base class for objects in the scene hierarchy.</div><div class="ttdef"><b>Definition</b> <a href="GameObject_8h_source.html#l00053">GameObject.h:54</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00052">52</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00053">53</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aba76996e7d861a146ce03d0b219665f5" name="aba76996e7d861a146ce03d0b219665f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba76996e7d861a146ce03d0b219665f5">&#9670;&#160;</a></span>GameObject()</h2>
@@ -347,7 +324,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00007">7</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00008">8</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -374,7 +351,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00011">11</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00013">13</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -397,7 +374,7 @@ Friends</h2></td></tr>
 
 <p>Adds an existing object as a child. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00019">19</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00021">21</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -459,7 +436,7 @@ Friends</h2></td></tr>
 
 <p>Connects all lifecycle signals at once. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00162">162</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00228">228</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -479,7 +456,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00120">120</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00161">161</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -499,7 +476,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00110">110</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00143">143</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -519,7 +496,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00115">115</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00152">152</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -539,7 +516,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00095">95</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00116">116</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -559,7 +536,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00105">105</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00134">134</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -579,7 +556,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00090">90</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00107">107</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -599,7 +576,37 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00100">100</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00125">125</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8c97bc1290ed616c627ec59cd0a833d5" name="a8c97bc1290ed616c627ec59cd0a833d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c97bc1290ed616c627ec59cd0a833d5">&#9670;&#160;</a></span>Create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::shared_ptr&lt; T &gt; duin::GameObject::Create </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structArgs.html">Args</a> &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00058">58</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -617,7 +624,7 @@ template&lt;typename T , typename... Args&gt; </div>
         <tr>
           <td class="memname">std::shared_ptr&lt; T &gt; duin::GameObject::CreateChildObject </td>
           <td>(</td>
-          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramtype"><a class="el" href="structArgs.html">Args</a> &amp;&amp;...&#160;</td>
           <td class="paramname"><em>args</em></td><td>)</td>
           <td></td>
         </tr>
@@ -633,7 +640,7 @@ template&lt;typename T , typename... Args&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>GameObject-derived type. </td></tr>
-    <tr><td class="paramname">Args</td><td>Constructor argument types. </td></tr>
+    <tr><td class="paramname"><a class="el" href="structArgs.html">Args</a></td><td>Constructor argument types. </td></tr>
   </table>
   </dd>
 </dl>
@@ -645,7 +652,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Shared pointer to the new child. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00066">66</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00078">78</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -672,7 +679,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00218">218</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00290">290</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -694,7 +701,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Disconnects all signals from a <a class="el" href="structduin_1_1SignalConnections.html" title="Holds UUIDs for signal connections to lifecycle events.">SignalConnections</a> bundle. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00179">179</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00248">248</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -714,7 +721,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00156">156</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00219">219</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -734,7 +741,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00146">146</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00203">203</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -754,7 +761,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00151">151</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00211">211</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -774,7 +781,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00131">131</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00179">179</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -794,7 +801,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00141">141</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00195">195</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -814,7 +821,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00126">126</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00171">171</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -834,7 +841,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00136">136</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00187">187</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -861,7 +868,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00210">210</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00282">282</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -888,7 +895,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00214">214</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00286">286</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -908,7 +915,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00222">222</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00294">294</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -928,7 +935,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00262">262</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00352">352</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -948,7 +955,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00257">257</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00344">344</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -968,7 +975,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00247">247</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00328">328</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -988,7 +995,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00252">252</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00336">336</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1008,7 +1015,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00232">232</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00304">304</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1028,7 +1035,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00242">242</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00320">320</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1048,7 +1055,26 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00237">237</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00312">312</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae6a1b469cce0e8218485cba4572acd5d" name="ae6a1b469cce0e8218485cba4572acd5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6a1b469cce0e8218485cba4572acd5d">&#9670;&#160;</a></span>EnsureImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObjectImpl.html">duin::GameObjectImpl</a> &gt; duin::GameObject::EnsureImpl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00508">508</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1067,7 +1093,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00063">63</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00065">65</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1086,18 +1112,39 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00069">69</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00074">74</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a014c6c10fabbbd6e26e371f5bc433021" name="a014c6c10fabbbd6e26e371f5bc433021"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a014c6c10fabbbd6e26e371f5bc433021">&#9670;&#160;</a></span>GetParent()</h2>
+<a id="a8480081c6a79a2e024e6bf7cdb82e226" name="a8480081c6a79a2e024e6bf7cdb82e226"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8480081c6a79a2e024e6bf7cdb82e226">&#9670;&#160;</a></span>GetImpl()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::weak_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a> &gt; duin::GameObject::GetParent </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObjectImpl.html">duin::GameObjectImpl</a> &gt; duin::GameObject::GetImpl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the internal implementation object. </p>
+
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00432">432</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a01f2b19206778e38ccf7cae3deff12d8" name="a01f2b19206778e38ccf7cae3deff12d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f2b19206778e38ccf7cae3deff12d8">&#9670;&#160;</a></span>GetParent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a> * duin::GameObject::GetParent </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1107,44 +1154,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Returns the parent object, or nullptr if root. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00079">79</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a90a010d59d0519af6b0aefb1d1abb54a" name="a90a010d59d0519af6b0aefb1d1abb54a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90a010d59d0519af6b0aefb1d1abb54a">&#9670;&#160;</a></span>GetSharedPointer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename... Args&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt; T &gt; duin::GameObject::GetSharedPointer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns this object as a shared pointer of derived type. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>The derived type to cast to. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00081">81</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00088">88</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1163,9 +1173,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Returns this object's unique identifier. </p>
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00302">302</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00423">423</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1192,7 +1200,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00190">190</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00262">262</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1211,7 +1219,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00297">297</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00414">414</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1230,7 +1238,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00292">292</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00405">405</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1249,7 +1257,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00282">282</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00387">387</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1268,7 +1276,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00287">287</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00396">396</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1287,7 +1295,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00267">267</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00360">360</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1306,7 +1314,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00277">277</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00378">378</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1325,7 +1333,26 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00272">272</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00369">369</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa2936ee72d6feea3e420095608ef9d84" name="aa2936ee72d6feea3e420095608ef9d84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2936ee72d6feea3e420095608ef9d84">&#9670;&#160;</a></span>IsValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::GameObject::IsValid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00447">447</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1344,7 +1371,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00419">419</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00500">500</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1363,7 +1390,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00385">385</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00484">484</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1382,7 +1409,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00402">402</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00492">492</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1402,7 +1429,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00334">334</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00460">460</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1422,7 +1449,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00368">368</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00476">476</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1441,7 +1468,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00317">317</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00452">452</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1461,7 +1488,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00351">351</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00468">468</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1489,7 +1516,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00198">198</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00270">270</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1509,7 +1536,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00312">312</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00442">442</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1529,7 +1556,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00307">307</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00437">437</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1557,7 +1584,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00206">206</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00278">278</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1584,7 +1611,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00194">194</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00266">266</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1625,12 +1652,12 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00084">84</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00101">101</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
-<a id="aa5da7b56f195430cf7c3eaf579649583" name="aa5da7b56f195430cf7c3eaf579649583"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5da7b56f195430cf7c3eaf579649583">&#9670;&#160;</a></span>SetParent()</h2>
+<a id="a6ca15f3927cb2c1e6e311d841780474d" name="a6ca15f3927cb2c1e6e311d841780474d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ca15f3927cb2c1e6e311d841780474d">&#9670;&#160;</a></span>SetParent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1638,14 +1665,34 @@ template&lt;typename T , typename... Args&gt; </div>
         <tr>
           <td class="memname">void duin::GameObject::SetParent </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt;&#160;</td>
-          <td class="paramname"><em>parent</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classduin_1_1GameObject.html">GameObject</a> *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00074">74</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00083">83</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa65267cda43e25c35a066b520ba05852" name="aa65267cda43e25c35a066b520ba05852"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa65267cda43e25c35a066b520ba05852">&#9670;&#160;</a></span>SetUUID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::GameObject::SetUUID </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classduin_1_1UUID.html">UUID</a>&#160;</td>
+          <td class="paramname"><em>newUUID</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00093">93</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1677,7 +1724,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Moves a child to a new parent. </p>
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00056">56</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00058">58</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1705,7 +1752,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00202">202</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8cpp_source.html#l00274">274</a> of file <a class="el" href="GameObject_8cpp_source.html">GameObject.cpp</a>.</p>
 
 </div>
 </div>
@@ -1730,7 +1777,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00191">191</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00197">197</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1754,7 +1801,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00193">193</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00199">199</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1778,7 +1825,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00192">192</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00198">198</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>
@@ -1802,120 +1849,7 @@ template&lt;typename T , typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00190">190</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a35dc79f68567e3392423ee0b0e0581de" name="a35dc79f68567e3392423ee0b0e0581de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35dc79f68567e3392423ee0b0e0581de">&#9670;&#160;</a></span>OnObjectDebug</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classduin_1_1Signal.html">Signal</a> duin::GameObject::OnObjectDebug</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00202">202</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
-
-</div>
-</div>
-<a id="acec13e7045d0e6e12a57f75ff4bdc96b" name="acec13e7045d0e6e12a57f75ff4bdc96b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acec13e7045d0e6e12a57f75ff4bdc96b">&#9670;&#160;</a></span>OnObjectDraw</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classduin_1_1Signal.html">Signal</a> duin::GameObject::OnObjectDraw</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00200">200</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
-
-</div>
-</div>
-<a id="aa0f3a4b60f3d96fb1a09418d267ddd8e" name="aa0f3a4b60f3d96fb1a09418d267ddd8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0f3a4b60f3d96fb1a09418d267ddd8e">&#9670;&#160;</a></span>OnObjectDrawUI</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classduin_1_1Signal.html">Signal</a> duin::GameObject::OnObjectDrawUI</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00201">201</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
-
-</div>
-</div>
-<a id="a099babd3955fb53ca7a9de3e603bcd99" name="a099babd3955fb53ca7a9de3e603bcd99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a099babd3955fb53ca7a9de3e603bcd99">&#9670;&#160;</a></span>OnObjectOnEvent</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classduin_1_1Signal.html">Signal</a>&lt;<a class="el" href="classduin_1_1Event.html">Event</a>&gt; duin::GameObject::OnObjectOnEvent</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00197">197</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
-
-</div>
-</div>
-<a id="a743026ffb2600368e911dba099a104be" name="a743026ffb2600368e911dba099a104be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a743026ffb2600368e911dba099a104be">&#9670;&#160;</a></span>OnObjectPhysicsUpdate</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classduin_1_1Signal.html">Signal</a>&lt;double&gt; duin::GameObject::OnObjectPhysicsUpdate</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00199">199</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
-
-</div>
-</div>
-<a id="a5b7dc85c5c65c0857504e4dd8b5d9a4d" name="a5b7dc85c5c65c0857504e4dd8b5d9a4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b7dc85c5c65c0857504e4dd8b5d9a4d">&#9670;&#160;</a></span>OnObjectReady</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classduin_1_1Signal.html">Signal</a> duin::GameObject::OnObjectReady</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 <p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00196">196</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
-
-</div>
-</div>
-<a id="a18aa9b012b09630fc6eccca2492a38d7" name="a18aa9b012b09630fc6eccca2492a38d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18aa9b012b09630fc6eccca2492a38d7">&#9670;&#160;</a></span>OnObjectUpdate</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classduin_1_1Signal.html">Signal</a>&lt;double&gt; duin::GameObject::OnObjectUpdate</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="GameObject_8h_source.html#l00198">198</a> of file <a class="el" href="GameObject_8h_source.html">GameObject.h</a>.</p>
 
 </div>
 </div>

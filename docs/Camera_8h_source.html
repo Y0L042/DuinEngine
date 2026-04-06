@@ -187,30 +187,31 @@ $(document).ready(function(){initNavTree('Camera_8h_source.html',''); initResiza
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>};</div>
 </div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="keyword">extern</span> Camera DEFAULT_CAMERA; </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="keyword">extern</span> <a class="code hl_struct" href="structCamera.html">Camera</a> DEFAULT_CAMERA; </div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keywordtype">void</span> SetActiveCamera(Camera *camera);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>Camera *GetActiveCamera();</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keywordtype">void</span> SetActiveCamera(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><a class="code hl_struct" href="structCamera.html">Camera</a> *GetActiveCamera();</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>Vector3 GetCameraForward(Camera *camera);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>Vector3 GetCameraUp(Camera *camera);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>Vector3 GetCameraRight(Camera *camera);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keywordtype">void</span> CameraMoveForward(Camera *camera, <span class="keywordtype">float</span> distance);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keywordtype">void</span> CameraMoveUp(Camera *camera, <span class="keywordtype">float</span> distance);</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="keywordtype">void</span> CameraMoveRight(Camera *camera, <span class="keywordtype">float</span> distance);</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keywordtype">void</span> CameraMoveToTarget(Camera *camera, <span class="keywordtype">float</span> delta);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="keywordtype">void</span> CameraYaw(Camera *camera, <span class="keywordtype">float</span> angle, <span class="keywordtype">bool</span> rotateAroundTarget = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keywordtype">void</span> CameraPitch(Camera *camera, <span class="keywordtype">float</span> angle, <span class="keywordtype">bool</span> lockView = <span class="keyword">true</span>, <span class="keywordtype">bool</span> rotateAroundTarget = <span class="keyword">false</span>,</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>Vector3 GetCameraForward(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>Vector3 GetCameraUp(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>Vector3 GetCameraRight(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keywordtype">void</span> CameraMoveForward(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera, <span class="keywordtype">float</span> distance);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keywordtype">void</span> CameraMoveUp(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera, <span class="keywordtype">float</span> distance);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="keywordtype">void</span> CameraMoveRight(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera, <span class="keywordtype">float</span> distance);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keywordtype">void</span> CameraMoveToTarget(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera, <span class="keywordtype">float</span> delta);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="keywordtype">void</span> CameraYaw(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera, <span class="keywordtype">float</span> angle, <span class="keywordtype">bool</span> rotateAroundTarget = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keywordtype">void</span> CameraPitch(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera, <span class="keywordtype">float</span> angle, <span class="keywordtype">bool</span> lockView = <span class="keyword">true</span>, <span class="keywordtype">bool</span> rotateAroundTarget = <span class="keyword">false</span>,</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                 <span class="keywordtype">bool</span> rotateUp = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="keywordtype">void</span> CameraRoll(Camera *camera, <span class="keywordtype">float</span> angle);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>Matrix GetCameraViewMatrix(Camera *camera);</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>Matrix GetCameraProjectionMatrix(Camera *camera);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="keywordtype">void</span> CameraRoll(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera, <span class="keywordtype">float</span> angle);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>Matrix GetCameraViewMatrix(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>Matrix GetCameraProjectionMatrix(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera);</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keywordtype">void</span> GetBGFXMatrix(Camera *camera);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keywordtype">void</span> GetBGFXMatrix(<a class="code hl_struct" href="structCamera.html">Camera</a> *camera);</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aUUID_8h_html"><div class="ttname"><a href="UUID_8h.html">UUID.h</a></div><div class="ttdoc">Defines the UUID class for generating and managing unique identifiers.</div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
+<div class="ttc" id="astructCamera_html"><div class="ttname"><a href="structCamera.html">Camera</a></div><div class="ttdef"><b>Definition</b> <a href="camera_8cpp_source.html#l00076">camera.cpp:77</a></div></div>
 <div class="ttc" id="astructduin_1_1Camera_1_1CameraImpl_html"><div class="ttname"><a href="structduin_1_1Camera_1_1CameraImpl.html">duin::Camera::CameraImpl</a></div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00067">Camera.h:68</a></div></div>
 <div class="ttc" id="astructduin_1_1Camera_html"><div class="ttname"><a href="structduin_1_1Camera.html">duin::Camera</a></div><div class="ttdoc">3D camera with position, target, and orientation.</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00030">Camera.h:31</a></div></div>
 <div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00178">DuinMaths.h:179</a></div></div>

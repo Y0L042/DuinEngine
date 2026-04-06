@@ -9,5 +9,6 @@ var searchData=
   ['local_6',['Local',['../structduin_1_1ECSTag_1_1Local.html',1,'duin::ECSTag']]],
   ['locations_7',['File Locations',['../md_docs_2RenderingPipeline.html#autotoc_md33',1,'']]],
   ['log_8',['Log',['../classduin_1_1Log.html',1,'duin']]],
-  ['lookupvector_9',['LookupVector',['../classduin_1_1LookupVector.html',1,'duin']]]
+  ['lookup_9',['Lookup',['../classduin_1_1Entity.html#ad8439216cf3f512a7db654552f2238ff',1,'duin::Entity']]],
+  ['lookupvector_10',['LookupVector',['../classduin_1_1LookupVector.html',1,'duin']]]
 ];

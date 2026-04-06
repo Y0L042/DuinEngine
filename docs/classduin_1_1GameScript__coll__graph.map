@@ -1,0 +1,7 @@
+<map id="duin::GameScript" name="duin::GameScript">
+<area shape="rect" id="Node000001" title=" " alt="" coords="56,79,191,104"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1Script.html" title=" " alt="" coords="5,5,100,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,39,114,77,110,80,72,43"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="125,5,263,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,43,137,80,133,77,171,39"/>
+</map>
