@@ -11,193 +11,187 @@ ProjectRoot = "."
 
 
 project "Duin"
-    location ""
-    kind "StaticLib"
-    language "C++"
+location ""
+kind "StaticLib"
+language "C++"
 
-    externalanglebrackets "On" 
-    linkoptions { "-IGNORE:4006" }
-    externalwarnings    "Off"
-
-
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-    pchheader "dnpch.h"
-    pchsource "./src/dnpch.cpp"
-
-    -- DNAssert.cpp must opt out of the PCH so that DOCTEST_CONFIG_IMPLEMENT
-    -- and DOCTEST_CONFIG_SUPER_FAST_ASSERTS are defined before doctest.h is
-    -- first included. MSVC ignores any #defines that precede #include "dnpch.h"
-    -- in a PCH-enabled translation unit.
-    filter "files:**/Core/Debug/DNAssert.cpp"
-        enablepch "Off"
-        pchheader ""
-    filter {}
-
-    -- Exclude precompiled headers for C files
-    filter "files:**.c"
-        enablepch "Off"
-        pchheader ""  -- Ensures .c files ignore PCH
-    filter {} -- Clear the filter
-
-    filter { "files:**/external/**" }
-        enablepch "Off"
-        warnings "Off"
-        pchheader ""
-    filter {}
-
-    filter { "files:**/vendor/**" }
-        enablepch "Off"
-        warnings "Off"
-        pchheader ""
-    filter {}
-
-    -- Script/ files include daScript headers that conflict with the PCH
-    filter "files:**/Script/**"
-        enablepch "Off"
-        pchheader ""
-    filter {}
+externalanglebrackets "On"
+linkoptions { "-IGNORE:4006" }
+externalwarnings "Off"
 
 
-    -- files(global_files)
-	files 
-	{
-		ProjectRoot .. "/src/**.h",
-		ProjectRoot .. "/src/**.hpp",
-		ProjectRoot .. "/src/**.c",
-		ProjectRoot .. "/src/**.cpp",
-        ProjectRoot .. "/src/**.inc",
-	}
+targetdir("bin/" .. outputdir .. "/%{prj.name}")
+objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    -- includedirs(global_includedirs) 
-    includedirs 
-    { 
-        ProjectRoot .. "/src",
-    }
-    -- externalincludedirs(global_externalincludedirs) 
-    externalincludedirs
-    {
-        SolutionRoot .. "/%{IncludeDir.sdl}",
-        SolutionRoot .. "/%{IncludeDir.bx}",
-        SolutionRoot .. "/%{IncludeDir.bimg}",
-        SolutionRoot .. "/%{IncludeDir.bgfx}",
-        SolutionRoot .. "/%{IncludeDir.bgfx_examples}",
-        SolutionRoot .. "/%{IncludeDir.bgfx_3p}",
-        SolutionRoot .. "/%{IncludeDir.spdlog}",
-		SolutionRoot .. "/%{IncludeDir.imgui}",
-        SolutionRoot .. "/%{IncludeDir.imguizmo}",
-		SolutionRoot .. "/%{IncludeDir.imguibackends}",
-		SolutionRoot .. "/%{IncludeDir.imguifilex}",
-		SolutionRoot .. "/%{IncludeDir.flecs}",
-		SolutionRoot .. "/%{IncludeDir.fmt}",
-		SolutionRoot .. "/%{IncludeDir.patches}",
-        SolutionRoot .. "/%{IncludeDir.rapidjson}",
-        SolutionRoot .. "/%{IncludeDir.toml11}",
-		SolutionRoot .. "/%{IncludeDir.physx}",
-        SolutionRoot .. "/%{IncludeDir.reflectcpp}",
-        SolutionRoot .. "/%{IncludeDir.doctest}",
-        SolutionRoot .. "/%{IncludeDir.daslang}",
-        ProjectRoot .. "/vendor/daslang/src/builtin",
-        SolutionRoot .. "/%{IncludeDir.flecs_das}",
-    }
-    -- libdirs(global_libdirs) 
-    libdirs 
-    { 
-        ProjectRoot .. "/vendor/sdl/build/Debug",
-        ProjectRoot .. "/vendor/bgfx/.build/win64_vs2026/bin",
-		ProjectRoot .. "/vendor/flecs/build_vs2026/Debug",
-        ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
-        ProjectRoot .. "/vendor/toml11/build/src/Debug",
-        ProjectRoot .. "/vendor/reflectcpp/build/Debug",
-        ProjectRoot .. "/vendor/daslang/lib/RelWithDebInfo",
-        ProjectRoot .. "/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
-    }
-    -- defines(global_defines)
-    defines
-    {
-        -- TODO
-        "flecs_STATIC",
-        "DN_BUILD_STATIC",
-		"DN_PLATFORM_WINDOWS",
-        "PX_PHYSX_STATIC_LIB",
-        "BX_CONFIG_DEBUG=0",
-		--"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
-        "DN_HEADLESS",
-        "DAS_SMART_PTR_DEBUG=1",
-        "DAS_ENABLE_DYN_INCLUDES=1",
-        "DAS_ENABLE_EXCEPTIONS=1",
-    }
-    -- links(global_links)
-    links
-    {
-        "flecs_das.lib",
-        "flecs_static.lib",
-		"winmm.lib",
-        "legacy_stdio_definitions.lib",
-        "Setupapi.lib",
-        "Version.lib",
-        "Imm32.lib",
-        "Cfgmgr32.lib",
-        "SDL3-static.lib",
-        "toml11.lib",
-        "bxDebug.lib",
-        "bimgDebug.lib",
-        "bgfxDebug.lib",
-        "PhysX_static.lib",
-        "PhysXCooking_static.lib",
-        "PhysXCommon_static.lib",
-        "PhysXFoundation_static.lib",
-        "PhysXPvdSDK_static.lib",
-        "PhysXExtensions_static.lib",
-        "PhysXCharacterKinematic_static.lib",
-        "reflectcpp.lib",
-        "libDaScript.lib",
-        "libUriParser.lib",
-        "dbghelp.lib",
-    }
+pchheader "dnpch.h"
+pchsource "./src/dnpch.cpp"
 
-    filter "action:vs*"
-        buildoptions { 
-            "/utf-8", 
-            '/Zc:__cplusplus', 
-            '/Zc:preprocessor' ,
-            '/bigobj'
-        }  -- Changed: Added /utf-8 flag for Unicode support
-        multiprocessorcompile "On"
-    filter {}
-      
+-- DNAssert.cpp must opt out of the PCH so that DOCTEST_CONFIG_IMPLEMENT
+-- and DOCTEST_CONFIG_SUPER_FAST_ASSERTS are defined before doctest.h is
+-- first included. MSVC ignores any #defines that precede #include "dnpch.h"
+-- in a PCH-enabled translation unit.
+filter "files:**/Core/Debug/DNAssert.cpp"
+enablepch "Off"
+pchheader ""
+filter {}
 
-    filter "system:windows"
-        buildoptions { "/openmp" }
-        cppdialect "C++20"
+-- Exclude precompiled headers for C files
+filter "files:**.c"
+enablepch "Off"
+pchheader ""         -- Ensures .c files ignore PCH
+filter {}            -- Clear the filter
 
-    filter "configurations:Debug"
-        defines { "DN_DEBUG", "_DEBUG" }
-        symbols "On"
-        buildoptions { "/Gy" }  -- Function-level linking: enables dead-stripping of unused functions
-        -- Enable code coverage for Debug builds
-        -- buildoptions { "/Z7" }  -- Full symbolic debug information
-        -- linkoptions { "/PROFILE" }  -- Enable profiling/coverage
-        -- flags { "NoIncrementalLink" }  -- Required for /PROFILE
+filter { "files:**/external/**" }
+enablepch "Off"
+warnings "Off"
+pchheader ""
+filter {}
 
-    filter "configurations:DebugCoverage"
-        defines { "DN_DEBUG", "_DEBUG" }
-        symbols "On"
-        -- Enable code coverage for Debug builds
-        buildoptions { "/Z7" }  -- Full symbolic debug information
-        linkoptions { "/PROFILE" }  -- Enable profiling/coverage
-        incrementallink "Off"  -- Required for /PROFILE
+filter { "files:**/vendor/**" }
+enablepch "Off"
+warnings "Off"
+pchheader ""
+filter {}
 
-    filter "configurations:Release"
-        defines { "DN_RELEASE", "NDEBUG" }
-        optimize "On"
+-- Script/ files include daScript headers that conflict with the PCH.
+filter "files:**/Script/**"
+enablepch "Off"
+pchheader ""
+filter {}
 
-    filter "configurations:Dist"
-        defines "DN_DIST"
-        optimize "On"
 
-    -- include "vendor"
+-- files(global_files)
+files
+{
+    ProjectRoot .. "/src/**.h",
+    ProjectRoot .. "/src/**.hpp",
+    ProjectRoot .. "/src/**.c",
+    ProjectRoot .. "/src/**.cpp",
+    ProjectRoot .. "/src/**.inc",
+}
+
+-- includedirs(global_includedirs)
+includedirs
+{
+    ProjectRoot .. "/src",
+}
+-- externalincludedirs(global_externalincludedirs)
+externalincludedirs
+{
+    SolutionRoot .. "/%{IncludeDir.sdl}",
+    SolutionRoot .. "/%{IncludeDir.bx}",
+    SolutionRoot .. "/%{IncludeDir.bimg}",
+    SolutionRoot .. "/%{IncludeDir.bgfx}",
+    SolutionRoot .. "/%{IncludeDir.bgfx_examples}",
+    SolutionRoot .. "/%{IncludeDir.bgfx_3p}",
+    SolutionRoot .. "/%{IncludeDir.spdlog}",
+    SolutionRoot .. "/%{IncludeDir.imgui}",
+    SolutionRoot .. "/%{IncludeDir.imguizmo}",
+    SolutionRoot .. "/%{IncludeDir.imguibackends}",
+    SolutionRoot .. "/%{IncludeDir.imguifilex}",
+    SolutionRoot .. "/%{IncludeDir.flecs}",
+    SolutionRoot .. "/%{IncludeDir.fmt}",
+    SolutionRoot .. "/%{IncludeDir.patches}",
+    SolutionRoot .. "/%{IncludeDir.rapidjson}",
+    SolutionRoot .. "/%{IncludeDir.toml11}",
+    SolutionRoot .. "/%{IncludeDir.physx}",
+    SolutionRoot .. "/%{IncludeDir.reflectcpp}",
+    SolutionRoot .. "/%{IncludeDir.doctest}",
+    SolutionRoot .. "/%{IncludeDir.daslang}",
+    ProjectRoot .. "/vendor/daslang/src/builtin",
+    SolutionRoot .. "/%{IncludeDir.flecs_das}",
+}
+-- libdirs(global_libdirs)
+libdirs
+{
+    ProjectRoot .. "/vendor/sdl/build/Debug",
+    ProjectRoot .. "/vendor/bgfx/.build/win64_vs2026/bin",
+    ProjectRoot .. "/vendor/flecs/build_vs2026/Debug",
+    ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
+    ProjectRoot .. "/vendor/toml11/build/src/Debug",
+    ProjectRoot .. "/vendor/reflectcpp/build/Debug",
+    ProjectRoot .. "/vendor/daslang/lib/RelWithDebInfo",
+}
+-- defines(global_defines)
+defines
+{
+    -- TODO
+    "flecs_STATIC",
+    "DN_BUILD_STATIC",
+    "DN_PLATFORM_WINDOWS",
+    "PX_PHYSX_STATIC_LIB",
+    "BX_CONFIG_DEBUG=0",
+    --"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
+    "DN_HEADLESS",
+    "DAS_SMART_PTR_DEBUG=1",
+    "DAS_ENABLE_EXCEPTIONS=1",
+}
+-- links(global_links)
+links
+{
+    "flecs_static.lib",
+    "winmm.lib",
+    "legacy_stdio_definitions.lib",
+    "Setupapi.lib",
+    "Version.lib",
+    "Imm32.lib",
+    "Cfgmgr32.lib",
+    "SDL3-static.lib",
+    "toml11.lib",
+    "bxDebug.lib",
+    "bimgDebug.lib",
+    "bgfxDebug.lib",
+    "PhysX_static.lib",
+    "PhysXCooking_static.lib",
+    "PhysXCommon_static.lib",
+    "PhysXFoundation_static.lib",
+    "PhysXPvdSDK_static.lib",
+    "PhysXExtensions_static.lib",
+    "PhysXCharacterKinematic_static.lib",
+    "reflectcpp.lib",
+}
+
+filter "action:vs*"
+buildoptions {
+    "/utf-8",
+    '/Zc:__cplusplus',
+    '/Zc:preprocessor',
+    '/bigobj'
+}         -- Changed: Added /utf-8 flag for Unicode support
+multiprocessorcompile "On"
+filter {}
+
+
+filter "system:windows"
+buildoptions { "/openmp" }
+cppdialect "C++20"
+
+filter "configurations:Debug"
+defines { "DN_DEBUG", "_DEBUG" }
+symbols "On"
+buildoptions { "/Gy" }         -- Function-level linking: enables dead-stripping of unused functions
+-- Enable code coverage for Debug builds
+-- buildoptions { "/Z7" }  -- Full symbolic debug information
+-- linkoptions { "/PROFILE" }  -- Enable profiling/coverage
+-- flags { "NoIncrementalLink" }  -- Required for /PROFILE
+
+filter "configurations:DebugCoverage"
+defines { "DN_DEBUG", "_DEBUG" }
+symbols "On"
+-- Enable code coverage for Debug builds
+buildoptions { "/Z7" }             -- Full symbolic debug information
+linkoptions { "/PROFILE" }         -- Enable profiling/coverage
+incrementallink "Off"              -- Required for /PROFILE
+
+filter "configurations:Release"
+defines { "DN_RELEASE", "NDEBUG" }
+optimize "On"
+
+filter "configurations:Dist"
+defines "DN_DIST"
+optimize "On"
+
+-- include "vendor"
 
 if _OPTIONS["deps"] then
     local vendorDeps = require "dependencies"
@@ -226,8 +220,8 @@ if _OPTIONS["deps"] then
         end
         io.write("\nContinue with this operation (yes/n)? ")
         io.flush()
-        answer=io.read()
-    until answer=="yes" or answer=="n"
+        answer = io.read()
+    until answer == "yes" or answer == "n"
 
     if answer == "yes" then
         print("Operation continued.")

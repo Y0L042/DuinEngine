@@ -29,18 +29,6 @@ function dep_flecsdaslangbindings.build()
     end
     print(name .. " cloned.")
 
-    -- Copy headers from on-disk project
-    print("\t\tCopying headers from " .. source_headers)
-    local win_dest_headers = dest_headers:gsub("/", "\\")
-    local win_source_headers = source_headers:gsub("/", "\\")
-    utils.runCommand("robocopy \"" .. win_source_headers .. "\" \"" .. win_dest_headers .. "\" *.h *.hpp")
-
-    -- Copy pre-built lib from on-disk project
-    print("\t\tCopying lib from " .. source_lib)
-    local win_dest_lib = dest_lib:gsub("/", "\\")
-    local win_source_lib = source_lib:gsub("/", "\\")
-    utils.runCommand("robocopy \"" .. win_source_lib .. "\" \"" .. win_dest_lib .. "\" *.lib")
-
     print("END: " .. name)
 end
 

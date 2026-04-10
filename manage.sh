@@ -2,7 +2,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-GENERATE_XXD="$SCRIPT_DIR/Duin/src/Duin/Script/generate_xxd.py"
+GENERATE_XXD="$SCRIPT_DIR/tools/generate_engine_script_xxd.py"
+FORCE_GENERATE_XXD="$SCRIPT_DIR/Duin/src/Duin/Script/generate_xxd.py"
 DASLANG="$SCRIPT_DIR/Duin/vendor/daslang/bin/RelWithDebInfo/daslang_static.exe"
 GEN_ADAPTER_DAS="$SCRIPT_DIR/Duin/src/Duin/Script/gen_adapter.das"
 GEN_BIND_DAS="$SCRIPT_DIR/Duin/src/Duin/Script/gen_bind.das"
@@ -14,7 +15,8 @@ usage() {
     echo "Usage: $0 <command> [args]"
     echo ""
     echo "Commands:"
-    echo "  gen-inc         Regenerate all .das.inc files from their .das sources"
+    echo "  force-gen-inc   Force regenerate all .das.inc files from their .das sources"
+    echo "  gen-inc         Regenerate changed .das.inc files (skips gen_adapter/gen_bind)"
     echo "  gen-adapter     Regenerate DnGameObjectAdapter_gen.inc via cpp_bind"
     echo "  fmt <file.das>  Format a .das file in-place (backs up, formats, verifies)"
     echo "  fmt-all         Format all .das files under Duin/src/Duin/Script"
@@ -22,7 +24,7 @@ usage() {
     echo "  help            Show this help message"
 }
 
-cmd_gen_inc() {
+cmd_force_gen_inc() {
     local script_dir="$SCRIPT_DIR/Duin/src/Duin/Script"
     local count=0
 
@@ -34,6 +36,11 @@ cmd_gen_inc() {
     done < <(find "$script_dir" -name "*.das" -print0)
 
     echo "Generated $count file(s)."
+}
+
+cmd_gen_inc() {
+    local script_dir="$SCRIPT_DIR/Duin/src/Duin/Script"
+    python "$GENERATE_XXD" "$script_dir"
 }
 
 cmd_gen_adapter() {
@@ -86,6 +93,7 @@ cmd_codegen() {
 }
 
 case "${1:-}" in
+    force-gen-inc) cmd_force_gen_inc ;;
     gen-inc)      cmd_gen_inc ;;
     gen-adapter)  cmd_gen_adapter ;;
     fmt)          cmd_fmt "${2:-}" ;;

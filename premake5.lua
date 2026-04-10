@@ -65,7 +65,7 @@ workspace "Duin"
         "%{IncludeDir.doctest}",
         "%{IncludeDir.reflectcpp}",
     }
-    global_libdirs = 
+    global_libdirs =
     {
         "Duin/bin/" .. outputdir .. "/Duin",  -- Duin's output directory
         "Duin/vendor/sdl/build/Debug",
@@ -75,6 +75,7 @@ workspace "Duin"
         "Duin/vendor/toml11/build/src/Debug",
         "Duin/vendor/reflectcpp/build/Debug",
         "Duin/vendor/daslang/lib/RelWithDebInfo",
+        "Duin/vendor/flecs-daslang/flecs_das/bin/" .. outputdir .. "/flecs_das",
     }
     global_defines = 
     {
@@ -85,8 +86,9 @@ workspace "Duin"
         "PX_PHYSX_STATIC_LIB",
         "BX_CONFIG_DEBUG=0",
     }
-    global_links = 
+    global_links =
     {
+        "flecs_das.lib",
         "flecs_static.lib",
         "winmm.lib",
         "legacy_stdio_definitions.lib",
@@ -108,6 +110,9 @@ workspace "Duin"
         "PhysXExtensions_static.lib",
         "PhysXCharacterKinematic_static.lib",
         "reflectcpp.lib",
+        "libDaScript.lib",
+        "libUriParser.lib",
+        "dbghelp.lib",
     }
 
     -- Debug build size optimisations:
@@ -128,3 +133,14 @@ workspace "Duin"
     include "ExampleProjects/DuinFPSDaslang"
     include "ScriptTests/AngelScriptTest"
     include "ScriptTests/DaslangTest"
+
+    local duinVendorRoot = path.getabsolute("Duin/vendor")
+
+    FLECS_DAS_FLECS_INCLUDE      = path.join(duinVendorRoot, "flecs/include")
+    FLECS_DAS_DASLANG_INCLUDE    = path.join(duinVendorRoot, "daslang/include")
+    FLECS_DAS_FLECS_LIBDIR       = path.join(duinVendorRoot, "flecs/build_vs2026/Debug")
+    FLECS_DAS_FLECS_LIBDIR_REL   = path.join(duinVendorRoot, "flecs/build_vs2026/Release")
+    FLECS_DAS_DASLANG_LIBDIR     = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
+    FLECS_DAS_DASLANG_LIBDIR_REL = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
+
+    include "Duin/vendor/flecs-daslang"
