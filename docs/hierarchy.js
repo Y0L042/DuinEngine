@@ -78,6 +78,9 @@ var hierarchy =
     [ "DnGameObjectAdapterBase", null, [
       [ "ScriptGameObject", "classScriptGameObject.html", null ]
     ] ],
+    [ "DnGameWorldAdapterBase", null, [
+      [ "ScriptGameWorld", "classScriptGameWorld.html", null ]
+    ] ],
     [ "duin::ECSComponent::DynamicBodyComponent", "structduin_1_1ECSComponent_1_1DynamicBodyComponent.html", null ],
     [ "duin::ECSComponent::DynamicBodyComponent::DynamicBodyComponentImpl", "structduin_1_1ECSComponent_1_1DynamicBodyComponent_1_1DynamicBodyComponentImpl.html", null ],
     [ "ImCurveEdit::EditPoint", "structImCurveEdit_1_1EditPoint.html", null ],
@@ -399,6 +402,7 @@ var hierarchy =
       [ "Module_DecsGameWorld", "classModule__DecsGameWorld.html", null ],
       [ "Module_DecsQuery", "classModule__DecsQuery.html", null ],
       [ "Module_DecsWorld", "classModule__DecsWorld.html", null ],
+      [ "Module_DnECS", "classModule__DnECS.html", null ],
       [ "Module_DnGameObject", "classModule__DnGameObject.html", null ],
       [ "Module_DnLog", "classModule__DnLog.html", null ],
       [ "Module_Doctest", "classModule__Doctest.html", null ]
@@ -534,6 +538,8 @@ var hierarchy =
     [ "duin::ECSComponent::Velocity3D::Velocity3DImpl", "structduin_1_1ECSComponent_1_1Velocity3D_1_1Velocity3DImpl.html", null ],
     [ "GraphEditor::ViewState", "structGraphEditor_1_1ViewState.html", null ],
     [ "duin::World", "classduin_1_1World.html", [
-      [ "duin::GameWorld", "classduin_1_1GameWorld.html", null ]
+      [ "duin::GameWorld", "classduin_1_1GameWorld.html", [
+        [ "ScriptGameWorld", "classScriptGameWorld.html", null ]
+      ] ]
     ] ]
 ];

@@ -30,12 +30,13 @@ var searchData=
   ['module_5fdecsgameworld_27',['Module_DecsGameWorld',['../classModule__DecsGameWorld.html',1,'']]],
   ['module_5fdecsquery_28',['Module_DecsQuery',['../classModule__DecsQuery.html',1,'']]],
   ['module_5fdecsworld_29',['Module_DecsWorld',['../classModule__DecsWorld.html',1,'']]],
-  ['module_5fdngameobject_30',['Module_DnGameObject',['../classModule__DnGameObject.html',1,'']]],
-  ['module_5fdnlog_31',['Module_DnLog',['../classModule__DnLog.html',1,'']]],
-  ['module_5fdoctest_32',['Module_Doctest',['../classModule__Doctest.html',1,'']]],
-  ['modules_33',['Modules',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#modules',1,'']]],
-  ['modules_2edox_34',['modules.dox',['../modules_8dox.html',1,'']]],
-  ['mousecoords_35',['MouseCoords',['../structCamera_1_1MouseCoords.html',1,'Camera']]],
-  ['movement_36',['Camera Movement',['../md_docs_2RenderingPipeline.html#autotoc_md22',1,'']]],
-  ['mydocument_37',['MyDocument',['../structMyDocument.html',1,'']]]
+  ['module_5fdnecs_30',['Module_DnECS',['../classModule__DnECS.html',1,'']]],
+  ['module_5fdngameobject_31',['Module_DnGameObject',['../classModule__DnGameObject.html',1,'']]],
+  ['module_5fdnlog_32',['Module_DnLog',['../classModule__DnLog.html',1,'']]],
+  ['module_5fdoctest_33',['Module_Doctest',['../classModule__Doctest.html',1,'']]],
+  ['modules_34',['Modules',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#modules',1,'']]],
+  ['modules_2edox_35',['modules.dox',['../modules_8dox.html',1,'']]],
+  ['mousecoords_36',['MouseCoords',['../structCamera_1_1MouseCoords.html',1,'Camera']]],
+  ['movement_37',['Camera Movement',['../md_docs_2RenderingPipeline.html#autotoc_md22',1,'']]],
+  ['mydocument_38',['MyDocument',['../structMyDocument.html',1,'']]]
 ];

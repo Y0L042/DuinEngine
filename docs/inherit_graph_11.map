@@ -1,19 +1,21 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,179,107,204"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,203,107,228"/>
 <area shape="rect" id="Node000001" href="$classModule__DecsComponents.html" title=" " alt="" coords="155,5,345,31"/>
-<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="65,165,97,102,122,68,153,40,174,28,177,33,156,44,126,72,102,105,69,167"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="62,189,74,155,93,115,119,74,153,40,173,29,175,33,156,44,123,77,98,117,79,157,67,191"/>
 <area shape="rect" id="Node000002" href="$classModule__DecsEntity.html" title=" " alt="" coords="177,55,323,80"/>
-<area shape="poly" id="edge3_Node000000_Node000002" title=" " alt="" coords="72,166,107,126,129,106,153,89,179,78,181,83,156,94,132,110,110,130,76,169"/>
+<area shape="poly" id="edge3_Node000000_Node000002" title=" " alt="" coords="68,189,102,138,126,112,153,89,177,78,179,82,156,94,129,115,106,141,72,192"/>
 <area shape="rect" id="Node000003" href="$classModule__DecsGameWorld.html" title=" " alt="" coords="157,104,343,129"/>
-<area shape="poly" id="edge4_Node000000_Node000003" title=" " alt="" coords="89,169,154,138,189,127,191,132,156,143,91,174"/>
+<area shape="poly" id="edge4_Node000000_Node000003" title=" " alt="" coords="79,191,113,164,153,138,183,127,185,132,156,143,116,168,82,195"/>
 <area shape="rect" id="Node000004" href="$classModule__DecsQuery.html" title=" " alt="" coords="176,153,324,179"/>
-<area shape="poly" id="edge5_Node000000_Node000004" title=" " alt="" coords="120,180,175,173,176,178,121,186"/>
+<area shape="poly" id="edge5_Node000000_Node000004" title=" " alt="" coords="118,197,154,187,198,176,199,181,155,193,120,202"/>
 <area shape="rect" id="Node000005" href="$classModule__DecsWorld.html" title=" " alt="" coords="177,203,323,228"/>
-<area shape="poly" id="edge6_Node000000_Node000005" title=" " alt="" coords="121,197,177,204,176,209,120,202"/>
-<area shape="rect" id="Node000006" href="$classModule__DnGameObject.html" title=" " alt="" coords="162,252,338,277"/>
-<area shape="poly" id="edge7_Node000000_Node000006" title=" " alt="" coords="93,208,156,237,195,249,194,255,154,242,91,213"/>
-<area shape="rect" id="Node000007" href="$classModule__DnLog.html" title=" " alt="" coords="191,301,309,327"/>
-<area shape="poly" id="edge8_Node000000_Node000007" title=" " alt="" coords="77,214,111,251,156,286,192,301,190,306,153,291,108,255,73,217"/>
-<area shape="rect" id="Node000008" href="$classModule__Doctest.html" title=" " alt="" coords="187,351,313,376"/>
-<area shape="poly" id="edge9_Node000000_Node000008" title=" " alt="" coords="70,215,102,277,127,309,156,336,188,351,185,356,153,340,123,312,98,279,65,218"/>
+<area shape="poly" id="edge6_Node000000_Node000005" title=" " alt="" coords="121,213,176,213,176,218,121,218"/>
+<area shape="rect" id="Node000006" href="$classModule__DnECS.html" title=" " alt="" coords="190,252,310,277"/>
+<area shape="poly" id="edge7_Node000000_Node000006" title=" " alt="" coords="120,229,200,249,198,254,119,234"/>
+<area shape="rect" id="Node000007" href="$classModule__DnGameObject.html" title=" " alt="" coords="162,301,338,327"/>
+<area shape="poly" id="edge8_Node000000_Node000007" title=" " alt="" coords="83,235,116,262,156,286,189,299,187,304,153,291,113,266,80,240"/>
+<area shape="rect" id="Node000008" href="$classModule__DnLog.html" title=" " alt="" coords="191,351,309,376"/>
+<area shape="poly" id="edge9_Node000000_Node000008" title=" " alt="" coords="73,239,106,289,130,314,156,336,192,351,189,356,153,340,126,318,102,292,68,242"/>
+<area shape="rect" id="Node000009" href="$classModule__Doctest.html" title=" " alt="" coords="187,400,313,425"/>
+<area shape="poly" id="edge10_Node000000_Node000009" title=" " alt="" coords="67,240,80,274,98,313,124,352,156,385,187,401,185,406,153,389,120,355,94,316,75,276,62,242"/>
 </map>

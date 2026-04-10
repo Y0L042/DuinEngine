@@ -5,7 +5,7 @@ var searchData=
   ['capturemouse_2',['CaptureMouse',['../namespaceduin_1_1Input.html#abb44090b33cbcfb4b27326da213f4e7e',1,'duin::Input']]],
   ['childof_3',['ChildOf',['../classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32',1,'duin::Entity']]],
   ['clean_4',['Clean',['../classduin_1_1PhysicsServer.html#a7207ac5cd5f6d3e3297578fe2c2f9f9a',1,'duin::PhysicsServer']]],
-  ['clear_5',['clear',['../classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca',1,'duin::Entity::Clear()'],['../classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957',1,'duin::GameWorld::Clear()'],['../classRectanglePacker.html#afb92dc6a0d96dc70efeeda5f936bdef0',1,'RectanglePacker::clear()']]],
+  ['clear_5',['clear',['../classRectanglePacker.html#afb92dc6a0d96dc70efeeda5f936bdef0',1,'RectanglePacker::clear()'],['../classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca',1,'duin::Entity::Clear()'],['../classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957',1,'duin::GameWorld::Clear()']]],
   ['clone_6',['clone',['../classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d',1,'duin::Entity::Clone()'],['../classduin_1_1JSONValue.html#ad0452d11bf60219d89c177929bd47e15',1,'duin::JSONValue::Clone()']]],
   ['close_7',['Close',['../classduin_1_1io_1_1IOStream.html#a0885c4aef32a7830d273c011962f1a92',1,'duin::io::IOStream']]],
   ['collisionshape_8',['CollisionShape',['../classduin_1_1CollisionShape.html#a6aa804363ecb98861dce849988faf6f0',1,'duin::CollisionShape']]],

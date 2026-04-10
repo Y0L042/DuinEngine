@@ -7,8 +7,6 @@ var dir_5cc98666edf43c1d0aba776d31ad3ead =
     [ "DnGameObjectAdapter_gen.inc", "DnGameObjectAdapter__gen_8inc_source.html", null ],
     [ "GameScript.cpp", "GameScript_8cpp_source.html", null ],
     [ "GameScript.h", "GameScript_8h_source.html", null ],
-    [ "gen_adapter.das.inc", "gen__adapter_8das_8inc_source.html", null ],
-    [ "gen_bind.das.inc", "gen__bind_8das_8inc_source.html", null ],
     [ "generate_xxd.py", "generate__xxd_8py_source.html", null ],
     [ "Script.cpp", "Script_8cpp_source.html", null ],
     [ "Script.h", "Script_8h_source.html", null ],
