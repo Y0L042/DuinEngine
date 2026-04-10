@@ -541,32 +541,6 @@ class Module_DnECS : public das::Module
         addExtern<DAS_BIND_FUN(dn_entity_get_velocity3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
             *this, lib, "dn_entity_get_velocity3d", das::SideEffects::none, "dn_entity_get_velocity3d");
 
-        // GameWorld externs
-        addExtern<DAS_BIND_FUN(dn_get_flecs_world_impl)>(*this, lib, "dn_get_flecs_world_impl",
-                                                         das::SideEffects::modifyExternal, "dn_get_flecs_world_impl");
-        addExtern<DAS_BIND_FUN(dn_get_gameworld_ptr_impl)>(
-            *this, lib, "dn_get_gameworld_ptr_impl", das::SideEffects::modifyExternal, "dn_get_gameworld_ptr_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_find_prefab_impl)>(*this, lib, "dn_gameworld_find_prefab_impl",
-                                                               das::SideEffects::none, "dn_gameworld_find_prefab_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_set_global_position_impl)>(
-            *this, lib, "dn_gameworld_set_global_position_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_set_global_position_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_get_global_position_impl)>(
-            *this, lib, "dn_gameworld_get_global_position_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_get_global_position_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_set_global_rotation_impl)>(
-            *this, lib, "dn_gameworld_set_global_rotation_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_set_global_rotation_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_get_global_rotation_impl)>(
-            *this, lib, "dn_gameworld_get_global_rotation_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_get_global_rotation_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_set_global_scale_impl)>(*this, lib, "dn_gameworld_set_global_scale_impl",
-                                                                    das::SideEffects::modifyExternal,
-                                                                    "dn_gameworld_set_global_scale_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_get_global_scale_impl)>(*this, lib, "dn_gameworld_get_global_scale_impl",
-                                                                    das::SideEffects::modifyExternal,
-                                                                    "dn_gameworld_get_global_scale_impl");
-
         compileBuiltinModule("dn_ecs.das", dn_ecs_das, sizeof(dn_ecs_das));
 
         DN_CORE_INFO("Script Module [decs] initialized.");

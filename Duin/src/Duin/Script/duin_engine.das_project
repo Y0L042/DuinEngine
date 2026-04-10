@@ -1,0 +1,34 @@
+options gen2
+
+require strings
+require daslib/strings_boost
+
+typedef module_info = tuple<string; string; string> const
+
+var DAS_PAK_ROOT = "./"
+
+include modules/moduleGameObject/.das_module
+include modules/moduleECS/.das_module
+include modules/moduleRuntime/.das_module
+
+def module_default(req, from : string) : module_info {
+    let rs <- split_by_chars(req, "./")
+    var fr <- split_by_chars(from, "/")
+    let mod_name = rs[length(rs) - 1]
+    if (length(rs) == 0) {
+        return (mod_name, req + ".das", "")
+    } elif (rs[0] == "daslib") {
+        return (mod_name, "{get_das_root()}/daslib/{mod_name}.das", "")
+    } else {
+        pop(fr)
+        for (se in rs) {
+            push(fr, se)
+        }
+        return (mod_name, join(fr, "/") + ".das", "")
+    }
+}
+
+[export]
+def module_get(req, from : string) : module_info {
+    return module_default(req, from)
+}

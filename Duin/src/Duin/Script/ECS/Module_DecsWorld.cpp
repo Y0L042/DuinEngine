@@ -84,6 +84,8 @@ class Module_DecsWorld : public das::Module
 
         compileBuiltinModule("decs_world.das", decs_world_das, sizeof(decs_world_das));
         DN_CORE_INFO("Script Module [decs_world] initialized.");
+
+        return true;
     }
 };
 
