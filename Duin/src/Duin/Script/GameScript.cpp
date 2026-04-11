@@ -2,7 +2,7 @@
 #include "GameScript.h"
 #include "Duin/ECS/GameWorld.h"
 #include "Duin/IO/FileModule.h"
-#include "./GameObject/Module_DnGameObject.h"
+#include "./modules/moduleGameObject/Module_DnGameObject.h"
 #include <iostream>
 #include <memory>
 #include <regex>

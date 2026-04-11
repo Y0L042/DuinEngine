@@ -1,7 +1,7 @@
 #include "Module_DecsWorld.h"
 
 #include <daScript/daScript.h>
-#include "../ScriptContext.h"
+#include "../../ScriptContext.h"
 #include "Duin/ECS/DECS/DECS.h"
 #include "decs_world.das.inc"
 

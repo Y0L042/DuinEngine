@@ -4,7 +4,7 @@
 
 #include "Duin/Objects/GameObject.h"
 
-#include "../DnGameObjectAdapter_gen.inc"
+#include "../../DnGameObjectAdapter_gen.inc"
 
 #include "Duin/Core/Debug/DNLog.h"
 
