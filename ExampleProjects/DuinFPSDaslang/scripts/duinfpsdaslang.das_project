@@ -1,0 +1,7 @@
+options gen2
+
+require strings
+
+typedef module_info = tuple<string; string; string> const
+
+var DAS_PAK_ROOT = "./"

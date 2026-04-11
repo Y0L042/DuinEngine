@@ -1,27 +1,25 @@
 options gen2
 options rtti
 
+require imgui/imgui_boost
+
+require flecs
 require dn_doctest
-
 require dn_log
-
 require dn_gameobject
-
-require decs_world
-require decs_entity
-require decs_query
+require dn_ecs
+require dn_gameworld
 
 require player
 require frogger
 
-require flecs
-
 var player : Player?
 var child : Frogger?
-
 var world : ecs_world_t?
-
+var game_world : dn_GameWorld?
 var counter : float = 0.0
+
+
 
 struct Position {
     x : double
@@ -38,8 +36,9 @@ struct Velocity {
 def game_ready() {
     dn_info("Game Ready!")
 
-    world = ecs_init();
-    // register_engine_components(world)
+    game_world = dn_gameworld_init(new dn_GameWorld())
+    world = game_world.ecs_world()
+
     ecs_component_register(world, type<Position>);
     ecs_component_register(world, type<Velocity>);
 

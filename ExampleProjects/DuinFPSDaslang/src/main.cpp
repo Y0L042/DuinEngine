@@ -12,6 +12,8 @@
 
 #include <iostream>
 
+
+
 class DuinFPSDaslangApp : public duin::Application
 {
     const std::string ENTRY_SCRIPT = "scripts/main.das";
@@ -33,11 +35,9 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_Doctest);
             NEED_MODULE(Module_DnLog);
             NEED_MODULE(Module_DnGameObject);
-            NEED_MODULE(Module_DecsEntity);
-            NEED_MODULE(Module_DecsWorld);
-            NEED_MODULE(Module_DecsComponents);
-            NEED_MODULE(Module_DecsQuery);
             NEED_MODULE(Module_flecs);
+            NEED_MODULE(Module_DnECS);
+            NEED_MODULE(Module_DecsGameWorld);
         });
         mainScript->EnableHotCompile(true, true);
         mainScript->CompileAndSimulate();
