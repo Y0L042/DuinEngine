@@ -4,6 +4,7 @@ local name = "FLECSDASLANGBINDINGS"
 
 local repo = "https://github.com/Y0L042/flecs-daslang"
 local folder = "flecs-daslang"
+local branch = "DuinEngine"
 
 -- On-disk sibling project path (relative to the vendor/ dir where this script runs)
 local source_project = "../../flecs-daslang"

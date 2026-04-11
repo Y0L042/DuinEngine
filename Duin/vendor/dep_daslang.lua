@@ -3,7 +3,7 @@ local dep_daslang = {}
 local name = "DASLANG"
 
 local repo = "https://github.com/GaijinEntertainment/daScript"
-local tag = "v0.6.0"
+local tag = "0.6.1-RC2"
 local folder = "daslang"
 
 function dep_daslang.build()
@@ -36,7 +36,7 @@ function dep_daslang.build()
 
     local cmake_flags = "-DCMAKE_BUILD_TYPE=" .. build_type
         -- .. " -DDAS_TOOLS_DISABLED=ON"
-        .. " -DDAS_TUTORIAL_DISABLED=ON"
+        .. " -DDAS_TUTORIAL_DISABLED=OFF"
         .. " -DDAS_TESTS_DISABLED=ON"
         .. " -DDAS_AOT_EXAMPLES_DISABLED=ON"
         .. " -DDAS_GLFW_DISABLED=ON"
