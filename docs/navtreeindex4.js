@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"structImDrawCmdHeader.html":[4,0,48],
 "structImDrawData.html":[4,0,49],
 "structImDrawDataBuilder.html":[4,0,50],
 "structImDrawList.html":[4,0,51],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "structduin_1_1Entity_1_1ID.html#a64fe415e67e4ab071a67cf4b3ad595d3":[4,0,0,33,0,15],
 "structduin_1_1Entity_1_1ID.html#a6c11417e94319a67101e4de51e4569db":[4,0,0,33,0,17],
 "structduin_1_1Entity_1_1ID.html#a6e0bad291f25f8fc4164264f2d22f5a0":[4,0,0,33,0,6],
-"structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33":[4,0,0,33,0,12],
-"structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca":[4,0,0,33,0,14]
+"structduin_1_1Entity_1_1ID.html#a6f161364d88322249693b9cc2b890c33":[4,0,0,33,0,12]
 };
