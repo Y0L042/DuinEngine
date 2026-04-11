@@ -1,3 +1,5 @@
+require "premakeCfg"
+
 function prependRoot(root, dirs)
     local result = {}
     for _, dir in ipairs(dirs) do

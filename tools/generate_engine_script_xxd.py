@@ -13,7 +13,7 @@ import os
 import json
 import hashlib
 
-SKIP_FOLDERS = {"modules"}
+SKIP_FOLDERS = {}
 SKIP_FILES = {"gen_adapter.das", "gen_bind.das"}
 CACHE_FILE = ".xxd_cache.json"
 

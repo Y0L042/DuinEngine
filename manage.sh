@@ -84,8 +84,8 @@ cmd_fmt_all() {
 }
 
 cmd_codegen() {
-    echo "==> fmt-all"
-    cmd_fmt_all
+    # echo "==> fmt-all"
+    # cmd_fmt_all
     echo "==> gen-inc"
     cmd_gen_inc
     echo "==> gen-adapter"
