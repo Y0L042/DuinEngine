@@ -167,6 +167,18 @@ class Module_DecsGameWorld : public das::Module
             return false;
         }
 
+        auto *flecsMod = das::Module::require("flecs");
+        if (!flecsMod)
+        {
+            DN_CORE_ERROR("dn_gameworld: required module 'flecs' not found");
+            return false;
+        }
+        if (!flecsMod->initDependencies())
+        {
+            DN_CORE_ERROR("dn_gameworld: failed to initialize dependencies of 'flecs'");
+            return false;
+        }
+
         auto *ecsMod = das::Module::require("dn_ecs");
         if (!ecsMod)
         {
@@ -184,6 +196,7 @@ class Module_DecsGameWorld : public das::Module
         das::ModuleLibrary lib(this);
         lib.addBuiltInModule();
         addBuiltinDependency(lib, logMod);
+        addBuiltinDependency(lib, flecsMod);
         addBuiltinDependency(lib, rttiMod);
         addBuiltinDependency(lib, ecsMod);
 
@@ -200,7 +213,6 @@ class Module_DecsGameWorld : public das::Module
         addExtern<DAS_BIND_FUN(dn_gameworld_get_flecs_world_impl)>(*this, lib, "dn_gameworld_get_flecs_world_impl",
                                                                    das::SideEffects::none,
                                                                    "dn_gameworld_get_flecs_world_impl");
-
         addExtern<DAS_BIND_FUN(dn_gameworld_find_prefab_impl)>(*this, lib, "dn_gameworld_find_prefab_impl",
                                                                das::SideEffects::none, "dn_gameworld_find_prefab_impl");
 

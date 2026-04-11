@@ -6,8 +6,8 @@ require rtti
 require ast
 require daslib/ast_boost
 require gen_adapter
-require GameObject/dn_gameobject
-require ECS/dn_gameworld_class
+require modules/moduleGameObject/dn_gameobject
+require modules/moduleECS/dn_gameworld_class
 
 
 [export]

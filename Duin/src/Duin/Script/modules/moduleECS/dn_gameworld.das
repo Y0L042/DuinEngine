@@ -2,8 +2,10 @@ options gen2
 options remove_unused_symbols = false
 options rtti
 
+require flecs
 require dn_log
 require dn_ecs
+require dn_gameworld
 
 class dn_GameWorld {
     _handle : void?
@@ -12,6 +14,30 @@ class dn_GameWorld {
     def abstract _post_physics_update(delta : double) : void
     def abstract _post_draw() : void
     def abstract _post_draw_ui() : void
+
+    def ecs_world() : ecs_world_t? {
+        var ecs_w : ecs_world_t?
+        var h = _handle
+        if (h != null) {
+            unsafe {
+                ecs_w = reinterpret<ecs_world_t?>(dn_gameworld_get_flecs_world_impl(h))
+            }
+        }
+
+        return ecs_w
+    }
+}
+
+def dn_gameworld_world(var self : dn_GameWorld?) : ecs_world_t? {
+    var ecs_w : ecs_world_t?
+    var h = self?._handle
+    if (h != null) {
+        unsafe {
+            ecs_w = reinterpret<ecs_world_t?>(dn_gameworld_get_flecs_world_impl(h))
+        }
+    }
+
+    return ecs_w
 }
 
 def dn_gameworld_init(var self : auto?) : auto? {

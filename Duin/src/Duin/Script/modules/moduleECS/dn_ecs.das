@@ -60,6 +60,14 @@ class dn_Entity {
     def destruct() {
         ecs_delete(world, entity)
     }
+
+    def ecs_entity() : ecs_entity_t {
+        return entity
+    }
+
+    def ecs_world() : ecs_world_t? {
+        return world
+    }
 }
 
 
@@ -106,6 +114,10 @@ class dn_World {
             return false
         }
         return ecs_is_alive(world, e.entity)
+    }
+
+    def ecs_world() : ecs_world_t? {
+        return world
     }
 }
 

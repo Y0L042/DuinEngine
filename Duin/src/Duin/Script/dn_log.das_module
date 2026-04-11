@@ -4,7 +4,7 @@ def module_dn_log(req, from : string) : module_info {
     if (req != "dn_log") {
         return ("", "", "")
     }
-    return ("dn_log", DAS_PAK_ROOT + "DNLog/dn_log.das", "")
+    return ("dn_log", DAS_PAK_ROOT + "modules/moduleDNLog/dn_log.das", "")
 }
 
 [init]
