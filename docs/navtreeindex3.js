@@ -11,6 +11,7 @@ var NAVTREEINDEX3 =
 "dn__doctest_8das_8inc_source.html":[5,0,1,0,9,0,1,0],
 "dn__ecs_8das_8inc_source.html":[5,0,1,0,9,0,2,5],
 "dn__gameobject_8das_8inc_source.html":[5,0,1,0,9,0,3,0],
+"dn__gameobject__class_8das_8inc_source.html":[5,0,1,0,9,0,3,1],
 "dn__gameworld_8das_8inc_source.html":[5,0,1,0,9,0,2,6],
 "dn__gameworld__class_8das_8inc_source.html":[5,0,1,0,9,0,2,7],
 "dn__log_8das_8inc_source.html":[5,0,1,0,9,0,0,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "structImColor.html":[4,0,45],
 "structImCurveEdit_1_1Delegate.html":[4,0,3,0],
 "structImCurveEdit_1_1EditPoint.html":[4,0,3,1],
-"structImDrawChannel.html":[4,0,46],
-"structImDrawCmd.html":[4,0,47]
+"structImDrawChannel.html":[4,0,46]
 };

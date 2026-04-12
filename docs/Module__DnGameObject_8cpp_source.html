@@ -333,94 +333,97 @@ $(document).ready(function(){initNavTree('Module__DnGameObject_8cpp_source.html'
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        {</div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        }</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        <span class="keyword">auto</span> logMod = das::Module::require(<span class="stringliteral">&quot;dn_log&quot;</span>);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="keywordflow">if</span> (!logMod)</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        {</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: required module &#39;dn_log&#39; not found&quot;</span>);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        }</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keywordflow">if</span> (!logMod-&gt;initDependencies())</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        {</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: failed to initialize dependencies of &#39;dn_log&#39;&quot;</span>);</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        }</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keyword">auto</span> rttiMod = das::Module::require(<span class="stringliteral">&quot;rtti&quot;</span>);</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keywordflow">if</span> (!rttiMod)</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        {</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: required module &#39;rtti&#39; not found&quot;</span>);</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        }</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keywordflow">if</span> (!rttiMod-&gt;initDependencies())</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        {</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: failed to initialize dependencies of &#39;rtti&#39;&quot;</span>);</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        }</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        initialized = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        das::ModuleLibrary lib(<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        lib.addBuiltInModule();</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        addBuiltinDependency(lib, logMod);</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        addBuiltinDependency(lib, rttiMod);</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        addExtern&lt;DAS_BIND_FUN(dn_create_gameobject_impl)&gt;(</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_create_gameobject_impl&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_create_gameobject_impl&quot;</span>);</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="keyword">auto</span> *rttiMod = das::Module::require(<span class="stringliteral">&quot;rtti_core&quot;</span>);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="keywordflow">if</span> (!rttiMod)</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        {</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: required module &#39;rtti_core&#39; not found&quot;</span>);</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        }</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        <span class="keywordflow">if</span> (!rttiMod-&gt;initDependencies())</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        {</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: failed to initialize dependencies of &#39;rtti_core&#39;&quot;</span>);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        }</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keyword">auto</span> logMod = das::Module::require(<span class="stringliteral">&quot;dn_log&quot;</span>);</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        <span class="keywordflow">if</span> (!logMod)</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        {</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: required module &#39;dn_log&#39; not found&quot;</span>);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        }</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keywordflow">if</span> (!logMod-&gt;initDependencies())</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        {</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;Module_DnGameObject: failed to initialize dependencies of &#39;dn_log&#39;&quot;</span>);</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        }</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        initialized = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        das::ModuleLibrary lib(<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        lib.addBuiltInModule();</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        addBuiltinDependency(lib, logMod);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        addBuiltinDependency(lib, rttiMod);</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        addExtern&lt;DAS_BIND_FUN(dn_destroy_gameobject_impl)&gt;(</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_destroy_gameobject_impl&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_destroy_gameobject_impl&quot;</span>);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        addExtern&lt;DAS_BIND_FUN(dn_create_gameobject_impl)&gt;(</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_create_gameobject_impl&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_create_gameobject_impl&quot;</span>);</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        addExtern&lt;DAS_BIND_FUN(dn_add_child_object_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_add_child_object_impl&quot;</span>,</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                                                          das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_add_child_object_impl&quot;</span>);</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        addExtern&lt;DAS_BIND_FUN(dn_destroy_gameobject_impl)&gt;(</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_destroy_gameobject_impl&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_destroy_gameobject_impl&quot;</span>);</div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        addExtern&lt;DAS_BIND_FUN(dn_add_root_object_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_add_root_object_impl&quot;</span>,</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                                                         das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_add_root_object_impl&quot;</span>);</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        addExtern&lt;DAS_BIND_FUN(dn_add_child_object_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_add_child_object_impl&quot;</span>,</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                                                          das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_add_child_object_impl&quot;</span>);</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        addExtern&lt;DAS_BIND_FUN(dn_remove_child_object_impl)&gt;(</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_remove_child_object_impl&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_remove_child_object_impl&quot;</span>);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        addExtern&lt;DAS_BIND_FUN(dn_add_root_object_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_add_root_object_impl&quot;</span>,</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                                                         das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_add_root_object_impl&quot;</span>);</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        addExtern&lt;DAS_BIND_FUN(dn_get_children_count_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_children_count_impl&quot;</span>,</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                                                            das::SideEffects::none, <span class="stringliteral">&quot;dn_get_children_count_impl&quot;</span>);</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        addExtern&lt;DAS_BIND_FUN(dn_remove_child_object_impl)&gt;(</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_remove_child_object_impl&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_remove_child_object_impl&quot;</span>);</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_impl&quot;</span>, das::SideEffects::modifyExternal,</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                                                <span class="stringliteral">&quot;dn_enable_impl&quot;</span>);</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_on_event_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_on_event_impl&quot;</span>,</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                                                         das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_on_event_impl&quot;</span>);</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_update_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_update_impl&quot;</span>,</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                                                       das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_update_impl&quot;</span>);</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_physics_update_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_physics_update_impl&quot;</span>,</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                                                               das::SideEffects::modifyExternal,</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                                                               <span class="stringliteral">&quot;dn_enable_physics_update_impl&quot;</span>);</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_draw_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_draw_impl&quot;</span>,</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                                                     das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_draw_impl&quot;</span>);</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_draw_ui_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_draw_ui_impl&quot;</span>,</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                                                        das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_draw_ui_impl&quot;</span>);</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_debug_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_debug_impl&quot;</span>,</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                                                      das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_debug_impl&quot;</span>);</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_children_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_children_impl&quot;</span>,</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                                                         das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_children_impl&quot;</span>);</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        addExtern&lt;DAS_BIND_FUN(dn_is_on_event_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_on_event_enabled_impl&quot;</span>,</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                                                             das::SideEffects::none, <span class="stringliteral">&quot;dn_is_on_event_enabled_impl&quot;</span>);</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        addExtern&lt;DAS_BIND_FUN(dn_is_update_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_update_enabled_impl&quot;</span>,</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                                                           das::SideEffects::none, <span class="stringliteral">&quot;dn_is_update_enabled_impl&quot;</span>);</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        addExtern&lt;DAS_BIND_FUN(dn_is_physics_update_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_physics_update_enabled_impl&quot;</span>,</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                                                                   das::SideEffects::none,</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                                                                   <span class="stringliteral">&quot;dn_is_physics_update_enabled_impl&quot;</span>);</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        addExtern&lt;DAS_BIND_FUN(dn_is_draw_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_draw_enabled_impl&quot;</span>, das::SideEffects::none,</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                                                         <span class="stringliteral">&quot;dn_is_draw_enabled_impl&quot;</span>);</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        addExtern&lt;DAS_BIND_FUN(dn_is_draw_ui_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_draw_ui_enabled_impl&quot;</span>,</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                                                            das::SideEffects::none, <span class="stringliteral">&quot;dn_is_draw_ui_enabled_impl&quot;</span>);</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        addExtern&lt;DAS_BIND_FUN(dn_is_debug_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_debug_enabled_impl&quot;</span>,</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                                                          das::SideEffects::none, <span class="stringliteral">&quot;dn_is_debug_enabled_impl&quot;</span>);</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        addExtern&lt;DAS_BIND_FUN(dn_is_children_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_children_enabled_impl&quot;</span>,</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                                                             das::SideEffects::none, <span class="stringliteral">&quot;dn_is_children_enabled_impl&quot;</span>);</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        compileBuiltinModule(<span class="stringliteral">&quot;dn_gameobject.das&quot;</span>, dn_gameobject_das, <span class="keyword">sizeof</span>(dn_gameobject_das));</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    }</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>};</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        addExtern&lt;DAS_BIND_FUN(dn_get_children_count_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_children_count_impl&quot;</span>,</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                                                            das::SideEffects::none, <span class="stringliteral">&quot;dn_get_children_count_impl&quot;</span>);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_impl&quot;</span>, das::SideEffects::modifyExternal,</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                                                <span class="stringliteral">&quot;dn_enable_impl&quot;</span>);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_on_event_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_on_event_impl&quot;</span>,</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                                                         das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_on_event_impl&quot;</span>);</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_update_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_update_impl&quot;</span>,</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                                                       das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_update_impl&quot;</span>);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_physics_update_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_physics_update_impl&quot;</span>,</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                                                               das::SideEffects::modifyExternal,</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                                                               <span class="stringliteral">&quot;dn_enable_physics_update_impl&quot;</span>);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_draw_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_draw_impl&quot;</span>,</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                                                     das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_draw_impl&quot;</span>);</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_draw_ui_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_draw_ui_impl&quot;</span>,</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                                                        das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_draw_ui_impl&quot;</span>);</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_debug_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_debug_impl&quot;</span>,</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                                                      das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_debug_impl&quot;</span>);</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        addExtern&lt;DAS_BIND_FUN(dn_enable_children_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_enable_children_impl&quot;</span>,</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                                                         das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_enable_children_impl&quot;</span>);</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        addExtern&lt;DAS_BIND_FUN(dn_is_on_event_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_on_event_enabled_impl&quot;</span>,</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                                                             das::SideEffects::none, <span class="stringliteral">&quot;dn_is_on_event_enabled_impl&quot;</span>);</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        addExtern&lt;DAS_BIND_FUN(dn_is_update_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_update_enabled_impl&quot;</span>,</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                                                           das::SideEffects::none, <span class="stringliteral">&quot;dn_is_update_enabled_impl&quot;</span>);</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        addExtern&lt;DAS_BIND_FUN(dn_is_physics_update_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_physics_update_enabled_impl&quot;</span>,</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                                                                   das::SideEffects::none,</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                                                                   <span class="stringliteral">&quot;dn_is_physics_update_enabled_impl&quot;</span>);</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        addExtern&lt;DAS_BIND_FUN(dn_is_draw_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_draw_enabled_impl&quot;</span>, das::SideEffects::none,</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                                                         <span class="stringliteral">&quot;dn_is_draw_enabled_impl&quot;</span>);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        addExtern&lt;DAS_BIND_FUN(dn_is_draw_ui_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_draw_ui_enabled_impl&quot;</span>,</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                                                            das::SideEffects::none, <span class="stringliteral">&quot;dn_is_draw_ui_enabled_impl&quot;</span>);</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        addExtern&lt;DAS_BIND_FUN(dn_is_debug_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_debug_enabled_impl&quot;</span>,</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                                                          das::SideEffects::none, <span class="stringliteral">&quot;dn_is_debug_enabled_impl&quot;</span>);</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        addExtern&lt;DAS_BIND_FUN(dn_is_children_enabled_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_is_children_enabled_impl&quot;</span>,</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                                                             das::SideEffects::none, <span class="stringliteral">&quot;dn_is_children_enabled_impl&quot;</span>);</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        compileBuiltinModule(<span class="stringliteral">&quot;dn_gameobject.das&quot;</span>, dn_gameobject_das, <span class="keyword">sizeof</span>(dn_gameobject_das));</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    }</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>};</div>
 </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>REGISTER_MODULE(<a class="code hl_class" href="classModule__DnGameObject.html">Module_DnGameObject</a>);</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>REGISTER_MODULE(<a class="code hl_class" href="classModule__DnGameObject.html">Module_DnGameObject</a>);</div>
 <div class="ttc" id="aGameObject_8h_html"><div class="ttname"><a href="GameObject_8h.html">GameObject.h</a></div><div class="ttdoc">Scene graph node with lifecycle callbacks.</div></div>
 <div class="ttc" id="aclassModule__DnGameObject_html"><div class="ttname"><a href="classModule__DnGameObject.html">Module_DnGameObject</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnGameObject_8cpp_source.html#l00202">Module_DnGameObject.cpp:203</a></div></div>
 <div class="ttc" id="aclassScriptGameObject_html"><div class="ttname"><a href="classScriptGameObject.html">ScriptGameObject</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnGameObject_8h_source.html#l00015">Module_DnGameObject.h:16</a></div></div>
