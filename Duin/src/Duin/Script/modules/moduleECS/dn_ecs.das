@@ -2,6 +2,7 @@ options gen2
 
 require flecs
 require dn_log
+require dn_ecs
 
 class dn_Entity {
     entity : ecs_entity_t
@@ -160,12 +161,17 @@ def dn_query_builder(var world_obj : dn_World?; var query_desc : dn_QueryDesc) :
     if (world_obj == null) {
         return null
     }
-    var terms : array<ecs_term_t>
+    var q_desc : ecs_query_desc_t
+    var i = 0
     for (t in query_desc.terms) {
-        push(terms, ecs_term(t))
+        flecs_query_desc_set_term(q_desc, i, t, EcsInOutDefault)
+        i++
     }
+    flecs_query_desc_set_cache_kind(q_desc, EcsQueryCacheAuto)
     var q = new dn_Query()
     q.world = world_obj.world
-    q.query = ecs_query_builder(world_obj.world, terms, EcsQueryCacheAuto)
+    unsafe {
+        q.query = ecs_query_init(world_obj.world, addr(q_desc))
+    }
     return q
 }

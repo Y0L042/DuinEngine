@@ -1,9 +1,9 @@
 options gen2
 options rtti
 
-require fio
-require rtti
-require ast
+require daslib/fio
+require daslib/rtti
+require daslib/ast
 require daslib/ast_boost
 require daslib/cpp_bind public
 

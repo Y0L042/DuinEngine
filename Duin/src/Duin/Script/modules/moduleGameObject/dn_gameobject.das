@@ -2,9 +2,9 @@ options gen2
 options remove_unused_symbols = false
 options rtti
 
+require rtti_core
 require dn_log
-
-require rtti
+require dn_gameobject
 
 class dn_GameObject {
     _handle : void?

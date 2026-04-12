@@ -183,9 +183,19 @@ static void dn_register_test(const char *suite, const char *name, const char *fn
 
 class Module_Doctest : public das::Module
 {
+    bool initialized = false;
+
   public:
     Module_Doctest() : das::Module("dn_doctest")
     {
+    }
+
+    bool initDependencies() override
+    {
+        if (initialized)
+            return true;
+        initialized = true;
+
         das::ModuleLibrary lib(this);
         lib.addBuiltInModule();
 
@@ -222,6 +232,10 @@ class Module_Doctest : public das::Module
                 ->args({"suite", "name", "fn_name", "at", "context"});
 
         compileBuiltinModule("dn_doctest.das", dn_doctest_das, sizeof(dn_doctest_das));
+
+        DN_CORE_INFO("Script Module [dn_doctest] initialized.");
+
+        return true;
     }
 };
 

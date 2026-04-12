@@ -7,6 +7,7 @@
 #include <daScript/ast/ast.h>
 #include <daScript/daScriptModule.h>
 #include <daScript/misc/smart_ptr.h>
+#include <daScript/misc/sysos.h>
 #include <daScript/simulate/fs_file_info.h>
 #include <daScript/simulate/runtime_string.h>
 #include <daScript/simulate/simulate.h>
@@ -19,6 +20,11 @@ duin::Script::Script(const std::string &relScriptPath) : scriptPath(relScriptPat
 duin::Script::~Script()
 {
     ResetScript();
+}
+
+void duin::Script::SetDasRoot(const std::string &path)
+{
+    das::setDasRoot(path);
 }
 
 void duin::Script::InitModules(std::function<void(void)> initModules)

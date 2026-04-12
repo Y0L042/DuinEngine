@@ -1,12 +1,12 @@
 options gen2
 options rtti
 
-require fio
-require rtti
-require ast
+require daslib/rtti
+require daslib/ast
+require daslib/fio
 require daslib/ast_boost
 require gen_adapter
-require modules/moduleGameObject/dn_gameobject
+require modules/moduleGameObject/dn_gameobject_class
 require modules/moduleECS/dn_gameworld_class
 
 

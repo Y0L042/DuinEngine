@@ -214,6 +214,19 @@ class Module_DnGameObject : public das::Module
         {
             return true;
         }
+
+        auto *rttiMod = das::Module::require("rtti_core");
+        if (!rttiMod)
+        {
+            DN_CORE_ERROR("Module_DnGameObject: required module 'rtti_core' not found");
+            return false;
+        }
+        if (!rttiMod->initDependencies())
+        {
+            DN_CORE_ERROR("Module_DnGameObject: failed to initialize dependencies of 'rtti_core'");
+            return false;
+        }
+
         auto logMod = das::Module::require("dn_log");
         if (!logMod)
         {
@@ -225,17 +238,7 @@ class Module_DnGameObject : public das::Module
             DN_CORE_ERROR("Module_DnGameObject: failed to initialize dependencies of 'dn_log'");
             return false;
         }
-        auto rttiMod = das::Module::require("rtti");
-        if (!rttiMod)
-        {
-            DN_CORE_ERROR("Module_DnGameObject: required module 'rtti' not found");
-            return false;
-        }
-        if (!rttiMod->initDependencies())
-        {
-            DN_CORE_ERROR("Module_DnGameObject: failed to initialize dependencies of 'rtti'");
-            return false;
-        }
+
         initialized = true;
 
         das::ModuleLibrary lib(this);

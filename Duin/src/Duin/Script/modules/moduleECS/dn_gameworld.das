@@ -1,6 +1,7 @@
 options gen2
 options remove_unused_symbols = false
-options rtti
+options rtti=true
+
 
 require flecs
 require dn_log

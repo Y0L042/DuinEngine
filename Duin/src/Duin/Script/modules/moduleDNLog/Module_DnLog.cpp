@@ -45,9 +45,19 @@ static void dn_log_trace(const char *msg, das::LineInfoArg *at)
 
 class Module_DnLog : public das::Module
 {
+    bool initialized = false;
+
   public:
     Module_DnLog() : das::Module("dn_log")
     {
+    }
+
+    bool initDependencies() override
+    {
+        if (initialized)
+            return true;
+        initialized = true;
+
         das::ModuleLibrary lib(this);
         lib.addBuiltInModule();
 
@@ -63,6 +73,10 @@ class Module_DnLog : public das::Module
                                                    "dn_log_trace");
 
         compileBuiltinModule("dn_log.das", dn_log_das, sizeof(dn_log_das));
+
+        DN_CORE_INFO("Script Module [dn_log] initialized.");
+
+        return true;
     }
 };
 

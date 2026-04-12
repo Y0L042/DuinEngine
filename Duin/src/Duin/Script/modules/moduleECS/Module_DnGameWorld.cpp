@@ -155,15 +155,15 @@ class Module_DecsGameWorld : public das::Module
             return false;
         }
 
-        auto *rttiMod = das::Module::require("rtti");
+        auto *rttiMod = das::Module::require("rtti_core");
         if (!rttiMod)
         {
-            DN_CORE_ERROR("dn_gameworld: required module 'rtti' not found");
+            DN_CORE_ERROR("dn_gameworld: required module 'rtti_core' not found");
             return false;
         }
         if (!rttiMod->initDependencies())
         {
-            DN_CORE_ERROR("dn_gameworld: failed to initialize dependencies of 'rtti'");
+            DN_CORE_ERROR("dn_gameworld: failed to initialize dependencies of 'rtti_core'");
             return false;
         }
 

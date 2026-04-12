@@ -17,6 +17,8 @@ class Script
     Script(const std::string &relScriptPath);
     ~Script();
 
+
+    void SetDasRoot(const std::string &path);
     virtual void InitModules(std::function<void(void)> initModules = [](void) {});
 
     bool Compile();
