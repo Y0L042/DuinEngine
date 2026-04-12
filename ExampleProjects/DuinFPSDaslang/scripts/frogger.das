@@ -5,10 +5,12 @@ require daslib/rtti
 
 require dn_gameobject
 require dn_log
+require dn_ecs
 
 class Frogger : dn_GameObject {
     x : double;
     cnt : int;
+    entity : ecs_entity_t
 
     def override _init() {}
 

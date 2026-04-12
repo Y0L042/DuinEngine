@@ -1,5 +1,5 @@
 options gen2
-options rtti=true
+options rtti
 
 require daslib/rtti
 
@@ -18,7 +18,7 @@ var world : ecs_world_t?
 var game_world : dn_GameWorld?
 var counter : float = 0.0
 
-
+var q_update_pos : ecs_query_t?
 
 struct Position {
     x : double
@@ -43,11 +43,27 @@ def game_ready() {
 
     player = dn_gameobject_add_root_child(new Player())
     child = dn_gameobject_add_child(player, new Frogger())
+
+    player.entity = ecs_entity_new(world, "Player")
+    child.entity = ecs_entity_new(world, "Frogger")
+    ecs_add_pair(world, child.entity, EcsChildOf, player.entity)
+
+    ecs_set(world, player.entity, Position(x=10.0d, y=20.0d))
+    ecs_set(world, player.entity, Velocity(x=1.0d, y=2.0d))
+
+    q_update_pos = ecs_query_builder(
+        world, 
+        [
+            ecs_term(world, type<Position>),
+            ecs_term(world, type<Velocity>, EcsIn)
+        ], 
+        EcsQueryCacheAuto
+    )
 }
 
 [export]
 def game_update() {
-  
+    
 }
 
 [export]
@@ -56,6 +72,20 @@ def game_physics_update() {
     if (counter > 2.0) {
         counter = 0.0
         //dn_info("PhysicsUpdate!")
+    }
+
+    var it = ecs_query_iter(world, q_update_pos)
+    unsafe {
+        while (ecs_query_next_iter(it)) {
+            var p : Position? = ecs_field_get(it, type<Position>, 0)
+            var v : Velocity? = ecs_field_get(it, type<Velocity>, 1)
+            for (i in range(it.count)) {
+                p[i].x += v[i].x
+                p[i].y += v[i].y
+                let name = ecs_get_name(world, it.entities[i])
+                print("{name}: \{ {p[i].x}, {p[i].y} \}\n")
+            }
+        }
     }
 }
 
@@ -94,10 +124,8 @@ def layer_2b() : void {
     var it = ecs_query_iter(world, q)
     unsafe {
         while (ecs_query_next_iter(it)) {
-            // var p : iterator<Position> <- ecs_field_iter(it, type<Position>, 0)
             var p : Position? = ecs_field_get(it, type<Position>, 0)
             var v : Velocity? = ecs_field_get(it, type<Velocity>, 1)
-            // for (i, pi, vi in range(it.count), each(p), each(v)) {
             for (i in range(it.count)) {
                 p[i].x += v[i].x
                 p[i].y += v[i].y

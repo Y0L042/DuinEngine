@@ -32,6 +32,7 @@ class DuinFPSDaslangApp : public duin::Application
     {
         mainScript = CreateChildObject<duin::GameScript>(ENTRY_SCRIPT);
         mainScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
+        mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\Duin\\src\\Duin\\Script\\duin_engine.das_project");
         mainScript->InitModules([]() {
             NEED_MODULE(Module_DnLog);
             NEED_MODULE(Module_DnGameObject);
@@ -39,8 +40,8 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_DnECS);
             NEED_MODULE(Module_DecsGameWorld);
         });
-        mainScript->EnableHotCompile(true, true);
-        mainScript->CompileAndSimulate();
+        mainScript->EnableHotCompile(true, false);
+        mainScript->HotCompileAndSimulate();
     }
 
     void Update(double delta) override

@@ -3,12 +3,14 @@ options rtti
 
 require daslib/rtti
 
-require dn_gameobject
 require dn_log
+require dn_gameobject
+require dn_ecs
 
 class Player : dn_GameObject {
     x : double;
     cnt : int;
+    entity : ecs_entity_t;
 
     def override _init() {}
 
