@@ -7,9 +7,14 @@ typedef module_info = tuple<string; string; string> const
 
 var DAS_PAK_ROOT = "./"
 
-include modules/moduleGameObject/.das_module
-include modules/moduleECS/.das_module
-include modules/moduleRuntime/.das_module
+def module_engine(req, from : string) : module_info {
+    if (req == "dn_gameobject") {
+        return ("dn_gameobject", DAS_PAK_ROOT + "modules/moduleGameObject/dn_gameobject.das", "")
+    } elif (req == "dn_gameworld") {
+        return ("dn_gameworld", DAS_PAK_ROOT + "modules/moduleECS/dn_gameworld.das", "")
+    }
+    return ("", "", "")
+}
 
 def module_default(req, from : string) : module_info {
     let rs <- split_by_chars(req, "./")
@@ -30,5 +35,9 @@ def module_default(req, from : string) : module_info {
 
 [export]
 def module_get(req, from : string) : module_info {
+    var res = module_engine(req, from)
+    if (length(res._0) > 0) {
+        return res
+    }
     return module_default(req, from)
 }

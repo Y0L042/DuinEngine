@@ -27,6 +27,11 @@ void duin::Script::SetDasRoot(const std::string &path)
     das::setDasRoot(path);
 }
 
+void duin::Script::SetProjectFile(const std::string &path)
+{
+    projectFile = path;
+}
+
 void duin::Script::InitModules(std::function<void(void)> initModules)
 {
     NEED_ALL_DEFAULT_MODULES;
@@ -48,7 +53,14 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
 bool duin::Script::Compile()
 {
     DN_CORE_INFO("Compiling script {}...", scriptPath);
-    fileAccess = das::make_smart<das::FsFileAccess>();
+    if (!projectFile.empty())
+    {
+        fileAccess = das::make_smart<das::FsFileAccess>(projectFile, das::make_smart<das::FsFileAccess>());
+    }
+    else
+    {
+        fileAccess = das::make_smart<das::FsFileAccess>();
+    }
     auto &fAccess = fileAccess;
     fAccess->addFsRoot("scripts", "scripts");
     das::CodeOfPolicies policies;

@@ -19,6 +19,7 @@ class Script
 
 
     void SetDasRoot(const std::string &path);
+    void SetProjectFile(const std::string &path);
     virtual void InitModules(std::function<void(void)> initModules = [](void) {});
 
     bool Compile();
@@ -37,6 +38,7 @@ class Script
     das::TextPrinter tout;
     das::FileAccessPtr fileAccess;
     bool scriptReady = false;
+    std::string projectFile;
     bool modulesAreInit = false;
     std::vector<das::Module *> baseModules;
 

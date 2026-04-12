@@ -1,8 +1,8 @@
 options gen2
 
-require flecs
 require dn_log
-require dn_ecs
+require flecs public
+require dn_ecs public
 
 class dn_Entity {
     entity : ecs_entity_t

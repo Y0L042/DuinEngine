@@ -5,8 +5,6 @@
 #include "Duin/Script/Script.h"
 #include "Duin/Objects/GameObject.h"
 
-#include "dn_gameobject.das.inc"
-
 // Creates a C++ ScriptGameObject backed by the daslang class instance.
 // Returns a void* handle to a heap-allocated shared_ptr.
 static void *dn_create_gameobject_impl(void *classPtr, const das::StructInfo *info, das::Context *context)
@@ -204,7 +202,7 @@ class Module_DnGameObject : public das::Module
     bool initialized = false;
 
   public:
-    Module_DnGameObject() : das::Module("dn_gameobject")
+    Module_DnGameObject() : das::Module("dn_gameobject_core")
     {
     }
 
@@ -298,7 +296,7 @@ class Module_DnGameObject : public das::Module
         addExtern<DAS_BIND_FUN(dn_is_children_enabled_impl)>(*this, lib, "dn_is_children_enabled_impl",
                                                              das::SideEffects::none, "dn_is_children_enabled_impl");
 
-        compileBuiltinModule("dn_gameobject.das", dn_gameobject_das, sizeof(dn_gameobject_das));
+        DN_CORE_INFO("Script Module [dn_gameobject_core] initialized.");
         return true;
     }
 };

@@ -2,11 +2,13 @@ options gen2
 options remove_unused_symbols = false
 options rtti=true
 
+module dn_gameworld shared public
 
-require flecs
-require dn_log
-require dn_ecs
-require dn_gameworld
+require flecs public
+require daslib/rtti public
+require dn_log public
+require dn_ecs public
+require dn_gameworld_core public
 
 class dn_GameWorld {
     _handle : void?

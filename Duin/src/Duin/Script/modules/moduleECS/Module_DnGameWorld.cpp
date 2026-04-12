@@ -8,7 +8,6 @@
 #include "Duin/ECS/PrefabRegistry.h"
 #include "Duin/Script/ScriptContext.h"
 #include "Duin/Core/Maths/DuinMaths.h"
-#include "dn_gameworld.das.inc"
 
 // Creates a ScriptGameWorld backed by the daslang class instance.
 // Returns a void* handle stored in ScriptMemory.
@@ -134,7 +133,7 @@ class Module_DecsGameWorld : public das::Module
     bool initialized = false;
 
   public:
-    Module_DecsGameWorld() : das::Module("dn_gameworld")
+    Module_DecsGameWorld() : das::Module("dn_gameworld_core")
     {
     }
 
@@ -235,9 +234,7 @@ class Module_DecsGameWorld : public das::Module
                                                                     das::SideEffects::modifyExternal,
                                                                     "dn_gameworld_get_global_scale_impl");
 
-        compileBuiltinModule("dn_gameworld.das", dn_gameworld_das, sizeof(dn_gameworld_das));
-
-        DN_CORE_INFO("Script Module [dn_gameworld] initialized.");
+        DN_CORE_INFO("Script Module [dn_gameworld_core] initialized.");
 
         return true;
     }
