@@ -97,6 +97,20 @@ function utils.runBatchScript(scriptPath, args)
     utils.runCommand(command)
 end
 
+function utils.patchFile(filePath, pattern, replacement)
+    local f = io.open(filePath, "r")
+    if not f then return end
+    local content = f:read("*all")
+    f:close()
+    local patched, count = content:gsub(pattern, replacement)
+    if count > 0 then
+        local out = io.open(filePath, "w")
+        out:write(patched)
+        out:close()
+        print(utils.colors.yellow .. "Patched " .. count .. " occurrence(s) in " .. filePath .. utils.colors.reset)
+    end
+end
+
 function utils.copyFiles(sourceDir, targetDir, patterns)
     if not os.isdir(targetDir) then
         os.mkdir(targetDir)

@@ -1,5 +1,8 @@
 local projectRoot = path.getabsolute(".")
 package.path = package.path .. ";" .. projectRoot .. "/vendor/?.lua"
+package.path = package.path .. ";" .. projectRoot .. "/../?.lua"
+
+local Cfg = require "premakeCfg"
 
 newoption {
     trigger     = "deps",
@@ -38,8 +41,8 @@ filter {}
 -- Exclude precompiled headers for C files
 filter "files:**.c"
 enablepch "Off"
-pchheader ""         -- Ensures .c files ignore PCH
-filter {}            -- Clear the filter
+pchheader "" -- Ensures .c files ignore PCH
+filter {}    -- Clear the filter
 
 filter { "files:**/external/**" }
 enablepch "Off"
@@ -75,81 +78,23 @@ includedirs
 {
     ProjectRoot .. "/src",
 }
--- externalincludedirs(global_externalincludedirs)
-externalincludedirs
-{
-    SolutionRoot .. "/%{IncludeDir.sdl}",
-    SolutionRoot .. "/%{IncludeDir.bx}",
-    SolutionRoot .. "/%{IncludeDir.bimg}",
-    SolutionRoot .. "/%{IncludeDir.bgfx}",
-    SolutionRoot .. "/%{IncludeDir.bgfx_examples}",
-    SolutionRoot .. "/%{IncludeDir.bgfx_3p}",
-    SolutionRoot .. "/%{IncludeDir.spdlog}",
-    SolutionRoot .. "/%{IncludeDir.imgui}",
-    SolutionRoot .. "/%{IncludeDir.imguizmo}",
-    SolutionRoot .. "/%{IncludeDir.imguibackends}",
-    SolutionRoot .. "/%{IncludeDir.imguifilex}",
-    SolutionRoot .. "/%{IncludeDir.flecs}",
-    SolutionRoot .. "/%{IncludeDir.fmt}",
-    SolutionRoot .. "/%{IncludeDir.patches}",
-    SolutionRoot .. "/%{IncludeDir.rapidjson}",
-    SolutionRoot .. "/%{IncludeDir.toml11}",
-    SolutionRoot .. "/%{IncludeDir.physx}",
-    SolutionRoot .. "/%{IncludeDir.reflectcpp}",
-    SolutionRoot .. "/%{IncludeDir.doctest}",
-    SolutionRoot .. "/%{IncludeDir.daslang}",
-    ProjectRoot .. "/vendor/daslang/src/builtin",
-    SolutionRoot .. "/%{IncludeDir.flecs_das}",
-}
--- libdirs(global_libdirs)
-libdirs
-{
-    ProjectRoot .. "/vendor/sdl/build/Debug",
-    ProjectRoot .. "/vendor/bgfx/.build/win64_vs2026/bin",
-    ProjectRoot .. "/vendor/flecs/build_vs2026/Debug",
-    ProjectRoot .. "/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
-    ProjectRoot .. "/vendor/toml11/build/src/Debug",
-    ProjectRoot .. "/vendor/reflectcpp/build/Debug",
-    ProjectRoot .. "/vendor/daslang/lib/RelWithDebInfo",
-}
--- defines(global_defines)
+externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
+
+libdirs(prependRoot(SolutionRoot, global_libdirs))
+
+defines(global_defines)
 defines
 {
-    -- TODO
-    "flecs_STATIC",
-    "DN_BUILD_STATIC",
-    "DN_PLATFORM_WINDOWS",
-    "PX_PHYSX_STATIC_LIB",
-    "BX_CONFIG_DEBUG=0",
-    --"IMGUI_IMPL_OPENGL_LOADER_GLAD", --necessary?
     "DN_HEADLESS",
-    "DAS_SMART_PTR_DEBUG=1",
     "DAS_ENABLE_EXCEPTIONS=1",
+    "DAS_SMART_PTR_DEBUG=1",
+    "DAS_ENABLE_DLL=1",
+    "DAS_MOD_EXPORTS",
 }
+
+-- global_links contains "Duin.lib" which is this project itself; static libs
+-- must not link their own output. Consumers (executables) own the full link.
 -- links(global_links)
-links
-{
-    "flecs_static.lib",
-    "winmm.lib",
-    "legacy_stdio_definitions.lib",
-    "Setupapi.lib",
-    "Version.lib",
-    "Imm32.lib",
-    "Cfgmgr32.lib",
-    "SDL3-static.lib",
-    "toml11.lib",
-    "bxDebug.lib",
-    "bimgDebug.lib",
-    "bgfxDebug.lib",
-    "PhysX_static.lib",
-    "PhysXCooking_static.lib",
-    "PhysXCommon_static.lib",
-    "PhysXFoundation_static.lib",
-    "PhysXPvdSDK_static.lib",
-    "PhysXExtensions_static.lib",
-    "PhysXCharacterKinematic_static.lib",
-    "reflectcpp.lib",
-}
 
 filter "action:vs*"
 buildoptions {
@@ -157,7 +102,7 @@ buildoptions {
     '/Zc:__cplusplus',
     '/Zc:preprocessor',
     '/bigobj'
-}         -- Changed: Added /utf-8 flag for Unicode support
+} -- Changed: Added /utf-8 flag for Unicode support
 multiprocessorcompile "On"
 filter {}
 
@@ -169,7 +114,9 @@ cppdialect "C++20"
 filter "configurations:Debug"
 defines { "DN_DEBUG", "_DEBUG" }
 symbols "On"
-buildoptions { "/Gy" }         -- Function-level linking: enables dead-stripping of unused functions
+staticruntime(Cfg.premake_staticrt)
+runtime "Debug"
+buildoptions { "/Gy" } -- Function-level linking: enables dead-stripping of unused functions
 -- Enable code coverage for Debug builds
 -- buildoptions { "/Z7" }  -- Full symbolic debug information
 -- linkoptions { "/PROFILE" }  -- Enable profiling/coverage
@@ -178,14 +125,18 @@ buildoptions { "/Gy" }         -- Function-level linking: enables dead-stripping
 filter "configurations:DebugCoverage"
 defines { "DN_DEBUG", "_DEBUG" }
 symbols "On"
+staticruntime(Cfg.premake_staticrt)
+runtime "Debug"
 -- Enable code coverage for Debug builds
-buildoptions { "/Z7" }             -- Full symbolic debug information
-linkoptions { "/PROFILE" }         -- Enable profiling/coverage
-incrementallink "Off"              -- Required for /PROFILE
+buildoptions { "/Z7" }     -- Full symbolic debug information
+linkoptions { "/PROFILE" } -- Enable profiling/coverage
+incrementallink "Off"      -- Required for /PROFILE
 
 filter "configurations:Release"
 defines { "DN_RELEASE", "NDEBUG" }
 optimize "On"
+staticruntime(Cfg.premake_staticrt)
+runtime "Release"
 
 filter "configurations:Dist"
 defines "DN_DIST"

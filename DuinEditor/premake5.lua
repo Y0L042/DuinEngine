@@ -43,30 +43,30 @@ project "DuinEditor"
         SolutionRoot .. "/Duin/extern",
     }
 
-    LocalIncludeDir = {}
-    LocalIncludeDir["nativefiledialog"] = "./vendor/nativefiledialog-extended/src/include"
     externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
-	externalincludedirs
-	{
+    externalincludedirs
+    {
         "./vendor/nativefiledialog-extended/src/include",
-        SolutionRoot .. "/" .. IncludeDir["flecs_das"],
-	}
+    }
 
     libdirs(prependRoot(SolutionRoot, global_libdirs))
-	libdirs
-	{
+    libdirs
+    {
         "./vendor/nativefiledialog-extended/build/src/Debug",
-        SolutionRoot .. "/Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
-	}
+    }
 
     defines(global_defines)
 
     links(global_links)
-	links
-	{
-        "flecs_das.lib",
+    links
+    {
         "nfd.lib",
-	}
+    }
+
+    postbuildcommands
+    {
+        '{COPYFILE} "' .. daslang_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn.dll"',
+    }
 
     filter { "files:**/external/**" }
         enablepch "Off"

@@ -1,3 +1,4 @@
+local Cfg = require "premakeCfg"
 SolutionRoot = "../.."
 ProjectRoot = "."
 
@@ -59,11 +60,6 @@ includedirs
 }
 
 externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
-externalincludedirs
-{
-    SolutionRoot .. "/" .. IncludeDir["daslang"],
-    SolutionRoot .. "/" .. IncludeDir["flecs_das"],
-}
 
 libdirs(prependRoot(SolutionRoot, global_libdirs))
 
@@ -73,6 +69,11 @@ postbuildcommands
 {
     '{COPYDIR} "' .. path.getabsolute("scripts") .. '" "%{cfg.targetdir}/scripts"',
     '{COPYDIR} "' .. path.getabsolute("data") .. '" "%{cfg.targetdir}/data"',
+}
+
+postbuildcommands
+{
+    '{COPYFILE} "' .. daslang_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn.dll"',
 }
 
 filter "system:windows"
@@ -91,11 +92,11 @@ filter {}
 filter "configurations:Debug"
 defines "DN_DEBUG"
 symbols "On"
-staticruntime "On"
+staticruntime(Cfg.premake_staticrt)
 runtime "Debug"
 
 filter "configurations:Release"
 defines "DN_RELEASE"
 optimize "On"
-staticruntime "On"
+staticruntime(Cfg.premake_staticrt)
 runtime "Release"

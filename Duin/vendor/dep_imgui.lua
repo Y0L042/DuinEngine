@@ -2,26 +2,22 @@ local utils = require "utils"
 local dep_imgui = {}
 local name = "IMGUI"
 
-local repo = "https://github.com/ocornut/imgui"
+local repo   = "https://github.com/ocornut/imgui"
 local branch = "docking"
 local folder = "imgui"
 
 function dep_imgui.build()
     print("START: " .. name)
 
-    -- Clone Repo
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. branch .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout " .. branch)
     else
         print("\t\tFetch")
-        local currentDir = os.getcwd()
-        utils.changeDir(folder)
-
+        utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git checkout " .. branch .. "")
-
+        utils.runCommand("git checkout " .. branch)
         utils.popDir()
     end
     print(name .. " downloaded.")
@@ -43,6 +39,10 @@ function dep_imgui.build()
     utils.copyFiles(folder .. "/backends", backendsDir, {
         "imgui_impl_sdl3.cpp", "imgui_impl_sdl3.h",
     })
+
+    -- Patch include paths: upstream uses "imgui.h" but we keep imgui in external/
+    utils.patchFile(backendsDir .. "/imgui_impl_sdl3.h",   '"imgui%.h"',   '"../../external/imgui.h"')
+    utils.patchFile(backendsDir .. "/imgui_impl_sdl3.cpp", '"imgui%.h"',   '"../../external/imgui.h"')
 
     print("END: " .. name)
 end

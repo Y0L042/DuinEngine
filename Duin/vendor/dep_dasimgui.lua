@@ -9,19 +9,16 @@ local folder = "dasimgui"
 function dep_dasimgui.build()
     print("START: " .. name)
 
-    -- Clone Repo
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
         utils.runCommand("cd " .. folder .. " && git checkout " .. commit)
     else
         print("\t\tFetch")
-        utils.changeDir(folder)
-
+        utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git fetch origin")
         utils.runCommand("git checkout " .. commit)
-
         utils.popDir()
     end
     print(name .. " downloaded.")

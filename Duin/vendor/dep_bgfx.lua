@@ -1,35 +1,56 @@
+local Cfg = require "premakeCfg"
 local utils = require "utils"
 local dep_bgfx = {}
+local name = "BGFX"
 
-local repo = "https://github.com/bkaradzic/bgfx"
-local branch = "master"
+local repo   = "https://github.com/bkaradzic/bgfx"
 local commit = "8532b2c"
 local folder = "bgfx"
 
 function dep_bgfx.build()
-    print("START: BGFX")
+    print("START: " .. name)
 
-    -- Clone Repo
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. commit .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout " .. commit)
     else
         print("\t\tFetch")
-        local currentDir = os.getcwd()
-        utils.changeDir(folder)
-
+        utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git checkout " .. commit .. "")
-
+        utils.runCommand("git checkout " .. commit)
         utils.popDir()
     end
-    print("BGFX downloaded.")
+    print(name .. " downloaded.")
 
-    utils.changeDir(folder)
+    utils.pushDir(folder)
     utils.runCommand("git submodule update --init --recursive")
     utils.runCommand("..\\bx\\tools\\bin\\windows\\genie vs2026")
-    utils.runCommand('cd .build\\projects\\vs2026 && msbuild "bgfx.slnx" /p:Configuration=Debug /p:Platform=x64 /p:RuntimeLibrary=MultiThreadedDebug /p:CLCompileAdditionalOptions="/Zc:__cplusplus"')
+
+    -- Patch genie-generated vcxproj files to use the workspace CRT (MD/MDd).
+    -- genie always emits static-CRT entries; /p:RuntimeLibrary= on msbuild is
+    -- ignored for this property, so we rewrite the XML directly.
+    local vcxprojDir = ".build\\projects\\vs2026"
+    for _, proj in ipairs({ "bgfx", "bimg", "bimg_decode", "bx" }) do
+        local path = vcxprojDir .. "\\" .. proj .. ".vcxproj"
+        local f = io.open(path, "r")
+        if f then
+            local content = f:read("*a")
+            f:close()
+            content = content:gsub(
+                "<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>",
+                "<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>")
+            content = content:gsub(
+                "<RuntimeLibrary>MultiThreaded</RuntimeLibrary>",
+                "<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>")
+            local out = io.open(path, "w")
+            out:write(content)
+            out:close()
+            print("\t\tPatched CRT to DLL in " .. path)
+        end
+    end
+
+    utils.runCommand('cd .build\\projects\\vs2026 && msbuild "bgfx.slnx" /p:Configuration=Debug /p:Platform=x64 /p:CLCompileAdditionalOptions="/Zc:__cplusplus"')
     utils.popDir()
 
     -- Copy example helper files to external/
@@ -57,7 +78,7 @@ function dep_bgfx.build()
         "fs_ocornut_imgui.sc", "vs_ocornut_imgui.sc",
     })
 
-    print("END: BGFX")
+    print("END: " .. name)
 end
 
 return dep_bgfx

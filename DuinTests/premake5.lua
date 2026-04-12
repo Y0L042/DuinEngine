@@ -28,14 +28,7 @@ includedirs
     ProjectRoot .. "/src",
 }
 
-LocalIncludeDir = {}
 externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
-externalincludedirs
-{
-    SolutionRoot .. "/" .. IncludeDir["daslang"],
-    SolutionRoot .. "/Duin/vendor/daslang/src/builtin",
-    SolutionRoot .. "/" .. IncludeDir["flecs_das"],
-}
 
 libdirs(prependRoot(SolutionRoot, global_libdirs))
 
@@ -55,6 +48,7 @@ links(global_links)
 postbuildcommands
 {
     '{COPYDIR} "' .. path.getabsolute("scripts") .. '" "%{cfg.targetdir}/scripts"',
+    '{COPYFILE} "' .. daslang_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn.dll"',
 }
 
 filter { "files:**/external/**" }

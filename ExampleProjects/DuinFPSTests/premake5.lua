@@ -31,18 +31,9 @@ project "DuinFPSTests"
         FPSSrc,  -- allows #include "EntityManager.h" etc.
     }
 
-    LocalIncludeDir = {}
     externalincludedirs(prependRoot(SolutionRoot, global_externalincludedirs))
-    externalincludedirs
-    {
-        SolutionRoot .. "/" .. IncludeDir["flecs_das"],
-    }
 
     libdirs(prependRoot(SolutionRoot, global_libdirs))
-    libdirs
-    {
-        SolutionRoot .. "/Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
-    }
 
     defines(global_defines)
     defines
@@ -53,9 +44,10 @@ project "DuinFPSTests"
     }
 
     links(global_links)
-    links
+
+    postbuildcommands
     {
-        "flecs_das.lib",
+        '{COPYFILE} "' .. daslang_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn.dll"',
     }
 
     filter { "files:**/external/**" }

@@ -1,32 +1,29 @@
+local Cfg = require "premakeCfg"
 local utils = require "utils"
 local dep_daslang = {}
 local name = "DASLANG"
 
-local repo = "https://github.com/GaijinEntertainment/daScript"
-local tag = "0.6.1-RC2"
+local repo   = "https://github.com/GaijinEntertainment/daScript"
+local tag    = "0.6.1-RC2"
 local folder = "daslang"
 
 function dep_daslang.build()
     print("START: " .. name)
 
-    -- Clone Repo
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. tag .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
     else
         print("\t\tFetch")
-        utils.changeDir(folder)
-
+        utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git pull")
-        utils.runCommand("git checkout " .. tag .. "")
-
+        utils.runCommand("git checkout tags/" .. tag)
         utils.popDir()
     end
     print(name .. " downloaded.")
 
-    -- Build static lib
     utils.pushDir(folder)
 
     -- Build daslang as RelWithDebInfo: retains usable debug info while cutting the
@@ -35,15 +32,16 @@ function dep_daslang.build()
     local build_type = "RelWithDebInfo"
 
     local cmake_flags = "-DCMAKE_BUILD_TYPE=" .. build_type
-        -- .. " -DDAS_TOOLS_DISABLED=ON"
         .. " -DDAS_TUTORIAL_DISABLED=OFF"
         .. " -DDAS_TESTS_DISABLED=ON"
         .. " -DDAS_AOT_EXAMPLES_DISABLED=ON"
         .. " -DDAS_GLFW_DISABLED=ON"
         .. " -DDAS_IMGUI_DISABLED=OFF"
 
+    cmake_flags = cmake_flags .. " -DCMAKE_CXX_FLAGS_RELWITHDEBINFO=\"/DDAS_SMART_PTR_DEBUG=1 /DDAS_ENABLE_EXCEPTIONS=1\""
+
     if os.target() == "windows" then
-        cmake_flags = cmake_flags .. " -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDebug"
+        cmake_flags = cmake_flags .. " -DCMAKE_MSVC_RUNTIME_LIBRARY=" .. Cfg.cmake_crt_debug
     end
 
     if os.isdir("build") then
@@ -56,7 +54,7 @@ function dep_daslang.build()
 
     print("\t\tConfiguring with: " .. cmake_flags)
     utils.runCommand("cmake -S . -B build " .. cmake_flags)
-    utils.runCommand("cmake --build build --config " .. build_type .. " -j 1") -- " -j 1" avoids build concurrency errors
+    utils.runCommand("cmake --build build --config " .. build_type .. " -j 1") -- -j 1 avoids build concurrency errors
 
     utils.popDir()
     print("END: " .. name)

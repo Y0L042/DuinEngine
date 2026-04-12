@@ -2,26 +2,22 @@ local utils = require "utils"
 local dep_doctest = {}
 local name = "DOCTEST"
 
-local repo = "https://github.com/doctest/doctest"
-local tag = "v2.4.12"
+local repo   = "https://github.com/doctest/doctest"
+local tag    = "v2.4.12"
 local folder = "doctest"
 
 function dep_doctest.build()
     print("START: " .. name)
 
-    -- Clone Repo
-    if not utils.isDir(folder) then
-        utils.print("\t\tClone")
+    if not os.isdir(folder) then
+        print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. tag .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
     else
-        utils.print("\t\tFetch")
-        utils.changeDir(folder)
-
+        print("\t\tFetch")
+        utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git pull")
-        utils.runCommand("git checkout " .. tag .. "")
-
+        utils.runCommand("git checkout tags/" .. tag)
         utils.popDir()
     end
     print(name .. " downloaded.")

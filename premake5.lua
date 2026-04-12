@@ -1,4 +1,4 @@
-require "premakeCfg"
+local Cfg = require "premakeCfg"
 
 function prependRoot(root, dirs)
     local result = {}
@@ -15,7 +15,7 @@ workspace "Duin"
     configurations { "Debug", "DebugCoverage", "Release", "Dist", "Archive" }
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-    staticruntime "On"
+    staticruntime(Cfg.premake_staticrt)
 
     -- Include directories relative to the root folder (solution directory)
     IncludeDir = {}
@@ -46,8 +46,8 @@ workspace "Duin"
     { 
         "Duin/src" 
     }
-    global_externalincludedirs = 
-    {    
+    global_externalincludedirs =
+    {
         "%{IncludeDir.sdl}",
         "%{IncludeDir.bx}",
         "%{IncludeDir.bimg}",
@@ -55,7 +55,6 @@ workspace "Duin"
         "%{IncludeDir.bgfx_examples}",
         "%{IncludeDir.bgfx_3p}",
         "%{IncludeDir.spdlog}",
-        "%{IncludeDir.imgui}",
         "%{IncludeDir.imguizmo}",
         "%{IncludeDir.imguifilex}",
         "%{IncludeDir.flecs}",
@@ -66,6 +65,9 @@ workspace "Duin"
         "%{IncludeDir.physx}",
         "%{IncludeDir.doctest}",
         "%{IncludeDir.reflectcpp}",
+        "%{IncludeDir.daslang}",
+        "Duin/vendor/daslang/src/builtin",
+        "%{IncludeDir.flecs_das}",
     }
     global_libdirs =
     {
@@ -73,15 +75,14 @@ workspace "Duin"
         "Duin/vendor/sdl/build/Debug",
         "Duin/vendor/bgfx/.build/win64_vs2026/bin",
         "Duin/vendor/flecs/build_vs2026/Debug",
-        "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.mt/debug",
+        "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.md/debug",
         "Duin/vendor/toml11/build/src/Debug",
         "Duin/vendor/reflectcpp/build/Debug",
         "Duin/vendor/daslang/lib/RelWithDebInfo",
-        "Duin/vendor/flecs-daslang/flecs_das/bin/" .. outputdir .. "/flecs_das",
+        "Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
     }
-    global_defines = 
+    global_defines =
     {
-        "DN_TESTING",
         "DN_PLATFORM_WINDOWS",
         "DN_BUILD_STATIC",
         "flecs_STATIC",
@@ -112,10 +113,12 @@ workspace "Duin"
         "PhysXExtensions_static.lib",
         "PhysXCharacterKinematic_static.lib",
         "reflectcpp.lib",
-        "libDaScript.lib",
+        "libDaScriptDyn.lib",
         "libUriParser.lib",
         "dbghelp.lib",
     }
+
+    daslang_dll_src = path.getabsolute("Duin/vendor/daslang/bin/RelWithDebInfo/libDaScriptDyn.dll")
 
     -- Debug build size optimisations:
     --   FastLink PDB — references .obj files instead of copying all symbols in.

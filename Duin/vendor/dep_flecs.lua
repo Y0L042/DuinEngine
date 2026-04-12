@@ -1,41 +1,33 @@
+local Cfg = require "premakeCfg"
 local utils = require "utils"
 local dep_flecs = {}
 local name = "FLECS"
 
-local repo = "https://github.com/SanderMertens/flecs"
--- local commit = "2c373c3"
-local tag = "v4.1.4"
+local repo   = "https://github.com/SanderMertens/flecs"
+local tag    = "v4.1.4"
 local folder = "flecs"
 
 function dep_flecs.build()
     print("START: " .. name)
 
-    -- Clone Repo
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. tag .. "")
+        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
     else
         print("\t\tFetch")
-        utils.changeDir(folder)
-
+        utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git pull")
-        utils.runCommand("git checkout " .. tag .. "")
-
+        utils.runCommand("git checkout tags/" .. tag)
         utils.popDir()
     end
     print(name .. " downloaded.")
 
-
-    utils.deleteFolder("flecs/build_vs2026")
-    if not os.isdir("flecs/build_vs2026") then
-        -- makeDir("flecs/build_vs2022")
-        -- runCommand('cmake -S flecs -B flecs/build_vs2022 -DBUILD_SHARED_LIBS=OFF -DCMAKE_CXX_FLAGS="/MT" -DCMAKE_C_FLAGS="/MT"')
-        utils.runCommand('cmake -S flecs -B flecs/build_vs2026 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDebug -DCMAKE_C_FLAGS_DEBUG="/MTd" -DCMAKE_CXX_FLAGS_DEBUG="/MTd"')
-        -- runCommand("cmake --build flecs/build_vs2022 --config Release")
-        utils.runCommand("cmake --build flecs/build_vs2026 --config Debug")
-    end
+    utils.deleteFolder(folder .. "/build_vs2026")
+    local crt_flag = (Cfg.CRT == "MT") and "/MTd" or "/MDd"
+    utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug .. ' -DCMAKE_C_FLAGS_DEBUG="' .. crt_flag .. '" -DCMAKE_CXX_FLAGS_DEBUG="' .. crt_flag .. '"')
+    utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug")
 
     print("END: " .. name)
 end

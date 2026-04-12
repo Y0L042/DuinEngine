@@ -8,6 +8,10 @@
 local Cfg = {}
 
 Cfg.VISUAL_STUDIO = "VS2026"
-Cfg.CRT          = "MT"
+Cfg.CRT          = "MD"
+
+Cfg.cmake_crt_debug   = (Cfg.CRT == "MT") and "MultiThreadedDebug"    or "MultiThreadedDebugDLL"
+Cfg.cmake_crt_release = (Cfg.CRT == "MT") and "MultiThreaded"          or "MultiThreadedDLL"
+Cfg.premake_staticrt  = (Cfg.CRT == "MT") and "On"                     or "Off"
 
 return Cfg

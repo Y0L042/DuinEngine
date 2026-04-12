@@ -2,28 +2,18 @@ local utils = require "utils"
 local dep_flecsdaslangbindings = {}
 local name = "FLECSDASLANGBINDINGS"
 
-local repo = "https://github.com/Y0L042/flecs-daslang"
+local repo   = "https://github.com/Y0L042/flecs-daslang"
 local folder = "flecs-daslang"
-local branch = "DuinEngine"
-
--- On-disk sibling project path (relative to the vendor/ dir where this script runs)
-local source_project = "../../flecs-daslang"
-local source_headers = source_project .. "/flecs_das/src"
-local source_lib     = source_project .. "/flecs_das/bin/Debug-windows-x86_64/flecs_das"
-
-local dest_headers = folder .. "/flecs_das/src"
-local dest_lib     = folder .. "/flecs_das/bin/Debug-windows-x86_64/flecs_das"
 
 function dep_flecsdaslangbindings.build()
     print("START: " .. name)
 
-    -- Clone Repo
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
     else
         print("\t\tFetch")
-        utils.changeDir(folder)
+        utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git pull")
         utils.popDir()
