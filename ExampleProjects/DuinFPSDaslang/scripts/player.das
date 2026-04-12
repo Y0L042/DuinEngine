@@ -1,6 +1,8 @@
 options gen2
 options rtti
 
+require daslib/rtti
+
 require dn_gameobject
 require dn_log
 

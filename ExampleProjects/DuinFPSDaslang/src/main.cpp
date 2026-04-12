@@ -31,8 +31,8 @@ class DuinFPSDaslangApp : public duin::Application
     void Ready() override
     {
         mainScript = CreateChildObject<duin::GameScript>(ENTRY_SCRIPT);
+        mainScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
         mainScript->InitModules([]() {
-            NEED_MODULE(Module_Doctest);
             NEED_MODULE(Module_DnLog);
             NEED_MODULE(Module_DnGameObject);
             NEED_MODULE(Module_flecs);

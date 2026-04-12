@@ -1,10 +1,9 @@
 options gen2
-options rtti
+options rtti=true
 
-require imgui/imgui_boost
+require daslib/rtti
 
 require flecs
-require dn_doctest
 require dn_log
 require dn_gameobject
 require dn_ecs
