@@ -10,14 +10,6 @@
 
 #define SDL_MAIN_HANDLED
 
-#ifndef BX_CONFIG_DEBUG
-#define BX_CONFIG_DEBUG 0
-#endif
-
-#include <bgfx/bgfx.h>
-#include <bgfx/platform.h>
-
-#include "external/backends/imgui_impl_bgfx.h"
 #include "external/backends/imgui_impl_sdl3.h"
 
 #include <filesystem>
@@ -37,7 +29,6 @@
 #include <Duin/Physics/physx/PhysicsServer.h>
 #include <Duin/Render/Camera.h>
 #include <external/imgui.h>
-#include <bgfx/defines.h>
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
@@ -624,9 +615,11 @@ void duin::Application::RemoveChildObject(std::shared_ptr<GameObject> child)
 // ============================================================
 // Standard function definitions
 // ============================================================
+
+#include "Duin/Render/RHI.h"
+
 #ifndef DN_HEADLESS
 #include "Application_Impl.hpp"
-
 #else /* DN_HEADLESS */
 #include "Application_HeadlessImpl.hpp"
 #endif /* DN_HEADLESS */

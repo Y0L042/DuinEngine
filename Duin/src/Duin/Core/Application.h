@@ -167,12 +167,12 @@ class DAPI Application
 
 #ifdef DN_TESTING
     void InitSDL();
-    void InitBGFX();
+    void InitRHI();
     void InitImGui();
     void InitRenderer();
     void CleanRenderer();
     void ShutdownImGui();
-    void ShutdownBGFX();
+    void ShutdownRHI();
     void ShutdownSDL();
 
     void BeginRenderFrame();
@@ -265,10 +265,10 @@ class DAPI Application
 #ifndef DN_TESTING
     // Init / shutdown
     void InitSDL();
-    void InitBGFX();
+    void InitRHI();
     void InitImGui();
     void ShutdownImGui();
-    void ShutdownBGFX();
+    void ShutdownRHI();
     void ShutdownSDL();
 
     bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,

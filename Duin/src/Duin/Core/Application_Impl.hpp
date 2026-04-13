@@ -1,4 +1,3 @@
-
 void duin::Application::Run()
 {
     double physicsCurrentTime = duin::GetTicks();
@@ -12,7 +11,7 @@ void duin::Application::Run()
     DN_CORE_INFO("Set render FPS {}", TARGET_RENDER_FRAMERATE);
 
     InitSDL();
-    InitBGFX();
+    InitRHI();
     InitImGui();
     duin::InitRenderer();
     duin::SetRenderContextAvailable(true);
@@ -32,7 +31,7 @@ void duin::Application::Run()
     duin::SetRenderContextAvailable(false);
 
     ShutdownImGui();
-    ShutdownBGFX();
+    ShutdownRHI();
     ShutdownSDL();
 }
 
@@ -56,33 +55,24 @@ void duin::Application::InitSDL()
     }
 }
 
-void duin::Application::InitBGFX()
+void duin::Application::InitRHI()
 {
-    bgfx::Init bgfxInit;
-    bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer
-
-    bgfx::renderFrame(); // Claim render thread before bgfx::init() spawns one
-    ::HWND hwnd = (::HWND)::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow),
-                                                   SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
-    if (!hwnd)
-    {
-        DN_CORE_FATAL("SDL3 window handle not found!");
-    }
-    bgfxInit.resolution.width = WINDOW_WIDTH;
-    bgfxInit.resolution.height = WINDOW_HEIGHT;
-    bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
-    bgfxInit.platformData.nwh = hwnd;
-
-    bgfx::init(bgfxInit);
-
-    bgfx::setViewClear(RENDER_3D_VIEWID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
-    bgfx::setViewRect(RENDER_3D_VIEWID, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    RHIStart(
+        RHI_VIEW_3D,
+        WINDOW_WIDTH, 
+        WINDOW_HEIGHT, 
+        [&]() {
+            return (::HWND)::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow),
+                                                SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
+        },
+        false // not headless
+    );
 }
 
 void duin::Application::InitImGui()
 {
     ImGui::CreateContext();
-    ::ImGui_Implbgfx_Init(255);
+    RHIImGuiInit(RHI_VIEW_IMGUI);
     ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 }
@@ -90,14 +80,14 @@ void duin::Application::InitImGui()
 void duin::Application::ShutdownImGui()
 {
     ::ImGui_ImplSDL3_Shutdown();
-    ::ImGui_Implbgfx_Shutdown();
+    RHIImGuiShutdown();
     ImGui::DestroyContext();
 }
 
-void duin::Application::ShutdownBGFX()
+void duin::Application::ShutdownRHI()
 {
-    bgfx::shutdown();
-    DN_CORE_INFO("bgfx shut down...");
+    RHIClose();
+    DN_CORE_INFO("RHI closed...");
 }
 
 void duin::Application::ShutdownSDL()
@@ -140,12 +130,12 @@ void duin::Application::RunRender()
     WINDOW_WIDTH = displayWidth;
     WINDOW_HEIGHT = displayHeight;
 
-    bgfx::reset((uint32_t)displayWidth, (uint32_t)displayHeight, BGFX_RESET_VSYNC);
-    bgfx::setViewRect(RENDER_3D_VIEWID, 0, 0, bgfx::BackbufferRatio::Equal);
-    bgfx::touch(RENDER_3D_VIEWID);
+    RHIReset((uint32_t)displayWidth, (uint32_t)displayHeight, RHI_RESET_VSYNC);
+    RHISetViewRect(RHI_VIEW_3D, 0, 0, (uint16_t)displayWidth, (uint16_t)displayHeight);
+    RHITouch(RHI_VIEW_3D);
 
     ++renderFrameCount;
-    ::ImGui_Implbgfx_NewFrame();
+    RHIImGuiNewFrame();
     ::ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
 
@@ -168,7 +158,7 @@ void duin::Application::RunRender()
     duin::EndDraw3D();
 
     ImGui::Render();
-    ::ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
+    RHIImGuiRenderDrawLists(ImGui::GetDrawData());
     duin::ExecuteRenderPipeline();
 }
 
