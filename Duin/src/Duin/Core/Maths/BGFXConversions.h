@@ -2,9 +2,6 @@
 
 #include "DuinMaths.h"
 
-#include <bx/math.h>
-#include <bgfx/bgfx.h>
-
 namespace duin
 {
 /**
