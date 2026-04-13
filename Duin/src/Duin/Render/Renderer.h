@@ -3,19 +3,20 @@
  * @brief Core rendering system and utilities.
  * @ingroup Render_Core
  *
- * Provides the main rendering interface using BGFX. Handles 3D rendering,
+ * Provides the main rendering interface. Handles 3D rendering,
  * render-to-texture, debug drawing, and primitive shapes.
+ * All GPU operations are routed through the RHI layer.
  */
 
 #pragma once
 
+#include "RHI.h"
 #include "RenderGeometry.h"
 #include "Camera.h"
 #include "RenderShape.h"
 
 #include "Duin/Core/Utils/UUID.h"
 #include "Color.h"
-#include <debugdraw/debugdraw.h>
 
 #include <cstdint>
 #include <vector>
@@ -25,36 +26,22 @@
 namespace duin
 {
 
+#define RENDER_3D_VIEWID 0
+
 struct RenderTexture;
 struct RenderState;
 struct ShaderProgram;
-struct DebugDrawState;
 
-const bgfx::ViewId RENDER_3D_VIEWID = 0;
-const bgfx::ViewId RENDER_3D_RENDERTEXTURE_VIEWID = 1;
-
-/** @brief Initializes the BGFX rendering system. */
+/** @brief Initializes the rendering system. */
 void InitRenderer();
 /** @brief Shuts down the rendering system. */
 void CleanRenderer();
-/** @brief Destroys GPU resources and resets all static state. Safe to call before bgfx::shutdown(). */
+/** @brief Destroys GPU resources and resets all static state. Safe to call before shutdown. */
 void ResetRenderer();
 /** @brief Returns true if rendering context is available. */
 bool IsRenderContextAvailable();
 /** @brief Sets rendering context availability flag. */
 void SetRenderContextAvailable(bool available);
-
-/**
- * @struct DebugDrawState
- * @brief State for debug drawing operations.
- * @ingroup Render_Core
- */
-struct DebugDrawState
-{
-    bool isActive = false;
-    DebugDrawEncoder encoder;
-    bgfx::Encoder *bgfxEncoder = nullptr;
-};
 
 /**
  * @struct RenderState
@@ -69,11 +56,10 @@ struct RenderState
     Camera *camera = nullptr;        ///< Active camera.
     bool in3DMode = false;           ///< True between BeginDraw3D/EndDraw3D.
     bool inTextureMode = false;      ///< True between BeginTextureMode/EndTextureMode.
-    DebugDrawState debugDrawState;
     Matrix viewMatrix;
     Matrix projectionMatrix;
     UUID stateUUID;
-    size_t viewID = RENDER_3D_VIEWID;
+    RHIViewId viewID = RHI_VIEW_3D;
 };
 
 /**
@@ -86,11 +72,12 @@ struct RenderState
  */
 struct RenderTexture
 {
-    uint16_t width, height;                 ///< Texture dimensions.
-    UUID textureUUID;                       ///< Unique identifier.
-    bgfx::ViewId viewID = RENDER_3D_RENDERTEXTURE_VIEWID; ///< BGFX view ID.
-    bgfx::TextureHandle texture;            ///< BGFX texture handle.
-    bgfx::FrameBufferHandle frameBuffer;    ///< BGFX framebuffer handle.
+    uint16_t width = 0;
+    uint16_t height = 0;
+    UUID textureUUID;                          ///< Unique identifier.
+    RHIViewId viewID = RHI_VIEW_RENDERTEXTURE; ///< View ID.
+    RHITextureHandle texture;                  ///< Texture handle.
+    RHIFrameBufferHandle frameBuffer;          ///< Framebuffer handle.
 
     RenderTexture() = default;
 
@@ -100,47 +87,13 @@ struct RenderTexture
      * @param height_ Height in pixels.
      * @param textureUUID_ Unique identifier.
      */
-    RenderTexture(int width_, int height_, UUID textureUUID_)
-        : width(static_cast<uint16_t>(width_)), height(static_cast<uint16_t>(height_)), textureUUID(textureUUID_),
-          texture(BGFX_INVALID_HANDLE), frameBuffer(BGFX_INVALID_HANDLE)
-    {
-        // Create uninitialized texture
-        texture = bgfx::createTexture2D(
-            static_cast<uint16_t>(std::max(width, (uint16_t)1)), static_cast<uint16_t>(std::max(height, (uint16_t)1)),
-            false, // mipmaps
-            1,     // num layers
-            bgfx::TextureFormat::RGBA8,
-            BGFX_TEXTURE_RT | BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT | BGFX_SAMPLER_MIP_POINT);
-        frameBuffer = bgfx::createFrameBuffer(1, &texture);
-    }
+    RenderTexture(int width_, int height_, UUID textureUUID_);
 
     /** @brief Returns true if texture handles are valid and dimensions > 0. */
-    bool IsValid()
-    {
-        bool valid = bgfx::isValid(texture) && bgfx::isValid(frameBuffer);
-        valid = valid && ((width > 0) && (height > 0));
+    bool IsValid();
 
-        return valid;
-    }
-
-    /** @brief Releases BGFX resources. */
-    void Destroy()
-    {
-        if (!IsRenderContextAvailable())
-        {
-            return;
-        }
-
-        textureUUID = UUID::INVALID;
-        width = 0;
-        height = 0;
-
-        bgfx::destroy(texture);
-        texture = BGFX_INVALID_HANDLE;
-
-        bgfx::destroy(frameBuffer);
-        frameBuffer = BGFX_INVALID_HANDLE;
-    }
+    /** @brief Releases GPU resources. */
+    void Destroy();
 };
 
 /**
@@ -151,16 +104,16 @@ struct RenderTexture
 struct ShaderProgram
 {
     UUID uuid;
-    bgfx::ShaderHandle vsh;      ///< Vertex shader handle.
-    bgfx::ShaderHandle fsh;      ///< Fragment shader handle.
-    bgfx::ProgramHandle program; ///< Combined program handle.
+    RHIShaderHandle vsh;      ///< Vertex shader handle.
+    RHIShaderHandle fsh;      ///< Fragment shader handle.
+    RHIProgramHandle program; ///< Combined program handle.
     uint8_t isValid = 0;
 
-    ShaderProgram() : vsh(BGFX_INVALID_HANDLE), fsh(BGFX_INVALID_HANDLE), program(BGFX_INVALID_HANDLE), isValid(0)
+    ShaderProgram() : isValid(0)
     {
     }
-    ShaderProgram(bgfx::ShaderHandle vsh, bgfx::ShaderHandle fsh, bgfx::ProgramHandle program)
-        : vsh(vsh), fsh(fsh), program(program), isValid(1)
+    ShaderProgram(RHIShaderHandle vsh_, RHIShaderHandle fsh_, RHIProgramHandle program_)
+        : vsh(vsh_), fsh(fsh_), program(program_), isValid(1)
     {
     }
 };
@@ -185,7 +138,7 @@ void BeginDebugDraw();
 void EndDebugDraw();
 /** @brief Begins a minimal render frame (encoder + debug draw). For testing use. */
 void BeginEncoderFrame();
-/** @brief Ends a minimal render frame. Submits frame to bgfx. For testing use. */
+/** @brief Ends a minimal render frame. Submits frame. For testing use. */
 void EndEncoderFrame();
 /** @} */
 
@@ -224,8 +177,6 @@ void DrawDebugBox(Vector3 min, Vector3 max);
 unsigned int DrawIMGUITexture(RenderTexture &texture, Vector2 targetSize);
 /** @brief Destroys a render texture and frees its resources. */
 void DestroyRenderTexture(RenderTexture &texture);
-
-
 
 RenderState GetGlobalRenderState();
 

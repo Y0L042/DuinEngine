@@ -1,11 +1,8 @@
 #include "dnpch.h"
 #include "Renderer.h"
 
-#include "Shader.h"
 #include "Camera.h"
 
-#include <bx/math.h>
-#include <debugdraw/debugdraw.h>
 #include <external/imgui.h>
 
 #include "Duin/Core/Debug/DNLog.h"
@@ -14,56 +11,117 @@
 
 namespace duin
 {
-struct BGFXBufferHandle
+
+// ---------------------------------------------------------------------------
+// Internal types
+// ---------------------------------------------------------------------------
+
+struct GeometryBufferHandle
 {
     UUID uuid;
-    bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
-    bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
+    RHIVertexBufferHandle vbh;
+    RHIIndexBufferHandle ibh;
 
-    BGFXBufferHandle() : vbh(BGFX_INVALID_HANDLE), ibh(BGFX_INVALID_HANDLE)
-    {
-    }
-    BGFXBufferHandle(bgfx::VertexBufferHandle vbh, bgfx::IndexBufferHandle ibh) : vbh(vbh), ibh(ibh)
+    GeometryBufferHandle() = default;
+    GeometryBufferHandle(RHIVertexBufferHandle vbh_, RHIIndexBufferHandle ibh_) : vbh(vbh_), ibh(ibh_)
     {
     }
 };
 
-static bool RENDER_CONTEXT_AVAILABLE = false; // Gets modified when imgui/bgfx is created, and destroyed
+// ---------------------------------------------------------------------------
+// Static state
+// ---------------------------------------------------------------------------
+
+static bool RENDER_CONTEXT_AVAILABLE = false;
 static UUID DEFAULT_SHADERPROGRAM_UUID;
-static bgfx::VertexLayout pcvDecl;
-static std::vector<BGFXBufferHandle> bgfxBufferList;
+static std::vector<GeometryBufferHandle> geometryBufferList;
 static std::unordered_map<UUID, ShaderProgram> shaderProgramMap;
-static DebugDrawEncoder dde;
-static DebugDrawState debugDrawState;
-static bgfx::Encoder *encoder = nullptr;
+static RHIEncoder *encoder = nullptr;
 static RenderState globalRenderState;
 static std::vector<RenderState> globalRenderStateStack;
 
 static void CreateGeometryBuffers();
-static BGFXBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type);
+static GeometryBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type);
+
+// Row-major Matrix to column-major float[16] for RHI.
+static void MatrixToFloat16(Matrix m, float *r)
+{
+    r[0] = m.m0;
+    r[1] = m.m4;
+    r[2] = m.m8;
+    r[3] = m.m12;
+
+    r[4] = m.m1;
+    r[5] = m.m5;
+    r[6] = m.m9;
+    r[7] = m.m13;
+
+    r[8] = m.m2;
+    r[9] = m.m6;
+    r[10] = m.m10;
+    r[11] = m.m14;
+
+    r[12] = m.m3;
+    r[13] = m.m7;
+    r[14] = m.m11;
+    r[15] = m.m15;
+}
+
+// ---------------------------------------------------------------------------
+// RenderTexture implementation
+// ---------------------------------------------------------------------------
+
+RenderTexture::RenderTexture(int width_, int height_, UUID textureUUID_)
+    : width(static_cast<uint16_t>(width_)), height(static_cast<uint16_t>(height_)), textureUUID(textureUUID_)
+{
+    texture = RHICreateTexture2D(width, height);
+    frameBuffer = RHICreateFrameBuffer(texture);
+}
+
+bool RenderTexture::IsValid()
+{
+    return texture.IsValid() && frameBuffer.IsValid() && (width > 0) && (height > 0);
+}
+
+void RenderTexture::Destroy()
+{
+    if (!IsRenderContextAvailable())
+    {
+        return;
+    }
+
+    textureUUID = UUID::INVALID;
+    width = 0;
+    height = 0;
+
+    RHIDestroyTexture(texture);
+    texture = RHITextureHandle{};
+
+    RHIDestroyFrameBuffer(frameBuffer);
+    frameBuffer = RHIFrameBufferHandle{};
+}
+
+// ---------------------------------------------------------------------------
+// Lifecycle
+// ---------------------------------------------------------------------------
 
 void InitRenderer()
 {
-    pcvDecl.begin()
-        .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
-        .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
-        .end();
+    RHIInit();
 
     // Load default shaders
-    bgfx::ShaderHandle vsh =
-        LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
-    bgfx::ShaderHandle fsh =
-        LoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
+    RHIShaderHandle vsh =
+        RHILoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
+    RHIShaderHandle fsh =
+        RHILoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
 
-    // Create default shaderprogram
-    bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh, true);
+    // Create default shader program
+    RHIProgramHandle program = RHICreateProgram(vsh, fsh, true);
     ShaderProgram shaderProgram(vsh, fsh, program);
     shaderProgramMap[shaderProgram.uuid] = shaderProgram;
     DEFAULT_SHADERPROGRAM_UUID = shaderProgram.uuid;
 
     CreateGeometryBuffers();
-
-    ddInit();
 
     DN_CORE_INFO("Renderer initialised.");
 }
@@ -71,50 +129,37 @@ void InitRenderer()
 void CleanRenderer()
 {
     // TODO
-    // Clean bgfx buffers
+    // Clean buffers
 }
 
 void ResetRenderer()
 {
     RENDER_CONTEXT_AVAILABLE = false;
 
-    for (auto &buf : bgfxBufferList)
+    for (auto &buf : geometryBufferList)
     {
-        if (bgfx::isValid(buf.vbh))
-            bgfx::destroy(buf.vbh);
-        if (bgfx::isValid(buf.ibh))
-            bgfx::destroy(buf.ibh);
+        RHIDestroyVertexBuffer(buf.vbh);
+        RHIDestroyIndexBuffer(buf.ibh);
     }
-    bgfxBufferList.clear();
+    geometryBufferList.clear();
 
     for (auto &[uuid, prog] : shaderProgramMap)
     {
-        if (bgfx::isValid(prog.program))
-            bgfx::destroy(prog.program);
+        RHIDestroyProgram(prog.program);
     }
     shaderProgramMap.clear();
     DEFAULT_SHADERPROGRAM_UUID = UUID{0};
 
-    dde.end();
-    ddShutdown();
-
-    // Force-reconstruct dde and debugDrawState so their internal DebugDrawEncoder
-    // instances re-capture s_dde.m_defaultEncoder on the next ddInit().
-    dde.~DebugDrawEncoder();
-    new (&dde) DebugDrawEncoder();
-    debugDrawState.~DebugDrawState();
-    new (&debugDrawState) DebugDrawState();
-
     if (encoder)
     {
-        bgfx::end(encoder);
+        RHIEndEncoder(encoder);
         encoder = nullptr;
     }
+
+    RHIShutdown();
+
     globalRenderState = RenderState{};
     globalRenderStateStack.clear();
-    pcvDecl = bgfx::VertexLayout{};
-
-
 }
 
 bool IsRenderContextAvailable()
@@ -127,25 +172,27 @@ void SetRenderContextAvailable(bool available)
     RENDER_CONTEXT_AVAILABLE = available;
 }
 
+// ---------------------------------------------------------------------------
+// Render modes
+// ---------------------------------------------------------------------------
+
 void BeginDraw3D(Camera &camera)
 {
-    // DN_CORE_INFO("BeginDraw3D");
-    //globalRenderStateStack.clear();
     globalRenderStateStack.push_back(globalRenderState);
-    const bgfx::ViewId viewID = RENDER_3D_VIEWID;
+    const RHIViewId viewID = RHI_VIEW_3D;
 
     // Get camera matrices
-    Matrix viewMtx = GetCameraViewMatrix(&camera);
-    Matrix projMtx = GetCameraProjectionMatrix(&camera);
+    Matrix viewMtx = GetCameraViewMatrix(camera.GetImpl());
+    Matrix projMtx = GetCameraProjectionMatrix(camera.GetImpl());
 
     // Set view transform
-    static float view[16];
-    static float proj[16];
-    MatrixAsArray(viewMtx, view);
-    MatrixAsArray(projMtx, proj);
-    bgfx::setViewTransform(viewID, view, proj);
-    bgfx::setViewRect(viewID, 0, 0, (uint16_t)GetWindowWidth(), (uint16_t)GetWindowHeight());
-    bgfx::setViewClear(viewID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
+    float view[16];
+    float proj[16];
+    MatrixToFloat16(viewMtx, view);
+    MatrixToFloat16(projMtx, proj);
+    RHISetViewTransform(viewID, view, proj);
+    RHISetViewRect(viewID, 0, 0, (uint16_t)GetWindowWidth(), (uint16_t)GetWindowHeight());
+    RHISetViewClear(viewID, 0x303030ff, 1.0f, 0);
 
     // Set new 3D rendering state
     globalRenderState = RenderState();
@@ -155,16 +202,12 @@ void BeginDraw3D(Camera &camera)
     globalRenderState.viewMatrix = viewMtx;
     globalRenderState.projectionMatrix = projMtx;
 
-    // Push current state to stack
-    //globalRenderStateStack.push_back(globalRenderState);
-
-    encoder = bgfx::begin(false);
+    encoder = RHIBeginEncoder();
     BeginDebugDraw();
 }
 
 void EndDraw3D()
 {
-    // DN_CORE_INFO("EndDraw3D");
     if (!globalRenderStateStack.empty())
     {
         // Restore previous state
@@ -174,11 +217,11 @@ void EndDraw3D()
         // If returning to another 3D mode, update matrices
         if (globalRenderState.in3DMode && globalRenderState.camera)
         {
-            static float view[16];
-            static float proj[16];
-            MatrixAsArray(globalRenderState.viewMatrix, view);
-            MatrixAsArray(globalRenderState.projectionMatrix, proj);
-            bgfx::setViewTransform(RENDER_3D_VIEWID, view, proj);
+            float view[16];
+            float proj[16];
+            MatrixToFloat16(globalRenderState.viewMatrix, view);
+            MatrixToFloat16(globalRenderState.projectionMatrix, proj);
+            RHISetViewTransform(RHI_VIEW_3D, view, proj);
         }
     }
     else
@@ -187,12 +230,12 @@ void EndDraw3D()
         globalRenderState = RenderState();
     }
     EndDebugDraw();
-    bgfx::end(encoder);
+    RHIEndEncoder(encoder);
 }
 
 void BeginTextureMode(RenderTexture &target)
 {
-    dde.end();
+    RHIDebugDrawEnd();
 
     // Push current state to stack
     globalRenderStateStack.push_back(globalRenderState);
@@ -214,31 +257,31 @@ void BeginTextureMode(RenderTexture &target)
     }
     else
     {
-        bgfx::setViewFrameBuffer(target.viewID, target.frameBuffer);
-        bgfx::setViewRect(target.viewID, 0, 0, target.width, target.height); // Clear render texture
-        bgfx::setViewClear(target.viewID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x00000000, 1.0f, 0);
+        RHISetViewFrameBuffer(target.viewID, target.frameBuffer);
+        RHISetViewRect(target.viewID, 0, 0, target.width, target.height);
+        RHISetViewClear(target.viewID, 0x00000000, 1.0f, 0);
 
         if (activeCamera)
         {
-            Matrix viewMtx = GetCameraViewMatrix(activeCamera);
-            Matrix projMtx = GetCameraProjectionMatrix(activeCamera);
+            Matrix viewMtx = GetCameraViewMatrix(activeCamera->GetImpl());
+            Matrix projMtx = GetCameraProjectionMatrix(activeCamera->GetImpl());
             globalRenderState.viewMatrix = viewMtx;
             globalRenderState.projectionMatrix = projMtx;
 
-            static float view[16];
-            static float proj[16];
-            MatrixAsArray(viewMtx, view);
-            MatrixAsArray(projMtx, proj);
-            bgfx::setViewTransform(target.viewID, view, proj);
+            float view[16];
+            float proj[16];
+            MatrixToFloat16(viewMtx, view);
+            MatrixToFloat16(projMtx, proj);
+            RHISetViewTransform(target.viewID, view, proj);
         }
     }
 
-    dde.begin(globalRenderState.viewID, true, encoder);
+    RHIDebugDrawBegin(globalRenderState.viewID, encoder);
 }
 
 void EndTextureMode()
 {
-    dde.end();
+    RHIDebugDrawEnd();
     if (!globalRenderStateStack.empty())
     {
         // Restore previous state
@@ -250,112 +293,88 @@ void EndTextureMode()
         // Reset to default state
         globalRenderState = RenderState();
     }
-    dde.begin(globalRenderState.viewID, true, encoder);
+    RHIDebugDrawBegin(globalRenderState.viewID, encoder);
 }
 
 void BeginDebugDraw()
 {
-    dde.begin(globalRenderState.viewID, true, encoder);
-    // DN_CORE_TRACE("Debug draw started");
+    RHIDebugDrawBegin(globalRenderState.viewID, encoder);
 }
 
 void EndDebugDraw()
 {
-    dde.end();
-    // DN_CORE_TRACE("Debug draw ended");
+    RHIDebugDrawEnd();
 }
 
 void BeginEncoderFrame()
 {
-    encoder = bgfx::begin(false);
-    dde.begin(globalRenderState.viewID, true, encoder);
+    encoder = RHIBeginEncoder();
+    RHIDebugDrawBegin(globalRenderState.viewID, encoder);
 }
 
 void EndEncoderFrame()
 {
-    dde.end();
-    bgfx::end(encoder);
-    bgfx::frame();
+    RHIDebugDrawEnd();
+    RHIEndEncoder(encoder);
+    RHIFrame();
     encoder = nullptr;
 }
 
+// ---------------------------------------------------------------------------
+// Render queue
+// ---------------------------------------------------------------------------
+
 void QueueRender(RenderGeometryType::Type type)
 {
-    // DN_CORE_INFO("Shape queued for rendering");
+    RHIViewId targetViewID = globalRenderState.viewID;
+    RHIProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
 
-    bgfx::ViewId targetViewID = globalRenderState.viewID;
-    bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
-    bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
-    bgfx::ProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
+    GeometryBufferHandle buffers = GetGeometryBufferHandle(type);
 
-    BGFXBufferHandle buffers = GetGeometryBufferHandle(type);
-    vbh = buffers.vbh;
-    ibh = buffers.ibh;
-
-    // bgfx::setVertexBuffer(0, vbh);
-    // bgfx::setIndexBuffer(ibh);
-    // bgfx::submit(0, program);
-
-    encoder->setVertexBuffer(0, vbh);
-    encoder->setIndexBuffer(ibh);
-    encoder->submit(targetViewID, program);
+    RHIEncoderSetVertexBuffer(encoder, 0, buffers.vbh);
+    RHIEncoderSetIndexBuffer(encoder, buffers.ibh);
+    RHIEncoderSubmit(encoder, targetViewID, program);
 }
 
 void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size)
 {
-    // DN_CORE_INFO("Shape queued for rendering");
-
     Vector3 eulerRotation = QuaternionToEuler(rotation);
 
-    bgfx::ViewId targetViewID = globalRenderState.viewID;
-    bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
-    bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
-    bgfx::ProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
+    RHIViewId targetViewID = globalRenderState.viewID;
+    RHIProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
 
-    BGFXBufferHandle buffers = GetGeometryBufferHandle(type);
-    vbh = buffers.vbh;
-    ibh = buffers.ibh;
-    if (!(bgfx::isValid(vbh) && bgfx::isValid(ibh)))
+    GeometryBufferHandle buffers = GetGeometryBufferHandle(type);
+    if (!(buffers.vbh.IsValid() && buffers.ibh.IsValid()))
     {
         DN_CORE_WARN("Invalid geometry buffers submitted!");
         return;
     }
 
     float mtx[16];
-    bx::mtxSRT(mtx, size.x, size.y, size.z, eulerRotation.x, eulerRotation.y, eulerRotation.z, position.x, position.y,
-               position.z);
+    RHIComputeSRTMatrix(mtx, size.x, size.y, size.z, eulerRotation.x, eulerRotation.y, eulerRotation.z, position.x,
+                        position.y, position.z);
 
-    // bgfx::setTransform(mtx);
-    // bgfx::setVertexBuffer(0, vbh);
-    // bgfx::setIndexBuffer(ibh);
-    // bgfx::submit(0, program);
-
-    encoder->setTransform(mtx);
-    encoder->setVertexBuffer(0, vbh);
-    encoder->setIndexBuffer(ibh);
-    encoder->submit(targetViewID, program);
+    RHIEncoderSetTransform(encoder, mtx);
+    RHIEncoderSetVertexBuffer(encoder, 0, buffers.vbh);
+    RHIEncoderSetIndexBuffer(encoder, buffers.ibh);
+    RHIEncoderSubmit(encoder, targetViewID, program);
 }
 
 void ExecuteRenderPipeline()
 {
-    // Camera *activeCamera = GetActiveCamera();
-    // if (activeCamera && activeCamera->IsValid()) {
-    //     GetBGFXMatrix(activeCamera);
-    // }
-
     if (globalRenderState.in3DMode && globalRenderState.camera)
     {
-        globalRenderState.viewMatrix = GetCameraViewMatrix(globalRenderState.camera);
-        globalRenderState.projectionMatrix = GetCameraProjectionMatrix(globalRenderState.camera);
+        globalRenderState.viewMatrix = GetCameraViewMatrix(globalRenderState.camera->GetImpl());
+        globalRenderState.projectionMatrix = GetCameraProjectionMatrix(globalRenderState.camera->GetImpl());
 
-        static float view[16];
-        static float proj[16];
-        MatrixAsArray(globalRenderState.viewMatrix, view);
-        MatrixAsArray(globalRenderState.projectionMatrix, proj);
-        bgfx::setViewTransform(globalRenderState.viewID, view, proj);
+        float view[16];
+        float proj[16];
+        MatrixToFloat16(globalRenderState.viewMatrix, view);
+        MatrixToFloat16(globalRenderState.projectionMatrix, proj);
+        RHISetViewTransform(globalRenderState.viewID, view, proj);
     }
 
-    bgfx::frame();
+    RHIFrame();
 }
 
 void EmptyRenderStack()
@@ -365,19 +384,23 @@ void EmptyRenderStack()
     DN_CORE_INFO("Cleared render stack.");
 }
 
+// ---------------------------------------------------------------------------
+// Drawing
+// ---------------------------------------------------------------------------
+
 void ClearBackground(Color color)
 {
-    bgfx::setViewClear(globalRenderState.viewID, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, color.PackedABGR(), 1.0f, 0);
-    bgfx::touch(globalRenderState.viewID);
+    RHISetViewClear(globalRenderState.viewID, color.PackedABGR(), 1.0f, 0);
+    RHITouch(globalRenderState.viewID);
 }
 
 unsigned int DrawIMGUITexture(RenderTexture &renderTexture, Vector2 targetSize)
 {
-    ::ImTextureID img = (::ImTextureID)(uintptr_t)renderTexture.texture.idx;
+    ::ImTextureID img = (::ImTextureID)(uintptr_t)RHIGetTextureIdx(renderTexture.texture);
     ::ImVec2 size{targetSize.x, targetSize.y};
     ImGui::Image(img, size, ::ImVec2{1, 0}, ::ImVec2{0, 1});
 
-    return renderTexture.texture.idx;
+    return RHIGetTextureIdx(renderTexture.texture);
 }
 
 void DestroyRenderTexture(RenderTexture &texture)
@@ -407,25 +430,22 @@ void DrawSquare(Vector3 position, Quaternion rotation, Vector3 size)
 
 void DrawGrid(float size)
 {
-    dde.drawGrid(Axis::Y, {0.0f, 0.0f, 0.0f}, static_cast<uint32_t>(size), 1.0f);
+    RHIDebugDrawGrid(0.0f, 0.0f, 0.0f, static_cast<uint32_t>(size), 1.0f);
 }
 
 void DrawDebugSphere(Vector3 pos, float radius)
 {
-    dde.drawOrb(pos.x, pos.y, pos.z, radius);
+    RHIDebugDrawOrb(pos.x, pos.y, pos.z, radius);
 }
 
 void DrawDebugCapsule(Vector3 from, Vector3 to, float radius)
 {
-    dde.drawCapsule({ from.x, from.y, from.z }, { to.x, to.y, to.z }, radius);
+    RHIDebugDrawCapsule(from.x, from.y, from.z, to.x, to.y, to.z, radius);
 }
 
 void DrawDebugBox(Vector3 min, Vector3 max)
 {
-    bx::Aabb aabb;
-    aabb.min = { min.x, min.y, min.z };
-    aabb.max = { max.x, max.y, max.z };
-    dde.draw(aabb);
+    RHIDebugDrawAABB(min.x, min.y, min.z, max.x, max.y, max.z);
 }
 
 void DrawPlane(Vector3 size)
@@ -435,66 +455,59 @@ void DrawPlane(Vector3 size)
     QueueRender(RenderGeometryType::PLANE, position, rotation, size);
 }
 
+// ---------------------------------------------------------------------------
+// Geometry buffer management
+// ---------------------------------------------------------------------------
+
 static void CreateGeometryBuffers()
 {
-    bgfxBufferList.resize(RenderGeometryType::Count);
-
-    bgfx::VertexBufferHandle vbh = BGFX_INVALID_HANDLE;
-    bgfx::IndexBufferHandle ibh = BGFX_INVALID_HANDLE;
+    geometryBufferList.resize(RenderGeometryType::Count);
 
     /* Create BOX Buffers */
-    vbh = BGFX_INVALID_HANDLE;
-    ibh = BGFX_INVALID_HANDLE;
-    vbh = bgfx::createVertexBuffer(
-        bgfx::makeRef(BoxRenderGeometry::GetIdentityVertices(),
-                      static_cast<uint32_t>(BoxRenderGeometry::VertSize()) * sizeof(PosColorVertex)),
-        pcvDecl);
-    ibh =
-        bgfx::createIndexBuffer(bgfx::makeRef(BoxRenderGeometry::GetIdentityTriList(),
-                                              static_cast<uint32_t>(BoxRenderGeometry::TriSize()) * sizeof(uint16_t)));
-    bgfxBufferList[RenderGeometryType::BOX] = BGFXBufferHandle(vbh, ibh);
+    {
+        RHIVertexBufferHandle vbh =
+            RHICreateVertexBuffer(BoxRenderGeometry::GetIdentityVertices(),
+                                  static_cast<uint32_t>(BoxRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(BoxRenderGeometry::GetIdentityTriList(),
+                                                        static_cast<uint32_t>(BoxRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::BOX] = GeometryBufferHandle(vbh, ibh);
+    }
 
     /* Create PLANE Buffers */
-    vbh = BGFX_INVALID_HANDLE;
-    ibh = BGFX_INVALID_HANDLE;
-    vbh = bgfx::createVertexBuffer(
-        bgfx::makeRef(PlaneRenderGeometry::GetIdentityVertices(),
-                      static_cast<uint32_t>(PlaneRenderGeometry::VertSize()) * sizeof(PosColorVertex)),
-        pcvDecl);
-    ibh = bgfx::createIndexBuffer(
-        bgfx::makeRef(PlaneRenderGeometry::GetIdentityTriList(),
-                      static_cast<uint32_t>(PlaneRenderGeometry::TriSize()) * sizeof(uint16_t)));
-    bgfxBufferList[RenderGeometryType::PLANE] = BGFXBufferHandle(vbh, ibh);
+    {
+        RHIVertexBufferHandle vbh =
+            RHICreateVertexBuffer(PlaneRenderGeometry::GetIdentityVertices(),
+                                  static_cast<uint32_t>(PlaneRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(PlaneRenderGeometry::GetIdentityTriList(),
+                                                        static_cast<uint32_t>(PlaneRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::PLANE] = GeometryBufferHandle(vbh, ibh);
+    }
 
     /* Create SPHERE Buffers */
-    vbh = BGFX_INVALID_HANDLE;
-    ibh = BGFX_INVALID_HANDLE;
-    vbh = bgfx::createVertexBuffer(
-        bgfx::makeRef(SphereRenderGeometry::GetIdentityVertices(),
-                      static_cast<uint32_t>(SphereRenderGeometry::VertSize()) * sizeof(PosColorVertex)),
-        pcvDecl);
-    ibh = bgfx::createIndexBuffer(
-        bgfx::makeRef(SphereRenderGeometry::GetIdentityTriList(),
-                      static_cast<uint32_t>(SphereRenderGeometry::TriSize()) * sizeof(uint16_t)));
-    bgfxBufferList[RenderGeometryType::SPHERE] = BGFXBufferHandle(vbh, ibh);
+    {
+        RHIVertexBufferHandle vbh =
+            RHICreateVertexBuffer(SphereRenderGeometry::GetIdentityVertices(),
+                                  static_cast<uint32_t>(SphereRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(SphereRenderGeometry::GetIdentityTriList(),
+                                                        static_cast<uint32_t>(SphereRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::SPHERE] = GeometryBufferHandle(vbh, ibh);
+    }
 }
 
-static BGFXBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type)
+static GeometryBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type)
 {
     switch (type)
     {
     case RenderGeometryType::BOX:
-        return bgfxBufferList[RenderGeometryType::BOX];
-        break;
+        return geometryBufferList[RenderGeometryType::BOX];
     case RenderGeometryType::PLANE:
-        return bgfxBufferList[RenderGeometryType::PLANE];
-        break;
+        return geometryBufferList[RenderGeometryType::PLANE];
     case RenderGeometryType::SPHERE:
-        return bgfxBufferList[RenderGeometryType::SPHERE];
-        break;
+        return geometryBufferList[RenderGeometryType::SPHERE];
     default:
         DN_CORE_FATAL("Invalid render geometry handle!");
-        break;
+        return GeometryBufferHandle();
     }
 }
+
 } // namespace duin

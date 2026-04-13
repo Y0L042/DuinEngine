@@ -7,8 +7,6 @@
 #include "RenderGeometry.h"
 #include "Color.h"
 
-#include <bgfx/bgfx.h>
-
 #include <memory>
 #include <vector>
 

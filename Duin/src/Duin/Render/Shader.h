@@ -1,10 +1,11 @@
 #pragma once
 
-#include <bgfx/bgfx.h>
-#include <cstring>
-#include <bgfx/platform.h>
+#include "RHI.h"
 
 namespace duin
 {
-bgfx::ShaderHandle LoadShader(const char *FILENAME);
+inline RHIShaderHandle LoadShader(const char *path)
+{
+    return RHILoadShader(path);
 }
+} // namespace duin
