@@ -7,14 +7,6 @@
 #include <bgfx/bgfx.h>
 #include <bx/math.h>
 
-#define VALIDATE_CAMERA(camera, RETURN)                                                                                \
-    {                                                                                                                  \
-        if (camera == nullptr || !camera->IsValid())                                                                   \
-        {                                                                                                              \
-            return RETURN;                                                                                             \
-        }                                                                                                              \
-    }
-
 #ifndef DISTANCE_MARGIN
 #define DISTANCE_MARGIN 0.1f
 #endif /* DISTANCE_MARGIN */
@@ -24,9 +16,9 @@ namespace duin
 Camera DEFAULT_CAMERA = {
     UUID(),
     {5.0f, 5.0f, 5.0f}, // Position
-    {0.0f, 0.0f, 0.0f},  // Target
-    {0.0f, 1.0f, 0.0f},  // Up
-    60.0f                // FOVY
+    {0.0f, 0.0f, 0.0f}, // Target
+    {0.0f, 1.0f, 0.0f}, // Up
+    60.0f               // FOVY
 };
 Camera *activeCamera = new Camera(UUID::INVALID);
 
@@ -39,259 +31,209 @@ Camera *GetActiveCamera()
 {
     if (activeCamera == nullptr || !activeCamera->IsValid())
     {
-        // Default camera values must not be changed
         static Camera defaultCamera;
         defaultCamera = DEFAULT_CAMERA;
-
-        // DN_CORE_WARN("No active camera set, using default camera.");
-
         return &defaultCamera;
     }
 
     return activeCamera;
 }
 
-/**
- * @brief Returns camera forward, defined as direction from position to
- * target.
- *
- * @param camera
- * @return forward vector3
- */
-Vector3 GetCameraForward(Camera *camera)
+// ============================================================================
+// Camera methods — delegate to standalone CameraImpl functions
+// ============================================================================
+
+void Camera::MoveForward(float distance)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return Vector3();
-    }
-    return Vector3NormalizeF(Vector3Subtract(camera->target, camera->position));
+    CameraMoveForward(impl, distance);
+}
+void Camera::MoveUp(float distance)
+{
+    CameraMoveUp(impl, distance);
+}
+void Camera::MoveRight(float distance)
+{
+    CameraMoveRight(impl, distance);
+}
+void Camera::MoveToTarget(float delta)
+{
+    CameraMoveToTarget(impl, delta);
 }
 
-/**
- * @brief Returns camera up, defined
- *
- * @param camera
- * @return
- */
-Vector3 GetCameraUp(Camera *camera)
+void Camera::Yaw(float angle, bool rotateAroundTarget)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return Vector3();
-    }
-    return Vector3NormalizeF(camera->up);
+    CameraYaw(impl, angle, rotateAroundTarget);
+}
+void Camera::Pitch(float angle, bool lockView, bool rotateAroundTarget, bool rotateUp)
+{
+    CameraPitch(impl, angle, lockView, rotateAroundTarget, rotateUp);
+}
+void Camera::Roll(float angle)
+{
+    CameraRoll(impl, angle);
 }
 
-Vector3 GetCameraRight(Camera *camera)
+Matrix Camera::ViewMatrix()
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return Vector3();
-    }
-    Vector3 forward = Vector3NormalizeF(Vector3Subtract(camera->target, camera->position));
-    Vector3 up = Vector3NormalizeF(camera->up);
-    return Vector3NormalizeF(Vector3CrossProduct(forward, up));
+    return GetCameraViewMatrix(impl);
+}
+Matrix Camera::ProjectionMatrix()
+{
+    return GetCameraProjectionMatrix(impl);
+}
+void Camera::ApplyBGFXMatrix()
+{
+    duin::ApplyBGFXMatrix(impl);
 }
 
-// Camera movement
-void CameraMoveForward(Camera *camera, float distance)
+// ============================================================================
+// Standalone CameraImpl equivalents
+// ============================================================================
+
+Vector3 CameraForward(const CameraImpl &cameraImpl)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-    Vector3 forward = GetCameraForward(camera);
-    camera->position = Vector3Add(camera->position, Vector3Scale(forward, distance));
-    camera->target = Vector3Add(camera->target, Vector3Scale(forward, distance));
+    return Vector3NormalizeF(Vector3Subtract(cameraImpl.target, cameraImpl.position));
 }
 
-void CameraMoveUp(Camera *camera, float distance)
+Vector3 CameraRight(const CameraImpl &cameraImpl)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-    Vector3 up = GetCameraUp(camera);
-    camera->position = Vector3Add(camera->position, Vector3Scale(up, distance));
-    camera->target = Vector3Add(camera->target, Vector3Scale(up, distance));
+    Vector3 forward = Vector3NormalizeF(Vector3Subtract(cameraImpl.target, cameraImpl.position));
+    return Vector3NormalizeF(Vector3CrossProduct(forward, cameraImpl.globalUp));
 }
 
-void CameraMoveRight(Camera *camera, float distance)
+Vector3 CameraUp(const CameraImpl &cameraImpl)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-    Vector3 right = GetCameraRight(camera);
-    camera->position = Vector3Add(camera->position, Vector3Scale(right, distance));
-    camera->target = Vector3Add(camera->target, Vector3Scale(right, distance));
+    Vector3 forward = Vector3NormalizeF(Vector3Subtract(cameraImpl.target, cameraImpl.position));
+    Vector3 right = Vector3NormalizeF(Vector3CrossProduct(forward, cameraImpl.globalUp));
+    return Vector3NormalizeF(Vector3CrossProduct(right, forward));
 }
 
-void CameraMoveToTarget(Camera *camera, float delta)
+bool IsCameraValid(const CameraImpl &cameraImpl)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-    Vector3 direction = Vector3Subtract(camera->target, camera->position);
+    return cameraImpl.uuid != UUID::INVALID;
+}
+
+void CameraMoveForward(CameraImpl &cameraImpl, float distance)
+{
+    Vector3 forward = CameraForward(cameraImpl);
+    cameraImpl.position = Vector3Add(cameraImpl.position, Vector3Scale(forward, distance));
+    cameraImpl.target = Vector3Add(cameraImpl.target, Vector3Scale(forward, distance));
+}
+
+void CameraMoveUp(CameraImpl &cameraImpl, float distance)
+{
+    Vector3 up = CameraUp(cameraImpl);
+    cameraImpl.position = Vector3Add(cameraImpl.position, Vector3Scale(up, distance));
+    cameraImpl.target = Vector3Add(cameraImpl.target, Vector3Scale(up, distance));
+}
+
+void CameraMoveRight(CameraImpl &cameraImpl, float distance)
+{
+    Vector3 right = CameraRight(cameraImpl);
+    cameraImpl.position = Vector3Add(cameraImpl.position, Vector3Scale(right, distance));
+    cameraImpl.target = Vector3Add(cameraImpl.target, Vector3Scale(right, distance));
+}
+
+void CameraMoveToTarget(CameraImpl &cameraImpl, float delta)
+{
+    Vector3 direction = Vector3Subtract(cameraImpl.target, cameraImpl.position);
     float distance = Vector3LengthF(direction);
 
     if (distance > 0.0f)
     {
         direction = Vector3Scale(Vector3NormalizeF(direction), fminf(delta, distance));
-        camera->position = Vector3Add(camera->position, direction);
+        cameraImpl.position = Vector3Add(cameraImpl.position, direction);
     }
 }
 
-// Camera rotation
-void CameraYaw(Camera *camera, float angle, bool rotateAroundTarget)
+void CameraYaw(CameraImpl &cameraImpl, float angle, bool rotateAroundTarget)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-    Vector3 forward = GetCameraForward(camera);
-
     if (rotateAroundTarget)
     {
-        Vector3 offset = Vector3Subtract(camera->position, camera->target);
+        Vector3 offset = Vector3Subtract(cameraImpl.position, cameraImpl.target);
         Vector3 rotOffset = Vector3RotateByAxisAngle(offset, Vector3::UP, angle);
-        camera->position = Vector3Add(camera->target, rotOffset);
-        camera->up = Vector3::UP;
+        cameraImpl.position = Vector3Add(cameraImpl.target, rotOffset);
     }
     else
     {
-        // Normal Operation
-        Vector3 up = GetCameraUp(camera);
+        Vector3 forward = CameraForward(cameraImpl);
+        Vector3 up = CameraUp(cameraImpl);
         Matrix rotation = MatrixRotate(up, angle);
         forward = Vector3Transform(forward, rotation);
-        camera->target = Vector3Add(camera->position, forward);
-        camera->up = Vector3Transform(camera->up, rotation);
+        cameraImpl.target = Vector3Add(cameraImpl.position, forward);
     }
 }
 
-void CameraPitch(Camera *camera, float angle, bool lockView, bool rotateAroundTarget, bool rotateUp)
+void CameraPitch(CameraImpl &cameraImpl, float angle, bool lockView, bool rotateAroundTarget, bool rotateUp)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-
-    Vector3 forward = GetCameraForward(camera);
-
     if (rotateAroundTarget)
     {
-        camera->up = Vector3::UP;
-        Vector3 right = GetCameraRight(camera);
+        Vector3 right = CameraRight(cameraImpl);
         Matrix rotation = MatrixRotate(right, angle);
-        Vector3 offset = Vector3Subtract(camera->position, camera->target);
+        Vector3 offset = Vector3Subtract(cameraImpl.position, cameraImpl.target);
         Vector3 rotOffset = Vector3Transform(offset, rotation);
-        camera->position = Vector3Add(camera->target, rotOffset);
-
-        if (rotateUp)
-        {
-            camera->up = Vector3Transform(camera->up, rotation);
-        }
+        cameraImpl.position = Vector3Add(cameraImpl.target, rotOffset);
     }
     else
     {
-        // Normal Operation
-        Vector3 right = GetCameraRight(camera);
+        Vector3 right = CameraRight(cameraImpl);
+        Vector3 forward = CameraForward(cameraImpl);
         Matrix rotation = MatrixRotate(right, angle);
         forward = Vector3Transform(forward, rotation);
-        camera->target = Vector3Add(camera->position, forward);
-
-        if (rotateUp)
-        {
-            camera->up = Vector3Transform(camera->up, rotation);
-        }
+        cameraImpl.target = Vector3Add(cameraImpl.position, forward);
     }
 }
 
-void CameraRoll(Camera *camera, float angle)
+void CameraRoll(CameraImpl &cameraImpl, float angle)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-    Vector3 forward = GetCameraForward(camera);
+    Vector3 forward = CameraForward(cameraImpl);
     Matrix rotation = MatrixRotate(forward, angle);
-    camera->up = Vector3Transform(camera->up, rotation);
+    cameraImpl.globalUp = Vector3Transform(cameraImpl.globalUp, rotation);
 }
 
-Matrix GetCameraViewMatrix(Camera *camera)
+Matrix GetCameraViewMatrix(const CameraImpl &cameraImpl)
 {
-    VALIDATE_CAMERA(camera, MatrixIdentity());
+    Vector3 up = CameraUp(cameraImpl);
 
-    bx::Vec3 eye = {camera->position.x, camera->position.y, camera->position.z};
-    bx::Vec3 at = {camera->target.x, camera->target.y, camera->target.z};
-    bx::Vec3 up = {camera->up.x, camera->up.y, camera->up.z};
+    bx::Vec3 eye = {cameraImpl.position.x, cameraImpl.position.y, cameraImpl.position.z};
+    bx::Vec3 at = {cameraImpl.target.x, cameraImpl.target.y, cameraImpl.target.z};
+    bx::Vec3 bxUp = {up.x, up.y, up.z};
 
     float view[16];
-    bx::mtxLookAt(view, eye, at, up);
+    bx::mtxLookAt(view, eye, at, bxUp);
 
     Matrix result;
     memcpy(&result, view, sizeof(float) * 16);
     return result;
-
-    // Vector3 forward = Vector3Normalize(Vector3Subtract(camera->target, camera->position));
-    // Vector3 right = Vector3Normalize(Vector3CrossProduct(forward, camera->up));
-    // Vector3 realUp = Vector3Normalize(Vector3CrossProduct(right, forward));
-    //
-    // return MatrixLookAt(camera->position, camera->target, realUp);
 }
 
-Matrix GetCameraProjectionMatrix(Camera *camera)
+Matrix GetCameraProjectionMatrix(const CameraImpl &cameraImpl)
 {
-    VALIDATE_CAMERA(camera, MatrixIdentity());
-
     float aspect = (float)GetWindowWidth() / (float)GetWindowHeight();
     float proj[16];
-    bx::mtxProj(proj, camera->fovy, aspect, 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
+    bx::mtxProj(proj, cameraImpl.fovy, aspect, 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
 
     Matrix result;
     memcpy(&result, proj, sizeof(float) * 16);
     return result;
-
-    // float aspect = (float)GetWindowWidth() / (float)GetWindowHeight();
-    // return MatrixPerspective(camera->fovy * DEG2RAD, aspect, 0.1f, 100.0f);
 }
 
-void GetBGFXMatrix(Camera *camera)
+void ApplyBGFXMatrix(const CameraImpl &cameraImpl)
 {
-    if (camera == nullptr || !camera->IsValid())
-    {
-        DN_CORE_WARN("Camera pointer not valid!");
-        return;
-    }
-
     int WINDOW_WIDTH = GetWindowWidth();
     int WINDOW_HEIGHT = GetWindowHeight();
 
-    Vector3 cTarget = camera->target;
-    Vector3 cPosition = camera->position;
-    Vector3 cUp = camera->up;
-    float fovy = camera->fovy;
+    Vector3 up = CameraUp(cameraImpl);
 
-    const bx::Vec3 at = {cTarget.x, cTarget.y, cTarget.z};
-    const bx::Vec3 eye = {cPosition.x, cPosition.y, cPosition.z};
-    const bx::Vec3 up = {cUp.x, cUp.y, cUp.z};
+    const bx::Vec3 at = {cameraImpl.target.x, cameraImpl.target.y, cameraImpl.target.z};
+    const bx::Vec3 eye = {cameraImpl.position.x, cameraImpl.position.y, cameraImpl.position.z};
+    const bx::Vec3 bxUp = {up.x, up.y, up.z};
 
     float view[16];
-    bx::mtxLookAt(view, eye, at, up);
+    bx::mtxLookAt(view, eye, at, bxUp);
 
     float proj[16];
-    bx::mtxProj(proj, fovy, float(WINDOW_WIDTH) / float(WINDOW_HEIGHT), 0.1f, 100.0f,
+    bx::mtxProj(proj, cameraImpl.fovy, float(WINDOW_WIDTH) / float(WINDOW_HEIGHT), 0.1f, 100.0f,
                 bgfx::getCaps()->homogeneousDepth);
 
     bgfx::setViewTransform(0, view, proj);
