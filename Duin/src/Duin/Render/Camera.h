@@ -25,6 +25,9 @@ namespace duin
  * - RIGHT = normalize(FORWARD × up_reference)
  * - UP = normalize(RIGHT × FORWARD)
  *
+ * Y
+ * |
+ * Z — X
  * Coordinate system: Right-hand rule, +Z toward viewer (same as Godot).
  */
 struct CameraImpl
@@ -157,8 +160,6 @@ class Camera
     /** @brief Computes perspective projection matrix. */
     Matrix ProjectionMatrix();
 
-    void ApplyBGFXMatrix();
-
     using ReflectionType = CameraImpl;
     Camera(const ReflectionType &impl) : impl(impl)
     {
@@ -211,7 +212,5 @@ void CameraRoll(CameraImpl &cameraImpl, float angle);
 Matrix GetCameraViewMatrix(const CameraImpl &cameraImpl);
 /** @brief Computes perspective projection matrix. */
 Matrix GetCameraProjectionMatrix(const CameraImpl &cameraImpl);
-
-void ApplyBGFXMatrix(const CameraImpl &cameraImpl);
 
 } // namespace duin

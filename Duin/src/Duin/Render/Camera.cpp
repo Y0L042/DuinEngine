@@ -4,8 +4,7 @@
 #include "Duin/Core/Application.h"
 #include "Duin/Core/Debug/DNLog.h"
 
-#include <bgfx/bgfx.h>
-#include <bx/math.h>
+#include "RHI.h"
 
 #ifndef DISTANCE_MARGIN
 #define DISTANCE_MARGIN 0.1f
@@ -81,11 +80,6 @@ Matrix Camera::ProjectionMatrix()
 {
     return GetCameraProjectionMatrix(impl);
 }
-void Camera::ApplyBGFXMatrix()
-{
-    duin::ApplyBGFXMatrix(impl);
-}
-
 // ============================================================================
 // Standalone CameraImpl equivalents
 // ============================================================================
@@ -195,12 +189,11 @@ Matrix GetCameraViewMatrix(const CameraImpl &cameraImpl)
 {
     Vector3 up = CameraUp(cameraImpl);
 
-    bx::Vec3 eye = {cameraImpl.position.x, cameraImpl.position.y, cameraImpl.position.z};
-    bx::Vec3 at = {cameraImpl.target.x, cameraImpl.target.y, cameraImpl.target.z};
-    bx::Vec3 bxUp = {up.x, up.y, up.z};
-
     float view[16];
-    bx::mtxLookAt(view, eye, at, bxUp);
+    RHIComputeViewMatrix(view,
+                         cameraImpl.position.x, cameraImpl.position.y, cameraImpl.position.z,
+                         cameraImpl.target.x, cameraImpl.target.y, cameraImpl.target.z,
+                         up.x, up.y, up.z);
 
     Matrix result;
     memcpy(&result, view, sizeof(float) * 16);
@@ -211,33 +204,11 @@ Matrix GetCameraProjectionMatrix(const CameraImpl &cameraImpl)
 {
     float aspect = (float)GetWindowWidth() / (float)GetWindowHeight();
     float proj[16];
-    bx::mtxProj(proj, cameraImpl.fovy, aspect, 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
+    RHIComputeProjMatrix(proj, cameraImpl.fovy, aspect, 0.1f, 100.0f);
 
     Matrix result;
     memcpy(&result, proj, sizeof(float) * 16);
     return result;
-}
-
-void ApplyBGFXMatrix(const CameraImpl &cameraImpl)
-{
-    int WINDOW_WIDTH = GetWindowWidth();
-    int WINDOW_HEIGHT = GetWindowHeight();
-
-    Vector3 up = CameraUp(cameraImpl);
-
-    const bx::Vec3 at = {cameraImpl.target.x, cameraImpl.target.y, cameraImpl.target.z};
-    const bx::Vec3 eye = {cameraImpl.position.x, cameraImpl.position.y, cameraImpl.position.z};
-    const bx::Vec3 bxUp = {up.x, up.y, up.z};
-
-    float view[16];
-    bx::mtxLookAt(view, eye, at, bxUp);
-
-    float proj[16];
-    bx::mtxProj(proj, cameraImpl.fovy, float(WINDOW_WIDTH) / float(WINDOW_HEIGHT), 0.1f, 100.0f,
-                bgfx::getCaps()->homogeneousDepth);
-
-    bgfx::setViewTransform(0, view, proj);
-    bgfx::setViewRect(0, 0, 0, uint16_t(WINDOW_WIDTH), uint16_t(WINDOW_HEIGHT));
 }
 
 } // namespace duin
