@@ -199,9 +199,9 @@ TEST_SUITE("GameWorld - Camera Queries")
 
         const duin::Camera *c = cam.TryGet<duin::Camera>();
         REQUIRE(c != nullptr);
-        CHECK(c->up.x == doctest::Approx(0.0f));
-        CHECK(c->up.y == doctest::Approx(1.0f));
-        CHECK(c->up.z == doctest::Approx(0.0f));
+        CHECK(c->cachedLocalUp.x == doctest::Approx(0.0f));
+        CHECK(c->cachedLocalUp.y == doctest::Approx(1.0f));
+        CHECK(c->cachedLocalUp.z == doctest::Approx(0.0f));
     }
 
     TEST_CASE("ExecuteQueryControlCamera - multiple cameras all get updated")
