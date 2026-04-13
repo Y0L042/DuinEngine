@@ -397,11 +397,7 @@ var hierarchy =
     [ "Mesh", "structMesh.html", null ],
     [ "MeshState", "structMeshState.html", null ],
     [ "das::Module", null, [
-      [ "Module_DecsComponents", "classModule__DecsComponents.html", null ],
-      [ "Module_DecsEntity", "classModule__DecsEntity.html", null ],
       [ "Module_DecsGameWorld", "classModule__DecsGameWorld.html", null ],
-      [ "Module_DecsQuery", "classModule__DecsQuery.html", null ],
-      [ "Module_DecsWorld", "classModule__DecsWorld.html", null ],
       [ "Module_DnECS", "classModule__DnECS.html", null ],
       [ "Module_DnGameObject", "classModule__DnGameObject.html", null ],
       [ "Module_DnLog", "classModule__DnLog.html", null ],

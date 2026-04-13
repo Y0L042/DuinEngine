@@ -1,38 +1,36 @@
 <map id="ECSTag.h" name="ECSTag.h">
-<area shape="rect" id="Node000001" title="Tag components for entity categorization." alt="" coords="367,5,448,31"/>
+<area shape="rect" id="Node000001" title="Tag components for entity categorization." alt="" coords="324,5,405,31"/>
 <area shape="rect" id="Node000002" href="$ECSObservers_8cpp_source.html" title=" " alt="" coords="5,79,145,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="354,33,130,81,128,76,353,28"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="311,35,123,81,122,76,310,30"/>
 <area shape="rect" id="Node000003" href="$ECSPrefabs_8cpp_source.html" title=" " alt="" coords="170,79,293,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="367,38,261,81,259,76,365,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="333,39,254,81,252,76,330,35"/>
 <area shape="rect" id="Node000004" href="$ECSTag_8cpp_source.html" title=" " alt="" coords="317,79,413,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="396,44,374,80,369,77,391,41"/>
-<area shape="rect" id="Node000005" href="$GameWorld_8h.html" title="ECS world manager." alt="" coords="488,79,599,104"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="442,34,522,76,520,81,440,39"/>
-<area shape="rect" id="Node000011" href="$Module__DnECS_8cpp_source.html" title=" " alt="" coords="30,152,177,177"/>
-<area shape="poly" id="edge19_Node000001_Node000011" title=" " alt="" coords="424,42,435,74,434,91,426,106,396,116,333,129,177,155,176,150,332,124,395,111,423,102,429,89,429,75,419,44"/>
-<area shape="rect" id="Node000017" href="$Module__DecsComponents_8cpp_source.html" title=" " alt="" coords="623,79,842,104"/>
-<area shape="poly" id="edge18_Node000001_Node000017" title=" " alt="" coords="462,29,681,76,679,81,461,34"/>
-<area shape="rect" id="Node000006" href="$ECSModule_8h_source.html" title=" " alt="" coords="201,152,307,177"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="484,110,301,154,300,149,483,105"/>
-<area shape="rect" id="Node000009" href="$GameScript_8cpp_source.html" title=" " alt="" coords="331,152,457,177"/>
-<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="508,112,420,154,417,149,506,107"/>
-<area shape="rect" id="Node000010" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="481,152,606,177"/>
-<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="546,118,546,152,541,152,541,118"/>
-<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="474,106,175,155,174,149,474,101"/>
-<area shape="rect" id="Node000012" href="$Module__DnGameWorld_8cpp_source.html" title=" " alt="" coords="544,225,743,251"/>
-<area shape="poly" id="edge11_Node000005_Node000012" title=" " alt="" coords="577,110,600,128,620,151,638,190,645,225,640,226,633,192,616,153,596,132,574,114"/>
-<area shape="rect" id="Node000013" href="$Module__DnGameWorld_8h_source.html" title=" " alt="" coords="681,152,864,177"/>
-<area shape="poly" id="edge12_Node000005_Node000013" title=" " alt="" coords="594,106,736,149,735,154,593,111"/>
-<area shape="rect" id="Node000015" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="925,225,1058,251"/>
-<area shape="poly" id="edge15_Node000005_Node000015" title=" " alt="" coords="613,102,775,129,876,149,908,166,938,186,981,223,978,227,934,191,905,171,874,155,774,135,612,107"/>
-<area shape="rect" id="Node000016" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="940,152,1059,177"/>
-<area shape="poly" id="edge16_Node000005_Node000016" title=" " alt="" coords="613,101,940,152,939,157,612,107"/>
-<area shape="rect" id="Node000007" href="$Duin_8h_source.html" title=" " alt="" coords="222,225,286,251"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="257,191,257,225,251,225,251,191"/>
-<area shape="rect" id="Node000008" href="$Duin_8cpp_source.html" title=" " alt="" coords="215,299,293,324"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="257,264,257,299,251,299,251,264"/>
-<area shape="poly" id="edge13_Node000013_Node000012" title=" " alt="" coords="741,186,666,227,663,223,738,182"/>
-<area shape="rect" id="Node000014" href="$ScriptModules_8h_source.html" title=" " alt="" coords="767,225,893,251"/>
-<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="793,186,823,224,819,227,788,190"/>
-<area shape="poly" id="edge17_Node000016_Node000015" title=" " alt="" coords="999,191,995,226,990,225,994,191"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="367,44,367,79,362,79,362,44"/>
+<area shape="rect" id="Node000005" href="$GameWorld_8h.html" title="ECS world manager." alt="" coords="661,79,772,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="419,28,662,76,661,82,418,33"/>
+<area shape="rect" id="Node000011" href="$Module__DnECS_8cpp_source.html" title=" " alt="" coords="203,152,350,177"/>
+<area shape="poly" id="edge18_Node000001_Node000011" title=" " alt="" coords="396,37,412,51,426,68,432,87,427,105,412,123,393,137,351,154,349,149,390,132,408,119,422,103,427,87,421,71,408,55,392,41"/>
+<area shape="rect" id="Node000006" href="$ECSModule_8h_source.html" title=" " alt="" coords="374,152,481,177"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="658,110,475,154,474,149,656,105"/>
+<area shape="rect" id="Node000009" href="$GameScript_8cpp_source.html" title=" " alt="" coords="505,152,630,177"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="682,112,593,154,591,149,679,107"/>
+<area shape="rect" id="Node000010" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="654,152,779,177"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="719,118,719,152,714,152,714,118"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="648,106,348,155,347,149,647,101"/>
+<area shape="rect" id="Node000012" href="$Module__DnGameWorld_8cpp_source.html" title=" " alt="" coords="717,225,916,251"/>
+<area shape="poly" id="edge11_Node000005_Node000012" title=" " alt="" coords="750,110,773,128,794,151,811,190,818,225,813,226,806,192,789,153,770,132,747,114"/>
+<area shape="rect" id="Node000013" href="$Module__DnGameWorld_8h_source.html" title=" " alt="" coords="855,152,1037,177"/>
+<area shape="poly" id="edge12_Node000005_Node000013" title=" " alt="" coords="768,106,910,149,908,154,766,111"/>
+<area shape="rect" id="Node000015" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="1098,225,1231,251"/>
+<area shape="poly" id="edge15_Node000005_Node000015" title=" " alt="" coords="786,93,844,99,912,110,982,126,1050,150,1082,166,1111,186,1155,223,1151,227,1108,191,1079,171,1048,154,980,131,911,115,844,104,786,99"/>
+<area shape="rect" id="Node000016" href="$SceneBuilder_8h.html" title="Scene serialization and deserialization structures." alt="" coords="1113,152,1232,177"/>
+<area shape="poly" id="edge16_Node000005_Node000016" title=" " alt="" coords="786,101,1114,151,1113,157,785,106"/>
+<area shape="rect" id="Node000007" href="$Duin_8h_source.html" title=" " alt="" coords="395,225,459,251"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="430,191,430,225,425,225,425,191"/>
+<area shape="rect" id="Node000008" href="$Duin_8cpp_source.html" title=" " alt="" coords="388,299,467,324"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="430,264,430,299,425,299,425,264"/>
+<area shape="poly" id="edge13_Node000013_Node000012" title=" " alt="" coords="914,186,839,227,837,223,912,182"/>
+<area shape="rect" id="Node000014" href="$ScriptModules_8h_source.html" title=" " alt="" coords="940,225,1067,251"/>
+<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="966,186,996,224,992,227,962,190"/>
+<area shape="poly" id="edge17_Node000016_Node000015" title=" " alt="" coords="1172,191,1169,226,1163,225,1167,191"/>
 </map>
