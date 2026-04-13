@@ -33,6 +33,7 @@ class GameScript : public Script, public GameObject
 
     void Init() override;
     void Ready() override;
+    void OnEvent(Event e) override;
     void Update(double delta) override;
     void PhysicsUpdate(double delta) override;
     void Draw() override;

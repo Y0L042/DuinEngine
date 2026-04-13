@@ -178,15 +178,15 @@ class Module_DecsGameWorld : public das::Module
             return false;
         }
 
-        auto *ecsMod = das::Module::require("dn_ecs");
+        auto *ecsMod = das::Module::require("dn_ecs_core");
         if (!ecsMod)
         {
-            DN_CORE_ERROR("dn_gameworld: required module 'dn_ecs' not found");
+            DN_CORE_ERROR("dn_gameworld: required module 'dn_ecs_core' not found");
             return false;
         }
         if (!ecsMod->initDependencies())
         {
-            DN_CORE_ERROR("dn_gameworld: failed to initialize dependencies of 'dn_ecs'");
+            DN_CORE_ERROR("dn_gameworld: failed to initialize dependencies of 'dn_ecs_core'");
             return false;
         }
 

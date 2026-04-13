@@ -10,7 +10,7 @@
 #include "Duin/Script/ScriptContext.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 
-#include "./dn_ecs.das.inc"
+//#include "./dn_ecs.das.inc"
 
 // ---- daScript external type factories ----
 MAKE_EXTERNAL_TYPE_FACTORY(ecs_world_t, ecs_world_t)
@@ -433,7 +433,7 @@ class Module_DnECS : public das::Module
     bool initialized = false;
 
   public:
-    Module_DnECS() : das::Module("dn_ecs")
+    Module_DnECS() : das::Module("dn_ecs_core")
     {
     }
 
@@ -541,7 +541,7 @@ class Module_DnECS : public das::Module
         addExtern<DAS_BIND_FUN(dn_entity_get_velocity3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
             *this, lib, "dn_entity_get_velocity3d", das::SideEffects::none, "dn_entity_get_velocity3d");
 
-        compileBuiltinModule("dn_ecs.das", dn_ecs_das, sizeof(dn_ecs_das));
+        //compileBuiltinModule("dn_ecs.das", dn_ecs_das, sizeof(dn_ecs_das));
 
         DN_CORE_INFO("Script Module [decs] initialized.");
         return true;

@@ -1,8 +1,11 @@
 options gen2
 
-require dn_log
+module dn_ecs shared public
+
 require flecs public
-require dn_ecs public
+require dn_log public
+require dn_ecs_core public
+
 
 class dn_Entity {
     entity : ecs_entity_t
@@ -133,22 +136,6 @@ struct dn_QueryDesc {
 class dn_Query {
     query : ecs_query_t?
     world : ecs_world_t?
-/*
-    def each(blk : block<(entity : dn_Entity?)>) {
-        if (query == null || world == null) {
-            return
-        }
-        var it = ecs_query_iter(world, query)
-        while (ecs_query_next_iter(it)) {
-            for (i in range(it.count)) {
-                var e = new dn_Entity()
-                e.entity = it.entities[i]
-                e.world = world
-                invoke(blk, e)
-            }
-        }
-    }
-*/
 }
 
 def dn_query_each(var q : dn_Query?; blk : block<(entity : dn_Entity?)>) {

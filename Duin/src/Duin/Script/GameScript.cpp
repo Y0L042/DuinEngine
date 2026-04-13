@@ -13,6 +13,7 @@
 #include <Duin/Objects/GameObject.h>
 #include "Script.h"
 #include <external/FileWatch.h>
+#include <vecmath/dag_vecMathDecl.h>
 
 duin::GameScript::GameScript(const std::string &relScriptPath) : Script(relScriptPath), GameObject()
 {
@@ -171,6 +172,10 @@ void duin::GameScript::Ready()
     }
 }
 
+void duin::GameScript::OnEvent(Event e)
+{
+}
+
 void duin::GameScript::Update(double delta)
 {
     if (hotCompileEnabled)
@@ -192,7 +197,9 @@ void duin::GameScript::Update(double delta)
 
     if (scriptReady)
     {
-        CallScript(fnGameUpdate);
+        vec4f args[1];
+        args[0] = cast<double>::from(delta);
+        CallScript(fnGameUpdate, args);
     }
     else
     {
@@ -208,7 +215,9 @@ void duin::GameScript::PhysicsUpdate(double delta)
 {
     if (scriptReady)
     {
-        CallScript(fnGamePhysicsUpdate);
+        vec4f args[1];
+        args[0] = cast<double>::from(delta);
+        CallScript(fnGamePhysicsUpdate, args);
     }
     else
     {
