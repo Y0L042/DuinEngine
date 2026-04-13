@@ -2,26 +2,30 @@ local utils = require "utils"
 local dep_dasimgui = {}
 local name = "DASIMGUI"
 
-local repo   = "https://github.com/borisbat/dasImgui"
-local commit = "ebc957b38506617ff7cca694e3f1342a33be8574"
-local folder = "dasimgui"
-
 function dep_dasimgui.build()
     print("START: " .. name)
 
-    if not os.isdir(folder) then
-        print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. commit)
+    -- dasimgui now lives directly in vendor/dasimgui (no git clone needed).
+    -- Only the imgui.h patch is required.
+
+    -- Patch imgui.h: add data() method to ImVector
+    -- Required by daScript's ast_handle.h ManagedVectorAnnotation.
+    local imguiHeader = "../src/external/imgui.h"
+    if utils.fileExists(imguiHeader) then
+        utils.patchFile(imguiHeader,
+            "(inline T%*           end%(%)"
+            .. "                               "
+            .. "{ return Data %+ Size; })",
+            "inline T*           data()"
+            .. "                              "
+            .. "{ return Data; }\n"
+            .. "    inline const T*     data() const"
+            .. "                        "
+            .. "{ return Data; }\n"
+            .. "    %1")
     else
-        print("\t\tFetch")
-        utils.pushDir(folder)
-        utils.runCommand("git stash")
-        utils.runCommand("git fetch origin")
-        utils.runCommand("git checkout " .. commit)
-        utils.popDir()
+        print("WARNING: imgui.h not found at " .. imguiHeader .. " — skipping data() patch")
     end
-    print(name .. " downloaded.")
 
     print("END: " .. name)
 end

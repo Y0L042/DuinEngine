@@ -37,6 +37,7 @@ function dep_daslang.build()
         .. " -DDAS_AOT_EXAMPLES_DISABLED=ON"
         .. " -DDAS_GLFW_DISABLED=ON"
         .. " -DDAS_IMGUI_DISABLED=OFF"
+        .. " -DDAS_CLANG_BIND_DISABLED=OFF"
 
     cmake_flags = cmake_flags .. " -DCMAKE_CXX_FLAGS_RELWITHDEBINFO=\"/DDAS_SMART_PTR_DEBUG=1 /DDAS_ENABLE_EXCEPTIONS=1\""
 

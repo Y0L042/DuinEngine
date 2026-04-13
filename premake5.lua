@@ -40,6 +40,7 @@ workspace "Duin"
     IncludeDir["angelscript_addon"] = "Duin/vendor/angelscript/sdk/add_on"
     IncludeDir["daslang"]   = "Duin/vendor/daslang/include"
     IncludeDir["flecs_das"] = "Duin/vendor/flecs-daslang/flecs_das/src"
+    IncludeDir["dasimgui"]  = "Duin/vendor/dasimgui/src"
 
     global_files = {}
     global_includedirs = 
@@ -68,6 +69,7 @@ workspace "Duin"
         "%{IncludeDir.daslang}",
         "Duin/vendor/daslang/src/builtin",
         "%{IncludeDir.flecs_das}",
+        "%{IncludeDir.dasimgui}",
     }
     global_libdirs =
     {
@@ -80,6 +82,7 @@ workspace "Duin"
         "Duin/vendor/reflectcpp/build/Debug",
         "Duin/vendor/daslang/lib/RelWithDebInfo",
         "Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
+        "Duin/vendor/dasimgui/bin/Debug-windows-x86_64/dasimgui",
     }
     global_defines =
     {
@@ -91,6 +94,7 @@ workspace "Duin"
     }
     global_links =
     {
+        "dasimgui.lib",
         "flecs_das.lib",
         "flecs_static.lib",
         "winmm.lib",
@@ -148,4 +152,10 @@ workspace "Duin"
     FLECS_DAS_DASLANG_LIBDIR     = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
     FLECS_DAS_DASLANG_LIBDIR_REL = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
 
+    DASIMGUI_IMGUI_INCLUDE      = path.join(duinVendorRoot, "../src/external")
+    DASIMGUI_DASLANG_INCLUDE    = path.join(duinVendorRoot, "daslang/include")
+    DASIMGUI_DASLANG_LIBDIR     = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
+    DASIMGUI_DASLANG_LIBDIR_REL = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
+
+    include "Duin/vendor/dasimgui"
     include "Duin/vendor/flecs-daslang"

@@ -11,7 +11,7 @@ externalanglebrackets "On"
 linkoptions { "-IGNORE:4006", "/STACK:8388608" }
 externalwarnings "Off"
 
-dependson { "Duin" }
+dependson { "Duin" , "dasimgui" , "flecs_das" }
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
