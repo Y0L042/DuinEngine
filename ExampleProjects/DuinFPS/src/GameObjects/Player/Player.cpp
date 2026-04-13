@@ -51,7 +51,7 @@ void Player::PhysicsUpdate(double delta)
     debugWatchlist.Post("Player Pos", "{ %.2f, %.2f, %.2f }", ppos.x, ppos.y, ppos.z);
     if (cam)
     {
-        auto &lookAt = cam->target;
+        auto lookAt = cam->GetTarget();
         debugWatchlist.Post("Player LookAt", "{ %.2f, %.2f, %.2f }", lookAt.x, lookAt.y, lookAt.z);
     }
 }
