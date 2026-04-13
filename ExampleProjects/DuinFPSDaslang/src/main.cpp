@@ -34,9 +34,10 @@ class DuinFPSDaslangApp : public duin::Application
         mainScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
         mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\Duin\\src\\Duin\\Script\\duin_engine.das_project");
         mainScript->InitModules([]() {
+            NEED_MODULE(Module_flecs);
+            NEED_MODULE(Module_imgui);
             NEED_MODULE(Module_DnLog);
             NEED_MODULE(Module_DnGameObject);
-            NEED_MODULE(Module_flecs);
             NEED_MODULE(Module_DnECS);
             NEED_MODULE(Module_DecsGameWorld);
         });

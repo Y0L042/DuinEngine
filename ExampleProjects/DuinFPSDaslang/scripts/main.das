@@ -4,6 +4,7 @@ options rtti
 require daslib/rtti
 
 require flecs
+require imgui
 require dn_log
 require dn_gameobject
 require dn_ecs
@@ -17,6 +18,8 @@ var child : Frogger?
 var world : ecs_world_t?
 var game_world : dn_GameWorld?
 var counter : float = 0.0
+var counter2 : float = 0.0
+var counter_int : int = 0
 
 var q_update_pos : ecs_query_t?
 
@@ -62,12 +65,11 @@ def game_ready() {
 }
 
 [export]
-def game_update() {
-    
+def game_update(delta : double) {
 }
 
 [export]
-def game_physics_update() { 
+def game_physics_update(delta : double) { 
     counter = counter + (1.0 / 60.0)
     if (counter > 2.0) {
         counter = 0.0
@@ -83,7 +85,7 @@ def game_physics_update() {
                 p[i].x += v[i].x
                 p[i].y += v[i].y
                 let name = ecs_get_name(world, it.entities[i])
-                print("{name}: \{ {p[i].x}, {p[i].y} \}\n")
+                // dn_info("{name}: \{ {p[i].x}, {p[i].y} \}")
             }
         }
     }
@@ -93,7 +95,17 @@ def game_physics_update() {
 def game_draw() {}
 
 [export]
-def game_draw_ui() {}
+def game_draw_ui() {
+    counter2 = counter2 + (1.0 / 60.0)
+    if (counter2 > 1.0) {
+        counter2 = 0.0
+
+        counter_int = counter_int + 1
+    }
+    imgui_boost::Begin("Hello, ImGui!")
+    imgui_boost::Text("Counter: {counter_int}")
+    imgui_boost::End()
+}
 
 
 
