@@ -53,12 +53,13 @@ var searchData=
   ['rendering_20view_200_50',['1. Main Display Rendering (View 0)',['../md_docs_2RenderingPipeline.html#autotoc_md10',1,'']]],
   ['rendershape_51',['RenderShape',['../classduin_1_1RenderShape.html',1,'duin']]],
   ['renderstate_52',['RenderState',['../structduin_1_1RenderState.html',1,'duin']]],
-  ['rendertexture_53',['rendertexture',['../md_docs_2RenderingPipeline.html#autotoc_md16',1,'Creating a RenderTexture'],['../md_docs_2RenderingPipeline.html#autotoc_md15',1,'RenderTexture'],['../structduin_1_1RenderTexture.html#aed6e70d630aacc05bea37019f057d123',1,'duin::RenderTexture::RenderTexture()'],['../structduin_1_1RenderTexture.html',1,'duin::RenderTexture']]],
+  ['rendertexture_53',['rendertexture',['../md_docs_2RenderingPipeline.html#autotoc_md16',1,'Creating a RenderTexture'],['../structduin_1_1RenderTexture.html#aed6e70d630aacc05bea37019f057d123',1,'duin::RenderTexture::RenderTexture()'],['../structduin_1_1RenderTexture.html',1,'duin::RenderTexture'],['../md_docs_2RenderingPipeline.html#autotoc_md15',1,'RenderTexture']]],
   ['restitutioncoeff_54',['restitutionCoeff',['../classduin_1_1PhysicsMaterial.html#abb612d607bd1f7bb9e9f1d7c0cf43598',1,'duin::PhysicsMaterial']]],
-  ['rotation_55',['Camera Rotation',['../md_docs_2RenderingPipeline.html#autotoc_md23',1,'']]],
-  ['rotation2d_56',['Rotation2D',['../structduin_1_1ECSComponent_1_1Rotation2D.html',1,'duin::ECSComponent']]],
-  ['rotation2dimpl_57',['Rotation2DImpl',['../structduin_1_1ECSComponent_1_1Rotation2D_1_1Rotation2DImpl.html',1,'duin::ECSComponent::Rotation2D']]],
-  ['rotation3d_58',['Rotation3D',['../structduin_1_1ECSComponent_1_1Rotation3D.html',1,'duin::ECSComponent']]],
-  ['rotation3dimpl_59',['Rotation3DImpl',['../structduin_1_1ECSComponent_1_1Rotation3D_1_1Rotation3DImpl.html',1,'duin::ECSComponent::Rotation3D']]],
-  ['run_60',['run',['../classduin_1_1Query.html#ae82330032f4703b9b9b69a521748cf9e',1,'duin::Query::Run()'],['../classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522',1,'duin::Application::Run()']]]
+  ['roll_55',['Roll',['../classduin_1_1Camera.html#a9dc807ac3d65ffe6ad50ffa555a5b904',1,'duin::Camera']]],
+  ['rotation_56',['Camera Rotation',['../md_docs_2RenderingPipeline.html#autotoc_md23',1,'']]],
+  ['rotation2d_57',['Rotation2D',['../structduin_1_1ECSComponent_1_1Rotation2D.html',1,'duin::ECSComponent']]],
+  ['rotation2dimpl_58',['Rotation2DImpl',['../structduin_1_1ECSComponent_1_1Rotation2D_1_1Rotation2DImpl.html',1,'duin::ECSComponent::Rotation2D']]],
+  ['rotation3d_59',['Rotation3D',['../structduin_1_1ECSComponent_1_1Rotation3D.html',1,'duin::ECSComponent']]],
+  ['rotation3dimpl_60',['Rotation3DImpl',['../structduin_1_1ECSComponent_1_1Rotation3D_1_1Rotation3DImpl.html',1,'duin::ECSComponent::Rotation3D']]],
+  ['run_61',['run',['../classduin_1_1Query.html#ae82330032f4703b9b9b69a521748cf9e',1,'duin::Query::Run()'],['../classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522',1,'duin::Application::Run()']]]
 ];

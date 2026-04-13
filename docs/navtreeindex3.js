@@ -1,5 +1,11 @@
 var NAVTREEINDEX3 =
 {
+"dn__gameobject__class_8das_8inc_source.html":[5,0,1,0,9,0,3,1],
+"dn__gameworld_8das_8inc_source.html":[5,0,1,0,9,0,2,1],
+"dn__gameworld__class_8das_8inc_source.html":[5,0,1,0,9,0,2,2],
+"dn__log_8das_8inc_source.html":[5,0,1,0,9,0,0,0],
+"dnpch_8cpp_source.html":[5,0,1,3],
+"dnpch_8h_source.html":[5,0,1,4],
 "docs_2examples_2JSONValue_8cpp.html":[5,0,0,0,0],
 "docs_2examples_2JSONValue_8cpp.html#a14d40ee8485125ef1d8ed5db244d36f7":[5,0,0,0,0,7],
 "docs_2examples_2JSONValue_8cpp.html#a3492dd939f7cf33c5e621aa3a4cd91c0":[5,0,0,0,0,5],
@@ -56,7 +62,8 @@ var NAVTREEINDEX3 =
 "functions_func_u.html":[4,3,1,19],
 "functions_func_v.html":[4,3,1,20],
 "functions_func_w.html":[4,3,1,21],
-"functions_func_~.html":[4,3,1,22],
+"functions_func_y.html":[4,3,1,22],
+"functions_func_~.html":[4,3,1,23],
 "functions_g.html":[4,3,0,6],
 "functions_h.html":[4,3,0,7],
 "functions_i.html":[4,3,0,8],
@@ -75,7 +82,8 @@ var NAVTREEINDEX3 =
 "functions_v.html":[4,3,0,21],
 "functions_vars.html":[4,3,2],
 "functions_w.html":[4,3,0,22],
-"functions_~.html":[4,3,0,23],
+"functions_y.html":[4,3,0,23],
+"functions_~.html":[4,3,0,24],
 "generate__xxd_8py_source.html":[5,0,1,0,9,4],
 "globals.html":[5,1,0],
 "globals_func.html":[5,1,1],
@@ -241,13 +249,5 @@ var NAVTREEINDEX3 =
 "structImDrawListSharedData.html":[4,0,52],
 "structImDrawListSplitter.html":[4,0,53],
 "structImDrawVert.html":[4,0,54],
-"structImFont.html":[4,0,55],
-"structImFontAtlas.html":[4,0,56],
-"structImFontAtlasBuilder.html":[4,0,57],
-"structImFontAtlasPostProcessData.html":[4,0,58],
-"structImFontAtlasRect.html":[4,0,59],
-"structImFontAtlasRectEntry.html":[4,0,60],
-"structImFontBaked.html":[4,0,61],
-"structImFontConfig.html":[4,0,62],
-"structImFontGlyph.html":[4,0,63]
+"structImFont.html":[4,0,55]
 };

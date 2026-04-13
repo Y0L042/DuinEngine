@@ -68,7 +68,7 @@ var searchData=
   ['signalconnections_2eh_65',['SignalConnections.h',['../SignalConnections_8h.html',1,'']]],
   ['signalimpl_66',['SignalImpl',['../classduin_1_1SignalImpl.html',1,'duin']]],
   ['signals_67',['Signals',['../group__Core__Signals.html',1,'']]],
-  ['size_68',['size',['../structduin_1_1fs_1_1PathInfo.html#ab15193fb1cc8bbb24513e1d6b546d826',1,'duin::fs::PathInfo::size'],['../classduin_1_1Iter.html#abce113016082365e3781612b7e2d363c',1,'duin::Iter::Size(int8_t index) const']]],
+  ['size_68',['size',['../classduin_1_1Iter.html#abce113016082365e3781612b7e2d363c',1,'duin::Iter::Size()'],['../structduin_1_1fs_1_1PathInfo.html#ab15193fb1cc8bbb24513e1d6b546d826',1,'duin::fs::PathInfo::size']]],
   ['skip_69',['Skip',['../classduin_1_1Iter.html#ac9ff7bf0039724f6563561777e5db50d',1,'duin::Iter']]],
   ['sm_5fmachine_70',['SM_Machine',['../structSM__Machine.html',1,'']]],
   ['sm_5fstate_71',['SM_State',['../structSM__State.html',1,'']]],
