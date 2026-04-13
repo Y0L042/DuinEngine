@@ -392,9 +392,9 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        Vector3 defaultForward = {0.0f, 0.0f, -1.0f};</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        c.position = gPos;</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        c.target = Vector3Add(gPos, forward);</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        c.up = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        c.SetPosition(gPos);</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        c.SetTarget(Vector3Add(gPos, forward));</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        c.SetGlobalUp({0.0f, 1.0f, 0.0f});</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    });</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="comment">// clang-format on</span></div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>}</div>
@@ -739,12 +739,12 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span> </div>
 <div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
-<div class="ttc" id="aApplication_8h_html_afa3ae93bbe35e54553d3eaa67f0781ec"><div class="ttname"><a href="Application_8h.html#afa3ae93bbe35e54553d3eaa67f0781ec">duin::GetPhysicsFrameTime</a></div><div class="ttdeci">float GetPhysicsFrameTime()</div><div class="ttdoc">Returns time spent on last physics frame in seconds.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00216">Application.cpp:216</a></div></div>
+<div class="ttc" id="aApplication_8h_html_afa3ae93bbe35e54553d3eaa67f0781ec"><div class="ttname"><a href="Application_8h.html#afa3ae93bbe35e54553d3eaa67f0781ec">duin::GetPhysicsFrameTime</a></div><div class="ttdeci">float GetPhysicsFrameTime()</div><div class="ttdoc">Returns time spent on last physics frame in seconds.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00207">Application.cpp:207</a></div></div>
 <div class="ttc" id="aCamera_8h_html"><div class="ttname"><a href="Camera_8h.html">Camera.h</a></div><div class="ttdoc">3D camera for rendering.</div></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aGameWorld_8h_html"><div class="ttname"><a href="GameWorld_8h.html">GameWorld.h</a></div><div class="ttdoc">ECS world manager.</div></div>
 <div class="ttc" id="aRenderer_8h_html"><div class="ttname"><a href="Renderer_8h.html">Renderer.h</a></div><div class="ttdoc">Core rendering system and utilities.</div></div>
-<div class="ttc" id="aclassduin_1_1Camera_html"><div class="ttname"><a href="classduin_1_1Camera.html">duin::Camera</a></div><div class="ttdoc">3D camera with position, target, and orientation.</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00039">Camera.h:40</a></div></div>
+<div class="ttc" id="aclassduin_1_1Camera_html"><div class="ttname"><a href="classduin_1_1Camera.html">duin::Camera</a></div><div class="ttdoc">3D camera with position, target, and orientation.</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00042">Camera.h:43</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html"><div class="ttname"><a href="classduin_1_1Entity.html">duin::Entity</a></div><div class="ttdoc">Represents an entity in the ECS world.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00021">Entity.h:22</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html_a066e2a35998f291a61c7733d8cd7a219"><div class="ttname"><a href="classduin_1_1Entity.html#a066e2a35998f291a61c7733d8cd7a219">duin::Entity::Parent</a></div><div class="ttdeci">Entity Parent() const</div><div class="ttdoc">Get the parent entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00324">Entity.h:324</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html_a537de7ca63c0877259d234b6b8f8cd84"><div class="ttname"><a href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a></div><div class="ttdeci">Entity &amp; Add()</div><div class="ttdoc">Add a component to the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00636">Entity.h:636</a></div></div>

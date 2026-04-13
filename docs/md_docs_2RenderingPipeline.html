@@ -221,7 +221,7 @@ Rendering Modes</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Display texture in ImGui</span></div>
 <div class="line">duin::DrawIMGUITexture(texture, {width, height});</div>
-<div class="ttc" id="astructduin_1_1RenderTexture_html"><div class="ttname"><a href="structduin_1_1RenderTexture.html">duin::RenderTexture</a></div><div class="ttdoc">Offscreen render target.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00087">Renderer.h:88</a></div></div>
+<div class="ttc" id="astructduin_1_1RenderTexture_html"><div class="ttname"><a href="structduin_1_1RenderTexture.html">duin::RenderTexture</a></div><div class="ttdoc">Offscreen render target.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00073">Renderer.h:74</a></div></div>
 </div><!-- fragment --><p><b>What happens in <code>BeginTextureMode</code>:</b></p><ol type="1">
 <li>Pushes current state to stack</li>
 <li>Sets <code>inTextureMode = true</code>, <code>target = &amp;texture</code></li>
@@ -237,8 +237,8 @@ Rendering Modes</h1>
 3. Nested Texture Modes</h2>
 <p>Texture modes can be nested (e.g., render texture A, then within that render to texture B):</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structduin_1_1RenderTexture.html">duin::RenderTexture</a> texA, texB;</div>
-<div class="line">texA.<a class="code hl_variable" href="structduin_1_1RenderTexture.html#a79b17e2faca645f6f9d91e731de5caca">viewID</a> = 1;</div>
-<div class="line">texB.<a class="code hl_variable" href="structduin_1_1RenderTexture.html#a79b17e2faca645f6f9d91e731de5caca">viewID</a> = 2;</div>
+<div class="line">texA.<a class="code hl_variable" href="structduin_1_1RenderTexture.html#a836bb55a02fa706bc801763a60188707">viewID</a> = 1;</div>
+<div class="line">texB.<a class="code hl_variable" href="structduin_1_1RenderTexture.html#a836bb55a02fa706bc801763a60188707">viewID</a> = 2;</div>
 <div class="line"> </div>
 <div class="line">duin::BeginTextureMode(texA);  <span class="comment">// viewID = 1</span></div>
 <div class="line">    <span class="comment">// draws go to View 1</span></div>
@@ -249,7 +249,7 @@ Rendering Modes</h1>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// draws go to View 1 again</span></div>
 <div class="line">duin::EndTextureMode();  <span class="comment">// viewID restored to 0</span></div>
-<div class="ttc" id="astructduin_1_1RenderTexture_html_a79b17e2faca645f6f9d91e731de5caca"><div class="ttname"><a href="structduin_1_1RenderTexture.html#a79b17e2faca645f6f9d91e731de5caca">duin::RenderTexture::viewID</a></div><div class="ttdeci">bgfx::ViewId viewID</div><div class="ttdoc">BGFX view ID.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00091">Renderer.h:91</a></div></div>
+<div class="ttc" id="astructduin_1_1RenderTexture_html_a836bb55a02fa706bc801763a60188707"><div class="ttname"><a href="structduin_1_1RenderTexture.html#a836bb55a02fa706bc801763a60188707">duin::RenderTexture::viewID</a></div><div class="ttdeci">RHIViewId viewID</div><div class="ttdoc">View ID.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00078">Renderer.h:78</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md13"></a>
 Draw Functions</h1>
 <p>All draw functions submit to <code>globalRenderState.viewID</code>, ensuring they render to the correct target:</p>

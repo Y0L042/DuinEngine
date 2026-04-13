@@ -176,6 +176,8 @@ var NAVTREEINDEX0 =
 "Query_8h_source.html":[5,0,1,0,3,0,8],
 "Query__impl_8h_source.html":[5,0,1,0,3,0,9],
 "Query__impl_8hpp_source.html":[5,0,1,0,3,0,10],
+"RHI_8cpp_source.html":[5,0,1,0,7,11],
+"RHI_8h_source.html":[5,0,1,0,7,12],
 "RenderGeometry_8cpp_source.html":[5,0,1,0,7,5],
 "RenderGeometry_8h_source.html":[5,0,1,0,7,6],
 "RenderIncludes_8h_source.html":[5,0,1,0,7,7],
@@ -201,8 +203,8 @@ var NAVTREEINDEX0 =
 "SerialisationManager_8h_source.html":[5,0,1,0,2,5,3],
 "Serializer_8cpp_source.html":[5,0,1,0,4,16],
 "Serializer_8h_source.html":[5,0,1,0,4,17],
-"Shader_8cpp_source.html":[5,0,1,0,7,11],
-"Shader_8h_source.html":[5,0,1,0,7,12],
+"Shader_8cpp_source.html":[5,0,1,0,7,13],
+"Shader_8h_source.html":[5,0,1,0,7,14],
 "SignalConnections_8h.html":[2,0,2,0],
 "Signal_8cpp_source.html":[5,0,1,0,2,4,0],
 "Signal_8h_source.html":[5,0,1,0,2,4,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classAtlas.html#aadffe36236f1d0e17e9d3e7e85b803ea":[4,0,9,4],
 "classAtlas.html#ab4e9ed8adc98f591d0047dd70a189829":[4,0,9,8],
 "classAtlas.html#ab6e1cc8a4f6c422c1bf2fa9f978a7235":[4,0,9,12],
-"classAtlas.html#ad6b863c91903c4a4aaf9a7164154d599":[4,0,9,10],
-"classAtlas.html#af7938ba41fadaef0c7a0e1f0c53d56e8":[4,0,9,7],
-"classConstDataIterator.html":[4,0,15]
+"classAtlas.html#ad6b863c91903c4a4aaf9a7164154d599":[4,0,9,10]
 };

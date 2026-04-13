@@ -1,6 +1,10 @@
 <map id="duin::RenderTexture" name="duin::RenderTexture">
-<area shape="rect" id="Node000001" title="Offscreen render target." alt="" coords="5,93,157,119"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="35,5,127,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,45,84,93,79,93,79,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="142,9,154,18,146,26,128,29,127,23,143,21,149,18,139,14"/>
+<area shape="rect" id="Node000001" title="Offscreen render target." alt="" coords="214,93,366,119"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="5,5,97,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,33,259,91,257,96,95,38"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="112,9,124,18,116,26,98,29,97,23,113,21,119,18,109,14"/>
+<area shape="rect" id="Node000003" href="$structduin_1_1RHITextureHandle.html" title=" " alt="" coords="203,5,377,31"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="293,45,293,93,287,93,287,45"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1RHIFrameBufferHandle.html" title=" " alt="" coords="401,5,608,31"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="464,38,320,96,318,91,462,34"/>
 </map>
