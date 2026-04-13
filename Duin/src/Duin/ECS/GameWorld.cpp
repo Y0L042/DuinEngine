@@ -260,9 +260,9 @@ void GameWorld::ExecuteQueryControlCamera()
         Vector3 defaultForward = {0.0f, 0.0f, -1.0f};
         Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);
 
-        c.position = gPos;
-        c.target = Vector3Add(gPos, forward);
-        c.up = {0.0f, 1.0f, 0.0f};
+        c.SetPosition(gPos);
+        c.SetTarget(Vector3Add(gPos, forward));
+        c.SetGlobalUp({0.0f, 1.0f, 0.0f});
     });
     // clang-format on
 }
