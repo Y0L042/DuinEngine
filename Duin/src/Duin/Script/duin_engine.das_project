@@ -9,14 +9,18 @@ var DAS_PAK_ROOT = "./"
 
 def module_engine(req, from : string) : module_info {
     if (req == "imgui" || req == "imgui_boost") {
-        // return ("imgui_boost", DAS_PAK_ROOT + "../../vendor/dasimgui/daslib/imgui_boost.das", "")
-        // return ("imgui_boost", DAS_PAK_ROOT + "../../../vendor/dasimgui/src/scripts/imgui_boost.das", "")
         return ("imgui_boost", DAS_PAK_ROOT + "modules/moduleImgui/imgui_boost.das", "")
-    } elif (req == "dn_gameobject") {
+    } 
+    elif (req == "dn_camera") {
+        return ("dn_camera", DAS_PAK_ROOT + "modules/moduleRenderer/dn_camera.das", "")
+    } 
+    elif (req == "dn_gameobject") {
         return ("dn_gameobject", DAS_PAK_ROOT + "modules/moduleGameObject/dn_gameobject.das", "")
-    } elif (req == "dn_gameworld") {
+    } 
+    elif (req == "dn_gameworld") {
         return ("dn_gameworld", DAS_PAK_ROOT + "modules/moduleECS/dn_gameworld.das", "")
-    } elif (req == "dn_ecs") {
+    } 
+    elif (req == "dn_ecs") {
         return ("dn_ecs", DAS_PAK_ROOT + "modules/moduleECS/dn_ecs.das", "")
     }
     return ("", "", "")
