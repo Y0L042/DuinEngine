@@ -55,7 +55,7 @@ class Camera
     {
     }
 
-    CameraImpl GetImpl() const
+    CameraImpl& GetImpl()
     {
         return impl;
     }
