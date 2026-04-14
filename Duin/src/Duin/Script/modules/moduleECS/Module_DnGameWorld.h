@@ -2,7 +2,7 @@
 
 #include "daScript/daScript.h"
 #include "Duin/ECS/GameWorld.h"
-#include "../../DnGameObjectAdapter_gen.inc"
+#include "../../DnGameWorldAdapter_gen.inc"
 #include "Duin/Core/Debug/DNLog.h"
 
 // =========================================================================
