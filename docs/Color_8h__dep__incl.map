@@ -1,28 +1,31 @@
 <map id="Color.h" name="Color.h">
-<area shape="rect" id="Node000001" title="RGBA color representation." alt="" coords="362,5,429,31"/>
-<area shape="rect" id="Node000002" href="$RenderIncludes_8h_source.html" title=" " alt="" coords="5,225,140,251"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="369,41,91,227,88,223,366,36"/>
-<area shape="rect" id="Node000003" href="$RenderModule_8h_source.html" title=" " alt="" coords="591,225,719,251"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="443,30,488,48,539,73,590,107,632,150,643,169,650,190,657,225,652,226,645,191,638,172,628,154,586,111,537,78,486,53,441,35"/>
-<area shape="rect" id="Node000006" href="$RenderShape_8h_source.html" title=" " alt="" coords="385,79,505,104"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="413,41,439,77,434,80,409,44"/>
-<area shape="rect" id="Node000008" href="$Renderer_8h.html" title="Core rendering system and utilities." alt="" coords="315,152,407,177"/>
-<area shape="poly" id="edge15_Node000001_Node000008" title=" " alt="" coords="387,44,375,79,364,152,359,151,370,78,382,43"/>
-<area shape="rect" id="Node000004" href="$Duin_8h_source.html" title=" " alt="" coords="623,299,687,324"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="658,264,658,299,653,299,653,264"/>
-<area shape="rect" id="Node000005" href="$Duin_8cpp_source.html" title=" " alt="" coords="616,372,695,397"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="658,338,658,372,653,372,653,338"/>
-<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="403,112,103,228,101,223,401,107"/>
-<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="449,117,456,148,473,175,494,189,527,202,603,223,602,228,525,207,492,194,469,179,452,150,444,118"/>
-<area shape="rect" id="Node000007" href="$RenderShape_8cpp_source.html" title=" " alt="" coords="483,152,617,177"/>
-<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="475,110,534,150,531,154,472,114"/>
-<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="422,115,376,154,373,150,419,111"/>
-<area shape="poly" id="edge12_Node000008_Node000002" title=" " alt="" coords="302,183,120,228,119,223,301,178"/>
-<area shape="poly" id="edge13_Node000008_Node000003" title=" " alt="" coords="420,178,608,223,607,228,419,183"/>
-<area shape="rect" id="Node000009" href="$Application_8cpp_source.html" title=" " alt="" coords="165,225,287,251"/>
-<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="328,186,249,227,247,223,326,181"/>
-<area shape="rect" id="Node000010" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="311,225,437,251"/>
-<area shape="poly" id="edge11_Node000008_Node000010" title=" " alt="" coords="368,191,374,225,369,226,363,192"/>
-<area shape="rect" id="Node000011" href="$Renderer_8cpp_source.html" title=" " alt="" coords="461,225,567,251"/>
-<area shape="poly" id="edge14_Node000008_Node000011" title=" " alt="" coords="399,181,490,223,488,228,396,185"/>
+<area shape="rect" id="Node000001" title="RGBA color representation." alt="" coords="386,5,453,31"/>
+<area shape="rect" id="Node000002" href="$Module__DnRenderer_8cpp_source.html" title=" " alt="" coords="164,225,344,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="393,41,349,80,320,120,295,161,262,226,257,224,290,159,315,117,345,77,389,37"/>
+<area shape="rect" id="Node000003" href="$RenderIncludes_8h_source.html" title=" " alt="" coords="5,225,140,251"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="390,40,325,81,92,227,89,223,322,76,388,36"/>
+<area shape="rect" id="Node000004" href="$RenderModule_8h_source.html" title=" " alt="" coords="795,225,923,251"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="456,34,837,223,835,228,453,39"/>
+<area shape="rect" id="Node000007" href="$RenderShape_8h_source.html" title=" " alt="" coords="359,79,479,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="422,44,422,79,417,79,417,44"/>
+<area shape="rect" id="Node000009" href="$Renderer_8h.html" title="Core rendering system and utilities." alt="" coords="501,152,593,177"/>
+<area shape="poly" id="edge17_Node000001_Node000009" title=" " alt="" coords="449,37,493,77,523,116,543,150,539,153,518,119,489,80,445,41"/>
+<area shape="rect" id="Node000005" href="$Duin_8h_source.html" title=" " alt="" coords="827,299,891,324"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="862,264,862,299,857,299,857,264"/>
+<area shape="rect" id="Node000006" href="$Duin_8cpp_source.html" title=" " alt="" coords="820,372,899,397"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="862,338,862,372,857,372,857,338"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="380,112,101,228,99,223,378,107"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="470,106,607,149,827,223,825,228,605,155,468,111"/>
+<area shape="rect" id="Node000008" href="$RenderShape_8cpp_source.html" title=" " alt="" coords="343,152,477,177"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="419,118,414,152,409,152,413,117"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="453,108,528,149,525,154,451,113"/>
+<area shape="poly" id="edge13_Node000009_Node000002" title=" " alt="" coords="488,183,302,228,301,223,487,178"/>
+<area shape="poly" id="edge14_Node000009_Node000003" title=" " alt="" coords="488,180,318,206,152,228,140,230,140,224,151,223,317,200,487,175"/>
+<area shape="poly" id="edge15_Node000009_Node000004" title=" " alt="" coords="607,177,810,223,808,228,606,182"/>
+<area shape="rect" id="Node000010" href="$Application_8cpp_source.html" title=" " alt="" coords="499,225,622,251"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="555,191,561,225,556,226,549,192"/>
+<area shape="rect" id="Node000011" href="$GameWorld_8cpp_source.html" title=" " alt="" coords="646,225,771,251"/>
+<area shape="poly" id="edge12_Node000009_Node000011" title=" " alt="" coords="587,180,683,223,681,228,585,185"/>
+<area shape="rect" id="Node000012" href="$Renderer_8cpp_source.html" title=" " alt="" coords="369,225,475,251"/>
+<area shape="poly" id="edge16_Node000009_Node000012" title=" " alt="" coords="517,186,444,227,441,223,514,182"/>
 </map>

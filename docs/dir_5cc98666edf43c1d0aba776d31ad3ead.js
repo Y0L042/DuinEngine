@@ -1,7 +1,10 @@
 var dir_5cc98666edf43c1d0aba776d31ad3ead =
 [
     [ "modules", "dir_b2bb2d02686f48316b070475b7ce67fd.html", "dir_b2bb2d02686f48316b070475b7ce67fd" ],
+    [ "DaslangConversionHelpers.h", "DaslangConversionHelpers_8h_source.html", null ],
+    [ "DnCameraAdapter_gen.inc", "DnCameraAdapter__gen_8inc_source.html", null ],
     [ "DnGameObjectAdapter_gen.inc", "DnGameObjectAdapter__gen_8inc_source.html", null ],
+    [ "DnGameWorldAdapter_gen.inc", "DnGameWorldAdapter__gen_8inc_source.html", null ],
     [ "GameScript.cpp", "GameScript_8cpp_source.html", null ],
     [ "GameScript.h", "GameScript_8h_source.html", null ],
     [ "generate_xxd.py", "generate__xxd_8py_source.html", null ],

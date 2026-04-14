@@ -397,9 +397,11 @@ var hierarchy =
     [ "MeshState", "structMeshState.html", null ],
     [ "das::Module", null, [
       [ "Module_DecsGameWorld", "classModule__DecsGameWorld.html", null ],
+      [ "Module_DnCamera", "classModule__DnCamera.html", null ],
       [ "Module_DnECS", "classModule__DnECS.html", null ],
       [ "Module_DnGameObject", "classModule__DnGameObject.html", null ],
       [ "Module_DnLog", "classModule__DnLog.html", null ],
+      [ "Module_DnRenderer", "classModule__DnRenderer.html", null ],
       [ "Module_Doctest", "classModule__Doctest.html", null ]
     ] ],
     [ "Camera::MouseCoords", "structCamera_1_1MouseCoords.html", null ],
