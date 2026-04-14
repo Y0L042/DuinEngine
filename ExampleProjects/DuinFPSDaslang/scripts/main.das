@@ -9,6 +9,8 @@ require dn_log
 require dn_gameobject
 require dn_ecs
 require dn_gameworld
+require dn_renderer
+require dn_camera
 
 require player
 require frogger
@@ -20,6 +22,8 @@ var game_world : dn_GameWorld?
 var counter : float = 0.0
 var counter2 : float = 0.0
 var counter_int : int = 0
+
+var camera : dn_Camera?
 
 var q_update_pos : ecs_query_t?
 
@@ -37,6 +41,18 @@ struct Velocity {
 [export]
 def game_ready() {
     dn_info("Game Ready!")
+
+    camera = dn_camera_init(new dn_Camera())
+    camera.set_impl_from_params(
+        float3(6.0, 6.0, 6.0),
+        float3(0.0, 0.0, 0.0),
+        float3(0.0, 1.0, 0.0),
+        80.0
+    )
+    dn_set_active_camera(camera)
+    if (dn_get_active_camera() == null) {
+        dn_fatal("Failed to set active camera!")
+    }
 
     game_world = dn_gameworld_init(new dn_GameWorld())
     world = game_world.ecs_world()
@@ -92,7 +108,9 @@ def game_physics_update(delta : double) {
 }
 
 [export]
-def game_draw() {}
+def game_draw() {
+    dn_draw_box(float3(0.0, 0.0, 0.0), float4(0.0, 0.0, 0.0, 1.0), float3(1.0, 1.0, 1.0))
+}
 
 [export]
 def game_draw_ui() {
@@ -102,8 +120,13 @@ def game_draw_ui() {
 
         counter_int = counter_int + 1
     }
-    imgui_boost::Begin("Hello, ImGui!")
+    var active_cam : dn_Camera?# = dn_get_active_camera()
+    let impl : dn_CameraImpl = active_cam.get_impl()
+    imgui_boost::Begin("Daslang Dashboard!")
     imgui_boost::Text("Counter: {counter_int}")
+    imgui_boost::Text("Camera:")
+    imgui_boost::Text("Position: \{{impl.position.x}, {impl.position.y}, {impl.position.z}\}")
+    imgui_boost::Text("Target: \{{impl.target.x}, {impl.target.y}, {impl.target.z}\}")
     imgui_boost::End()
 }
 

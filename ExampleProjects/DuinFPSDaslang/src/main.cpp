@@ -7,6 +7,7 @@
 #include <Duin/IO/FileModule.h>
 #include <Duin/Script/GameScript.h>
 #include <Duin/Script/ScriptModules.h>
+#include <external/imgui.h>
 
 #include <flecs_das.h>
 
@@ -37,6 +38,8 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_flecs);
             NEED_MODULE(Module_imgui);
             NEED_MODULE(Module_DnLog);
+            NEED_MODULE(Module_DnRenderer);
+            NEED_MODULE(Module_DnCamera);
             NEED_MODULE(Module_DnGameObject);
             NEED_MODULE(Module_DnECS);
             NEED_MODULE(Module_DecsGameWorld);
@@ -63,6 +66,14 @@ class DuinFPSDaslangApp : public duin::Application
 
     void DrawUI() override
     {
+        auto *cam = duin::GetActiveCamera();
+        auto pos = cam->GetPosition();
+        auto target = cam->GetTarget();
+        ImGui::Begin("C++ Dashboard");
+        ImGui::Text("Camera:");
+        ImGui::Text("Position {%.2f, %.2f, %.2f}", pos.x, pos.y, pos.z);
+        ImGui::Text("Target {%.2f, %.2f, %.2f}", target.x, target.y, target.z);
+        ImGui::End();
     }
 
     void Exit() override
