@@ -166,15 +166,15 @@ class Module_DecsGameWorld : public das::Module
             return false;
         }
 
-        auto *flecsMod = das::Module::require("flecs");
+        auto *flecsMod = das::Module::require("flecs_core");
         if (!flecsMod)
         {
-            DN_CORE_ERROR("dn_gameworld: required module 'flecs' not found");
+            DN_CORE_ERROR("dn_gameworld: required module 'flecs_core' not found");
             return false;
         }
         if (!flecsMod->initDependencies())
         {
-            DN_CORE_ERROR("dn_gameworld: failed to initialize dependencies of 'flecs'");
+            DN_CORE_ERROR("dn_gameworld: failed to initialize dependencies of 'flecs_core'");
             return false;
         }
 

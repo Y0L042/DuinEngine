@@ -1,15 +1,32 @@
 options gen2
 
+require strings
+require daslib/class_boost
+
 module dn_ecs shared public
 
-require flecs public
 require dn_log public
+require flecs public
 require dn_ecs_core public
 
 
 class dn_Entity {
     entity : ecs_entity_t
     world : ecs_world_t?
+
+    def dn_Entity(var world : ecs_world_t?, var name : string = "") : void {
+        if (world != null) {
+            self.world = world
+            entity = ecs_entity_new(world, name)
+        }
+    }
+
+    def dn_Entity(var world : ecs_world_t?, var entity : ecs_entity_t) : void {
+        if (world != null) {
+            self.world = world
+            self.entity = entity
+        }
+    }
 
     def is_valid() : bool {
         return (world != null) && (entity != 0ul)
@@ -24,6 +41,22 @@ class dn_Entity {
     def add_tag(tag_id : ecs_entity_t) : dn_Entity? {
         ecs_add(world, entity, tag_id)
         return unsafe(addr(self))
+    }
+
+    [class_method]
+    def static set(var cmp : auto(T)) : void {
+        if (world != null) {
+            ecs_set(world, self, cmp)
+        }
+    }
+
+    [class_method]
+    def static get_mut(var cmp_type : type<auto(T)>) : T? {
+        if (world != null) {
+            return ecs_get_mut(world, entity, type<T>)
+        }
+
+        return null
     }
 
     def has_tag(tag_id : ecs_entity_t) : bool {

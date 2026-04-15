@@ -451,9 +451,9 @@ class Module_DnECS : public das::Module
             DN_CORE_ERROR("decs: failed to find required module 'dn_log'");
         addBuiltinDependency(lib, logMod);
 
-        auto *flecsMod = das::Module::require("flecs");
+        auto *flecsMod = das::Module::require("flecs_core");
         if (!flecsMod)
-            DN_CORE_ERROR("decs: failed to find required module 'flecs'");
+            DN_CORE_ERROR("decs: failed to find required module 'flecs_core'");
         addBuiltinDependency(lib, flecsMod);
 
         addAnnotation(make_smart<dn_Vector3Annotation>(lib));
