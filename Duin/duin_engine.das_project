@@ -9,19 +9,22 @@ var DAS_PAK_ROOT = "./"
 
 def module_engine(req, from : string) : module_info {
     if (req == "imgui" || req == "imgui_boost") {
-        return ("imgui_boost", DAS_PAK_ROOT + "modules/moduleImgui/imgui_boost.das", "")
-    } 
+        return ("imgui_boost", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleImgui/imgui_boost.das", "")
+    }
     elif (req == "dn_camera") {
-        return ("dn_camera", DAS_PAK_ROOT + "modules/moduleRenderer/dn_camera.das", "")
-    } 
+        return ("dn_camera", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleRenderer/dn_camera.das", "")
+    }
     elif (req == "dn_gameobject") {
-        return ("dn_gameobject", DAS_PAK_ROOT + "modules/moduleGameObject/dn_gameobject.das", "")
-    } 
+        return ("dn_gameobject", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleGameObject/dn_gameobject.das", "")
+    }
     elif (req == "dn_gameworld") {
-        return ("dn_gameworld", DAS_PAK_ROOT + "modules/moduleECS/dn_gameworld.das", "")
-    } 
+        return ("dn_gameworld", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleECS/dn_gameworld.das", "")
+    }
     elif (req == "dn_ecs") {
-        return ("dn_ecs", DAS_PAK_ROOT + "modules/moduleECS/dn_ecs.das", "")
+        return ("dn_ecs", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleECS/dn_ecs.das", "")
+    }
+    elif (req == "flecs" || req == "flecs_boost") {
+        return ("flecs_boost", DAS_PAK_ROOT + "vendor/flecs-daslang/flecs_das/src/scripts/flecs_helpers.das", "")
     }
     return ("", "", "")
 }
