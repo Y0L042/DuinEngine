@@ -89,6 +89,7 @@ class GameWorld : public World
      */
     void ExecuteQueryTransform3DHierarchicalUpdate();
     void ExecuteQueryCharacterBody3DUpdateTransform();
+    void ExecuteQueryVelocity3DUpdateTransform();
     void ExecuteQuerySyncDynamicBody3DTransform();
     /** @} */
 

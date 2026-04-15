@@ -73,6 +73,7 @@ void GameWorld::PostUpdateQueryExecution(double delta)
 void GameWorld::PostPhysicsUpdateQueryExecution(double delta)
 {
     /* Update physics-objects' positions first */
+    ExecuteQueryVelocity3DUpdateTransform();
     ExecuteQueryCharacterBody3DUpdateTransform();
     ExecuteQuerySyncDynamicBody3DTransform();
     ExecuteQueryTransform3DHierarchicalUpdate();
@@ -178,6 +179,33 @@ void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
         {
             velocity.value.y = vDelta.y;
         }
+    });
+    // clang-format on
+}
+
+void GameWorld::ExecuteQueryVelocity3DUpdateTransform()
+{
+    // clang-format off
+    GetOrBuildQuery<
+        ECSComponent::Transform3D,
+        ECSComponent::Velocity3D
+    >("CharacterBody3DUpdateTransform", [](World& w) {
+        return w.QueryBuilder<
+                    ECSComponent::Transform3D,
+                    ECSComponent::Velocity3D>()
+               .Without<ECSComponent::CharacterBodyComponent>()
+               .Cached()
+               .Build();
+    }).Each([this](
+        duin::Entity e,
+        ECSComponent::Transform3D &tx,
+        ECSComponent::Velocity3D &velocity
+    ){
+        // Move CharacterBody3D and get physics-resolved global position
+        double delta = GetPhysicsFrameTime();
+        Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
+        Vector3 oldPos = tx.GetPosition();
+        tx.SetPosition(oldPos + vDelta);
     });
     // clang-format on
 }

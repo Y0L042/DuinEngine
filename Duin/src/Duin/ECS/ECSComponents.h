@@ -294,10 +294,12 @@ struct Transform3D
         globalRotationCacheDirtyFlag = true;
     }
 
-    void SetPosition(Vector3 position)
+    Vector3 SetPosition(Vector3 position)
     {
         position_ = position;
         InvalidateCacheFlags();
+
+        return position_;
     }
 
     Vector3 GetPosition() const
@@ -305,10 +307,12 @@ struct Transform3D
         return position_;
     }
 
-    void SetScale(Vector3 scale)
+    Vector3 SetScale(Vector3 scale)
     {
         scale_ = scale;
         InvalidateCacheFlags();
+
+        return scale_;
     }
 
     Vector3 GetScale() const
@@ -316,10 +320,12 @@ struct Transform3D
         return scale_;
     }
 
-    void SetRotation(Quaternion rotation)
+    Quaternion SetRotation(Quaternion rotation)
     {
         rotation_ = rotation;
         InvalidateCacheFlags();
+
+        return rotation_;
     }
 
     Quaternion GetRotation() const
