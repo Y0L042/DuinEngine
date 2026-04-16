@@ -5,9 +5,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GENERATE_XXD="$SCRIPT_DIR/tools/generate_engine_script_xxd.py"
 FORCE_GENERATE_XXD="$SCRIPT_DIR/Duin/src/Duin/Script/generate_xxd.py"
 DASLANG="$SCRIPT_DIR/Duin/vendor/daslang/bin/RelWithDebInfo/daslang_static.exe"
-GEN_ADAPTER_DAS="$SCRIPT_DIR/Duin/src/Duin/Script/gen_adapter.das"
-GEN_BIND_DAS="$SCRIPT_DIR/Duin/src/Duin/Script/gen_bind.das"
-SCRIPT_INC="$SCRIPT_DIR/Duin/src/Duin/Script"
+GEN_ADAPTER_DAS="$SCRIPT_DIR/Duin/gen_adapter.das"
+GEN_BIND_DAS="$SCRIPT_DIR/Duin/gen_bind.das"
+SCRIPT_INC="$SCRIPT_DIR/Duin"
 DAS_FORMATTER="$SCRIPT_DIR/Duin/vendor/daslang/utils/dasCodeFormatter/main.das"
 DASROOT="$SCRIPT_DIR/Duin/vendor/daslang"
 
@@ -17,7 +17,7 @@ usage() {
     echo "Commands:"
     echo "  force-gen-inc   Force regenerate all .das.inc files from their .das sources"
     echo "  gen-inc         Regenerate changed .das.inc files (skips gen_adapter/gen_bind)"
-    echo "  gen-adapter     Regenerate DnGameObjectAdapter_gen.inc via cpp_bind"
+    echo "  gen-adapter     Regenerate *Adapter_gen.inc files via gen_bind.das"
     echo "  fmt <file.das>  Format a .das file in-place (backs up, formats, verifies)"
     echo "  fmt-all         Format all .das files under Duin/src/Duin/Script"
     echo "  codegen         Run the full pipeline: fmt-all, gen-inc, gen-adapter"
@@ -44,11 +44,10 @@ cmd_gen_inc() {
 }
 
 cmd_gen_adapter() {
-    local out="$SCRIPT_DIR/Duin/src/Duin/Script/DnGameObjectAdapter_gen.inc"
     local dasroot="$SCRIPT_DIR/Duin/vendor/daslang"
     local project="$SCRIPT_INC/gen_bind.das_project"
     echo "Running gen_bind.das via daslang..."
-    "$DASLANG" -dasroot "$dasroot" -no-dynamic-modules -project "$project" "$GEN_BIND_DAS" -- "$out"
+    "$DASLANG" -dasroot "$dasroot" -no-dynamic-modules -project "$project" "$GEN_BIND_DAS"
 }
 
 cmd_fmt() {
