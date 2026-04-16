@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"structIMGUIZMO__NAMESPACE_1_1Style.html":[4,0,5,2],
+"structIMGUIZMO__NAMESPACE_1_1matrix__t.html":[4,0,5,1],
 "structIMGUIZMO__NAMESPACE_1_1vec__t.html":[4,0,5,3],
 "structImBitArray.html":[4,0,42],
 "structImBitVector.html":[4,0,43],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "structduin_1_1Entity_1_1ID.html#a1e45067c1604fd6678535162e730e4ec":[4,0,0,32,0,19],
 "structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269":[4,0,0,32,0,26],
 "structduin_1_1Entity_1_1ID.html#a2a4f6cd83989d6c8bb8d671d1def27e8":[4,0,0,32,0,16],
-"structduin_1_1Entity_1_1ID.html#a3b786fd70905e1e9e396964d44d9971c":[4,0,0,32,0,5],
-"structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279":[4,0,0,32,0,27],
-"structduin_1_1Entity_1_1ID.html#a4e14c52b81b74d078c6577bd4d320fd0":[4,0,0,32,0,10]
+"structduin_1_1Entity_1_1ID.html#a3b786fd70905e1e9e396964d44d9971c":[4,0,0,32,0,5]
 };

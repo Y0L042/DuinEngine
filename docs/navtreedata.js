@@ -104,8 +104,8 @@ var NAVTREEINDEX =
 "classAtlas.html#a5250603dd4054d8cca9a7b161a426a30",
 "classduin_1_1Iter.html#ab7455bdac286fe80088ec01ad2eae019",
 "dir_adc84b64c3e31638e183f7983f4e174a.html",
-"structIMGUIZMO__NAMESPACE_1_1vec__t.html",
-"structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be"
+"structIMGUIZMO__NAMESPACE_1_1Style.html",
+"structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
