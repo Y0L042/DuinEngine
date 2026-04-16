@@ -7,9 +7,10 @@ require daslib/fio
 require daslib/ast_boost
 require strings
 require gen_adapter
-require modules/moduleGameObject/dn_gameobject_class
-require modules/moduleECS/dn_gameworld_class
 
+
+require src/Duin/Script/modules/moduleGameObject/dn_gameobject_class
+require src/Duin/Script/modules/moduleECS/dn_gameworld_class
 
 def write_adapter_file(path : string; adapter_name : string; cinfo : TypeDeclPtr) : void {
     print("Output: {path}\n")
@@ -51,9 +52,10 @@ def main() : void {
     builtin_get_command_line_arguments(args)
 
     let dir = script_dir(args)
+    let inc_dir = "{dir}src/Duin/Script/"
 
     // ---- Register adapters here: one write_adapter_file call per adapter ----
-    write_adapter_file("{dir}DnGameObjectAdapter_gen.inc",  "DnGameObjectAdapterBase",  typeinfo ast_typedecl(type<dn_GameObject>))
-    write_adapter_file("{dir}DnGameWorldAdapter_gen.inc",   "DnGameWorldAdapterBase",   typeinfo ast_typedecl(type<dn_GameWorld>))
+    write_adapter_file("{inc_dir}DnGameObjectAdapter_gen.inc",  "DnGameObjectAdapterBase",  typeinfo ast_typedecl(type<dn_GameObject>))
+    write_adapter_file("{inc_dir}DnGameWorldAdapter_gen.inc",   "DnGameWorldAdapterBase",   typeinfo ast_typedecl(type<dn_GameWorld_Adapter>))
     // -------------------------------------------------------------------------
 }

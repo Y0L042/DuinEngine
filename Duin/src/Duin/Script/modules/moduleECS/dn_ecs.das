@@ -1,7 +1,9 @@
 options gen2
+options rtti
 
 require strings
 require daslib/class_boost
+require daslib/rtti
 
 module dn_ecs shared public
 
@@ -112,7 +114,11 @@ class dn_Entity {
 class dn_World {
     world : ecs_world_t?
 
-    def init() : bool {
+    def dn_World(var world : ecs_world_t?) : void {
+        self.world = world
+    }
+
+    def initialize() : bool {
         self.world = ecs_init();
         return (self.world != null);
     }
@@ -153,45 +159,108 @@ class dn_World {
         return ecs_is_alive(world, e.entity)
     }
 
+    def query_builder() : dn_QueryBuilder? {
+        if (world == null) {
+            return null
+        }
+        return new dn_QueryBuilder(world)
+    }
+
+
     def ecs_world() : ecs_world_t? {
         return world
     }
 }
 
-
-
-typedef dn_Term = ecs_entity_t
-
-struct dn_QueryDesc {
-    terms : array<dn_Term>
+def dn_register_component(var dn_world : dn_World?, var cmp_type : type<auto(T)>) : void {
+    ecs_component_register(dn_world.world, type<T>)
 }
 
 class dn_Query {
     query : ecs_query_t?
     world : ecs_world_t?
+
+    [class_method]
+    def static each(var q : dn_Query?; blk : block<(entity : dn_Entity?)>) : void {
+        if (q != null) {
+            q.each(blk)
+        }
+    }
+
+    def fini() : void {
+        ecs_query_fini(query)
+    }
+
 }
 
-def dn_query_each(var q : dn_Query?; blk : block<(entity : dn_Entity?)>) {
-    if (q != null) {
-        q.each(blk)
+class dn_QueryBuilder {
+    world : ecs_world_t?
+    q_desc : ecs_query_desc_t
+    term_count : int
+
+    def dn_QueryBuilder(var world : ecs_world_t?) : void {
+        self.world = world
+        self.term_count = 0
+    }
+
+    // Add a single typed term.
+    // Pass EcsIn as inout to match flecs' with<const T>() (read-only).
+    [class_method]
+    def static with_term(var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : dn_QueryBuilder? {
+        let id = ecs_component_register(world, type<T>)
+        flecs_query_desc_set_term_full(q_desc, term_count, id, inout, EcsAnd)
+        term_count++
+        return unsafe(addr(self))
+    }
+
+    // Exclude entities that have this component.
+    [class_method]
+    def static without_term(var cmp : type<auto(T)>) : dn_QueryBuilder? {
+        let id = ecs_component_register(world, type<T>)
+        flecs_query_desc_set_term_full(q_desc, term_count, id, EcsInOutNone, EcsNot)
+        term_count++
+        return unsafe(addr(self))
+    }
+
+    [class_method]
+    def static term(var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : ecs_term_t {
+        return ecs_term(world, cmp, inout)
+    }
+
+    // Add multiple pre-built terms at once.
+    def terms(var bulk_terms : array<ecs_term_t>) : dn_QueryBuilder? {
+        for (t in bulk_terms) {
+            flecs_query_desc_set_term_full(q_desc, term_count, t.id, int(t.inout), int(t.oper))
+            term_count++
+        }
+        return unsafe(addr(self))
+    }
+
+    def build() : dn_Query? {
+        var result = new dn_Query()
+        result.world = world
+        unsafe {
+            result.query = ecs_query_init(world, addr(q_desc))
+        }
+        return result
+    }
+
+    def cached() : dn_QueryBuilder? {
+        flecs_query_desc_set_cache_kind(q_desc, EcsQueryCacheAuto)
+        return unsafe(addr(self))
+    }
+
+    def cache_kind(cache_kind : int = 1) : dn_QueryBuilder? {
+        flecs_query_desc_set_cache_kind(q_desc, cache_kind)
+        return unsafe(addr(self))
+    }
+
+    def query_flags(flags : int) : dn_QueryBuilder? {
+        return unsafe(addr(self))
     }
 }
 
-def dn_query_builder(var world_obj : dn_World?; var query_desc : dn_QueryDesc) : dn_Query? {
-    if (world_obj == null) {
-        return null
-    }
-    var q_desc : ecs_query_desc_t
-    var i = 0
-    for (t in query_desc.terms) {
-        flecs_query_desc_set_term(q_desc, i, t, EcsInOutDefault)
-        i++
-    }
-    flecs_query_desc_set_cache_kind(q_desc, EcsQueryCacheAuto)
-    var q = new dn_Query()
-    q.world = world_obj.world
-    unsafe {
-        q.query = ecs_query_init(world_obj.world, addr(q_desc))
-    }
-    return q
+def ecs_term(var world : dn_World?, var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : ecs_term_t {
+    let id : ecs_entity_t = ecs_component_register(world.ecs_world(), type<T>)
+    return ecs_term_t(id=id, inout=int16(inout))
 }

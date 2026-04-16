@@ -1,12 +1,11 @@
 options gen2
 options remove_unused_symbols = false
-options rtti
 
-// Minimal class-only definition of dn_GameWorld for adapter generation.
-// Does not require dn_ecs (and by extension flecs), so it can be loaded
-// by gen_bind.das in the standalone daslang runner.
+module dn_gameworld_class shared public
 
-class dn_GameWorld {
+// Adapter contract for codegen — no C++ builtin requires.
+// dn_GameWorld inherits from this in dn_gameworld.das.
+class dn_GameWorld_Adapter {
     _handle : void?
 
     def abstract _post_update(delta : double) : void

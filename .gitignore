@@ -121,3 +121,7 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 /artifacts
 /.claude
 /ScriptTests/AngelScriptTest/AS_DEBUG
+
+
+./modules
+/modules

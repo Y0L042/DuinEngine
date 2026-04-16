@@ -13,8 +13,6 @@ var {
     modules : array< function<(req, from : string) : module_info> >
 }
 
-include dn_log.das_module
-
 def module_default(req, from : string) : module_info {
     let rs <- split_by_chars(req, "./")
     var fr <- split_by_chars(from, "/")

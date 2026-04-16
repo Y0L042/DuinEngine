@@ -27,6 +27,9 @@ def module_engine(req, from : string) : module_info {
     elif (req == "flecs" || req == "flecs_boost") {
         return ("flecs_boost", DAS_PAK_ROOT + "vendor/flecs-daslang/flecs_das/src/scripts/flecs_helpers.das", "")
     }
+    elif (req == "dn_log") {
+        return ("dn_log", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleDNLog/dn_log.das", "")
+    }
     return ("", "", "")
 }
 
