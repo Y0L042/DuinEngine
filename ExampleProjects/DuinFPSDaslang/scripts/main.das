@@ -41,8 +41,8 @@ def game_ready() {
         dn_fatal("Failed to set active camera!")
     }
 
-    game_world = dn_gameworld_init(new dn_GameWorld())
-    let world = game_world.ecs_world()
+    game_world = new dn_GameWorld()
+    var world = game_world.dn_world()
 
     world|>register_components()
     world|>construct_queries()
@@ -71,7 +71,7 @@ def game_physics_update(delta : double) {
 [export]
 def game_draw() {
     if (player != null && player.player_entity != null) {
-        let pos = game_world |> dn_gameworld_get_global_position(player.player_entity)
+        let pos = game_world.get_global_position(player.player_entity)
         dn_draw_box(pos, float4(0.2, 0.8, 0.2, 1.0), float3(1.0, 1.0, 1.0))
     }
     draw_cube_crowd()
@@ -98,7 +98,7 @@ def create_cube_crowd() : void {
     var seed = random_seed(43)
     for (i in range(0, crowd_size)) {
         let world = game_world.ecs_world()
-        var e : ecs_entity_t = dn_gameworld_create_entity(game_world, "{i}").ecs_entity()
+        var e : ecs_entity_t = game_world.create_entity("{i}").ecs_entity()
         ecs_set(world, e, RenderCube(size=float3(1.0, 1.0, 1.0)))
         dn_entity_set_transform3d(world, e, dn_make_transform3d(random_float(seed) * 1000.0 % 100.0 - 50.0, 0.0, random_float(seed) * 1000.0 % 100.0 - 50.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0))
         dn_entity_set_velocity3d(world, e, dn_make_velocity3d(0.0, 0.0, 0.0))        

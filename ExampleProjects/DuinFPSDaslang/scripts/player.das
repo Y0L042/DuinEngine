@@ -19,7 +19,7 @@ class Player : dn_GameObject {
 
     def Player(var game_world_ : dn_GameWorld?) : void {
         game_world = game_world_
-        player_entity = dn_gameworld_create_entity(game_world, "Player")
+        player_entity = game_world.create_entity("Player")
     }
 
     def override _init() : void {
@@ -37,7 +37,7 @@ class Player : dn_GameObject {
             return
         }
 
-        let pos = game_world |> dn_gameworld_get_global_position(player_entity)
+        let pos = game_world.get_global_position(player_entity)
         let dist : float = 10.0
         if (pos.x > dist) {
             inverse = -1
