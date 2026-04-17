@@ -23,17 +23,30 @@ def dn_get_global_queries_builtin() : dn_queries_builtin? {
 }
 
 def dn_ecs_build_queries_builtin(
-        world : ecs_world_t?, 
-        q_builtin : dn_global_queries_builtin? = dn_get_global_queries_builtin()
-    ) : void {
+            world : ecs_world_t?, 
+            q_builtin : dn_global_queries_builtin? = dn_get_global_queries_builtin()
+        ) : void {
+
     with (q_builtin) {
-        query_velocity3d_update_transform = ecs_query_builder(
-            world,
-            [
-                ecs_term(world, type<dn_Transform3D>)
-                ecs_term(world, type<dn_Velocity3D>),
-            ],
-            EcsQueryCacheAuto
-        )
+        query_velocity3d_update_transform = world.query_builder().terms([
+                ecs_term(world, type<Transform3D>)
+                ecs_term(world, type<Velocity3D>),
+            ]).cached().build()
     }
 }
+
+def dn_ecs_system_velocity3d_update_transform(delta : double) : void {
+    var query : dn_Query? = dn_get_global_queries_builtin().query_velocity3d_update_transform
+    var it = ecs_query_iter(world, query.ecs_query())
+    unsafe {
+        while (ecs_query_next_iter(it)) {
+            var tx = ecs_field_get(it, type<Transform3D>, 0)
+            var v = ecs_field_get(it, type<Velocity3D>, 1)
+            for (i in range(it.count)) {
+                tx[i].pos += v[i].val * float(delta)
+            }
+        }
+    }
+}
+
+// TODO Render cube

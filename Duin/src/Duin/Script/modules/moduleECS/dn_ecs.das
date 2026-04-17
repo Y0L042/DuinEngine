@@ -191,6 +191,10 @@ class dn_Query {
         ecs_query_fini(query)
     }
 
+    def ecs_query() : ecs_query_t? {
+        return query
+    }
+
 }
 
 class dn_QueryBuilder {

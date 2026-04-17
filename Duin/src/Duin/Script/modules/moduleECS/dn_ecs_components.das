@@ -3,41 +3,41 @@ options gen2
 module dn_ecs_components shared
 
 struct Position2D {
-    value : float2
+    val : float2
 }
 
 struct Rotation2D {
-    value : float
+    val : float
 }
 
 struct Scale2D {
-    value : float2
+    val : float2
 }
 
 struct Velocity2D {
-    value : float2
+    val : float2
 }
 
 struct Transform3D {
-    position : float3
-    rotation : float3
+    pos : float3
+    rot : float3
     scale : float3
 }
 
 struct Position3D {
-    value : float3
+    val : float3
 }
 
 struct Rotation3D {
-    value : float3
+    val : float3
 }
 
 struct Scale3D {
-    value : float3
+    val : float3
 }
 
 struct Velocity3D {
-    value : float3
+    val : float3
 }
 
 // Marker components
