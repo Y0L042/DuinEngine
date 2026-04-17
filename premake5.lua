@@ -33,7 +33,8 @@ workspace "Duin"
     IncludeDir["rapidjson"] = "Duin/vendor/rapidjson/include"
     IncludeDir["imguifilex"] = "Duin/vendor/ImGuiFileDialog"
     IncludeDir["imguizmo"] = "Duin/vendor/imguizmo"
-    IncludeDir["physx"] = "Duin/vendor/PhysX/physx/include"
+    -- IncludeDir["physx"] = "Duin/vendor/PhysX/physx/include"
+    IncludeDir["jolt"]  = "Duin/vendor/jolt"
     IncludeDir["doctest"] = "Duin/vendor/doctest/doctest"
     IncludeDir["reflectcpp"] = "Duin/vendor/reflectcpp/include"
     IncludeDir["angelscript"] = "Duin/vendor/angelscript/sdk/angelscript/include"
@@ -63,7 +64,8 @@ workspace "Duin"
         "%{IncludeDir.patches}",
         "%{IncludeDir.toml11}",
         "%{IncludeDir.rapidjson}",
-        "%{IncludeDir.physx}",
+        -- "%{IncludeDir.physx}",
+        "%{IncludeDir.jolt}",
         "%{IncludeDir.doctest}",
         "%{IncludeDir.reflectcpp}",
         "%{IncludeDir.daslang}",
@@ -77,7 +79,8 @@ workspace "Duin"
         "Duin/vendor/sdl/build/Debug",
         "Duin/vendor/bgfx/.build/win64_vs2026/bin",
         "Duin/vendor/flecs/build_vs2026/Debug",
-        "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.md/debug",
+        -- "Duin/vendor/PhysX/physx/bin/win.x86_64.vc143.md/debug",
+        "Duin/vendor/jolt/Build/vs2026/Debug",
         "Duin/vendor/toml11/build/src/Debug",
         "Duin/vendor/reflectcpp/build/Debug",
         "Duin/vendor/daslang/lib/RelWithDebInfo",
@@ -89,7 +92,13 @@ workspace "Duin"
         "DN_PLATFORM_WINDOWS",
         "DN_BUILD_STATIC",
         "flecs_STATIC",
-        "PX_PHYSX_STATIC_LIB",
+        -- "PX_PHYSX_STATIC_LIB",
+        "JPH_ENABLE_ASSERTS",
+        "JPH_OBJECT_LAYER_BITS=16",
+        "JPH_OBJECT_STREAM",
+        "JPH_FLOATING_POINT_EXCEPTIONS_ENABLED",
+        "JPH_PROFILE_ENABLED",
+        "JPH_DEBUG_RENDERER",
         "BX_CONFIG_DEBUG=0",
     }
     global_links =
@@ -109,13 +118,14 @@ workspace "Duin"
         "bimgDebug.lib",
         "bgfxDebug.lib",
         "Duin.lib",
-        "PhysX_static.lib",
-        "PhysXCooking_static.lib",
-        "PhysXCommon_static.lib",
-        "PhysXFoundation_static.lib",
-        "PhysXPvdSDK_static.lib",
-        "PhysXExtensions_static.lib",
-        "PhysXCharacterKinematic_static.lib",
+        -- "PhysX_static.lib",
+        -- "PhysXCooking_static.lib",
+        -- "PhysXCommon_static.lib",
+        -- "PhysXFoundation_static.lib",
+        -- "PhysXPvdSDK_static.lib",
+        -- "PhysXExtensions_static.lib",
+        -- "PhysXCharacterKinematic_static.lib",
+        "Jolt.lib",
         "reflectcpp.lib",
         "libDaScriptDyn.lib",
         "libUriParser.lib",
