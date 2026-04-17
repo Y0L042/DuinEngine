@@ -26,7 +26,7 @@
 #include "Events/Event.h"
 #include "Signals/Signal.h"
 #include <Duin/Objects/GameObject.h>
-#include <Duin/Physics/physx/PhysicsServer.h>
+#include <Duin/Physics/PhysicsIncludes.h>
 #include <Duin/Render/Camera.h>
 #include <external/imgui.h>
 #include <SDL3/SDL_error.h>

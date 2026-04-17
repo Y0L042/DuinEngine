@@ -55,13 +55,6 @@
 #define DUIN_MATHS_H
 
 #include <rfl.hpp>
-
-// PhysX dependencies
-#include <foundation/PxVec2.h>
-#include <foundation/PxVec3.h>
-#include <foundation/PxVec4.h>
-#include <foundation/PxMat44.h>
-
 // Fast square root dependencies
 #include <xmmintrin.h>
 
@@ -159,16 +152,6 @@ typedef struct Vector2
     Vector2(float x, float y) : x(x), y(y)
     {
     }
-
-    explicit Vector2(const physx::PxVec2T<float> &physxVec) : x(physxVec.x), y(physxVec.y)
-    {
-    }
-
-    physx::PxVec2T<float> ToPhysX() const
-    {
-        return physx::PxVec2T<float>(x, y);
-    }
-
 } Vector2;
 #define DN_VECTOR2_TYPE
 #endif
@@ -214,31 +197,6 @@ typedef struct Vector3
     Vector3(float x, float y, float z) : x(x), y(y), z(z)
     {
     }
-
-    explicit Vector3(const physx::PxVec3T<float> &physxVec) : x(physxVec.x), y(physxVec.y), z(physxVec.z)
-    {
-    }
-
-    explicit Vector3(const physx::PxVec3T<double> &physxVec)
-        : x((float)physxVec.x), y((float)physxVec.y), z((float)physxVec.z)
-    {
-    }
-
-    physx::PxVec3T<float> ToPhysX() const
-    {
-        return physx::PxVec3T<float>(x, y, z);
-    }
-
-    physx::PxVec3T<double> ToPhysXd() const
-    {
-        return physx::PxVec3T<double>((double)x, (double)y, (double)z);
-    }
-
-    // physx::PxVec3Padded ToPhysXPadded() const
-    // {
-    //     return physx::PxVec3Padded(x, y, z);
-    // }
-
 } Vector3;
 #define DN_VECTOR3_TYPE
 #endif
@@ -286,26 +244,6 @@ typedef struct Vector4
     Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w)
     {
     }
-
-    explicit Vector4(const physx::PxVec4T<float> &physxVec) : x(physxVec.x), y(physxVec.y), z(physxVec.z), w(physxVec.w)
-    {
-    }
-
-    explicit Vector4(const physx::PxQuatT<float> &physxQuat)
-        : x(physxQuat.x), y(physxQuat.y), z(physxQuat.z), w(physxQuat.w)
-    {
-    }
-
-    physx::PxVec4T<float> ToPhysX() const
-    {
-        return physx::PxVec4T<float>(x, y, z, w);
-    }
-
-    physx::PxQuatT<float> ToPhysXQuaternion() const
-    {
-        return physx::PxQuatT<float>(x, y, z, w);
-    }
-
 } Vector4;
 #define DN_VECTOR4_TYPE
 #endif
@@ -363,22 +301,6 @@ typedef struct Matrix
           m6(row3.y), m10(row3.z), m14(row3.w), m3(row4.x), m7(row4.y), m11(row4.z), m15(row4.w)
     {
     }
-
-    explicit Matrix(const physx::PxMat44T<float> &physxMat)
-        : m0(physxMat.column0.x), m4(physxMat.column0.y), m8(physxMat.column0.z), m12(physxMat.column0.w),
-          m1(physxMat.column1.x), m5(physxMat.column1.y), m9(physxMat.column1.z), m13(physxMat.column1.w),
-          m2(physxMat.column2.x), m6(physxMat.column2.y), m10(physxMat.column2.z), m14(physxMat.column2.w),
-          m3(physxMat.column3.x), m7(physxMat.column3.y), m11(physxMat.column3.z), m15(physxMat.column3.w)
-    {
-    }
-
-    physx::PxMat44T<float> ToPhysX() const
-    {
-        return physx::PxMat44T<float>(physx::PxVec4T<float>(m0, m1, m2, m3), physx::PxVec4T<float>(m4, m5, m6, m7),
-                                      physx::PxVec4T<float>(m8, m9, m10, m11),
-                                      physx::PxVec4T<float>(m12, m13, m14, m15));
-    }
-
 } Matrix;
 #define DN_MATRIX_TYPE
 #endif

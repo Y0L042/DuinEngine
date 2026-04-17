@@ -40,13 +40,15 @@
 #include <spdlog/logger.h>
 #include "Duin/Core/Debug/DNLog.h"
 
-#ifndef PX_PHYSX_STATIC_LIB
-#define PX_PHYSX_STATIC_LIB
-#endif
-#include <PxPhysicsAPI.h>
-#include <PxPhysics.h>
-#include <characterkinematic/PxController.h>
-#include <characterkinematic/PxControllerManager.h>
+//#ifndef PX_PHYSX_STATIC_LIB
+//#define PX_PHYSX_STATIC_LIB
+//#endif
+//#include <PxPhysicsAPI.h>
+//#include <PxPhysics.h>
+//#include <characterkinematic/PxController.h>
+//#include <characterkinematic/PxControllerManager.h>
+
+#include <Jolt/Jolt.h>
 
 #ifndef BX_CONFIG_DEBUG
 #define BX_CONFIG_DEBUG 0

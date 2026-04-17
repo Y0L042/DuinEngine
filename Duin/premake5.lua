@@ -73,6 +73,11 @@ files
     ProjectRoot .. "/src/**.inc",
 }
 
+removefiles
+{
+    ProjectRoot .. "/src/**/Physics/physx/**",
+}
+
 -- includedirs(global_includedirs)
 includedirs
 {
@@ -90,6 +95,8 @@ defines
     "DAS_SMART_PTR_DEBUG=1",
     "DAS_ENABLE_DLL=1",
     "DAS_MOD_EXPORTS",
+    "JPH_ENABLE_ASSERTS",
+    "JPH_FLOATING_POINT_EXCEPTIONS_ENABLED "
 }
 
 -- global_links contains "Duin.lib" which is this project itself; static libs

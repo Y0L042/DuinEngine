@@ -10,6 +10,7 @@ local dep_bx = require "dep_bx"
 local dep_bimg = require "dep_bimg"
 local dep_bgfx = require "dep_bgfx"
 local dep_physx = require "dep_physx"
+local dep_jolt = require "dep_jolt"
 local dep_fmt = require "dep_fmt"
 local dep_spdlog = require "dep_spdlog"
 local dep_toml11 = require "dep_toml11"
@@ -36,6 +37,7 @@ local dependencies_ordered = {
     {name = "IMGUIZMO", buildFn = dep_imguizmo.build}, -- must be built after IMGUI
     {name = "FLECS", buildFn = dep_flecs.build},
     {name = "PHYSX", buildFn = dep_physx.build},
+    {name = "JOLT", buildFn = dep_jolt.build},
     {name = "DOCTEST", buildFn = dep_doctest.build},
     {name = "RAPIDJSON", buildFn = dep_rapidjson.build},
     {name = "TOML11", buildFn = dep_toml11.build},
@@ -53,6 +55,7 @@ local dependencies = {
     BIMG = dep_bimg.build,
     BGFX = dep_bgfx.build,
     PHYSX = dep_physx.build,
+    JOLT = dep_jolt.build,
     FMT = dep_fmt.build,
     SPDLOG = dep_spdlog.build,
     TOML11 = dep_toml11.build,
