@@ -73,7 +73,7 @@ void GameState_Gameplay::Draw()
 {
     duin::DrawBox({0.0f, -20.0f, 0.0f}, duin::QuaternionIdentity(), {40.0f, 40.0f, 40.0f});
     duin::BeginDebugDraw();
-    duin::DrawGrid();
+    duin::DrawDebugGrid();
     duin::EndDebugDraw();
 }
 

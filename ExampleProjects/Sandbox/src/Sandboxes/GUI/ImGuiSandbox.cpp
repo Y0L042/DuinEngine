@@ -41,7 +41,7 @@ void ImGuiSandbox::Draw()
 {
     duin::BeginTextureMode(renderTarget);
     duin::ClearBackground(duin::Color(80, 80, 80));
-    duin::DrawGrid(10.0f);
+    duin::DrawDebugGrid(10.0f);
     duin::EndTextureMode();
 }
 

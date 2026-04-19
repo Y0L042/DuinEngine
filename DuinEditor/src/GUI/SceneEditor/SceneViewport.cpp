@@ -30,7 +30,7 @@ void SceneViewport::PhysicsUpdate(double delta)
 void SceneViewport::Draw()
 {
     StartTextureRender();
-    duin::DrawGrid(100.0f);
+    duin::DrawDebugGrid(100.0f);
     if (cachedActiveScene.lock())
     {
         auto world = cachedActiveScene.lock()->GetWorld().lock();
