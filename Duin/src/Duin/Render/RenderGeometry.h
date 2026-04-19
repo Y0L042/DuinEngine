@@ -144,6 +144,7 @@ struct DiskRenderGeometry : public RenderGeometry
 
 struct TriangleRenderGeometry : public RenderGeometry
 {
+    // Side lengths
     float a, b, c = 1.0f;
 
     TriangleRenderGeometry();

@@ -324,7 +324,7 @@ void EndEncoderFrame()
 // Render queue
 // ---------------------------------------------------------------------------
 
-void QueueRender(RenderGeometryType::Type type)
+void QueueRender(const RenderGeometryType::Type type)
 {
     RHIViewId targetViewID = globalRenderState.viewID;
     RHIProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
@@ -336,7 +336,8 @@ void QueueRender(RenderGeometryType::Type type)
     RHIEncoderSubmit(encoder, targetViewID, program);
 }
 
-void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size)
+void QueueRender(
+    const RenderGeometryType::Type type, const Vector3 position, const Quaternion rotation, const Vector3 size)
 {
     Vector3 eulerRotation = QuaternionToEuler(rotation);
 
@@ -351,8 +352,17 @@ void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rot
     }
 
     float mtx[16];
-    RHIComputeSRTMatrix(mtx, size.x, size.y, size.z, eulerRotation.x, eulerRotation.y, eulerRotation.z, position.x,
-                        position.y, position.z);
+    RHIComputeSRTMatrix(
+        mtx,
+        size.x,
+        size.y,
+        size.z,
+        eulerRotation.x,
+        eulerRotation.y,
+        eulerRotation.z,
+        position.x,
+        position.y,
+        position.z);
 
     RHIEncoderSetTransform(encoder, mtx);
     RHIEncoderSetVertexBuffer(encoder, 0, buffers.vbh);
@@ -413,42 +423,47 @@ RenderState GetGlobalRenderState()
     return globalRenderState;
 }
 
-void DrawBox(Vector3 position, Quaternion rotation, Vector3 size)
+void DrawBox(const Vector3 position, const Quaternion rotation, const Vector3 size)
 {
     QueueRender(RenderGeometryType::BOX, position, rotation, size);
 }
 
-void DrawSphere(Vector3 position, Quaternion rotation, Vector3 size)
+void DrawSphere(const Vector3 position, const Quaternion rotation, const Vector3 size)
 {
     QueueRender(RenderGeometryType::SPHERE, position, rotation, size);
 }
 
-void DrawSquare(Vector3 position, Quaternion rotation, Vector3 size)
+void DrawSquare(const Vector3 position, const Quaternion rotation, const Vector3 size)
 {
     QueueRender(RenderGeometryType::PLANE, position, rotation, size);
 }
 
-void DrawGrid(float size)
+void DrawDebugTriangle(const Vector3 c1, const Vector3 c2, const Vector3 c3)
+{
+    RHIDebugDrawTriangle(c1, c2, c3);
+}
+
+void DrawDebugGrid(const float size)
 {
     RHIDebugDrawGrid(0.0f, 0.0f, 0.0f, static_cast<uint32_t>(size), 1.0f);
 }
 
-void DrawDebugSphere(Vector3 pos, float radius)
+void DrawDebugSphere(const Vector3 pos, const float radius)
 {
     RHIDebugDrawOrb(pos.x, pos.y, pos.z, radius);
 }
 
-void DrawDebugCapsule(Vector3 from, Vector3 to, float radius)
+void DrawDebugCapsule(const Vector3 from, const Vector3 to, const float radius)
 {
     RHIDebugDrawCapsule(from.x, from.y, from.z, to.x, to.y, to.z, radius);
 }
 
-void DrawDebugBox(Vector3 min, Vector3 max)
+void DrawDebugBox(const Vector3 min, const Vector3 max)
 {
     RHIDebugDrawAABB(min.x, min.y, min.z, max.x, max.y, max.z);
 }
 
-void DrawPlane(Vector3 size)
+void DrawPlane(const Vector3 size)
 {
     Vector3 position = Vector3Zero();
     Quaternion rotation = QuaternionIdentity();
@@ -465,31 +480,31 @@ static void CreateGeometryBuffers()
 
     /* Create BOX Buffers */
     {
-        RHIVertexBufferHandle vbh =
-            RHICreateVertexBuffer(BoxRenderGeometry::GetIdentityVertices(),
-                                  static_cast<uint32_t>(BoxRenderGeometry::VertSize()) * sizeof(PosColorVertex));
-        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(BoxRenderGeometry::GetIdentityTriList(),
-                                                        static_cast<uint32_t>(BoxRenderGeometry::TriSize()));
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            BoxRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(BoxRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            BoxRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(BoxRenderGeometry::TriSize()));
         geometryBufferList[RenderGeometryType::BOX] = GeometryBufferHandle(vbh, ibh);
     }
 
     /* Create PLANE Buffers */
     {
-        RHIVertexBufferHandle vbh =
-            RHICreateVertexBuffer(PlaneRenderGeometry::GetIdentityVertices(),
-                                  static_cast<uint32_t>(PlaneRenderGeometry::VertSize()) * sizeof(PosColorVertex));
-        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(PlaneRenderGeometry::GetIdentityTriList(),
-                                                        static_cast<uint32_t>(PlaneRenderGeometry::TriSize()));
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            PlaneRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(PlaneRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            PlaneRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(PlaneRenderGeometry::TriSize()));
         geometryBufferList[RenderGeometryType::PLANE] = GeometryBufferHandle(vbh, ibh);
     }
 
     /* Create SPHERE Buffers */
     {
-        RHIVertexBufferHandle vbh =
-            RHICreateVertexBuffer(SphereRenderGeometry::GetIdentityVertices(),
-                                  static_cast<uint32_t>(SphereRenderGeometry::VertSize()) * sizeof(PosColorVertex));
-        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(SphereRenderGeometry::GetIdentityTriList(),
-                                                        static_cast<uint32_t>(SphereRenderGeometry::TriSize()));
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            SphereRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(SphereRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            SphereRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(SphereRenderGeometry::TriSize()));
         geometryBufferList[RenderGeometryType::SPHERE] = GeometryBufferHandle(vbh, ibh);
     }
 }

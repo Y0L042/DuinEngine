@@ -146,8 +146,9 @@ void EndEncoderFrame();
  * @name Render Queue
  * @{
  */
-void QueueRender(RenderGeometryType::Type type);
-void QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size);
+void QueueRender(const RenderGeometryType::Type type);
+void QueueRender(
+    const RenderGeometryType::Type type, const Vector3 position, const Quaternion rotation, const Vector3 size);
 void ExecuteRenderPipeline();
 void EmptyRenderStack();
 /** @} */
@@ -160,17 +161,26 @@ void ClearBackground(Color color = Color(0x443355FF));
  * Immediate-mode drawing of primitives.
  * @{
  */
-void DrawBox(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(),
-             Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
-void DrawSphere(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(),
-                Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
-void DrawSquare(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(),
-                Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
-void DrawGrid(float size = 50);
-void DrawPlane(Vector3 size);
-void DrawDebugSphere(Vector3 position, float radius);
-void DrawDebugCapsule(Vector3 from, Vector3 to, float radius);
-void DrawDebugBox(Vector3 min, Vector3 max);
+void DrawBox(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+void DrawSphere(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+void DrawSquare(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+void DrawPlane(const Vector3 size);
+
+/**
+ * @name Debug Draw Functions
+ * @{
+ */
+void DrawDebugTriangle(const Vector3 c1, const Vector3 c2, const Vector3 c3);
+void DrawDebugGrid(const float size = 50);
+void DrawDebugSphere(const Vector3 position, const float radius);
+void DrawDebugCapsule(const Vector3 from, const Vector3 to, const float radius);
+void DrawDebugBox(const Vector3 min, const Vector3 max);
 /** @} */
 
 /** @brief Draws a RenderTexture as an ImGui image. Returns texture ID. */

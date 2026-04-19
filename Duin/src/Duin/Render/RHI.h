@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <functional>
 #include <ctype.h>
+#include "Duin/Core/Maths/DuinMaths.h"
 
 struct ImDrawData; // global ImGui type forward declaration
 
@@ -154,7 +155,7 @@ void RHIComputeSRTMatrix(float *out16,
                          float tx, float ty, float tz);
 
 // ---------------------------------------------------------------------------
-// Debug Draw
+// Debug Draw (Should not really be part of RHI, belongs to renderer)
 // ---------------------------------------------------------------------------
 
 void RHIDebugDrawInit();
@@ -168,6 +169,10 @@ void RHIDebugDrawCapsule(float fromX, float fromY, float fromZ,
                          float toX, float toY, float toZ, float radius);
 void RHIDebugDrawAABB(float minX, float minY, float minZ,
                       float maxX, float maxY, float maxZ);
+void RHIDebugDrawTriangle(const Vector3 c1, const Vector3 c2, const Vector3 c3);
+void RHIDebugDrawSetColor(uint32_t abgr);
+void RHIDebugDrawLine(float fromX, float fromY, float fromZ,
+                      float toX,   float toY,   float toZ);
 
 // ---------------------------------------------------------------------------
 // Rendering (bgfx::reset wrapper)

@@ -499,6 +499,23 @@ void RHIDebugDrawAABB(float minX, float minY, float minZ, float maxX, float maxY
     s_dde.draw(aabb);
 }
 
+void RHIDebugDrawTriangle(const Vector3 c1, const Vector3 c2, const Vector3 c3)
+{
+    s_dde.draw({{c1.x, c1.y, c1.z}, {c2.x, c2.y, c2.z}, {c3.x, c3.y, c3.z}});
+}
+
+void RHIDebugDrawSetColor(uint32_t abgr)
+{
+    s_dde.setColor(abgr);
+}
+
+void RHIDebugDrawLine(float fromX, float fromY, float fromZ,
+                      float toX,   float toY,   float toZ)
+{
+    s_dde.moveTo(fromX, fromY, fromZ);
+    s_dde.lineTo(toX,   toY,   toZ);
+}
+
 // ---------------------------------------------------------------------------
 // Rendering (bgfx::reset wrapper)
 // ---------------------------------------------------------------------------
