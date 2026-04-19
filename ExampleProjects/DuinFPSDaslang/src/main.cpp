@@ -43,6 +43,8 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_DnGameObject);
             NEED_MODULE(Module_DnECS);
             NEED_MODULE(Module_DecsGameWorld);
+            NEED_MODULE(Module_DnInput);
+            NEED_MODULE(Module_DnPhysicsServer);
         });
         mainScript->EnableHotCompile(true, false);
         mainScript->HotCompileAndSimulate();
