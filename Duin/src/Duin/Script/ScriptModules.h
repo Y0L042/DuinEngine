@@ -8,6 +8,8 @@
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
 #include "./modules/moduleECS/Module_DnECS.h"
 #include "./modules/moduleECS/Module_DnGameWorld.h"
+#include "./modules/moduleInput/Module_DnInput.h"
+#include "./modules/modulePhysics/Module_DnPhysicsServer.h"
 //#include "./ECS/Module_DecsEntity.h"
 //#include "./ECS/Module_DecsWorld.h"
 //#include "./ECS/Module_DecsComponents.h"

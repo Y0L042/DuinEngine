@@ -23,4 +23,14 @@ inline duin::Vector4 from_f4(const das::float4 &f4)
 {
     return {f4.x, f4.y, f4.z, f4.w};
 }
+
+inline das::float2 to_f2(const Vector2 &v)
+{
+    return {v.x, v.y};
+}
+
+inline duin::Vector2 from_f2(const das::float2 &f2)
+{
+    return {f2.x, f2.y};
+}
 } // namespace duin
