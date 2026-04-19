@@ -30,6 +30,12 @@ def module_engine(req, from : string) : module_info {
     elif (req == "dn_log") {
         return ("dn_log", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleDNLog/dn_log.das", "")
     }
+    elif (req == "dn_input") {
+        return ("dn_input", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleInput/dn_input.das", "")
+    }
+    elif (req == "dn_physics_server") {
+        return ("dn_physics_server", DAS_PAK_ROOT + "src/Duin/Script/modules/modulePhysics/dn_physics_server.das", "")
+    }
     return ("", "", "")
 }
 
