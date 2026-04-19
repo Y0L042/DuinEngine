@@ -15,4 +15,7 @@ IncludeCategories:
 TabWidth: 8
 AlwaysBreakTemplateDeclarations: Yes
 BreakConstructorInitializers: BeforeColon
+BinPackArguments: false
+AlignAfterOpenBracket: AlwaysBreak
+BracedInitializerIndentWidth: 2
 ...

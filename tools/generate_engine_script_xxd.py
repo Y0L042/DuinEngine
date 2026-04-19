@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Batch-convert .das files to .das.inc hex arrays, with hash-based change detection.
 
-Skips gen_adapter.das and gen_bind.das.
+Skips generator scripts (gen_adapter.das/gen_bind.das) in both old and new locations.
 Only regenerates .inc files when the source .das has changed since last run.
 Cache stored in <script_dir>/.xxd_cache.json.
 
@@ -14,7 +14,12 @@ import json
 import hashlib
 
 SKIP_FOLDERS = {}
-SKIP_FILES = {"gen_adapter.das", "gen_bind.das"}
+SKIP_REL_PATHS = {
+    "gen_adapter.das",
+    "gen_bind.das",
+    "src/duin/script/gen_adapter.das",
+    "src/duin/script/gen_bind.das",
+}
 CACHE_FILE = ".xxd_cache.json"
 
 
@@ -66,9 +71,10 @@ def main():
     up_to_date = 0
 
     for das_file in sorted(das_files):
-        fname = os.path.basename(das_file)
-        
-        if fname in SKIP_FILES:
+        rel = os.path.relpath(das_file, script_dir)
+        rel_norm = rel.replace("\\", "/").lower()
+
+        if rel_norm in SKIP_REL_PATHS:
             skipped += 1
             continue
 
@@ -80,7 +86,6 @@ def main():
             up_to_date += 1
             continue
 
-        rel = os.path.relpath(das_file, script_dir)
         print(f"  {rel} -> {os.path.basename(inc_file)}")
         das_to_inc(das_file, inc_file)
         cache[das_file] = current_hash
