@@ -119,9 +119,9 @@ static void dn_draw_square_impl(const das::float3 position, const das::float4 ro
     duin::DrawSquare(duin::from_f3(position), duin::from_f4(rotation), duin::from_f3(size));
 }
 
-static void dn_draw_grid_impl(float size)
+static void dn_draw_debug_grid_impl(float size)
 {
-    duin::DrawGrid(size);
+    duin::DrawDebugGrid(size);
 }
 
 static void dn_draw_plane_impl(const das::float3 size)
@@ -272,8 +272,8 @@ class Module_DnRenderer : public das::Module
         addExtern<DAS_BIND_FUN(dn_draw_square_impl)>(*this, lib, "dn_draw_square", das::SideEffects::modifyExternal,
                                                      "dn_draw_square_impl")
             ->args({"position", "rotation", "size"});
-        addExtern<DAS_BIND_FUN(dn_draw_grid_impl)>(*this, lib, "dn_draw_grid", das::SideEffects::modifyExternal,
-                                                   "dn_draw_grid_impl")
+        addExtern<DAS_BIND_FUN(dn_draw_debug_grid_impl)>(*this, lib, "dn_draw_debug_grid", das::SideEffects::modifyExternal,
+                                                   "dn_draw_debug_grid_impl")
             ->args({"size"});
         addExtern<DAS_BIND_FUN(dn_draw_plane_impl)>(*this, lib, "dn_draw_plane", das::SideEffects::modifyExternal,
                                                     "dn_draw_plane_impl")

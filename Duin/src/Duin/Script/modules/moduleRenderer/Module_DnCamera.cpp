@@ -535,13 +535,13 @@ class Module_DnCamera : public das::Module
             ->args({"handle", "angle"});
 
         // Camera class direction queries
-        addExtern<DAS_BIND_FUN(dn_camera_forward_impl), das::SimNode_ExtFuncCallAndCopyOrMove>(
+        addExtern<DAS_BIND_FUN(dn_camera_forward_impl)>(
             *this, lib, "dn_camera_forward_impl", das::SideEffects::none, "dn_camera_forward_impl")
             ->args({"handle"});
-        addExtern<DAS_BIND_FUN(dn_camera_right_impl), das::SimNode_ExtFuncCallAndCopyOrMove>(
+        addExtern<DAS_BIND_FUN(dn_camera_right_impl)>(
             *this, lib, "dn_camera_right_impl", das::SideEffects::none, "dn_camera_right_impl")
             ->args({"handle"});
-        addExtern<DAS_BIND_FUN(dn_camera_up_impl), das::SimNode_ExtFuncCallAndCopyOrMove>(
+        addExtern<DAS_BIND_FUN(dn_camera_up_impl)>(
             *this, lib, "dn_camera_up_impl", das::SideEffects::none, "dn_camera_up_impl")
             ->args({"handle"});
 
@@ -572,13 +572,13 @@ class Module_DnCamera : public das::Module
             ->args({"position", "target", "globalUp", "fovy"});
 
         // Direction queries
-        addExtern<DAS_BIND_FUN(dn_cameraImpl_forward_impl), das::SimNode_ExtFuncCallAndCopyOrMove>(
+        addExtern<DAS_BIND_FUN(dn_cameraImpl_forward_impl)>(
             *this, lib, "dn_cameraImpl_forward_impl", das::SideEffects::none, "dn_cameraImpl_forward_impl")
             ->args({"position", "target", "globalUp", "fovy"});
-        addExtern<DAS_BIND_FUN(dn_cameraImpl_right_impl), das::SimNode_ExtFuncCallAndCopyOrMove>(
+        addExtern<DAS_BIND_FUN(dn_cameraImpl_right_impl)>(
             *this, lib, "dn_cameraImpl_right_impl", das::SideEffects::none, "dn_cameraImpl_right_impl")
             ->args({"position", "target", "globalUp", "fovy"});
-        addExtern<DAS_BIND_FUN(dn_cameraImpl_up_impl), das::SimNode_ExtFuncCallAndCopyOrMove>(
+        addExtern<DAS_BIND_FUN(dn_cameraImpl_up_impl)>(
             *this, lib, "dn_cameraImpl_up_impl", das::SideEffects::none, "dn_cameraImpl_up_impl")
             ->args({"position", "target", "globalUp", "fovy"});
 
