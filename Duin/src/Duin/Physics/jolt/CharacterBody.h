@@ -1,0 +1,61 @@
+#pragma once
+
+#include "PhysicsObject.h"
+
+#include "Duin/Core/Maths/DuinMaths.h"
+
+#include <memory>
+
+namespace duin
+{
+
+struct CharacterBodyDesc
+{
+    float height;
+    float radius;
+    float slopeLimit;
+    float stepOffset;
+    float contactOffset;
+    Vector3 upDirection;
+};
+
+class CharacterBody : public PhysicsObject
+{
+  public:
+    static std::shared_ptr<CharacterBody> Create(CharacterBodyDesc desc, Vector3 position);
+
+    CharacterBody(CharacterBodyDesc desc, Vector3 position);
+    ~CharacterBody();
+
+    void SetPosition(Vector3 position);
+    Vector3 GetPosition() override;
+
+    void SetFootPosition(Vector3 position);
+    Vector3 GetFootPosition();
+    Vector3 GetCurrentVelocity();
+    int IsOnFloor();
+    int IsOnFloorOnly();
+    void Move(Vector3 displacement, double delta);
+
+    void OnShapeHit(/*TODO*/);
+    void OnCharacterHit(/*TODO*/);
+    void OnObstacleHit(/*TODO*/);
+
+    int OnFloorShapeCast(double delta);
+
+    const CharacterBodyDesc GetDescriptor() const;
+
+    CharacterBody(const CharacterBody &) = delete;
+    CharacterBody &operator=(const CharacterBody &) = delete;
+
+  private:
+    Vector3 currentVelocity = Vector3Zero();
+    double onFloorGrace = 0.1;
+    double timeWhenLastMoved = 0.0;
+    double timeSinceOnFloor = 0.0;
+    int isOnFloor = 0;
+
+    CharacterBodyDesc desc;
+};
+
+} // namespace duin
