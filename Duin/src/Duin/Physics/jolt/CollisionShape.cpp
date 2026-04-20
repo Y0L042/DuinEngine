@@ -1,16 +1,32 @@
 #include "dnpch.h"
 #include "CollisionShape.h"
+#include <Jolt/Physics/Collision/Shape/BoxShape.h>
+#include <Jolt/Physics/Collision/Shape/SphereShape.h>
+#include <Jolt/Physics/Collision/Shape/PlaneShape.h>
+#include <Jolt/Physics/Collision/Shape/CapsuleShape.h>
 
-duin::CollisionShape::CollisionShape(duin::CollisionGeometryVariant geometryVariant, duin::PhysicsMaterial physicsMaterial)
-    : geometryVariant(geometryVariant), physicsMaterial(physicsMaterial)
+duin::CollisionShape::CollisionShape(CollisionShapeDesc desc, PhysicsMaterial material)
 {
+    GetJoltShape<void *>();
 }
 
-duin::CollisionShape::~CollisionShape()
+duin::CollisionShapeType duin::CollisionShape::GetType() const
 {
-}
-
-duin::CollisionGeometryVariant &duin::CollisionShape::GetGeometryVariant()
-{
-    return geometryVariant;
+    switch (shapeDesc.index())
+    {
+    case 0:
+        return CollisionShapeType::Box;
+    case 1:
+        return CollisionShapeType::Sphere;
+    case 2:
+        return CollisionShapeType::Capsule;
+    case 3:
+        return CollisionShapeType::Plane;
+    case 4:
+        return CollisionShapeType::ConvexMesh;
+    case 5:
+        return CollisionShapeType::TriangleMesh;
+    default:
+        return CollisionShapeType::Box; // fallback
+    };
 }

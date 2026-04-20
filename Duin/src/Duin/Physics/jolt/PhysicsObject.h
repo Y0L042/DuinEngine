@@ -1,13 +1,13 @@
 #pragma once
 
-#include "CollisionObject.h"
-
 #include "Duin/Core/Maths/DuinMaths.h"
+
+// Currently just a grouping class for physics objects
 
 namespace duin
 {
 
-class PhysicsObject : public CollisionObject
+class PhysicsObject
 {
   public:
     virtual Vector3 GetPosition() = 0;

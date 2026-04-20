@@ -1,14 +1,13 @@
 #include "dnpch.h"
 #include "CharacterBody.h"
+#include "PhysicsServer.h"
+#include "CollisionShape.h"
+#include "Duin/Core/Maths/DuinMaths.h"
 
-std::shared_ptr<duin::CharacterBody> duin::CharacterBody::Create(duin::CharacterBodyDesc desc, duin::Vector3 position)
+duin::CharacterBody::CharacterBody(CharacterBodyDesc bodyDesc, CollisionShapeDesc shapeDesc, Vector3 position)
+    : bodyDesc(bodyDesc), shapeDesc(shapeDesc)
 {
-    return std::make_shared<duin::CharacterBody>(desc, position);
-}
-
-duin::CharacterBody::CharacterBody(duin::CharacterBodyDesc desc, duin::Vector3 position)
-    : desc(desc)
-{
+    CreateBody(position, Quaternion());
 }
 
 duin::CharacterBody::~CharacterBody()
@@ -69,7 +68,38 @@ int duin::CharacterBody::OnFloorShapeCast(double delta)
     return 0;
 }
 
-const duin::CharacterBodyDesc duin::CharacterBody::GetDescriptor() const
+void duin::CharacterBody::Initialize(Vector3 position)
 {
-    return desc;
+    CollisionShape shape(shapeDesc, PhysicsMaterial{});
+    CreateBody(shape, position);
+
+    // Create 'player' character
+    JPH::Ref<JPH::CharacterVirtualSettings> settings = new JPH::CharacterVirtualSettings();
+    settings->mMaxSlopeAngle = bodyDesc.maxSlopeAngle;
+    settings->mMaxStrength = bodyDesc.maxStrength;
+    settings->mShape = shape.GetJoltShape<JPH::Shape>();
+    settings->mInnerBodyLayer = Layers::MOVING;
+
+    character = new JPH::CharacterVirtual(settings, JPH::RVec3::sZero(), JPH::Quat::sIdentity(), 0, PhysicsServer::Get().physicsSystem);
+
+    //character->SetCharacterVsCharacterCollision(&mCharacterVsCharacterCollision);
+    //mCharacterVsCharacterCollision.Add(character);
+}
+
+void duin::CharacterBody::CreateBody(
+    const CollisionShape &shape, const Vector3 &position, const Quaternion &rotation = Quaternion())
+
+{
+    // Create the collision shape
+    // Pass appropriate material if needed
+
+    // Create the Jolt body using the shape
+    PhysicsServer::Get().BodyInterface().CreateAndAddBody(
+        JPH::BodyCreationSettings(
+            shape.GetJoltShape<JPH::Shape>(), // Use the correct Jolt shape type
+            JPH::RVec3(position.x, position.y, position.z),
+            JPH::Quat::sRotation(JPH::Vec3::sAxisZ(), 0.25f * JPH::JPH_PI), // Use 'rotation' if you want
+            JPH::EMotionType::Dynamic,
+            Layers::MOVING),
+        JPH::EActivation::Activate);
 }
