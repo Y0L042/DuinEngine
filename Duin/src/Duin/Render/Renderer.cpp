@@ -438,6 +438,41 @@ void DrawSquare(const Vector3 position, const Quaternion rotation, const Vector3
     QueueRender(RenderGeometryType::PLANE, position, rotation, size);
 }
 
+void DrawPlane(const Vector3 size)
+{
+    Vector3 position = Vector3Zero();
+    Quaternion rotation = QuaternionIdentity();
+    QueueRender(RenderGeometryType::PLANE, position, rotation, size);
+}
+
+void DrawCapsule(const Vector3 position, const Quaternion rotation, const Vector3 size)
+{
+    QueueRender(RenderGeometryType::CAPSULE, position, rotation, size);
+}
+
+void DrawCylinder(const Vector3 position, const Quaternion rotation, const Vector3 size)
+{
+    QueueRender(RenderGeometryType::CYLINDER, position, rotation, size);
+}
+
+void DrawCone(const Vector3 position, const Quaternion rotation, const Vector3 size)
+{
+    QueueRender(RenderGeometryType::CONE, position, rotation, size);
+}
+
+void DrawDisk(const Vector3 position, const Quaternion rotation, const Vector3 size)
+{
+    QueueRender(RenderGeometryType::DISK, position, rotation, size);
+}
+
+void DrawTriangle(const Vector3 position, const Quaternion rotation, const Vector3 size)
+{
+    QueueRender(RenderGeometryType::TRIANGLE, position, rotation, size);
+}
+
+
+// Debug Draw functions
+
 void DrawDebugTriangle(const Vector3 c1, const Vector3 c2, const Vector3 c3)
 {
     RHIDebugDrawTriangle(c1, c2, c3);
@@ -463,12 +498,6 @@ void DrawDebugBox(const Vector3 min, const Vector3 max)
     RHIDebugDrawAABB(min.x, min.y, min.z, max.x, max.y, max.z);
 }
 
-void DrawPlane(const Vector3 size)
-{
-    Vector3 position = Vector3Zero();
-    Quaternion rotation = QuaternionIdentity();
-    QueueRender(RenderGeometryType::PLANE, position, rotation, size);
-}
 
 // ---------------------------------------------------------------------------
 // Geometry buffer management
@@ -507,18 +536,86 @@ static void CreateGeometryBuffers()
             SphereRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(SphereRenderGeometry::TriSize()));
         geometryBufferList[RenderGeometryType::SPHERE] = GeometryBufferHandle(vbh, ibh);
     }
+
+    /* Create CAPSULE Buffers */
+    {
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            CapsuleRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(CapsuleRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            CapsuleRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(CapsuleRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::CAPSULE] = GeometryBufferHandle(vbh, ibh);
+    }
+
+    /* Create CYLINDER Buffers */
+    {
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            CylinderRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(CylinderRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            CylinderRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(CylinderRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::CYLINDER] = GeometryBufferHandle(vbh, ibh);
+    }
+
+    /* Create CONE Buffers */
+    {
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            ConeRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(ConeRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            ConeRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(ConeRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::CONE] = GeometryBufferHandle(vbh, ibh);
+    }
+
+    /* Create DISK Buffers */
+    {
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            DiskRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(DiskRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            DiskRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(DiskRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::DISK] = GeometryBufferHandle(vbh, ibh);
+    }
+
+    /* Create TRIANGLE Buffers */
+    {
+        RHIVertexBufferHandle vbh = RHICreateVertexBuffer(
+            TriangleRenderGeometry::GetIdentityVertices(),
+            static_cast<uint32_t>(TriangleRenderGeometry::VertSize()) * sizeof(PosColorVertex));
+        RHIIndexBufferHandle ibh = RHICreateIndexBuffer(
+            TriangleRenderGeometry::GetIdentityTriList(), static_cast<uint32_t>(TriangleRenderGeometry::TriSize()));
+        geometryBufferList[RenderGeometryType::TRIANGLE] = GeometryBufferHandle(vbh, ibh);
+    }
 }
 
 static GeometryBufferHandle GetGeometryBufferHandle(RenderGeometryType::Type type)
 {
     switch (type)
     {
-    case RenderGeometryType::BOX:
+    case RenderGeometryType::BOX: {
         return geometryBufferList[RenderGeometryType::BOX];
-    case RenderGeometryType::PLANE:
+    }
+    case RenderGeometryType::PLANE: {
         return geometryBufferList[RenderGeometryType::PLANE];
-    case RenderGeometryType::SPHERE:
+    }
+    case RenderGeometryType::SPHERE: {
         return geometryBufferList[RenderGeometryType::SPHERE];
+    }
+    case RenderGeometryType::CAPSULE: {
+        return geometryBufferList[RenderGeometryType::CAPSULE];
+    }
+    case RenderGeometryType::CYLINDER: {
+        return geometryBufferList[RenderGeometryType::CYLINDER];
+    }
+    case RenderGeometryType::CONE: {
+        return geometryBufferList[RenderGeometryType::CONE];
+    }
+    case RenderGeometryType::DISK: {
+        return geometryBufferList[RenderGeometryType::DISK];
+    }
+    case RenderGeometryType::TRIANGLE: {
+        return geometryBufferList[RenderGeometryType::TRIANGLE];
+    }
     default:
         DN_CORE_FATAL("Invalid render geometry handle!");
         return GeometryBufferHandle();

@@ -95,6 +95,14 @@ struct CapsuleRenderGeometry : public RenderGeometry
 
     CapsuleRenderGeometry();
     CapsuleRenderGeometry(float radius, float height);
+
+    static const int VERT_SIZE = 18;
+    static const int TRI_SIZE  = 96;
+
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t       *GetIdentityTriList();
+    static size_t VertSize() { return VERT_SIZE; }
+    static size_t TriSize()  { return TRI_SIZE; }
 };
 
 struct PlaneRenderGeometry : public RenderGeometry
@@ -123,6 +131,14 @@ struct ConeRenderGeometry : public RenderGeometry
 
     ConeRenderGeometry();
     ConeRenderGeometry(float radius, float height);
+
+    static const int VERT_SIZE = 10;
+    static const int TRI_SIZE  = 48;
+
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t       *GetIdentityTriList();
+    static size_t VertSize() { return VERT_SIZE; }
+    static size_t TriSize()  { return TRI_SIZE; }
 };
 
 struct CylinderRenderGeometry : public RenderGeometry
@@ -132,6 +148,14 @@ struct CylinderRenderGeometry : public RenderGeometry
 
     CylinderRenderGeometry();
     CylinderRenderGeometry(float radius, float height);
+
+    static const int VERT_SIZE = 18;
+    static const int TRI_SIZE  = 96;
+
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t       *GetIdentityTriList();
+    static size_t VertSize() { return VERT_SIZE; }
+    static size_t TriSize()  { return TRI_SIZE; }
 };
 
 struct DiskRenderGeometry : public RenderGeometry
@@ -140,6 +164,14 @@ struct DiskRenderGeometry : public RenderGeometry
 
     DiskRenderGeometry();
     DiskRenderGeometry(float radius);
+
+    static const int VERT_SIZE = 9;
+    static const int TRI_SIZE  = 24;
+
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t       *GetIdentityTriList();
+    static size_t VertSize() { return VERT_SIZE; }
+    static size_t TriSize()  { return TRI_SIZE; }
 };
 
 struct TriangleRenderGeometry : public RenderGeometry
@@ -149,6 +181,14 @@ struct TriangleRenderGeometry : public RenderGeometry
 
     TriangleRenderGeometry();
     TriangleRenderGeometry(float a, float b, float c);
+
+    static const int VERT_SIZE = 3;
+    static const int TRI_SIZE  = 6;
+
+    static PosColorVertex *GetIdentityVertices();
+    static uint16_t       *GetIdentityTriList();
+    static size_t VertSize() { return VERT_SIZE; }
+    static size_t TriSize()  { return TRI_SIZE; }
 };
 
 struct TriangleMeshRenderGeometry : public RenderGeometry

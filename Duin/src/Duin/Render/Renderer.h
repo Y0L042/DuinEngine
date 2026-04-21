@@ -171,6 +171,21 @@ void DrawSquare(
     const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
     const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
 void DrawPlane(const Vector3 size);
+void DrawCapsule(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+void DrawCylinder(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+void DrawCone(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+void DrawDisk(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+void DrawTriangle(
+    const Vector3 position = Vector3(), const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
 
 /**
  * @name Debug Draw Functions
