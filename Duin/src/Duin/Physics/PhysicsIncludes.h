@@ -19,17 +19,10 @@
 #endif
 
 #ifdef JOLT_PHYSICS
-#include "jolt/CollisionMeta.h"
 #include "jolt/CollisionShape.h"
-#include "jolt/CollisionGeometry.h"
 #include "jolt/PhysicsMaterial.h"
 #include "jolt/PhysicsStructs.h"
 #include "jolt/PhysicsServer.h"
-#include "jolt/CollisionObject.h"
-#include "jolt/Area.h"
 #include "jolt/PhysicsObject.h"
-#include "jolt/StaticBody.h"
-#include "jolt/KinematicBody.h"
-#include "jolt/DynamicBody.h"
 #include "jolt/CharacterBody.h"
 #endif
