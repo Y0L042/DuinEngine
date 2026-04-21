@@ -77,6 +77,8 @@ void duin::PhysicsServer::Initialize()
     // TODO %optional%
     physicsSystem.SetBodyActivationListener(&bodyActivationListener);
     physicsSystem.SetContactListener(&contactListener);
+
+    DN_CORE_INFO("PhysicsServer initialized.");
 }
 
 void duin::PhysicsServer::Clean()

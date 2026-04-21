@@ -2,6 +2,7 @@
 #include "PhysicsObject.h"
 #include "Duin/Core/Maths/DuinMaths.h"
 #include <Jolt/Jolt.h>
+#include <Jolt/Core/Atomics.h>
 #include <Jolt/Physics/Character/CharacterID.h>
 #include <Jolt/Physics/Character/CharacterVirtual.h>
 #include <memory>
@@ -34,6 +35,7 @@ class CharacterBody : public PhysicsObject
 
     void SetPosition(Vector3 position);
     Vector3 GetPosition() override;
+    Vector3 GetCenterOfMassPosition();
 
     void SetFootPosition(Vector3 position);
     Vector3 GetFootPosition();
@@ -62,6 +64,7 @@ class CharacterBody : public PhysicsObject
 
     CharacterBodyDesc bodyDesc;
     CollisionShapeDesc shapeDesc;
+    float shapeHalfExtent = 0.0f;
 };
 
 } // namespace duin
