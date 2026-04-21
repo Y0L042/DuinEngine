@@ -6,8 +6,11 @@ require daslib/random
 require daslib/class_boost
 require math
 
+require dn_live_host // NOT ACTIVE
+
 require flecs_boost
 require imgui
+
 require dn_log
 require dn_gameobject
 require dn_ecs
@@ -15,7 +18,7 @@ require dn_gameworld
 require dn_renderer
 require dn_camera
 require dn_input
-require dn_physics_server
+require dn_physics
 
 require ecs_components
 require ecs_systems
@@ -23,43 +26,50 @@ require player
 require frogger
 
 var player : Player?
-var child : Frogger?
 var game_world : dn_GameWorld?
-var camera : dn_Camera?
+var dev_camera : dn_Camera?
 
 [export]
 def game_ready() {
-    dn_info("Game Ready!")
+    if (is_reload()) {
+        dn_info("Game Hot-Reloaded!")
+    } else {
+        dn_info("Game Ready!")
+    }
 
-    camera = dn_camera_init(new dn_Camera())
-    camera.set_impl(
+    // Camera always reinits (GPU resource).
+    dev_camera = dn_camera_init(new dn_Camera())
+    dev_camera.set_impl(
         float3(15.0, 8.0, 15.0),
         float3(0.0, 0.0, 0.0),
         float3(0.0, 1.0, 0.0),
         80.0
     )
-    dn_set_active_camera(camera)
-    if (dn_get_active_camera() == null) {
-        dn_fatal("Failed to set active camera!")
-    }
+    // dn_set_active_camera(dev_camera)
+    // if (dn_get_active_camera() == null) {
+    //     dn_fatal("Failed to set active dev_camera!")
+    // }
 
     dn_capture_mouse(true)
 
+    // GameWorld always re-wraps (smart constructor reuses existing C++ world on reload).
     game_world = new dn_GameWorld()
-    var world = game_world.dn_world()
 
-    world|>register_components()
-    world|>construct_queries()
+    // Entities and game state are only created on first load.
+    if (!is_reload()) {
+        var world = game_world.dn_world()
 
-    // register_components(world)
-    // construct_queries(world)
+        world|>register_components()
+        world|>construct_queries()
 
-    player = dn_gameobject_add_root_child(new Player(game_world))
+        player = dn_gameobject_add_root_child(new Player(game_world))
+        player._init()
 
-    create_cube_crowd()
+        create_cube_crowd()
 
-    dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
-    dn_physics_server_create_box(float3(0.0, 10.0, 0.0), float3(1.0, 1.0, 1.0))
+        dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
+        dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
+    }
 }
 
 
@@ -74,7 +84,7 @@ def game_physics_update(delta : double) {
         // system_integrate_velocity(game_world.ecs_world(), delta)
     }
 
-    process_input(delta)
+    // process_input(delta)
 }
 
 [export]
@@ -133,7 +143,7 @@ def draw_cube_crowd() : void {
 var move_speed = 7.0f
 let mouse_sensitivity = 0.0015f
 def process_input(delta : double) : void {
-        if (camera == null) {
+        if (dev_camera == null) {
         return
     }
     let dt = float(delta)
@@ -145,17 +155,17 @@ def process_input(delta : double) : void {
     }
 
     if (dn_is_key_down(DN_Scancode.DN_SCANCODE_R)) {
-        camera.set_position(float3(5.0f, 5.0f, 5.0f))
+        dev_camera.set_position(float3(5.0f, 5.0f, 5.0f))
     }
 
     // Mouse look
     let md = dn_get_mouse_delta()
-    camera.yaw(md.x * mouse_sensitivity)
-    camera.pitch(-md.y * mouse_sensitivity)
+    dev_camera.yaw(md.x * mouse_sensitivity)
+    dev_camera.pitch(-md.y * mouse_sensitivity)
 
-    // Horizontal movement relative to camera yaw (WASD), vertical with Q/Z
-    let fwd = camera.forward()
-    let rgt = camera.right()
+    // Horizontal movement relative to dev_camera yaw (WASD), vertical with Q/Z
+    let fwd = dev_camera.forward()
+    let rgt = dev_camera.right()
     let h_fwd   = float3(fwd.x, 0.0f, fwd.z)
     let h_right = float3(rgt.x, 0.0f, rgt.z)
 
@@ -186,10 +196,10 @@ def process_input(delta : double) : void {
     let move_len = length(move)
     if (move_len > 0.001f) {
         let step = (move / move_len) * move_speed * dt
-        let pos = camera.get_position()
-        let tgt = camera.get_target()
-        camera.set_position(pos + step)
-        camera.set_target(tgt + step)
+        let pos = dev_camera.get_position()
+        let tgt = dev_camera.get_target()
+        dev_camera.set_position(pos + step)
+        dev_camera.set_target(tgt + step)
     }
 }
 
