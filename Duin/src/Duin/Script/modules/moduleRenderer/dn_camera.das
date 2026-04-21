@@ -1,6 +1,7 @@
 options gen2
 
 require daslib/class_boost
+require math
 
 module dn_camera public
 
@@ -168,6 +169,23 @@ class dn_Camera {
 
     def is_valid() : bool {
         return dn_camera_is_valid_impl(_handle)
+    }
+
+    def move_to(position : float3) : void {
+        let delta =  position - get_position()
+        set_position(position)
+        set_target(get_target() + delta)
+    }
+
+    // -Y (floor) is -PI/2 , +Y (sky) is PI/2, Horizon is 0
+    def get_pitch() : float {
+        var dir_vec = get_target() - get_position()
+        var Y_UP = float3(0.0, 1.0, 0.0)
+        
+        let dot = dot(dir_vec, Y_UP)
+        let inv_mag = inv_length(dir_vec) * 1.0
+
+        return ((PI / 2.0) - acos(dot / inv_mag))
     }
 }
 
