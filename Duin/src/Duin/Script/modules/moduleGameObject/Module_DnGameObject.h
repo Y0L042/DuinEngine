@@ -26,7 +26,15 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__init(classPtr))
         {
-            invoke__init(context, fn, classPtr);
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [init] is mangled.");
+            }
+            else
+            {
+                invoke__init(context, fn, classPtr);
+            }
         }
     }
 
@@ -34,7 +42,15 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__ready(classPtr))
         {
-            invoke__ready(context, fn, classPtr);
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [ready] is mangled.");
+            }
+            else
+            {
+                invoke__ready(context, fn, classPtr);
+            }
         }
     }
 
@@ -42,7 +58,15 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__update(classPtr))
         {
-            invoke__update(context, fn, classPtr, delta);
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [update] is mangled.");
+            }
+            else
+            {
+                invoke__update(context, fn, classPtr, delta);
+            }
         }
     }
 
@@ -50,7 +74,15 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__physics_update(classPtr))
         {
-            invoke__physics_update(context, fn, classPtr, delta);
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [physics_update] is mangled.");
+            }
+            else
+            {
+                invoke__physics_update(context, fn, classPtr, delta);
+            }
         }
     }
 
@@ -58,7 +90,15 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__draw(classPtr))
         {
-            invoke__draw(context, fn, classPtr);
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [draw] is mangled.");
+            }
+            else
+            {
+                invoke__draw(context, fn, classPtr);
+            }
         }
     }
 
@@ -66,7 +106,15 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__draw_ui(classPtr))
         {
-            invoke__draw_ui(context, fn, classPtr);
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [draw_ui] is mangled.");
+            }
+            else
+            {
+                invoke__draw_ui(context, fn, classPtr);
+            }
         }
     }
 
@@ -74,7 +122,15 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__debug(classPtr))
         {
-            invoke__debug(context, fn, classPtr);
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [debug] is mangled.");
+            }
+            else
+            {
+                invoke__debug(context, fn, classPtr);
+            }
         }
     }
 

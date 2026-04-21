@@ -2,8 +2,10 @@ options gen2
 options remove_unused_symbols = false
 options rtti
 
+module dn_gameobject_class shared public
+
 // Minimal class-only definition for adapter generation.
-class dn_GameObject {
+class dn_GameObject_Adapter {
     _handle : void?
 
     def abstract _init() : void
