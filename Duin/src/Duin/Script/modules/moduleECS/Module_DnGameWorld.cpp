@@ -26,6 +26,12 @@ static void *dn_create_gameworld_impl(void *classPtr, const das::StructInfo *inf
 }
 
 // Destroys the ScriptGameWorld and unregisters it from the context.
+static void *dn_gameworld_context_handle_impl(das::Context *context)
+{
+    auto *dnCtx = static_cast<duin::ScriptContext *>(context);
+    return dnCtx->gameWorld;
+}
+
 static void dn_destroy_gameworld_impl(void *handle, das::Context *context)
 {
     if (!handle)
@@ -198,6 +204,11 @@ class Module_DecsGameWorld : public das::Module
         addBuiltinDependency(lib, flecsMod);
         addBuiltinDependency(lib, rttiMod);
         addBuiltinDependency(lib, ecsMod);
+
+        addExtern<DAS_BIND_FUN(dn_gameworld_context_handle_impl)>(*this, lib, "dn_gameworld_context_handle_impl",
+                                                                 das::SideEffects::accessGlobal,
+                                                                 "dn_gameworld_context_handle_impl")
+            ->args({"context"});
 
         addExtern<DAS_BIND_FUN(dn_create_gameworld_impl)>(*this, lib, "dn_create_gameworld_impl",
                                                           das::SideEffects::modifyExternal, "dn_create_gameworld_impl");

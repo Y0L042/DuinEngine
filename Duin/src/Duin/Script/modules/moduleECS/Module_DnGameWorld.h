@@ -22,29 +22,70 @@ class ScriptGameWorld : public duin::GameWorld, public DnGameWorldAdapterBase
     void PostUpdateQueryExecution(double delta) override
     {
         duin::GameWorld::PostUpdateQueryExecution(delta);
+
         if (auto fn = get__post_update(classPtr))
-            invoke__post_update(context, fn, classPtr, delta);
+        {
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [update] is mangled.");
+            }
+            else
+            {
+                invoke__post_update(context, fn, classPtr, delta);
+            }
+        }
     }
 
     void PostPhysicsUpdateQueryExecution(double delta) override
     {
         duin::GameWorld::PostPhysicsUpdateQueryExecution(delta);
         if (auto fn = get__post_physics_update(classPtr))
-            invoke__post_physics_update(context, fn, classPtr, delta);
+        {
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [physics_update] is mangled.");
+            }
+            else
+            {
+                invoke__post_physics_update(context, fn, classPtr, delta);
+            }
+        }
     }
 
     void PostDrawQueryExecution() override
     {
         duin::GameWorld::PostDrawQueryExecution();
         if (auto fn = get__post_draw(classPtr))
-            invoke__post_draw(context, fn, classPtr);
+        {
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [draw] is mangled.");
+            }
+            else
+            {
+                invoke__post_draw(context, fn, classPtr);
+            }
+        }
     }
 
     void PostDrawUIQueryExecution() override
     {
         duin::GameWorld::PostDrawUIQueryExecution();
         if (auto fn = get__post_draw_ui(classPtr))
-            invoke__post_draw_ui(context, fn, classPtr);
+        {
+            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
+            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            {
+                DN_CORE_FATAL("Function [draw_ui] is mangled.");
+            }
+            else
+            {
+                invoke__post_draw_ui(context, fn, classPtr);
+            }
+        }
     }
 
     void *classPtr;

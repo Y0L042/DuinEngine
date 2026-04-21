@@ -4,6 +4,7 @@ options rtti
 
 require daslib/class_boost public
 require daslib/rtti public
+require daslib/archive
 
 module dn_gameworld shared public
 
@@ -21,6 +22,27 @@ class dn_GameWorld : dn_GameWorld_Adapter {
     def initialize() : void {
         self._handle = unsafe(dn_create_gameworld_impl(addr(self), class_info(self)))
         initialized = self._handle != null
+    }
+
+    [before_reload]
+    def hot_reload_store() : void {
+        var data : array<uint8>
+        data <- mem_archive_save(_handle)
+        live_store_bytes("gameworld_handle", data)
+    }
+
+    [after_reload]
+    def hot_reload_restore() : void {
+        var res : bool = true
+        var data : array<uint8>
+        res = res && live_load_bytes("gameworld_handle", data)
+        data |> mem_archive_load(_handle)
+
+        if (res) {
+            dn_info("dn_GameWorld hot_reload_restore() success.")
+        } else {
+            dn_fatal("dn_GameWorld hot_reload_restore() failed!")
+        }
     }
 
     def dn_world() : dn_World? {

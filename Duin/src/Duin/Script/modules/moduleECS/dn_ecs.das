@@ -11,6 +11,9 @@ require dn_log public
 require flecs public
 require dn_ecs_core public
 
+require live/live_vars
+require dn_live_host public
+
 
 class dn_Entity {
     entity : ecs_entity_t
