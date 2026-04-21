@@ -176,9 +176,9 @@ class SignalImpl
     bool Emit(types... args)
     {
         DN_CORE_WARN_IF(emitExecuting_,
-                         "Recursive infinite emition detected! Do not re-emit signal while it is still emitting");
+                         "Recursive infinite emission detected! Do not re-emit signal while it is still emitting");
         //DN_CORE_ASSERT(!emitExecuting_,
-        //               "Recursive infinite emition detected! Do not re-emit signal while it is still emitting");
+        //               "Recursive infinite emission detected! Do not re-emit signal while it is still emitting");
 
         if (!emitExecuting_)
         {
@@ -188,7 +188,7 @@ class SignalImpl
         ++recursiveEmissionCount;
         if (recursiveEmissionCount >= 30)
         {
-            DN_CORE_FATAL("Recursive emittion exceeded 30! Preventing recursion loop.");
+            DN_CORE_FATAL("Recursive emission exceeded 30! Preventing recursion loop.");
             --recursiveEmissionCount;
             recursionLimitHit = true;
             return false;
