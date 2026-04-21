@@ -24,6 +24,20 @@ class ScriptContext : public das::Context
         gameWorld = nullptr;
     }
 
+    void TransferMemoryTo(ScriptContext &other)
+    {
+        other.scriptMemory = this->scriptMemory;
+        other.rootGameObject = this->rootGameObject;
+        other.gameWorld = this->gameWorld;
+    }
+
+    void Clear()
+    {
+        scriptMemory.reset();
+        rootGameObject = nullptr;
+        gameWorld = nullptr;
+    }
+
     std::shared_ptr<ScriptMemory> scriptMemory;
     GameObject *rootGameObject = nullptr;
     GameWorld *gameWorld = nullptr;

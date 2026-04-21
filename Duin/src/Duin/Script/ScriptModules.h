@@ -10,6 +10,9 @@
 #include "./modules/moduleECS/Module_DnGameWorld.h"
 #include "./modules/moduleInput/Module_DnInput.h"
 #include "./modules/modulePhysics/Module_DnPhysicsServer.h"
+#include "./modules/modulePhysics/ModuleDnCharacterBody.h"
+#include "./modules/moduleLiveHost/Module_DnLiveHost.h"
+
 //#include "./ECS/Module_DecsEntity.h"
 //#include "./ECS/Module_DecsWorld.h"
 //#include "./ECS/Module_DecsComponents.h"

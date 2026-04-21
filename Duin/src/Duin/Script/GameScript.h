@@ -41,16 +41,21 @@ class GameScript : public Script, public GameObject
 
   private:
     GameWorld *gameWorld_ = nullptr;
+
     bool hotCompileEnabled = false;
     bool haltOnCompilationFail = false;
     bool queueHotCompileFlag = false;
     std::unique_ptr<filewatch::FileWatch<std::wstring>> directoryWatch;
+
     int64_t scriptLastModified = 0;
+    float uptimeAccum = 0.0f;
+
     bool muteReadyWarning = false;
     bool muteUpdateWarning = false;
     bool mutePhysicsUpdateWarning = false;
     bool muteDrawWarning = false;
     bool muteDrawUIWarning = false;
+
     das::SimFunction *fnGameReady = nullptr;
     das::SimFunction *fnGameUpdate = nullptr;
     das::SimFunction *fnGamePhysicsUpdate = nullptr;
@@ -59,5 +64,6 @@ class GameScript : public Script, public GameObject
 
     void ClearScriptGameObjects();
     void RestartSGORecurse(std::shared_ptr<GameObject> child);
+    void CallAnnotatedScriptFunctions(const std::string &annotationName);
 };
 } // namespace duin

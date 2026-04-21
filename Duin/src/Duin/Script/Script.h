@@ -32,7 +32,9 @@ class Script
 
   protected:
     const std::string scriptPath;
+
     std::shared_ptr<ScriptContext> context;
+
     das::ProgramPtr program;
     das::ModuleGroup libGroup;
     das::TextPrinter tout;
