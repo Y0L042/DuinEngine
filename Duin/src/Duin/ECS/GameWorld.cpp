@@ -72,23 +72,13 @@ void GameWorld::PostUpdateQueryExecution(double delta)
 
 void GameWorld::PostPhysicsUpdateQueryExecution(double delta)
 {
-    /* Update physics-objects' positions first */
-    ExecuteQueryVelocity3DUpdateTransform();
-    ExecuteQueryCharacterBody3DUpdateTransform();
-    ExecuteQuerySyncDynamicBody3DTransform();
-    ExecuteQueryTransform3DHierarchicalUpdate();
-
-    ExecuteQuerySetCameraAsActive();
-    ExecuteQueryControlCamera();
 
     Progress(); // TODO testing for remote viewing
 }
 
 void GameWorld::PostDrawQueryExecution()
 {
-    ExecuteQueryDrawCube();
-    ExecuteQueryDrawDebugCapsule();
-    ExecuteQueryDrawDebugCube();
+
 }
 
 void GameWorld::PostDrawUIQueryExecution()
@@ -125,246 +115,6 @@ void GameWorld::InitializeRemoteExplorer()
     //    .enable_stats()
     //    .enable_rest()
     //    .run();
-}
-
-/*----------------------------------------------------------------------
- * Transform Updates
-----------------------------------------------------------------------*/
-void GameWorld::ExecuteQueryCharacterBody3DUpdateTransform()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        ECSComponent::CharacterBodyComponent,
-        ECSComponent::Transform3D,
-        ECSComponent::Velocity3D
-    >("CharacterBody3DUpdateTransform", [](World& w) {
-        return w.QueryBuilder<
-                    ECSComponent::CharacterBodyComponent,
-                    ECSComponent::Transform3D,
-                    ECSComponent::Velocity3D>()
-               .With<ECSTag::PxKinematic>()
-               .Cached()
-               .Build();
-    }).Each([this](
-        duin::Entity e,
-        ECSComponent::CharacterBodyComponent &cb,
-        ECSComponent::Transform3D &tx,
-        ECSComponent::Velocity3D &velocity
-    ){
-        // Move CharacterBody3D and get physics-resolved global position
-        double delta = GetPhysicsFrameTime();
-        Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
-
-        if (!cb.body)
-        {
-            DN_WARN("CharacterBody pointer is nullptr!");
-            return;
-        }
-        cb.body->SetFootPosition(GetGlobalPosition(e));
-        Vector3 oldPos = cb.body->GetFootPosition();
-        cb.body->Move(vDelta, delta);
-        Vector3 newPos = cb.body->GetFootPosition();
-
-        // add distance between current globalPos (old) and pxBody global pos (new) to localPos
-        Vector3 globalDelta = Vector3Subtract(newPos, GetGlobalPosition(e));
-        Vector3 newLocalPos = Vector3Add(globalDelta, tx.GetPosition());
-        tx.SetPosition(newLocalPos);
-
-        velocity.value = cb.body->GetCurrentVelocity();
-
-        // If autostep has happened, cap Y velocity
-        Vector3 distanceMoved = Vector3Subtract(newPos, oldPos);
-        static const float AUTOSTEP_FACTOR = 5.0f;
-        if (std::abs(distanceMoved.y) > std::abs(vDelta.y * AUTOSTEP_FACTOR))
-        {
-            velocity.value.y = vDelta.y;
-        }
-    });
-    // clang-format on
-}
-
-void GameWorld::ExecuteQueryVelocity3DUpdateTransform()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        ECSComponent::Transform3D,
-        ECSComponent::Velocity3D
-    >("CharacterBody3DUpdateTransform", [](World& w) {
-        return w.QueryBuilder<
-                    ECSComponent::Transform3D,
-                    ECSComponent::Velocity3D>()
-               .Without<ECSComponent::CharacterBodyComponent>()
-               .Cached()
-               .Build();
-    }).Each([this](
-        duin::Entity e,
-        ECSComponent::Transform3D &tx,
-        ECSComponent::Velocity3D &velocity
-    ){
-        // Move CharacterBody3D and get physics-resolved global position
-        double delta = GetPhysicsFrameTime();
-        Vector3 vDelta = Vector3Scale(velocity.value, GetPhysicsFrameTime());
-        Vector3 oldPos = tx.GetPosition();
-        tx.SetPosition(oldPos + vDelta);
-    });
-    // clang-format on
-}
-
-void GameWorld::ExecuteQuerySyncDynamicBody3DTransform()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        const ECSComponent::DynamicBodyComponent,
-        ECSComponent::Transform3D
-    >("SyncDynamicBody3DTransform", [](World& w) {
-        return w.QueryBuilder<
-                    const ECSComponent::DynamicBodyComponent,
-                    ECSComponent::Transform3D>()
-               .Cached()
-               .Build();
-    }).Each([this](
-        duin::Entity e,
-        const ECSComponent::DynamicBodyComponent &dynamicBodyComponent,
-        ECSComponent::Transform3D &tx
-    ){
-        Vector3 newGPos = dynamicBodyComponent.body->GetPosition();
-        SetGlobalPosition(e, newGPos);
-        Quaternion newGRot = dynamicBodyComponent.body->GetRotation();
-        SetGlobalRotation(e, newGRot);
-    });
-    // clang-format on
-}
-
-void GameWorld::ExecuteQueryTransform3DHierarchicalUpdate()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        ECSComponent::Transform3D,
-        const ECSComponent::Transform3D *
-    >("Transform3DHierarchicalUpdate", [](World& w) {
-        return w.QueryBuilder<
-                    ECSComponent::Transform3D,
-                    const ECSComponent::Transform3D *>()
-               .TermAt(1)
-               .Parent()
-               .Cascade()
-               .Cached()
-               .Build();
-    }).Each([this](
-        duin::Entity e,
-        ECSComponent::Transform3D &tx,
-        const ECSComponent::Transform3D *parent_tx
-    ){
-        tx.InvalidateCacheFlags();
-        GetGlobalPosition(e);
-        GetGlobalScale(e);
-        GetGlobalRotation(e);
-    });
-    // clang-format on
-}
-
-void GameWorld::ExecuteQueryControlCamera()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        Camera,
-        const ECSComponent::Transform3D
-    >("ControlCamera", [](World& w) {
-        return w.QueryBuilder<
-                    Camera,
-                    const ECSComponent::Transform3D>()
-               //.With<ECSTag::ActiveCamera>()
-               .Cached()
-               .Build();
-    }).Each([this](
-        duin::Entity e,
-        Camera &c,
-        const ECSComponent::Transform3D &tx
-    ){
-        Vector3 gPos = GetGlobalPosition(e);
-        Quaternion gRot = GetGlobalRotation(e);
-
-        // Rotate the default forward by gRot to get the new target position of the camera
-        Vector3 defaultForward = {0.0f, 0.0f, -1.0f};
-        Vector3 forward = Vector3RotateByQuaternion(defaultForward, gRot);
-
-        c.SetPosition(gPos);
-        c.SetTarget(Vector3Add(gPos, forward));
-        c.SetGlobalUp({0.0f, 1.0f, 0.0f});
-    });
-    // clang-format on
-}
-
-void GameWorld::ExecuteQueryDrawCube()
-{
-}
-
-void GameWorld::ExecuteQueryDrawDebugCapsule()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        const ECSComponent::DebugCapsuleComponent,
-        const ECSComponent::Transform3D
-    >("DrawDebugCapsule", [](World& w) {
-        return w.QueryBuilder<
-                    const ECSComponent::DebugCapsuleComponent,
-                    const ECSComponent::Transform3D>()
-               .Cached()
-               .Build();
-    }).Each([this](
-        duin::Entity e,
-        const ECSComponent::DebugCapsuleComponent &capsule,
-        const ECSComponent::Transform3D &tx
-    ){
-        Vector3 gPos = GetGlobalPosition(e);
-        Vector3 top = {gPos.x, gPos.y + capsule.height, gPos.z};
-        DrawDebugCapsule(gPos, top, capsule.radius);
-    });
-    // clang-format on
-}
-
-void GameWorld::ExecuteQueryDrawDebugCube()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        const ECSComponent::DebugCubeComponent,
-        const ECSComponent::Transform3D
-    >("DrawDebugCube", [](World& w) {
-        return w.QueryBuilder<
-                    const ECSComponent::DebugCubeComponent,
-                    const ECSComponent::Transform3D>()
-               .Cached()
-               .Build();
-    }).Each([this](
-        duin::Entity e,
-        const ECSComponent::DebugCubeComponent &cube,
-        const ECSComponent::Transform3D &tx
-    ){
-        Vector3 gPos = GetGlobalPosition(e);
-        Vector3 halfSize = {cube.width * 0.5f, cube.height * 0.5f, cube.length * 0.5f};
-        Vector3 min = Vector3Subtract(gPos, halfSize);
-        Vector3 max = Vector3Add(gPos, halfSize);
-        DrawDebugBox(min, max);
-    });
-    // clang-format on
-}
-
-void GameWorld::ExecuteQuerySetCameraAsActive()
-{
-    // clang-format off
-    GetOrBuildQuery<
-        Camera
-    >("SetCameraAsActive", [](World& w) {
-        return w.QueryBuilder<Camera>()
-               .With<ECSTag::ActiveCamera>()
-               .Build();
-    }).Each([](
-        duin::Entity e,
-        Camera &camera
-    ){
-        SetActiveCamera(&camera);
-    });
-    // clang-format on
 }
 
 /*----------------------------------------------------------------------
@@ -487,7 +237,7 @@ Vector3 GameWorld::GetGlobalPosition(duin::Entity e)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
-        DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
+        //DN_CORE_WARN("Entity not valid, or does not have Transform3D!");
         return Vector3Zero();
     }
     ECSComponent::Transform3D *tx = e.TryGetMut<ECSComponent::Transform3D>();

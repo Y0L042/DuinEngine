@@ -24,10 +24,7 @@ void RegisterComponents(duin::World &world)
     world.Component<ECSComponent::Velocity3D>();
 
     world.Component<ECSComponent::CubeComponent>();
-    world.Component<ECSComponent::StaticBodyComponent>();
-    world.Component<ECSComponent::KinematicBodyComponent>();
-    world.Component<ECSComponent::DynamicBodyComponent>();
-    world.Component<ECSComponent::CharacterBodyComponent>();
+
     world.Component<ECSComponent::PhysicsStaticCubeComponent>();
 
     world.Component<ECSComponent::DebugCapsuleComponent>();
@@ -49,10 +46,6 @@ void RegisterComponents(duin::World &world)
     inspector.RegisterComponent<ECSComponent::Scale3D>("Scale3D");
     inspector.RegisterComponent<ECSComponent::Velocity3D>("Velocity3D");
     inspector.RegisterComponent<ECSComponent::CubeComponent>("CubeComponent");
-    inspector.RegisterComponent<ECSComponent::StaticBodyComponent>("StaticBodyComponent");
-    inspector.RegisterComponent<ECSComponent::KinematicBodyComponent>("KinematicBodyComponent");
-    inspector.RegisterComponent<ECSComponent::DynamicBodyComponent>("DynamicBodyComponent");
-    inspector.RegisterComponent<ECSComponent::CharacterBodyComponent>("CharacterBodyComponent");
     inspector.RegisterComponent<ECSComponent::DebugCapsuleComponent>("DebugCapsuleComponent");
     inspector.RegisterComponent<ECSComponent::DebugCubeComponent>("DebugCubeComponent");
     inspector.RegisterComponent<Camera>("Camera");

@@ -44,28 +44,22 @@ void RegisterPrefabs(duin::World &world)
     PhysicsStaticBody = world.Prefab("PhysicsStaticBody")
                             .IsA(Node3D)
                             .Add<ECSTag::PxStatic>()
-                            .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
-                            .Set<ECSComponent::StaticBodyComponent>(ECSComponent::StaticBodyComponent{nullptr});
+                            .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f});
 
-    PhysicsKinematicBody =
-        world.Prefab("PhysicsKinematicBody")
-            .IsA(Node3D)
-            .Add<ECSTag::PxKinematic>()
-            .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
-            .Set<ECSComponent::KinematicBodyComponent>(ECSComponent::KinematicBodyComponent{nullptr});
+    PhysicsKinematicBody = world.Prefab("PhysicsKinematicBody")
+                               .IsA(Node3D)
+                               .Add<ECSTag::PxKinematic>()
+                               .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f});
 
     PhysicsDynamicBody = world.Prefab("PhysicsDynamicBody")
                              .IsA(Node3D)
                              .Add<ECSTag::PxDynamic>()
-                             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
-                             .Set<ECSComponent::DynamicBodyComponent>(ECSComponent::DynamicBodyComponent{nullptr});
+                             .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f});
 
-    PhysicsCharacterBody =
-        world.Prefab("PhysicsCharacterBody")
-            .IsA(Node3D)
-            .Add<ECSTag::PxKinematic>()
-            .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f})
-            .Set<ECSComponent::CharacterBodyComponent>(ECSComponent::CharacterBodyComponent{nullptr});
+    PhysicsCharacterBody = world.Prefab("PhysicsCharacterBody")
+                               .IsA(Node3D)
+                               .Add<ECSTag::PxKinematic>()
+                               .Set<ECSComponent::Velocity3D>(ECSComponent::Velocity3D{0.0f, 0.0f, 0.0f});
 
     Camera3D = world.Prefab("Camera3D")
                    .IsA(Node3D)

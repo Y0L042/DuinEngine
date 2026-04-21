@@ -83,29 +83,6 @@ class GameWorld : public World
     void Clear();
     void Reset(bool connectSignals = true);
 
-    /**
-     * @name Transform Queries
-     * @{
-     */
-    void ExecuteQueryTransform3DHierarchicalUpdate();
-    void ExecuteQueryCharacterBody3DUpdateTransform();
-    void ExecuteQueryVelocity3DUpdateTransform();
-    void ExecuteQuerySyncDynamicBody3DTransform();
-    /** @} */
-
-    /** @brief Processes camera activation requests. */
-    void ExecuteQuerySetCameraAsActive();
-
-    /**
-     * @name Render Queries
-     * @{
-     */
-    void ExecuteQueryControlCamera();
-    void ExecuteQueryDrawCube();
-    void ExecuteQueryDrawDebugCapsule();
-    void ExecuteQueryDrawDebugCube();
-    /** @} */
-
     // Global-space transform helpers
     void SetGlobalTransform(duin::Entity e, ECSComponent::Transform3D tx);
     ECSComponent::Transform3D GetGlobalTransform(duin::Entity e);
