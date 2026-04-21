@@ -33,9 +33,16 @@ def module_engine(req, from : string) : module_info {
     elif (req == "dn_input") {
         return ("dn_input", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleInput/dn_input.das", "")
     }
-    elif (req == "dn_physics_server") {
-        return ("dn_physics_server", DAS_PAK_ROOT + "src/Duin/Script/modules/modulePhysics/dn_physics_server.das", "")
+    elif (req == "dn_physics") {
+        return ("dn_physics", DAS_PAK_ROOT + "src/Duin/Script/modules/modulePhysics/dn_physics.das", "")
     }
+    elif (req == "dn_live_host" || req == "live_host") {
+        return ("dn_live_host", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleLiveHost/dn_live_host.das", "")
+    }
+    elif (req == "live/live_vars") {
+        return ("live_vars", DAS_PAK_ROOT + "vendor/daslang/modules/dasLiveHost/live/live_vars.das", "")
+    }
+
     return ("", "", "")
 }
 
