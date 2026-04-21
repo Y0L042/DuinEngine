@@ -7,6 +7,7 @@
 #include <Duin/IO/FileModule.h>
 #include <Duin/Script/GameScript.h>
 #include <Duin/Script/ScriptModules.h>
+#include <Duin/Physics/jolt/PhysicsServer.h>
 #include <external/imgui.h>
 
 #include <flecs_das.h>
@@ -27,14 +28,17 @@ class DuinFPSDaslangApp : public duin::Application
         duin::SetFramerate(244);
         SetWindowStartupSize(1600, 900);
         SetWindowName("DuinFPS (Daslang)");
+
     }
 
     void Ready() override
     {
+        duin::PhysicsServer::Get();
         mainScript = CreateChildObject<duin::GameScript>(ENTRY_SCRIPT);
         mainScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
         mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\Duin\\duin_engine.das_project");
         mainScript->InitModules([]() {
+            NEED_MODULE(Module_DnLiveHost);
             NEED_MODULE(Module_flecs);
             NEED_MODULE(Module_imgui);
             NEED_MODULE(Module_DnLog);
@@ -45,6 +49,7 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_DecsGameWorld);
             NEED_MODULE(Module_DnInput);
             NEED_MODULE(Module_DnPhysicsServer);
+            NEED_MODULE(Module_DnCharacterBody);
         });
         mainScript->EnableHotCompile(true, false);
         mainScript->HotCompileAndSimulate();
