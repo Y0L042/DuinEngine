@@ -3,71 +3,52 @@ options gen2
 require strings
 require daslib/strings_boost
 
-typedef module_info = tuple<string; string; string> const
+typedef module_info = tuple<string; string; string>
 
-var DAS_PAK_ROOT = "./"
+struct PathResolution {
+    resolved : bool
+    info : module_info
+}
 
-def module_engine(req, from : string) : module_info {
+def get_engine_module(req, path_to_engine : string) : PathResolution {
+    var res : PathResolution
+    res.resolved = true
     if (req == "imgui" || req == "imgui_boost") {
-        // return ("imgui_boost", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleImgui/imgui_boost.das", "")
-        return ("imgui_boost", DAS_PAK_ROOT + "vendor/dasimgui/src/scripts/imgui_boost.das", "")
+        res.info = ("imgui_boost", path_to_engine + "vendor/dasimgui/src/scripts/imgui_boost.das", "")
     }
     elif (req == "dn_camera") {
-        return ("dn_camera", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleRenderer/dn_camera.das", "")
+        res.info = ("dn_camera", path_to_engine + "src/Duin/Script/modules/moduleRenderer/dn_camera.das", "")
     }
     elif (req == "dn_gameobject") {
-        return ("dn_gameobject", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleGameObject/dn_gameobject.das", "")
+        res.info = ("dn_gameobject", path_to_engine + "src/Duin/Script/modules/moduleGameObject/dn_gameobject.das", "")
     }
     elif (req == "dn_gameworld") {
-        return ("dn_gameworld", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleECS/dn_gameworld.das", "")
+        res.info = ("dn_gameworld", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_gameworld.das", "")
     }
     elif (req == "dn_ecs") {
-        return ("dn_ecs", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleECS/dn_ecs.das", "")
+        res.info = ("dn_ecs", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs.das", "")
     }
     elif (req == "flecs" || req == "flecs_boost") {
-        return ("flecs_boost", DAS_PAK_ROOT + "vendor/flecs-daslang/flecs_das/src/scripts/flecs_helpers.das", "")
+        res.info = ("flecs_boost", path_to_engine + "vendor/flecs-daslang/flecs_das/src/scripts/flecs_helpers.das", "")
     }
     elif (req == "dn_log") {
-        return ("dn_log", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleDNLog/dn_log.das", "")
+        res.info = ("dn_log", path_to_engine + "src/Duin/Script/modules/moduleDNLog/dn_log.das", "")
     }
     elif (req == "dn_input") {
-        return ("dn_input", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleInput/dn_input.das", "")
+        res.info = ("dn_input", path_to_engine + "src/Duin/Script/modules/moduleInput/dn_input.das", "")
     }
     elif (req == "dn_physics") {
-        return ("dn_physics", DAS_PAK_ROOT + "src/Duin/Script/modules/modulePhysics/dn_physics.das", "")
+        res.info = ("dn_physics", path_to_engine + "src/Duin/Script/modules/modulePhysics/dn_physics.das", "")
     }
     elif (req == "dn_live_host" || req == "live_host") {
-        return ("dn_live_host", DAS_PAK_ROOT + "src/Duin/Script/modules/moduleLiveHost/dn_live_host.das", "")
+        res.info = ("dn_live_host", path_to_engine + "src/Duin/Script/modules/moduleLiveHost/dn_live_host.das", "")
     }
     elif (req == "live/live_vars") {
-        return ("live_vars", DAS_PAK_ROOT + "vendor/daslang/modules/dasLiveHost/live/live_vars.das", "")
+        res.info = ("live_vars", path_to_engine + "vendor/daslang/modules/dasLiveHost/live/live_vars.das", "")
     }
-
-    return ("", "", "")
-}
-
-def module_default(req, from : string) : module_info {
-    let rs <- split_by_chars(req, "./")
-    var fr <- split_by_chars(from, "/")
-    let mod_name = rs[length(rs) - 1]
-    if (length(rs) == 0) {
-        return (mod_name, req + ".das", "")
-    } elif (rs[0] == "daslib") {
-        return (mod_name, "{get_das_root()}/daslib/{mod_name}.das", "")
-    } else {
-        pop(fr)
-        for (se in rs) {
-            push(fr, se)
-        }
-        return (mod_name, join(fr, "/") + ".das", "")
+    else {
+        res.info = ("", "", "")
+        res.resolved = false
     }
-}
-
-[export]
-def module_get(req, from : string) : module_info {
-    var res = module_engine(req, from)
-    if (length(res._0) > 0) {
-        return res
-    }
-    return module_default(req, from)
+    return res
 }
