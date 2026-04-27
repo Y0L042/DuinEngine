@@ -456,13 +456,13 @@ class Module_DnECS : public das::Module
             DN_CORE_ERROR("decs: failed to find required module 'flecs_core'");
         addBuiltinDependency(lib, flecsMod);
 
-        addAnnotation(make_smart<dn_Vector3Annotation>(lib));
-        addAnnotation(make_smart<dn_QuaternionAnnotation>(lib));
-        addAnnotation(make_smart<dn_Position3DAnnotation>(lib));
-        addAnnotation(make_smart<dn_Rotation3DAnnotation>(lib));
-        addAnnotation(make_smart<dn_Scale3DAnnotation>(lib));
-        addAnnotation(make_smart<dn_Transform3DAnnotation>(lib));
-        addAnnotation(make_smart<dn_Velocity3DAnnotation>(lib));
+        addAnnotation(new dn_Vector3Annotation(lib));
+        addAnnotation(new dn_QuaternionAnnotation(lib));
+        addAnnotation(new dn_Position3DAnnotation(lib));
+        addAnnotation(new dn_Rotation3DAnnotation(lib));
+        addAnnotation(new dn_Scale3DAnnotation(lib));
+        addAnnotation(new dn_Transform3DAnnotation(lib));
+        addAnnotation(new dn_Velocity3DAnnotation(lib));
 
         // Factory helpers
         addExtern<DAS_BIND_FUN(dn_make_vector3), das::SimNode_ExtFuncCallAndCopyOrMove>(
