@@ -208,40 +208,61 @@ $(document).ready(function(){initNavTree('Renderer_8h_source.html',''); initResi
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="keywordtype">void</span> EndDebugDraw();</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="keywordtype">void</span> BeginEncoderFrame();</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="keywordtype">void</span> EndEncoderFrame();</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="keywordtype">void</span> QueueRender(RenderGeometryType::Type type);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keywordtype">void</span> QueueRender(RenderGeometryType::Type type, Vector3 position, Quaternion rotation, Vector3 size);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="keywordtype">void</span> ExecuteRenderPipeline();</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="keywordtype">void</span> EmptyRenderStack();</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="keywordtype">void</span> ClearBackground(Color color = Color(0x443355FF));</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="keywordtype">void</span> DrawBox(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(),</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>             Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="keywordtype">void</span> DrawSphere(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(),</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keywordtype">void</span> DrawSquare(Vector3 position = Vector3(), Quaternion rotation = QuaternionIdentity(),</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="keywordtype">void</span> DrawGrid(<span class="keywordtype">float</span> size = 50);</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="keywordtype">void</span> DrawPlane(Vector3 size);</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keywordtype">void</span> DrawDebugSphere(Vector3 position, <span class="keywordtype">float</span> radius);</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="keywordtype">void</span> DrawDebugCapsule(Vector3 from, Vector3 to, <span class="keywordtype">float</span> radius);</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="keywordtype">void</span> DrawDebugBox(Vector3 min, Vector3 max);</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> DrawIMGUITexture(RenderTexture &amp;texture, Vector2 targetSize);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="keywordtype">void</span> DestroyRenderTexture(RenderTexture &amp;texture);</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>RenderState GetGlobalRenderState();</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="keywordtype">void</span> QueueRender(<span class="keyword">const</span> RenderGeometryType::Type type);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keywordtype">void</span> QueueRender(</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keyword">const</span> RenderGeometryType::Type type, <span class="keyword">const</span> Vector3 position, <span class="keyword">const</span> Quaternion rotation, <span class="keyword">const</span> Vector3 size);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="keywordtype">void</span> ExecuteRenderPipeline();</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="keywordtype">void</span> EmptyRenderStack();</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="keywordtype">void</span> ClearBackground(Color color = Color(0x443355FF));</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="keywordtype">void</span> DrawBox(</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keywordtype">void</span> DrawSphere(</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="keywordtype">void</span> DrawSquare(</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="keywordtype">void</span> DrawPlane(<span class="keyword">const</span> Vector3 size);</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="keywordtype">void</span> DrawCapsule(</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="keywordtype">void</span> DrawCylinder(</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="keywordtype">void</span> DrawCone(</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="keywordtype">void</span> DrawDisk(</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="keywordtype">void</span> DrawTriangle(</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keyword">const</span> Vector3 position = Vector3(), <span class="keyword">const</span> Quaternion rotation = QuaternionIdentity(),</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="keyword">const</span> Vector3 size = Vector3(1.0f, 1.0f, 1.0f));</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="keywordtype">void</span> DrawDebugTriangle(<span class="keyword">const</span> Vector3 c1, <span class="keyword">const</span> Vector3 c2, <span class="keyword">const</span> Vector3 c3);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="keywordtype">void</span> DrawDebugGrid(<span class="keyword">const</span> <span class="keywordtype">float</span> size = 50);</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="keywordtype">void</span> DrawDebugSphere(<span class="keyword">const</span> Vector3 position, <span class="keyword">const</span> <span class="keywordtype">float</span> radius);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="keywordtype">void</span> DrawDebugCapsule(<span class="keyword">const</span> Vector3 from, <span class="keyword">const</span> Vector3 to, <span class="keyword">const</span> <span class="keywordtype">float</span> radius);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="keywordtype">void</span> DrawDebugBox(<span class="keyword">const</span> Vector3 min, <span class="keyword">const</span> Vector3 max);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> DrawIMGUITexture(RenderTexture &amp;texture, Vector2 targetSize);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="keywordtype">void</span> DestroyRenderTexture(RenderTexture &amp;texture);</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>RenderState GetGlobalRenderState();</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aCamera_8h_html"><div class="ttname"><a href="Camera_8h.html">Camera.h</a></div><div class="ttdoc">3D camera for rendering.</div></div>
 <div class="ttc" id="aColor_8h_html"><div class="ttname"><a href="Color_8h.html">Color.h</a></div><div class="ttdoc">RGBA color representation.</div></div>
 <div class="ttc" id="aUUID_8h_html"><div class="ttname"><a href="UUID_8h.html">UUID.h</a></div><div class="ttdoc">Defines the UUID class for generating and managing unique identifiers.</div></div>
 <div class="ttc" id="aclassduin_1_1Camera_html"><div class="ttname"><a href="classduin_1_1Camera.html">duin::Camera</a></div><div class="ttdoc">3D camera with position, target, and orientation.</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00042">Camera.h:43</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
 <div class="ttc" id="astructCamera_html"><div class="ttname"><a href="structCamera.html">Camera</a></div><div class="ttdef"><b>Definition</b> <a href="camera_8cpp_source.html#l00076">camera.cpp:77</a></div></div>
-<div class="ttc" id="astructduin_1_1Matrix_html"><div class="ttname"><a href="structduin_1_1Matrix.html">duin::Matrix</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00321">DuinMaths.h:322</a></div></div>
-<div class="ttc" id="astructduin_1_1RHIFrameBufferHandle_html"><div class="ttname"><a href="structduin_1_1RHIFrameBufferHandle.html">duin::RHIFrameBufferHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00030">RHI.h:31</a></div></div>
-<div class="ttc" id="astructduin_1_1RHIProgramHandle_html"><div class="ttname"><a href="structduin_1_1RHIProgramHandle.html">duin::RHIProgramHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00042">RHI.h:43</a></div></div>
-<div class="ttc" id="astructduin_1_1RHIShaderHandle_html"><div class="ttname"><a href="structduin_1_1RHIShaderHandle.html">duin::RHIShaderHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00036">RHI.h:37</a></div></div>
-<div class="ttc" id="astructduin_1_1RHITextureHandle_html"><div class="ttname"><a href="structduin_1_1RHITextureHandle.html">duin::RHITextureHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00024">RHI.h:25</a></div></div>
+<div class="ttc" id="astructduin_1_1Matrix_html"><div class="ttname"><a href="structduin_1_1Matrix.html">duin::Matrix</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00259">DuinMaths.h:260</a></div></div>
+<div class="ttc" id="astructduin_1_1RHIFrameBufferHandle_html"><div class="ttname"><a href="structduin_1_1RHIFrameBufferHandle.html">duin::RHIFrameBufferHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00031">RHI.h:32</a></div></div>
+<div class="ttc" id="astructduin_1_1RHIProgramHandle_html"><div class="ttname"><a href="structduin_1_1RHIProgramHandle.html">duin::RHIProgramHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00043">RHI.h:44</a></div></div>
+<div class="ttc" id="astructduin_1_1RHIShaderHandle_html"><div class="ttname"><a href="structduin_1_1RHIShaderHandle.html">duin::RHIShaderHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00037">RHI.h:38</a></div></div>
+<div class="ttc" id="astructduin_1_1RHITextureHandle_html"><div class="ttname"><a href="structduin_1_1RHITextureHandle.html">duin::RHITextureHandle</a></div><div class="ttdef"><b>Definition</b> <a href="RHI_8h_source.html#l00025">RHI.h:26</a></div></div>
 <div class="ttc" id="astructduin_1_1RenderState_html"><div class="ttname"><a href="structduin_1_1RenderState.html">duin::RenderState</a></div><div class="ttdoc">Current render configuration.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00053">Renderer.h:54</a></div></div>
 <div class="ttc" id="astructduin_1_1RenderState_html_a63cccf0d345b856ada5148f2308c0018"><div class="ttname"><a href="structduin_1_1RenderState.html#a63cccf0d345b856ada5148f2308c0018">duin::RenderState::inTextureMode</a></div><div class="ttdeci">bool inTextureMode</div><div class="ttdoc">True between BeginTextureMode/EndTextureMode.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00058">Renderer.h:58</a></div></div>
 <div class="ttc" id="astructduin_1_1RenderState_html_a7ab86b31bba578fd418dfc239ba0ce87"><div class="ttname"><a href="structduin_1_1RenderState.html#a7ab86b31bba578fd418dfc239ba0ce87">duin::RenderState::target</a></div><div class="ttdeci">RenderTexture * target</div><div class="ttdoc">Active render target (nullptr = backbuffer).</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00055">Renderer.h:55</a></div></div>

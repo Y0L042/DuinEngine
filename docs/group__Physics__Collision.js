@@ -2,8 +2,8 @@ var group__Physics__Collision =
 [
     [ "CollisionMeta.h", "CollisionMeta_8h.html", null ],
     [ "CollisionObject.h", "CollisionObject_8h.html", null ],
-    [ "CollisionShape.h", "CollisionShape_8h.html", null ],
-    [ "PhysicsMaterial.h", "PhysicsMaterial_8h.html", null ],
+    [ "CollisionShape.h", "physx_2CollisionShape_8h.html", null ],
+    [ "PhysicsMaterial.h", "physx_2PhysicsMaterial_8h.html", null ],
     [ "duin::CollisionObject", "classduin_1_1CollisionObject.html", [
       [ "GetCollisionLayer", "classduin_1_1CollisionObject.html#a8139a9c6f5d5d619800cd1a612a45c61", null ],
       [ "GetCollisionMask", "classduin_1_1CollisionObject.html#a9bee2e6c8f30757878e130468d568e17", null ],

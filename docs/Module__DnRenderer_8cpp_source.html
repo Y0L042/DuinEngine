@@ -237,9 +237,9 @@ $(document).ready(function(){initNavTree('Module__DnRenderer_8cpp_source.html','
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    duin::DrawSquare(duin::from_f3(position), duin::from_f4(rotation), duin::from_f3(size));</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>}</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="keyword">static</span> <span class="keywordtype">void</span> dn_draw_grid_impl(<span class="keywordtype">float</span> size)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="keyword">static</span> <span class="keywordtype">void</span> dn_draw_debug_grid_impl(<span class="keywordtype">float</span> size)</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>{</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    duin::DrawGrid(size);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    duin::DrawDebugGrid(size);</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="keyword">static</span> <span class="keywordtype">void</span> dn_draw_plane_impl(<span class="keyword">const</span> das::float3 size)</div>
@@ -335,7 +335,7 @@ $(document).ready(function(){initNavTree('Module__DnRenderer_8cpp_source.html','
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        addBuiltinDependency(lib, cameraMod);</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="comment">// Color type</span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        addAnnotation(make_smart&lt;dn_ColorAnnotation&gt;(lib));</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        addAnnotation(<span class="keyword">new</span> dn_ColorAnnotation(lib));</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        addExtern&lt;DAS_BIND_FUN(dn_make_color), das::SimNode_ExtFuncCallAndCopyOrMove&gt;(</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_make_color&quot;</span>, das::SideEffects::none, <span class="stringliteral">&quot;dn_make_color&quot;</span>)</div>
@@ -391,8 +391,8 @@ $(document).ready(function(){initNavTree('Module__DnRenderer_8cpp_source.html','
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        addExtern&lt;DAS_BIND_FUN(dn_draw_square_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_square&quot;</span>, das::SideEffects::modifyExternal,</div>
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                                                     <span class="stringliteral">&quot;dn_draw_square_impl&quot;</span>)</div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            -&gt;args({<span class="stringliteral">&quot;position&quot;</span>, <span class="stringliteral">&quot;rotation&quot;</span>, <span class="stringliteral">&quot;size&quot;</span>});</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        addExtern&lt;DAS_BIND_FUN(dn_draw_grid_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_grid&quot;</span>, das::SideEffects::modifyExternal,</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                                                   <span class="stringliteral">&quot;dn_draw_grid_impl&quot;</span>)</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        addExtern&lt;DAS_BIND_FUN(dn_draw_debug_grid_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_debug_grid&quot;</span>, das::SideEffects::modifyExternal,</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                                                   <span class="stringliteral">&quot;dn_draw_debug_grid_impl&quot;</span>)</div>
 <div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            -&gt;args({<span class="stringliteral">&quot;size&quot;</span>});</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        addExtern&lt;DAS_BIND_FUN(dn_draw_plane_impl)&gt;(*<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_plane&quot;</span>, das::SideEffects::modifyExternal,</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                                                    <span class="stringliteral">&quot;dn_draw_plane_impl&quot;</span>)</div>
@@ -465,7 +465,7 @@ $(document).ready(function(){initNavTree('Module__DnRenderer_8cpp_source.html','
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
 <div class="ttc" id="astructduin_1_1Color_html"><div class="ttname"><a href="structduin_1_1Color.html">duin::Color</a></div><div class="ttdoc">RGBA color with multiple constructors.</div><div class="ttdef"><b>Definition</b> <a href="Color_8h_source.html#l00024">Color.h:25</a></div></div>
 <div class="ttc" id="astructduin_1_1RenderTexture_html"><div class="ttname"><a href="structduin_1_1RenderTexture.html">duin::RenderTexture</a></div><div class="ttdoc">Offscreen render target.</div><div class="ttdef"><b>Definition</b> <a href="Renderer_8h_source.html#l00073">Renderer.h:74</a></div></div>
-<div class="ttc" id="astructduin_1_1Vector2_html"><div class="ttname"><a href="structduin_1_1Vector2.html">duin::Vector2</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00127">DuinMaths.h:128</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector2_html"><div class="ttname"><a href="structduin_1_1Vector2.html">duin::Vector2</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00120">DuinMaths.h:121</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

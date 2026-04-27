@@ -575,13 +575,13 @@ $(document).ready(function(){initNavTree('Module__DnECS_8cpp_source.html',''); i
 <div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>            DN_CORE_ERROR(<span class="stringliteral">&quot;decs: failed to find required module &#39;flecs_core&#39;&quot;</span>);</div>
 <div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>        addBuiltinDependency(lib, flecsMod);</div>
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span> </div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        addAnnotation(make_smart&lt;dn_Vector3Annotation&gt;(lib));</div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>        addAnnotation(make_smart&lt;dn_QuaternionAnnotation&gt;(lib));</div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        addAnnotation(make_smart&lt;dn_Position3DAnnotation&gt;(lib));</div>
-<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>        addAnnotation(make_smart&lt;dn_Rotation3DAnnotation&gt;(lib));</div>
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        addAnnotation(make_smart&lt;dn_Scale3DAnnotation&gt;(lib));</div>
-<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>        addAnnotation(make_smart&lt;dn_Transform3DAnnotation&gt;(lib));</div>
-<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>        addAnnotation(make_smart&lt;dn_Velocity3DAnnotation&gt;(lib));</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        addAnnotation(<span class="keyword">new</span> dn_Vector3Annotation(lib));</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>        addAnnotation(<span class="keyword">new</span> dn_QuaternionAnnotation(lib));</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        addAnnotation(<span class="keyword">new</span> dn_Position3DAnnotation(lib));</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>        addAnnotation(<span class="keyword">new</span> dn_Rotation3DAnnotation(lib));</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        addAnnotation(<span class="keyword">new</span> dn_Scale3DAnnotation(lib));</div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>        addAnnotation(<span class="keyword">new</span> dn_Transform3DAnnotation(lib));</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>        addAnnotation(<span class="keyword">new</span> dn_Velocity3DAnnotation(lib));</div>
 <div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span> </div>
 <div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>        <span class="comment">// Factory helpers</span></div>
 <div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>        addExtern&lt;DAS_BIND_FUN(dn_make_vector3), das::SimNode_ExtFuncCallAndCopyOrMove&gt;(</div>
@@ -693,8 +693,8 @@ $(document).ready(function(){initNavTree('Module__DnECS_8cpp_source.html',''); i
 <div class="ttc" id="astructduin_1_1ECSTag_1_1PxKinematic_html"><div class="ttname"><a href="structduin_1_1ECSTag_1_1PxKinematic.html">duin::ECSTag::PxKinematic</a></div><div class="ttdoc">Marks entity as having a kinematic physics body.</div><div class="ttdef"><b>Definition</b> <a href="ECSTag_8h_source.html#l00047">ECSTag.h:48</a></div></div>
 <div class="ttc" id="astructduin_1_1ECSTag_1_1PxStatic_html"><div class="ttname"><a href="structduin_1_1ECSTag_1_1PxStatic.html">duin::ECSTag::PxStatic</a></div><div class="ttdoc">Marks entity as having a static physics body.</div><div class="ttdef"><b>Definition</b> <a href="ECSTag_8h_source.html#l00055">ECSTag.h:56</a></div></div>
 <div class="ttc" id="astructduin_1_1ECSTag_1_1SetCameraAsActive_html"><div class="ttname"><a href="structduin_1_1ECSTag_1_1SetCameraAsActive.html">duin::ECSTag::SetCameraAsActive</a></div><div class="ttdoc">Request to set this camera as active.</div><div class="ttdef"><b>Definition</b> <a href="ECSTag_8h_source.html#l00064">ECSTag.h:65</a></div></div>
-<div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00178">DuinMaths.h:179</a></div></div>
-<div class="ttc" id="astructduin_1_1Vector4_html"><div class="ttname"><a href="structduin_1_1Vector4.html">duin::Vector4</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00248">DuinMaths.h:249</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00161">DuinMaths.h:162</a></div></div>
+<div class="ttc" id="astructduin_1_1Vector4_html"><div class="ttname"><a href="structduin_1_1Vector4.html">duin::Vector4</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00206">DuinMaths.h:207</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

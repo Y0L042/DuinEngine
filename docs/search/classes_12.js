@@ -8,5 +8,6 @@ var searchData=
   ['transform3dimpl_5',['Transform3DImpl',['../structduin_1_1ECSComponent_1_1Transform3D_1_1Transform3DImpl.html',1,'duin::ECSComponent::Transform3D']]],
   ['trianglemeshgeometry_6',['TriangleMeshGeometry',['../classduin_1_1TriangleMeshGeometry.html',1,'duin']]],
   ['trianglemeshrendergeometry_7',['TriangleMeshRenderGeometry',['../structduin_1_1TriangleMeshRenderGeometry.html',1,'duin']]],
-  ['trianglerendergeometry_8',['TriangleRenderGeometry',['../structduin_1_1TriangleRenderGeometry.html',1,'duin']]]
+  ['trianglerendergeometry_8',['TriangleRenderGeometry',['../structduin_1_1TriangleRenderGeometry.html',1,'duin']]],
+  ['trianglerendershape_9',['TriangleRenderShape',['../classduin_1_1TriangleRenderShape.html',1,'duin']]]
 ];

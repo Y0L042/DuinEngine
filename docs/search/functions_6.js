@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['get_0',['get',['../classduin_1_1Entity.html#a2c9bbf3854f6bc728c6c6dab1f54d46b',1,'duin::Entity::Get() const'],['../classduin_1_1Entity.html#a412b10a7e3b72ed3eb31ef4171a3127b',1,'duin::Entity::Get(Entity e)'],['../classduin_1_1PhysicsServer.html#a9a3467ec90a96ffc69574afdc90f6dce',1,'duin::PhysicsServer::Get()'],['../classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652',1,'duin::EventHandler::Get()']]],
+  ['get_0',['get',['../classduin_1_1Entity.html#a2c9bbf3854f6bc728c6c6dab1f54d46b',1,'duin::Entity::Get() const'],['../classduin_1_1Entity.html#a412b10a7e3b72ed3eb31ef4171a3127b',1,'duin::Entity::Get(Entity e)'],['../classduin_1_1PhysicsServer.html#a0e376fa81ce6bb0c69cdf49130358f88',1,'duin::PhysicsServer::Get()'],['../classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652',1,'duin::EventHandler::Get()']]],
   ['getactivestate_1',['GetActiveState',['../classduin_1_1GameStateMachine.html#acd1bede4446b7b6f889b6717571e4fa6',1,'duin::GameStateMachine']]],
   ['getbasepath_2',['GetBasePath',['../namespaceduin_1_1fs.html#a728b2a4e2019bec9e1af7c235dfce55f',1,'duin::fs']]],
   ['getbindebugmode_3',['GetBinDebugMode',['../namespaceduin_1_1fs.html#a000b2f9cf291d17207a93e23c77772d0',1,'duin::fs']]],

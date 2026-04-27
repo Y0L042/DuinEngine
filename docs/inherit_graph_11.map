@@ -1,17 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,153,107,179"/>
-<area shape="rect" id="Node000001" href="$classModule__DecsGameWorld.html" title=" " alt="" coords="155,5,340,31"/>
-<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="68,140,102,89,126,62,153,40,176,28,179,33,156,44,129,66,106,92,72,143"/>
-<area shape="rect" id="Node000002" href="$classModule__DnCamera.html" title=" " alt="" coords="174,55,321,80"/>
-<area shape="poly" id="edge3_Node000000_Node000002" title=" " alt="" coords="79,142,113,114,153,89,183,78,185,83,156,94,116,119,82,146"/>
-<area shape="rect" id="Node000003" href="$classModule__DnECS.html" title=" " alt="" coords="187,104,307,129"/>
-<area shape="poly" id="edge4_Node000000_Node000003" title=" " alt="" coords="118,147,196,127,198,132,120,152"/>
-<area shape="rect" id="Node000004" href="$classModule__DnGameObject.html" title=" " alt="" coords="159,153,335,179"/>
-<area shape="poly" id="edge5_Node000000_Node000004" title=" " alt="" coords="121,163,159,163,159,169,121,169"/>
-<area shape="rect" id="Node000005" href="$classModule__DnLog.html" title=" " alt="" coords="188,203,307,228"/>
-<area shape="poly" id="edge6_Node000000_Node000005" title=" " alt="" coords="120,180,198,200,196,205,118,185"/>
-<area shape="rect" id="Node000006" href="$classModule__DnRenderer.html" title=" " alt="" coords="170,252,325,277"/>
-<area shape="poly" id="edge7_Node000000_Node000006" title=" " alt="" coords="83,186,116,213,156,237,188,249,186,254,153,242,113,217,80,190"/>
-<area shape="rect" id="Node000007" href="$classModule__Doctest.html" title=" " alt="" coords="184,301,311,327"/>
-<area shape="poly" id="edge8_Node000000_Node000007" title=" " alt="" coords="73,189,107,239,130,265,156,286,185,300,183,305,153,291,126,269,102,242,68,192"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,141,31"/>
+<area shape="rect" id="Node000001" href="$classEnumerationDN__Scancode.html" title=" " alt="" coords="189,5,384,31"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="156,15,189,15,189,21,156,21"/>
 </map>

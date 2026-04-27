@@ -28,11 +28,12 @@ var searchData=
   ['trianglemeshgeometry_25',['TriangleMeshGeometry',['../classduin_1_1TriangleMeshGeometry.html',1,'duin']]],
   ['trianglemeshrendergeometry_26',['TriangleMeshRenderGeometry',['../structduin_1_1TriangleMeshRenderGeometry.html',1,'duin']]],
   ['trianglerendergeometry_27',['TriangleRenderGeometry',['../structduin_1_1TriangleRenderGeometry.html',1,'duin']]],
-  ['triggered_28',['Triggered',['../structduin_1_1InputBinding.html#a3d68e8b2f06dcbb7355888a33cf287b4',1,'duin::InputBinding']]],
-  ['tryget_29',['TryGet',['../classduin_1_1Entity.html#a7e3a75743f37a731e81ba64400920f5e',1,'duin::Entity']]],
-  ['trygetmut_30',['trygetmut',['../classduin_1_1Entity.html#a40527067b974cc1ff25df63737cf165c',1,'duin::Entity::TryGetMut(Entity first, Entity second)'],['../classduin_1_1Entity.html#ae69c456858f80264995b7ce755aa0a7d',1,'duin::Entity::TryGetMut(Entity second)'],['../classduin_1_1Entity.html#a6618af7bd3bd025d2e5978236810a4b5',1,'duin::Entity::TryGetMut()'],['../classduin_1_1Entity.html#ae30c904683e55937f509c2bf808d7610',1,'duin::Entity::TryGetMut(Entity comp)'],['../classduin_1_1Entity.html#a9119f6121cf475a11c2bbce0daa4e4a1',1,'duin::Entity::TryGetMut()']]],
-  ['trygetmutsecond_31',['trygetmutsecond',['../classduin_1_1Entity.html#aaaf0c3ef47b9b8b5d7a86a888ceb4cbc',1,'duin::Entity::TryGetMutSecond()'],['../classduin_1_1Entity.html#a2b86cfb810c72f61570c5f185774004f',1,'duin::Entity::TryGetMutSecond(Entity first)']]],
-  ['trygetpair_32',['TryGetPair',['../classduin_1_1Entity.html#a73d65a440766b477ed7e4343df4a186c',1,'duin::Entity']]],
-  ['type_33',['type',['../structduin_1_1fs_1_1PathInfo.html#a6cee40602989ceec53916d9bfeab5cd1',1,'duin::fs::PathInfo']]],
-  ['typeid_34',['TypeId',['../structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279',1,'duin::Entity::ID']]]
+  ['trianglerendershape_28',['TriangleRenderShape',['../classduin_1_1TriangleRenderShape.html',1,'duin']]],
+  ['triggered_29',['Triggered',['../structduin_1_1InputBinding.html#a3d68e8b2f06dcbb7355888a33cf287b4',1,'duin::InputBinding']]],
+  ['tryget_30',['TryGet',['../classduin_1_1Entity.html#a7e3a75743f37a731e81ba64400920f5e',1,'duin::Entity']]],
+  ['trygetmut_31',['trygetmut',['../classduin_1_1Entity.html#a40527067b974cc1ff25df63737cf165c',1,'duin::Entity::TryGetMut(Entity first, Entity second)'],['../classduin_1_1Entity.html#ae69c456858f80264995b7ce755aa0a7d',1,'duin::Entity::TryGetMut(Entity second)'],['../classduin_1_1Entity.html#a6618af7bd3bd025d2e5978236810a4b5',1,'duin::Entity::TryGetMut()'],['../classduin_1_1Entity.html#ae30c904683e55937f509c2bf808d7610',1,'duin::Entity::TryGetMut(Entity comp)'],['../classduin_1_1Entity.html#a9119f6121cf475a11c2bbce0daa4e4a1',1,'duin::Entity::TryGetMut()']]],
+  ['trygetmutsecond_32',['trygetmutsecond',['../classduin_1_1Entity.html#aaaf0c3ef47b9b8b5d7a86a888ceb4cbc',1,'duin::Entity::TryGetMutSecond()'],['../classduin_1_1Entity.html#a2b86cfb810c72f61570c5f185774004f',1,'duin::Entity::TryGetMutSecond(Entity first)']]],
+  ['trygetpair_33',['TryGetPair',['../classduin_1_1Entity.html#a73d65a440766b477ed7e4343df4a186c',1,'duin::Entity']]],
+  ['type_34',['type',['../structduin_1_1fs_1_1PathInfo.html#a6cee40602989ceec53916d9bfeab5cd1',1,'duin::fs::PathInfo']]],
+  ['typeid_35',['TypeId',['../structduin_1_1Entity_1_1ID.html#a4813e2ff9d4a59af369f2a85b36ea279',1,'duin::Entity::ID']]]
 ];

@@ -1,0 +1,19 @@
+<map id="CollisionShape.h" name="CollisionShape.h">
+<area shape="rect" id="Node000001" title="Collision shape combining geometry and material." alt="" coords="322,5,453,31"/>
+<area shape="rect" id="Node000002" href="$physx_2CollisionShape_8cpp_source.html" title=" " alt="" coords="5,79,151,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="325,36,129,81,127,76,324,31"/>
+<area shape="rect" id="Node000003" href="$DynamicBody_8h.html" title="Fully simulated rigid body." alt="" coords="175,79,298,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="352,39,262,81,260,76,350,34"/>
+<area shape="rect" id="Node000005" href="$KinematicBody_8h_source.html" title=" " alt="" coords="322,79,453,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="390,44,390,79,385,79,385,44"/>
+<area shape="rect" id="Node000007" href="$physx_2PhysicsServer_8cpp_source.html" title=" " alt="" coords="477,79,615,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="426,34,521,76,519,81,424,39"/>
+<area shape="rect" id="Node000008" href="$StaticBody_8h_source.html" title=" " alt="" coords="640,79,743,104"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="450,31,643,76,642,81,449,36"/>
+<area shape="rect" id="Node000004" href="$DynamicBody_8cpp_source.html" title=" " alt="" coords="159,152,298,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="236,118,233,152,227,152,231,117"/>
+<area shape="rect" id="Node000006" href="$KinematicBody_8cpp_source.html" title=" " alt="" coords="322,152,469,177"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="393,117,397,152,391,152,388,118"/>
+<area shape="rect" id="Node000009" href="$StaticBody_8cpp_source.html" title=" " alt="" coords="633,152,750,177"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="694,118,694,152,689,152,689,118"/>
+</map>
