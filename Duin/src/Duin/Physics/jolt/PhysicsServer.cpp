@@ -91,6 +91,13 @@ void duin::PhysicsServer::StepPhysics(double delta)
     physicsSystem.Update(cDeltaTime, cCollisionSteps, tempAllocator.get(), jobSystem.get());
 }
 
+void duin::PhysicsServer::DebugDrawBodies()
+{
+    JPH::BodyManager::DrawSettings settings;
+    JPH::DebugRenderer *r = static_cast<JPH::DebugRenderer *>(&debugRenderer.core);
+    physicsSystem.DrawBodies(settings, r);
+}
+
 void duin::PhysicsServer::CreatePlane(const Vector3 &normal, const float height)
 {
     BodyInterface().CreateAndAddBody(
@@ -113,11 +120,4 @@ void duin::PhysicsServer::CreateBox(const Vector3 &position, const Vector3 &size
             JPH::EMotionType::Dynamic,
             Layers::MOVING),
         JPH::EActivation::Activate);
-}
-
-void duin::PhysicsServer::DebugDrawBodies()
-{
-    JPH::BodyManager::DrawSettings settings;
-    JPH::DebugRenderer *r = static_cast<JPH::DebugRenderer *>(&debugRenderer.core);
-    physicsSystem.DrawBodies(settings, r);
 }

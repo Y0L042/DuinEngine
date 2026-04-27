@@ -46,10 +46,10 @@ class PhysicsServer
     void Clean();
     void StepPhysics(double delta);
 
+    void DebugDrawBodies();
+
     void CreatePlane(const Vector3& normal, const float height);
     void CreateBox(const Vector3& position, const Vector3& size);
-
-    void DebugDrawBodies();
 
   protected:
     friend class StaticBody;
@@ -64,7 +64,6 @@ class PhysicsServer
     const JPH::uint cMaxBodyPairs = 1024;
     const JPH::uint cMaxContactConstraints = 1024;
     const float cDeltaTime = 1.0f / 60.0f;
-
     int cCollisionSteps = 1;
 
     PhysicsDebugRenderer debugRenderer;
