@@ -6,8 +6,9 @@
 EditorCamera::EditorCamera(duin::Vector3 pos, duin::Vector3 target)
 {
     SetupInput();
-    camera.SetAxis(pos, target, duin::Vector3::UP);
-    camera.position = duin::Vector3(0.0f, 15.0f, 5.0f);
+    camera.GetImpl().position = duin::Vector3(0.0f, 15.0f, 5.0f);
+    camera.GetImpl().target = target;
+    camera.GetImpl().globalUp = duin::Vector3::UP;
 }
 
 void EditorCamera::SetupInput()
@@ -50,27 +51,27 @@ void EditorCamera::PhysicsUpdate(double delta)
 
 void EditorCamera::UpdatePosition(duin::Vector3 pos)
 {
-    camera.position = pos;
+    camera.GetImpl().position = pos;
 }
 
 void EditorCamera::UpdateTarget(duin::Vector3 target)
 {
-    camera.target = target;
+    camera.GetImpl().target = target;
 }
 
 void EditorCamera::Yaw(float angle, bool aroundTarget)
 {
-    duin::CameraYaw(&camera, angle, aroundTarget);
+    duin::CameraYaw(camera.GetImpl(), angle, aroundTarget);
 }
 
 void EditorCamera::Pitch(float angle, bool aroundTarget)
 {
-    duin::CameraPitch(&camera, angle, false, aroundTarget, true);
+    duin::CameraPitch(camera.GetImpl(), angle, false, aroundTarget, true);
 }
 
 void EditorCamera::Roll(float angle)
 {
-    duin::CameraRoll(&camera, angle);
+    duin::CameraRoll(camera.GetImpl(), angle);
 }
 
 void EditorCamera::MovePosition(double delta)
@@ -120,7 +121,7 @@ void EditorCamera::MovePosition(double delta)
         }
         else
         {
-            duin::Vector3 right_xz = duin::GetCameraRight(&camera);
+        duin::Vector3 right_xz = camera.Right();
             right_xz.y = 0.0f;
             duin::Vector3 forward_xz = duin::Vector3CrossProduct(duin::Vector3::UP, right_xz);
             forward_xz.y = 0.0f;
@@ -129,8 +130,8 @@ void EditorCamera::MovePosition(double delta)
             delta_xz = duin::Vector3Scale(delta_xz, (float)delta * MOVE_SPEED_XZ);
         }
 
-        camera.position = duin::Vector3Add(camera.position, delta_xz);
-        camera.target = duin::Vector3Add(camera.target, delta_xz);
+        camera.SetPosition(duin::Vector3Add(camera.GetPosition(), delta_xz));
+        camera.SetTarget(duin::Vector3Add(camera.GetTarget(), delta_xz));
     }
 
     // duin::Vector2 mouseWheel;

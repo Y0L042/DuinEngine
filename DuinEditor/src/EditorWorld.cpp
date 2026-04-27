@@ -15,7 +15,7 @@ void EditorWorld::PostUpdateQueryExecution(double delta)
 
 void EditorWorld::PostPhysicsUpdateQueryExecution(double delta)
 {
-    ExecuteQueryTransform3DHierarchicalUpdate();
+    //ExecuteQueryTransform3DHierarchicalUpdate();
     //ExecuteQueryCharacterBody3DUpdateTransform();
     // ExecuteQueryControlCamera();
     // ExecuteQuerySetCameraAsActive();
@@ -23,9 +23,9 @@ void EditorWorld::PostPhysicsUpdateQueryExecution(double delta)
 
 void EditorWorld::PostDrawQueryExecution()
 {
-    ExecuteQueryDrawCube();
-    ExecuteQueryDrawDebugCapsule();
-    ExecuteQueryDrawDebugCube();
+    //ExecuteQueryDrawCube();
+    //ExecuteQueryDrawDebugCapsule();
+    //ExecuteQueryDrawDebugCube();
     ExecuteQueryDrawTransform3DGizmos();
 }
 
@@ -63,14 +63,14 @@ void EditorWorld::ExecuteQuerySyncCharacterBodyWithTransform3D()
 {
     // clang-format off
     GetOrBuildQuery<
-        duin::ECSComponent::CharacterBodyComponent,
+        //duin::ECSComponent::CharacterBodyComponent,
         duin::ECSComponent::Transform3D
     >(
         "SyncCharacterBodyWithTransform3D", 
         [](duin::World& w) 
         {
             return w.QueryBuilder<
-                    duin::ECSComponent::CharacterBodyComponent,
+                    //duin::ECSComponent::CharacterBodyComponent,
                     duin::ECSComponent::Transform3D
                 >()
                 .Cached()
@@ -78,15 +78,15 @@ void EditorWorld::ExecuteQuerySyncCharacterBodyWithTransform3D()
         }
     ).Each([this](
         duin::Entity e,
-        duin::ECSComponent::CharacterBodyComponent &cb,
+        //duin::ECSComponent::CharacterBodyComponent &cb,
         duin::ECSComponent::Transform3D &tx
     ){
-        if (!cb.body)
-        {
-            DN_WARN("CharacterBody pointer is nullptr!");
-            return;
-        }
-        cb.body->SetPosition(GetGlobalPosition(e));
+        //if (!cb.body)
+        //{
+        //    DN_WARN("CharacterBody pointer is nullptr!");
+        //    return;
+        //}
+        //cb.body->SetPosition(GetGlobalPosition(e));
     });
     // clang-format on
 }

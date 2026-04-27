@@ -67,8 +67,8 @@ void SceneViewport::DrawUI()
     ImGuizmo::SetDrawlist(ImGui::GetWindowDrawList());
 
     duin::Camera &cam = mainCamera->camera;
-    duin::Matrix viewMtx = duin::GetCameraViewMatrix(&cam);
-    duin::Matrix projMtx = duin::GetCameraProjectionMatrix(&cam);
+    duin::Matrix viewMtx = duin::GetCameraViewMatrix(cam.GetImpl());
+    duin::Matrix projMtx = duin::GetCameraProjectionMatrix(cam.GetImpl());
 
     // duin::Matrix is column-major (OpenGL style); ImGuizmo expects the same layout.
     // Read the floats in storage order directly.
