@@ -436,8 +436,8 @@ class Module_DnInput : public das::Module
         addBuiltinDependency(lib, logMod);
 
         // Enums
-        addEnumeration(das::make_smart<EnumerationKeyEvent>());
-        addEnumeration(das::make_smart<EnumerationDN_Scancode>());
+        addEnumeration(new EnumerationKeyEvent());
+        addEnumeration(new EnumerationDN_Scancode());
 
         // Mouse button constants
         addConstant(*this, "DN_MOUSE_BUTTON_LEFT", static_cast<uint32_t>(DN_MOUSE_BUTTON_LEFT));
