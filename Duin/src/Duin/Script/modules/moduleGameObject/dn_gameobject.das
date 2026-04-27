@@ -27,6 +27,14 @@ class dn_GameObject : dn_GameObject_Adapter {
         }
     }
 
+    def override _init() : void {}
+    def override _ready() : void {}
+    def override _update(delta : double) : void {}
+    def override _physics_update(delta : double) : void {}
+    def override _draw() : void {}
+    def override _draw_ui() : void {}
+    def override _debug() : void {}
+
     [class_method]
     def static add_child(var child : auto?) : auto? {
         if ((_handle != null) && (child != null)) {
