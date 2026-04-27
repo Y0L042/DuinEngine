@@ -176,8 +176,8 @@ class Module_DnLiveHost : public das::Module
         das::ModuleLibrary lib(this);
         lib.addBuiltInModule();
 
-        addAnnotation(das::make_smart<BeforeReloadAnnotation>());
-        addAnnotation(das::make_smart<AfterReloadAnnotation>());
+        addAnnotation(new BeforeReloadAnnotation());
+        addAnnotation(new AfterReloadAnnotation());
 
         das::addExtern<DAS_BIND_FUN(dn_live_is_live_mode_impl)>(
             *this, lib, "is_live_mode", das::SideEffects::accessGlobal, "dn_live_is_live_mode_impl");
