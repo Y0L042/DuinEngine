@@ -48,6 +48,7 @@ project "DuinFPSTests"
     postbuildcommands
     {
         '{COPYFILE} "' .. daslang_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn.dll"',
+        '{COPYFILE} "' .. daslang_runtime_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn_runtime.dll"',
     }
 
     filter { "files:**/external/**" }

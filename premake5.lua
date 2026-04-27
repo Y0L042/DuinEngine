@@ -83,7 +83,7 @@ workspace "Duin"
         "Duin/vendor/jolt/Build/vs2026/Debug",
         "Duin/vendor/toml11/build/src/Debug",
         "Duin/vendor/reflectcpp/build/Debug",
-        "Duin/vendor/daslang/lib/RelWithDebInfo",
+        "Duin/vendor/daslang/lib/Debug",
         "Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
         "Duin/vendor/dasimgui/bin/Debug-windows-x86_64/dasimgui",
     }
@@ -128,11 +128,13 @@ workspace "Duin"
         "Jolt.lib",
         "reflectcpp.lib",
         "libDaScriptDyn.lib",
+        "libDaScriptDyn_runtime.lib",
         "libUriParser.lib",
         "dbghelp.lib",
     }
 
-    daslang_dll_src = path.getabsolute("Duin/vendor/daslang/bin/RelWithDebInfo/libDaScriptDyn.dll")
+    daslang_dll_src = path.getabsolute("Duin/vendor/daslang/bin/Debug/libDaScriptDyn.dll")
+    daslang_runtime_dll_src = path.getabsolute("Duin/vendor/daslang/bin/Debug/libDaScriptDyn_runtime.dll")
 
     -- Debug build size optimisations:
     --   FastLink PDB — references .obj files instead of copying all symbols in.
@@ -159,13 +161,13 @@ workspace "Duin"
     FLECS_DAS_DASLANG_INCLUDE    = path.join(duinVendorRoot, "daslang/include")
     FLECS_DAS_FLECS_LIBDIR       = path.join(duinVendorRoot, "flecs/build_vs2026/Debug")
     FLECS_DAS_FLECS_LIBDIR_REL   = path.join(duinVendorRoot, "flecs/build_vs2026/Release")
-    FLECS_DAS_DASLANG_LIBDIR     = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
-    FLECS_DAS_DASLANG_LIBDIR_REL = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
+    FLECS_DAS_DASLANG_LIBDIR     = path.join(duinVendorRoot, "daslang/lib/Debug")
+    FLECS_DAS_DASLANG_LIBDIR_REL = path.join(duinVendorRoot, "daslang/lib/Debug")
 
     DASIMGUI_IMGUI_INCLUDE      = path.join(duinVendorRoot, "../src/external")
     DASIMGUI_DASLANG_INCLUDE    = path.join(duinVendorRoot, "daslang/include")
-    DASIMGUI_DASLANG_LIBDIR     = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
-    DASIMGUI_DASLANG_LIBDIR_REL = path.join(duinVendorRoot, "daslang/lib/RelWithDebInfo")
+    DASIMGUI_DASLANG_LIBDIR     = path.join(duinVendorRoot, "daslang/lib/Debug")
+    DASIMGUI_DASLANG_LIBDIR_REL = path.join(duinVendorRoot, "daslang/lib/Debug")
 
     include "Duin/vendor/dasimgui"
     include "Duin/vendor/flecs-daslang"

@@ -19,7 +19,6 @@ objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 defines(global_defines)
 defines
 {
-    "DAS_ENABLE_DYN_INCLUDES=1",
     "DAS_ENABLE_EXCEPTIONS=1",
     "DAS_SMART_PTR_DEBUG=1",
 }
@@ -52,6 +51,7 @@ postbuildcommands
 postbuildcommands
 {
     '{COPYFILE} "' .. daslang_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn.dll"',
+    '{COPYFILE} "' .. daslang_runtime_dll_src .. '" "%{cfg.targetdir}/libDaScriptDyn_runtime.dll"',
 }
 
 filter "system:windows"
