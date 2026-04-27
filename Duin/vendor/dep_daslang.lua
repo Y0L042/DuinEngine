@@ -4,7 +4,8 @@ local dep_daslang = {}
 local name = "DASLANG"
 
 local repo   = "https://github.com/GaijinEntertainment/daScript"
-local tag    = "0.6.1-RC2"
+local commit    = "6c1e28b"
+local checkout = commit
 local folder = "daslang"
 
 function dep_daslang.build()
@@ -13,23 +14,20 @@ function dep_daslang.build()
     if not os.isdir(folder) then
         print("\t\tClone")
         utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
+        utils.runCommand("cd " .. folder .. " && git checkout " .. checkout)
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git pull")
-        utils.runCommand("git checkout tags/" .. tag)
+        utils.runCommand("git checkout " .. checkout)
         utils.popDir()
     end
     print(name .. " downloaded.")
 
     utils.pushDir(folder)
 
-    -- Build daslang as RelWithDebInfo: retains usable debug info while cutting the
-    -- library size dramatically (~908MB Debug → ~200MB RelWithDebInfo). The engine
-    -- does not need to step into daslang interpreter internals during debugging.
-    local build_type = "RelWithDebInfo"
+    local build_type = "Debug"
 
     local cmake_flags = "-DCMAKE_BUILD_TYPE=" .. build_type
         .. " -DDAS_TUTORIAL_DISABLED=OFF"
@@ -39,7 +37,7 @@ function dep_daslang.build()
         .. " -DDAS_IMGUI_DISABLED=OFF"
         .. " -DDAS_CLANG_BIND_DISABLED=OFF"
 
-    cmake_flags = cmake_flags .. " -DCMAKE_CXX_FLAGS_RELWITHDEBINFO=\"/DDAS_SMART_PTR_DEBUG=1 /DDAS_ENABLE_EXCEPTIONS=1\""
+    cmake_flags = cmake_flags .. " -DCMAKE_CXX_FLAGS_DEBUG=\"/DDAS_SMART_PTR_DEBUG=1 /DDAS_ENABLE_EXCEPTIONS=1\""
 
     if os.target() == "windows" then
         cmake_flags = cmake_flags .. " -DCMAKE_MSVC_RUNTIME_LIBRARY=" .. Cfg.cmake_crt_debug
