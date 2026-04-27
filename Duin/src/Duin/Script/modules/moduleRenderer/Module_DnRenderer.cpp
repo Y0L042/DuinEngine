@@ -216,7 +216,7 @@ class Module_DnRenderer : public das::Module
         addBuiltinDependency(lib, cameraMod);
 
         // Color type
-        addAnnotation(make_smart<dn_ColorAnnotation>(lib));
+        addAnnotation(new dn_ColorAnnotation(lib));
 
         addExtern<DAS_BIND_FUN(dn_make_color), das::SimNode_ExtFuncCallAndCopyOrMove>(
             *this, lib, "dn_make_color", das::SideEffects::none, "dn_make_color")
