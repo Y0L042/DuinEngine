@@ -9,7 +9,7 @@ require math
 require dn_live_host // NOT ACTIVE
 
 require flecs_boost
-require imgui
+require imgui_boost
 
 require dn_log
 require dn_gameobject
@@ -19,15 +19,19 @@ require dn_renderer
 require dn_camera
 require dn_input
 require dn_physics
+require dn_application
 
 require ecs_components
 require ecs_systems
-require player
-require frogger
+
+require ./GameObjects/Player/player.das
+require ./GameObjects/Frogger/frogger.das
+require ./GameObjects/Zeus/zeus.das
 
 var player : Player?
 var game_world : dn_GameWorld?
-var dev_camera : dn_Camera?
+var zeus : Zeus?
+var zeus_mode : bool = false
 
 [export]
 def game_ready() {
@@ -36,19 +40,6 @@ def game_ready() {
     } else {
         dn_info("Game Ready!")
     }
-
-    // Camera always reinits (GPU resource).
-    dev_camera = dn_camera_init(new dn_Camera())
-    dev_camera.set_impl(
-        float3(15.0, 8.0, 15.0),
-        float3(0.0, 0.0, 0.0),
-        float3(0.0, 1.0, 0.0),
-        80.0
-    )
-    // dn_set_active_camera(dev_camera)
-    // if (dn_get_active_camera() == null) {
-    //     dn_fatal("Failed to set active dev_camera!")
-    // }
 
     dn_capture_mouse(true)
 
@@ -70,6 +61,11 @@ def game_ready() {
         dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
         dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
     }
+
+    zeus = dn_gameobject_add_root_child(new Zeus())
+    zeus._init()
+
+    register_keybinds()
 }
 
 
@@ -80,6 +76,29 @@ def game_update(delta : double) {
 
 [export]
 def game_physics_update(delta : double) {
+    if (dn_is_key_pressed(DN_Scancode.DN_SCANCODE_SPACE)) {
+        spawn_block()
+    }
+
+    if (dn_is_input_action_triggered("ToggleZeus")) {
+        dn_info("ToggleZeus Pressed")
+        if (zeus_mode) {
+            zeus_mode = false
+            dn_info("Disabling Zeus Mode...")
+            player.set_camera_active()
+            player.enable_physics_update(true)
+
+            zeus.enable_physics_update(false)
+        } else {
+            zeus_mode = true
+            dn_info("Enabling Zeus Mode...")
+            zeus.set_camera_active()
+            zeus.enable_physics_update(true)
+
+            player.enable_physics_update(false)
+        }
+    }
+
     if (game_world != null) {
         // system_integrate_velocity(game_world.ecs_world(), delta)
     }
@@ -109,10 +128,52 @@ def game_draw_ui() {
     var active_cam : dn_Camera?# = dn_get_active_camera()
     let impl : dn_CameraImpl = active_cam.get_impl()
     imgui_boost::Begin("Daslang Dashboard!")
+    imgui_boost::Text("Render  FPS: {dn_get_render_frame_time() * 1000f}")
+    imgui_boost::Text("Physics FPS: {dn_get_physics_frame_time() * 1000f}")
     imgui_boost::Text("Camera:")
     imgui_boost::Text("Position: \{{impl.position.x}, {impl.position.y}, {impl.position.z}\}")
     imgui_boost::Text("Target: \{{impl.target.x}, {impl.target.y}, {impl.target.z}\}")
     imgui_boost::End()
+}
+
+def register_keybinds() : void {
+    // Zeus keybinds
+    dn_add_keyboard_binding(
+        "ToggleZeus",
+        DN_Scancode.DN_SCANCODE_P, 
+        KeyEvent.PRESSED, 
+        DN_KEY_MOD_LCTRL
+    )
+
+    dn_add_keyboard_binding(
+        "Zeus_MoveCameraUp",
+        DN_Scancode.DN_SCANCODE_Q, 
+        KeyEvent.HELD, 
+        DN_KEY_MOD_NONE
+    )
+
+    dn_add_keyboard_binding(
+        "Zeus_MoveCameraDown",
+        DN_Scancode.DN_SCANCODE_Z, 
+        KeyEvent.HELD, 
+        DN_KEY_MOD_NONE
+    )
+
+    dn_add_keyboard_binding(
+        "Zeus_MoveCameraFast",
+        DN_Scancode.DN_SCANCODE_LSHIFT, 
+        KeyEvent.HELD, 
+        DN_KEY_MOD_NONE
+    )
+
+    dn_add_keyboard_binding(
+        "Zeus_ResetCameraPos",
+        DN_Scancode.DN_SCANCODE_R, 
+        KeyEvent.PRESSED, 
+        DN_KEY_MOD_LCTRL
+    )
+
+    // Player keybinds
 }
 
 let crowd_size = 1000
@@ -136,70 +197,6 @@ def draw_cube_crowd() : void {
     system_draw_rendercube(game_world)
     for (i in range(0, crowd_size)) {
         // dn_draw_box(float3(random_float(seed) * 1000.0 % 100.0 - 50.0, 0, random_float(seed) * 1000.0 % 100.0 - 50.0), float4(0.2, 0.8, 0.2, 1.0), float3(1.0, 1.0, 1.0))
-    }
-}
-
-
-var move_speed = 7.0f
-let mouse_sensitivity = 0.0015f
-def process_input(delta : double) : void {
-        if (dev_camera == null) {
-        return
-    }
-    let dt = float(delta)
-
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_LSHIFT)) {
-        move_speed = 7.0f * 2.2f
-    } else {
-        move_speed = 7.0f
-    }
-
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_R)) {
-        dev_camera.set_position(float3(5.0f, 5.0f, 5.0f))
-    }
-
-    // Mouse look
-    let md = dn_get_mouse_delta()
-    dev_camera.yaw(md.x * mouse_sensitivity)
-    dev_camera.pitch(-md.y * mouse_sensitivity)
-
-    // Horizontal movement relative to dev_camera yaw (WASD), vertical with Q/Z
-    let fwd = dev_camera.forward()
-    let rgt = dev_camera.right()
-    let h_fwd   = float3(fwd.x, 0.0f, fwd.z)
-    let h_right = float3(rgt.x, 0.0f, rgt.z)
-
-    var move = float3(0.0f, 0.0f, 0.0f)
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_W)) {
-        move += h_fwd
-    }
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_S)) {
-        move -= h_fwd
-    }
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_D)) {
-        move -= h_right
-    }
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_A)) {
-        move += h_right
-    }
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_Q)) {
-        move.y += 1.0f
-    }
-    if (dn_is_key_down(DN_Scancode.DN_SCANCODE_Z)) {
-        move.y -= 1.0f
-    }
-
-    if (dn_is_key_pressed(DN_Scancode.DN_SCANCODE_SPACE)) {
-        spawn_block()
-    }
-
-    let move_len = length(move)
-    if (move_len > 0.001f) {
-        let step = (move / move_len) * move_speed * dt
-        let pos = dev_camera.get_position()
-        let tgt = dev_camera.get_target()
-        dev_camera.set_position(pos + step)
-        dev_camera.set_target(tgt + step)
     }
 }
 

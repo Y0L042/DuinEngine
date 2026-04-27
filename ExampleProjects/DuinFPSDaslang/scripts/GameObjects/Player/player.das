@@ -1,10 +1,7 @@
 options gen2
 options rtti
 
-require daslib/rtti
-require math
-
-require live_host
+require ../../Headers.das
 
 require dn_log
 require dn_gameobject
@@ -15,13 +12,18 @@ require dn_camera
 require dn_input
 require dn_physics
 
+require ../../state_machine.das
+require ./StateMachine/player_on_ground_idle.das
+
 class Player : dn_GameObject {
+    sm : StateMachine?
+
     inverse : int = 1
     cnt : int
     speed : float = 6.0
     v_offset : float3 = float3(0.0, 2.0, 0.0)
-
     position : float3 = float3(5.0, 2.0, 5.0)
+
 
     game_world : dn_GameWorld?
     player_entity : dn_Entity?
@@ -29,6 +31,8 @@ class Player : dn_GameObject {
     camera : dn_Camera?
 
     def Player(var game_world_ : dn_GameWorld?) : void {
+        sm = new StateMachine()
+        sm.change_state(new Player_OnGround_Idle())
         game_world = game_world_
         player_entity = game_world.create_entity("Player")
         characterbody = new dn_CharacterBody()
@@ -57,6 +61,10 @@ class Player : dn_GameObject {
         }
     }
 
+    def set_camera_active() : void {
+        dn_set_active_camera(camera)
+    }
+
     def override _init() : void {
         dn_info("Player init!")
         characterbody.initialize(position)
@@ -75,7 +83,6 @@ class Player : dn_GameObject {
             return
         }
         let pi = process_player_input()
-        dn_info("move: {pi}")
         characterbody.move(pi, delta)
         position = characterbody.get_position()
         camera.move_to(position + v_offset)
