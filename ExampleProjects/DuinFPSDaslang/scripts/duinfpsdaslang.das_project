@@ -7,49 +7,6 @@ include ../../../Duin/duin_engine.das_project
 
 var DAS_PAK_ROOT = "./"
 
-def module_default(req, from : string) : module_info {
-    var frParts <- split_by_chars(from, "/")
-    pop(frParts)  // strip filename, keep directory
-
-    var reqParts <- split_by_chars(req, "/")
-    let firstPart = reqParts[0]
-
-    // Relative path require: ./foo or ../foo (handles explicit .das extension too)
-    if (firstPart == "." || firstPart == "..") {
-        for (part in reqParts) {
-            if (part == "." || part == "") {
-                continue
-            } elif (part == "..") {
-                if (length(frParts) > 0) {
-                    pop(frParts)
-                }
-            } else {
-                push(frParts, part)
-            }
-        }
-        let lastComp = reqParts[length(reqParts) - 1]
-        let modParts <- split_by_chars(lastComp, ".")
-        let modName = modParts[0]
-        let fullPath = join(frParts, "/")
-        let hasDasExt = length(modParts) > 1
-        return (modName, hasDasExt ? fullPath : fullPath + ".das", "")
-    }
-
-    // Module-name based require
-    let rs <- split_by_chars(req, "./")
-    let mod_name = rs[length(rs) - 1]
-    if (length(rs) == 0) {
-        return (mod_name, req + ".das", "")
-    } elif (rs[0] == "daslib") {
-        return (mod_name, "{get_das_root()}/daslib/{mod_name}.das", "")
-    } else {
-        for (se in rs) {
-            push(frParts, se)
-        }
-        return (mod_name, join(frParts, "/") + ".das", "")
-    }
-}
-
 [export]
 def module_get(req, from : string) : module_info {
     let ENGINE_ROOT = DAS_PAK_ROOT + "../../../Duin/"
