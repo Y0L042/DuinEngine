@@ -4,6 +4,7 @@
 #include <Duin/Core/Events/EventsModule.h>
 #include <Duin/IO/IOModule.h>
 #include <Duin/Objects/GameObject.h>
+#include <Duin/Script/GameScript.h>
 
 class Editor : public duin::Application
 {
@@ -28,4 +29,6 @@ class Editor : public duin::Application
 
   private:
     static Editor *instance;
+
+    std::shared_ptr<duin::GameScript> script;
 };

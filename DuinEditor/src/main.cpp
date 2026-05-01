@@ -2,9 +2,10 @@
 
 #include <DuinMeta.h>
 #include <Duin/EntryPoint.h>
-#include <Duin/Objects/GameStateMachine.h>
-
-#include "EditorStates/States.h"
+#include <Duin/Script/GameScript.h>
+#include <Duin/Script/ScriptModules.h>
+#include <flecs_das.h>
+#include <external/imgui.h>
 
 #include <memory>
 
@@ -13,7 +14,7 @@
 #endif
 
 Editor *Editor::instance = nullptr;
-std::shared_ptr<duin::GameStateMachine> sm;
+
 
 duin::Application *duin::CreateApplication()
 {
@@ -39,8 +40,28 @@ void Editor::Ready()
 {
     duin::SetWindowResizable(true);
 
-    sm = CreateChildObject<duin::GameStateMachine>();
-    sm->SwitchState<State_SelectProject>();
+    script = CreateChildObject<duin::GameScript>("./scripts/_entry.das");
+    script->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
+    script->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DuinEditor\\duineditor.das_project");
+    script->InitModules([]() {
+        NEED_MODULE(Module_flecs);
+        NEED_MODULE(Module_imgui);
+
+        NEED_MODULE(Module_DnLiveHost);
+        NEED_MODULE(Module_DnLog);
+        NEED_MODULE(Module_DnApplication);
+        NEED_MODULE(Module_DnRenderer);
+        NEED_MODULE(Module_DnCamera);
+        NEED_MODULE(Module_DnGameObject);
+        NEED_MODULE(Module_DnGameStateMachine);
+        NEED_MODULE(Module_DnECS);
+        NEED_MODULE(Module_DecsGameWorld);
+        NEED_MODULE(Module_DnInput);
+        NEED_MODULE(Module_DnPhysicsServer);
+        NEED_MODULE(Module_DnCharacterBody);
+    });
+    script->EnableHotCompile(true, false);
+    script->HotCompileAndSimulate();
 }
 
 void Editor::OnEvent(duin::Event event)
@@ -49,6 +70,10 @@ void Editor::OnEvent(duin::Event event)
 
 void Editor::Update(double rDelta)
 {
+    if (duin::Input::IsKeyPressed(DN_SCANCODE_F5))
+    {
+        script->HotCompileAndSimulate();
+    }
 }
 
 void Editor::PhysicsUpdate(double pDelta)
