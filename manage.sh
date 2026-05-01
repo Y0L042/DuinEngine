@@ -4,11 +4,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GENERATE_XXD="$SCRIPT_DIR/tools/generate_engine_script_xxd.py"
 FORCE_GENERATE_XXD="$SCRIPT_DIR/Duin/src/Duin/Script/generate_xxd.py"
-DASLANG="$SCRIPT_DIR/Duin/vendor/daslang/bin/RelWithDebInfo/daslang_static.exe"
+DASLANG="$SCRIPT_DIR/Duin/vendor/daslang/bin/Debug/daslang_static.exe"
 GEN_ADAPTER_DAS="$SCRIPT_DIR/Duin/gen_adapter.das"
 GEN_BIND_DAS="$SCRIPT_DIR/Duin/gen_bind.das"
 SCRIPT_INC="$SCRIPT_DIR/Duin"
-DAS_FORMATTER="$SCRIPT_DIR/Duin/vendor/daslang/utils/dasCodeFormatter/main.das"
+DAS_FORMATTER="$SCRIPT_DIR/tools/format_das.das"
 DASROOT="$SCRIPT_DIR/Duin/vendor/daslang"
 
 usage() {
@@ -20,8 +20,9 @@ usage() {
     echo "  gen-adapter     Regenerate *Adapter_gen.inc files via gen_bind.das"
     echo "  fmt <file.das>  Format a .das file in-place (backs up, formats, verifies)"
     echo "  fmt-all         Format all .das files under Duin/src/Duin/Script"
-    echo "  codegen         Run the full pipeline: fmt-all, gen-inc, gen-adapter"
-    echo "  help            Show this help message"
+    echo "  codegen              Run the full pipeline: fmt-all, gen-inc, gen-adapter"
+    echo "  run-duin-das-tests   Run DAS script tests via DuinTests.exe"
+    echo "  help                 Show this help message"
 }
 
 cmd_force_gen_inc() {
@@ -82,6 +83,21 @@ cmd_fmt_all() {
     echo "Formatted $count file(s)."
 }
 
+cmd_run_duin_das_tests() {
+    local exe_dir="$SCRIPT_DIR/DuinTests/bin/Debug-windows-x86_64/DuinTests"
+    local exe="$exe_dir/DuinTests.exe"
+    local src_scripts="$SCRIPT_DIR/DuinTests/scripts"
+    local dst_scripts="$exe_dir/scripts"
+    if [[ ! -f "$exe" ]]; then
+        echo "DuinTests.exe not found at: $exe"
+        exit 1
+    fi
+    echo "==> Syncing scripts..."
+    rm -rf "$dst_scripts"
+    cp -r "$src_scripts" "$dst_scripts"
+    (cd "$exe_dir" && "$exe" DAS)
+}
+
 cmd_codegen() {
     # echo "==> fmt-all"
     # cmd_fmt_all
@@ -97,7 +113,8 @@ case "${1:-}" in
     gen-adapter)  cmd_gen_adapter ;;
     fmt)          cmd_fmt "${2:-}" ;;
     fmt-all)      cmd_fmt_all ;;
-    codegen)      cmd_codegen ;;
-    help|"")      usage ;;
+    codegen)              cmd_codegen ;;
+    run-duin-das-tests)   cmd_run_duin_das_tests ;;
+    help|"")              usage ;;
     *)            echo "Unknown command: $1"; usage; exit 1 ;;
 esac
