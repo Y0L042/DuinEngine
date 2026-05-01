@@ -82,6 +82,33 @@ void ClearCurrentMouseDelta()
     mouseScrollDelta = Vector2();
 }
 
+void StepInputStates()
+{
+    // Key states
+    memset(previousKeyState, 0, sizeof(previousKeyState));                  // Clear old inputs
+    memcpy(previousKeyState, currentKeyState, sizeof(previousKeyState));    // Cache current inputs
+    memset(currentKeyState, 0, sizeof(currentKeyState));                    // Clear current inputs
+
+    // Keymod states
+    previousModifierState = DN_KEY_MOD_NONE;
+    previousModifierState = currentModifierState;
+    currentModifierState = DN_KEY_MOD_NONE;
+
+    // Mouse key states
+    memset(previousMouseKeyState, 0, sizeof(previousMouseKeyState));
+    memcpy(previousMouseKeyState, currentMouseKeyState, sizeof(previousMouseKeyState));
+    memset(currentMouseKeyState, 0, sizeof(currentMouseKeyState));
+
+    // Mouse scroll delta
+    mouseScrollDelta = Vector2();
+
+    // Mouse position state
+    previousMouseLocalPos = Vector2();
+    previousMouseLocalPos = currentMouseLocalPos;
+    mouseDeltaX = 0.0f;
+    mouseDeltaY = 0.0f;
+}
+
 void ResetMouseFrameState()
 {
     previousMouseLocalPos = currentMouseLocalPos;

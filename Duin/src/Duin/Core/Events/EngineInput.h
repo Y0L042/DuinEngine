@@ -10,6 +10,7 @@ void ClearCurrentKeyState();
 void CacheCurrentMouseKeyState();
 void ClearCurrentMouseKeyState();
 void ClearCurrentModKeyState();
+void StepInputStates(); // Advances the input states by one frame, setting previous states, clearing caches...
 void ResetMouseFrameState();
 void ResetAllInputState();
 
