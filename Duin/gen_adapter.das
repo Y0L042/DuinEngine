@@ -9,6 +9,6 @@ require daslib/cpp_bind public
 
 module gen_adapter
 
-def write_adapter(cpp_file : file; name : string; cinfo : TypeDeclPtr) {
+def write_adapter(cpp_file : file; name : string; var cinfo : TypeDeclPtr) {
     log_cpp_class_adapter(cpp_file, name, cinfo)
 }

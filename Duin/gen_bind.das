@@ -10,9 +10,11 @@ require gen_adapter
 
 
 require src/Duin/Script/modules/moduleGameObject/dn_gameobject_class
+require src/Duin/Script/modules/moduleGameObject/dn_gamestate_class
+require src/Duin/Script/modules/moduleGameObject/dn_gamestatemachine_class
 require src/Duin/Script/modules/moduleECS/dn_gameworld_class
 
-def write_adapter_file(path : string; adapter_name : string; cinfo : TypeDeclPtr) : void {
+def write_adapter_file(path : string; adapter_name : string; var cinfo : TypeDeclPtr) : void {
     print("Output: {path}\n")
     fopen(path, "wb") <| $(f) {
         if (f != null) {
@@ -55,7 +57,9 @@ def main() : void {
     let inc_dir = "{dir}src/Duin/Script/"
 
     // ---- Register adapters here: one write_adapter_file call per adapter ----
-    write_adapter_file("{inc_dir}DnGameObjectAdapter_gen.inc",  "DnGameObjectAdapterBase",  typeinfo ast_typedecl(type<dn_GameObject>))
-    write_adapter_file("{inc_dir}DnGameWorldAdapter_gen.inc",   "DnGameWorldAdapterBase",   typeinfo ast_typedecl(type<dn_GameWorld_Adapter>))
+    write_adapter_file("{inc_dir}DnGameObjectAdapter_gen.inc",      "DnGameObjectAdapterBase",      typeinfo ast_typedecl(type<dn_GameObject_Adapter>))
+    write_adapter_file("{inc_dir}DnGameStateAdapter_gen.inc",       "DnGameStateAdapterBase",       typeinfo ast_typedecl(type<dn_GameState_Adapter>))
+    write_adapter_file("{inc_dir}DnGameStateMachineAdapter_gen.inc","DnGameStateMachineAdapterBase",typeinfo ast_typedecl(type<dn_GameStateMachine_Adapter>))
+    write_adapter_file("{inc_dir}DnGameWorldAdapter_gen.inc",       "DnGameWorldAdapterBase",       typeinfo ast_typedecl(type<dn_GameWorld_Adapter>))
     // -------------------------------------------------------------------------
 }
