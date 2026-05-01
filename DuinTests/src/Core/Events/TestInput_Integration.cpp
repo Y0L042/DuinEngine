@@ -36,7 +36,7 @@ struct AppScope
         app.EngineInitialize();
         app.Initialize();
         app.InitSDL();
-        app.InitBGFX();
+        // app.InitBGFX(); // Removed due to API change
         app.InitImGui();
         duin::Input::ResetAllInputState();
     }
@@ -44,7 +44,7 @@ struct AppScope
     ~AppScope()
     {
         app.ShutdownImGui();
-        app.ShutdownBGFX();
+        // app.ShutdownBGFX(); // Removed due to API change
         app.ShutdownSDL();
         app.EngineExit();
         app.Exit();

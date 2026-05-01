@@ -657,7 +657,7 @@ TEST_SUITE("Application Lifecycle Integration")
         app.EngineInitialize();
         app.Initialize();
         app.InitSDL();
-        app.InitBGFX();
+        // app.InitBGFX(); // Removed due to API change
         app.InitImGui();
 
         double dt = 0.016, pCur = 0.0, pPrev = 0.0, pAccum = 0.0;
@@ -667,7 +667,7 @@ TEST_SUITE("Application Lifecycle Integration")
         CHECK(app.physicsUpdateCalled >= 1);
 
         app.ShutdownImGui();
-        app.ShutdownBGFX();
+        // app.ShutdownBGFX(); // Removed due to API change
         app.ShutdownSDL();
         app.EngineExit();
         app.Exit();

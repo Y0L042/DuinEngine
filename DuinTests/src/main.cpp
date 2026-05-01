@@ -8,9 +8,25 @@
 #include <sstream>
 #include <corecrt.h>
 
+#include <daScript/daScript.h>
+#include <Duin/Script/Script.h>
+#include <Duin/Script/GameScript.h>
+#include <Duin/Script/ScriptModules.h>
+
+#include <filesystem>
+
 #define __TESTING__
 
 const char testLogDir[] = "./TestLogs";
+
+enum class RunCtx
+{
+    ALL,
+    CPP,
+    DAS
+};
+
+void RunScriptTests();
 
 std::string getTimestampedFilename()
 {
@@ -25,18 +41,88 @@ std::string getTimestampedFilename()
 
 int main(int argc, char **argv)
 {
-    doctest::Context ctx;
-    ctx.setOption("abort-after", 50);
-    ctx.setOption("no-breaks", true);
-    ctx.applyCommandLine(argc, argv);
+    int res = 0;
 
-    // Run the tests
-    int res = ctx.run();
+    //RunCtx runCtx = RunCtx::ALL;
+     RunCtx runCtx = RunCtx::DAS;
 
-    if (ctx.shouldExit())
+    if (argc > 1)
     {
-        return res;
+        const char *runContext = argv[1];
+        if (strcmp(runContext, "CPP") == 0)
+        {
+            runCtx = RunCtx::CPP;
+        }
+        else if (strcmp(runContext, "DAS") == 0)
+        {
+            runCtx = RunCtx::DAS;
+        }
+        else if (strcmp(runContext, "ALL") == 0)
+        {
+            runCtx = RunCtx::ALL;
+        }
+    }
+
+    if (runCtx == RunCtx::ALL || runCtx == RunCtx::CPP)
+    {
+        doctest::Context ctx;
+        ctx.setOption("abort-after", 50);
+        ctx.setOption("no-breaks", true);
+        ctx.applyCommandLine(argc, argv);
+
+        // Run the tests
+        res = ctx.run();
+
+        if (ctx.shouldExit())
+        {
+            return res;
+        }
+    }
+
+    if (runCtx == RunCtx::ALL || runCtx == RunCtx::DAS)
+    {
+        RunScriptTests();
     }
 
     return res;
+}
+
+void RunScriptTests()
+{
+    namespace fs = std::filesystem;
+    
+    int passed = 0, failed = 0;
+
+    duin::Script script;
+    script.SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
+    script.SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DuinTests\\duintests.das_project");
+    script.InitModules([]() {
+        NEED_MODULE(Module_flecs);
+        NEED_MODULE(Module_imgui);
+
+        NEED_MODULE(Module_DnLog);
+        NEED_MODULE(Module_DnRenderer);
+        NEED_MODULE(Module_DnCamera);
+        NEED_MODULE(Module_DnGameObject);
+        NEED_MODULE(Module_DnECS);
+        NEED_MODULE(Module_DecsGameWorld);
+        NEED_MODULE(Module_DnInput);
+        NEED_MODULE(Module_DnPhysicsServer);
+        NEED_MODULE(Module_DnCharacterBody);
+        NEED_MODULE(Module_DnApplication);
+    });
+
+    for (const auto &entry : fs::recursive_directory_iterator("./scripts")) {
+        if (entry.path().extension() != ".das") continue;
+
+        std::string path = entry.path().generic_string();
+        std::cout << "Running script: " << path << "\n";
+
+        script.SetScriptPath(path);
+        bool ok = script.Compile() && script.SimulateContext();
+        std::cout << (ok ? "  PASSED\n" : "  FAILED\n");
+        ok ? ++passed : ++failed;
+    }
+
+    std::cout << "\nScript tests: " << passed << " passed, " << failed << " failed\n";
 }

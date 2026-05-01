@@ -1,0 +1,19 @@
+options gen2
+
+require strings
+require daslib/strings_boost
+
+include ../Duin/duin_engine.das_project
+let RELATIVE_ENGINE_ROOT : string = "../Duin/"
+
+var DAS_PAK_ROOT = "./"
+
+[export]
+def module_get(req, from : string) : module_info {
+    let ENGINE_ROOT = DAS_PAK_ROOT + RELATIVE_ENGINE_ROOT
+    let engineRes = get_engine_module(req, ENGINE_ROOT)
+    if (engineRes.resolved) {
+        return engineRes.info
+    }
+    return module_default(req, from)
+}
