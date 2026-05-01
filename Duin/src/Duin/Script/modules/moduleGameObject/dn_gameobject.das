@@ -49,18 +49,6 @@ class dn_GameObject : dn_GameObject_Adapter {
     }
 
     [class_method]
-    def static add_root_child(var child : auto?) : auto? {
-        if (child != null) {
-            if (child._handle == null) {
-                dn_gameobject_init(child)
-            }
-            dn_add_root_object_impl(child._handle)
-            return child
-        }
-        return null
-    }
-
-    [class_method]
     def static remove_child(var child : auto?) : void {
         if ((_handle != null) && (child != null) && (child._handle != null)) {
             dn_remove_child_object_impl(_handle, child._handle)
@@ -192,22 +180,12 @@ def dn_gameobject_finalize(var self : auto?) : void {
 }
 
 def dn_gameobject_add_child(var self : auto?; var child : auto?) : auto? {
-    if ((self._handle != null) && (child != null)) {
-        if (child._handle == null) {
-            dn_gameobject_init(child)
-        }
-        dn_add_child_object_impl(self._handle, child._handle)
-        return child
-    }
-    return null
-}
-
-def dn_gameobject_add_root_child(var child : auto?) : auto? {
     if (child != null) {
         if (child._handle == null) {
             dn_gameobject_init(child)
         }
-        dn_add_root_object_impl(child._handle)
+        let parentHandle = self != null ? self._handle : null
+        dn_add_child_object_impl(parentHandle, child._handle)
         return child
     }
     return null
