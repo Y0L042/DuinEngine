@@ -24,11 +24,11 @@ void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
     {
         auto childImpl = child->GetImpl();
         if (!childImpl)
-            return; 
+            return;
 
         // Check if the child is already present by comparing UUIDs
         auto &ci = impl->childImpls;
-        auto it = std::find_if(ci.begin(), ci.end(), [&](const std::shared_ptr<GameObjectImpl>& existing) {
+        auto it = std::find_if(ci.begin(), ci.end(), [&](const std::shared_ptr<GameObjectImpl> &existing) {
             return existing->uuid == childImpl->uuid;
         });
 
@@ -38,7 +38,14 @@ void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
             impl->AddChild(childImpl, child);
             childImpl->parentImpl = impl.get();
             child->SetParent(this);
-            child->Init();
+            if (!child->IsInitialized()) // Objects should only be initialized once.
+            {
+                child->_InitializeImpl();
+            }
+            if (IsReady() && !child->IsReady()) // TODO add callback when child gets new parent
+            {
+                child->Ready();
+            }
         }
     }
 }
@@ -449,6 +456,11 @@ bool duin::GameObject::IsValid()
     return impl != nullptr;
 }
 
+bool duin::GameObject::IsInitialized() const
+{
+    return impl->IsInitialized();
+}
+
 void duin::GameObject::ObjectReady()
 {
     if (impl)
@@ -505,6 +517,16 @@ void duin::GameObject::ObjectDebug()
     }
 }
 
+bool duin::GameObject::IsReady() const
+{
+    if (impl)
+    {
+        return impl->IsReady();
+    }
+
+    return false;
+}
+
 std::shared_ptr<duin::GameObjectImpl> duin::GameObject::EnsureImpl()
 {
     if (!impl)
@@ -514,4 +536,13 @@ std::shared_ptr<duin::GameObjectImpl> duin::GameObject::EnsureImpl()
         return impl;
     }
     return nullptr;
+}
+
+void duin::GameObject::_InitializeImpl()
+{
+    if (impl)
+    {
+        impl->Initialize();
+        Init();
+    }
 }

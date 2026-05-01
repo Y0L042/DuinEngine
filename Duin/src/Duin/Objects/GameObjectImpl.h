@@ -19,6 +19,10 @@ class GameObjectImpl : public std::enable_shared_from_this<GameObjectImpl>
     GameObjectImpl(GameObject *owner);
     ~GameObjectImpl();
 
+    void Initialize();
+    bool IsInitialized() const;
+    bool IsReady() const;
+
     void AddChild(std::shared_ptr<GameObjectImpl> childImpl, std::shared_ptr<GameObject> childOwner);
     void RemoveChild(const std::shared_ptr<GameObjectImpl> &childImpl);
 
@@ -40,6 +44,9 @@ class GameObjectImpl : public std::enable_shared_from_this<GameObjectImpl>
 
     std::vector<std::shared_ptr<GameObjectImpl>> childImpls;
     std::vector<std::shared_ptr<GameObject>> childOwners;
+
+    bool isInitialized = false;
+    bool isReady = false;
 
     Signal<> OnObjectReady;
     Signal<Event> OnObjectOnEvent;

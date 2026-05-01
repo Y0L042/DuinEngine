@@ -12,6 +12,21 @@ duin::GameObjectImpl::~GameObjectImpl()
 {
 }
 
+void duin::GameObjectImpl::Initialize()
+{
+    isInitialized = true;
+}
+
+bool duin::GameObjectImpl::IsInitialized() const
+{
+    return isInitialized;
+}
+
+bool duin::GameObjectImpl::IsReady() const
+{
+    return isReady;
+}
+
 void duin::GameObjectImpl::AddChild(std::shared_ptr<GameObjectImpl> childImpl, std::shared_ptr<GameObject> childOwner)
 {
     childImpls.push_back(std::move(childImpl));
@@ -59,6 +74,8 @@ void duin::GameObjectImpl::DispatchReady()
     OnObjectReady.Emit();
     if (owner)
         owner->Ready();
+
+    isReady = true;
 }
 
 void duin::GameObjectImpl::DispatchOnEvent(Event event)

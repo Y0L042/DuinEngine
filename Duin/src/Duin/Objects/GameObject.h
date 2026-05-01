@@ -185,6 +185,7 @@ class GameObject
     bool operator!=(const GameObject &other) const;
 
     bool IsValid();
+    bool IsInitialized() const;
 
     /** @brief Returns the internal implementation object. */
     std::shared_ptr<GameObjectImpl> GetImpl() const;
@@ -210,10 +211,14 @@ class GameObject
     void ObjectDrawUI();
     void ObjectDebug();
 
+    bool IsReady() const;
+
     std::shared_ptr<GameObjectImpl> EnsureImpl();
 
+    void _InitializeImpl(); // TODO internal init(), public for bindings, for now
   private:
     std::shared_ptr<GameObjectImpl> impl;
     GameObject *parent = nullptr;
+
 };
 } // namespace duin

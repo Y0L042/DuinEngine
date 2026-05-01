@@ -48,10 +48,12 @@ class GameStateMachine : public GameObject
 
     UUID GetUUID();
 
-    template <typename T>
-    std::shared_ptr<T> CreateState()
+    template <typename T, typename... Args>
+    std::shared_ptr<T> CreateState(Args &&...args)
     {
-        auto newState = CreateChildObject<T>(*this);
+        static_assert(std::is_base_of<GameState, T>::value, "T must be a GameState derived class");
+
+        auto newState = CreateChildObject<T>(*this, std::forward<Args>(args)...);
         newState->Enable(false);
 
         return newState;
