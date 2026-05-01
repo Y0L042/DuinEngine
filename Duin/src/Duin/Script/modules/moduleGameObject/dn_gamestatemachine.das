@@ -17,6 +17,7 @@ require dn_gamestatemachine_core public
 // ── GameState ─────────────────────────────────────────────────────────────
 
 class dn_GameState : dn_GameState_Adapter {
+  // Public
     _alias : string = "dn_GameState"
 
     def dn_GameState() : void {}
@@ -34,6 +35,15 @@ class dn_GameState : dn_GameState_Adapter {
         }
     }
 
+    [class_method]
+    def static switch_state(var state : auto?) : auto? {
+        if (sm_owner == null) {
+            dn_warn("State '{_alias}' owner is empty!")
+            return null
+        }
+        return sm_owner.switch_state(state)
+    } 
+
     def override _enter() : void {}
     def override _update(delta : double) : void {}
     def override _physics_update(delta : double) : void {}
@@ -42,7 +52,17 @@ class dn_GameState : dn_GameState_Adapter {
     def override _exit() : void {}
     def override _set_pause() : void {}
     def override _set_unpause() : void {}
+
+    def set_sm_owner(var owner : dn_GameStateMachine?) : void {
+        sm_owner = owner
+    }
+  // Private
+    private sm_owner : dn_GameStateMachine?
 }
+
+
+
+
 
 // ── GameStateMachine ──────────────────────────────────────────────────────
 
@@ -72,7 +92,7 @@ class dn_GameStateMachine : dn_GameStateMachine_Adapter {
     def override _debug() : void {}
 
     [class_method]
-    def static switch_state(var state : auto ?) : auto ? {
+    def static switch_state(var state : auto?) : auto? {
         var prev_state = current_state
         current_state = state
 
@@ -82,6 +102,8 @@ class dn_GameStateMachine : dn_GameStateMachine_Adapter {
             }
             dn_gsm_switch_state_impl(_handle, state._handle)
         }
+        current_state.set_sm_owner(unsafe(addr(self)))
+
         dn_info("Switched States from {prev_state?._alias} to {current_state?._alias}")
         return state
     }

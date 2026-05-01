@@ -31,7 +31,6 @@ static void dn_destroy_gamestatemachine_impl(void *handle, das::Context *context
     }
 }
 
-
 static int dn_gsm_get_children_count_impl(void *handle)
 {
     if (!handle)
