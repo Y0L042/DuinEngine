@@ -5,6 +5,8 @@ require dn_log
 
 require dn_gamestatemachine
 
+require state_project_editor
+
 class State_ProjectSelection : dn_GameState {
     EDITOR_CFG_PATH : string const = "data/editor_cfg.toml"
     PROJECT_FILE_NAME : string const = "duin.project"
@@ -49,6 +51,7 @@ class State_ProjectSelection : dn_GameState {
             }
             if (imgui_boost::IsItemHovered() && imgui_boost::IsMouseDoubleClicked(0)) {
                 dn_info("Load project [{path}]")
+                self.switch_state(new State_ProjectEditor())
             }
         }
 
