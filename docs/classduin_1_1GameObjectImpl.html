@@ -142,6 +142,12 @@ Collaboration diagram for duin::GameObjectImpl:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ace8734910d6f8dfbdda65b7bdb5c8eec" id="r_ace8734910d6f8dfbdda65b7bdb5c8eec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#ace8734910d6f8dfbdda65b7bdb5c8eec">GameObjectImpl</a> (<a class="el" href="classduin_1_1GameObject.html">GameObject</a> *owner)</td></tr>
 <tr class="separator:ace8734910d6f8dfbdda65b7bdb5c8eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e6cfdc61dbbc2cba4a0d4584d34596a" id="r_a7e6cfdc61dbbc2cba4a0d4584d34596a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#a7e6cfdc61dbbc2cba4a0d4584d34596a">Initialize</a> ()</td></tr>
+<tr class="separator:a7e6cfdc61dbbc2cba4a0d4584d34596a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addeaaad053d99a79103a84c608a285e5" id="r_addeaaad053d99a79103a84c608a285e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#addeaaad053d99a79103a84c608a285e5">IsInitialized</a> () const</td></tr>
+<tr class="separator:addeaaad053d99a79103a84c608a285e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2cd91fa9d38816524ddc3dff76029b4" id="r_ac2cd91fa9d38816524ddc3dff76029b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#ac2cd91fa9d38816524ddc3dff76029b4">IsReady</a> () const</td></tr>
+<tr class="separator:ac2cd91fa9d38816524ddc3dff76029b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2b21a8701ab1cb0644c9969370f706d" id="r_ab2b21a8701ab1cb0644c9969370f706d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#ab2b21a8701ab1cb0644c9969370f706d">AddChild</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObjectImpl.html">GameObjectImpl</a> &gt; childImpl, std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; childOwner)</td></tr>
 <tr class="separator:ab2b21a8701ab1cb0644c9969370f706d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08679bed20fc87c0c917a224caa7472d" id="r_a08679bed20fc87c0c917a224caa7472d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#a08679bed20fc87c0c917a224caa7472d">RemoveChild</a> (const std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObjectImpl.html">GameObjectImpl</a> &gt; &amp;childImpl)</td></tr>
@@ -177,6 +183,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a408df7f50806f11302b01c753810e1d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0ca8e25f8567c9f214dda80549021aa" id="r_ae0ca8e25f8567c9f214dda80549021aa"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#ae0ca8e25f8567c9f214dda80549021aa">childOwners</a></td></tr>
 <tr class="separator:ae0ca8e25f8567c9f214dda80549021aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4150af70456833f440904f8afc6a256" id="r_af4150af70456833f440904f8afc6a256"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#af4150af70456833f440904f8afc6a256">isInitialized</a> = false</td></tr>
+<tr class="separator:af4150af70456833f440904f8afc6a256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd944b0d86e7125adc936363181be1f8" id="r_afd944b0d86e7125adc936363181be1f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#afd944b0d86e7125adc936363181be1f8">isReady</a> = false</td></tr>
+<tr class="separator:afd944b0d86e7125adc936363181be1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62e635295536a8b6d7776438d9b936f3" id="r_a62e635295536a8b6d7776438d9b936f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#a62e635295536a8b6d7776438d9b936f3">OnObjectReady</a></td></tr>
 <tr class="separator:a62e635295536a8b6d7776438d9b936f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af32678b0e47097ad38964ffdcdb60b12" id="r_af32678b0e47097ad38964ffdcdb60b12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1Signal.html">Signal</a>&lt; <a class="el" href="classduin_1_1Event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObjectImpl.html#af32678b0e47097ad38964ffdcdb60b12">OnObjectOnEvent</a></td></tr>
@@ -276,7 +286,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00015">15</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00030">30</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -295,7 +305,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00154">154</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00171">171</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -314,7 +324,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00118">118</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00135">135</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -333,7 +343,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00136">136</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00153">153</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -353,7 +363,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00064">64</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00081">81</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -373,7 +383,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00100">100</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00117">117</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -392,7 +402,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00046">46</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00061">61</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,7 +422,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00082">82</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00099">99</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -431,7 +441,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00035">35</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00050">50</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -450,7 +460,64 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00041">41</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00056">56</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7e6cfdc61dbbc2cba4a0d4584d34596a" name="a7e6cfdc61dbbc2cba4a0d4584d34596a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e6cfdc61dbbc2cba4a0d4584d34596a">&#9670;&#160;</a></span>Initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::GameObjectImpl::Initialize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00015">15</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+
+</div>
+</div>
+<a id="addeaaad053d99a79103a84c608a285e5" name="addeaaad053d99a79103a84c608a285e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addeaaad053d99a79103a84c608a285e5">&#9670;&#160;</a></span>IsInitialized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::GameObjectImpl::IsInitialized </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00020">20</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac2cd91fa9d38816524ddc3dff76029b4" name="ac2cd91fa9d38816524ddc3dff76029b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2cd91fa9d38816524ddc3dff76029b4">&#9670;&#160;</a></span>IsReady()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::GameObjectImpl::IsReady </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00025">25</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -470,7 +537,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00021">21</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8cpp_source.html#l00036">36</a> of file <a class="el" href="GameObjectImpl_8cpp_source.html">GameObjectImpl.cpp</a>.</p>
 
 </div>
 </div>
@@ -487,7 +554,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00041">41</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00045">45</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -503,7 +570,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00042">42</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00046">46</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -519,7 +586,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00058">58</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00065">65</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -535,7 +602,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00057">57</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00064">64</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -551,7 +618,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00055">55</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00062">62</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -567,7 +634,39 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00056">56</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00063">63</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+
+</div>
+</div>
+<a id="af4150af70456833f440904f8afc6a256" name="af4150af70456833f440904f8afc6a256"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4150af70456833f440904f8afc6a256">&#9670;&#160;</a></span>isInitialized</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::GameObjectImpl::isInitialized = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00048">48</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+
+</div>
+</div>
+<a id="afd944b0d86e7125adc936363181be1f8" name="afd944b0d86e7125adc936363181be1f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd944b0d86e7125adc936363181be1f8">&#9670;&#160;</a></span>isReady</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool duin::GameObjectImpl::isReady = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00049">49</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -583,7 +682,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00052">52</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00059">59</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -599,7 +698,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00050">50</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00057">57</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -615,7 +714,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00048">48</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00055">55</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -631,7 +730,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00049">49</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00056">56</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -647,7 +746,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00045">45</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00052">52</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -663,7 +762,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00047">47</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00054">54</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -679,7 +778,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00044">44</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00051">51</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -695,7 +794,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00046">46</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00053">53</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -711,7 +810,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00038">38</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00042">42</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -727,7 +826,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00039">39</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00043">43</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -743,7 +842,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00054">54</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00061">61</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -759,7 +858,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00053">53</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00060">60</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>
@@ -775,7 +874,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00037">37</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameObjectImpl_8h_source.html#l00041">41</a> of file <a class="el" href="GameObjectImpl_8h_source.html">GameObjectImpl.h</a>.</p>
 
 </div>
 </div>

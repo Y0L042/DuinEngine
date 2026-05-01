@@ -1,5 +1,12 @@
 var NAVTREEINDEX2 =
 {
+"classduin_1_1GameStateMachine.html#acd1bede4446b7b6f889b6717571e4fa6":[2,4,1,1,2],
+"classduin_1_1GameStateMachine.html#af38da22c2d87b9df8ee50da8e3d8d45c":[2,4,1,1,6],
+"classduin_1_1GameWorld.html":[2,1,0,0],
+"classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee":[2,1,0,0,4],
+"classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427":[2,1,0,0,6],
+"classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611":[2,1,0,0,0],
+"classduin_1_1GameWorld.html#a795a578fc55757b0a0ca1da0dc3e2313":[2,1,0,0,3],
 "classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957":[2,1,0,0,1],
 "classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601":[2,1,0,0,5],
 "classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6":[2,1,0,0,2],
@@ -242,12 +249,5 @@ var NAVTREEINDEX2 =
 "classduin_1_1io_1_1IOStream.html#ad1875e8d3798100ae5ef241336dec92f":[4,0,0,3,0,8],
 "classduin_1_1io_1_1IOStream.html#ad1e00d5b58ffd2eaa18c75a172e16a8e":[4,0,0,3,0,30],
 "classduin_1_1io_1_1IOStream.html#ad894dc263a39de2d1d250b8bd7c1c88e":[4,0,0,3,0,2],
-"classduin_1_1io_1_1IOStream.html#ae003591497a2114a066eab736e6f6785":[4,0,0,3,0,27],
-"classduin_1_1io_1_1IOStream.html#ae0f0a9931a69841686d676e066525a55":[4,0,0,3,0,12],
-"classduin_1_1io_1_1IOStream.html#ae8fd757fa74e273f90b88b5c560ed0a5":[4,0,0,3,0,26],
-"classduin_1_1io_1_1IOStream.html#aec9dfc0769cfde5f8f72234785c68cd9":[4,0,0,3,0,19],
-"classduin_1_1io_1_1IOStream.html#af2458731c12d82852cd266816908986f":[4,0,0,3,0,41],
-"classduin_1_1io_1_1IOStream.html#af734d4b1d7f6856e2952c71efba739dc":[4,0,0,3,0,18],
-"classduin_1_1io_1_1IOStream.html#aff891132b7b500b656662c4d40c7b124":[4,0,0,3,0,0],
-"classes.html":[4,1]
+"classduin_1_1io_1_1IOStream.html#ae003591497a2114a066eab736e6f6785":[4,0,0,3,0,27]
 };

@@ -1,0 +1,17 @@
+<map id="ScriptGameState" name="ScriptGameState">
+<area shape="rect" id="Node000001" title=" " alt="" coords="298,257,430,283"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1GameState.html" title="Base class for application states." alt="" coords="205,183,336,208"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="298,214,350,255,347,259,295,219"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="5,5,144,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="74,45,75,75,86,104,113,132,145,153,181,169,215,180,213,185,179,174,143,158,109,136,82,107,70,76,69,45"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1GameStateMachine.html" title="Stack&#45;based state manager." alt="" coords="96,80,283,105"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="106,36,172,78,170,82,103,40"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="307,80,399,105"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="337,117,282,184,278,181,333,114"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="414,85,426,93,417,100,400,102,399,97,415,95,421,93,412,89"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="206,115,237,157,260,181,256,184,233,160,202,118"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1Signal.html" title="Signal class for event&#45;driven programming." alt="" coords="505,80,669,105"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="538,112,307,185,306,180,537,107"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="361,183,557,208"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="434,219,381,259,378,255,431,214"/>
+</map>

@@ -129,17 +129,18 @@ $(document).ready(function(){initNavTree('EngineInput_8h_source.html',''); initR
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keywordtype">void</span> CacheCurrentMouseKeyState();</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keywordtype">void</span> ClearCurrentMouseKeyState();</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keywordtype">void</span> ClearCurrentModKeyState();</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keywordtype">void</span> ResetMouseFrameState();</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keywordtype">void</span> ResetAllInputState();</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">ProcessSDLMouseEvent</a>(::SDL_Event e);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> UpdateMouseFrameDelta();</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> ClearCurrentMouseDelta();</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>} <span class="comment">// namespace duin::Input</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keywordtype">void</span> StepInputStates(); <span class="comment">// Advances the input states by one frame, setting previous states, clearing caches...</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keywordtype">void</span> ResetMouseFrameState();</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keywordtype">void</span> ResetAllInputState();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">ProcessSDLMouseEvent</a>(::SDL_Event e);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> UpdateMouseFrameDelta();</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">void</span> ClearCurrentMouseDelta();</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} <span class="comment">// namespace duin::Input</span></div>
 </div>
 <div class="ttc" id="anamespaceduin_1_1Input_html"><div class="ttname"><a href="namespaceduin_1_1Input.html">duin::Input</a></div><div class="ttdoc">Low-level input state queries.</div><div class="ttdef"><b>Definition</b> <a href="EngineInput_8h_source.html#l00005">EngineInput.h:6</a></div></div>
-<div class="ttc" id="anamespaceduin_1_1Input_html_a161ffb71e8fc5f3aa18fbafeb61a7889"><div class="ttname"><a href="namespaceduin_1_1Input.html#a161ffb71e8fc5f3aa18fbafeb61a7889">duin::Input::ProcessSDLKeyboardEvent</a></div><div class="ttdeci">void ProcessSDLKeyboardEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a keyboard event, then process the event. This function is called ...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00114">Input.cpp:114</a></div></div>
-<div class="ttc" id="anamespaceduin_1_1Input_html_a4ad600a8fc36f8a1b98966126326cea6"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">duin::Input::ProcessSDLMouseEvent</a></div><div class="ttdeci">void ProcessSDLMouseEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a mouse event, then process the event. This function is called fro...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00243">Input.cpp:243</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a161ffb71e8fc5f3aa18fbafeb61a7889"><div class="ttname"><a href="namespaceduin_1_1Input.html#a161ffb71e8fc5f3aa18fbafeb61a7889">duin::Input::ProcessSDLKeyboardEvent</a></div><div class="ttdeci">void ProcessSDLKeyboardEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a keyboard event, then process the event. This function is called ...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00141">Input.cpp:141</a></div></div>
+<div class="ttc" id="anamespaceduin_1_1Input_html_a4ad600a8fc36f8a1b98966126326cea6"><div class="ttname"><a href="namespaceduin_1_1Input.html#a4ad600a8fc36f8a1b98966126326cea6">duin::Input::ProcessSDLMouseEvent</a></div><div class="ttdeci">void ProcessSDLMouseEvent(::SDL_Event e)</div><div class="ttdoc">Test the SDL event to see if it is a mouse event, then process the event. This function is called fro...</div><div class="ttdef"><b>Definition</b> <a href="Input_8cpp_source.html#l00270">Input.cpp:270</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -1,0 +1,9 @@
+<map id="ScriptGameStateMachine" name="ScriptGameStateMachine">
+<area shape="rect" id="Node000001" title=" " alt="" coords="127,152,313,177"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1GameStateMachine.html" title="Stack&#45;based state manager." alt="" coords="5,79,192,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,109,201,149,199,154,129,113"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy." alt="" coords="29,5,168,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,44,101,79,96,79,96,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="216,79,467,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="311,113,241,154,239,149,308,109"/>
+</map>

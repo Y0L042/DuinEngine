@@ -121,6 +121,10 @@ $(document).ready(function(){initNavTree('classduin_1_1Script.html',''); initRes
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a43bb980203a27d96672044662b415a61" id="r_a43bb980203a27d96672044662b415a61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a43bb980203a27d96672044662b415a61">Script</a> (const std::string &amp;relScriptPath)</td></tr>
 <tr class="separator:a43bb980203a27d96672044662b415a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47bb3456afd7142c7acdc5e180155ee3" id="r_a47bb3456afd7142c7acdc5e180155ee3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a47bb3456afd7142c7acdc5e180155ee3">SetScriptPath</a> (const std::string &amp;path)</td></tr>
+<tr class="separator:a47bb3456afd7142c7acdc5e180155ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d3dc357f1d9271308d473ebf8d3bce" id="r_a24d3dc357f1d9271308d473ebf8d3bce"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a24d3dc357f1d9271308d473ebf8d3bce">GetScriptPath</a> ()</td></tr>
+<tr class="separator:a24d3dc357f1d9271308d473ebf8d3bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fc6fca18d15cb2598ce97e34aee64c3" id="r_a1fc6fca18d15cb2598ce97e34aee64c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a1fc6fca18d15cb2598ce97e34aee64c3">SetDasRoot</a> (const std::string &amp;path)</td></tr>
 <tr class="separator:a1fc6fca18d15cb2598ce97e34aee64c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a12a52159fd83c0c5db76e99bd0f71e" id="r_a9a12a52159fd83c0c5db76e99bd0f71e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a9a12a52159fd83c0c5db76e99bd0f71e">SetProjectFile</a> (const std::string &amp;path)</td></tr>
@@ -149,8 +153,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:acce1976f1b6b232f8926fc3131a8a433" id="r_acce1976f1b6b232f8926fc3131a8a433"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#acce1976f1b6b232f8926fc3131a8a433">scriptPath</a></td></tr>
-<tr class="separator:acce1976f1b6b232f8926fc3131a8a433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affb380542d80097e22d05fec6b38064c" id="r_affb380542d80097e22d05fec6b38064c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#affb380542d80097e22d05fec6b38064c">scriptPath</a></td></tr>
+<tr class="separator:affb380542d80097e22d05fec6b38064c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a090aa6008c57089fa9ed69977bd40d" id="r_a2a090aa6008c57089fa9ed69977bd40d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1ScriptContext.html">ScriptContext</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a2a090aa6008c57089fa9ed69977bd40d">context</a></td></tr>
 <tr class="separator:a2a090aa6008c57089fa9ed69977bd40d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac1f5d9393791eadb35e924bad2f684a" id="r_aac1f5d9393791eadb35e924bad2f684a"><td class="memItemLeft" align="right" valign="top">das::ProgramPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#aac1f5d9393791eadb35e924bad2f684a">program</a></td></tr>
@@ -174,8 +178,27 @@ Protected Attributes</h2></td></tr>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00014">14</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a879f596cae884911f779b37933684e57" name="a879f596cae884911f779b37933684e57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a879f596cae884911f779b37933684e57">&#9670;&#160;</a></span>Script() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">duin::Script::Script </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00016">16</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a43bb980203a27d96672044662b415a61" name="a43bb980203a27d96672044662b415a61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43bb980203a27d96672044662b415a61">&#9670;&#160;</a></span>Script()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a43bb980203a27d96672044662b415a61">&#9670;&#160;</a></span>Script() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,7 +213,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00016">16</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00020">20</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -209,7 +232,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00020">20</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00024">24</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -246,7 +269,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00109">109</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00123">123</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -265,7 +288,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00053">53</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00067">67</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,7 +308,26 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00158">158</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00172">172</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a24d3dc357f1d9271308d473ebf8d3bce" name="a24d3dc357f1d9271308d473ebf8d3bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d3dc357f1d9271308d473ebf8d3bce">&#9670;&#160;</a></span>GetScriptPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string duin::Script::GetScriptPath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00034">34</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -313,7 +355,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00035">35</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00049">49</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -340,7 +382,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00167">167</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00181">181</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -367,7 +409,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00144">144</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00158">158</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -394,7 +436,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00133">133</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00147">147</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -422,7 +464,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00173">173</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00187">187</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -442,7 +484,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00025">25</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00039">39</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -462,7 +504,27 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00030">30</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00044">44</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a47bb3456afd7142c7acdc5e180155ee3" name="a47bb3456afd7142c7acdc5e180155ee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47bb3456afd7142c7acdc5e180155ee3">&#9670;&#160;</a></span>SetScriptPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::Script::SetScriptPath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00029">29</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -481,7 +543,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00086">86</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8cpp_source.html#l00100">100</a> of file <a class="el" href="Script_8cpp_source.html">Script.cpp</a>.</p>
 
 </div>
 </div>
@@ -506,7 +568,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00045">45</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00047">47</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -530,7 +592,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00036">36</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00038">38</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -554,7 +616,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00041">41</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00043">43</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -578,7 +640,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00039">39</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00041">41</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -602,7 +664,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00044">44</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00046">46</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -626,7 +688,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00038">38</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00040">40</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -650,12 +712,12 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00043">43</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00045">45</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
-<a id="acce1976f1b6b232f8926fc3131a8a433" name="acce1976f1b6b232f8926fc3131a8a433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acce1976f1b6b232f8926fc3131a8a433">&#9670;&#160;</a></span>scriptPath</h2>
+<a id="affb380542d80097e22d05fec6b38064c" name="affb380542d80097e22d05fec6b38064c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affb380542d80097e22d05fec6b38064c">&#9670;&#160;</a></span>scriptPath</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -664,7 +726,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string duin::Script::scriptPath</td>
+          <td class="memname">std::string duin::Script::scriptPath</td>
         </tr>
       </table>
   </td>
@@ -674,7 +736,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00034">34</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00036">36</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -698,7 +760,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00042">42</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00044">44</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>
@@ -722,7 +784,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00040">40</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Script_8h_source.html#l00042">42</a> of file <a class="el" href="Script_8h_source.html">Script.h</a>.</p>
 
 </div>
 </div>

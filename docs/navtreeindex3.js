@@ -1,5 +1,12 @@
 var NAVTREEINDEX3 =
 {
+"classduin_1_1io_1_1IOStream.html#ae0f0a9931a69841686d676e066525a55":[4,0,0,3,0,12],
+"classduin_1_1io_1_1IOStream.html#ae8fd757fa74e273f90b88b5c560ed0a5":[4,0,0,3,0,26],
+"classduin_1_1io_1_1IOStream.html#aec9dfc0769cfde5f8f72234785c68cd9":[4,0,0,3,0,19],
+"classduin_1_1io_1_1IOStream.html#af2458731c12d82852cd266816908986f":[4,0,0,3,0,41],
+"classduin_1_1io_1_1IOStream.html#af734d4b1d7f6856e2952c71efba739dc":[4,0,0,3,0,18],
+"classduin_1_1io_1_1IOStream.html#aff891132b7b500b656662c4d40c7b124":[4,0,0,3,0,0],
+"classes.html":[4,1],
 "classfilewatch_1_1FileWatch.html":[4,0,1,0],
 "common_8h_source.html":[5,0,1,1,9],
 "cube__atlas_8cpp_source.html":[5,0,1,1,10],
@@ -141,7 +148,7 @@ var NAVTREEINDEX3 =
 "functions_w.html":[4,3,0,22],
 "functions_y.html":[4,3,0,23],
 "functions_~.html":[4,3,0,24],
-"generate__xxd_8py_source.html":[5,0,1,0,9,7],
+"generate__xxd_8py_source.html":[5,0,1,0,9,9],
 "globals.html":[5,1,0],
 "globals_func.html":[5,1,1],
 "group__Assets.html":[2,6],
@@ -242,12 +249,5 @@ var NAVTREEINDEX3 =
 "md_docs_2RenderingPipeline.html#autotoc_md8":[1,2,0],
 "md_docs_2RenderingPipeline.html#autotoc_md9":[1,3],
 "namespacegenerate__xxd.html":[3,0,3],
-"namespacemembers.html":[3,1,0],
-"namespacemembers_enum.html":[3,1,3],
-"namespacemembers_eval.html":[3,1,4],
-"namespacemembers_func.html":[3,1,1],
-"namespacemembers_type.html":[3,1,2],
-"namespaces.html":[3,0],
-"namespacestd.html":[3,0,4],
-"packrect_8h_source.html":[5,0,1,1,30]
+"namespacemembers.html":[3,1,0]
 };

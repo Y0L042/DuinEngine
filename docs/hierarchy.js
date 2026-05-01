@@ -88,6 +88,12 @@ var hierarchy =
     [ "DnGameObjectAdapterBase", null, [
       [ "ScriptGameObject", "classScriptGameObject.html", null ]
     ] ],
+    [ "DnGameStateAdapterBase", null, [
+      [ "ScriptGameState", "classScriptGameState.html", null ]
+    ] ],
+    [ "DnGameStateMachineAdapterBase", null, [
+      [ "ScriptGameStateMachine", "classScriptGameStateMachine.html", null ]
+    ] ],
     [ "DnGameWorldAdapterBase", null, [
       [ "ScriptGameWorld", "classScriptGameWorld.html", null ]
     ] ],
@@ -132,8 +138,12 @@ var hierarchy =
     [ "duin::GameObject", "classduin_1_1GameObject.html", [
       [ "ScriptGameObject", "classScriptGameObject.html", null ],
       [ "duin::GameScript", "classduin_1_1GameScript.html", null ],
-      [ "duin::GameState", "classduin_1_1GameState.html", null ],
-      [ "duin::GameStateMachine", "classduin_1_1GameStateMachine.html", null ]
+      [ "duin::GameState", "classduin_1_1GameState.html", [
+        [ "ScriptGameState", "classScriptGameState.html", null ]
+      ] ],
+      [ "duin::GameStateMachine", "classduin_1_1GameStateMachine.html", [
+        [ "ScriptGameStateMachine", "classScriptGameStateMachine.html", null ]
+      ] ]
     ] ],
     [ "GeometryT< MaxHandlesT >::Geometry", "structGeometryT_1_1Geometry.html", null ],
     [ "duin::GeometryBufferHandle", "structduin_1_1GeometryBufferHandle.html", null ],
@@ -418,6 +428,7 @@ var hierarchy =
       [ "Module_DnCharacterBody", "classModule__DnCharacterBody.html", null ],
       [ "Module_DnECS", "classModule__DnECS.html", null ],
       [ "Module_DnGameObject", "classModule__DnGameObject.html", null ],
+      [ "Module_DnGameStateMachine", "classModule__DnGameStateMachine.html", null ],
       [ "Module_DnInput", "classModule__DnInput.html", null ],
       [ "Module_DnLiveHost", "classModule__DnLiveHost.html", null ],
       [ "Module_DnLog", "classModule__DnLog.html", null ],
