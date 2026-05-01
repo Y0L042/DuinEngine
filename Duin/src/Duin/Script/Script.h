@@ -14,10 +14,12 @@ namespace duin
 class Script
 {
   public:
+    Script();
     Script(const std::string &relScriptPath);
     ~Script();
 
-
+    void SetScriptPath(const std::string &path);
+    std::string GetScriptPath();
     void SetDasRoot(const std::string &path);
     void SetProjectFile(const std::string &path);
     virtual void InitModules(std::function<void(void)> initModules = [](void) {});
@@ -31,7 +33,7 @@ class Script
     das::SimFunction *FindFunction(const std::string &func);
 
   protected:
-    const std::string scriptPath;
+    std::string scriptPath;
 
     std::shared_ptr<ScriptContext> context;
 

@@ -13,6 +13,10 @@
 #include <daScript/simulate/simulate.h>
 #include <vecmath/dag_vecMathDecl.h>
 
+duin::Script::Script()
+{
+}
+
 duin::Script::Script(const std::string &relScriptPath) : scriptPath(relScriptPath)
 {
 }
@@ -20,6 +24,16 @@ duin::Script::Script(const std::string &relScriptPath) : scriptPath(relScriptPat
 duin::Script::~Script()
 {
     ResetScript();
+}
+
+void duin::Script::SetScriptPath(const std::string &path)
+{
+    scriptPath = path;
+}
+
+std::string duin::Script::GetScriptPath()
+{
+    return scriptPath;
 }
 
 void duin::Script::SetDasRoot(const std::string &path)

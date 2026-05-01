@@ -6,6 +6,7 @@
 #include "./modules/moduleRenderer/Module_DnRenderer.h"
 #include "./modules/moduleRenderer/Module_DnCamera.h"
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
+#include "./modules/moduleGameObject/Module_DnGameStateMachine.h"
 #include "./modules/moduleECS/Module_DnECS.h"
 #include "./modules/moduleECS/Module_DnGameWorld.h"
 #include "./modules/moduleInput/Module_DnInput.h"
