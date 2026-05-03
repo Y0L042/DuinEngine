@@ -7,7 +7,7 @@
 
 // Creates a C++ ScriptGameObject backed by the daslang class instance.
 // Returns a void* handle to a heap-allocated shared_ptr.
-static void *dn_create_gameobject_impl(void *classPtr, const das::StructInfo *info, das::Context *context)
+void *dn_create_gameobject_impl(void *classPtr, const das::StructInfo *info, das::Context *context)
 {
     auto obj = duin::GameObject::Create<ScriptGameObject>((char *)classPtr, info, context);
     DN_CORE_INFO("dn_create_gameobject_impl: created ScriptGameObject for '{}'", info->name);
@@ -38,12 +38,12 @@ static void dn_destroy_gameobject_impl(void *handle, das::Context *context)
 }
 
 // Removes a child object from a parent. Both are passed as handles.
-static void dn_remove_child_object_impl(void *selfHandle, void *childHandle, das::Context *context)
+void dn_remove_child_object_impl(void *selfHandle, void *childHandle, das::Context *context)
 {
     if (!selfHandle || !childHandle)
         return;
-    auto *parent = static_cast<ScriptGameObject *>(selfHandle);
-    auto *child = static_cast<ScriptGameObject *>(childHandle);
+    auto *parent = static_cast<duin::GameObject *>(selfHandle);
+    auto *child = static_cast<duin::GameObject *>(childHandle);
 
     auto parentImpl = parent->GetImpl();
     auto childImpl = child->GetImpl();
@@ -55,89 +55,89 @@ static void dn_remove_child_object_impl(void *selfHandle, void *childHandle, das
 }
 
 // Returns the number of children.
-static int dn_get_children_count_impl(void *handle)
+int dn_get_children_count_impl(void *handle)
 {
     if (!handle)
         return 0;
-    auto *obj = static_cast<ScriptGameObject *>(handle);
+    auto *obj = static_cast<duin::GameObject *>(handle);
     return (int)obj->GetChildrenCount();
 }
 
 // Enable/disable callbacks
-static void dn_enable_impl(void *handle, bool enable)
+void dn_enable_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->Enable(enable);
+        static_cast<duin::GameObject *>(handle)->Enable(enable);
 }
-static void dn_enable_on_event_impl(void *handle, bool enable)
+void dn_enable_on_event_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->EnableOnEvent(enable);
+        static_cast<duin::GameObject *>(handle)->EnableOnEvent(enable);
 }
-static void dn_enable_update_impl(void *handle, bool enable)
+void dn_enable_update_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->EnableUpdate(enable);
+        static_cast<duin::GameObject *>(handle)->EnableUpdate(enable);
 }
-static void dn_enable_physics_update_impl(void *handle, bool enable)
+void dn_enable_physics_update_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->EnablePhysicsUpdate(enable);
+        static_cast<duin::GameObject *>(handle)->EnablePhysicsUpdate(enable);
 }
-static void dn_enable_draw_impl(void *handle, bool enable)
+void dn_enable_draw_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->EnableDraw(enable);
+        static_cast<duin::GameObject *>(handle)->EnableDraw(enable);
 }
-static void dn_enable_draw_ui_impl(void *handle, bool enable)
+void dn_enable_draw_ui_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->EnableDrawUI(enable);
+        static_cast<duin::GameObject *>(handle)->EnableDrawUI(enable);
 }
-static void dn_enable_debug_impl(void *handle, bool enable)
+void dn_enable_debug_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->EnableDebug(enable);
+        static_cast<duin::GameObject *>(handle)->EnableDebug(enable);
 }
-static void dn_enable_children_impl(void *handle, bool enable)
+void dn_enable_children_impl(void *handle, bool enable)
 {
     if (handle)
-        static_cast<ScriptGameObject *>(handle)->EnableChildren(enable);
+        static_cast<duin::GameObject *>(handle)->EnableChildren(enable);
 }
 
 // Query callback state
-static bool dn_is_on_event_enabled_impl(void *handle)
+bool dn_is_on_event_enabled_impl(void *handle)
 {
-    return handle && static_cast<ScriptGameObject *>(handle)->IsOnEventEnabled();
+    return handle && static_cast<duin::GameObject *>(handle)->IsOnEventEnabled();
 }
-static bool dn_is_update_enabled_impl(void *handle)
+bool dn_is_update_enabled_impl(void *handle)
 {
-    return handle && static_cast<ScriptGameObject *>(handle)->IsUpdateEnabled();
+    return handle && static_cast<duin::GameObject *>(handle)->IsUpdateEnabled();
 }
-static bool dn_is_physics_update_enabled_impl(void *handle)
+bool dn_is_physics_update_enabled_impl(void *handle)
 {
-    return handle && static_cast<ScriptGameObject *>(handle)->IsPhysicsUpdateEnabled();
+    return handle && static_cast<duin::GameObject *>(handle)->IsPhysicsUpdateEnabled();
 }
-static bool dn_is_draw_enabled_impl(void *handle)
+bool dn_is_draw_enabled_impl(void *handle)
 {
-    return handle && static_cast<ScriptGameObject *>(handle)->IsDrawEnabled();
+    return handle && static_cast<duin::GameObject *>(handle)->IsDrawEnabled();
 }
-static bool dn_is_draw_ui_enabled_impl(void *handle)
+bool dn_is_draw_ui_enabled_impl(void *handle)
 {
-    return handle && static_cast<ScriptGameObject *>(handle)->IsDrawUIEnabled();
+    return handle && static_cast<duin::GameObject *>(handle)->IsDrawUIEnabled();
 }
-static bool dn_is_debug_enabled_impl(void *handle)
+bool dn_is_debug_enabled_impl(void *handle)
 {
-    return handle && static_cast<ScriptGameObject *>(handle)->IsDebugEnabled();
+    return handle && static_cast<duin::GameObject *>(handle)->IsDebugEnabled();
 }
-static bool dn_is_children_enabled_impl(void *handle)
+bool dn_is_children_enabled_impl(void *handle)
 {
-    return handle && static_cast<ScriptGameObject *>(handle)->IsChildrenEnabled();
+    return handle && static_cast<duin::GameObject *>(handle)->IsChildrenEnabled();
 }
 
 // Adds a child object to a parent. Both are passed as handles.
 // If selfHandle is null, the child is added to the context's root game object.
-static void dn_add_child_object_impl(void *selfHandle, void *childHandle, das::Context *context)
+void dn_add_child_object_impl(void *selfHandle, void *childHandle, das::Context *context)
 {
     if (!childHandle)
         return;

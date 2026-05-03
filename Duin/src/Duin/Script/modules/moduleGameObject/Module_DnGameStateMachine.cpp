@@ -6,6 +6,7 @@
 #include "Duin/Script/Script.h"
 #include "Duin/Objects/GameStateMachine.h"
 #include "Duin/Objects/GameObjectImpl.h"
+#include "GameObjectCommonBindings.h"
 
 // =========================================================================
 // ScriptGameStateMachine helpers
@@ -31,95 +32,24 @@ static void dn_destroy_gamestatemachine_impl(void *handle, das::Context *context
     }
 }
 
-static int dn_gsm_get_children_count_impl(void *handle)
-{
-    if (!handle)
-        return 0;
-    return (int)static_cast<ScriptGameStateMachine *>(handle)->GetChildrenCount();
-}
+static int  dn_gsm_get_children_count_impl(void *handle)                  { return dn_get_children_count_impl(handle); }
 
-static void dn_gsm_enable_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->Enable(enable);
-}
+static void dn_gsm_enable_impl(void *handle, bool enable)                  { dn_enable_impl(handle, enable); }
+static void dn_gsm_enable_on_event_impl(void *handle, bool enable)         { dn_enable_on_event_impl(handle, enable); }
+static void dn_gsm_enable_update_impl(void *handle, bool enable)           { dn_enable_update_impl(handle, enable); }
+static void dn_gsm_enable_physics_update_impl(void *handle, bool enable)   { dn_enable_physics_update_impl(handle, enable); }
+static void dn_gsm_enable_draw_impl(void *handle, bool enable)             { dn_enable_draw_impl(handle, enable); }
+static void dn_gsm_enable_draw_ui_impl(void *handle, bool enable)          { dn_enable_draw_ui_impl(handle, enable); }
+static void dn_gsm_enable_debug_impl(void *handle, bool enable)            { dn_enable_debug_impl(handle, enable); }
+static void dn_gsm_enable_children_impl(void *handle, bool enable)         { dn_enable_children_impl(handle, enable); }
 
-static void dn_gsm_enable_on_event_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->EnableOnEvent(enable);
-}
-
-static void dn_gsm_enable_update_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->EnableUpdate(enable);
-}
-
-static void dn_gsm_enable_physics_update_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->EnablePhysicsUpdate(enable);
-}
-
-static void dn_gsm_enable_draw_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->EnableDraw(enable);
-}
-
-static void dn_gsm_enable_draw_ui_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->EnableDrawUI(enable);
-}
-
-static void dn_gsm_enable_debug_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->EnableDebug(enable);
-}
-
-static void dn_gsm_enable_children_impl(void *handle, bool enable)
-{
-    if (handle)
-        static_cast<ScriptGameStateMachine *>(handle)->EnableChildren(enable);
-}
-
-static bool dn_gsm_is_on_event_enabled_impl(void *handle)
-{
-    return handle && static_cast<ScriptGameStateMachine *>(handle)->IsOnEventEnabled();
-}
-
-static bool dn_gsm_is_update_enabled_impl(void *handle)
-{
-    return handle && static_cast<ScriptGameStateMachine *>(handle)->IsUpdateEnabled();
-}
-
-static bool dn_gsm_is_physics_update_enabled_impl(void *handle)
-{
-    return handle && static_cast<ScriptGameStateMachine *>(handle)->IsPhysicsUpdateEnabled();
-}
-
-static bool dn_gsm_is_draw_enabled_impl(void *handle)
-{
-    return handle && static_cast<ScriptGameStateMachine *>(handle)->IsDrawEnabled();
-}
-
-static bool dn_gsm_is_draw_ui_enabled_impl(void *handle)
-{
-    return handle && static_cast<ScriptGameStateMachine *>(handle)->IsDrawUIEnabled();
-}
-
-static bool dn_gsm_is_debug_enabled_impl(void *handle)
-{
-    return handle && static_cast<ScriptGameStateMachine *>(handle)->IsDebugEnabled();
-}
-
-static bool dn_gsm_is_children_enabled_impl(void *handle)
-{
-    return handle && static_cast<ScriptGameStateMachine *>(handle)->IsChildrenEnabled();
-}
+static bool dn_gsm_is_on_event_enabled_impl(void *handle)         { return dn_is_on_event_enabled_impl(handle); }
+static bool dn_gsm_is_update_enabled_impl(void *handle)           { return dn_is_update_enabled_impl(handle); }
+static bool dn_gsm_is_physics_update_enabled_impl(void *handle)   { return dn_is_physics_update_enabled_impl(handle); }
+static bool dn_gsm_is_draw_enabled_impl(void *handle)             { return dn_is_draw_enabled_impl(handle); }
+static bool dn_gsm_is_draw_ui_enabled_impl(void *handle)          { return dn_is_draw_ui_enabled_impl(handle); }
+static bool dn_gsm_is_debug_enabled_impl(void *handle)            { return dn_is_debug_enabled_impl(handle); }
+static bool dn_gsm_is_children_enabled_impl(void *handle)         { return dn_is_children_enabled_impl(handle); }
 
 // =========================================================================
 // ScriptGameState helpers
@@ -129,7 +59,10 @@ static void *dn_create_gamestate_impl(void *smHandle, void *classPtr,
                                       const das::StructInfo *info, das::Context *context)
 {
     if (!smHandle)
+    {
+        DN_CORE_WARN("dn_create_gamestate_impl: smHandle is null for '{}' — state machine not initialized", info->name);
         return nullptr;
+    }
     auto *sm = static_cast<ScriptGameStateMachine *>(smHandle);
     //auto obj = duin::GameObject::Create<ScriptGameState>(*sm, (char *)classPtr, info, context);
     auto obj = sm->CreateState<ScriptGameState>((char *)classPtr, info, context);
@@ -156,24 +89,36 @@ static void dn_destroy_gamestate_impl(void *handle, das::Context *context)
 static void dn_gsm_switch_state_impl(void *smHandle, void *stateHandle, das::Context *context)
 {
     if (!smHandle)
+    {
+        DN_CORE_WARN("dn_gsm_switch_state_impl: smHandle is null");
         return;
+    }
     auto *sm = static_cast<ScriptGameStateMachine *>(smHandle);
     duin::ScriptContext *dnCtx = static_cast<duin::ScriptContext *>(context);
     auto statePtr = dnCtx->scriptMemory->Get<duin::GameState>(stateHandle);
     if (!statePtr)
+    {
+        DN_CORE_WARN("dn_gsm_switch_state_impl: state not found in scriptMemory (handle={})", stateHandle);
         return;
+    }
     sm->SwitchState<duin::GameState>(statePtr);
 }
 
 static void dn_gsm_push_state_impl(void *smHandle, void *stateHandle, das::Context *context)
 {
     if (!smHandle)
+    {
+        DN_CORE_WARN("dn_gsm_push_state_impl: smHandle is null");
         return;
+    }
     auto *sm = static_cast<ScriptGameStateMachine *>(smHandle);
     duin::ScriptContext *dnCtx = static_cast<duin::ScriptContext *>(context);
     auto statePtr = dnCtx->scriptMemory->Get<duin::GameState>(stateHandle);
     if (!statePtr)
+    {
+        DN_CORE_WARN("dn_gsm_push_state_impl: state not found in scriptMemory (handle={})", stateHandle);
         return;
+    }
     sm->PushState<duin::GameState>(statePtr);
 }
 
@@ -181,12 +126,18 @@ static void dn_gsm_flush_and_switch_state_impl(void *smHandle, void *stateHandle
                                                das::Context *context)
 {
     if (!smHandle)
+    {
+        DN_CORE_WARN("dn_gsm_flush_and_switch_state_impl: smHandle is null");
         return;
+    }
     auto *sm = static_cast<ScriptGameStateMachine *>(smHandle);
     duin::ScriptContext *dnCtx = static_cast<duin::ScriptContext *>(context);
     auto statePtr = dnCtx->scriptMemory->Get<duin::GameState>(stateHandle);
     if (!statePtr)
+    {
+        DN_CORE_WARN("dn_gsm_flush_and_switch_state_impl: state not found in scriptMemory (handle={})", stateHandle);
         return;
+    }
     sm->FlushAndSwitchState<duin::GameState>(statePtr);
 }
 
@@ -202,50 +153,19 @@ static void dn_gsm_flush_stack_impl(void *smHandle)
         static_cast<ScriptGameStateMachine *>(smHandle)->FlushStack();
 }
 
+static void* dn_gsm_create_gameobject_impl(void* classPtr, const das::StructInfo* info, das::Context* context)
+{
+    return dn_create_gameobject_impl(classPtr, info, context);
+}
+
 static void dn_gsm_add_child_impl(void *selfHandle, void *childHandle, das::Context *context)
 {
-    if (!childHandle)
-        return;
-    auto *dnCtx = static_cast<duin::ScriptContext *>(context);
-    if (!selfHandle)
-    {
-        if (!(dnCtx && dnCtx->rootGameObject))
-            return;
-        selfHandle = dnCtx->rootGameObject;
-    }
-    auto *parent = static_cast<duin::GameObject *>(selfHandle);
-    auto *child = static_cast<duin::GameObject *>(childHandle);
-    auto parentImpl = parent->GetImpl();
-    auto childImpl = child->GetImpl();
-    if (!parentImpl || !childImpl)
-        return;
-    for (auto &existing : parentImpl->childImpls)
-        if (existing->uuid == childImpl->uuid)
-            return;
-    auto childOwner = dnCtx->scriptMemory->Get<duin::GameObject>(childHandle);
-    if (!childOwner)
-        return;
-    parentImpl->AddChild(childImpl, childOwner);
-    childImpl->parentImpl = parentImpl.get();
-    child->SetParent(parent);
-    if (!child->IsInitialized())
-        child->_InitializeImpl();
-    if (parent->IsReady() && !child->IsReady())
-        child->Ready();
+    dn_add_child_object_impl(selfHandle, childHandle, context);
 }
 
 static void dn_gsm_remove_child_impl(void *selfHandle, void *childHandle, das::Context *context)
 {
-    if (!selfHandle || !childHandle)
-        return;
-    auto *parent = static_cast<duin::GameObject *>(selfHandle);
-    auto *child = static_cast<duin::GameObject *>(childHandle);
-    auto parentImpl = parent->GetImpl();
-    auto childImpl = child->GetImpl();
-    if (!parentImpl || !childImpl)
-        return;
-    parentImpl->RemoveChild(childImpl);
-    child->ResetParent();
+    dn_remove_child_object_impl(selfHandle, childHandle, context);
 }
 
 // =========================================================================
@@ -332,6 +252,8 @@ class Module_DnGameStateMachine : public das::Module
             *this, lib, "dn_gsm_flush_stack_impl", das::SideEffects::modifyExternal,
             "dn_gsm_flush_stack_impl");
 
+        addExtern<DAS_BIND_FUN(dn_gsm_create_gameobject_impl)>(
+            *this, lib, "dn_gsm_create_gameobject_impl", das::SideEffects::modifyExternal, "dn_gsm_create_gameobject_impl");
         addExtern<DAS_BIND_FUN(dn_gsm_add_child_impl)>(
             *this, lib, "dn_gsm_add_child_impl", das::SideEffects::modifyExternal,
             "dn_gsm_add_child_impl");
