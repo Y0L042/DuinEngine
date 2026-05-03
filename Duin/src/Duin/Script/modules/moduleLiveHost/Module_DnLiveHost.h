@@ -17,6 +17,8 @@ struct DnLiveHostState
     float fps = 0.0f;
     std::string last_error;
     std::unordered_map<std::string, std::vector<uint8_t>> store;
+    std::vector<das::SimFunction *> beforeReloadFns;
+    std::vector<das::SimFunction *> afterReloadFns;
 };
 
 extern DnLiveHostState g_DnLiveHostState;

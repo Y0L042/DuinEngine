@@ -122,6 +122,12 @@ struct BeforeReloadAnnotation : das::FunctionAnnotation
     {
         return true;
     }
+
+    void complete(das::Context *ctx, const das::FunctionPtr &fn) override
+    {
+        if (auto *simFn = ctx->getFunction(fn->index))
+            g_DnLiveHostState.beforeReloadFns.push_back(simFn);
+    }
 };
 
 struct AfterReloadAnnotation : das::FunctionAnnotation
@@ -153,6 +159,12 @@ struct AfterReloadAnnotation : das::FunctionAnnotation
         das::string &) override
     {
         return true;
+    }
+
+    void complete(das::Context *ctx, const das::FunctionPtr &fn) override
+    {
+        if (auto *simFn = ctx->getFunction(fn->index))
+            g_DnLiveHostState.afterReloadFns.push_back(simFn);
     }
 };
 
