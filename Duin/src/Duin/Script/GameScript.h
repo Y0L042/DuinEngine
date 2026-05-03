@@ -24,10 +24,8 @@ class GameScript : public Script, public GameObject
 
     void EnableHotCompile(bool enable, bool halt = false);
     bool IsHotCompileEnabled();
-    bool HotCompileAndSimulate();
+    bool CompileAndSimulate();
     bool SetContextRootObject();
-
-    bool CompileAndSimulate(bool skipReady = false);
 
     void ResetScript() override;
 
@@ -41,14 +39,17 @@ class GameScript : public Script, public GameObject
 
   private:
     GameWorld *gameWorld_ = nullptr;
+    const float HOT_COMPILE_FILE_CHANGE_COOLDOWN = 10.0f;
 
     bool hotCompileEnabled = false;
     bool haltOnCompilationFail = false;
     bool queueHotCompileFlag = false;
+    float hotCompileFileChangeCooldownTimer;
     std::unique_ptr<filewatch::FileWatch<std::wstring>> directoryWatch;
 
     int64_t scriptLastModified = 0;
     float uptimeAccum = 0.0f;
+    bool hasCompiledOnce = false;
 
     bool muteReadyWarning = false;
     bool muteUpdateWarning = false;
@@ -64,6 +65,7 @@ class GameScript : public Script, public GameObject
 
     void ClearScriptGameObjects();
     void RestartSGORecurse(std::shared_ptr<GameObject> child);
+    void CallLiveVarsFunctions(const std::string &funcName);
     void CallAnnotatedScriptFunctions(const std::string &annotationName);
 };
 } // namespace duin

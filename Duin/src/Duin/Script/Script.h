@@ -33,17 +33,16 @@ class Script
     das::SimFunction *FindFunction(const std::string &func);
 
   protected:
+    bool scriptReady = false;
+    bool modulesAreInit = false;
     std::string scriptPath;
-
-    std::shared_ptr<ScriptContext> context;
-
+    std::string lastCompileError;
+    std::string projectFile;
     das::ProgramPtr program;
     das::ModuleGroup libGroup;
     das::TextPrinter tout;
     das::FileAccessPtr fileAccess;
-    bool scriptReady = false;
-    std::string projectFile;
-    bool modulesAreInit = false;
+    std::shared_ptr<ScriptContext> context;
     std::vector<das::Module *> baseModules;
 
     void ResetToBaseModules();

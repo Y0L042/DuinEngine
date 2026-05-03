@@ -3,6 +3,7 @@
 #include "Duin/ECS/GameWorld.h"
 #include "Duin/IO/FileModule.h"
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
+#include "./modules/moduleLiveHost/Module_DnLiveHost.h"
 #include <iostream>
 #include <memory>
 #include <regex>
@@ -66,6 +67,7 @@ void duin::GameScript::EnableHotCompile(bool enable, bool halt)
 {
     hotCompileEnabled = enable;
     haltOnCompilationFail = halt;
+    g_DnLiveHostState.live_mode = enable;
 }
 
 bool duin::GameScript::IsHotCompileEnabled()
@@ -73,17 +75,83 @@ bool duin::GameScript::IsHotCompileEnabled()
     return hotCompileEnabled;
 }
 
-bool duin::GameScript::HotCompileAndSimulate()
+bool duin::GameScript::CompileAndSimulate()
 {
-    bool compiled = false;
+    bool isReload = hasCompiledOnce;
 
+    ResetMuteWarningFlags();
     ResetToBaseModules();
-    ClearScriptGameObjects();
-    compiled = CompileAndSimulate(false);
+
+    bool compiled = Compile();
     if (compiled)
     {
-        SetContextRootObject();
-        Ready();
+        // Call pre-Reload hooks of old context
+        if (isReload && scriptReady)
+        {
+            g_DnLiveHostState.is_reload = true;
+            for (auto *fn : g_DnLiveHostState.beforeReloadFns)
+            {
+                CallScript(fn);
+            }
+            CallLiveVarsFunctions("__before_reload_live_vars");
+        }
+
+        g_DnLiveHostState.beforeReloadFns.clear();
+        g_DnLiveHostState.afterReloadFns.clear();
+
+        std::shared_ptr<ScriptMemory> oldContextMemory;
+        if (context)
+        {
+            oldContextMemory = context->scriptMemory;
+        }
+
+        bool simulated = SimulateContext();
+        if (simulated)
+        {
+            if (oldContextMemory)
+            {
+                context->scriptMemory = oldContextMemory;
+            }
+
+            SetGameFunctions();
+            SetContextRootObject();
+            g_DnLiveHostState.last_error.clear();
+
+            if (isReload)
+            {
+                for (auto *fn : g_DnLiveHostState.afterReloadFns)
+                {
+                    CallScript(fn);
+                }
+                CallLiveVarsFunctions("__after_reload_live_vars");
+                g_DnLiveHostState.is_reload = false;
+            }
+
+            if (!hotCompileEnabled)
+            {
+                // Treat recompile as a fresh start: clear only once we have a working new script.
+                ClearScriptGameObjects();
+            }
+
+            hasCompiledOnce = true;
+            Ready();
+        }
+        else
+        {
+            g_DnLiveHostState.last_error = "Simulation failed";
+            g_DnLiveHostState.is_reload = false;
+        }
+
+        compiled = simulated;
+    }
+    else
+    {
+        g_DnLiveHostState.last_error = lastCompileError;
+
+        if (haltOnCompilationFail)
+        {
+            scriptReady = false;
+        }
     }
 
     return compiled;
@@ -101,31 +169,6 @@ bool duin::GameScript::SetContextRootObject()
     return res;
 }
 
-bool duin::GameScript::CompileAndSimulate(bool skipReady)
-{
-    ResetMuteWarningFlags();
-    bool compiled = false;
-    compiled = Compile();
-    if (compiled)
-    {
-        SimulateContext();
-        SetGameFunctions();
-        if (!skipReady)
-        {
-            //Ready();
-        }
-    }
-    else
-    {
-        if (haltOnCompilationFail)
-        {
-            scriptReady = false;
-        }
-    }
-
-    return compiled;
-}
-
 void duin::GameScript::ResetScript()
 {
     ResetGameFunctions();
@@ -138,8 +181,10 @@ void duin::GameScript::Init()
     std::wregex wrgx(L".*\\.das$");
     std::wstring wpath(path.begin(), path.end());
     directoryWatch = std::make_unique<filewatch::FileWatch<std::wstring>>(
-        wpath, wrgx,
-        [this](const std::wstring &path, const filewatch::Event change_type) { queueHotCompileFlag = true; });
+        wpath, wrgx, [this](const std::wstring &path, const filewatch::Event change_type) {
+            // queueHotCompileFlag = true;
+            hotCompileFileChangeCooldownTimer = HOT_COMPILE_FILE_CHANGE_COOLDOWN;
+        });
 }
 
 void duin::GameScript::Ready()
@@ -176,22 +221,54 @@ void duin::GameScript::OnEvent(Event e)
 {
 }
 
+void duin::GameScript::CallLiveVarsFunctions(const std::string &funcName)
+{
+    if (!context || !scriptReady)
+        return;
+    for (auto *fn : context->findFunctions(funcName.c_str()))
+        CallScript(fn);
+}
+
+void duin::GameScript::CallAnnotatedScriptFunctions(const std::string &)
+{
+    // Annotation-registered functions are tracked via FunctionAnnotation::complete()
+    // in Module_DnLiveHost. Use beforeReloadFns / afterReloadFns on g_DnLiveHostState.
+}
+
 void duin::GameScript::Update(double delta)
 {
-    if (hotCompileEnabled)
-    {
-        duin::fs::PathInfo pInfo;
-        bool scriptFound = duin::vfs::GetPathInfo("bin://" + scriptPath, &pInfo);
-        // if (scriptFound && (pInfo.modifyTime != scriptLastModified))
-        if (queueHotCompileFlag)
-        {
-            queueHotCompileFlag = false;
-            scriptLastModified = pInfo.modifyTime;
+    uptimeAccum += static_cast<float>(delta);
+    g_DnLiveHostState.dt = static_cast<float>(delta);
+    g_DnLiveHostState.uptime = uptimeAccum;
+    g_DnLiveHostState.fps = (delta > 0.0) ? static_cast<float>(1.0 / delta) : 0.0f;
 
-            if (!HotCompileAndSimulate())
-            {
-                DN_CORE_WARN("Hot compilation of {} failed!", "bin://" + scriptPath);
-            }
+    // Only hot recompile if it has been X seconds since last file change (with no further changes).
+    // Timer then disabled to prevent continual recompilation, only reset when file is changed again.
+    float cooldownTimerPrev = hotCompileFileChangeCooldownTimer;
+    if (hotCompileFileChangeCooldownTimer > 0.0f)
+    {
+        hotCompileFileChangeCooldownTimer -= delta;
+    }
+    bool cooldownReachedZero =
+        (hotCompileFileChangeCooldownTimer <= 0.0f) && ((hotCompileFileChangeCooldownTimer * cooldownTimerPrev) < 0.0f);
+    if (cooldownReachedZero)
+    {
+        queueHotCompileFlag = true;
+        hotCompileFileChangeCooldownTimer = -999.999f;
+    }
+
+    if (queueHotCompileFlag)
+    {
+        queueHotCompileFlag = false;
+        if (hotCompileEnabled)
+        {
+            duin::fs::PathInfo pInfo;
+            if (duin::vfs::GetPathInfo("bin://" + scriptPath, &pInfo))
+                scriptLastModified = pInfo.modifyTime;
+        }
+        if (!CompileAndSimulate())
+        {
+            DN_CORE_WARN("Compilation of {} failed! Continuing with previous version.", "bin://" + scriptPath);
         }
     }
 

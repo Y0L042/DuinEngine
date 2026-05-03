@@ -67,6 +67,9 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
 bool duin::Script::Compile()
 {
     DN_CORE_INFO("Compiling script {}...", scriptPath);
+    bool res = false;
+
+    // Set optional project file, script root, configure policies
     if (!projectFile.empty())
     {
         fileAccess = das::make_smart<das::FsFileAccess>(projectFile, das::make_smart<das::FsFileAccess>());
@@ -79,45 +82,61 @@ bool duin::Script::Compile()
     fAccess->addFsRoot("scripts", "scripts");
     das::CodeOfPolicies policies;
     policies.rtti = true;
+
+    // Attempt compilation
+    // only update script program on successful compilation
     das::ProgramPtr newProgram = das::compileDaScript(scriptPath, fAccess, tout, libGroup, policies);
     if (newProgram->failed())
     {
-        // tout << "Compilation failed:\n";
         DN_CORE_FATAL("Compilation failed!");
         for (auto &err : newProgram->errors)
         {
             DN_CORE_FATAL("{}", SafeErrorReport(err));
-
-            // tout << das::reportError(err.at, err.what, err.extra, err.fixme, err.cerr);
         }
-        return false;
-    }
-    program = newProgram;
 
-    return true;
+        lastCompileError.clear();
+        for (auto &err : newProgram->errors)
+        {
+            lastCompileError += SafeErrorReport(err);
+        }
+
+        res = false;
+    }
+    else
+    {
+        program = newProgram;
+        lastCompileError.clear();
+        res = true;
+    }
+
+    return res;
 }
 
 bool duin::Script::SimulateContext()
 {
+    DN_CORE_INFO("Simulating context for script {}...", scriptPath);
+    bool res = false;
+
     context = std::make_shared<ScriptContext>(program->getContextStackSize());
     context->scriptMemory = std::make_shared<ScriptMemory>();
+
     if (!program->simulate(*context.get(), tout))
     {
-        // tout << "Simulation failed:\n";
         DN_CORE_FATAL("Simulation failed!");
         for (auto &err : program->errors)
         {
             DN_CORE_FATAL("{}", SafeErrorReport(err));
-            // tout << das::reportError(err.at, err.what, err.extra, err.fixme, err.cerr);
-            // DN_CORE_FATAL("Simulation failed: \n{}\n{}\n{}\n{}\n{}", err.at, err.what, err.extra, err.fixme,
-            // err.cerr);
         }
         ResetContext();
-        return false;
+        res = false;
     }
-    scriptReady = true;
+    else
+    {
+        scriptReady = true;
+        res = true;
+    }
 
-    return true;
+    return res;
 }
 
 bool duin::Script::CallScript(das::SimFunction *fn, vec4f *args, void *res)
@@ -160,7 +179,7 @@ void duin::Script::ResetScript()
     ResetContext();
     program.reset();
     fileAccess.reset();
-    //baseModules.clear();
+    // baseModules.clear();
     libGroup = das::ModuleGroup{};
     if (modulesAreInit)
     {
