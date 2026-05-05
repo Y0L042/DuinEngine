@@ -19,19 +19,25 @@ require dn_input
 require dn_physics
 require dn_application
 require dn_gamestatemachine
+require dn_live_host
 
 require state_project_selection
+require state_project_editor
+require editor_context
 
 
 
 class _Root : dn_GameObject {
     game_states : dn_GameStateMachine?  // Lifetime scope, OK to be a pointer
-    test_obj : dn_GameObject?
+
+    def _Root() : void {
+        super()
+    }
 
     def override _ready() : void {
         game_states = self.add_child(new dn_GameStateMachine())
-
         game_states.switch_state(new State_ProjectSelection())
+        // game_states.switch_state(new State_ProjectEditor())
     }
 
 
@@ -52,6 +58,6 @@ class _Root : dn_GameObject {
         imgui_boost::Text("Render  FPS: {dn_get_render_frame_time() * 1000f}")
         imgui_boost::Text("Physics FPS: {dn_get_physics_frame_time() * 1000f}")
         imgui_boost::Text("Editor state: {game_states?.current_state?._alias}")
-        imgui_boost::End()
+        imgui_boost::End()        
     }
 }
