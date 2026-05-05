@@ -15,7 +15,6 @@
 
 Editor *Editor::instance = nullptr;
 
-
 duin::Application *duin::CreateApplication()
 {
     return new Editor();
@@ -29,6 +28,10 @@ Editor &Editor::Get()
 void Editor::Initialize()
 {
     Editor::instance = this;
+
+#ifdef DN_DEBUG
+    duin::fs::SetBinDebugMode(true);
+#endif
 
     duin::SetFramerate(244);
     SetWindowStartupSize(1600, 900);
@@ -59,9 +62,12 @@ void Editor::Ready()
         NEED_MODULE(Module_DnInput);
         NEED_MODULE(Module_DnPhysicsServer);
         NEED_MODULE(Module_DnCharacterBody);
+        NEED_MODULE(Module_DnFilesystem);
+        NEED_MODULE(Module_TOMLC17);
     });
-    script->EnableHotCompile(true, false);
-    script->HotCompileAndSimulate();
+    script->EnableHotCompile(false, false);
+    script->SetHotCompileFileChangeCooldown(2.5f);
+    script->CompileAndSimulate();
 }
 
 void Editor::OnEvent(duin::Event event)
@@ -72,7 +78,7 @@ void Editor::Update(double rDelta)
 {
     if (duin::Input::IsKeyPressed(DN_SCANCODE_F5))
     {
-        script->HotCompileAndSimulate();
+        script->CompileAndSimulate();
     }
 }
 
