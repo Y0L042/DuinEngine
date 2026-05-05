@@ -53,9 +53,10 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_DnPhysicsServer);
             NEED_MODULE(Module_DnCharacterBody);
             NEED_MODULE(Module_DnApplication);
+            NEED_MODULE(Module_DnFilesystem);
         });
-        mainScript->EnableHotCompile(true, false);
-        mainScript->HotCompileAndSimulate();
+        mainScript->EnableHotCompile(false, false);
+        mainScript->CompileAndSimulate();
     }
 
     void Update(double delta) override

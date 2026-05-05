@@ -110,6 +110,7 @@ void RunScriptTests()
         NEED_MODULE(Module_DnPhysicsServer);
         NEED_MODULE(Module_DnCharacterBody);
         NEED_MODULE(Module_DnApplication);
+        NEED_MODULE(Module_DnFilesystem);
     });
 
     for (const auto &entry : fs::recursive_directory_iterator("./scripts")) {

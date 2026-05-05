@@ -53,7 +53,7 @@ def game_ready() {
         world|>register_components()
         world|>construct_queries()
 
-        player = dn_gameobject_add_child(null, new Player(game_world))
+        player = dn_application_add_child(new Player(game_world))
         player._init()
 
         create_cube_crowd()
@@ -62,7 +62,7 @@ def game_ready() {
         dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
     }
 
-    zeus = dn_gameobject_add_child(null, new Zeus())
+    zeus = dn_application_add_child(new Zeus())
     zeus._init()
 
     register_keybinds()
