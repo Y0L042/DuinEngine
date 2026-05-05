@@ -56,6 +56,12 @@ warnings "Off"
 pchheader ""
 filter {}
 
+-- filter { "files:**/modules/**" }
+-- enablepch "Off"
+-- warnings "Off"
+-- pchheader ""
+-- filter {}
+
 -- Script/ files include daScript headers that conflict with the PCH.
 filter "files:**/Script/**"
 enablepch "Off"

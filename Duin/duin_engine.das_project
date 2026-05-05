@@ -34,6 +34,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "dn_ecs") {
         res.info = ("dn_ecs", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs.das", "")
     }
+    elif (req == "dn_filesystem") {
+        res.info = ("dn_filesystem", path_to_engine + "src/Duin/Script/modules/moduleIO/dn_filesystem.das", "")
+    }
     elif (req == "flecs" || req == "flecs_boost") {
         res.info = ("flecs_boost", path_to_engine + "vendor/flecs-daslang/flecs_das/src/scripts/flecs_helpers.das", "")
     }
@@ -45,6 +48,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     }
     elif (req == "dn_physics") {
         res.info = ("dn_physics", path_to_engine + "src/Duin/Script/modules/modulePhysics/dn_physics.das", "")
+    }
+    elif (req == "tomlc17") {
+        res.info = ("tomlc17", path_to_engine + "src/Duin/Script/modules/moduleTOML/tomlc17.das", "")
     }
     elif (req == "dn_live_host" || req == "live_host") {
         res.info = ("dn_live_host", path_to_engine + "src/Duin/Script/modules/moduleLiveHost/dn_live_host.das", "")
@@ -61,7 +67,7 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
 
 
 def module_default(req, from : string) : module_info {
-    var frParts <- split_by_chars(from, "/")
+    var frParts <- split_by_chars(from, "/\\")
     pop(frParts)  // strip filename, keep directory
 
     var reqParts <- split_by_chars(req, "/")
