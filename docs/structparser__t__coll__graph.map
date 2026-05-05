@@ -1,0 +1,13 @@
+<map id="parser_t" name="parser_t">
+<area shape="rect" id="Node000001" title=" " alt="" coords="149,200,223,225"/>
+<area shape="rect" id="Node000002" href="$structscanner__t.html" title=" " alt="" coords="73,95,158,121"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,133,134,154,145,174,170,198,167,202,141,178,129,156,120,135"/>
+<area shape="rect" id="Node000003" href="$structebuf__t.html" title=" " alt="" coords="5,5,68,31"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="29,45,22,83,23,103,30,121,54,150,85,172,118,189,149,200,147,205,116,194,82,177,50,154,25,124,18,104,16,82,24,43"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="58,39,107,93,103,97,54,43"/>
+<area shape="rect" id="Node000004" href="$structtoml__datum__t.html" title=" " alt="" coords="183,95,296,121"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="229,135,194,201,190,199,224,132"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="311,99,323,108,314,116,297,119,296,114,312,111,317,108,308,104"/>
+<area shape="rect" id="Node000005" href="$structpool__t.html" title=" " alt="" coords="381,95,444,121"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="377,129,270,178,214,202,212,197,268,174,375,124"/>
+</map>

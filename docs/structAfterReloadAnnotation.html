@@ -135,10 +135,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9cae486631d4cc2b7d3b2e9273a18705"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd61c5bba21df0302fc75919e22ecce7" id="r_afd61c5bba21df0302fc75919e22ecce7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAfterReloadAnnotation.html#afd61c5bba21df0302fc75919e22ecce7">finalize</a> (das::ExprBlock *, das::ModuleGroup &amp;, const das::AnnotationArgumentList &amp;, const das::AnnotationArgumentList &amp;, das::string &amp;) override</td></tr>
 <tr class="separator:afd61c5bba21df0302fc75919e22ecce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c412932cd739703d64ce0dbe9cba247" id="r_a5c412932cd739703d64ce0dbe9cba247"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAfterReloadAnnotation.html#a5c412932cd739703d64ce0dbe9cba247">complete</a> (das::Context *ctx, const das::FunctionPtr &amp;fn) override</td></tr>
+<tr class="separator:a5c412932cd739703d64ce0dbe9cba247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00127">127</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00133">133</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a89c67b3a3c8fdb1acffae6c217658e7f" name="a89c67b3a3c8fdb1acffae6c217658e7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a89c67b3a3c8fdb1acffae6c217658e7f">&#9670;&#160;</a></span>AfterReloadAnnotation()</h2>
@@ -163,7 +165,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00129">129</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00135">135</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
 
 </div>
 </div>
@@ -214,7 +216,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00133">133</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00139">139</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
 
 </div>
 </div>
@@ -264,7 +266,45 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00146">146</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00152">152</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5c412932cd739703d64ce0dbe9cba247" name="a5c412932cd739703d64ce0dbe9cba247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c412932cd739703d64ce0dbe9cba247">&#9670;&#160;</a></span>complete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AfterReloadAnnotation::complete </td>
+          <td>(</td>
+          <td class="paramtype">das::Context *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const das::FunctionPtr &amp;&#160;</td>
+          <td class="paramname"><em>fn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00164">164</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
 
 </div>
 </div>
@@ -320,7 +360,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00139">139</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00145">145</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
 
 </div>
 </div>
@@ -376,7 +416,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00151">151</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Module__DnLiveHost_8cpp_source.html#l00157">157</a> of file <a class="el" href="Module__DnLiveHost_8cpp_source.html">Module_DnLiveHost.cpp</a>.</p>
 
 </div>
 </div>

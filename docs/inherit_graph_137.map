@@ -1,3 +1,17 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structduin_1_1RenderTexture.html" title="Offscreen render target." alt="" coords="5,5,157,31"/>
+<area shape="rect" id="Node000000" href="$classduin_1_1RenderShape.html" title=" " alt="" coords="5,153,149,179"/>
+<area shape="rect" id="Node000001" href="$classduin_1_1BoxRenderShape.html" title=" " alt="" coords="212,5,381,31"/>
+<area shape="poly" id="edge60_Node000000_Node000001" title=" " alt="" coords="93,140,136,89,164,62,196,40,222,28,224,33,199,44,167,66,139,93,97,144"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1CapsuleRenderShape.html" title=" " alt="" coords="199,55,395,80"/>
+<area shape="poly" id="edge61_Node000000_Node000002" title=" " alt="" coords="105,143,146,115,196,89,230,78,231,83,198,94,149,120,107,147"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1ConeRenderShape.html" title=" " alt="" coords="208,104,385,129"/>
+<area shape="poly" id="edge62_Node000000_Node000003" title=" " alt="" coords="147,148,239,127,240,132,148,153"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1CylinderRenderShape.html" title=" " alt="" coords="197,153,396,179"/>
+<area shape="poly" id="edge63_Node000000_Node000004" title=" " alt="" coords="163,163,197,163,197,169,163,169"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1DiskRenderShape.html" title=" " alt="" coords="210,203,383,228"/>
+<area shape="poly" id="edge64_Node000000_Node000005" title=" " alt="" coords="148,179,240,200,239,205,147,184"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1SphereRenderShape.html" title=" " alt="" coords="202,252,391,277"/>
+<area shape="poly" id="edge65_Node000000_Node000006" title=" " alt="" coords="108,185,150,212,198,237,235,249,233,254,196,242,147,216,105,189"/>
+<area shape="rect" id="Node000007" href="$classduin_1_1TriangleRenderShape.html" title=" " alt="" coords="199,301,394,327"/>
+<area shape="poly" id="edge66_Node000000_Node000007" title=" " alt="" coords="98,188,140,239,168,264,199,286,227,299,225,304,196,291,164,269,136,242,93,192"/>
 </map>

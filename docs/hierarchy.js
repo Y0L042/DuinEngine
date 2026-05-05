@@ -97,7 +97,9 @@ var hierarchy =
     [ "DnGameWorldAdapterBase", null, [
       [ "ScriptGameWorld", "classScriptGameWorld.html", null ]
     ] ],
+    [ "DnIOStreamHandle", "structDnIOStreamHandle.html", null ],
     [ "DnLiveHostState", "structDnLiveHostState.html", null ],
+    [ "ebuf_t", "structebuf__t.html", null ],
     [ "ImCurveEdit::EditPoint", "structImCurveEdit_1_1EditPoint.html", null ],
     [ "std::enable_shared_from_this", null, [
       [ "duin::GameObjectImpl", "classduin_1_1GameObjectImpl.html", null ]
@@ -410,11 +412,16 @@ var hierarchy =
     [ "duin::JSONDocument", "classduin_1_1JSONDocument.html", null ],
     [ "duin::JSONMember", "classduin_1_1JSONMember.html", null ],
     [ "duin::JSONValue", "classduin_1_1JSONValue.html", null ],
+    [ "keypart_t", "structkeypart__t.html", null ],
     [ "ImLightRig::Light", "structImLightRig_1_1Light.html", null ],
     [ "GraphEditor::Link", "structGraphEditor_1_1Link.html", null ],
     [ "duin::ECSTag::Local", "structduin_1_1ECSTag_1_1Local.html", null ],
     [ "duin::Log", "classduin_1_1Log.html", null ],
     [ "duin::LookupVector< KEY, VALUE >", "classduin_1_1LookupVector.html", null ],
+    [ "das::ManagedStructureAnnotation", null, [
+      [ "DnIOStreamHandleAnnotation", "structDnIOStreamHandleAnnotation.html", null ],
+      [ "TomlResultAnnotation", "structTomlResultAnnotation.html", null ]
+    ] ],
     [ "duin::Matrix", "structduin_1_1Matrix.html", null ],
     [ "IMGUIZMO_NAMESPACE::matrix_t", "structIMGUIZMO__NAMESPACE_1_1matrix__t.html", null ],
     [ "duin::Matrix::MatrixImpl", "structduin_1_1Matrix_1_1MatrixImpl.html", null ],
@@ -427,6 +434,7 @@ var hierarchy =
       [ "Module_DnCamera", "classModule__DnCamera.html", null ],
       [ "Module_DnCharacterBody", "classModule__DnCharacterBody.html", null ],
       [ "Module_DnECS", "classModule__DnECS.html", null ],
+      [ "Module_DnFilesystem", "classModule__DnFilesystem.html", null ],
       [ "Module_DnGameObject", "classModule__DnGameObject.html", null ],
       [ "Module_DnGameStateMachine", "classModule__DnGameStateMachine.html", null ],
       [ "Module_DnInput", "classModule__DnInput.html", null ],
@@ -434,7 +442,8 @@ var hierarchy =
       [ "Module_DnLog", "classModule__DnLog.html", null ],
       [ "Module_DnPhysicsServer", "classModule__DnPhysicsServer.html", null ],
       [ "Module_DnRenderer", "classModule__DnRenderer.html", null ],
-      [ "Module_Doctest", "classModule__Doctest.html", null ]
+      [ "Module_Doctest", "classModule__Doctest.html", null ],
+      [ "Module_TOMLC17", "classModule__TOMLC17.html", null ]
     ] ],
     [ "Camera::MouseCoords", "structCamera_1_1MouseCoords.html", null ],
     [ "MyDocument", "structMyDocument.html", null ],
@@ -457,6 +466,7 @@ var hierarchy =
     [ "duin::PackedPair", "structduin_1_1PackedPair.html", null ],
     [ "duin::PackedScene", "structduin_1_1PackedScene.html", null ],
     [ "duin::PackedSceneMetadata", "structduin_1_1PackedSceneMetadata.html", null ],
+    [ "parser_t", "structparser__t.html", null ],
     [ "duin::fs::PathInfo", "structduin_1_1fs_1_1PathInfo.html", null ],
     [ "duin::PathInfo", "structduin_1_1PathInfo.html", null ],
     [ "duin::PhysicsBody", "classduin_1_1PhysicsBody.html", null ],
@@ -464,6 +474,7 @@ var hierarchy =
     [ "duin::PhysicsMaterial", "classduin_1_1PhysicsMaterial.html", null ],
     [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", null ],
     [ "duin::ECSComponent::PhysicsStaticCubeComponent", "structduin_1_1ECSComponent_1_1PhysicsStaticCubeComponent.html", null ],
+    [ "pool_t", "structpool__t.html", null ],
     [ "duin::PosColorVertex", "structduin_1_1PosColorVertex.html", null ],
     [ "duin::ECSComponent::Position2D", "structduin_1_1ECSComponent_1_1Position2D.html", null ],
     [ "duin::ECSComponent::Position2D::Position2DImpl", "structduin_1_1ECSComponent_1_1Position2D_1_1Position2DImpl.html", null ],
@@ -533,6 +544,8 @@ var hierarchy =
     [ "duin::ECSComponent::Scale2D::Scale2DImpl", "structduin_1_1ECSComponent_1_1Scale2D_1_1Scale2DImpl.html", null ],
     [ "duin::ECSComponent::Scale3D", "structduin_1_1ECSComponent_1_1Scale3D.html", null ],
     [ "duin::ECSComponent::Scale3D::Scale3DImpl", "structduin_1_1ECSComponent_1_1Scale3D_1_1Scale3DImpl.html", null ],
+    [ "scanner_state_t", "structscanner__state__t.html", null ],
+    [ "scanner_t", "structscanner__t.html", null ],
     [ "duin::Scene", "structduin_1_1Scene.html", null ],
     [ "duin::SceneBuilder", "classduin_1_1SceneBuilder.html", null ],
     [ "duin::SceneDefinition", "classduin_1_1SceneDefinition.html", null ],
@@ -552,6 +565,7 @@ var hierarchy =
     [ "duin::SignalImpl< types >", "classduin_1_1SignalImpl.html", null ],
     [ "SM_Machine", "structSM__Machine.html", null ],
     [ "SM_State", "structSM__State.html", null ],
+    [ "span_t", "structspan__t.html", null ],
     [ "SpriteHandle", "structSpriteHandle.html", null ],
     [ "SpriteT< MaxHandlesT, TextureSizeT >", "structSpriteT.html", null ],
     [ "SpriteT< 256, SPRITE_TEXTURE_SIZE >", "structSpriteT.html", null ],
@@ -578,6 +592,14 @@ var hierarchy =
     [ "GraphEditor::Template", "structGraphEditor_1_1Template.html", null ],
     [ "MeshState::Texture", "structMeshState_1_1Texture.html", null ],
     [ "duin::Timer", "classduin_1_1Timer.html", null ],
+    [ "token_t", "structtoken__t.html", null ],
+    [ "toml_datum_t", "structtoml__datum__t.html", [
+      [ "toml::Datum", "classtoml_1_1Datum.html", null ]
+    ] ],
+    [ "toml_option_t", "structtoml__option__t.html", null ],
+    [ "toml_result_t", "structtoml__result__t.html", [
+      [ "toml::Result", "classtoml_1_1Result.html", null ]
+    ] ],
     [ "duin::ECSComponent::Transform2D", "structduin_1_1ECSComponent_1_1Transform2D.html", null ],
     [ "duin::ECSComponent::Transform3D", "structduin_1_1ECSComponent_1_1Transform3D.html", null ],
     [ "duin::Transform3D", "structduin_1_1Transform3D.html", null ],
