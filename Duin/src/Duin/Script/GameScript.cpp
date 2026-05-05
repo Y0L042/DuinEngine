@@ -224,9 +224,13 @@ void duin::GameScript::OnEvent(Event e)
 void duin::GameScript::CallLiveVarsFunctions(const std::string &funcName)
 {
     if (!context || !scriptReady)
+    {
         return;
+    }
     for (auto *fn : context->findFunctions(funcName.c_str()))
+    {
         CallScript(fn);
+    }
 }
 
 void duin::GameScript::CallAnnotatedScriptFunctions(const std::string &)
@@ -264,7 +268,9 @@ void duin::GameScript::Update(double delta)
         {
             duin::fs::PathInfo pInfo;
             if (duin::vfs::GetPathInfo("bin://" + scriptPath, &pInfo))
+            {
                 scriptLastModified = pInfo.modifyTime;
+            }
         }
         if (!CompileAndSimulate())
         {
@@ -336,6 +342,11 @@ void duin::GameScript::DrawUI()
             muteDrawUIWarning = true;
         }
     }
+}
+
+void duin::GameScript::SetHotCompileFileChangeCooldown(float val)
+{
+    HOT_COMPILE_FILE_CHANGE_COOLDOWN = val;
 }
 
 void duin::GameScript::ClearScriptGameObjects()

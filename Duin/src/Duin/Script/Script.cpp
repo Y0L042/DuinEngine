@@ -165,9 +165,16 @@ bool duin::Script::CallScript(das::SimFunction *fn, vec4f *args, void *res)
 
 void duin::Script::ResetToBaseModules()
 {
-    // libGroup.reset() deletes non-builtIn (script-compiled) modules and clears the list.
-    // builtIn engine modules stay alive in the global linked list, so we can re-add them.
+    // Order matters here:
+    // 1. libGroup.reset() first: skips promoted modules (builtIn=true, no delete) but clears
+    //    the local vector — so their raw pointers are gone from libGroup before step 2.
+    // 2. Module::Reset() then: walks the global daScriptEnvironment::modules linked list and
+    //    deletes only promoted entries (builtIn=true, promoted=true), forcing the next
+    //    compileDaScript to re-read `shared` modules from disk instead of reusing the stale
+    //    cached version. Doing this after libGroup.reset() avoids a double-free: if we deleted
+    //    them first, libGroup.reset() would still dereference their (now-dangling) pointers.
     libGroup.reset();
+    das::Module::Reset(false);
     for (das::Module *m : baseModules)
     {
         libGroup.addModule(m);

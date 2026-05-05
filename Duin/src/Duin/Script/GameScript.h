@@ -37,9 +37,11 @@ class GameScript : public Script, public GameObject
     void Draw() override;
     void DrawUI() override;
 
+    void SetHotCompileFileChangeCooldown(float val);
+
   private:
     GameWorld *gameWorld_ = nullptr;
-    const float HOT_COMPILE_FILE_CHANGE_COOLDOWN = 10.0f;
+    float HOT_COMPILE_FILE_CHANGE_COOLDOWN = 10.0f;
 
     bool hotCompileEnabled = false;
     bool haltOnCompilationFail = false;
