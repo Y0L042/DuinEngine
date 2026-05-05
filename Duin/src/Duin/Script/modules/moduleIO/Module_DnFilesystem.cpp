@@ -50,7 +50,7 @@ struct DnPathInfoAnnotation : das::ManagedStructureAnnotation<duin::fs::PathInfo
 {
     DnPathInfoAnnotation(das::ModuleLibrary &lib) : ManagedStructureAnnotation("DnPathInfo", lib)
     {
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type", "type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("typev", "typev");
         addField<DAS_BIND_MANAGED_FIELD(size)>("size", "size");
         addField<DAS_BIND_MANAGED_FIELD(createTime)>("createTime", "createTime");
         addField<DAS_BIND_MANAGED_FIELD(modifyTime)>("modifyTime", "modifyTime");
