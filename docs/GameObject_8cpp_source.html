@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            }</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordflow">if</span> (IsReady() &amp;&amp; !child-&gt;IsReady()) <span class="comment">// TODO add callback when child gets new parent</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                child-&gt;Ready();</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                child-&gt;ObjectReady();</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            }</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        }</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
@@ -659,25 +659,30 @@ $(document).ready(function(){initNavTree('GameObject_8cpp_source.html',''); init
 <div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>}</div>
 <div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span> </div>
-<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>std::shared_ptr&lt;duin::GameObjectImpl&gt; duin::GameObject::EnsureImpl()</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span><span class="keywordtype">void</span> duin::GameObject::OverrideReady(<span class="keywordtype">bool</span> val)</div>
 <div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>{</div>
-<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>    <span class="keywordflow">if</span> (!impl)</div>
-<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>    {</div>
-<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>        impl = std::make_shared&lt;GameObjectImpl&gt;(<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span> </div>
-<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>        <span class="keywordflow">return</span> impl;</div>
-<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>    }</div>
-<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>}</div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>    impl-&gt;isReady = val;</div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>}</div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span> </div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>std::shared_ptr&lt;duin::GameObjectImpl&gt; duin::GameObject::EnsureImpl()</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>{</div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>    <span class="keywordflow">if</span> (!impl)</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>    {</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>        impl = std::make_shared&lt;GameObjectImpl&gt;(<span class="keyword">this</span>);</div>
 <div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span> </div>
-<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span><span class="keywordtype">void</span> duin::GameObject::_InitializeImpl()</div>
-<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>{</div>
-<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>    <span class="keywordflow">if</span> (impl)</div>
-<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>    {</div>
-<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>        impl-&gt;Initialize();</div>
-<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>        Init();</div>
-<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>    }</div>
-<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>}</div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>        <span class="keywordflow">return</span> impl;</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>    }</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>}</div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span> </div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span><span class="keywordtype">void</span> duin::GameObject::_InitializeImpl()</div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>{</div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>    <span class="keywordflow">if</span> (impl)</div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>    {</div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>        impl-&gt;Initialize();</div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>        Init();</div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>    }</div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>}</div>
 <div class="ttc" id="aDNAssert_8h_html"><div class="ttname"><a href="DNAssert_8h.html">DNAssert.h</a></div><div class="ttdoc">Assertion macros for debugging and error checking.</div></div>
 <div class="ttc" id="aGameObject_8h_html"><div class="ttname"><a href="GameObject_8h.html">GameObject.h</a></div><div class="ttdoc">Scene graph node with lifecycle callbacks.</div></div>
 <div class="ttc" id="aclassduin_1_1Event_html"><div class="ttname"><a href="classduin_1_1Event.html">duin::Event</a></div><div class="ttdoc">Base wrapper for SDL events.</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00025">Event.h:26</a></div></div>

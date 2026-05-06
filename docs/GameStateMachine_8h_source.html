@@ -242,108 +242,109 @@ $(document).ready(function(){initNavTree('GameStateMachine_8h_source.html',''); 
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        newState-&gt;Enable(<span class="keyword">false</span>);</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        T *ptr = newState.get();</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        stateStack.push(std::move(newState));</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        stateStack.top()-&gt;StateEnter();</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">return</span> ptr;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    }</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    std::stack&lt;std::shared_ptr&lt;GameState&gt;&gt; stateStack;</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>};</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        stateStack.top()-&gt;OverrideReady(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        stateStack.top()-&gt;StateEnter();</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">return</span> ptr;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    std::stack&lt;std::shared_ptr&lt;GameState&gt;&gt; stateStack;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>};</div>
 </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
-<div class="foldopen" id="foldopen00189" data-start="{" data-end="};">
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="classduin_1_1GameState.html">  189</a></span><span class="keyword">class </span><a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> : <span class="keyword">public</span> <a class="code hl_class" href="classduin_1_1GameObject.html">GameObject</a></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>{</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <a class="code hl_class" href="classduin_1_1GameState.html">GameState</a>(<a class="code hl_class" href="classduin_1_1GameStateMachine.html">GameStateMachine</a> &amp;owner);</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classduin_1_1GameState.html">~GameState</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keywordtype">void</span> StateEnter();</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keywordtype">void</span> StateOnEvent(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> e);</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordtype">void</span> StateUpdate(<span class="keywordtype">double</span> delta);</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordtype">void</span> StatePhysicsUpdate(<span class="keywordtype">double</span> delta);</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordtype">void</span> StateDraw();</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keywordtype">void</span> StateDrawUI();</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keywordtype">void</span> StateExit();</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keywordtype">void</span> StateSetPause();</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="keywordtype">void</span> StateSetUnpause();</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Enter() {};</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnEvent(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> e)<span class="keyword"> override </span>{};</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Update(<span class="keywordtype">double</span> delta)<span class="keyword"> override </span>{};</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> PhysicsUpdate(<span class="keywordtype">double</span> delta)<span class="keyword"> override </span>{};</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Draw()<span class="keyword"> override </span>{};</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> DrawUI()<span class="keyword"> override </span>{};</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Exit() {};</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetPause() {};</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetUnpause() {};</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keywordtype">void</span> Init() <span class="keyword">override</span> <span class="keyword">final</span> {};</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keywordtype">void</span> Ready() <span class="keyword">override</span> <span class="keyword">final</span> {};</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keywordtype">void</span> Debug() <span class="keyword">override</span> <span class="keyword">final</span> {};</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    T *SwitchState()</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keywordflow">return</span> owner.template SwitchState&lt;T&gt;();</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    }</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    T *FlushAndSwitchState()</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    {</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="keywordflow">return</span> owner.template FlushAndSwitchState&lt;T&gt;();</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    }</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    T *PushState()</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    {</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        <span class="keywordflow">return</span> owner.template PushState&lt;T&gt;();</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    }</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordtype">void</span> PopState();</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordtype">void</span> FlushStack();</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keywordtype">bool</span> IsEqualTo(<a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> *other);</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="comment">// Signal connection functions</span></div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> ConnectOnStateEnter(std::function&lt;<span class="keywordtype">void</span>()&gt; callback);</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> ConnectOnStateExit(std::function&lt;<span class="keywordtype">void</span>()&gt; callback);</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="comment">// Signal disconnection functions</span></div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keywordtype">void</span> DisconnectOnStateEnter(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid);</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordtype">void</span> DisconnectOnStateExit(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid);</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <a class="code hl_struct" href="structduin_1_1SignalConnections.html">SignalConnections</a> ConnectAllSignals(std::function&lt;<span class="keywordtype">void</span>()&gt; onEnter, std::function&lt;<span class="keywordtype">void</span>()&gt; onExit);</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="keywordtype">void</span> DisconnectAllSignals(<span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1SignalConnections.html">SignalConnections</a> &amp;connections);</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> GetUUID();</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <a class="code hl_class" href="classduin_1_1GameStateMachine.html">GameStateMachine</a> &amp;GetOwner();</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keyword">const</span> std::string GetName();</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> &amp;state)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="keywordflow">return</span> this-&gt;uuid == state.uuid;</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    }</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> &amp;state)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        <span class="keywordflow">return</span> this-&gt;uuid != state.uuid;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    }</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>  <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid;</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    std::string stateName;</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <a class="code hl_class" href="classduin_1_1GameStateMachine.html">GameStateMachine</a> &amp;owner;</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal&lt;&gt;</a> OnStateEnter;</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal&lt;&gt;</a> OnStateExit;</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>};</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="foldopen" id="foldopen00190" data-start="{" data-end="};">
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="classduin_1_1GameState.html">  190</a></span><span class="keyword">class </span><a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> : <span class="keyword">public</span> <a class="code hl_class" href="classduin_1_1GameObject.html">GameObject</a></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>{</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <a class="code hl_class" href="classduin_1_1GameState.html">GameState</a>(<a class="code hl_class" href="classduin_1_1GameStateMachine.html">GameStateMachine</a> &amp;owner);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classduin_1_1GameState.html">~GameState</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keywordtype">void</span> StateEnter();</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordtype">void</span> StateOnEvent(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> e);</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordtype">void</span> StateUpdate(<span class="keywordtype">double</span> delta);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordtype">void</span> StatePhysicsUpdate(<span class="keywordtype">double</span> delta);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keywordtype">void</span> StateDraw();</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keywordtype">void</span> StateDrawUI();</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keywordtype">void</span> StateExit();</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="keywordtype">void</span> StateSetPause();</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="keywordtype">void</span> StateSetUnpause();</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Enter() {};</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnEvent(<a class="code hl_class" href="classduin_1_1Event.html">Event</a> e)<span class="keyword"> override </span>{};</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Update(<span class="keywordtype">double</span> delta)<span class="keyword"> override </span>{};</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> PhysicsUpdate(<span class="keywordtype">double</span> delta)<span class="keyword"> override </span>{};</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Draw()<span class="keyword"> override </span>{};</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> DrawUI()<span class="keyword"> override </span>{};</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Exit() {};</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetPause() {};</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> SetUnpause() {};</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keywordtype">void</span> Init() <span class="keyword">override</span> <span class="keyword">final</span> {};</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keywordtype">void</span> Ready() <span class="keyword">override</span> <span class="keyword">final</span> {};</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <span class="keywordtype">void</span> Debug() <span class="keyword">override</span> <span class="keyword">final</span> {};</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    T *SwitchState()</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keywordflow">return</span> owner.template SwitchState&lt;T&gt;();</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    }</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    T *FlushAndSwitchState()</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    {</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="keywordflow">return</span> owner.template FlushAndSwitchState&lt;T&gt;();</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    }</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    T *PushState()</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    {</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <span class="keywordflow">return</span> owner.template PushState&lt;T&gt;();</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordtype">void</span> PopState();</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    <span class="keywordtype">void</span> FlushStack();</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    <span class="keywordtype">bool</span> IsEqualTo(<a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> *other);</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <span class="comment">// Signal connection functions</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> ConnectOnStateEnter(std::function&lt;<span class="keywordtype">void</span>()&gt; callback);</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> ConnectOnStateExit(std::function&lt;<span class="keywordtype">void</span>()&gt; callback);</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="comment">// Signal disconnection functions</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordtype">void</span> DisconnectOnStateEnter(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid);</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keywordtype">void</span> DisconnectOnStateExit(<a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid);</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <a class="code hl_struct" href="structduin_1_1SignalConnections.html">SignalConnections</a> ConnectAllSignals(std::function&lt;<span class="keywordtype">void</span>()&gt; onEnter, std::function&lt;<span class="keywordtype">void</span>()&gt; onExit);</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordtype">void</span> DisconnectAllSignals(<span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1SignalConnections.html">SignalConnections</a> &amp;connections);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> GetUUID();</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <a class="code hl_class" href="classduin_1_1GameStateMachine.html">GameStateMachine</a> &amp;GetOwner();</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="keyword">const</span> std::string GetName();</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> &amp;state)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        <span class="keywordflow">return</span> this-&gt;uuid == state.uuid;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    }</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code hl_class" href="classduin_1_1GameState.html">GameState</a> &amp;state)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <span class="keywordflow">return</span> this-&gt;uuid != state.uuid;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    }</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>  <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <a class="code hl_class" href="classduin_1_1UUID.html">UUID</a> uuid;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    std::string stateName;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    <a class="code hl_class" href="classduin_1_1GameStateMachine.html">GameStateMachine</a> &amp;owner;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal&lt;&gt;</a> OnStateEnter;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <a class="code hl_class" href="classduin_1_1Signal.html">Signal&lt;&gt;</a> OnStateExit;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>};</div>
 </div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aEvent_8h_html"><div class="ttname"><a href="Event_8h.html">Event.h</a></div><div class="ttdoc">Event wrapper classes for SDL events.</div></div>
 <div class="ttc" id="aGameObject_8h_html"><div class="ttname"><a href="GameObject_8h.html">GameObject.h</a></div><div class="ttdoc">Scene graph node with lifecycle callbacks.</div></div>
 <div class="ttc" id="aUUID_8h_html"><div class="ttname"><a href="UUID_8h.html">UUID.h</a></div><div class="ttdoc">Defines the UUID class for generating and managing unique identifiers.</div></div>
@@ -357,7 +358,7 @@ $(document).ready(function(){initNavTree('GameStateMachine_8h_source.html',''); 
 <div class="ttc" id="aclassduin_1_1GameStateMachine_html_acc85786c887f4b546fec63ade4d9b027"><div class="ttname"><a href="classduin_1_1GameStateMachine.html#acc85786c887f4b546fec63ade4d9b027">duin::GameStateMachine::FlushAndSwitchState</a></div><div class="ttdeci">T * FlushAndSwitchState()</div><div class="ttdoc">Exits all states and enters a new one.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00107">GameStateMachine.h:107</a></div></div>
 <div class="ttc" id="aclassduin_1_1GameStateMachine_html_acd1bede4446b7b6f889b6717571e4fa6"><div class="ttname"><a href="classduin_1_1GameStateMachine.html#acd1bede4446b7b6f889b6717571e4fa6">duin::GameStateMachine::GetActiveState</a></div><div class="ttdeci">T * GetActiveState()</div><div class="ttdoc">Returns the active state cast to type T.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00068">GameStateMachine.h:68</a></div></div>
 <div class="ttc" id="aclassduin_1_1GameStateMachine_html_af38da22c2d87b9df8ee50da8e3d8d45c"><div class="ttname"><a href="classduin_1_1GameStateMachine.html#af38da22c2d87b9df8ee50da8e3d8d45c">duin::GameStateMachine::SwitchState</a></div><div class="ttdeci">T * SwitchState()</div><div class="ttdoc">Exits current state and enters a new one.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00088">GameStateMachine.h:88</a></div></div>
-<div class="ttc" id="aclassduin_1_1GameState_html"><div class="ttname"><a href="classduin_1_1GameState.html">duin::GameState</a></div><div class="ttdoc">Base class for application states.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00189">GameStateMachine.h:190</a></div></div>
+<div class="ttc" id="aclassduin_1_1GameState_html"><div class="ttname"><a href="classduin_1_1GameState.html">duin::GameState</a></div><div class="ttdoc">Base class for application states.</div><div class="ttdef"><b>Definition</b> <a href="GameStateMachine_8h_source.html#l00190">GameStateMachine.h:191</a></div></div>
 <div class="ttc" id="aclassduin_1_1Signal_html"><div class="ttname"><a href="classduin_1_1Signal.html">duin::Signal</a></div><div class="ttdoc">Signal class for event-driven programming.</div><div class="ttdef"><b>Definition</b> <a href="Signal_8h_source.html#l00273">Signal.h:274</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
 <div class="ttc" id="astructArgs_html"><div class="ttname"><a href="structArgs.html">Args</a></div><div class="ttdef"><b>Definition</b> <a href="args_8h_source.html#l00010">args.h:11</a></div></div>
