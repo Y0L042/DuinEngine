@@ -212,6 +212,7 @@ class GameObject
     void ObjectDebug();
 
     bool IsReady() const;
+    void OverrideReady(bool val = true);
 
     std::shared_ptr<GameObjectImpl> EnsureImpl();
 

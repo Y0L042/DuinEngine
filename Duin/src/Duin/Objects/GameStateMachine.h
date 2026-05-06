@@ -160,6 +160,7 @@ class GameStateMachine : public GameObject
         newState->Enable(false);
         T *ptr = newState.get();
         stateStack.push(std::move(newState));
+        stateStack.top()->OverrideReady(true);
         stateStack.top()->StateEnter();
         return ptr;
     }

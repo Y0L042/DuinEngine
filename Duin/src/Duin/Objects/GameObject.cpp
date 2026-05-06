@@ -44,7 +44,7 @@ void duin::GameObject::AddChildObject(std::shared_ptr<GameObject> child)
             }
             if (IsReady() && !child->IsReady()) // TODO add callback when child gets new parent
             {
-                child->Ready();
+                child->ObjectReady();
             }
         }
     }
@@ -525,6 +525,11 @@ bool duin::GameObject::IsReady() const
     }
 
     return false;
+}
+
+void duin::GameObject::OverrideReady(bool val)
+{
+    impl->isReady = val;
 }
 
 std::shared_ptr<duin::GameObjectImpl> duin::GameObject::EnsureImpl()
