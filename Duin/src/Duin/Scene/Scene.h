@@ -6,6 +6,7 @@
 
 namespace duin
 {
+
 struct EntityData
 {
     UUID uuid;

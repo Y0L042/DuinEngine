@@ -991,9 +991,17 @@ duin::PackedScene duin::SceneBuilder::DeserializeScene(const JSONValue &scene)
     return ps;
 }
 
-duin::PackedScene duin::SceneBuilder::DeserializeSceneFromFile(const std::string &vpath)
+duin::PackedScene duin::SceneBuilder::DeserializeSceneFromFile(const std::string &path)
 {
-    std::string resolvedPath = duin::fs::MapVirtualToSystemPath(vpath);
+    std::string resolvedPath;
+    if (duin::fs::IsVirtualPath(path))
+    {
+        resolvedPath = duin::fs::MapVirtualToSystemPath(path);
+    }
+    else
+    {
+        resolvedPath = path;
+    }
     duin::JSONValue v = duin::JSONValue::ParseFromFile(resolvedPath);
 
     return DeserializeScene(v);
