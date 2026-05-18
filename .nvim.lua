@@ -22,6 +22,20 @@ vim.filetype.add({
     },
 })
 
+
+
+
+vim.g.project_ignore_patterns = {
+  -- "vendor/",
+  -- "Duin/vendor/",
+  -- "modules/",
+  "node_modules/",
+  "some_dir/",
+}
+
+
+
+
 -- Function to switch between header and source files
 function switch_source_header()
     -- Update (save) the current file before switching
