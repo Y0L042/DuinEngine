@@ -1,5 +1,10 @@
 options gen2
 
+module file_browser public
+
+require daslib/delegate
+require daslib/ansi_colors
+
 require imgui_boost
 require dn_log
 require dn_gameobject
@@ -8,16 +13,33 @@ require dn_filesystem
 require ../editor_context.das
 require ../filemanager.das
 
-var uid : int = 0
+typedef OnFileSelected = delegate(type<function<(var selected : FSNode?) : void>>)
 
-class FileBrowser : dn_GameObject {
+class FileBrowser : DnGameObject {
     selected_path : string
     expanded_dirs : array<string>
+    on_file_selected <- OnFileSelected()
+
+    def FileBrowser() : void {
+        super()
+    }
+
+    def override _init() : void {
+        on_file_selected += @(var node : FSNode?) : void {
+            dn_info("Selected file: {green_str(node.path)}")
+        }
+    }
+
+    def override _ready() : void {
+    }
+
+    def subscribe_file_selected(lmb : lambda<(var node : FSNode?) : void>) : void {
+        on_file_selected += lmb
+    }
 
     def override _draw_ui() : void {
         imgui_boost::Begin("File Browser")
 
-        uid = 0
         var fm : FileManager? = filemanager_get()
         var root = fm?.root_node
         if (root != null) {
@@ -54,7 +76,7 @@ class FileBrowser : dn_GameObject {
                 selected_path = node.path 
             }
             if (imgui_boost::IsItemHovered() && imgui_boost::IsMouseDoubleClicked(0)) {
-                // open file action (optional)
+                on_file_selected.invoke(node)
             }
         }
     }

@@ -21,6 +21,7 @@ enum GroupType {
 class FSNode {
     path : string
     name : string
+    ext : string
     typev : DnPathType
     parent : FSNode?
     children : array<FSNode?>
@@ -87,6 +88,7 @@ class FileManager {
                 return DnEnumerationResult.DNFS_ENUM_CONTINUE
             }
 
+            // Directory
             if (info.typev == DnPathType.DNFS_PATHTYPE_DIRECTORY) {
                 var dir_node : FSNode? = new FSNode()
                 dir_node.path := clone_string(full_path) 
@@ -96,6 +98,7 @@ class FileManager {
                 _build_tree(full_path, dir_node)          
                 push_clone(parent.children, dir_node)
 
+            // File
             } elif (info.typev == DnPathType.DNFS_PATHTYPE_FILE) {
                 let ext = dn_fs_get_file_extension(fname)
                 if (length(allowed_extensions) == 0 || find_index(allowed_extensions, ext) >= 0) {
@@ -103,6 +106,7 @@ class FileManager {
                     var leaf : FSNode? = new FSNode()
                     leaf.path := clone_string(full_path) 
                     leaf.name := clone_string(fname)
+                    leaf.ext := clone_string(ext)
                     leaf.typev = DnPathType.DNFS_PATHTYPE_FILE
                     leaf.parent = parent
                     push(parent.children, leaf)
@@ -170,3 +174,8 @@ def filemanager_get() : FileManager? {
 def set_working_dir(new_dir : string) : void {
     WORKING_DIR = new_dir
 }
+
+def get_file_ext(path : string) : string {
+    return "NONE"
+}
+

@@ -27,15 +27,15 @@ require editor_context
 
 
 
-class _Root : dn_GameObject {
-    game_states : dn_GameStateMachine?  // Lifetime scope, OK to be a pointer
+class _Root : DnGameObject {
+    game_states : DnGameStateMachine?  // Lifetime scope, OK to be a pointer
 
     def _Root() : void {
         super()
     }
 
     def override _ready() : void {
-        game_states = self.add_child(new dn_GameStateMachine())
+        game_states = self.add_child(new DnGameStateMachine())
         game_states.switch_state(new State_ProjectSelection())
         // game_states.switch_state(new State_ProjectEditor())
     }

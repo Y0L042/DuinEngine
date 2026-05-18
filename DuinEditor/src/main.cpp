@@ -49,21 +49,23 @@ void Editor::Ready()
     script->InitModules([]() {
         NEED_MODULE(Module_flecs);
         NEED_MODULE(Module_imgui);
+        NEED_MODULE(Module_TOMLC17);
 
         NEED_MODULE(Module_DnLiveHost);
         NEED_MODULE(Module_DnLog);
         NEED_MODULE(Module_DnApplication);
+        NEED_MODULE(Module_DnUUID);
         NEED_MODULE(Module_DnRenderer);
         NEED_MODULE(Module_DnCamera);
         NEED_MODULE(Module_DnGameObject);
         NEED_MODULE(Module_DnGameStateMachine);
         NEED_MODULE(Module_DnECS);
+        NEED_MODULE(Module_DnSceneBuilder);
         NEED_MODULE(Module_DecsGameWorld);
         NEED_MODULE(Module_DnInput);
         NEED_MODULE(Module_DnPhysicsServer);
         NEED_MODULE(Module_DnCharacterBody);
         NEED_MODULE(Module_DnFilesystem);
-        NEED_MODULE(Module_TOMLC17);
     });
     script->EnableHotCompile(false, false);
     script->SetHotCompileFileChangeCooldown(2.5f);

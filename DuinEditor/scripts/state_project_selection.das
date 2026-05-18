@@ -14,7 +14,7 @@ require editor_context
 require state_project_editor
 require filemanager
 
-class State_ProjectSelection : dn_GameState {
+class State_ProjectSelection : DnGameState {
     // CFG Structure
     TAG_EDITOR_CONFIG : string const = "EditorConfig"
     TAG_CURRENT_PROJECT_DIR : string const = "CurrentProjectDir"
