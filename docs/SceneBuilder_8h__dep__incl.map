@@ -1,5 +1,7 @@
 <map id="SceneBuilder.h" name="SceneBuilder.h">
-<area shape="rect" id="Node000001" title="Scene serialization and deserialization structures." alt="" coords="13,5,131,31"/>
-<area shape="rect" id="Node000002" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="5,79,139,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,44,75,79,69,79,69,44"/>
+<area shape="rect" id="Node000001" title="Scene serialization and deserialization structures." alt="" coords="147,5,265,31"/>
+<area shape="rect" id="Node000002" href="$Module__DnSceneBuilder_8cpp_source.html" title=" " alt="" coords="5,79,212,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,41,126,81,123,76,178,37"/>
+<area shape="rect" id="Node000003" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="237,79,370,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="234,37,289,76,286,81,231,41"/>
 </map>

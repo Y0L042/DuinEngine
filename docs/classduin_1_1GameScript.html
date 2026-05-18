@@ -137,8 +137,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5f5dfe31fe2e88c2ebb2b7198988fc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ae91e60606eb4c0d2ffd5e4d33ecda7" id="r_a0ae91e60606eb4c0d2ffd5e4d33ecda7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameScript.html#a0ae91e60606eb4c0d2ffd5e4d33ecda7">ResetMuteWarningFlags</a> ()</td></tr>
 <tr class="separator:a0ae91e60606eb4c0d2ffd5e4d33ecda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6db8e45075f1f32892ac3771cf3aaee1" id="r_a6db8e45075f1f32892ac3771cf3aaee1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameScript.html#a6db8e45075f1f32892ac3771cf3aaee1">SetGameWorld</a> (<a class="el" href="classduin_1_1GameWorld.html">GameWorld</a> *gw)</td></tr>
-<tr class="separator:a6db8e45075f1f32892ac3771cf3aaee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac0ab06301b707f627c6162f8dec2913" id="r_aac0ab06301b707f627c6162f8dec2913"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameScript.html#aac0ab06301b707f627c6162f8dec2913">EnableHotCompile</a> (bool enable, bool halt=false)</td></tr>
 <tr class="separator:aac0ab06301b707f627c6162f8dec2913"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f99ae8a77ca19e0648d02542c5f8951" id="r_a2f99ae8a77ca19e0648d02542c5f8951"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1GameScript.html#a2f99ae8a77ca19e0648d02542c5f8951">IsHotCompileEnabled</a> ()</td></tr>
@@ -182,10 +180,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9d363eb431964b6650893d23171d738e inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd5f7297b6529fd6c8a49b8966300e4f inherit pub_methods_classduin_1_1Script" id="r_acd5f7297b6529fd6c8a49b8966300e4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#acd5f7297b6529fd6c8a49b8966300e4f">SimulateContext</a> ()</td></tr>
 <tr class="separator:acd5f7297b6529fd6c8a49b8966300e4f inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cacb45bf6f27606c8660fb7a960c23d inherit pub_methods_classduin_1_1Script" id="r_a9cacb45bf6f27606c8660fb7a960c23d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a9cacb45bf6f27606c8660fb7a960c23d">CallScript</a> (das::SimFunction *fn, vec4f *args=(vec4f *) nullptr, void *res=(void *) nullptr)</td></tr>
-<tr class="separator:a9cacb45bf6f27606c8660fb7a960c23d inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af152e9b52ef37ea8a445ea3c0d4c15f1 inherit pub_methods_classduin_1_1Script" id="r_af152e9b52ef37ea8a445ea3c0d4c15f1"><td class="memItemLeft" align="right" valign="top">das::SimFunction *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#af152e9b52ef37ea8a445ea3c0d4c15f1">FindFunction</a> (const std::string &amp;func)</td></tr>
-<tr class="separator:af152e9b52ef37ea8a445ea3c0d4c15f1 inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa6f74a8e5128fc3bd411eb4b3fbc7e6 inherit pub_methods_classduin_1_1Script" id="r_aaa6f74a8e5128fc3bd411eb4b3fbc7e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#aaa6f74a8e5128fc3bd411eb4b3fbc7e6">CallScript</a> (das::Func fn, vec4f *args=(vec4f *) nullptr, void *res=(void *) nullptr)</td></tr>
+<tr class="separator:aaa6f74a8e5128fc3bd411eb4b3fbc7e6 inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8185541a4a54cb7eb35e039ca37f3673 inherit pub_methods_classduin_1_1Script" id="r_a8185541a4a54cb7eb35e039ca37f3673"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a8185541a4a54cb7eb35e039ca37f3673">InvokeVoid</a> (das::Func fn)</td></tr>
+<tr class="separator:a8185541a4a54cb7eb35e039ca37f3673 inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7da9dd165f63de0f5c09fa5402402eb6 inherit pub_methods_classduin_1_1Script" id="r_a7da9dd165f63de0f5c09fa5402402eb6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a7da9dd165f63de0f5c09fa5402402eb6">InvokeWithDelta</a> (das::Func fn, double delta)</td></tr>
+<tr class="separator:a7da9dd165f63de0f5c09fa5402402eb6 inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e8d79e3d39f8d74e84b93f2a484d3c1 inherit pub_methods_classduin_1_1Script" id="r_a7e8d79e3d39f8d74e84b93f2a484d3c1"><td class="memItemLeft" align="right" valign="top">das::Func&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#a7e8d79e3d39f8d74e84b93f2a484d3c1">FindFunction</a> (const std::string &amp;func)</td></tr>
+<tr class="separator:a7e8d79e3d39f8d74e84b93f2a484d3c1 inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa84f16afce9dd826c1832c6b062473c9 inherit pub_methods_classduin_1_1Script" id="r_aa84f16afce9dd826c1832c6b062473c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Script.html#aa84f16afce9dd826c1832c6b062473c9">VerifyFunction</a> (das::Func fn)</td></tr>
+<tr class="separator:aa84f16afce9dd826c1832c6b062473c9 inherit pub_methods_classduin_1_1Script"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classduin_1_1GameObject"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classduin_1_1GameObject')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a></td></tr>
 <tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe inherit pub_methods_classduin_1_1GameObject" id="r_ad95ae2a5c75925c02085b3fce76c21fe"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:ad95ae2a5c75925c02085b3fce76c21fe inherit pub_methods_classduin_1_1GameObject"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe">CreateChildObject</a> (<a class="el" href="structArgs.html">Args</a> &amp;&amp;...args)</td></tr>
@@ -354,7 +358,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="GameScript_8h_source.html#l00013">13</a> of file <a class="el" href="GameScript_8h_source.html">GameScript.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8h_source.html#l00011">11</a> of file <a class="el" href="GameScript_8h_source.html">GameScript.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4a1918ce4085b329f3115d085ceee2bb" name="a4a1918ce4085b329f3115d085ceee2bb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4a1918ce4085b329f3115d085ceee2bb">&#9670;&#160;</a></span>GameScript()</h2>
@@ -372,7 +376,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00019">19</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00017">17</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -391,7 +395,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00023">23</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00021">21</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -411,7 +415,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00078">78</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00110">110</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -440,7 +444,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00315">315</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00290">290</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -469,7 +473,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00331">331</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00306">306</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -499,7 +503,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00066">66</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00099">99</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -528,7 +532,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00178">178</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00177">177</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -547,7 +551,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00073">73</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00105">105</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -577,7 +581,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00220">220</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00219">219</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -607,7 +611,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00297">297</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00274">274</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -636,7 +640,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00190">190</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00189">189</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -655,7 +659,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00043">43</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00081">81</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -674,7 +678,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00057">57</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00090">90</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -703,7 +707,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1Script.html">duin::Script</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00172">172</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00171">171</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -741,27 +745,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00028">28</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a6db8e45075f1f32892ac3771cf3aaee1" name="a6db8e45075f1f32892ac3771cf3aaee1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6db8e45075f1f32892ac3771cf3aaee1">&#9670;&#160;</a></span>SetGameWorld()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void duin::GameScript::SetGameWorld </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classduin_1_1GameWorld.html">GameWorld</a> *&#160;</td>
-          <td class="paramname"><em>gw</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00052">52</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00026">26</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -781,7 +765,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00347">347</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00322">322</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>
@@ -811,7 +795,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classduin_1_1GameObject.html">duin::GameObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00242">242</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GameScript_8cpp_source.html#l00224">224</a> of file <a class="el" href="GameScript_8cpp_source.html">GameScript.cpp</a>.</p>
 
 </div>
 </div>

@@ -442,6 +442,9 @@ var hierarchy =
       [ "Module_DnLog", "classModule__DnLog.html", null ],
       [ "Module_DnPhysicsServer", "classModule__DnPhysicsServer.html", null ],
       [ "Module_DnRenderer", "classModule__DnRenderer.html", null ],
+      [ "Module_DnSceneBuilder", "classModule__DnSceneBuilder.html", null ],
+      [ "Module_DnSignal", "classModule__DnSignal.html", null ],
+      [ "Module_DnUUID", "classModule__DnUUID.html", null ],
       [ "Module_Doctest", "classModule__Doctest.html", null ],
       [ "Module_TOMLC17", "classModule__TOMLC17.html", null ]
     ] ],

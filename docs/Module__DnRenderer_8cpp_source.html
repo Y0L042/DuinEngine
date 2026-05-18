@@ -134,9 +134,9 @@ $(document).ready(function(){initNavTree('Module__DnRenderer_8cpp_source.html','
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// ---- Direct type bindings ----</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>DAS_TYPE_DECL(dn_Color, <a class="code hl_struct" href="structduin_1_1Color.html">duin::Color</a>);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>DAS_TYPE_DECL(DnColor, <a class="code hl_struct" href="structduin_1_1Color.html">duin::Color</a>);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>DAS_TYPE_ANNOTATION(dn_Color)</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>DAS_TYPE_ANNOTATION(DnColor)</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>{</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    DAS_ADD_FIELD_BIND(r);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    DAS_ADD_FIELD_BIND(g);</div>
@@ -335,7 +335,7 @@ $(document).ready(function(){initNavTree('Module__DnRenderer_8cpp_source.html','
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        addBuiltinDependency(lib, cameraMod);</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="comment">// Color type</span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        addAnnotation(<span class="keyword">new</span> dn_ColorAnnotation(lib));</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        addAnnotation(<span class="keyword">new</span> DnColorAnnotation(lib));</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        addExtern&lt;DAS_BIND_FUN(dn_make_color), das::SimNode_ExtFuncCallAndCopyOrMove&gt;(</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_make_color&quot;</span>, das::SideEffects::none, <span class="stringliteral">&quot;dn_make_color&quot;</span>)</div>
