@@ -280,6 +280,8 @@ class DAPI Application
     void RunUpdate(double delta);
     void RunPhysics(double &physicsCurrentTime, double &physicsPreviousTime, double &physicsAccumTime);
     void RunRender();
+
+    void PhysicsStep(double frametime);
 };
 
 /**

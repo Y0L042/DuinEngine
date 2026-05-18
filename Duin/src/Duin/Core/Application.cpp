@@ -452,10 +452,17 @@ void duin::Application::RunPhysics(double &physicsCurrentTime, double &physicsPr
 
         if (isPhysicsPaused)
             return; // TODO Debugging, refactor
-        EnginePhysicsUpdate(physicsDeltaTime);
-        PhysicsUpdate(physicsDeltaTime);
-        EnginePostPhysicsUpdate(physicsDeltaTime);
+
+        PhysicsStep(physicsDeltaTime);
+        
     } // End of Physics
+}
+
+void duin::Application::PhysicsStep(double frametime)
+{
+    EnginePhysicsUpdate(frametime);
+    PhysicsUpdate(frametime);
+    EnginePostPhysicsUpdate(frametime);
 }
 
 // --- Engine Callbacks ---

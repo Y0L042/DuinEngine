@@ -16,13 +16,10 @@ void duin::Application::Run()
 
     std::function<HWND(void)> renderThreadCapture = [&]() -> HWND {
         if (headlessMode)
-            return (::HWND)nullptr;
+            return (::HWND) nullptr;
 
         return (::HWND)::SDL_GetPointerProperty(
-            ::SDL_GetWindowProperties(sdlWindow),
-            SDL_PROP_WINDOW_WIN32_HWND_POINTER,
-            NULL
-        );
+            ::SDL_GetWindowProperties(sdlWindow), SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
     };
 
     RHIStart(
@@ -30,8 +27,7 @@ void duin::Application::Run()
         headlessMode ? 0 : WINDOW_WIDTH,
         headlessMode ? 0 : WINDOW_HEIGHT,
         renderThreadCapture,
-        headlessMode
-    );
+        headlessMode);
     InitImGui();
 
     if (!headlessMode)
@@ -201,8 +197,8 @@ void duin::Application::RunRender()
     duin::ExecuteRenderPipeline();
 }
 
-bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
-                                     double &physicsAccumTime)
+bool duin::Application::ProcessFrame(
+    double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime, double &physicsAccumTime)
 {
 #ifdef DN_DEBUG
     if (!debugIsGamePaused_)
@@ -236,7 +232,15 @@ bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTi
 
         RunUpdate(deltaTime);
 
-        RunPhysics(physicsCurrentTime, physicsPreviousTime, physicsAccumTime);
+        // Used for testing and debugging, to force physics step.
+        if (physicsAccumTime < 0.0)
+        {
+            PhysicsStep(physicsCurrentTime);
+        }
+        else
+        {
+            RunPhysics(physicsCurrentTime, physicsPreviousTime, physicsAccumTime);
+        }
 
         if (!headlessMode)
         {
