@@ -57,9 +57,9 @@ def main() : void {
     let inc_dir = "{dir}src/Duin/Script/"
 
     // ---- Register adapters here: one write_adapter_file call per adapter ----
-    write_adapter_file("{inc_dir}DnGameObjectAdapter_gen.inc",      "DnGameObjectAdapterBase",      typeinfo ast_typedecl(type<dn_GameObject_Adapter>))
-    write_adapter_file("{inc_dir}DnGameStateAdapter_gen.inc",       "DnGameStateAdapterBase",       typeinfo ast_typedecl(type<dn_GameState_Adapter>))
-    write_adapter_file("{inc_dir}DnGameStateMachineAdapter_gen.inc","DnGameStateMachineAdapterBase",typeinfo ast_typedecl(type<dn_GameStateMachine_Adapter>))
-    write_adapter_file("{inc_dir}DnGameWorldAdapter_gen.inc",       "DnGameWorldAdapterBase",       typeinfo ast_typedecl(type<dn_GameWorld_Adapter>))
+    write_adapter_file("{inc_dir}DnGameObjectAdapter_gen.inc",      "DnGameObjectAdapterBase",      typeinfo ast_typedecl(type<DnGameObject_Adapter>))
+    write_adapter_file("{inc_dir}DnGameStateAdapter_gen.inc",       "DnGameStateAdapterBase",       typeinfo ast_typedecl(type<DnGameState_Adapter>))
+    write_adapter_file("{inc_dir}DnGameStateMachineAdapter_gen.inc","DnGameStateMachineAdapterBase",typeinfo ast_typedecl(type<DnGameStateMachine_Adapter>))
+    write_adapter_file("{inc_dir}DnGameWorldAdapter_gen.inc",       "DnGameWorldAdapterBase",       typeinfo ast_typedecl(type<DnGameWorld_Adapter>))
     // -------------------------------------------------------------------------
 }

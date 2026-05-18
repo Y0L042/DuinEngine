@@ -31,6 +31,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "dn_gameworld") {
         res.info = ("dn_gameworld", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_gameworld.das", "")
     }
+    elif (req == "dn_scenebuilder") {
+        res.info = ("dn_scenebuilder", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_scenebuilder.das", "")
+    }
     elif (req == "dn_ecs") {
         res.info = ("dn_ecs", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs.das", "")
     }
@@ -48,6 +51,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     }
     elif (req == "dn_physics") {
         res.info = ("dn_physics", path_to_engine + "src/Duin/Script/modules/modulePhysics/dn_physics.das", "")
+    }
+    elif (req == "dn_uuid") {
+        res.info = ("dn_uuid", path_to_engine + "src/Duin/Script/modules/moduleUUID/dn_uuid.das", "")
     }
     elif (req == "tomlc17") {
         res.info = ("tomlc17", path_to_engine + "src/Duin/Script/modules/moduleTOML/tomlc17.das", "")
