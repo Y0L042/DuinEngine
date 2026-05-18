@@ -13,9 +13,9 @@ require dn_log public
 require dn_ecs public
 require dn_gameworld_core public
 
-class dn_GameWorld : dn_GameWorld_Adapter {
+class DnGameWorld : DnGameWorld_Adapter {
     initialized : bool = false
-    def dn_GameWorld() : void {
+    def DnGameWorld() : void {
         initialize()
     }
 
@@ -39,14 +39,14 @@ class dn_GameWorld : dn_GameWorld_Adapter {
         data |> mem_archive_load(_handle)
 
         if (res) {
-            dn_info("dn_GameWorld hot_reload_restore() success.")
+            dn_info("DnGameWorld hot_reload_restore() success.")
         } else {
-            dn_fatal("dn_GameWorld hot_reload_restore() failed!")
+            dn_fatal("DnGameWorld hot_reload_restore() failed!")
         }
     }
 
-    def dn_world() : dn_World? {
-        return new dn_World(ecs_world())
+    def dn_world() : DnWorld? {
+        return new DnWorld(ecs_world())
     }
 
     def ecs_world() : ecs_world_t? {
@@ -87,11 +87,11 @@ class dn_GameWorld : dn_GameWorld_Adapter {
     }
 
     [class_method]
-    def static create_entity(name : string) : dn_Entity? {
+    def static create_entity(name : string) : DnEntity? {
         if (_handle == null) {
             return null
         }
-        var e = new dn_Entity()
+        var e = new DnEntity()
         e.entity = dn_gameworld_create_entity_impl(_handle, name)
         unsafe {
             e.world = reinterpret<ecs_world_t?>(dn_gameworld_get_flecs_world_impl(_handle))
@@ -108,14 +108,14 @@ class dn_GameWorld : dn_GameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_position(var e : dn_Entity?; x, y, z : float) {
+    def static set_global_position(var e : DnEntity?; x, y, z : float) {
         if (_handle != null && e != null) {
             dn_gameworld_set_global_position_impl(_handle, e.entity, x, y, z)
         }
     }
 
     [class_method]
-    def static get_global_position(var e : dn_Entity?) : float3 {
+    def static get_global_position(var e : DnEntity?) : float3 {
         var x = 0.0f
         var y = 0.0f
         var z = 0.0f
@@ -128,14 +128,14 @@ class dn_GameWorld : dn_GameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_rotation(var e : dn_Entity?; x, y, z, w : float) {
+    def static set_global_rotation(var e : DnEntity?; x, y, z, w : float) {
         if (_handle != null && e != null) {
             dn_gameworld_set_global_rotation_impl(_handle, e.entity, x, y, z, w)
         }
     }
 
     [class_method]
-    def static get_global_rotation(var e : dn_Entity?) : float4 {
+    def static get_global_rotation(var e : DnEntity?) : float4 {
         var x = 0.0f
         var y = 0.0f
         var z = 0.0f
@@ -149,14 +149,14 @@ class dn_GameWorld : dn_GameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_scale(var e : dn_Entity?; x, y, z : float) {
+    def static set_global_scale(var e : DnEntity?; x, y, z : float) {
         if (_handle != null && e != null) {
             dn_gameworld_set_global_scale_impl(_handle, e.entity, x, y, z)
         }
     }
 
     [class_method]
-    def static get_global_scale(var e : dn_Entity?) : float3 {
+    def static get_global_scale(var e : DnEntity?) : float3 {
         var x = 1.0f
         var y = 1.0f
         var z = 1.0f

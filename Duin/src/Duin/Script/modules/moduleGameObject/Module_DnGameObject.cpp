@@ -18,6 +18,13 @@ void *dn_create_gameobject_impl(void *classPtr, const das::StructInfo *info, das
     return handle;
 }
 
+MAKE_TYPE_FACTORY(DnGameObjectHandle, duin::GameObject);
+static das::Handle<duin::GameObject> dn_make_gameobject_impl()
+{
+    auto sp = std::make_shared<duin::GameObject>();
+    return das::HandleRegistry<duin::GameObject>::instance().acquire(sp);
+}
+
 static void dn_add_to_tree(void *handle)
 {
     // if (handle)
@@ -180,10 +187,9 @@ void dn_add_child_object_impl(void *selfHandle, void *childHandle, das::Context 
     }
     if (parent->IsReady() && !child->IsReady())
     {
-        child->Ready();
+        child->ObjectReady();
     }
 }
-
 
 class Module_DnGameObject : public das::Module
 {

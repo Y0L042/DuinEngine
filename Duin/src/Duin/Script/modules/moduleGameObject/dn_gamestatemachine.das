@@ -17,11 +17,11 @@ require dn_gamestatemachine_core public
 
 // ── GameState ─────────────────────────────────────────────────────────────
 
-class dn_GameState : dn_GameState_Adapter {
+class DnGameState : DnGameState_Adapter {
   // Public
-    _alias : string = "dn_GameState"
+    _alias : string = "DnGameState"
 
-    def dn_GameState() : void {}
+    def DnGameState() : void {}
 
     def finalize() : void {
         if (_handle != null) {
@@ -54,7 +54,7 @@ class dn_GameState : dn_GameState_Adapter {
     def override _set_pause() : void {}
     def override _set_unpause() : void {}
 
-    def set_sm_owner(var owner : dn_GameStateMachine?) : void {
+    def set_sm_owner(var owner : DnGameStateMachine?) : void {
         sm_owner = owner
     }
 
@@ -197,7 +197,7 @@ class dn_GameState : dn_GameState_Adapter {
     }
 
   // Private
-    private sm_owner : dn_GameStateMachine?
+    private sm_owner : DnGameStateMachine?
 }
 
 
@@ -206,10 +206,10 @@ class dn_GameState : dn_GameState_Adapter {
 
 // ── GameStateMachine ──────────────────────────────────────────────────────
 
-class dn_GameStateMachine : dn_GameStateMachine_Adapter {
-    current_state : dn_GameState?
+class DnGameStateMachine : DnGameStateMachine_Adapter {
+    current_state : DnGameState?
 
-    def dn_GameStateMachine() : void {
+    def DnGameStateMachine() : void {
         unsafe {
             _handle = dn_create_gamestatemachine_impl(addr(self), class_info(self))
             dn_info("dn_gamestatemachine_init: _handle = {_handle}\n")

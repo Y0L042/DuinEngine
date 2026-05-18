@@ -16,9 +16,9 @@
 
 // ---- Direct type bindings ----
 
-DAS_TYPE_DECL(dn_Color, duin::Color);
+DAS_TYPE_DECL(DnColor, duin::Color);
 
-DAS_TYPE_ANNOTATION(dn_Color)
+DAS_TYPE_ANNOTATION(DnColor)
 {
     DAS_ADD_FIELD_BIND(r);
     DAS_ADD_FIELD_BIND(g);
@@ -216,7 +216,7 @@ class Module_DnRenderer : public das::Module
         addBuiltinDependency(lib, cameraMod);
 
         // Color type
-        addAnnotation(new dn_ColorAnnotation(lib));
+        addAnnotation(new DnColorAnnotation(lib));
 
         addExtern<DAS_BIND_FUN(dn_make_color), das::SimNode_ExtFuncCallAndCopyOrMove>(
             *this, lib, "dn_make_color", das::SideEffects::none, "dn_make_color")

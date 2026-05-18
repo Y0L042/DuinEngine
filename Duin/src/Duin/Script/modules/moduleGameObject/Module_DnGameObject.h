@@ -7,6 +7,7 @@
 #include "../../DnGameObjectAdapter_gen.inc"
 
 #include "Duin/Core/Debug/DNLog.h"
+#include "Duin/Script/Script.h"
 
 // =========================================================================
 // Layer 3: Dual-inheritance bridge (C++ GameObject + daslang adapter)
@@ -26,14 +27,19 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__init(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [init] is mangled.");
             }
             else
             {
-                invoke__init(context, fn, classPtr);
+                bool ok = context->runWithCatch([&]() { invoke__init(context, fn, classPtr); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _init: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -42,14 +48,19 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__ready(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [ready] is mangled.");
             }
             else
             {
-                invoke__ready(context, fn, classPtr);
+                bool ok = context->runWithCatch([&]() { invoke__ready(context, fn, classPtr); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _ready: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -58,14 +69,19 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__update(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [update] is mangled.");
             }
             else
             {
-                invoke__update(context, fn, classPtr, delta);
+                bool ok = context->runWithCatch([&]() { invoke__update(context, fn, classPtr, delta); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _update: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -74,14 +90,19 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__physics_update(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [physics_update] is mangled.");
             }
             else
             {
-                invoke__physics_update(context, fn, classPtr, delta);
+                bool ok = context->runWithCatch([&]() { invoke__physics_update(context, fn, classPtr, delta); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _physics_update: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -90,14 +111,19 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__draw(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [draw] is mangled.");
             }
             else
             {
-                invoke__draw(context, fn, classPtr);
+                bool ok = context->runWithCatch([&]() { invoke__draw(context, fn, classPtr); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _draw: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -106,14 +132,19 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__draw_ui(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [draw_ui] is mangled.");
             }
             else
             {
-                invoke__draw_ui(context, fn, classPtr);
+                bool ok = context->runWithCatch([&]() { invoke__draw_ui(context, fn, classPtr); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _draw_ui: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -122,14 +153,19 @@ class ScriptGameObject : public duin::GameObject, public DnGameObjectAdapterBase
     {
         if (auto fn = get__debug(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [debug] is mangled.");
             }
             else
             {
-                invoke__debug(context, fn, classPtr);
+                bool ok = context->runWithCatch([&]() { invoke__debug(context, fn, classPtr); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _debug: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }

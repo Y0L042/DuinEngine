@@ -4,8 +4,8 @@ options remove_unused_symbols = false
 module dn_gameworld_class shared public
 
 // Adapter contract for codegen — no C++ builtin requires.
-// dn_GameWorld inherits from this in dn_gameworld.das.
-class dn_GameWorld_Adapter {
+// DnGameWorld inherits from this in dn_gameworld.das.
+class DnGameWorld_Adapter {
     _handle : void?
 
     def abstract _post_update(delta : double) : void

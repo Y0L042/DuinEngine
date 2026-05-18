@@ -5,7 +5,7 @@ options rtti
 module dn_gameobject_class shared public
 
 // Minimal class-only definition for adapter generation.
-class dn_GameObject_Adapter {
+class DnGameObject_Adapter {
     _handle : void?
 
     def abstract _init() : void

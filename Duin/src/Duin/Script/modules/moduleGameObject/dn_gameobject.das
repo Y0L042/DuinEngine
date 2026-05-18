@@ -12,8 +12,8 @@ require dn_log public
 require dn_gameobject_class public
 require dn_gameobject_core public
 
-class dn_GameObject : dn_GameObject_Adapter {
-    def dn_GameObject() : void {
+class DnGameObject : DnGameObject_Adapter {
+    def DnGameObject() : void {
         unsafe {
             _handle = dn_create_gameobject_impl(addr(self), class_info(self))
             dn_info("dn_gameobject_init: _handle = {_handle}\n")

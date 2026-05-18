@@ -4,7 +4,7 @@ module dn_characterbody shared public
 
 require dn_characterbody_core public
 
-class dn_CharacterBody {
+class DnCharacterBody {
     _handle : void?
 
     def create_capsule(

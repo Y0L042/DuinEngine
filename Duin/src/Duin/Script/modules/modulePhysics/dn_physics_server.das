@@ -6,7 +6,7 @@ require dn_physics_server_core public
 
 require dn_log
 
-class dn_PhysicsServer {
+class DnPhysicsServer {
     _handle : void?
     
     def static step(delta : double) : void {

@@ -61,7 +61,7 @@ static void dn_app_add_child_object_impl(void *childHandle, das::Context *contex
     if (!child->IsInitialized())
         child->_InitializeImpl();
     if (parent->IsReady() && !child->IsReady())
-        child->Ready();
+        child->ObjectReady();
 }
 
 // ---- Module ----

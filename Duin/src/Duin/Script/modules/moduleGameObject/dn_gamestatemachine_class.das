@@ -5,7 +5,7 @@ options rtti
 module dn_gamestatemachine_class shared public
 
 // Minimal class-only definition for adapter generation.
-class dn_GameStateMachine_Adapter {
+class DnGameStateMachine_Adapter {
     _handle : void?
 
     def abstract _init() : void

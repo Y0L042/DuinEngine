@@ -17,22 +17,22 @@ MAKE_EXTERNAL_TYPE_FACTORY(ecs_world_t, ecs_world_t)
 
 // ---- Direct type bindings ----
 
-DAS_TYPE_DECL(dn_Vector3, duin::Vector3);
-DAS_TYPE_DECL(dn_Quaternion, duin::Quaternion);
-DAS_TYPE_DECL(dn_Position3D, duin::ECSComponent::Position3D);
-DAS_TYPE_DECL(dn_Rotation3D, duin::ECSComponent::Rotation3D);
-DAS_TYPE_DECL(dn_Scale3D, duin::ECSComponent::Scale3D);
-DAS_TYPE_DECL(dn_Transform3D, duin::ECSComponent::Transform3D::Transform3DImpl);
-DAS_TYPE_DECL(dn_Velocity3D, duin::ECSComponent::Velocity3D);
+DAS_TYPE_DECL(DnVector3, duin::Vector3);
+DAS_TYPE_DECL(DnQuaternion, duin::Quaternion);
+DAS_TYPE_DECL(DnPosition3D, duin::ECSComponent::Position3D);
+DAS_TYPE_DECL(DnRotation3D, duin::ECSComponent::Rotation3D);
+DAS_TYPE_DECL(DnScale3D, duin::ECSComponent::Scale3D);
+DAS_TYPE_DECL(DnTransform3D, duin::ECSComponent::Transform3D::Transform3DImpl);
+DAS_TYPE_DECL(DnVelocity3D, duin::ECSComponent::Velocity3D);
 
-DAS_TYPE_ANNOTATION(dn_Vector3)
+DAS_TYPE_ANNOTATION(DnVector3)
 {
     DAS_ADD_FIELD_BIND(x);
     DAS_ADD_FIELD_BIND(y);
     DAS_ADD_FIELD_BIND(z);
 }
 
-DAS_TYPE_ANNOTATION(dn_Quaternion)
+DAS_TYPE_ANNOTATION(DnQuaternion)
 {
     DAS_ADD_FIELD_BIND(x);
     DAS_ADD_FIELD_BIND(y);
@@ -40,29 +40,29 @@ DAS_TYPE_ANNOTATION(dn_Quaternion)
     DAS_ADD_FIELD_BIND(w);
 }
 
-DAS_TYPE_ANNOTATION(dn_Position3D)
+DAS_TYPE_ANNOTATION(DnPosition3D)
 {
     DAS_ADD_FIELD_BIND(value);
 }
 
-DAS_TYPE_ANNOTATION(dn_Rotation3D)
+DAS_TYPE_ANNOTATION(DnRotation3D)
 {
     DAS_ADD_FIELD_BIND(value);
 }
 
-DAS_TYPE_ANNOTATION(dn_Scale3D)
+DAS_TYPE_ANNOTATION(DnScale3D)
 {
     DAS_ADD_FIELD_BIND(value);
 }
 
-DAS_TYPE_ANNOTATION(dn_Transform3D)
+DAS_TYPE_ANNOTATION(DnTransform3D)
 {
     DAS_ADD_FIELD_BIND(pos);
     DAS_ADD_FIELD_BIND(scale);
     DAS_ADD_FIELD_BIND(rot);
 }
 
-DAS_TYPE_ANNOTATION(dn_Velocity3D)
+DAS_TYPE_ANNOTATION(DnVelocity3D)
 {
     DAS_ADD_FIELD_BIND(value);
 }
@@ -456,13 +456,13 @@ class Module_DnECS : public das::Module
             DN_CORE_ERROR("decs: failed to find required module 'flecs_core'");
         addBuiltinDependency(lib, flecsMod);
 
-        addAnnotation(new dn_Vector3Annotation(lib));
-        addAnnotation(new dn_QuaternionAnnotation(lib));
-        addAnnotation(new dn_Position3DAnnotation(lib));
-        addAnnotation(new dn_Rotation3DAnnotation(lib));
-        addAnnotation(new dn_Scale3DAnnotation(lib));
-        addAnnotation(new dn_Transform3DAnnotation(lib));
-        addAnnotation(new dn_Velocity3DAnnotation(lib));
+        addAnnotation(new DnVector3Annotation(lib));
+        addAnnotation(new DnQuaternionAnnotation(lib));
+        addAnnotation(new DnPosition3DAnnotation(lib));
+        addAnnotation(new DnRotation3DAnnotation(lib));
+        addAnnotation(new DnScale3DAnnotation(lib));
+        addAnnotation(new DnTransform3DAnnotation(lib));
+        addAnnotation(new DnVelocity3DAnnotation(lib));
 
         // Factory helpers
         addExtern<DAS_BIND_FUN(dn_make_vector3), das::SimNode_ExtFuncCallAndCopyOrMove>(

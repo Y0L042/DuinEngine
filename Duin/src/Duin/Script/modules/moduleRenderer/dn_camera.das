@@ -10,19 +10,19 @@ require dn_camera_impl public
 
 require dn_log
 
-class dn_Camera {
+class DnCamera {
     _handle : void?
 
-    def dn_Camera() {
+    def DnCamera() {
         self.init()
     }
 
-    def dn_Camera(impl : dn_CameraImpl) {
+    def DnCamera(impl : DnCameraImpl) {
         self.init()
         self.set_impl(impl)
     }
 
-    def dn_Camera(position, target, global_up : float3, fovy : float) {
+    def DnCamera(position, target, global_up : float3, fovy : float) {
         self.init()
         self.set_impl(
             position, 
@@ -33,14 +33,14 @@ class dn_Camera {
     }
 
     [class_method]
-    def static init() : dn_Camera? {
+    def static init() : DnCamera? {
         _handle = dn_camera_init_impl();
         unsafe{ return addr(self); }
     }
 
     [class_method]
-    def static init(camera_impl : dn_CameraImpl) : dn_Camera? {
-        var camera : dn_Camera? = new dn_Camera()
+    def static init(camera_impl : DnCameraImpl) : DnCamera? {
+        var camera : DnCamera? = new DnCamera()
         camera._handle = dn_camera_init_impl()
         camera.set_impl(camera_impl)
         
@@ -48,8 +48,8 @@ class dn_Camera {
     }
 
     [class_method]
-    def static init(position, target, global_up : float3, fovy : float) : dn_Camera? {
-        var camera : dn_Camera? = new dn_Camera()
+    def static init(position, target, global_up : float3, fovy : float) : DnCamera? {
+        var camera : DnCamera? = new DnCamera()
         camera._handle = dn_camera_init_impl()
         camera.set_impl(position, target, global_up, fovy)
         
@@ -99,8 +99,8 @@ class dn_Camera {
         return dn_camera_get_fovy_impl(_handle)
     }
 
-    def get_impl() : dn_CameraImpl {
-        var c_impl : dn_CameraImpl = dn_CameraImpl()
+    def get_impl() : DnCameraImpl {
+        var c_impl : DnCameraImpl = DnCameraImpl()
         if (_handle != null) {
             dn_get_camera_cameraImpl_impl(_handle, c_impl.position, c_impl.target, c_impl.global_up, c_impl.fovy)
         } else {
@@ -110,7 +110,7 @@ class dn_Camera {
     }
 
     [class_method]
-    def static set_impl(impl : dn_CameraImpl) : void {
+    def static set_impl(impl : DnCameraImpl) : void {
         if (_handle != null) {
             dn_set_camera_cameraImpl_impl(_handle, impl.position, impl.target, impl.global_up, impl.fovy)
         } else {
@@ -193,36 +193,36 @@ class dn_Camera {
 
 
 
-def dn_camera_init(camera_impl : dn_CameraImpl) : dn_Camera? {
-    var camera : dn_Camera? = new dn_Camera()
+def dn_camera_init(camera_impl : DnCameraImpl) : DnCamera? {
+    var camera : DnCamera? = new DnCamera()
     camera._handle = dn_camera_init_impl()
     camera.set_impl(camera_impl)
     
     return camera
 }
 
-def dn_camera_init(position, target, global_up : float3, fovy : float) : dn_Camera? {
-    var camera : dn_Camera? = new dn_Camera()
+def dn_camera_init(position, target, global_up : float3, fovy : float) : DnCamera? {
+    var camera : DnCamera? = new DnCamera()
     camera._handle = dn_camera_init_impl()
     camera.set_impl(position, target, global_up, fovy)
     
     return camera
 }
 
-def dn_camera_finalize(var self : dn_Camera?) : void {
+def dn_camera_finalize(var self : DnCamera?) : void {
     if (self != null) {
         dn_camera_finalize_impl(self._handle)
     }
 }
 
-def dn_get_active_camera() : dn_Camera? {
-    var cam : dn_Camera? = new dn_Camera()
+def dn_get_active_camera() : DnCamera? {
+    var cam : DnCamera? = new DnCamera()
     cam._handle = dn_get_active_camera_impl()
 
     return cam
 }
 
-def dn_set_active_camera(var cam : dn_Camera?) : void {
+def dn_set_active_camera(var cam : DnCamera?) : void {
     if (cam != null) {
         dn_set_active_camera_impl(cam._handle)
     } else {
@@ -231,7 +231,7 @@ def dn_set_active_camera(var cam : dn_Camera?) : void {
     }
 }
 
-def dn_camera_init(var self : dn_Camera?) : dn_Camera? {
+def dn_camera_init(var self : DnCamera?) : DnCamera? {
     if (self != null) {
         self._handle = dn_camera_init_impl()
     }
@@ -239,141 +239,141 @@ def dn_camera_init(var self : dn_Camera?) : dn_Camera? {
     return self
 }
 
-def dn_camera_set_position(var self : dn_Camera?; position : float3) : void {
+def dn_camera_set_position(var self : DnCamera?; position : float3) : void {
     if (self != null) {
         self.set_position(position)
     }
 }
 
-def dn_camera_get_position(var self : dn_Camera?) : float3 {
+def dn_camera_get_position(var self : DnCamera?) : float3 {
     if (self != null) {
         return self.get_position()
     }
     return default<float3>
 }
 
-def dn_camera_set_target(var self : dn_Camera?; target : float3) : void {
+def dn_camera_set_target(var self : DnCamera?; target : float3) : void {
     if (self != null) {
         self.set_target(target)
     }
 }
 
-def dn_camera_get_target(var self : dn_Camera?) : float3 {
+def dn_camera_get_target(var self : DnCamera?) : float3 {
     if (self != null) {
         return self.get_target()
     }
     return default<float3>
 }
 
-def dn_camera_set_global_up(var self : dn_Camera?; global_up : float3) : void {
+def dn_camera_set_global_up(var self : DnCamera?; global_up : float3) : void {
     if (self != null) {
         self.set_global_up(global_up)
     }
 }
 
-def dn_camera_get_global_up(var self : dn_Camera?) : float3 {
+def dn_camera_get_global_up(var self : DnCamera?) : float3 {
     if (self != null) {
         return self.get_global_up()
     }
     return default<float3>
 }
 
-def dn_camera_set_fovy(var self : dn_Camera?; fovy : float) : void {
+def dn_camera_set_fovy(var self : DnCamera?; fovy : float) : void {
     if (self != null) {
         self.set_fovy(fovy)
     }
 }
 
-def dn_camera_get_fovy(var self : dn_Camera?) : float {
+def dn_camera_get_fovy(var self : DnCamera?) : float {
     if (self != null) {
         return self.get_fovy()
     }
     return default<float>
 }
 
-def dn_camera_get_impl(var self : dn_Camera?) : dn_CameraImpl {
+def dn_camera_get_impl(var self : DnCamera?) : DnCameraImpl {
     if (self != null) {
         return self.get_impl()
     }
-    return default<dn_CameraImpl>
+    return default<DnCameraImpl>
 }
 
-def dn_camera_set_impl(var self : dn_Camera?; impl : dn_CameraImpl) : void {
+def dn_camera_set_impl(var self : DnCamera?; impl : DnCameraImpl) : void {
     if (self != null) {
         self.set_impl(impl)
     }
 }
 
-def dn_camera_set_impl(var self : dn_Camera?; position, target, global_up : float3; fovy : float) : void {
+def dn_camera_set_impl(var self : DnCamera?; position, target, global_up : float3; fovy : float) : void {
     if (self != null) {
         self.set_impl(position, target, global_up, fovy)
     }
 }
 
-def dn_camera_move_forward(var self : dn_Camera?; distance : float) : void {
+def dn_camera_move_forward(var self : DnCamera?; distance : float) : void {
     if (self != null) {
         self.move_forward(distance)
     }
 }
 
-def dn_camera_move_up(var self : dn_Camera?; distance : float) : void {
+def dn_camera_move_up(var self : DnCamera?; distance : float) : void {
     if (self != null) {
         self.move_up(distance)
     }
 }
 
-def dn_camera_move_right(var self : dn_Camera?; distance : float) : void {
+def dn_camera_move_right(var self : DnCamera?; distance : float) : void {
     if (self != null) {
         self.move_right(distance)
     }
 }
 
-def dn_camera_move_to_target(var self : dn_Camera?; delta : float) : void {
+def dn_camera_move_to_target(var self : DnCamera?; delta : float) : void {
     if (self != null) {
         self.move_to_target(delta)
     }
 }
 
-def dn_camera_yaw(var self : dn_Camera?; angle : float; rotateAroundTarget : bool = false) : void {
+def dn_camera_yaw(var self : DnCamera?; angle : float; rotateAroundTarget : bool = false) : void {
     if (self != null) {
         self.yaw(angle, rotateAroundTarget)
     }
 }
 
-def dn_camera_pitch(var self : dn_Camera?; angle : float; lockView : bool = true; rotateAroundTarget : bool = false; rotateUp : bool = false) : void {
+def dn_camera_pitch(var self : DnCamera?; angle : float; lockView : bool = true; rotateAroundTarget : bool = false; rotateUp : bool = false) : void {
     if (self != null) {
         self.pitch(angle, lockView, rotateAroundTarget, rotateUp)
     }
 }
 
-def dn_camera_roll(var self : dn_Camera?; angle : float) : void {
+def dn_camera_roll(var self : DnCamera?; angle : float) : void {
     if (self != null) {
         self.roll(angle)
     }
 }
 
-def dn_camera_forward(var self : dn_Camera?) : float3 {
+def dn_camera_forward(var self : DnCamera?) : float3 {
     if (self != null) {
         return self.forward()
     }
     return default<float3>
 }
 
-def dn_camera_right(var self : dn_Camera?) : float3 {
+def dn_camera_right(var self : DnCamera?) : float3 {
     if (self != null) {
         return self.right()
     }
     return default<float3>
 }
 
-def dn_camera_up(var self : dn_Camera?) : float3 {
+def dn_camera_up(var self : DnCamera?) : float3 {
     if (self != null) {
         return self.up()
     }
     return default<float3>
 }
 
-def dn_camera_is_valid(var self : dn_Camera?) : bool {
+def dn_camera_is_valid(var self : DnCamera?) : bool {
     if (self != null) {
         return self.is_valid()
     }

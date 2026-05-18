@@ -5,7 +5,7 @@ options rtti
 module dn_gamestate_class shared public
 
 // Minimal class-only definition for adapter generation.
-class dn_GameState_Adapter {
+class DnGameState_Adapter {
     _handle : void? // handle for C++ duin::GameState class
 
     def abstract _enter() : void

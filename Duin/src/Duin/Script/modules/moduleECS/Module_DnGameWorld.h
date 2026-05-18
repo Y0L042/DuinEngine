@@ -4,6 +4,7 @@
 #include "Duin/ECS/GameWorld.h"
 #include "../../DnGameWorldAdapter_gen.inc"
 #include "Duin/Core/Debug/DNLog.h"
+#include "Duin/Script/Script.h"
 
 // =========================================================================
 // Bridge: dual-inherits duin::GameWorld + generated daslang adapter.
@@ -25,14 +26,19 @@ class ScriptGameWorld : public duin::GameWorld, public DnGameWorldAdapterBase
 
         if (auto fn = get__post_update(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [update] is mangled.");
             }
             else
             {
-                invoke__post_update(context, fn, classPtr, delta);
+                bool ok = context->runWithCatch([&]() { invoke__post_update(context, fn, classPtr, delta); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _post_update: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -42,14 +48,19 @@ class ScriptGameWorld : public duin::GameWorld, public DnGameWorldAdapterBase
         duin::GameWorld::PostPhysicsUpdateQueryExecution(delta);
         if (auto fn = get__post_physics_update(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [physics_update] is mangled.");
             }
             else
             {
-                invoke__post_physics_update(context, fn, classPtr, delta);
+                bool ok = context->runWithCatch([&]() { invoke__post_physics_update(context, fn, classPtr, delta); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _post_physics_update: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -59,14 +70,19 @@ class ScriptGameWorld : public duin::GameWorld, public DnGameWorldAdapterBase
         duin::GameWorld::PostDrawQueryExecution();
         if (auto fn = get__post_draw(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [draw] is mangled.");
             }
             else
             {
-                invoke__post_draw(context, fn, classPtr);
+                bool ok = context->runWithCatch([&]() { invoke__post_draw(context, fn, classPtr); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _post_draw: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }
@@ -76,14 +92,19 @@ class ScriptGameWorld : public duin::GameWorld, public DnGameWorldAdapterBase
         duin::GameWorld::PostDrawUIQueryExecution();
         if (auto fn = get__post_draw_ui(classPtr))
         {
-            constexpr uintptr_t kInvalidPtrPattern = 0xddddddddddddddddULL;
-            if (fn.PTR == nullptr || reinterpret_cast<uintptr_t>(fn.PTR) == kInvalidPtrPattern)
+            if (!duin::VerifyFunction(context, fn))
             {
                 DN_CORE_FATAL("Function [draw_ui] is mangled.");
             }
             else
             {
-                invoke__post_draw_ui(context, fn, classPtr);
+                bool ok = context->runWithCatch([&]() { invoke__post_draw_ui(context, fn, classPtr); });
+                if (!ok)
+                {
+                    if (auto ex = context->getException())
+                        DN_CORE_ERROR("[Script] Exception in _post_draw_ui: {}", ex);
+                    context->clearException();
+                }
             }
         }
     }

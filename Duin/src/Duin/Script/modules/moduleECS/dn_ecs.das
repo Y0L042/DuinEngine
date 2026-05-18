@@ -15,18 +15,18 @@ require live/live_vars
 require dn_live_host public
 
 
-class dn_Entity {
+class DnEntity {
     entity : ecs_entity_t
     world : ecs_world_t?
 
-    def dn_Entity(var world : ecs_world_t?, var name : string = "") : void {
+    def DnEntity(var world : ecs_world_t?, var name : string = "") : void {
         if (world != null) {
             self.world = world
             entity = ecs_entity_new(world, name)
         }
     }
 
-    def dn_Entity(var world : ecs_world_t?, var entity : ecs_entity_t) : void {
+    def DnEntity(var world : ecs_world_t?, var entity : ecs_entity_t) : void {
         if (world != null) {
             self.world = world
             self.entity = entity
@@ -37,13 +37,13 @@ class dn_Entity {
         return (world != null) && (entity != 0ul)
     }
 
-    def is_a(prefab_id : ecs_entity_t) : dn_Entity? {
+    def is_a(prefab_id : ecs_entity_t) : DnEntity? {
         let IsA = ecs_lookup(world, "IsA")
         ecs_add_id(world, entity, ecs_make_pair(IsA, prefab_id))
         return unsafe(addr(self))
     }
 
-    def add_tag(tag_id : ecs_entity_t) : dn_Entity? {
+    def add_tag(tag_id : ecs_entity_t) : DnEntity? {
         ecs_add(world, entity, tag_id)
         return unsafe(addr(self))
     }
@@ -68,12 +68,12 @@ class dn_Entity {
         return ecs_has(world, entity, tag_id)
     }
 
-    def remove_tag(tag_id : ecs_entity_t) : dn_Entity? {
+    def remove_tag(tag_id : ecs_entity_t) : DnEntity? {
         ecs_remove(world, entity, tag_id)
         return unsafe(addr(self))
     }
 
-    def child_of(var parent : dn_Entity?) : dn_Entity? {
+    def child_of(var parent : DnEntity?) : DnEntity? {
         if (parent != null) {
             let ChildOf = ecs_lookup(world, "ChildOf")
             ecs_add_id(world, entity, ecs_make_pair(ChildOf, parent.entity))
@@ -81,7 +81,7 @@ class dn_Entity {
         return unsafe(addr(self))
     }
 
-    def set_name(name : string) : dn_Entity? {
+    def set_name(name : string) : DnEntity? {
         ecs_set_name(world, entity, name)
         return unsafe(addr(self))
     }
@@ -90,7 +90,7 @@ class dn_Entity {
         return string(ecs_get_name(world, entity))
     }
 
-    def enable(v : bool) : dn_Entity? {
+    def enable(v : bool) : DnEntity? {
         ecs_enable(world, entity, v)
         return unsafe(addr(self))
     }
@@ -114,10 +114,10 @@ class dn_Entity {
 
 
 
-class dn_World {
+class DnWorld {
     world : ecs_world_t?
 
-    def dn_World(var world : ecs_world_t?) : void {
+    def DnWorld(var world : ecs_world_t?) : void {
         self.world = world
     }
 
@@ -130,15 +130,15 @@ class dn_World {
         return (world != null)
     }
 
-    def create_entity(name : string) : dn_Entity? {
-        var e = new dn_Entity()
+    def create_entity(name : string) : DnEntity? {
+        var e = new DnEntity()
         e.entity = ecs_entity_new(world, name)
         e.world = world
         return e
     }
 
-    def create_prefab(name : string) : dn_Entity? {
-        var e = new dn_Entity()
+    def create_prefab(name : string) : DnEntity? {
+        var e = new DnEntity()
         unsafe {
             var desc = ecs_entity_desc_t(name = name)
             e.entity = ecs_entity_init(world, addr(desc))
@@ -149,24 +149,24 @@ class dn_World {
         return e
     }
 
-    def delete_entity(var e : dn_Entity?) {
+    def delete_entity(var e : DnEntity?) {
         if (e != null) {
             ecs_delete(world, e.entity)
         }
     }
 
-    def is_alive(var e : dn_Entity?) : bool {
+    def is_alive(var e : DnEntity?) : bool {
         if (e == null) {
             return false
         }
         return ecs_is_alive(world, e.entity)
     }
 
-    def query_builder() : dn_QueryBuilder? {
+    def query_builder() : DnQueryBuilder? {
         if (world == null) {
             return null
         }
-        return new dn_QueryBuilder(world)
+        return new DnQueryBuilder(world)
     }
 
 
@@ -175,16 +175,16 @@ class dn_World {
     }
 }
 
-def dn_register_component(var dn_world : dn_World?, var cmp_type : type<auto(T)>) : void {
+def dn_register_component(var dn_world : DnWorld?, var cmp_type : type<auto(T)>) : void {
     ecs_component_register(dn_world.world, type<T>)
 }
 
-class dn_Query {
+class DnQuery {
     query : ecs_query_t?
     world : ecs_world_t?
 
     [class_method]
-    def static each(var q : dn_Query?; blk : block<(entity : dn_Entity?)>) : void {
+    def static each(var q : DnQuery?; blk : block<(entity : DnEntity?)>) : void {
         if (q != null) {
             q.each(blk)
         }
@@ -200,12 +200,12 @@ class dn_Query {
 
 }
 
-class dn_QueryBuilder {
+class DnQueryBuilder {
     world : ecs_world_t?
     q_desc : ecs_query_desc_t
     term_count : int
 
-    def dn_QueryBuilder(var world : ecs_world_t?) : void {
+    def DnQueryBuilder(var world : ecs_world_t?) : void {
         self.world = world
         self.term_count = 0
     }
@@ -213,7 +213,7 @@ class dn_QueryBuilder {
     // Add a single typed term.
     // Pass EcsIn as inout to match flecs' with<const T>() (read-only).
     [class_method]
-    def static with_term(var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : dn_QueryBuilder? {
+    def static with_term(var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : DnQueryBuilder? {
         let id = ecs_component_register(world, type<T>)
         flecs_query_desc_set_term_full(q_desc, term_count, id, inout, EcsAnd)
         term_count++
@@ -222,7 +222,7 @@ class dn_QueryBuilder {
 
     // Exclude entities that have this component.
     [class_method]
-    def static without_term(var cmp : type<auto(T)>) : dn_QueryBuilder? {
+    def static without_term(var cmp : type<auto(T)>) : DnQueryBuilder? {
         let id = ecs_component_register(world, type<T>)
         flecs_query_desc_set_term_full(q_desc, term_count, id, EcsInOutNone, EcsNot)
         term_count++
@@ -235,7 +235,7 @@ class dn_QueryBuilder {
     }
 
     // Add multiple pre-built terms at once.
-    def terms(var bulk_terms : array<ecs_term_t>) : dn_QueryBuilder? {
+    def terms(var bulk_terms : array<ecs_term_t>) : DnQueryBuilder? {
         for (t in bulk_terms) {
             flecs_query_desc_set_term_full(q_desc, term_count, t.id, int(t.inout), int(t.oper))
             term_count++
@@ -243,8 +243,8 @@ class dn_QueryBuilder {
         return unsafe(addr(self))
     }
 
-    def build() : dn_Query? {
-        var result = new dn_Query()
+    def build() : DnQuery? {
+        var result = new DnQuery()
         result.world = world
         unsafe {
             result.query = ecs_query_init(world, addr(q_desc))
@@ -252,22 +252,22 @@ class dn_QueryBuilder {
         return result
     }
 
-    def cached() : dn_QueryBuilder? {
+    def cached() : DnQueryBuilder? {
         flecs_query_desc_set_cache_kind(q_desc, EcsQueryCacheAuto)
         return unsafe(addr(self))
     }
 
-    def cache_kind(cache_kind : int = 1) : dn_QueryBuilder? {
+    def cache_kind(cache_kind : int = 1) : DnQueryBuilder? {
         flecs_query_desc_set_cache_kind(q_desc, cache_kind)
         return unsafe(addr(self))
     }
 
-    def query_flags(flags : int) : dn_QueryBuilder? {
+    def query_flags(flags : int) : DnQueryBuilder? {
         return unsafe(addr(self))
     }
 }
 
-def ecs_term(var world : dn_World?, var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : ecs_term_t {
+def ecs_term(var world : DnWorld?, var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : ecs_term_t {
     let id : ecs_entity_t = ecs_component_register(world.ecs_world(), type<T>)
     return ecs_term_t(id=id, inout=int16(inout))
 }
