@@ -29,7 +29,7 @@ require ./GameObjects/Frogger/frogger.das
 require ./GameObjects/Zeus/zeus.das
 
 var player : Player?
-var game_world : dn_GameWorld?
+var game_world : DnGameWorld?
 var zeus : Zeus?
 var zeus_mode : bool = false
 
@@ -44,7 +44,7 @@ def game_ready() {
     dn_capture_mouse(true)
 
     // GameWorld always re-wraps (smart constructor reuses existing C++ world on reload).
-    game_world = new dn_GameWorld()
+    game_world = new DnGameWorld()
 
     // Entities and game state are only created on first load.
     if (!is_reload()) {
@@ -125,8 +125,8 @@ def game_draw() {
 
 [export]
 def game_draw_ui() {
-    var active_cam : dn_Camera?# = dn_get_active_camera()
-    let impl : dn_CameraImpl = active_cam.get_impl()
+    var active_cam : DnCamera?# = dn_get_active_camera()
+    let impl : DnCameraImpl = active_cam.get_impl()
     imgui_boost::Begin("Daslang Dashboard!")
     imgui_boost::Text("Render  FPS: {dn_get_render_frame_time() * 1000f}")
     imgui_boost::Text("Physics FPS: {dn_get_physics_frame_time() * 1000f}")

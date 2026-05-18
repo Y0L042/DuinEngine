@@ -15,7 +15,7 @@ require dn_physics
 require ../../state_machine.das
 require ./StateMachine/player_on_ground_idle.das
 
-class Player : dn_GameObject {
+class Player : DnGameObject {
     sm : StateMachine?
 
     inverse : int = 1
@@ -25,17 +25,17 @@ class Player : dn_GameObject {
     position : float3 = float3(5.0, 2.0, 5.0)
 
 
-    game_world : dn_GameWorld?
-    player_entity : dn_Entity?
-    characterbody : dn_CharacterBody?
-    camera : dn_Camera?
+    game_world : DnGameWorld?
+    player_entity : DnEntity?
+    characterbody : DnCharacterBody?
+    camera : DnCamera?
 
-    def Player(var game_world_ : dn_GameWorld?) : void {
+    def Player(var game_world_ : DnGameWorld?) : void {
         sm = new StateMachine()
         sm.change_state(new Player_OnGround_Idle())
         game_world = game_world_
         player_entity = game_world.create_entity("Player")
-        characterbody = new dn_CharacterBody()
+        characterbody = new DnCharacterBody()
         characterbody.create_capsule(
             70.0,
             1.0,
@@ -48,7 +48,7 @@ class Player : dn_GameObject {
             0.25
         )
 
-        camera = dn_camera_init(new dn_Camera())
+        camera = dn_camera_init(new DnCamera())
         camera.set_impl(
             position + v_offset,
             float3(0.0, 0.0, 0.0),

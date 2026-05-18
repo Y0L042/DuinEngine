@@ -11,13 +11,13 @@ require dn_log
 require dn_input
 require dn_ecs
 
-class Zeus : dn_GameObject {
+class Zeus : DnGameObject {
     move_speed : float = 7.0f
     mouse_sensitivity : float = 0.0015f
-    dev_camera : dn_Camera?
+    dev_camera : DnCamera?
 
     def override _init() {
-        dev_camera = dn_camera_init(new dn_Camera())
+        dev_camera = dn_camera_init(new DnCamera())
         dev_camera.set_impl(
             float3(15.0, 8.0, 15.0),
             float3(0.0, 0.0, 0.0),

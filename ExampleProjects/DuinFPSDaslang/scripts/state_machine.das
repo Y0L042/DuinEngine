@@ -8,7 +8,7 @@ module state_machine shared public
 require dn_gameobject
 
 
-class StateMachine : dn_GameObject {
+class StateMachine : DnGameObject {
     current_state : State?
 
     def StateMachine() : void {}

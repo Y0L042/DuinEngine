@@ -9,6 +9,6 @@ struct RenderCube {
     size : float3
 }
 
-def register_components(var world : dn_World?) : void {
+def register_components(var world : DnWorld?) : void {
     world.dn_register_component(type<RenderCube>)
 }

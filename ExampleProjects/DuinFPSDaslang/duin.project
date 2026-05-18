@@ -1,0 +1,56 @@
+{
+	"ENGINE_VERSION": 0,
+	"EDITOR_VERSION": 0,
+	"EditorConfig": {
+		"Array_Of_Tabs": [
+			{
+				"Tab_Title": "Editor",
+				"Tab_UUID": "0x4C85560B03CECDB8",
+				"Tab_PanelManager_UUID": {
+					"PanelManager_UUID": "0x84928B227532B196",
+					"Array_Of_Panels": [
+						{
+							"Panel_Type": "SCENETREE",
+							"Panel_UUID": "0x5511FD0DBA92C7EF",
+							"Panel_Name": "SceneTree_Panel_1",
+							"Panel_Window_Name": "SceneTree_Panel_1_0x5511FD0DBA92C7EF"
+						},
+						{
+							"Panel_Type": "FILEBROWSER",
+							"Panel_UUID": "0xA5E865D792E2CDED",
+							"Panel_Name": "FileBrowser_Panel_2",
+							"Panel_Window_Name": "FileBrowser_Panel_2_0xA5E865D792E2CDED"
+						},
+						{
+							"Panel_Type": "VIEWPORT",
+							"Panel_UUID": "0xE03C6C1035D3797A",
+							"Panel_Name": "Viewport_Panel_1",
+							"Panel_Window_Name": "Viewport_Panel_1_0xE03C6C1035D3797A"
+						}
+					]
+				}
+			},
+			{
+				"Tab_Title": "Map Editor",
+				"Tab_UUID": "0xD1FA1EC742E6C8A8",
+				"Tab_PanelManager_UUID": {
+					"PanelManager_UUID": "0x912D44CA05825EA1",
+					"Array_Of_Panels": [
+						{
+							"Panel_Type": "VIEWPORT",
+							"Panel_UUID": "0xDF9393B8ABBC41D8",
+							"Panel_Name": "Viewport_Panel_3",
+							"Panel_Window_Name": "Viewport_Panel_3_0xDF9393B8ABBC41D8"
+						},
+						{
+							"Panel_Type": "VIEWPORT",
+							"Panel_UUID": "0xA51B14888DC4977F",
+							"Panel_Name": "Viewport_Panel_4",
+							"Panel_Window_Name": "Viewport_Panel_4_0xA51B14888DC4977F"
+						}
+					]
+				}
+			}
+		]
+	}
+}
