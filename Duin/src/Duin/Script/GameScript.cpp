@@ -1,6 +1,5 @@
 #include "dnpch.h"
 #include "GameScript.h"
-#include "Duin/ECS/GameWorld.h"
 #include "Duin/IO/FileModule.h"
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
 #include "./modules/moduleLiveHost/Module_DnLiveHost.h"
@@ -14,7 +13,6 @@
 #include <Duin/Objects/GameObject.h>
 #include "Script.h"
 #include <external/FileWatch.h>
-#include <vecmath/dag_vecMathDecl.h>
 
 duin::GameScript::GameScript(const std::string &relScriptPath) : Script(relScriptPath), GameObject()
 {
@@ -33,25 +31,60 @@ void duin::GameScript::SetGameFunctions()
         return;
     }
 
-    fnGameReady = context->findFunction("game_ready");
-    fnGameUpdate = context->findFunction("game_update");
-    fnGamePhysicsUpdate = context->findFunction("game_physics_update");
-    fnGameDraw = context->findFunction("game_draw");
-    fnGameDrawUI = context->findFunction("game_draw_ui");
+    auto bindFn = [&](das::Func &field, const char *name) -> das::SimFunction * {
+        das::SimFunction *simFn = context->findFunction(name);
+        field = das::Func(simFn);
+        return simFn;
+    };
+
+    if (auto *sf = bindFn(fnGameReady, "game_ready"))
+    {
+        if (!das::verifyCall<void>(sf->debugInfo, libGroup))
+        {
+            DN_CORE_WARN("game_ready: signature mismatch — expected void()");
+        }
+    }
+
+    if (auto *sf = bindFn(fnGameUpdate, "game_update"))
+    {
+        if (!das::verifyCall<void, double>(sf->debugInfo, libGroup))
+        {
+            DN_CORE_WARN("game_update: signature mismatch — expected void(double)");
+        }
+    }
+
+    if (auto *sf = bindFn(fnGamePhysicsUpdate, "game_physics_update"))
+    {
+        if (!das::verifyCall<void, double>(sf->debugInfo, libGroup))
+        {
+            DN_CORE_WARN("game_physics_update: signature mismatch — expected void(double)");
+        }
+    }
+
+    if (auto *sf = bindFn(fnGameDraw, "game_draw"))
+    {
+        if (!das::verifyCall<void>(sf->debugInfo, libGroup))
+        {
+            DN_CORE_WARN("game_draw: signature mismatch — expected void()");
+        }
+    }
+
+    if (auto *sf = bindFn(fnGameDrawUI, "game_draw_ui"))
+    {
+        if (!das::verifyCall<void>(sf->debugInfo, libGroup))
+        {
+            DN_CORE_WARN("game_draw_ui: signature mismatch — expected void()");
+        }
+    }
 }
 
 void duin::GameScript::ResetGameFunctions()
 {
-    fnGameReady = nullptr;
-    fnGameUpdate = nullptr;
-    fnGamePhysicsUpdate = nullptr;
-    fnGameDraw = nullptr;
-    fnGameDrawUI = nullptr;
-}
-
-void duin::GameScript::SetGameWorld(GameWorld *gw)
-{
-    gameWorld_ = gw;
+    fnGameReady = das::Func{};
+    fnGameUpdate = das::Func{};
+    fnGamePhysicsUpdate = das::Func{};
+    fnGameDraw = das::Func{};
+    fnGameDrawUI = das::Func{};
 }
 
 void duin::GameScript::ResetMuteWarningFlags()
@@ -67,7 +100,6 @@ void duin::GameScript::EnableHotCompile(bool enable, bool halt)
 {
     hotCompileEnabled = enable;
     haltOnCompilationFail = halt;
-    g_DnLiveHostState.live_mode = enable;
 }
 
 bool duin::GameScript::IsHotCompileEnabled()
@@ -85,20 +117,6 @@ bool duin::GameScript::CompileAndSimulate()
     bool compiled = Compile();
     if (compiled)
     {
-        // Call pre-Reload hooks of old context
-        if (isReload && scriptReady)
-        {
-            g_DnLiveHostState.is_reload = true;
-            for (auto *fn : g_DnLiveHostState.beforeReloadFns)
-            {
-                CallScript(fn);
-            }
-            CallLiveVarsFunctions("__before_reload_live_vars");
-        }
-
-        g_DnLiveHostState.beforeReloadFns.clear();
-        g_DnLiveHostState.afterReloadFns.clear();
-
         std::shared_ptr<ScriptMemory> oldContextMemory;
         if (context)
         {
@@ -115,39 +133,21 @@ bool duin::GameScript::CompileAndSimulate()
 
             SetGameFunctions();
             SetContextRootObject();
-            g_DnLiveHostState.last_error.clear();
-
-            if (isReload)
-            {
-                for (auto *fn : g_DnLiveHostState.afterReloadFns)
-                {
-                    CallScript(fn);
-                }
-                CallLiveVarsFunctions("__after_reload_live_vars");
-                g_DnLiveHostState.is_reload = false;
-            }
 
             if (!hotCompileEnabled)
             {
-                // Treat recompile as a fresh start: clear only once we have a working new script.
+                // Treat recompile as a fresh start: clear only once when new script is working.
                 ClearScriptGameObjects();
             }
 
             hasCompiledOnce = true;
             Ready();
         }
-        else
-        {
-            g_DnLiveHostState.last_error = "Simulation failed";
-            g_DnLiveHostState.is_reload = false;
-        }
 
         compiled = simulated;
     }
     else
     {
-        g_DnLiveHostState.last_error = lastCompileError;
-
         if (haltOnCompilationFail)
         {
             scriptReady = false;
@@ -163,7 +163,6 @@ bool duin::GameScript::SetContextRootObject()
     if (res)
     {
         context->rootGameObject = this;
-        context->gameWorld = gameWorld_;
     }
 
     return res;
@@ -205,7 +204,7 @@ void duin::GameScript::Ready()
 
     if (scriptReady)
     {
-        CallScript(fnGameReady);
+        InvokeVoid(fnGameReady);
     }
     else
     {
@@ -221,37 +220,17 @@ void duin::GameScript::OnEvent(Event e)
 {
 }
 
-void duin::GameScript::CallLiveVarsFunctions(const std::string &funcName)
-{
-    if (!context || !scriptReady)
-    {
-        return;
-    }
-    for (auto *fn : context->findFunctions(funcName.c_str()))
-    {
-        CallScript(fn);
-    }
-}
-
-void duin::GameScript::CallAnnotatedScriptFunctions(const std::string &)
-{
-    // Annotation-registered functions are tracked via FunctionAnnotation::complete()
-    // in Module_DnLiveHost. Use beforeReloadFns / afterReloadFns on g_DnLiveHostState.
-}
 
 void duin::GameScript::Update(double delta)
 {
     uptimeAccum += static_cast<float>(delta);
-    g_DnLiveHostState.dt = static_cast<float>(delta);
-    g_DnLiveHostState.uptime = uptimeAccum;
-    g_DnLiveHostState.fps = (delta > 0.0) ? static_cast<float>(1.0 / delta) : 0.0f;
 
     // Only hot recompile if it has been X seconds since last file change (with no further changes).
     // Timer then disabled to prevent continual recompilation, only reset when file is changed again.
     float cooldownTimerPrev = hotCompileFileChangeCooldownTimer;
     if (hotCompileFileChangeCooldownTimer > 0.0f)
     {
-        hotCompileFileChangeCooldownTimer -= delta;
+        hotCompileFileChangeCooldownTimer -= static_cast<float>(delta);
     }
     bool cooldownReachedZero =
         (hotCompileFileChangeCooldownTimer <= 0.0f) && ((hotCompileFileChangeCooldownTimer * cooldownTimerPrev) < 0.0f);
@@ -280,9 +259,7 @@ void duin::GameScript::Update(double delta)
 
     if (scriptReady)
     {
-        vec4f args[1];
-        args[0] = cast<double>::from(delta);
-        CallScript(fnGameUpdate, args);
+        InvokeWithDelta(fnGameUpdate, delta);
     }
     else
     {
@@ -298,9 +275,7 @@ void duin::GameScript::PhysicsUpdate(double delta)
 {
     if (scriptReady)
     {
-        vec4f args[1];
-        args[0] = cast<double>::from(delta);
-        CallScript(fnGamePhysicsUpdate, args);
+        InvokeWithDelta(fnGamePhysicsUpdate, delta);
     }
     else
     {
@@ -316,7 +291,7 @@ void duin::GameScript::Draw()
 {
     if (scriptReady)
     {
-        CallScript(fnGameDraw);
+        InvokeVoid(fnGameDraw);
     }
     else
     {
@@ -332,7 +307,7 @@ void duin::GameScript::DrawUI()
 {
     if (scriptReady)
     {
-        CallScript(fnGameDrawUI);
+        InvokeVoid(fnGameDrawUI);
     }
     else
     {
@@ -355,18 +330,6 @@ void duin::GameScript::ClearScriptGameObjects()
     {
         RemoveChildObject(child.lock());
     }
-
-    // if (context && context->rootGameObject)
-    //{
-    //     auto &root = *context->rootGameObject;
-    //     for (auto &child : root.GetChildren())
-    //     {
-    //         if (child.lock())
-    //         {
-    //             RestartSGORecurse(child.lock());
-    //         }
-    //     }
-    // }
 }
 
 void duin::GameScript::RestartSGORecurse(std::shared_ptr<GameObject> obj)

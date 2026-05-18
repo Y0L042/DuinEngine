@@ -8,8 +8,6 @@
 
 namespace duin
 {
-class GameWorld;
-
 class GameScript : public Script, public GameObject
 {
   public:
@@ -20,7 +18,6 @@ class GameScript : public Script, public GameObject
     void ResetGameFunctions();
     void ResetMuteWarningFlags();
 
-    void SetGameWorld(GameWorld *gw);
 
     void EnableHotCompile(bool enable, bool halt = false);
     bool IsHotCompileEnabled();
@@ -40,13 +37,12 @@ class GameScript : public Script, public GameObject
     void SetHotCompileFileChangeCooldown(float val);
 
   private:
-    GameWorld *gameWorld_ = nullptr;
     float HOT_COMPILE_FILE_CHANGE_COOLDOWN = 10.0f;
 
     bool hotCompileEnabled = false;
     bool haltOnCompilationFail = false;
     bool queueHotCompileFlag = false;
-    float hotCompileFileChangeCooldownTimer;
+    float hotCompileFileChangeCooldownTimer = -999.999f;
     std::unique_ptr<filewatch::FileWatch<std::wstring>> directoryWatch;
 
     int64_t scriptLastModified = 0;
@@ -59,15 +55,13 @@ class GameScript : public Script, public GameObject
     bool muteDrawWarning = false;
     bool muteDrawUIWarning = false;
 
-    das::SimFunction *fnGameReady = nullptr;
-    das::SimFunction *fnGameUpdate = nullptr;
-    das::SimFunction *fnGamePhysicsUpdate = nullptr;
-    das::SimFunction *fnGameDraw = nullptr;
-    das::SimFunction *fnGameDrawUI = nullptr;
+    das::Func fnGameReady;
+    das::Func fnGameUpdate;
+    das::Func fnGamePhysicsUpdate;
+    das::Func fnGameDraw;
+    das::Func fnGameDrawUI;
 
     void ClearScriptGameObjects();
     void RestartSGORecurse(std::shared_ptr<GameObject> child);
-    void CallLiveVarsFunctions(const std::string &funcName);
-    void CallAnnotatedScriptFunctions(const std::string &annotationName);
 };
 } // namespace duin

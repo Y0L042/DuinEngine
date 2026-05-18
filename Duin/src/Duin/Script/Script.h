@@ -1,6 +1,7 @@
 #pragma once
 
 #include <daScript/daScript.h>
+#include <daScript/simulate/aot.h>
 #include <string>
 #include <functional>
 #include <vector>
@@ -9,7 +10,7 @@
 namespace duin
 {
 
-
+bool VerifyFunction(das::Context *ctx, das::Func fn);
 
 class Script
 {
@@ -26,11 +27,13 @@ class Script
 
     bool Compile();
     bool SimulateContext();
-    bool CallScript(das::SimFunction *fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
+    bool CallScript(das::Func fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
+    bool InvokeVoid(das::Func fn);
+    bool InvokeWithDelta(das::Func fn, double delta);
     virtual void ResetScript();
 
-
-    das::SimFunction *FindFunction(const std::string &func);
+    das::Func FindFunction(const std::string &func);
+    bool VerifyFunction(das::Func fn);
 
   protected:
     bool scriptReady = false;

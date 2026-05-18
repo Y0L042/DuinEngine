@@ -1,10 +1,12 @@
 #include "dnpch.h"
 #include "Script.h"
 #include <Duin/Core/Debug/DNLog.h>
+#include <chrono>
 #include <memory>
 #include <string>
 #include <sstream>
 #include <daScript/ast/ast.h>
+#include <daScript/simulate/aot.h>
 #include <daScript/daScriptModule.h>
 #include <daScript/misc/smart_ptr.h>
 #include <daScript/misc/sysos.h>
@@ -66,7 +68,7 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
 
 bool duin::Script::Compile()
 {
-    DN_CORE_INFO("Compiling script {}...", scriptPath);
+    DN_CORE_WARN("Compiling script {}...", scriptPath);
     bool res = false;
 
     // Set optional project file, script root, configure policies
@@ -85,7 +87,10 @@ bool duin::Script::Compile()
 
     // Attempt compilation
     // only update script program on successful compilation
+    auto compileStart = std::chrono::steady_clock::now();
     das::ProgramPtr newProgram = das::compileDaScript(scriptPath, fAccess, tout, libGroup, policies);
+    auto compileMs =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - compileStart).count();
     if (newProgram->failed())
     {
         DN_CORE_FATAL("Compilation failed!");
@@ -100,10 +105,12 @@ bool duin::Script::Compile()
             lastCompileError += SafeErrorReport(err);
         }
 
+        DN_CORE_ERROR("Compilation failed in {}ms.", compileMs);
         res = false;
     }
     else
     {
+        DN_CORE_INFO("Compiled {} in {}ms.", scriptPath, compileMs);
         program = newProgram;
         lastCompileError.clear();
         res = true;
@@ -139,9 +146,9 @@ bool duin::Script::SimulateContext()
     return res;
 }
 
-bool duin::Script::CallScript(das::SimFunction *fn, vec4f *args, void *res)
+bool duin::Script::CallScript(das::Func fn, vec4f *args, void *res)
 {
-    if (!(fn && context))
+    if (!VerifyFunction(fn))
     {
         if (!fn)
         {
@@ -153,11 +160,11 @@ bool duin::Script::CallScript(das::SimFunction *fn, vec4f *args, void *res)
         }
         return false;
     }
-
-    context->evalWithCatch(fn, args, res);
+    context->evalWithCatch(fn.PTR, args, res);
     if (auto ex = context->getException())
     {
         DN_CORE_FATAL("Script Exception: \n{}\n", ex);
+        context->clearException();
         return false;
     }
     return true;
@@ -168,11 +175,13 @@ void duin::Script::ResetToBaseModules()
     // Order matters here:
     // 1. libGroup.reset() first: skips promoted modules (builtIn=true, no delete) but clears
     //    the local vector — so their raw pointers are gone from libGroup before step 2.
-    // 2. Module::Reset() then: walks the global daScriptEnvironment::modules linked list and
-    //    deletes only promoted entries (builtIn=true, promoted=true), forcing the next
-    //    compileDaScript to re-read `shared` modules from disk instead of reusing the stale
-    //    cached version. Doing this after libGroup.reset() avoids a double-free: if we deleted
-    //    them first, libGroup.reset() would still dereference their (now-dangling) pointers.
+    // 2. Module::Reset(false) then: walks the global daScriptEnvironment::modules linked list
+    //    and deletes only entries where promoted==true (i.e. daslib/*.das files promoted to
+    //    builtins during a previous compileDaScript). This forces re-reading them from disk so
+    //    hot-reload sees any changes. Duin's own C++ modules (builtIn=true, promoted=false)
+    //    are never touched by Module::Reset and survive across recompiles unchanged.
+    //    Doing this after libGroup.reset() avoids a double-free: if they are deleted first,
+    //    libGroup.reset() would still dereference their (now-dangling) pointers.
     libGroup.reset();
     das::Module::Reset(false);
     for (das::Module *m : baseModules)
@@ -195,13 +204,75 @@ void duin::Script::ResetScript()
     }
 }
 
-das::SimFunction *duin::Script::FindFunction(const std::string &func)
+bool duin::Script::InvokeVoid(das::Func fn)
+{
+    if (!VerifyFunction(fn))
+    {
+        if (!fn)
+        {
+            DN_CORE_WARN("Called script function is null!");
+        }
+        if (!context)
+        {
+            DN_CORE_WARN("Context is not set!");
+        }
+        return false;
+    }
+
+    bool ok = context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn); });
+
+    if (!ok)
+    {
+        if (auto ex = context->getException())
+        {
+            DN_CORE_FATAL("Script Exception: \n{}\n", ex);
+        }
+        context->clearException();
+        return false;
+    }
+    return true;
+}
+
+bool duin::Script::InvokeWithDelta(das::Func fn, double delta)
+{
+    if (!VerifyFunction(fn))
+    {
+        if (!fn)
+        {
+            DN_CORE_WARN("Called script function is null!");
+        }
+        if (!context)
+        {
+            DN_CORE_WARN("Context is not set!");
+        }
+        return false;
+    }
+    bool ok =
+        context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn, delta); });
+    if (!ok)
+    {
+        if (auto ex = context->getException())
+        {
+            DN_CORE_FATAL("Script Exception: \n{}\n", ex);
+        }
+        context->clearException();
+        return false;
+    }
+    return true;
+}
+
+das::Func duin::Script::FindFunction(const std::string &func)
 {
     if (context)
     {
-        return context->findFunction(func.c_str());
+        return das::Func(context->findFunction(func.c_str()));
     }
-    return nullptr;
+    return das::Func();
+}
+
+bool duin::Script::VerifyFunction(das::Func fn)
+{
+    return duin::VerifyFunction(context.get(), fn);
 }
 
 void duin::Script::ResetContext()
@@ -239,4 +310,17 @@ std::string duin::Script::SafeErrorReport(const das::Error &err)
     oss << "Cerr: " << (int)err.cerr << "\n";
 
     return oss.str();
+}
+
+bool duin::VerifyFunction(das::Context *ctx, das::Func fn)
+{
+    if (!fn || !ctx)
+        return false;
+    // Pointer-range check: valid handles live inside the current context's
+    // contiguous function table. A stale SimFunction* from a destroyed context
+    // (Windows debug fill: 0xDDDDDDDD...) will fall outside this range without
+    // requiring us to dereference the potentially dangling pointer.
+    const das::SimFunction *begin = ctx->getFunction(0);
+    const das::SimFunction *end = begin + ctx->getTotalFunctions();
+    return fn.PTR >= begin && fn.PTR < end;
 }
