@@ -42,13 +42,13 @@ class TestApp : public duin::Application
 
     void Update(double delta) override
     {
-        ++updateCalled;
+        updateCalled += 1;
         lastDelta = delta;
     }
 
     void PhysicsUpdate(double delta) override
     {
-        ++physicsUpdateCalled;
+        physicsUpdateCalled += 1;
     }
 
     void Draw() override
@@ -660,7 +660,7 @@ TEST_SUITE("Application Lifecycle Integration")
         // app.InitBGFX(); // Removed due to API change
         app.InitImGui();
 
-        double dt = 0.016, pCur = 0.0, pPrev = 0.0, pAccum = 0.0;
+        double dt = 0.016, pCur = 0.0016, pPrev = 0.0, pAccum = -999.999;
         bool cont = app.ProcessFrame(dt, pCur, pPrev, pAccum);
 
         CHECK(app.updateCalled >= 1);

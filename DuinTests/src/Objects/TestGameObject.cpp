@@ -123,6 +123,18 @@ class LifecycleTracker : public duin::GameObject
     std::vector<std::string> callOrder;
 };
 
+// Object that counts Ready() invocations precisely
+class ReadyCountTracker : public duin::GameObject
+{
+  public:
+    void Ready() override
+    {
+        readyCount++;
+    }
+    int readyCount = 0;
+};
+
+
 // Object that tracks signal callbacks
 class SignalTrackerObject : public duin::GameObject
 {
@@ -2421,6 +2433,159 @@ TEST_SUITE("GameObject")
 
         CHECK(readyCount == 1); // No longer increments
         CHECK(drawCount == 1);  // No longer increments
+    }
+
+    
+    // ========================================================================
+    // READY() PROPAGATION TESTS
+    // ========================================================================
+
+    TEST_CASE("Ready is called on pre-existing child when parent ObjectReady is invoked")
+    {
+        // Child is added BEFORE ObjectReady is called — the standard case.
+        auto parent = std::make_shared<ReadyCountTracker>();
+        auto child = parent->CreateChildObject<ReadyCountTracker>();
+
+        parent->ObjectReady();
+
+        MSG_CHECK(parent->readyCount, parent->readyCount == 1);
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+    }
+
+    TEST_CASE("Ready is called on child added AFTER parent ObjectReady was already called")
+    {
+        // Parent has already been readied; a child is then attached.
+        // The child should receive its own Ready() call when added.
+        auto parent = std::make_shared<ReadyCountTracker>();
+
+        parent->ObjectReady();
+        MSG_CHECK(parent->readyCount, parent->readyCount == 1);
+
+        auto child = parent->CreateChildObject<ReadyCountTracker>();
+
+        // Child joined a live (already-ready) parent — it must be readied.
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+    }
+
+    TEST_CASE("AddChildObject on already-ready parent calls Ready on newly added child")
+    {
+        auto parent = std::make_shared<ReadyCountTracker>();
+        parent->ObjectReady();
+
+        auto child = std::make_shared<ReadyCountTracker>();
+        parent->AddChildObject(child);
+
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+    }
+
+    TEST_CASE("Ready is NOT called again on child when it is re-added to same parent")
+    {
+        auto parent = std::make_shared<ReadyCountTracker>();
+        auto child = parent->CreateChildObject<ReadyCountTracker>();
+
+        parent->ObjectReady();
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+
+        // Attempt to add the same child again — no duplicate Ready.
+        parent->AddChildObject(child);
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+    }
+
+    TEST_CASE("Ready is NOT double-called when child switches parents")
+    {
+        auto parent1 = std::make_shared<ReadyCountTracker>();
+        auto parent2 = std::make_shared<ReadyCountTracker>();
+        auto child = parent1->CreateChildObject<ReadyCountTracker>();
+
+        parent1->ObjectReady();
+        parent2->ObjectReady();
+
+        // child was readied under parent1
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+
+        // Transfer to parent2 — Ready should NOT fire a second time.
+        parent1->TransferChildObject(child, parent2);
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+    }
+
+    TEST_CASE("Ready is NOT called again on child whose SetParent points to an already-ready parent")
+    {
+        auto parent = std::make_shared<ReadyCountTracker>();
+        auto child = std::make_shared<ReadyCountTracker>();
+
+        parent->ObjectReady();
+        child->ObjectReady(); // child was independently readied
+
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+
+        // Manually reparent — should not trigger another Ready.
+        child->SetParent(parent.get());
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+    }
+
+    TEST_CASE("Ready propagates to member-child that is a field of the parent")
+    {
+        // Simulates a pattern where a derived parent class owns a child as a
+        // data member and adds it in its constructor / Init.
+        struct ParentWithMember : public duin::GameObject
+        {
+            std::shared_ptr<ReadyCountTracker> member;
+
+            void Init() override
+            {
+                member = CreateChildObject<ReadyCountTracker>();
+            }
+        };
+
+        auto parent = std::make_shared<ParentWithMember>();
+        // Init (and thus member creation) was triggered by CreateChildObject
+        // or can be called explicitly here if the parent is a root:
+        parent->Init();
+
+        parent->ObjectReady();
+
+        MSG_CHECK(parent->member->readyCount, parent->member->readyCount == 1);
+    }
+
+    TEST_CASE("ObjectReady on deep hierarchy — every level receives exactly one Ready")
+    {
+        auto root = std::make_shared<ReadyCountTracker>();
+        auto child = root->CreateChildObject<ReadyCountTracker>();
+        auto grandchild = child->CreateChildObject<ReadyCountTracker>();
+        auto great = grandchild->CreateChildObject<ReadyCountTracker>();
+
+        root->ObjectReady();
+
+        MSG_CHECK(root->readyCount, root->readyCount == 1);
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
+        MSG_CHECK(grandchild->readyCount, grandchild->readyCount == 1);
+        MSG_CHECK(great->readyCount, great->readyCount == 1);
+    }
+
+    TEST_CASE("Multiple ObjectReady calls do not suppress child Ready")
+    {
+        // Calling ObjectReady twice on a parent must fire Ready twice on the child.
+        auto parent = std::make_shared<ReadyCountTracker>();
+        auto child = parent->CreateChildObject<ReadyCountTracker>();
+
+        parent->ObjectReady();
+        parent->ObjectReady();
+
+        MSG_CHECK(parent->readyCount, parent->readyCount == 2);
+        MSG_CHECK(child->readyCount, child->readyCount == 2);
+    }
+
+    TEST_CASE("Child added after second ObjectReady still gets Ready called once")
+    {
+        auto parent = std::make_shared<ReadyCountTracker>();
+
+        parent->ObjectReady();
+        parent->ObjectReady();
+
+        auto child = parent->CreateChildObject<ReadyCountTracker>();
+
+        // Parent was readied twice; child joins now and should be readied once.
+        MSG_CHECK(child->readyCount, child->readyCount == 1);
     }
 }
 } // namespace TestGameObject

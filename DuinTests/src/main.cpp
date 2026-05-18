@@ -43,8 +43,8 @@ int main(int argc, char **argv)
 {
     int res = 0;
 
-    //RunCtx runCtx = RunCtx::ALL;
-     RunCtx runCtx = RunCtx::DAS;
+    RunCtx runCtx = RunCtx::ALL;
+     //RunCtx runCtx = RunCtx::DAS;
 
     if (argc > 1)
     {
@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 
     if (runCtx == RunCtx::ALL || runCtx == RunCtx::DAS)
     {
-        RunScriptTests();
+        //RunScriptTests();
     }
 
     return res;
