@@ -25,14 +25,37 @@ class ComponentSerializer
     using DeserializeAddFn = std::function<void(Entity e, const std::string &type)>;
     using DeserializeRemoveFn = std::function<void(Entity e, const std::string &type)>;
 
+    bool IsRegistered(const std::string &typeName) const
+    {
+        return serializers_.find(typeName) != serializers_.end();
+    }
+
     template <typename T>
     void RegisterComponent(flecs::world &world, flecs::entity typeEntity)
     {
         std::string typeName = static_cast<std::string>(typeEntity.name());
 
-        if (typeAliases_.contains(typeName)) // && serializers_.contains(typeName) && deserializers_.contains(typeName))
+        // Prevent duplicate registration
+        if (typeAliases_.contains(typeName))
         {
             return;
+        }
+
+        // Register type alias for types with ReflectionType (like Transform3D -> Transform3DImpl)
+        if constexpr (requires { typename T::ReflectionType; })
+        {
+            std::string fullReflectionTypeName = rfl::type_name_t<typename T::ReflectionType>().str();
+
+            // Extract unqualified name (e.g., "duin::ECSComponent::Velocity2D::Velocity2DImpl" -> "Velocity2DImpl")
+            std::string unqualifiedName = fullReflectionTypeName;
+            size_t lastColonPos = fullReflectionTypeName.find_last_of(':');
+            if (lastColonPos != std::string::npos)
+            {
+                unqualifiedName = fullReflectionTypeName.substr(lastColonPos + 1);
+            }
+
+            typeAliases_[unqualifiedName] = typeName;
+            // DN_CORE_INFO("Registered type alias: {} -> {}", unqualifiedName, typeName);
         }
 
         // Serialize function
@@ -52,9 +75,7 @@ class ComponentSerializer
         // PlainDeserialize function - simply adds component type, does not set data
         plainDeserializers_[typeName] = [](Entity e, const std::string &type) { e.Add<T>(); };
 
-        remove_[typeName] = [](Entity e, const std::string &typeName) { e.Remove<T>(); };
-
-        // Deserialize function
+        // Full Deserialize function
         bool isTag = ecs_id_is_tag(world.c_ptr(), typeEntity.raw_id());
         if (isTag)
         {
@@ -84,7 +105,7 @@ class ComponentSerializer
                     if (result)
                     {
                         typed_ptr = new T;
-                        *typed_ptr = result.value();
+                        *typed_ptr = result.value(); // Read by value
                         e.Set<T>(*typed_ptr);
                         delete typed_ptr;
                     }
@@ -92,24 +113,8 @@ class ComponentSerializer
             }
         }
 
-        // Register type alias for types with ReflectionType (like Transform3D -> Transform3DImpl)
-        if constexpr (requires { typename T::ReflectionType; })
-        {
-            std::string fullReflectionTypeName = rfl::type_name_t<typename T::ReflectionType>().str();
-
-            // Extract unqualified name (e.g., "duin::ECSComponent::Velocity2D::Velocity2DImpl" -> "Velocity2DImpl")
-            std::string unqualifiedName = fullReflectionTypeName;
-            size_t lastColonPos = fullReflectionTypeName.find_last_of(':');
-            if (lastColonPos != std::string::npos)
-            {
-                unqualifiedName = fullReflectionTypeName.substr(lastColonPos + 1);
-            }
-
-            typeAliases_[unqualifiedName] = typeName;
-            // DN_CORE_INFO("Registered type alias: {} -> {}", unqualifiedName, typeName);
-        }
-
-        // DN_CORE_INFO("Registered {} {}", isTag ? "Tag" : "Component", typeName);
+        // Removal function
+        remove_[typeName] = [](Entity e, const std::string &typeName) { e.Remove<T>(); };
     }
 
     std::string Serialize(const std::string &typeName, const void *componentPtr) const
@@ -120,11 +125,6 @@ class ComponentSerializer
             return it->second(componentPtr);
         }
         return "{}";
-    }
-
-    bool IsRegistered(const std::string &typeName) const
-    {
-        return serializers_.find(typeName) != serializers_.end();
     }
 
     void Deserialize(Entity e, const std::string &typeName, void *componentPtr, const std::string &json)
@@ -176,8 +176,8 @@ class ComponentSerializer
         }
     }
 
-    void ForComponent(Entity e, const std::string &typeName,
-                      std::function<void(Entity e, const std::string &resolvedTypeName)> fn)
+    void ForComponent(
+        Entity e, const std::string &typeName, std::function<void(Entity e, const std::string &resolvedTypeName)> fn)
     {
         // TODO Generalize for general lambdas
         std::string resolvedTypeName = typeName;
