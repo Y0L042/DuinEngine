@@ -4,7 +4,7 @@ local dep_daslang = {}
 local name = "DASLANG"
 
 local repo   = "https://github.com/GaijinEntertainment/daScript"
-local commit    = "v0.6.2-RC1"
+local commit    = "v0.6.2-RC3"
 local checkout = commit
 local folder = "daslang"
 
