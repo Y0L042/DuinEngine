@@ -1,6 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"classduin_1_1io_1_1IOStream.html#a92d7f85fae58404d2153239dd5ffb147":[4,0,0,3,0,16],
 "classduin_1_1io_1_1IOStream.html#a92e1176455e48fb994d7d6903977bbdd":[4,0,0,3,0,40],
 "classduin_1_1io_1_1IOStream.html#aa7d5253225842e9f3cbcdae6f67df03a":[4,0,0,3,0,36],
 "classduin_1_1io_1_1IOStream.html#aaa6b336b1980ae87328ffb71016d37dd":[4,0,0,3,0,14],
@@ -132,8 +131,8 @@ var NAVTREEINDEX3 =
 "functions_d.html":[4,3,0,3],
 "functions_e.html":[4,3,0,4],
 "functions_f.html":[4,3,0,5],
-"functions_func.html":[4,3,1,0],
 "functions_func.html":[4,3,1],
+"functions_func.html":[4,3,1,0],
 "functions_func_b.html":[4,3,1,1],
 "functions_func_c.html":[4,3,1,2],
 "functions_func_d.html":[4,3,1,3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX3 =
 "md_docs_2RenderingPipeline.html#autotoc_md10":[1,3,0],
 "md_docs_2RenderingPipeline.html#autotoc_md11":[1,3,1],
 "md_docs_2RenderingPipeline.html#autotoc_md12":[1,3,2],
-"md_docs_2RenderingPipeline.html#autotoc_md13":[1,4]
+"md_docs_2RenderingPipeline.html#autotoc_md13":[1,4],
+"md_docs_2RenderingPipeline.html#autotoc_md14":[1,4,0]
 };

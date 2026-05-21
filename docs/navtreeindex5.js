@@ -1,6 +1,5 @@
 var NAVTREEINDEX5 =
 {
-"structImTextureRect.html":[4,0,190],
 "structImTextureRef.html":[4,0,191],
 "structImTriangulator.html":[4,0,192],
 "structImTriangulatorNode.html":[4,0,193],
@@ -249,5 +248,6 @@ var NAVTREEINDEX5 =
 "structfilewatch_1_1IsWChar_3_01wchar__t_01_4.html":[4,0,1,3],
 "structkeypart__t.html":[4,0,202],
 "structparser__t.html":[4,0,227],
-"structpool__t.html":[4,0,228]
+"structpool__t.html":[4,0,228],
+"structscanner__state__t.html":[4,0,237]
 };

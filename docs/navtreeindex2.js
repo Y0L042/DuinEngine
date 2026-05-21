@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2":[2,4,0,1,3],
 "classduin_1_1GameObject.html#acc88e71a32dc1a84322601bf599bb7d5":[2,4,0,1,1],
 "classduin_1_1GameObject.html#ad924d34dc3f30a0be10b680327d6168d":[2,4,0,1,7],
 "classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe":[2,4,0,1,2],
@@ -249,5 +248,6 @@ var NAVTREEINDEX2 =
 "classduin_1_1io_1_1IOStream.html#a7f0c589ce874726e7ce0df84cc2bf401":[4,0,0,3,0,21],
 "classduin_1_1io_1_1IOStream.html#a81b4e5acdac7120827ba26f43f601e58":[4,0,0,3,0,7],
 "classduin_1_1io_1_1IOStream.html#a8c224bc5c01bc47cbe26aa100f61857d":[4,0,0,3,0,24],
-"classduin_1_1io_1_1IOStream.html#a8cc49ef39aa449d9962ce6cf07013903":[4,0,0,3,0,4]
+"classduin_1_1io_1_1IOStream.html#a8cc49ef39aa449d9962ce6cf07013903":[4,0,0,3,0,4],
+"classduin_1_1io_1_1IOStream.html#a92d7f85fae58404d2153239dd5ffb147":[4,0,0,3,0,16]
 };

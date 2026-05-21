@@ -1,6 +1,5 @@
 var NAVTREEINDEX6 =
 {
-"structscanner__state__t.html":[4,0,237],
 "structscanner__t.html":[4,0,238],
 "structspan__t.html":[4,0,245],
 "structstbrp__context.html":[4,0,249],
