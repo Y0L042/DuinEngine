@@ -62,15 +62,20 @@ class Module_DnLog : public das::Module
         lib.addBuiltInModule();
 
         das::addExtern<DAS_BIND_FUN(dn_log_fatal)>(*this, lib, "dn_fatal", das::SideEffects::modifyExternal,
-                                                   "dn_log_fatal");
+                                                   "dn_log_fatal")
+            ->args({"msg", "at"});
         das::addExtern<DAS_BIND_FUN(dn_log_error)>(*this, lib, "dn_error", das::SideEffects::modifyExternal,
-                                                   "dn_log_error");
+                                                   "dn_log_error")
+            ->args({"msg", "at"});
         das::addExtern<DAS_BIND_FUN(dn_log_warn)>(*this, lib, "dn_warn", das::SideEffects::modifyExternal,
-                                                  "dn_log_warn");
+                                                  "dn_log_warn")
+            ->args({"msg", "at"});
         das::addExtern<DAS_BIND_FUN(dn_log_info)>(*this, lib, "dn_info", das::SideEffects::modifyExternal,
-                                                  "dn_log_info");
+                                                  "dn_log_info")
+            ->args({"msg", "at"});
         das::addExtern<DAS_BIND_FUN(dn_log_trace)>(*this, lib, "dn_trace", das::SideEffects::modifyExternal,
-                                                   "dn_log_trace");
+                                                   "dn_log_trace")
+            ->args({"msg", "at"});
 
         compileBuiltinModule("dn_log.das", dn_log_das, sizeof(dn_log_das));
 
