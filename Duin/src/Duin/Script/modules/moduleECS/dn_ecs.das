@@ -1,19 +1,14 @@
 options gen2
 options rtti
 
+module dn_ecs shared public
 require strings
 require daslib/class_boost
 require daslib/rtti
 
-module dn_ecs shared public
-
 require dn_log public
-require flecs public
+require flecs_boost public
 require dn_ecs_core public
-
-require live/live_vars
-require dn_live_host public
-
 
 class DnEntity {
     entity : ecs_entity_t

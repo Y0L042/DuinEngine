@@ -24,27 +24,6 @@ class DnGameWorld : DnGameWorld_Adapter {
         initialized = self._handle != null
     }
 
-    [before_reload]
-    def hot_reload_store() : void {
-        var data : array<uint8>
-        data <- mem_archive_save(_handle)
-        live_store_bytes("gameworld_handle", data)
-    }
-
-    [after_reload]
-    def hot_reload_restore() : void {
-        var res : bool = true
-        var data : array<uint8>
-        res = res && live_load_bytes("gameworld_handle", data)
-        data |> mem_archive_load(_handle)
-
-        if (res) {
-            dn_info("DnGameWorld hot_reload_restore() success.")
-        } else {
-            dn_fatal("DnGameWorld hot_reload_restore() failed!")
-        }
-    }
-
     def dn_world() : DnWorld? {
         return new DnWorld(ecs_world())
     }

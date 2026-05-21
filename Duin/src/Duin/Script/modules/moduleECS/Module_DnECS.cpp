@@ -342,15 +342,17 @@ static duin::ECSComponent::Velocity3D dn_entity_get_velocity3d(ecs_world_t *w, u
 static ecs_world_t *dn_get_flecs_world_impl(das::Context *context)
 {
     auto *dnCtx = static_cast<duin::ScriptContext *>(context);
-    if (!dnCtx || !dnCtx->gameWorld)
+    if (!dnCtx || dnCtx->gameWorld.expired())
+    {
         return nullptr;
-    return dnCtx->gameWorld->GetFlecsWorld().c_ptr();
+    }
+    return dnCtx->gameWorld.lock()->GetFlecsWorld().c_ptr();
 }
 
 static void *dn_get_gameworld_ptr_impl(das::Context *context)
 {
     auto *dnCtx = static_cast<duin::ScriptContext *>(context);
-    return dnCtx ? static_cast<void *>(dnCtx->gameWorld) : nullptr;
+    return dnCtx ? static_cast<void *>(dnCtx->gameWorld.lock().get()) : nullptr;
 }
 
 static uint64_t dn_gameworld_find_prefab_impl(void *gwPtr, const char *name)
@@ -489,57 +491,81 @@ class Module_DnECS : public das::Module
 
         // Component ID lookups
         addExtern<DAS_BIND_FUN(dn_component_id_position3d)>(*this, lib, "dn_component_id_position3d",
-                                                            das::SideEffects::none, "dn_component_id_position3d");
+                                                            das::SideEffects::none, "dn_component_id_position3d")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_component_id_rotation3d)>(*this, lib, "dn_component_id_rotation3d",
-                                                            das::SideEffects::none, "dn_component_id_rotation3d");
+                                                            das::SideEffects::none, "dn_component_id_rotation3d")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_component_id_scale3d)>(*this, lib, "dn_component_id_scale3d", das::SideEffects::none,
-                                                         "dn_component_id_scale3d");
+                                                         "dn_component_id_scale3d")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_component_id_transform3d)>(*this, lib, "dn_component_id_transform3d",
-                                                             das::SideEffects::none, "dn_component_id_transform3d");
+                                                             das::SideEffects::none, "dn_component_id_transform3d")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_component_id_velocity3d)>(*this, lib, "dn_component_id_velocity3d",
-                                                            das::SideEffects::none, "dn_component_id_velocity3d");
+                                                            das::SideEffects::none, "dn_component_id_velocity3d")
+            ->args({"world"});
 
         // Tag ID lookups
         addExtern<DAS_BIND_FUN(dn_tag_id_local)>(*this, lib, "dn_tag_id_local", das::SideEffects::none,
-                                                 "dn_tag_id_local");
+                                                 "dn_tag_id_local")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_global)>(*this, lib, "dn_tag_id_global", das::SideEffects::none,
-                                                  "dn_tag_id_global");
+                                                  "dn_tag_id_global")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_pxkinematic)>(*this, lib, "dn_tag_id_pxkinematic", das::SideEffects::none,
-                                                       "dn_tag_id_pxkinematic");
+                                                       "dn_tag_id_pxkinematic")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_pxdynamic)>(*this, lib, "dn_tag_id_pxdynamic", das::SideEffects::none,
-                                                     "dn_tag_id_pxdynamic");
+                                                     "dn_tag_id_pxdynamic")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_pxstatic)>(*this, lib, "dn_tag_id_pxstatic", das::SideEffects::none,
-                                                    "dn_tag_id_pxstatic");
+                                                    "dn_tag_id_pxstatic")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_nonpx)>(*this, lib, "dn_tag_id_nonpx", das::SideEffects::none,
-                                                 "dn_tag_id_nonpx");
+                                                 "dn_tag_id_nonpx")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_set_camera_as_active)>(
-            *this, lib, "dn_tag_id_set_camera_as_active", das::SideEffects::none, "dn_tag_id_set_camera_as_active");
+            *this, lib, "dn_tag_id_set_camera_as_active", das::SideEffects::none, "dn_tag_id_set_camera_as_active")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_camera_is_active)>(*this, lib, "dn_tag_id_camera_is_active",
-                                                            das::SideEffects::none, "dn_tag_id_camera_is_active");
+                                                            das::SideEffects::none, "dn_tag_id_camera_is_active")
+            ->args({"world"});
         addExtern<DAS_BIND_FUN(dn_tag_id_active_camera)>(*this, lib, "dn_tag_id_active_camera", das::SideEffects::none,
-                                                         "dn_tag_id_active_camera");
+                                                         "dn_tag_id_active_camera")
+            ->args({"world"});
 
         // Component set/get
         addExtern<DAS_BIND_FUN(dn_entity_set_position3d)>(*this, lib, "dn_entity_set_position3d",
-                                                          das::SideEffects::modifyExternal, "dn_entity_set_position3d");
+                                                          das::SideEffects::modifyExternal, "dn_entity_set_position3d")
+            ->args({"world", "eid", "position"});
         addExtern<DAS_BIND_FUN(dn_entity_get_position3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_entity_get_position3d", das::SideEffects::none, "dn_entity_get_position3d");
+            *this, lib, "dn_entity_get_position3d", das::SideEffects::none, "dn_entity_get_position3d")
+            ->args({"world", "eid"});
         addExtern<DAS_BIND_FUN(dn_entity_set_rotation3d)>(*this, lib, "dn_entity_set_rotation3d",
-                                                          das::SideEffects::modifyExternal, "dn_entity_set_rotation3d");
+                                                          das::SideEffects::modifyExternal, "dn_entity_set_rotation3d")
+            ->args({"world", "eid", "rotation"});
         addExtern<DAS_BIND_FUN(dn_entity_get_rotation3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_entity_get_rotation3d", das::SideEffects::none, "dn_entity_get_rotation3d");
+            *this, lib, "dn_entity_get_rotation3d", das::SideEffects::none, "dn_entity_get_rotation3d")
+            ->args({"world", "eid"});
         addExtern<DAS_BIND_FUN(dn_entity_set_scale3d)>(*this, lib, "dn_entity_set_scale3d",
-                                                       das::SideEffects::modifyExternal, "dn_entity_set_scale3d");
+                                                       das::SideEffects::modifyExternal, "dn_entity_set_scale3d")
+            ->args({"world", "eid", "scale"});
         addExtern<DAS_BIND_FUN(dn_entity_get_scale3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_entity_get_scale3d", das::SideEffects::none, "dn_entity_get_scale3d");
+            *this, lib, "dn_entity_get_scale3d", das::SideEffects::none, "dn_entity_get_scale3d")
+            ->args({"world", "eid"});
         addExtern<DAS_BIND_FUN(dn_entity_set_transform3d)>(
-            *this, lib, "dn_entity_set_transform3d", das::SideEffects::modifyExternal, "dn_entity_set_transform3d");
+            *this, lib, "dn_entity_set_transform3d", das::SideEffects::modifyExternal, "dn_entity_set_transform3d")
+            ->args({"world", "eid", "transform"});
         addExtern<DAS_BIND_FUN(dn_entity_get_transform3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_entity_get_transform3d", das::SideEffects::none, "dn_entity_get_transform3d");
+            *this, lib, "dn_entity_get_transform3d", das::SideEffects::none, "dn_entity_get_transform3d")
+            ->args({"world", "eid"});
         addExtern<DAS_BIND_FUN(dn_entity_set_velocity3d)>(*this, lib, "dn_entity_set_velocity3d",
-                                                          das::SideEffects::modifyExternal, "dn_entity_set_velocity3d");
+                                                          das::SideEffects::modifyExternal, "dn_entity_set_velocity3d")
+            ->args({"world", "eid", "velocity"});
         addExtern<DAS_BIND_FUN(dn_entity_get_velocity3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_entity_get_velocity3d", das::SideEffects::none, "dn_entity_get_velocity3d");
+            *this, lib, "dn_entity_get_velocity3d", das::SideEffects::none, "dn_entity_get_velocity3d")
+            ->args({"world", "eid"});
 
         //compileBuiltinModule("dn_ecs.das", dn_ecs_das, sizeof(dn_ecs_das));
 

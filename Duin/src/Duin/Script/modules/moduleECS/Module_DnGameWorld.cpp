@@ -20,7 +20,7 @@ static void *dn_create_gameworld_impl(void *classPtr, const das::StructInfo *inf
     void *handle = static_cast<void *>(dnCtx->scriptMemory->Add(obj));
 
     // Register as the active game world in the context so other systems can find it.
-    dnCtx->gameWorld = obj.get();
+    dnCtx->gameWorld = obj;
 
     return handle;
 }
@@ -29,7 +29,11 @@ static void *dn_create_gameworld_impl(void *classPtr, const das::StructInfo *inf
 static void *dn_gameworld_context_handle_impl(das::Context *context)
 {
     auto *dnCtx = static_cast<duin::ScriptContext *>(context);
-    return dnCtx->gameWorld;
+    if (dnCtx && dnCtx->lock())
+    {
+        return dnCtx->gameWorld.lock().get();
+    }
+    return nullptr;
 }
 
 static void dn_destroy_gameworld_impl(void *handle, das::Context *context)
@@ -38,9 +42,15 @@ static void dn_destroy_gameworld_impl(void *handle, das::Context *context)
         return;
     DN_CORE_INFO("dn_destroy_gameworld_impl: destroying ScriptGameWorld");
     auto *dnCtx = static_cast<duin::ScriptContext *>(context);
-    if (dnCtx->gameWorld == static_cast<duin::GameWorld *>(handle))
-        dnCtx->gameWorld = nullptr;
-    dnCtx->scriptMemory->Remove(handle);
+    if (dnCtx && dnCtx->gameWorld.lock())
+    {
+        if (dnCtx->gameWorld.lock().get() == static_cast<duin::GameWorld *>(handle))
+        {
+            dnCtx->gameWorld.reset();
+        }
+
+        dnCtx->scriptMemory->Remove(handle);
+    }
 }
 
 static uint64_t dn_gameworld_create_entity_impl(void *handle, const char *name)
@@ -99,8 +109,8 @@ static void dn_gameworld_set_global_rotation_impl(void *handle, uint64_t entityI
     gw->SetGlobalRotation(e, duin::Quaternion{x, y, z, w});
 }
 
-static void dn_gameworld_get_global_rotation_impl(void *handle, uint64_t entityId, float *x, float *y, float *z,
-                                                  float *w)
+static void dn_gameworld_get_global_rotation_impl(
+    void *handle, uint64_t entityId, float *x, float *y, float *z, float *w)
 {
     if (!handle || !entityId)
         return;
@@ -205,45 +215,83 @@ class Module_DecsGameWorld : public das::Module
         addBuiltinDependency(lib, rttiMod);
         addBuiltinDependency(lib, ecsMod);
 
-        addExtern<DAS_BIND_FUN(dn_gameworld_context_handle_impl)>(*this, lib, "dn_gameworld_context_handle_impl",
-                                                                 das::SideEffects::accessGlobal,
-                                                                 "dn_gameworld_context_handle_impl")
+        addExtern<DAS_BIND_FUN(dn_gameworld_context_handle_impl)>(
+            *this,
+            lib,
+            "dn_gameworld_context_handle_impl",
+            das::SideEffects::accessGlobal,
+            "dn_gameworld_context_handle_impl")
             ->args({"context"});
 
-        addExtern<DAS_BIND_FUN(dn_create_gameworld_impl)>(*this, lib, "dn_create_gameworld_impl",
-                                                          das::SideEffects::modifyExternal, "dn_create_gameworld_impl");
+        addExtern<DAS_BIND_FUN(dn_create_gameworld_impl)>(
+            *this, lib, "dn_create_gameworld_impl", das::SideEffects::modifyExternal, "dn_create_gameworld_impl")
+            ->args({"classPtr", "info", "context"});
 
         addExtern<DAS_BIND_FUN(dn_destroy_gameworld_impl)>(
-            *this, lib, "dn_destroy_gameworld_impl", das::SideEffects::modifyExternal, "dn_destroy_gameworld_impl");
+            *this, lib, "dn_destroy_gameworld_impl", das::SideEffects::modifyExternal, "dn_destroy_gameworld_impl")
+            ->args({"handle", "context"});
 
-        addExtern<DAS_BIND_FUN(dn_gameworld_create_entity_impl)>(*this, lib, "dn_gameworld_create_entity_impl",
-                                                                 das::SideEffects::modifyExternal,
-                                                                 "dn_gameworld_create_entity_impl");
+        addExtern<DAS_BIND_FUN(dn_gameworld_create_entity_impl)>(
+            *this,
+            lib,
+            "dn_gameworld_create_entity_impl",
+            das::SideEffects::modifyExternal,
+            "dn_gameworld_create_entity_impl")
+            ->args({"handle", "name"});
 
-        addExtern<DAS_BIND_FUN(dn_gameworld_get_flecs_world_impl)>(*this, lib, "dn_gameworld_get_flecs_world_impl",
-                                                                   das::SideEffects::none,
-                                                                   "dn_gameworld_get_flecs_world_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_find_prefab_impl)>(*this, lib, "dn_gameworld_find_prefab_impl",
-                                                               das::SideEffects::none, "dn_gameworld_find_prefab_impl");
+        addExtern<DAS_BIND_FUN(dn_gameworld_get_flecs_world_impl)>(
+            *this,
+            lib,
+            "dn_gameworld_get_flecs_world_impl",
+            das::SideEffects::none,
+            "dn_gameworld_get_flecs_world_impl")
+            ->args({"handle"});
+        addExtern<DAS_BIND_FUN(dn_gameworld_find_prefab_impl)>(
+            *this, lib, "dn_gameworld_find_prefab_impl", das::SideEffects::none, "dn_gameworld_find_prefab_impl")
+            ->args({"handle", "name"});
 
         addExtern<DAS_BIND_FUN(dn_gameworld_set_global_position_impl)>(
-            *this, lib, "dn_gameworld_set_global_position_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_set_global_position_impl");
+            *this,
+            lib,
+            "dn_gameworld_set_global_position_impl",
+            das::SideEffects::modifyExternal,
+            "dn_gameworld_set_global_position_impl")
+            ->args({"handle", "entity", "x", "y", "z"});
         addExtern<DAS_BIND_FUN(dn_gameworld_get_global_position_impl)>(
-            *this, lib, "dn_gameworld_get_global_position_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_get_global_position_impl");
+            *this,
+            lib,
+            "dn_gameworld_get_global_position_impl",
+            das::SideEffects::modifyExternal,
+            "dn_gameworld_get_global_position_impl")
+            ->args({"handle", "entity", "x", "y", "z"});
         addExtern<DAS_BIND_FUN(dn_gameworld_set_global_rotation_impl)>(
-            *this, lib, "dn_gameworld_set_global_rotation_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_set_global_rotation_impl");
+            *this,
+            lib,
+            "dn_gameworld_set_global_rotation_impl",
+            das::SideEffects::modifyExternal,
+            "dn_gameworld_set_global_rotation_impl")
+            ->args({"handle", "entity", "x", "y", "z", "w"});
         addExtern<DAS_BIND_FUN(dn_gameworld_get_global_rotation_impl)>(
-            *this, lib, "dn_gameworld_get_global_rotation_impl", das::SideEffects::modifyExternal,
-            "dn_gameworld_get_global_rotation_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_set_global_scale_impl)>(*this, lib, "dn_gameworld_set_global_scale_impl",
-                                                                    das::SideEffects::modifyExternal,
-                                                                    "dn_gameworld_set_global_scale_impl");
-        addExtern<DAS_BIND_FUN(dn_gameworld_get_global_scale_impl)>(*this, lib, "dn_gameworld_get_global_scale_impl",
-                                                                    das::SideEffects::modifyExternal,
-                                                                    "dn_gameworld_get_global_scale_impl");
+            *this,
+            lib,
+            "dn_gameworld_get_global_rotation_impl",
+            das::SideEffects::modifyExternal,
+            "dn_gameworld_get_global_rotation_impl")
+            ->args({"handle", "entity", "x", "y", "z", "w"});
+        addExtern<DAS_BIND_FUN(dn_gameworld_set_global_scale_impl)>(
+            *this,
+            lib,
+            "dn_gameworld_set_global_scale_impl",
+            das::SideEffects::modifyExternal,
+            "dn_gameworld_set_global_scale_impl")
+            ->args({"handle", "entity", "x", "y", "z"});
+        addExtern<DAS_BIND_FUN(dn_gameworld_get_global_scale_impl)>(
+            *this,
+            lib,
+            "dn_gameworld_get_global_scale_impl",
+            das::SideEffects::modifyExternal,
+            "dn_gameworld_get_global_scale_impl")
+            ->args({"handle", "entity", "x", "y", "z"});
 
         DN_CORE_INFO("Script Module [dn_gameworld_core] initialized.");
 
