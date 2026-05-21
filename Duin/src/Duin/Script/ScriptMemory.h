@@ -11,6 +11,14 @@ class ScriptMemory
   public:
     using Key = void *;
 
+    ScriptMemory()
+    {
+    }
+
+    ~ScriptMemory()
+    {
+    }
+
     template <typename T>
     T *Add(std::shared_ptr<T> ptr)
     {

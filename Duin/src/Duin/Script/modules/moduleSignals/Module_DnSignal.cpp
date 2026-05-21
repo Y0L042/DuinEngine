@@ -1,5 +1,4 @@
 #include "dnpch.h"
-#include "Module_DnSignal.h"
 #include <daScript/daScript.h>
 #include <daScript/misc/handle_registry.h>
 #include <daScript/ast/ast_handle.h>

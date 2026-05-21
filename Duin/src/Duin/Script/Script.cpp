@@ -247,6 +247,7 @@ bool duin::Script::InvokeWithDelta(das::Func fn, double delta)
         }
         return false;
     }
+
     bool ok =
         context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn, delta); });
     if (!ok)
@@ -314,13 +315,42 @@ std::string duin::Script::SafeErrorReport(const das::Error &err)
 
 bool duin::VerifyFunction(das::Context *ctx, das::Func fn)
 {
-    if (!fn || !ctx)
+    if (!fn)
+    {
+        DN_CORE_FATAL("VerifyFunction: null function handle.");
+    }
+    if (!ctx)
+    {
+        DN_CORE_FATAL("VerifyFunction: null context.");
+    }
+    if (!ctx || !fn)
+    {
         return false;
+    }
+
+    // TODO This is a temporary workaround, as it is specific to MSVC++ debug heap fill patterns.
+    // Reject Windows debug-heap fill pattern (0xDDDDDDDDDDDDDDDD) so we never
+    // dereference a pointer into freed memory.
+    constexpr uintptr_t kFreedFill = 0xDDDDDDDDDDDDDDDDull;
+    if (reinterpret_cast<uintptr_t>(fn.PTR) == kFreedFill)
+    {
+        DN_CORE_FATAL(
+            "VerifyFunction: function pointer contains freed-memory fill (0xDDDDDDDD...). The owning context was "
+            "likely destroyed.");
+        return false;
+    }
     // Pointer-range check: valid handles live inside the current context's
-    // contiguous function table. A stale SimFunction* from a destroyed context
-    // (Windows debug fill: 0xDDDDDDDD...) will fall outside this range without
-    // requiring us to dereference the potentially dangling pointer.
+    // contiguous function table.
     const das::SimFunction *begin = ctx->getFunction(0);
     const das::SimFunction *end = begin + ctx->getTotalFunctions();
-    return fn.PTR >= begin && fn.PTR < end;
+    if (fn.PTR < begin || fn.PTR >= end)
+    {
+        DN_CORE_FATAL(
+            "VerifyFunction: function pointer {:p} is outside the context's function table [{:p}, {:p}).",
+            static_cast<const void *>(fn.PTR),
+            static_cast<const void *>(begin),
+            static_cast<const void *>(end));
+        return false;
+    }
+    return true;
 }

@@ -114,37 +114,26 @@ bool duin::GameScript::CompileAndSimulate()
     ResetMuteWarningFlags();
     ResetToBaseModules();
 
-    bool compiled = Compile();
-    if (compiled)
+    bool success = Compile();
+    if (success)
     {
-        std::shared_ptr<ScriptMemory> oldContextMemory;
-        if (context)
-        {
-            oldContextMemory = context->scriptMemory;
-        }
+        std::shared_ptr<ScriptContext> oldContext = context; // Cache Context
+        context = nullptr;
 
-        bool simulated = SimulateContext();
-        if (simulated)
+        success = SimulateContext();
+        if (success)
         {
-            if (oldContextMemory)
-            {
-                context->scriptMemory = oldContextMemory;
-            }
+            ClearScriptGameObjects();
 
             SetGameFunctions();
-            SetContextRootObject();
-
-            if (!hotCompileEnabled)
-            {
-                // Treat recompile as a fresh start: clear only once when new script is working.
-                ClearScriptGameObjects();
-            }
 
             hasCompiledOnce = true;
             Ready();
         }
-
-        compiled = simulated;
+        else
+        {
+            context = oldContext; // Restore old program if Simulation fails, else let context release
+        }
     }
     else
     {
@@ -154,7 +143,7 @@ bool duin::GameScript::CompileAndSimulate()
         }
     }
 
-    return compiled;
+    return success;
 }
 
 bool duin::GameScript::SetContextRootObject()

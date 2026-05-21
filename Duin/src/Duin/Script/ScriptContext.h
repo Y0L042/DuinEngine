@@ -20,8 +20,7 @@ class ScriptContext : public das::Context
 
     ~ScriptContext()
     {
-        rootGameObject = nullptr;
-        gameWorld = nullptr;
+        Clear();
     }
 
     void TransferMemoryTo(ScriptContext &other)
@@ -34,13 +33,15 @@ class ScriptContext : public das::Context
     void Clear()
     {
         scriptMemory.reset();
+
         rootGameObject = nullptr;
-        gameWorld = nullptr;
+
+        gameWorld.reset();
     }
 
     std::shared_ptr<ScriptMemory> scriptMemory;
-    GameObject *rootGameObject = nullptr;
-    GameWorld *gameWorld = nullptr;
+    GameObject* rootGameObject;
+    std::weak_ptr<GameWorld> gameWorld;
 };
 
 } // namespace duin
