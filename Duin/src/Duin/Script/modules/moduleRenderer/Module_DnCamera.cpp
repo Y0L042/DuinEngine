@@ -471,13 +471,16 @@ class Module_DnCamera : public das::Module
 
         // Camera class
         addExtern<DAS_BIND_FUN(dn_camera_init_impl)>(*this, lib, "dn_camera_init_impl",
-                                                     das::SideEffects::modifyExternal, "dn_camera_init_impl");
+                                                     das::SideEffects::modifyExternal, "dn_camera_init_impl")
+            ->args({"context"});
         addExtern<DAS_BIND_FUN(dn_camera_finalize_impl)>(*this, lib, "dn_camera_finalize_impl",
-                                                         das::SideEffects::modifyExternal, "dn_camera_finalize_impl");
+                                                         das::SideEffects::modifyExternal, "dn_camera_finalize_impl")
+            ->args({"handle", "context"});
         addExtern<DAS_BIND_FUN(dn_get_active_camera_impl)>(*this, lib, "dn_get_active_camera_impl",
                                                            das::SideEffects::none, "dn_get_active_camera_impl");
         addExtern<DAS_BIND_FUN(dn_set_active_camera_impl)>(
-            *this, lib, "dn_set_active_camera_impl", das::SideEffects::modifyExternal, "dn_set_active_camera_impl");
+            *this, lib, "dn_set_active_camera_impl", das::SideEffects::modifyExternal, "dn_set_active_camera_impl")
+            ->args({"camera"});
 
         // Property getters/setters
         addExtern<DAS_BIND_FUN(dn_camera_get_position_impl)>(
