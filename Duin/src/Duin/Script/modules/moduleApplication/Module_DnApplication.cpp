@@ -34,7 +34,9 @@ static void dn_app_add_child_object_impl(void *childHandle, das::Context *contex
 
     auto *dnCtx = static_cast<duin::ScriptContext *>(context);
     if (!(dnCtx && dnCtx->rootGameObject))
+    {
         return;
+    }
 
     auto *parent = dnCtx->rootGameObject;
     auto *child = static_cast<duin::GameObject *>(childHandle);
