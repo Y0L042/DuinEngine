@@ -239,59 +239,79 @@ class Module_DnGameObject : public das::Module
         addBuiltinDependency(lib, rttiMod);
 
         addExtern<DAS_BIND_FUN(dn_create_gameobject_impl)>(
-            *this, lib, "dn_create_gameobject_impl", das::SideEffects::modifyExternal, "dn_create_gameobject_impl");
+            *this, lib, "dn_create_gameobject_impl", das::SideEffects::modifyExternal, "dn_create_gameobject_impl")
+            ->args({"classPtr", "info", "context"});
 
         addExtern<DAS_BIND_FUN(dn_destroy_gameobject_impl)>(
-            *this, lib, "dn_destroy_gameobject_impl", das::SideEffects::modifyExternal, "dn_destroy_gameobject_impl");
+            *this, lib, "dn_destroy_gameobject_impl", das::SideEffects::modifyExternal, "dn_destroy_gameobject_impl")
+            ->args({"handle", "context"});
 
         addExtern<DAS_BIND_FUN(dn_add_child_object_impl)>(
-            *this, lib, "dn_add_child_object_impl", das::SideEffects::modifyExternal, "dn_add_child_object_impl");
+            *this, lib, "dn_add_child_object_impl", das::SideEffects::modifyExternal, "dn_add_child_object_impl")
+            ->args({"selfHandle", "childHandle", "context"});
 
         addExtern<DAS_BIND_FUN(dn_remove_child_object_impl)>(
-            *this, lib, "dn_remove_child_object_impl", das::SideEffects::modifyExternal, "dn_remove_child_object_impl");
+            *this, lib, "dn_remove_child_object_impl", das::SideEffects::modifyExternal, "dn_remove_child_object_impl")
+            ->args({"selfHandle", "childHandle", "context"});
 
         addExtern<DAS_BIND_FUN(dn_get_children_count_impl)>(
-            *this, lib, "dn_get_children_count_impl", das::SideEffects::none, "dn_get_children_count_impl");
+            *this, lib, "dn_get_children_count_impl", das::SideEffects::none, "dn_get_children_count_impl")
+            ->args({"handle"});
 
         addExtern<DAS_BIND_FUN(dn_enable_impl)>(
-            *this, lib, "dn_enable_impl", das::SideEffects::modifyExternal, "dn_enable_impl");
+            *this, lib, "dn_enable_impl", das::SideEffects::modifyExternal, "dn_enable_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_enable_on_event_impl)>(
-            *this, lib, "dn_enable_on_event_impl", das::SideEffects::modifyExternal, "dn_enable_on_event_impl");
+            *this, lib, "dn_enable_on_event_impl", das::SideEffects::modifyExternal, "dn_enable_on_event_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_enable_update_impl)>(
-            *this, lib, "dn_enable_update_impl", das::SideEffects::modifyExternal, "dn_enable_update_impl");
+            *this, lib, "dn_enable_update_impl", das::SideEffects::modifyExternal, "dn_enable_update_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_enable_physics_update_impl)>(
             *this,
             lib,
             "dn_enable_physics_update_impl",
             das::SideEffects::modifyExternal,
-            "dn_enable_physics_update_impl");
+            "dn_enable_physics_update_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_enable_draw_impl)>(
-            *this, lib, "dn_enable_draw_impl", das::SideEffects::modifyExternal, "dn_enable_draw_impl");
+            *this, lib, "dn_enable_draw_impl", das::SideEffects::modifyExternal, "dn_enable_draw_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_enable_draw_ui_impl)>(
-            *this, lib, "dn_enable_draw_ui_impl", das::SideEffects::modifyExternal, "dn_enable_draw_ui_impl");
+            *this, lib, "dn_enable_draw_ui_impl", das::SideEffects::modifyExternal, "dn_enable_draw_ui_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_enable_debug_impl)>(
-            *this, lib, "dn_enable_debug_impl", das::SideEffects::modifyExternal, "dn_enable_debug_impl");
+            *this, lib, "dn_enable_debug_impl", das::SideEffects::modifyExternal, "dn_enable_debug_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_enable_children_impl)>(
-            *this, lib, "dn_enable_children_impl", das::SideEffects::modifyExternal, "dn_enable_children_impl");
+            *this, lib, "dn_enable_children_impl", das::SideEffects::modifyExternal, "dn_enable_children_impl")
+            ->args({"handle", "enable"});
 
         addExtern<DAS_BIND_FUN(dn_is_on_event_enabled_impl)>(
-            *this, lib, "dn_is_on_event_enabled_impl", das::SideEffects::none, "dn_is_on_event_enabled_impl");
+            *this, lib, "dn_is_on_event_enabled_impl", das::SideEffects::none, "dn_is_on_event_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_is_update_enabled_impl)>(
-            *this, lib, "dn_is_update_enabled_impl", das::SideEffects::none, "dn_is_update_enabled_impl");
+            *this, lib, "dn_is_update_enabled_impl", das::SideEffects::none, "dn_is_update_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_is_physics_update_enabled_impl)>(
             *this,
             lib,
             "dn_is_physics_update_enabled_impl",
             das::SideEffects::none,
-            "dn_is_physics_update_enabled_impl");
+            "dn_is_physics_update_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_is_draw_enabled_impl)>(
-            *this, lib, "dn_is_draw_enabled_impl", das::SideEffects::none, "dn_is_draw_enabled_impl");
+            *this, lib, "dn_is_draw_enabled_impl", das::SideEffects::none, "dn_is_draw_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_is_draw_ui_enabled_impl)>(
-            *this, lib, "dn_is_draw_ui_enabled_impl", das::SideEffects::none, "dn_is_draw_ui_enabled_impl");
+            *this, lib, "dn_is_draw_ui_enabled_impl", das::SideEffects::none, "dn_is_draw_ui_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_is_debug_enabled_impl)>(
-            *this, lib, "dn_is_debug_enabled_impl", das::SideEffects::none, "dn_is_debug_enabled_impl");
+            *this, lib, "dn_is_debug_enabled_impl", das::SideEffects::none, "dn_is_debug_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_is_children_enabled_impl)>(
-            *this, lib, "dn_is_children_enabled_impl", das::SideEffects::none, "dn_is_children_enabled_impl");
+            *this, lib, "dn_is_children_enabled_impl", das::SideEffects::none, "dn_is_children_enabled_impl")
+            ->args({"handle"});
 
         DN_CORE_INFO("Script Module [dn_gameobject_core] initialized.");
         return true;

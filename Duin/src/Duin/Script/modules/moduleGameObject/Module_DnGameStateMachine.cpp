@@ -222,97 +222,125 @@ class Module_DnGameStateMachine : public das::Module
         // GameStateMachine create/destroy
         addExtern<DAS_BIND_FUN(dn_create_gamestatemachine_impl)>(
             *this, lib, "dn_create_gamestatemachine_impl", das::SideEffects::modifyExternal,
-            "dn_create_gamestatemachine_impl");
+            "dn_create_gamestatemachine_impl")
+            ->args({"classPtr", "info", "context"});
         addExtern<DAS_BIND_FUN(dn_destroy_gamestatemachine_impl)>(
             *this, lib, "dn_destroy_gamestatemachine_impl", das::SideEffects::modifyExternal,
-            "dn_destroy_gamestatemachine_impl");
+            "dn_destroy_gamestatemachine_impl")
+            ->args({"handle", "context"});
 
         // GameState create/destroy
         addExtern<DAS_BIND_FUN(dn_create_gamestate_impl)>(
             *this, lib, "dn_create_gamestate_impl", das::SideEffects::modifyExternal,
-            "dn_create_gamestate_impl");
+            "dn_create_gamestate_impl")
+            ->args({"smHandle", "classPtr", "info", "context"});
         addExtern<DAS_BIND_FUN(dn_destroy_gamestate_impl)>(
             *this, lib, "dn_destroy_gamestate_impl", das::SideEffects::modifyExternal,
-            "dn_destroy_gamestate_impl");
+            "dn_destroy_gamestate_impl")
+            ->args({"handle", "context"});
 
         // State stack operations
         addExtern<DAS_BIND_FUN(dn_gsm_switch_state_impl)>(
             *this, lib, "dn_gsm_switch_state_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_switch_state_impl");
+            "dn_gsm_switch_state_impl")
+            ->args({"smHandle", "stateHandle", "context"});
         addExtern<DAS_BIND_FUN(dn_gsm_push_state_impl)>(
             *this, lib, "dn_gsm_push_state_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_push_state_impl");
+            "dn_gsm_push_state_impl")
+            ->args({"smHandle", "stateHandle", "context"});
         addExtern<DAS_BIND_FUN(dn_gsm_flush_and_switch_state_impl)>(
             *this, lib, "dn_gsm_flush_and_switch_state_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_flush_and_switch_state_impl");
+            "dn_gsm_flush_and_switch_state_impl")
+            ->args({"smHandle", "stateHandle", "context"});
         addExtern<DAS_BIND_FUN(dn_gsm_pop_state_impl)>(
             *this, lib, "dn_gsm_pop_state_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_pop_state_impl");
+            "dn_gsm_pop_state_impl")
+            ->args({"smHandle"});
         addExtern<DAS_BIND_FUN(dn_gsm_flush_stack_impl)>(
             *this, lib, "dn_gsm_flush_stack_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_flush_stack_impl");
+            "dn_gsm_flush_stack_impl")
+            ->args({"smHandle"});
 
         addExtern<DAS_BIND_FUN(dn_gsm_create_gameobject_impl)>(
-            *this, lib, "dn_gsm_create_gameobject_impl", das::SideEffects::modifyExternal, "dn_gsm_create_gameobject_impl");
+            *this, lib, "dn_gsm_create_gameobject_impl", das::SideEffects::modifyExternal, "dn_gsm_create_gameobject_impl")
+            ->args({"classPtr", "info", "context"});
         addExtern<DAS_BIND_FUN(dn_gsm_add_child_impl)>(
             *this, lib, "dn_gsm_add_child_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_add_child_impl");
+            "dn_gsm_add_child_impl")
+            ->args({"selfHandle", "childHandle", "context"});
         addExtern<DAS_BIND_FUN(dn_gsm_remove_child_impl)>(
             *this, lib, "dn_gsm_remove_child_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_remove_child_impl");
+            "dn_gsm_remove_child_impl")
+            ->args({"selfHandle", "childHandle", "context"});
 
         addExtern<DAS_BIND_FUN(dn_gsm_get_children_count_impl)>(
             *this, lib, "dn_gsm_get_children_count_impl", das::SideEffects::none,
-            "dn_gsm_get_children_count_impl");
+            "dn_gsm_get_children_count_impl")
+            ->args({"handle"});
 
         // GSM enable/disable
         addExtern<DAS_BIND_FUN(dn_gsm_enable_impl)>(*this, lib, "dn_gsm_enable_impl",
                                                      das::SideEffects::modifyExternal,
-                                                     "dn_gsm_enable_impl");
+                                                     "dn_gsm_enable_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_gsm_enable_on_event_impl)>(
             *this, lib, "dn_gsm_enable_on_event_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_enable_on_event_impl");
+            "dn_gsm_enable_on_event_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_gsm_enable_update_impl)>(
             *this, lib, "dn_gsm_enable_update_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_enable_update_impl");
+            "dn_gsm_enable_update_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_gsm_enable_physics_update_impl)>(
             *this, lib, "dn_gsm_enable_physics_update_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_enable_physics_update_impl");
+            "dn_gsm_enable_physics_update_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_gsm_enable_draw_impl)>(
             *this, lib, "dn_gsm_enable_draw_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_enable_draw_impl");
+            "dn_gsm_enable_draw_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_gsm_enable_draw_ui_impl)>(
             *this, lib, "dn_gsm_enable_draw_ui_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_enable_draw_ui_impl");
+            "dn_gsm_enable_draw_ui_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_gsm_enable_debug_impl)>(
             *this, lib, "dn_gsm_enable_debug_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_enable_debug_impl");
+            "dn_gsm_enable_debug_impl")
+            ->args({"handle", "enable"});
         addExtern<DAS_BIND_FUN(dn_gsm_enable_children_impl)>(
             *this, lib, "dn_gsm_enable_children_impl", das::SideEffects::modifyExternal,
-            "dn_gsm_enable_children_impl");
+            "dn_gsm_enable_children_impl")
+            ->args({"handle", "enable"});
 
         // GSM enable queries
         addExtern<DAS_BIND_FUN(dn_gsm_is_on_event_enabled_impl)>(
             *this, lib, "dn_gsm_is_on_event_enabled_impl", das::SideEffects::none,
-            "dn_gsm_is_on_event_enabled_impl");
+            "dn_gsm_is_on_event_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_gsm_is_update_enabled_impl)>(
             *this, lib, "dn_gsm_is_update_enabled_impl", das::SideEffects::none,
-            "dn_gsm_is_update_enabled_impl");
+            "dn_gsm_is_update_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_gsm_is_physics_update_enabled_impl)>(
             *this, lib, "dn_gsm_is_physics_update_enabled_impl", das::SideEffects::none,
-            "dn_gsm_is_physics_update_enabled_impl");
+            "dn_gsm_is_physics_update_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_gsm_is_draw_enabled_impl)>(
             *this, lib, "dn_gsm_is_draw_enabled_impl", das::SideEffects::none,
-            "dn_gsm_is_draw_enabled_impl");
+            "dn_gsm_is_draw_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_gsm_is_draw_ui_enabled_impl)>(
             *this, lib, "dn_gsm_is_draw_ui_enabled_impl", das::SideEffects::none,
-            "dn_gsm_is_draw_ui_enabled_impl");
+            "dn_gsm_is_draw_ui_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_gsm_is_debug_enabled_impl)>(
             *this, lib, "dn_gsm_is_debug_enabled_impl", das::SideEffects::none,
-            "dn_gsm_is_debug_enabled_impl");
+            "dn_gsm_is_debug_enabled_impl")
+            ->args({"handle"});
         addExtern<DAS_BIND_FUN(dn_gsm_is_children_enabled_impl)>(
             *this, lib, "dn_gsm_is_children_enabled_impl", das::SideEffects::none,
-            "dn_gsm_is_children_enabled_impl");
+            "dn_gsm_is_children_enabled_impl")
+            ->args({"handle"});
 
         DN_CORE_INFO("Script Module [dn_gamestatemachine_core] initialized.");
         return true;
