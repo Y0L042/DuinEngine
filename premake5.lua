@@ -154,6 +154,7 @@ workspace "Duin"
     include "ExampleProjects/DuinFPSDaslang"
     include "ScriptTests/AngelScriptTest"
     include "ScriptTests/DaslangTest"
+    include "DaslangDocGenerator"
 
     local duinVendorRoot = path.getabsolute("Duin/vendor")
 
