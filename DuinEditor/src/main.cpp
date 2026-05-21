@@ -51,7 +51,6 @@ void Editor::Ready()
         NEED_MODULE(Module_imgui);
         NEED_MODULE(Module_TOMLC17);
 
-        NEED_MODULE(Module_DnLiveHost);
         NEED_MODULE(Module_DnLog);
         NEED_MODULE(Module_DnApplication);
         NEED_MODULE(Module_DnUUID);
