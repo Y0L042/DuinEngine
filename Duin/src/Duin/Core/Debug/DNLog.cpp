@@ -52,7 +52,7 @@ void Log::Init()
     // Create a custom formatter with the frame count flag
     auto coreFormatter = std::make_unique<spdlog::pattern_formatter>();
     coreFormatter->add_flag<FrameCountFormatter>('F');
-    coreFormatter->set_pattern("%^[ %T | %F ]\t%n\t(%s:%#): %v%$");
+    coreFormatter->set_pattern("%^[ %H:%M:%S.%e | %F ]\t%n\t(%s:%#): %v%$");
 
     // s_CoreLogger = spdlog::stdout_color_mt("DUIN");
     s_CoreLogger = std::make_shared<spdlog::logger>("CORE", begin(sinks), end(sinks));
@@ -63,7 +63,7 @@ void Log::Init()
     auto clientFormatter = std::make_unique<spdlog::pattern_formatter>();
     clientFormatter->add_flag<FrameCountFormatter>('F');
     // clientFormatter->set_pattern("%^[%T] %n [%F] (%s:%#): %v%$");
-    clientFormatter->set_pattern("%^[ %T | %F ]\t%n\t(%s:%#): %v%$");
+    clientFormatter->set_pattern("%^[ %H:%M:%S.%e | %F ]\t%n\t(%s:%#): %v%$");
 
     // s_ClientLogger = spdlog::stdout_color_mt("APP");
     s_ClientLogger = std::make_shared<spdlog::logger>("APP", begin(sinks), end(sinks));

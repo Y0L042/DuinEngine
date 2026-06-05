@@ -11,6 +11,8 @@
 #include "Duin/Core/Debug/DNAssert.h"
 #include <iostream>
 
+static std::function<std::string()> assertContextCallback;
+
 static void assert_handler(const doctest::AssertData &ad)
 {
     using namespace doctest;
@@ -41,7 +43,17 @@ static void assert_handler(const doctest::AssertData &ad)
         std::cout << Color::None << "an assert dealing with exceptions has failed!";
     }
 
+    if (assertContextCallback)
+    {
+        std::string extra = assertContextCallback();
+        if (!extra.empty())
+        {
+            std::cout << "\n[Script callstack]\n" << extra << "\n";
+        }
+    }
+
     std::cout << std::endl;
+
 }
 
 static doctest::Context* g_assertContext = nullptr;
@@ -57,4 +69,20 @@ void duin::InitAsserts()
     // set a handler with a signature: void(const doctest::AssertData&)
     // without setting a handler we would get std::abort() called when an assert fails
     g_assertContext->setAssertHandler(assert_handler);
+}
+
+void duin::SetAssertContextCallback(std::function<std::string()> callback)
+{
+    assertContextCallback = std::move(callback);
+}
+
+void duin::OnCrash(const char *message)
+{
+    std::cout << doctest::Color::Red << "[CRASH] " << (message ? message : "(no message)") << "\n";
+    if (assertContextCallback) {
+        std::string stack = assertContextCallback();
+        if (!stack.empty())
+            std::cout << doctest::Color::None << "[Script callstack]\n" << stack << "\n";
+    }
+    std::abort();
 }

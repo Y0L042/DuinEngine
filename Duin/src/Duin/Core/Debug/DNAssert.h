@@ -1,10 +1,22 @@
 #pragma once
 
 #include <doctest.h>
+#include <functional>
 
 namespace duin
 {
 void InitAsserts();
+void SetAssertContextCallback(std::function<std::string()> callback);
+void OnCrash(const char *message);
+
+struct AssertContextScope {
+    explicit AssertContextScope(std::function<std::string()> cb) {
+        SetAssertContextCallback(std::move(cb));
+    }
+    ~AssertContextScope() { SetAssertContextCallback(nullptr); }
+    AssertContextScope(const AssertContextScope &) = delete;
+    AssertContextScope &operator=(const AssertContextScope &) = delete;
+};
 } // namespace duin
 
 // DN_CORE_ASSERT / DN_ASSERT: always active.
