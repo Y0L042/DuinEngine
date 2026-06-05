@@ -34,15 +34,21 @@ class DuinFPSDaslangApp : public duin::Application
     void Ready() override
     {
         duin::PhysicsServer::Get();
+
+        static const char *debugArgv[] = {"DuinFPSDaslang", "--das-stepping-debugger"};
+        das::setCommandLineArguments(2, const_cast<char **>(debugArgv));
+
         mainScript = CreateChildObject<duin::GameScript>(ENTRY_SCRIPT);
         mainScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
         //mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\Duin\\duin_engine.das_project");
         mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\DuinFPSDaslang\\scripts\\duinfpsdaslang.das_project");
         mainScript->InitModules([]() {
+            NEED_MODULE(Module_UriParser);
+            das::register_builtin_modules();
+
             NEED_MODULE(Module_flecs);
             NEED_MODULE(Module_imgui);
 
-            NEED_MODULE(Module_DnLiveHost);
             NEED_MODULE(Module_DnLog);
             NEED_MODULE(Module_DnRenderer);
             NEED_MODULE(Module_DnCamera);
@@ -56,6 +62,7 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_DnFilesystem);
         });
         mainScript->EnableHotCompile(false, false);
+        mainScript->SetHotCompileFileChangeCooldown(1.0f);
         mainScript->CompileAndSimulate();
     }
 

@@ -14,6 +14,8 @@ require dn_physics
 
 require ../../state_machine.das
 require ./StateMachine/player_on_ground_idle.das
+require ../../ecs_components.das
+require ../../ecs_systems.das
 
 class Player : DnGameObject {
     sm : StateMachine?
@@ -26,14 +28,24 @@ class Player : DnGameObject {
 
 
     game_world : DnGameWorld?
-    player_entity : DnEntity?
+    player_entity : DnEntity = DnEntity()
     characterbody : DnCharacterBody?
     camera : DnCamera?
+    observer : ecs_observer_t
 
     def Player(var game_world_ : DnGameWorld?) : void {
+        game_world = game_world_
+
         sm = new StateMachine()
         sm.change_state(new Player_OnGround_Idle())
-        game_world = game_world_
+
+        let MAX_PITCH = 87.0f * (PI / 180.0f)
+
+        assume world = game_world.ecs_world()
+        // world.ecs_hookup_on_add(type<CharacterBodyCMP>, @(world : ecs_world_t?, e : ecs_entity_t, var cb_cmp : CharacterBodyCMP?) : void {
+        //     dn_log(cb_cmp)
+        // })
+
         player_entity = game_world.create_entity("Player")
         characterbody = new DnCharacterBody()
         characterbody.create_capsule(
@@ -59,6 +71,12 @@ class Player : DnGameObject {
         if (dn_get_active_camera() == null) {
             dn_fatal("Failed to set player camera as active camera!")
         }
+
+        player_entity.add(IsPlayer())
+        player_entity.set(PlayerMoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
+        player_entity.set(MoveSpeed(walk = 7.0f, sprint = 12.0f))
+        player_entity.set(CameraYaw(radians = 0.0f))
+        player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
     }
 
     def set_camera_active() : void {
@@ -73,20 +91,24 @@ class Player : DnGameObject {
     def override _ready() : void {
         dn_info("Player ready!")
 
-    }
+    } 
 
     def override _update(delta : double) : void {}
 
-    def override _physics_update(delta : double) : void {     
-        if ((player_entity == null) || (game_world == null)) {
+    def override _physics_update(delta : double) : void {
+        if (game_world == null) {
             dn_warn("player_entity \{{player_entity}\} | game_world \{{game_world}\}")
             return
         }
-        let pi = process_player_input()
-        characterbody.move(pi, delta)
+        system_player_input(game_world.ecs_world(), camera)
+ 
+        var input : PlayerMoveInput? = player_entity.get_mut(type<PlayerMoveInput>)
+        if (input != null) {
+            characterbody.move(input.dir, delta)
+        }
+
         position = characterbody.get_position()
         camera.move_to(position + v_offset)
-
     }
 
     def override _draw() : void {}
@@ -94,48 +116,4 @@ class Player : DnGameObject {
     def override _draw_ui() : void {}
 
     def override _debug() : void {}
-
-    def process_player_input() : float3 {
-        var move_speed = 7.0f
-        let mouse_sensitivity = 0.0015f 
-
-        // Mouse look
-        let md = dn_get_mouse_delta()
-        camera.yaw(md.x * mouse_sensitivity)
-
-        let MAX_PITCH : float = 87.0 * (PI / 180.0)
-
-        if ((camera.get_pitch() > MAX_PITCH) && (-md.y > 0.0)) {
-            // Don't pitch
-        } elif ((camera.get_pitch() < -MAX_PITCH) && (-md.y < 0.0)) {
-            // Don't pitch
-        } else {
-            camera.pitch(-md.y * mouse_sensitivity)
-        }
-            
-        // Horizontal movement relative to camera yaw (WASD), vertical with Q/Z
-        let fwd = camera.forward()
-        let rgt = camera.right()
-        let h_fwd   = float3(fwd.x, 0.0f, fwd.z)
-        let h_right = float3(rgt.x, 0.0f, rgt.z)
-        
-        var move = float3(0.0f, 0.0f, 0.0f)
-        if (dn_is_key_down(DN_Scancode.DN_SCANCODE_W)) {
-            move += h_fwd
-        }
-        if (dn_is_key_down(DN_Scancode.DN_SCANCODE_S)) {
-            move -= h_fwd
-        }
-        if (dn_is_key_down(DN_Scancode.DN_SCANCODE_D)) {
-            move -= h_right
-        }
-        if (dn_is_key_down(DN_Scancode.DN_SCANCODE_A)) {
-            move += h_right
-        }
-        if (dn_is_key_pressed(DN_Scancode.DN_SCANCODE_SPACE)) {
-            // move.y += 1.0f
-        }
-
-        return move * move_speed
-    }
 }

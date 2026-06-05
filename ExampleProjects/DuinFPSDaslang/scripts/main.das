@@ -1,12 +1,13 @@
 options gen2
 options rtti
+options string_heap_size_limit = 0
 
+// require daslib/debug
 require daslib/rtti
 require daslib/random
 require daslib/class_boost
 require math
 
-require dn_live_host // NOT ACTIVE
 
 require flecs_boost
 require imgui_boost
@@ -35,11 +36,9 @@ var zeus_mode : bool = false
 
 [export]
 def game_ready() {
-    if (is_reload()) {
-        dn_info("Game Hot-Reloaded!")
-    } else {
-        dn_info("Game Ready!")
-    }
+    // wait_for_debugger()
+
+    dn_info("Game Ready!")
 
     dn_capture_mouse(true)
 
@@ -47,20 +46,16 @@ def game_ready() {
     game_world = new DnGameWorld()
 
     // Entities and game state are only created on first load.
-    if (!is_reload()) {
-        var world = game_world.dn_world()
+    assume world = game_world.dn_world()
 
-        world|>register_components()
-        world|>construct_queries()
+    world |> register_components()
+    world |> construct_queries()
 
-        player = dn_application_add_child(new Player(game_world))
-        player._init()
+    player = dn_application_add_child(new Player(game_world))
+    player._init()
 
-        create_cube_crowd()
-
-        dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
-        dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
-    }
+    dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
+    dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
 
     zeus = dn_application_add_child(new Zeus())
     zeus._init()
@@ -76,10 +71,6 @@ def game_update(delta : double) {
 
 [export]
 def game_physics_update(delta : double) {
-    if (dn_is_key_pressed(DN_Scancode.DN_SCANCODE_SPACE)) {
-        spawn_block()
-    }
-
     if (dn_is_input_action_triggered("ToggleZeus")) {
         dn_info("ToggleZeus Pressed")
         if (zeus_mode) {
@@ -98,22 +89,10 @@ def game_physics_update(delta : double) {
             player.enable_physics_update(false)
         }
     }
-
-    if (game_world != null) {
-        // system_integrate_velocity(game_world.ecs_world(), delta)
-    }
-
-    // process_input(delta)
 }
 
 [export]
 def game_draw() {
-    if (player != null && player.player_entity != null) {
-        let pos = game_world.get_global_position(player.player_entity)
-        dn_draw_box(pos, float4(0.2, 0.8, 0.2, 1.0), float3(1.0, 1.0, 1.0))
-    }
-    draw_cube_crowd()
-
 
     dn_begin_debug_draw()
 
@@ -125,14 +104,9 @@ def game_draw() {
 
 [export]
 def game_draw_ui() {
-    var active_cam : DnCamera?# = dn_get_active_camera()
-    let impl : DnCameraImpl = active_cam.get_impl()
     imgui_boost::Begin("Daslang Dashboard!")
     imgui_boost::Text("Render  FPS: {dn_get_render_frame_time() * 1000f}")
     imgui_boost::Text("Physics FPS: {dn_get_physics_frame_time() * 1000f}")
-    imgui_boost::Text("Camera:")
-    imgui_boost::Text("Position: \{{impl.position.x}, {impl.position.y}, {impl.position.z}\}")
-    imgui_boost::Text("Target: \{{impl.target.x}, {impl.target.y}, {impl.target.z}\}")
     imgui_boost::End()
 }
 
@@ -140,66 +114,52 @@ def register_keybinds() : void {
     // Zeus keybinds
     dn_add_keyboard_binding(
         "ToggleZeus",
-        DN_Scancode.DN_SCANCODE_P, 
-        KeyEvent.PRESSED, 
+        DN_Scancode.DN_SCANCODE_P,
+        KeyEvent.PRESSED,
         DN_KEY_MOD_LCTRL
     )
 
     dn_add_keyboard_binding(
         "Zeus_MoveCameraUp",
-        DN_Scancode.DN_SCANCODE_Q, 
-        KeyEvent.HELD, 
+        DN_Scancode.DN_SCANCODE_Q,
+        KeyEvent.HELD,
         DN_KEY_MOD_NONE
     )
 
     dn_add_keyboard_binding(
         "Zeus_MoveCameraDown",
-        DN_Scancode.DN_SCANCODE_Z, 
-        KeyEvent.HELD, 
+        DN_Scancode.DN_SCANCODE_Z,
+        KeyEvent.HELD,
         DN_KEY_MOD_NONE
     )
 
     dn_add_keyboard_binding(
         "Zeus_MoveCameraFast",
-        DN_Scancode.DN_SCANCODE_LSHIFT, 
-        KeyEvent.HELD, 
+        DN_Scancode.DN_SCANCODE_LSHIFT,
+        KeyEvent.HELD,
         DN_KEY_MOD_NONE
     )
 
     dn_add_keyboard_binding(
         "Zeus_ResetCameraPos",
-        DN_Scancode.DN_SCANCODE_R, 
-        KeyEvent.PRESSED, 
+        DN_Scancode.DN_SCANCODE_R,
+        KeyEvent.PRESSED,
         DN_KEY_MOD_LCTRL
     )
 
     // Player keybinds
-}
+    dn_create_input_action("Player_MoveForward")
+    dn_add_keyboard_binding("Player_MoveForward", DN_Scancode.DN_SCANCODE_W, KeyEvent.HELD, DN_KEY_MOD_NONE)
 
-let crowd_size = 1000
-var cubes : ecs_entity_t[crowd_size]
-def create_cube_crowd() : void {
-    var seed = random_seed(43)
-    for (i in range(0, crowd_size)) {
-        let world = game_world.ecs_world()
-        var e : ecs_entity_t = game_world.create_entity("{i}").ecs_entity()
-        ecs_set(world, e, RenderCube(size=float3(1.0, 1.0, 1.0)))
-        dn_entity_set_transform3d(world, e, dn_make_transform3d(random_float(seed) * 1000.0 % 100.0 - 50.0, 0.0, random_float(seed) * 1000.0 % 100.0 - 50.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0))
-        dn_entity_set_velocity3d(world, e, dn_make_velocity3d(0.0, 0.0, 0.0))        
-        cubes[i] = e
-    }
+    dn_create_input_action("Player_MoveBackward")
+    dn_add_keyboard_binding("Player_MoveBackward", DN_Scancode.DN_SCANCODE_S, KeyEvent.HELD, DN_KEY_MOD_NONE)
 
-    dn_info("Crowd of {length(cubes)} cubes created.")
-}
+    dn_create_input_action("Player_StrafeLeft")
+    dn_add_keyboard_binding("Player_StrafeLeft", DN_Scancode.DN_SCANCODE_A, KeyEvent.HELD, DN_KEY_MOD_NONE)
 
-def draw_cube_crowd() : void {
-    var seed = random_seed(43)
-    system_draw_rendercube(game_world)
-    for (i in range(0, crowd_size)) {
-        // dn_draw_box(float3(random_float(seed) * 1000.0 % 100.0 - 50.0, 0, random_float(seed) * 1000.0 % 100.0 - 50.0), float4(0.2, 0.8, 0.2, 1.0), float3(1.0, 1.0, 1.0))
-    }
-}
+    dn_create_input_action("Player_StrafeRight")
+    dn_add_keyboard_binding("Player_StrafeRight", DN_Scancode.DN_SCANCODE_D, KeyEvent.HELD, DN_KEY_MOD_NONE)
 
-def spawn_block() : void {
-    dn_physics_server_create_box(float3(0.0, 10.0, 0.0), float3(1.0, 1.0, 1.0))
+    dn_create_input_action("Player_Sprint")
+    dn_add_keyboard_binding("Player_Sprint", DN_Scancode.DN_SCANCODE_LSHIFT, KeyEvent.HELD, DN_KEY_MOD_NONE)
 }
