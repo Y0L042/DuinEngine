@@ -37,26 +37,25 @@ class State_ProjectEditor : DnGameState {
     def State_ProjectEditor() : void {
         _alias = "State_ProjectEditor"
         dn_info("Entered {_alias}")
-
     }
 
     def override _enter() : void {
-
+        scene_builder = new DnSceneBuilder()
         file_browser = add_child(new FileBrowser())
+        scenetree_viewer = add_child(new ScenetreeViewer())
+        scene_viewer = add_child(new SceneViewer())
+        entity_properties = add_child(new EntityProperties())
+
         file_browser.on_file_selected += @(var node : FSNode?) : void {
             on_file_selected(node)
         }
-
-        scenetree_viewer = add_child(new ScenetreeViewer())
+        scenetree_viewer.on_entity_selected += @(var e : DnEntity) : void {
+            entity_properties.update_selected_entity(e)
+        }
         on_active_scene_change += @(var scene : Scene) : void {
             scenetree_viewer.update_scene(scene)
         }
 
-        scene_viewer = add_child(new SceneViewer())
-
-        entity_properties = add_child(new EntityProperties())
-
-        scene_builder = new DnSceneBuilder()
     }
 
     def override _update(delta : double) : void {

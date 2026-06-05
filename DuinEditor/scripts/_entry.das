@@ -19,7 +19,6 @@ require dn_input
 require dn_physics
 require dn_application
 require dn_gamestatemachine
-require dn_live_host
 
 
 require main

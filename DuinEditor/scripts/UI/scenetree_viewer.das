@@ -10,7 +10,7 @@ require dn_ecs
 
 require ../scene.das
 
-typedef OnEntitySelected = delegate(type<function<(var selected : DnEntity?) : void>>)
+typedef OnEntitySelected = delegate(type<function<(var selected : DnEntity) : void>>)
 
 struct STNode {
     entity_id   : ecs_entity_t
@@ -33,7 +33,7 @@ class ScenetreeViewer : DnGameObject {
 
     def override _ready() : void {
         on_entity_selected += @(var e : DnEntity) : void {
-            dn_info("Selected Entity: {e}")
+            dn_info("Selected Entity: {e.entity} World: {e.world}")
         }
     }
 
@@ -85,20 +85,32 @@ class ScenetreeViewer : DnGameObject {
         let display_name = node.entity_name == "" ? "Unnamed Entity" : node.entity_name
         let node_id = "{display_name}##{node.entity_id}"
 
-        if (imgui_boost::IsItemClicked(0)) {
-            selected_entity = node.entity_id
-        }
-
+        var opened = false
         if (length(node.children) == 0) {
             flags |= int(ImGuiTreeNodeFlags.ImGuiTreeNodeFlags_Leaf) | int(ImGuiTreeNodeFlags.ImGuiTreeNodeFlags_NoTreePushOnOpen)
             imgui_boost::TreeNodeEx(node_id, flags, display_name)
         } else {
-            if (imgui_boost::TreeNodeEx(node_id, flags, display_name)) {
-                for (child in node.children) {
-                    draw_entity_node(child)
+            opened = imgui_boost::TreeNodeEx(node_id, flags, display_name)
+        }
+
+        if (imgui_boost::IsItemClicked(0)) {
+            selected_entity = node.entity_id
+            var w = active_scene.world
+            if (w != null) {
+                if (w.ecs_world() == null) {
+                    dn_fatal("ECS_WORLD is null!")
                 }
-                imgui_boost::TreePop()
+                var ecs_w = w.ecs_world()
+                var e : DnEntity = DnEntity(world=ecs_w, entity=node.entity_id)
+                on_entity_selected.invoke(e)
             }
+        }
+
+        if (opened) {
+            for (child in node.children) {
+                draw_entity_node(child)
+            }
+            imgui_boost::TreePop()
         }
     }
 }

@@ -19,7 +19,6 @@ require dn_input
 require dn_physics
 require dn_application
 require dn_gamestatemachine
-require dn_live_host
 
 require state_project_selection
 require state_project_editor
@@ -38,6 +37,7 @@ class _Root : DnGameObject {
         game_states = self.add_child(new DnGameStateMachine())
         game_states.switch_state(new State_ProjectSelection())
         // game_states.switch_state(new State_ProjectEditor())
+        // var x = "5" + 10
     }
 
 
