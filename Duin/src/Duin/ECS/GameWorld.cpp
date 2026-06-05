@@ -7,7 +7,6 @@
 #include "Duin/Render/Renderer.h"
 #include "PrefabRegistry.h"
 #include "Duin/Core/Debug/DNLog.h"
-
 #include <functional>
 
 namespace duin
@@ -31,6 +30,8 @@ GameWorld::~GameWorld()
 
 void GameWorld::Initialize(bool connectSignals)
 {
+    // Disable for now. Decide if it should happen here, or on daslang side
+#if 0
     ECSTag::RegisterTags(*this);
     DN_CORE_INFO("Tags registered.");
     ECSComponent::RegisterComponents(*this);
@@ -39,6 +40,7 @@ void GameWorld::Initialize(bool connectSignals)
     DN_CORE_INFO("Prefabs registered.");
     ECSObserver::RegisterObservers(*this);
     DN_CORE_INFO("Observers registered.");
+#endif
 
     if (connectSignals)
     {
