@@ -1,6 +1,6 @@
 options gen2
 
-module dn_camera_impl public
+module dn_camera_impl shared public
 
 require dn_camera_core public
 

@@ -3,7 +3,7 @@ options gen2
 require daslib/class_boost
 require math
 
-module dn_camera public
+module dn_camera shared public
 
 require dn_camera_core public
 require dn_camera_impl public
