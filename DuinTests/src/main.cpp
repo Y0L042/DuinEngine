@@ -43,8 +43,8 @@ int main(int argc, char **argv)
 {
     int res = 0;
 
-    RunCtx runCtx = RunCtx::ALL;
-     //RunCtx runCtx = RunCtx::DAS;
+    //RunCtx runCtx = RunCtx::ALL;
+     RunCtx runCtx = RunCtx::DAS;
 
     if (argc > 1)
     {
@@ -81,7 +81,9 @@ int main(int argc, char **argv)
 
     if (runCtx == RunCtx::ALL || runCtx == RunCtx::DAS)
     {
-        //RunScriptTests();
+        RunScriptTests();
+        if (res != 0)
+            return res;
     }
 
     return res;
@@ -90,12 +92,12 @@ int main(int argc, char **argv)
 void RunScriptTests()
 {
     namespace fs = std::filesystem;
-    
-    int passed = 0, failed = 0;
+
+    int totalPassed = 0, totalFailed = 0;
 
     duin::Script script;
-    script.SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
-    script.SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DuinTests\\duintests.das_project");
+    script.SetDasRoot("../Duin/vendor/daslang");
+    script.SetProjectFile("./duintests.das_project");
     script.InitModules([]() {
         NEED_MODULE(Module_flecs);
         NEED_MODULE(Module_imgui);
@@ -111,19 +113,32 @@ void RunScriptTests()
         NEED_MODULE(Module_DnCharacterBody);
         NEED_MODULE(Module_DnApplication);
         NEED_MODULE(Module_DnFilesystem);
+        NEED_MODULE(Module_DnUUID);
     });
 
     for (const auto &entry : fs::recursive_directory_iterator("./scripts")) {
         if (entry.path().extension() != ".das") continue;
 
         std::string path = entry.path().generic_string();
-        std::cout << "Running script: " << path << "\n";
+        std::cout << "\n=== " << path << " ===\n";
 
         script.SetScriptPath(path);
-        bool ok = script.Compile() && script.SimulateContext();
-        std::cout << (ok ? "  PASSED\n" : "  FAILED\n");
-        ok ? ++passed : ++failed;
+        // Keep cached bindings: daslib + dn_* are identical across test files, so reuse
+        // the warm graph and only recompile each test file. Much faster across many files.
+        script.PrepareForRecompile(duin::RecompileMode::KeepCachedBindings);
+        if (!script.Compile() || !script.SimulateContext()) {
+            std::cout << "  COMPILE/SIMULATE FAILED\n";
+            ++totalFailed;
+            continue;
+        }
+
+        auto [p, f] = script.RunTests();
+        totalPassed += p;
+        totalFailed += f;
     }
 
-    std::cout << "\nScript tests: " << passed << " passed, " << failed << " failed\n";
+    std::cout << "\n--- DAS test results: " << totalPassed << " passed, " << totalFailed << " failed ---\n";
+
+    if (totalFailed > 0)
+        std::exit(1);
 }

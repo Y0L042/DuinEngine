@@ -8,12 +8,13 @@ namespace TestGameWorld
 {
 
 // ---------------------------------------------------------------------------
-// Helper — spawn a Camera3D prefab instance.
+// Helper — spawn a camera entity with the required Camera and Transform3D components.
+// Does not rely on ECSPrefab globals (RegisterPrefabs is currently disabled).
 // ---------------------------------------------------------------------------
 static duin::Entity MakeCamera3D(duin::GameWorld &gw, const char *name)
 {
     return gw.Entity(name)
-             .IsA(duin::ECSPrefab::Camera3D)
+             .Set<duin::Camera>(duin::Camera{})
              .Set<duin::ECSComponent::Transform3D>(duin::ECSComponent::Transform3D{});
 }
 
@@ -35,7 +36,7 @@ TEST_SUITE("GameWorld - Camera Queries")
         duin::GameWorld gw;
         gw.Initialize(false);
 
-        duin::Entity e = gw.Entity("NoCam").IsA(duin::ECSPrefab::Node3D);
+        duin::Entity e = gw.Entity("NoCam");
         CHECK_NOTHROW([&]() { gw.ActivateCameraEntity(e); }());
 
         // The entity must NOT have received ActiveCamera from this call.
