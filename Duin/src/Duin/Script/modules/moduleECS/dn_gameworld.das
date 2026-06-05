@@ -12,6 +12,7 @@ require dn_gameworld_class public
 require dn_log public
 require dn_ecs public
 require dn_gameworld_core public
+require dn_ecs_components public
 
 class DnGameWorld : DnGameWorld_Adapter {
     initialized : bool = false
@@ -21,11 +22,12 @@ class DnGameWorld : DnGameWorld_Adapter {
 
     def initialize() : void {
         self._handle = unsafe(dn_create_gameworld_impl(addr(self), class_info(self)))
+        register_internal_components()
         initialized = self._handle != null
     }
 
-    def dn_world() : DnWorld? {
-        return new DnWorld(ecs_world())
+    def dn_world() : DnWorld {
+        return DnWorld(ecs_world())
     }
 
     def ecs_world() : ecs_world_t? {
@@ -39,8 +41,30 @@ class DnGameWorld : DnGameWorld_Adapter {
         return ecs_w
     }
 
+    def register_internal_components() : void {
+        var ecs_w = ecs_world()
+        ecs_component_register(ecs_w, type<Position2D>)
+        ecs_component_register(ecs_w, type<Rotation2D>)
+        ecs_component_register(ecs_w, type<Scale2D>)
+        ecs_component_register(ecs_w, type<Velocity2D>)
+        ecs_component_register(ecs_w, type<Transform3D>)
+        ecs_component_register(ecs_w, type<Position3D>)
+        ecs_component_register(ecs_w, type<Rotation3D>)
+        ecs_component_register(ecs_w, type<Scale3D>)
+        ecs_component_register(ecs_w, type<Velocity3D>)
+        ecs_component_register(ecs_w, type<CubeComponent>)
+        ecs_component_register(ecs_w, type<StaticBodyComponent>)
+        ecs_component_register(ecs_w, type<KinematicBodyComponent>)
+        ecs_component_register(ecs_w, type<DynamicBodyComponent>)
+        ecs_component_register(ecs_w, type<CharacterBodyComponent>)
+        ecs_component_register(ecs_w, type<PhysicsStaticCubeComponent>)
+        ecs_component_register(ecs_w, type<DebugCapsuleComponent>)
+        ecs_component_register(ecs_w, type<DebugCubeComponent>)
+        ecs_component_register(ecs_w, type<Camera>)
+    }
+
     [class_method]
-    def static world() : ecs_world_t? {
+    def static world() : ecs_world_t ? {
         var ecs_w : ecs_world_t?
         var h = _handle
         if (h != null) {
@@ -66,11 +90,11 @@ class DnGameWorld : DnGameWorld_Adapter {
     }
 
     [class_method]
-    def static create_entity(name : string) : DnEntity? {
+    def static create_entity(name : string) : DnEntity {
         if (_handle == null) {
-            return null
+            return DnEntity()
         }
-        var e = new DnEntity()
+        var e = DnEntity()
         e.entity = dn_gameworld_create_entity_impl(_handle, name)
         unsafe {
             e.world = reinterpret<ecs_world_t?>(dn_gameworld_get_flecs_world_impl(_handle))
@@ -87,18 +111,18 @@ class DnGameWorld : DnGameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_position(var e : DnEntity?; x, y, z : float) {
-        if (_handle != null && e != null) {
+    def static set_global_position(e : DnEntity ==const &; x, y, z : float) {
+        if (_handle != null) {
             dn_gameworld_set_global_position_impl(_handle, e.entity, x, y, z)
         }
     }
 
     [class_method]
-    def static get_global_position(var e : DnEntity?) : float3 {
-        var x = 0.0f
-        var y = 0.0f
-        var z = 0.0f
-        if (_handle != null && e != null) {
+    def static get_global_position(e : DnEntity ==const &) : float3 {
+        var x : float = 0.0f
+        var y : float = 0.0f
+        var z : float = 0.0f
+        if (_handle != null) {
             unsafe {
                 dn_gameworld_get_global_position_impl(_handle, e.entity, addr(x), addr(y), addr(z))
             }
@@ -107,19 +131,19 @@ class DnGameWorld : DnGameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_rotation(var e : DnEntity?; x, y, z, w : float) {
-        if (_handle != null && e != null) {
+    def static set_global_rotation(e : DnEntity ==const &; x, y, z, w : float) {
+        if (_handle != null) {
             dn_gameworld_set_global_rotation_impl(_handle, e.entity, x, y, z, w)
         }
     }
 
     [class_method]
-    def static get_global_rotation(var e : DnEntity?) : float4 {
+    def static get_global_rotation(e : DnEntity ==const &) : float4 {
         var x = 0.0f
         var y = 0.0f
         var z = 0.0f
         var w = 1.0f
-        if (_handle != null && e != null) {
+        if (_handle != null) {
             unsafe {
                 dn_gameworld_get_global_rotation_impl(_handle, e.entity, addr(x), addr(y), addr(z), addr(w))
             }
@@ -128,18 +152,18 @@ class DnGameWorld : DnGameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_scale(var e : DnEntity?; x, y, z : float) {
-        if (_handle != null && e != null) {
+    def static set_global_scale(e : DnEntity ==const &; x, y, z : float) {
+        if (_handle != null) {
             dn_gameworld_set_global_scale_impl(_handle, e.entity, x, y, z)
         }
     }
 
     [class_method]
-    def static get_global_scale(var e : DnEntity?) : float3 {
+    def static get_global_scale(e : DnEntity ==const &) : float3 {
         var x = 1.0f
         var y = 1.0f
         var z = 1.0f
-        if (_handle != null && e != null) {
+        if (_handle != null) {
             unsafe {
                 dn_gameworld_get_global_scale_impl(_handle, e.entity, addr(x), addr(y), addr(z))
             }

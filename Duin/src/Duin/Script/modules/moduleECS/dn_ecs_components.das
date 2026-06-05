@@ -58,3 +58,4 @@ struct DebugCapsuleComponent {}
 struct DebugCubeComponent {}
 
 struct Camera {}
+

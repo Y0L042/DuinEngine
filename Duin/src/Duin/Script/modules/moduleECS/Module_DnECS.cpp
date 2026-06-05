@@ -67,46 +67,6 @@ DAS_TYPE_ANNOTATION(DnVelocity3D)
     DAS_ADD_FIELD_BIND(value);
 }
 
-// ---- Factory helpers ----
-
-static duin::Vector3 dn_make_vector3(float x, float y, float z)
-{
-    return duin::Vector3{x, y, z};
-}
-
-static duin::Quaternion dn_make_quaternion(float x, float y, float z, float w)
-{
-    return duin::Quaternion{x, y, z, w};
-}
-
-static duin::ECSComponent::Position3D dn_make_position3d(float x, float y, float z)
-{
-    return duin::ECSComponent::Position3D{duin::Vector3{x, y, z}};
-}
-
-static duin::ECSComponent::Rotation3D dn_make_rotation3d(float x, float y, float z, float w)
-{
-    return duin::ECSComponent::Rotation3D{duin::Quaternion{x, y, z, w}};
-}
-
-static duin::ECSComponent::Scale3D dn_make_scale3d(float x, float y, float z)
-{
-    return duin::ECSComponent::Scale3D{duin::Vector3{x, y, z}};
-}
-
-static duin::ECSComponent::Transform3D::Transform3DImpl dn_make_transform3d(float px, float py, float pz, float sx,
-                                                                            float sy, float sz, float rx, float ry,
-                                                                            float rz, float rw)
-{
-    return duin::ECSComponent::Transform3D::Transform3DImpl{duin::Vector3{px, py, pz}, duin::Vector3{sx, sy, sz},
-                                                            duin::Quaternion{rx, ry, rz, rw}};
-}
-
-static duin::ECSComponent::Velocity3D dn_make_velocity3d(float x, float y, float z)
-{
-    return duin::ECSComponent::Velocity3D{duin::Vector3{x, y, z}};
-}
-
 // ---- Component ID lookups (ecs_world_t* → ecs_entity_t) ----
 
 static uint64_t dn_component_id_position3d(ecs_world_t *w)
@@ -465,29 +425,6 @@ class Module_DnECS : public das::Module
         addAnnotation(new DnScale3DAnnotation(lib));
         addAnnotation(new DnTransform3DAnnotation(lib));
         addAnnotation(new DnVelocity3DAnnotation(lib));
-
-        // Factory helpers
-        addExtern<DAS_BIND_FUN(dn_make_vector3), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_make_vector3", das::SideEffects::none, "dn_make_vector3")
-            ->args({"x", "y", "z"});
-        addExtern<DAS_BIND_FUN(dn_make_quaternion), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_make_quaternion", das::SideEffects::none, "dn_make_quaternion")
-            ->args({"x", "y", "z", "w"});
-        addExtern<DAS_BIND_FUN(dn_make_position3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_make_position3d", das::SideEffects::none, "dn_make_position3d")
-            ->args({"x", "y", "z"});
-        addExtern<DAS_BIND_FUN(dn_make_rotation3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_make_rotation3d", das::SideEffects::none, "dn_make_rotation3d")
-            ->args({"x", "y", "z", "w"});
-        addExtern<DAS_BIND_FUN(dn_make_scale3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_make_scale3d", das::SideEffects::none, "dn_make_scale3d")
-            ->args({"x", "y", "z"});
-        addExtern<DAS_BIND_FUN(dn_make_transform3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_make_transform3d", das::SideEffects::none, "dn_make_transform3d")
-            ->args({"px", "py", "pz", "sx", "sy", "sz", "rx", "ry", "rz", "rw"});
-        addExtern<DAS_BIND_FUN(dn_make_velocity3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
-            *this, lib, "dn_make_velocity3d", das::SideEffects::none, "dn_make_velocity3d")
-            ->args({"x", "y", "z"});
 
         // Component ID lookups
         addExtern<DAS_BIND_FUN(dn_component_id_position3d)>(*this, lib, "dn_component_id_position3d",
