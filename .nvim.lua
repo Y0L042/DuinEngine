@@ -108,6 +108,20 @@ local function switch_and_search()
     end
 end
 
+-- daslang: [[ and ]] jump between def functions in .das files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = "*.das",
+    callback = function()
+        vim.keymap.set('n', '[[', function()
+            vim.fn.search([[\v^\s*def\s]], 'bsW')
+        end, { buffer = true, silent = true, desc = "Jump to previous def" })
+        vim.keymap.set('n', ']]', function()
+            vim.fn.search([[\v^\s*def\s]], 'sW')
+        end, { buffer = true, silent = true, desc = "Jump to next def" })
+    end,
+})
+
+
 -- Key mappings for switching files
 
 -- F4: Switch between header and source

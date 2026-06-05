@@ -84,7 +84,7 @@ workspace "Duin"
         "Duin/vendor/toml11/build/src/Debug",
         "Duin/vendor/reflectcpp/build/Debug",
         "Duin/vendor/daslang/lib/Debug",
-        "Duin/vendor/flecs-daslang/flecs_das/bin/Debug-windows-x86_64/flecs_das",
+        "Duin/vendor/flecs-daslang/flecs_das/bin/" .. outputdir .. "/flecs_das",
         "Duin/vendor/dasimgui/bin/Debug-windows-x86_64/dasimgui",
     }
     global_defines =
@@ -92,6 +92,7 @@ workspace "Duin"
         "DN_PLATFORM_WINDOWS",
         "DN_BUILD_STATIC",
         "flecs_STATIC",
+        "DAS_USE_BASE_CRASH_HANDLER=1",
         -- "PX_PHYSX_STATIC_LIB",
         "JPH_ENABLE_ASSERTS",
         "JPH_OBJECT_LAYER_BITS=16",
@@ -155,6 +156,7 @@ workspace "Duin"
     include "ScriptTests/AngelScriptTest"
     include "ScriptTests/DaslangTest"
     include "DaslangDocGenerator"
+    include "DuinDasHost"
 
     local duinVendorRoot = path.getabsolute("Duin/vendor")
 
