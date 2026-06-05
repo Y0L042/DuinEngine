@@ -4,6 +4,7 @@ var hierarchy =
     [ "duin::ECSTag::ActiveExternalRef", "structduin_1_1ECSTag_1_1ActiveExternalRef.html", null ],
     [ "duin::Application", "classduin_1_1Application.html", null ],
     [ "Args", "structArgs.html", null ],
+    [ "duin::AssertContextScope", "structduin_1_1AssertContextScope.html", null ],
     [ "duin::Asset", "structduin_1_1Asset.html", null ],
     [ "duin::AssetManager", "classduin_1_1AssetManager.html", null ],
     [ "duin::AssetRef", "structduin_1_1AssetRef.html", null ],
@@ -84,6 +85,7 @@ var hierarchy =
     [ "ImCurveEdit::Delegate", "structImCurveEdit_1_1Delegate.html", null ],
     [ "ImGradient::Delegate", "structImGradient_1_1Delegate.html", null ],
     [ "duin::ECSTag::DeleteExternalRef", "structduin_1_1ECSTag_1_1DeleteExternalRef.html", null ],
+    [ "duin::Diagnostic", "structduin_1_1Diagnostic.html", null ],
     [ "duin::fs::DirCallbackWrapper", "structduin_1_1fs_1_1DirCallbackWrapper.html", null ],
     [ "DnGameObjectAdapterBase", null, [
       [ "ScriptGameObject", "classScriptGameObject.html", null ]

@@ -173,7 +173,7 @@ $(document).ready(function(){initNavTree('DNLog_8cpp_source.html',''); initResiz
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">// Create a custom formatter with the frame count flag</span></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keyword">auto</span> coreFormatter = std::make_unique&lt;spdlog::pattern_formatter&gt;();</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    coreFormatter-&gt;add_flag&lt;<a class="code hl_class" href="classduin_1_1FrameCountFormatter.html">FrameCountFormatter</a>&gt;(<span class="charliteral">&#39;F&#39;</span>);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    coreFormatter-&gt;set_pattern(<span class="stringliteral">&quot;%^[ %T | %F ]\t%n\t(%s:%#): %v%$&quot;</span>);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    coreFormatter-&gt;set_pattern(<span class="stringliteral">&quot;%^[ %H:%M:%S.%e | %F ]\t%n\t(%s:%#): %v%$&quot;</span>);</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="comment">// s_CoreLogger = spdlog::stdout_color_mt(&quot;DUIN&quot;);</span></div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    s_CoreLogger = std::make_shared&lt;spdlog::logger&gt;(<span class="stringliteral">&quot;CORE&quot;</span>, begin(sinks), end(sinks));</div>
@@ -184,7 +184,7 @@ $(document).ready(function(){initNavTree('DNLog_8cpp_source.html',''); initResiz
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">auto</span> clientFormatter = std::make_unique&lt;spdlog::pattern_formatter&gt;();</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    clientFormatter-&gt;add_flag&lt;<a class="code hl_class" href="classduin_1_1FrameCountFormatter.html">FrameCountFormatter</a>&gt;(<span class="charliteral">&#39;F&#39;</span>);</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="comment">// clientFormatter-&gt;set_pattern(&quot;%^[%T] %n [%F] (%s:%#): %v%$&quot;);</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    clientFormatter-&gt;set_pattern(<span class="stringliteral">&quot;%^[ %T | %F ]\t%n\t(%s:%#): %v%$&quot;</span>);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    clientFormatter-&gt;set_pattern(<span class="stringliteral">&quot;%^[ %H:%M:%S.%e | %F ]\t%n\t(%s:%#): %v%$&quot;</span>);</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="comment">// s_ClientLogger = spdlog::stdout_color_mt(&quot;APP&quot;);</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    s_ClientLogger = std::make_shared&lt;spdlog::logger&gt;(<span class="stringliteral">&quot;APP&quot;</span>, begin(sinks), end(sinks));</div>

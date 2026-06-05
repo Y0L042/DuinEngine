@@ -7,7 +7,7 @@ var dir_adc84b64c3e31638e183f7983f4e174a =
     [ "DebugTools.h", "DebugTools_8h_source.html", null ],
     [ "DNAssert - BAK.h", "DNAssert_01-_01BAK_8h_source.html", null ],
     [ "DNAssert.cpp", "DNAssert_8cpp_source.html", null ],
-    [ "DNAssert.h", "DNAssert_8h.html", null ],
+    [ "DNAssert.h", "DNAssert_8h.html", "DNAssert_8h" ],
     [ "DNLog.cpp", "DNLog_8cpp_source.html", null ],
     [ "DNLog.h", "DNLog_8h.html", null ]
 ];

@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"md_docs_2RenderingPipeline.html#autotoc_md13":[1,4],
+"md_docs_2RenderingPipeline.html#autotoc_md14":[1,4,0],
 "md_docs_2RenderingPipeline.html#autotoc_md15":[1,5],
 "md_docs_2RenderingPipeline.html#autotoc_md16":[1,5,0],
 "md_docs_2RenderingPipeline.html#autotoc_md17":[1,5,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "structImSequencer_1_1SequenceInterface.html":[4,0,7,0],
 "structImSpan.html":[4,0,186],
 "structImSpanAllocator.html":[4,0,187],
-"structImStableVector.html":[4,0,188],
-"structImTextureData.html":[4,0,189],
-"structImTextureRect.html":[4,0,190]
+"structImStableVector.html":[4,0,188]
 };

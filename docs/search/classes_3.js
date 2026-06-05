@@ -18,11 +18,12 @@ var searchData=
   ['debugvertex_15',['DebugVertex',['../structDebugVertex.html',1,'']]],
   ['delegate_16',['delegate',['../structGraphEditor_1_1Delegate.html',1,'GraphEditor::Delegate'],['../structImCurveEdit_1_1Delegate.html',1,'ImCurveEdit::Delegate'],['../structImGradient_1_1Delegate.html',1,'ImGradient::Delegate']]],
   ['deleteexternalref_17',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
-  ['dircallbackwrapper_18',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
-  ['diskrendergeometry_19',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
-  ['diskrendershape_20',['DiskRenderShape',['../classduin_1_1DiskRenderShape.html',1,'duin']]],
-  ['dniostreamhandle_21',['DnIOStreamHandle',['../structDnIOStreamHandle.html',1,'']]],
-  ['dniostreamhandleannotation_22',['DnIOStreamHandleAnnotation',['../structDnIOStreamHandleAnnotation.html',1,'']]],
-  ['dnlivehoststate_23',['DnLiveHostState',['../structDnLiveHostState.html',1,'']]],
-  ['dynamicbody_24',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]]
+  ['diagnostic_18',['Diagnostic',['../structduin_1_1Diagnostic.html',1,'duin']]],
+  ['dircallbackwrapper_19',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
+  ['diskrendergeometry_20',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
+  ['diskrendershape_21',['DiskRenderShape',['../classduin_1_1DiskRenderShape.html',1,'duin']]],
+  ['dniostreamhandle_22',['DnIOStreamHandle',['../structDnIOStreamHandle.html',1,'']]],
+  ['dniostreamhandleannotation_23',['DnIOStreamHandleAnnotation',['../structDnIOStreamHandleAnnotation.html',1,'']]],
+  ['dnlivehoststate_24',['DnLiveHostState',['../structDnLiveHostState.html',1,'']]],
+  ['dynamicbody_25',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]]
 ];

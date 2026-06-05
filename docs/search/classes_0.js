@@ -6,12 +6,13 @@ var searchData=
   ['application_3',['Application',['../classduin_1_1Application.html',1,'duin']]],
   ['area_4',['Area',['../classduin_1_1Area.html',1,'duin']]],
   ['args_5',['Args',['../structArgs.html',1,'']]],
-  ['asset_6',['Asset',['../structduin_1_1Asset.html',1,'duin']]],
-  ['assetmanager_7',['AssetManager',['../classduin_1_1AssetManager.html',1,'duin']]],
-  ['assetref_8',['AssetRef',['../structduin_1_1AssetRef.html',1,'duin']]],
-  ['atlas_9',['Atlas',['../classAtlas.html',1,'']]],
-  ['atlasregion_10',['AtlasRegion',['../structAtlasRegion.html',1,'']]],
-  ['attrib_11',['Attrib',['../structAttrib.html',1,'']]],
-  ['aviwriter_12',['AviWriter',['../structAviWriter.html',1,'']]],
-  ['axis_13',['Axis',['../structAxis.html',1,'']]]
+  ['assertcontextscope_6',['AssertContextScope',['../structduin_1_1AssertContextScope.html',1,'duin']]],
+  ['asset_7',['Asset',['../structduin_1_1Asset.html',1,'duin']]],
+  ['assetmanager_8',['AssetManager',['../classduin_1_1AssetManager.html',1,'duin']]],
+  ['assetref_9',['AssetRef',['../structduin_1_1AssetRef.html',1,'duin']]],
+  ['atlas_10',['Atlas',['../classAtlas.html',1,'']]],
+  ['atlasregion_11',['AtlasRegion',['../structAtlasRegion.html',1,'']]],
+  ['attrib_12',['Attrib',['../structAttrib.html',1,'']]],
+  ['aviwriter_13',['AviWriter',['../structAviWriter.html',1,'']]],
+  ['axis_14',['Axis',['../structAxis.html',1,'']]]
 ];
