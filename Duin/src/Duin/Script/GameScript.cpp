@@ -2,7 +2,6 @@
 #include "GameScript.h"
 #include "Duin/IO/FileModule.h"
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
-#include "./modules/moduleLiveHost/Module_DnLiveHost.h"
 #include <iostream>
 #include <memory>
 #include <regex>
@@ -112,7 +111,9 @@ bool duin::GameScript::CompileAndSimulate()
     bool isReload = hasCompiledOnce;
 
     ResetMuteWarningFlags();
-    ResetToBaseModules();
+    // Hot-reload: re-read promoted .das modules (game + engine bindings) from disk so
+    // edits take effect. KeepCachedBindings would defeat reload, so refresh explicitly.
+    ResetToBaseModules(RecompileMode::RefreshBindings);
 
     bool success = Compile();
     if (success)

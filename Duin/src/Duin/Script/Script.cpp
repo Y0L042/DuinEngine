@@ -3,6 +3,7 @@
 #include <Duin/Core/Debug/DNLog.h>
 #include <chrono>
 #include <memory>
+#include <algorithm>
 #include <string>
 #include <sstream>
 #include <daScript/ast/ast.h>
@@ -71,6 +72,41 @@ bool duin::Script::Compile()
     DN_CORE_WARN("Compiling script {}...", scriptPath);
     bool res = false;
 
+    diagnostics.clear();
+
+    // Validate inputs BEFORE handing them to daslang. Constructing FsFileAccess on a
+    // non-existent project file faults inside daslang (it parses/runs the project's
+    // module_get) — an editor sending a stale/renamed URI must not crash the daemon. A
+    // missing script path is handled gracefully by compileDaScript, but we reject it here
+    // too for a cleaner diagnostic. Both checks emit a 20605 (file-not-found) diagnostic.
+    auto fileExists = [](const std::string &p) -> bool {
+        if (p.empty())
+            return false;
+        if (FILE *f = std::fopen(p.c_str(), "rb"))
+        {
+            std::fclose(f);
+            return true;
+        }
+        return false;
+    };
+    auto failMissing = [&](const std::string &what, const std::string &path) -> bool {
+        DN_CORE_ERROR("Cannot compile: {} not found: {}", what, path);
+        Diagnostic d;
+        d.severity = Diagnostic::Severity::Error;
+        d.code = 20605; // missing prerequisite / file not found
+        d.message = what + " not found: " + path;
+        d.file = path;
+        d.line = 1;
+        d.column = 1;
+        lastCompileError = d.message;
+        diagnostics.push_back(d);
+        return false;
+    };
+    if (!projectFile.empty() && !fileExists(projectFile))
+        return failMissing("project file", projectFile);
+    if (!fileExists(scriptPath))
+        return failMissing("source file", scriptPath);
+
     // Set optional project file, script root, configure policies
     if (!projectFile.empty())
     {
@@ -84,6 +120,9 @@ bool duin::Script::Compile()
     fAccess->addFsRoot("scripts", "scripts");
     das::CodeOfPolicies policies;
     policies.rtti = true;
+    policies.log_compile_time = true;        // total time at end
+    //policies.log_total_compile_time = true;  // detailed breakdown per phase
+    //policies.log_module_compile_time = true; // per-module: parse / infer passes / optimize / macros
 
     // Attempt compilation
     // only update script program on successful compilation
@@ -91,6 +130,25 @@ bool duin::Script::Compile()
     das::ProgramPtr newProgram = das::compileDaScript(scriptPath, fAccess, tout, libGroup, policies);
     auto compileMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - compileStart).count();
+
+    // compileDaScript can return a null program (e.g. the top-level file can't be opened —
+    // a stale/renamed URI from an editor). Dereferencing it below would crash the daemon, so
+    // synthesize a diagnostic and fail gracefully instead.
+    if (!newProgram)
+    {
+        DN_CORE_ERROR("Compilation returned no program for {} (file missing/unopenable).", scriptPath);
+        Diagnostic d;
+        d.severity = Diagnostic::Severity::Error;
+        d.code = 20605; // missing prerequisite / file not found
+        d.message = "could not open source file: " + scriptPath;
+        d.file = scriptPath;
+        d.line = 1;
+        d.column = 1;
+        lastCompileError = d.message;
+        diagnostics.push_back(d);
+        return false;
+    }
+
     if (newProgram->failed())
     {
         DN_CORE_FATAL("Compilation failed!");
@@ -103,6 +161,7 @@ bool duin::Script::Compile()
         for (auto &err : newProgram->errors)
         {
             lastCompileError += SafeErrorReport(err);
+            diagnostics.push_back(MakeDiagnostic(err));
         }
 
         DN_CORE_ERROR("Compilation failed in {}ms.", compileMs);
@@ -124,7 +183,9 @@ bool duin::Script::SimulateContext()
     DN_CORE_INFO("Simulating context for script {}...", scriptPath);
     bool res = false;
 
-    context = std::make_shared<ScriptContext>(program->getContextStackSize());
+    // context = std::make_shared<ScriptContext>(program->getContextStackSize());
+    context = std::make_shared<ScriptContext>(
+        std::max(program->getContextStackSize(), 512 * 1024)); // For daslang debugger overhead
     context->scriptMemory = std::make_shared<ScriptMemory>();
 
     if (!program->simulate(*context.get(), tout))
@@ -160,7 +221,10 @@ bool duin::Script::CallScript(das::Func fn, vec4f *args, void *res)
         }
         return false;
     }
+
+    auto _dasCtx = MakeScriptContextScope(context.get());
     context->evalWithCatch(fn.PTR, args, res);
+
     if (auto ex = context->getException())
     {
         DN_CORE_FATAL("Script Exception: \n{}\n", ex);
@@ -170,20 +234,33 @@ bool duin::Script::CallScript(das::Func fn, vec4f *args, void *res)
     return true;
 }
 
-void duin::Script::ResetToBaseModules()
+void duin::Script::ResetToBaseModules(RecompileMode mode)
 {
-    // Order matters here:
-    // 1. libGroup.reset() first: skips promoted modules (builtIn=true, no delete) but clears
-    //    the local vector — so their raw pointers are gone from libGroup before step 2.
-    // 2. Module::Reset(false) then: walks the global daScriptEnvironment::modules linked list
-    //    and deletes only entries where promoted==true (i.e. daslib/*.das files promoted to
-    //    builtins during a previous compileDaScript). This forces re-reading them from disk so
-    //    hot-reload sees any changes. Duin's own C++ modules (builtIn=true, promoted=false)
-    //    are never touched by Module::Reset and survive across recompiles unchanged.
-    //    Doing this after libGroup.reset() avoids a double-free: if they are deleted first,
-    //    libGroup.reset() would still dereference their (now-dangling) pointers.
+    // Step 1 (both modes): libGroup.reset() clears the group's local module vector.
+    // It deletes only !builtIn modules; the promoted .das modules (builtIn==true) are
+    // left alive in the global daScriptEnvironment::modules list, just dropped from the
+    // group. Doing this first avoids a double-free in the RefreshBindings path below.
     libGroup.reset();
-    das::Module::Reset(false);
+
+    // Step 2 (RefreshBindings only): Module::Reset(false) walks the global module list
+    // and deletes every promoted==true entry — i.e. all daslib/*.das AND the dn_* engine
+    // binding .das files promoted to builtins by a previous compile. This forces them to
+    // be re-read from disk on the next compile, so edits to engine bindings take effect.
+    // Duin's own C++ modules (builtIn==true, promoted==false) are never touched and
+    // survive across recompiles either way.
+    //
+    // KeepCachedBindings SKIPS this: the promoted modules stay in the global list, so the
+    // next compileDaScript resolves `require daslib/... | dn_...` against the already-
+    // compiled modules instead of recompiling them. Only the target file is re-read. This
+    // is the daemon fast path — warm graph reused, per-request cost is just the one file.
+    if (mode == RecompileMode::RefreshBindings)
+    {
+        das::Module::Reset(false);
+    }
+
+    // Step 3 (both modes): re-add the C++ base modules (captured right after InitModules)
+    // to the now-cleared group. In KeepCachedBindings the promoted .das modules remain
+    // resolvable from the global list; they do not need to be in the group to be found.
     for (das::Module *m : baseModules)
     {
         libGroup.addModule(m);
@@ -219,6 +296,7 @@ bool duin::Script::InvokeVoid(das::Func fn)
         return false;
     }
 
+    auto _dasCtx = MakeScriptContextScope(context.get());
     bool ok = context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn); });
 
     if (!ok)
@@ -248,8 +326,10 @@ bool duin::Script::InvokeWithDelta(das::Func fn, double delta)
         return false;
     }
 
+    auto _dasCtx = MakeScriptContextScope(context.get());
     bool ok =
         context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn, delta); });
+
     if (!ok)
     {
         if (auto ex = context->getException())
@@ -311,6 +391,68 @@ std::string duin::Script::SafeErrorReport(const das::Error &err)
     oss << "Cerr: " << (int)err.cerr << "\n";
 
     return oss.str();
+}
+
+duin::Diagnostic duin::Script::MakeDiagnostic(const das::Error &err)
+{
+    Diagnostic d;
+    d.severity = Diagnostic::Severity::Error;
+    d.code = (int)err.cerr;
+    d.message = err.what.c_str();
+    d.extra = err.extra.c_str();
+    d.fixme = err.fixme.c_str();
+    d.line = (int)err.at.line;
+    d.column = (int)err.at.column;
+
+    // Guard against null fileInfo, mirroring SafeErrorReport.
+    if (err.at.fileInfo != nullptr)
+    {
+        d.file = err.at.fileInfo->name.c_str();
+    }
+
+    return d;
+}
+
+std::pair<int, int> duin::Script::RunTests()
+{
+    if (!program || !context)
+        return {0, 0};
+
+    int passed = 0, failed = 0;
+
+    auto *mod = program->thisModule.get();
+    mod->functions.foreach ([&](das::FunctionPtr &fn) {
+        if (!fn || !fn->exports)
+            return;
+        if (fn->name.find("test_") != 0)
+            return;
+        // Only run 0-argument test functions.
+        // [test] functions with a T? argument require a live testing::T object
+        // that must be constructed daslang-side; skip them here.
+        if (!fn->arguments.empty())
+            return;
+
+        const std::string name = fn->name;
+        auto simFn = context->findFunction(name.c_str());
+        if (!simFn)
+            return;
+
+        context->evalWithCatch(simFn, nullptr, nullptr);
+
+        if (auto ex = context->getException())
+        {
+            std::cout << "  FAIL  " << name << " -- " << ex << "\n";
+            context->clearException();
+            ++failed;
+        }
+        else
+        {
+            std::cout << "  PASS  " << name << "\n";
+            ++passed;
+        }
+    });
+
+    return {passed, failed};
 }
 
 bool duin::VerifyFunction(das::Context *ctx, das::Func fn)

@@ -13,7 +13,6 @@
 #include "./modules/modulePhysics/Module_DnPhysicsServer.h"
 #include "./modules/modulePhysics/ModuleDnCharacterBody.h"
 #include "./modules/moduleApplication/Module_DnApplication.h"
-#include "./modules/moduleLiveHost/Module_DnLiveHost.h"
 #include "./modules/moduleTOML/Module_TOMLC17.h"
 
 //#include "./ECS/Module_DecsEntity.h"
