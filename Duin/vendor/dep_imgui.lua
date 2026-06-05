@@ -3,7 +3,7 @@ local dep_imgui = {}
 local name = "IMGUI"
 
 local repo   = "https://github.com/ocornut/imgui"
-local branch = "docking"
+local branch = "148bd34a7e8106cd6e8dae8411a506a8e3e84f40" --"docking"
 local folder = "imgui"
 
 function dep_imgui.build()

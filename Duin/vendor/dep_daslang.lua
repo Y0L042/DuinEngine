@@ -4,7 +4,7 @@ local dep_daslang = {}
 local name = "DASLANG"
 
 local repo   = "https://github.com/GaijinEntertainment/daScript"
-local commit    = "v0.6.2-RC3"
+local commit    = "6e38cb3" -- "v0.6.2-RC3"
 local checkout = commit
 local folder = "daslang"
 
@@ -36,12 +36,23 @@ function dep_daslang.build()
         .. " -DDAS_GLFW_DISABLED=ON"
         .. " -DDAS_IMGUI_DISABLED=OFF"
         .. " -DDAS_CLANG_BIND_DISABLED=OFF"
+        .. " -DDAS_LLVM_DISABLED=OFF"
+        .. " -DDAS_HV_DISABLED=OFF"
+        .. " -DDAS_SQLITE_DISABLED=OFF"
+        .. " -DCMAKE_TOOLCHAIN_FILE=C:/Projects/_Tools/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        .. " -DVCPKG_TARGET_TRIPLET=x64-windows"
+        .. " -DOPENSSL_ROOT_DIR=C:/Projects/_Tools/vcpkg/installed/x64-windows"
+        .. " -DOPENSSL_INCLUDE_DIR=C:/Projects/_Tools/vcpkg/installed/x64-windows/include"
 
     cmake_flags = cmake_flags .. " -DCMAKE_CXX_FLAGS_DEBUG=\"/DDAS_SMART_PTR_DEBUG=1 /DDAS_ENABLE_EXCEPTIONS=1\""
 
     if os.target() == "windows" then
         cmake_flags = cmake_flags .. " -DCMAKE_MSVC_RUNTIME_LIBRARY=" .. Cfg.cmake_crt_debug
     end
+
+    print("\t\tConfiguring with: " .. cmake_flags)
+    utils.runCommand("cmake -S . -B build " .. cmake_flags)
+    utils.runCommand("cmake --build build --config " .. build_type .. " -j 1") -- -j 1 avoids build concurrency errors
 
     if os.isdir("build") then
         if os.target() == "windows" then
@@ -50,10 +61,6 @@ function dep_daslang.build()
             utils.runCommand("rm -rf build")
         end
     end
-
-    print("\t\tConfiguring with: " .. cmake_flags)
-    utils.runCommand("cmake -S . -B build " .. cmake_flags)
-    utils.runCommand("cmake --build build --config " .. build_type .. " -j 1") -- -j 1 avoids build concurrency errors
 
     utils.popDir()
     print("END: " .. name)
