@@ -91,7 +91,7 @@ bool duin::IsInputActionTriggered(const std::string &actionName)
 {
     if (inputActionMap.find(actionName) == inputActionMap.end())
     {
-        DN_CORE_WARN("InputAction {} not found!", actionName);
+        //DN_CORE_WARN("InputAction {} not found!", actionName);
         return false;
     }
 
