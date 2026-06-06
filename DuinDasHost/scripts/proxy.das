@@ -208,20 +208,31 @@ def uri_to_path(uri : string) : string {
     return p
 }
 
-// ===== Diagnostics mapping =====
-// Daemon: {diagnostics:[{line,column,code,severity,message,...}]} (1-based line/col).
-// LSP wants 0-based; severity error=1 / warning=2; a 1-char range at the point for now.
+// Converts a native path back to a file:// URI (Windows-aware).
+def path_to_uri(p : string) : string {
+    let fwd = replace(p, "\\", "/")
+    // Windows absolute path: C:/... -> file:///C:/...
+    if (length(fwd) >= 2 && character_at(fwd, 1) == ':') {
+        return "file:///{fwd}"
+    }
+    return "file://{fwd}"
+}
 
-def map_diagnostics_to_lsp(result_json : string) : string {
+// ===== Diagnostics mapping =====
+// Daemon: {diagnostics:[{file,line,column,code,severity,message,...}]} (1-based line/col).
+// LSP wants 0-based; severity error=1 / warning=2; a 1-char range at the point for now.
+// Returns a table mapping native file path -> JSON diagnostics array string.
+
+def map_diagnostics_by_file(result_json : string; var out : table<string; array<string>>) {
     var err : string
     let jv = read_json(result_json, err)
-    if (jv == null) return "[]"
+    if (jv == null) return
     let diagsV = jv ?["diagnostics"]
-    if (diagsV == null) return "[]"
-    if (!(diagsV.value is _array)) return "[]"
+    if (diagsV == null) return
+    if (!(diagsV.value is _array)) return
 
-    var out : array<string>
     for (d in diagsV.value as _array) {
+        let dfile = jstr(d, "file")
         let line : int = max(0, jint(d, "line", 1) - 1)
         let col : int = max(0, jint(d, "column", 1) - 1)
         let colEnd : int = col + 1
@@ -229,11 +240,9 @@ def map_diagnostics_to_lsp(result_json : string) : string {
         let code : int = jint(d, "code", 0)
         let msg = jstr(d, "message")
         let rng = "\{\"start\":\{\"line\":{line},\"character\":{col}},\"end\":\{\"line\":{line},\"character\":{colEnd}}}"
-        out |> push("\{\"range\":{rng},\"severity\":{sev},\"code\":{code},\"source\":\"duin\",\"message\":{json_string(msg)}}")
+        let entry = "\{\"range\":{rng},\"severity\":{sev},\"code\":{code},\"source\":\"duin\",\"message\":{json_string(msg)}}"
+        out[dfile] |> push(entry)
     }
-    let joined : string = join(out, ",")
-    delete out
-    return "[{joined}]"
 }
 
 // ===== LSP method handlers =====
@@ -300,8 +309,27 @@ def compile_and_publish(uri : string; refresh : bool = false) {
     if (g_daemon == null || !g_daemon.connected) return
     let result = daemon_compile(uri_to_path(uri), refresh)
     if (empty(result)) return
-    send_notification("textDocument/publishDiagnostics",
-        "\{\"uri\":{json_string(uri)},\"diagnostics\":{map_diagnostics_to_lsp(result)}}")
+
+    // Group diagnostics by the file they belong to, then publish each file separately.
+    // This prevents errors in required files (e.g. fileB.das) from being shown on the
+    // file that triggered the compile (fileA.das).
+    var byFile : table<string; array<string>>
+    map_diagnostics_by_file(result, byFile)
+
+    // Always publish the compiled file (possibly with an empty array to clear stale diags).
+    let compiledPath = uri_to_path(uri)
+    if (!key_exists(byFile, compiledPath)) {
+        byFile[compiledPath] |> resize(0)
+    }
+
+    for (filePath, entries in keys(byFile), values(byFile)) {
+        let fileUri = path_to_uri(filePath)
+        let joined = join(entries, ",")
+        send_notification("textDocument/publishDiagnostics",
+            "\{\"uri\":{json_string(fileUri)},\"diagnostics\":[{joined}]}")
+        plog("publishDiagnostics -> {fileUri} ({length(entries)} diags)")
+    }
+    delete byFile
 }
 
 // Handles workspace/executeCommand. Currently: duin.refreshBindings — recompile the current
