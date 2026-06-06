@@ -126,3 +126,5 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 ./modules
 /modules
 /DaslangDocGenerator/docs
+*.ddh
+*.lock

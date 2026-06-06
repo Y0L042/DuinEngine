@@ -176,11 +176,13 @@ def connect_daemon(project_path : string) : bool {
 }
 
 // Sends a compile request for `file_path` (native path), returns the reply JSON ("" on fail).
-def daemon_compile(file_path : string) : string {
+// Pass refresh=true to trigger RefreshBindings on the daemon (re-reads engine .das from disk).
+def daemon_compile(file_path : string; refresh : bool = false) : string {
     if (g_daemon == null || !g_daemon.connected) return ""
     g_daemon.got_reply = false
     g_daemon.reply = ""
-    let req = "\{\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)}}"
+    let refresh_field = refresh ? ",\"refresh\":true" : ""
+    let req = "\{\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)}{refresh_field}}"
     g_daemon->send(req)
 
     var elapsed = 0
@@ -281,7 +283,7 @@ def handle_initialize(id_json : string; params : JsonValue?) {
     g_project_path = empty(root) ? "" : find_project(root)
     plog("  project_path = {g_project_path}")
 
-    let caps = "\{\"textDocumentSync\":\{\"openClose\":true,\"save\":true}}"
+    let caps = "\{\"textDocumentSync\":\{\"openClose\":true,\"save\":true},\"executeCommandProvider\":\{\"commands\":[\"duin.refreshBindings\"]}}"
     send_response(id_json, "\{\"capabilities\":{caps}}")
     plog("  initialize response sent")
 
@@ -294,12 +296,36 @@ def handle_initialize(id_json : string; params : JsonValue?) {
     }
 }
 
-def compile_and_publish(uri : string) {
+def compile_and_publish(uri : string; refresh : bool = false) {
     if (g_daemon == null || !g_daemon.connected) return
-    let result = daemon_compile(uri_to_path(uri))
+    let result = daemon_compile(uri_to_path(uri), refresh)
     if (empty(result)) return
     send_notification("textDocument/publishDiagnostics",
         "\{\"uri\":{json_string(uri)},\"diagnostics\":{map_diagnostics_to_lsp(result)}}")
+}
+
+// Handles workspace/executeCommand. Currently: duin.refreshBindings — recompile the current
+// file with refresh:true so the daemon re-reads engine .das modules from disk before compiling.
+def handle_execute_command(id_json : string; params : JsonValue?) {
+    let command = jstr(params, "command")
+    send_response(id_json, "null")  // LSP requires a response before side-effects
+    if (command == "duin.refreshBindings") {
+        // We need a file URI to compile against. Use the arguments array if provided, else skip.
+        let argsV = params ?["arguments"]
+        var uri = ""
+        if (argsV != null && argsV.value is _array) {
+            assume arr = argsV.value as _array
+            if (length(arr) > 0) {
+                uri = arr[0] ?? ""
+            }
+        }
+        if (empty(uri)) {
+            show_message(2, "Duin LSP: refreshBindings needs a file URI (pass current buffer URI)")
+        } else {
+            show_message(3, "Duin LSP: refreshing engine bindings...")
+            compile_and_publish(uri, true)
+        }
+    }
 }
 
 def handle_text_document(method : string; params : JsonValue?) {
@@ -349,6 +375,8 @@ def main {
             send_response(id_json, "null")
         } elif (method == "exit") {
             break
+        } elif (method == "workspace/executeCommand") {
+            handle_execute_command(id_json, params)
         } elif (starts_with(method, "textDocument/")) {
             handle_text_document(method, params)
         }

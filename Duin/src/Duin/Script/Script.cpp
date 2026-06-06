@@ -49,6 +49,20 @@ void duin::Script::SetProjectFile(const std::string &path)
     projectFile = path;
 }
 
+void duin::Script::SetOverrideContent(const std::string &path, const std::string &content)
+{
+    overridePath = path;
+    overrideContent = content;
+    hasOverrideContent = !path.empty();
+}
+
+void duin::Script::ClearOverrideContent()
+{
+    hasOverrideContent = false;
+    overridePath.clear();
+    overrideContent.clear();
+}
+
 void duin::Script::InitModules(std::function<void(void)> initModules)
 {
     NEED_ALL_DEFAULT_MODULES;
@@ -104,7 +118,10 @@ bool duin::Script::Compile()
     };
     if (!projectFile.empty() && !fileExists(projectFile))
         return failMissing("project file", projectFile);
-    if (!fileExists(scriptPath))
+    // When compiling in-memory override content for scriptPath, the file need not exist on
+    // disk (unsaved buffer / new file) — skip the source-existence check for that path.
+    const bool overrideForScript = hasOverrideContent && overridePath == scriptPath;
+    if (!overrideForScript && !fileExists(scriptPath))
         return failMissing("source file", scriptPath);
 
     // Set optional project file, script root, configure policies
@@ -118,6 +135,21 @@ bool duin::Script::Compile()
     }
     auto &fAccess = fileAccess;
     fAccess->addFsRoot("scripts", "scripts");
+
+    // On-type override: inject the unsaved buffer text as the source for scriptPath so daslang
+    // compiles the in-memory content instead of reading the (stale or absent) file from disk.
+    // TextFileInfo does NOT copy its source; with own=true its destructor frees it via
+    // das_aligned_free16, so we hand it a matching das_aligned_alloc16 copy (daslang then owns
+    // the buffer — no lifetime coupling to overrideContent).
+    if (overrideForScript)
+    {
+        const uint32_t len = (uint32_t)overrideContent.size();
+        char *buf = (char *)das_aligned_alloc16(len + 1);
+        std::memcpy(buf, overrideContent.data(), len);
+        buf[len] = '\0';
+        auto info = das::make_unique<das::TextFileInfo>(buf, len, /*own=*/true);
+        fAccess->setFileInfo(scriptPath, das::move(info));
+    }
     das::CodeOfPolicies policies;
     policies.rtti = true;
     policies.log_compile_time = true;        // total time at end

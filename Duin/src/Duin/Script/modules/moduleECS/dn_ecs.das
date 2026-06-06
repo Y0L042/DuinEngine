@@ -38,6 +38,7 @@ struct DnEntity {
     def static add(var tag : auto(T)) : DnEntity {
         if (world != null) {
             ecs_add(world, entity, tag)
+            ecs_emit_hook_event(type<T>, EcsHookEvent.ONADD, world, entity, tag)
         }
         return self
     }
@@ -46,6 +47,16 @@ struct DnEntity {
     def static set(var cmp : auto(T)) : DnEntity {
         if (world != null) {
             ecs_set(world, entity, cmp)
+            ecs_emit_hook_event(type<T>, EcsHookEvent.ONSET, world, entity, cmp)
+        }
+        return self
+    }
+
+    [class_method]
+    def static remove(var cmp : auto(T)) : DnEntity {
+        if (world != null) {
+            ecs_emit_hook_event(type<T>, EcsHookEvent.ONREMOVE, world, entity, cmp)
+            ecs_remove(world, entity, ecs_component_register(world, type<T>))
         }
         return self
     }

@@ -78,6 +78,12 @@ class Script
     std::string GetScriptPath();
     void SetDasRoot(const std::string &path);
     void SetProjectFile(const std::string &path);
+
+    // In-memory override for the script's source. When set, Compile() injects this text as
+    // the source for scriptPath (via a daslang TextFileInfo) instead of reading from disk —
+    // used for on-type diagnostics on UNSAVED editor buffers. Pass empty path to clear.
+    void SetOverrideContent(const std::string &path, const std::string &content);
+    void ClearOverrideContent();
     virtual void InitModules(std::function<void(void)> initModules = [](void) {});
 
     bool Compile();
@@ -114,6 +120,9 @@ class Script
     std::string lastCompileError;
     std::vector<Diagnostic> diagnostics;
     std::string projectFile;
+    bool hasOverrideContent = false; // when true, compile overrideContent for overridePath
+    std::string overridePath;        // native path the override applies to (usually scriptPath)
+    std::string overrideContent;     // in-memory source text (unsaved buffer)
     das::ProgramPtr program;
     das::ModuleGroup libGroup;
     das::TextPrinter tout;
