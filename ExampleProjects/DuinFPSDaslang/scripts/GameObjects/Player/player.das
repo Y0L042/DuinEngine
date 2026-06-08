@@ -20,6 +20,8 @@ require ../../ecs_systems.das
 class Player : DnGameObject {
     sm : StateMachine?
 
+    MAX_PITCH = 87.0f * (PI / 180.0f)
+
     inverse : int = 1
     cnt : int
     speed : float = 6.0
@@ -39,26 +41,10 @@ class Player : DnGameObject {
         sm = new StateMachine()
         sm.change_state(new Player_OnGround_Idle())
 
-        let MAX_PITCH = 87.0f * (PI / 180.0f)
 
         assume world = game_world.ecs_world()
-        // world.ecs_hookup_on_add(type<CharacterBodyCMP>, @(world : ecs_world_t?, e : ecs_entity_t, var cb_cmp : CharacterBodyCMP?) : void {
-        //     dn_log(cb_cmp)
-        // })
 
         player_entity = game_world.create_entity("Player")
-        characterbody = new DnCharacterBody()
-        characterbody.create_capsule(
-            70.0,
-            1.0,
-            60.0,
-            true,
-            true,
-            true,
-            true,
-            1.8,
-            0.25
-        )
 
         camera = dn_camera_init(new DnCamera())
         camera.set_impl(
@@ -71,12 +57,6 @@ class Player : DnGameObject {
         if (dn_get_active_camera() == null) {
             dn_fatal("Failed to set player camera as active camera!")
         }
-
-        player_entity.add(IsPlayer())
-        player_entity.set(PlayerMoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
-        player_entity.set(MoveSpeed(walk = 7.0f, sprint = 12.0f))
-        player_entity.set(CameraYaw(radians = 0.0f))
-        player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
     }
 
     def set_camera_active() : void {
@@ -85,17 +65,40 @@ class Player : DnGameObject {
 
     def override _init() : void {
         dn_info("Player init!")
-        characterbody.initialize(position)
+
+        // ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ capture(copy(characterbody), copy(position)) (world : ecs_world_t?, e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
+        //     dn_info("Creating CharacterBody {cb_cmp}")
+        //     characterbody = new DnCharacterBody()
+        //     characterbody.create_capsule(
+        //         70.0,
+        //         1.0,
+        //         60.0,
+        //         true,
+        //         true,
+        //         true,
+        //         true,
+        //         1.8,
+        //         0.25
+        //     )
+        //     characterbody.initialize(position)
+        // })
+
+        player_entity.add(IsPlayer())
+        player_entity.set(PlayerMoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
+        player_entity.set(MoveSpeed(walk = 7.0f, sprint = 12.0f))
+        player_entity.set(CameraYaw(radians = 0.0f))
+        player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
+        player_entity.set(CharacterBodyDesc())
     }
 
     def override _ready() : void {
         dn_info("Player ready!")
-
     } 
 
     def override _update(delta : double) : void {}
 
     def override _physics_update(delta : double) : void {
+        let ref = ref_time_ticks()
         if (game_world == null) {
             dn_warn("player_entity \{{player_entity}\} | game_world \{{game_world}\}")
             return
@@ -103,12 +106,14 @@ class Player : DnGameObject {
         system_player_input(game_world.ecs_world(), camera)
  
         var input : PlayerMoveInput? = player_entity.get_mut(type<PlayerMoveInput>)
-        if (input != null) {
+        if (input != null && characterbody != null) {
             characterbody.move(input.dir, delta)
         }
 
-        position = characterbody.get_position()
+        position = characterbody != null ? characterbody.get_position() : position
+        // position = characterbody.get_position()
         camera.move_to(position + v_offset)
+        // dn_info("PLAYER _physics_update {double(get_time_usec(ref)) / 1000d}")
     }
 
     def override _draw() : void {}

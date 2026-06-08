@@ -14,6 +14,8 @@
 
 #include <iostream>
 
+//#define TRACY_ON_DEMAND
+
 
 
 class DuinFPSDaslangApp : public duin::Application
@@ -35,8 +37,8 @@ class DuinFPSDaslangApp : public duin::Application
     {
         duin::PhysicsServer::Get();
 
-        static const char *debugArgv[] = {"DuinFPSDaslang", "--das-stepping-debugger"};
-        das::setCommandLineArguments(2, const_cast<char **>(debugArgv));
+        //static const char *debugArgv[] = {"DuinFPSDaslang", "--das-stepping-debugger"};
+        //das::setCommandLineArguments(2, const_cast<char **>(debugArgv));
 
         mainScript = CreateChildObject<duin::GameScript>(ENTRY_SCRIPT);
         mainScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
