@@ -50,19 +50,17 @@ inline AssertContextScope MakeScriptContextScope(ScriptContext *ctx)
 {
     return AssertContextScope([ctx]() -> std::string {
         std::string stackTop = ctx->getStackWalk(
-            /*at=*/nullptr, 
-            /*showArguments=*/false, 
-            /*showLocalVariables=*/false, 
-            /*showOutOfScope=*/false, 
-            /*stackTopOnly=*/true
-        );
+            /*at=*/nullptr,
+            /*showArguments=*/false,
+            /*showLocalVariables=*/false,
+            /*showOutOfScope=*/false,
+            /*stackTopOnly=*/true);
         std::string fullStack = ctx->getStackWalk(
             /*at=*/nullptr,
             /*showArguments=*/true,
             /*showLocalVariables=*/true,
             /*showOutOfScope=*/false,
-            /*stackTopOnly=*/false
-        );
+            /*stackTopOnly=*/false);
         return "\nFull Stack:\n" + fullStack + "\n\nStack Top:\n" + stackTop;
     });
 }
@@ -79,6 +77,8 @@ class Script
     void SetDasRoot(const std::string &path);
     void SetProjectFile(const std::string &path);
 
+    void SetProfiling(bool enable);
+
     // In-memory override for the script's source. When set, Compile() injects this text as
     // the source for scriptPath (via a daslang TextFileInfo) instead of reading from disk —
     // used for on-type diagnostics on UNSAVED editor buffers. Pass empty path to clear.
@@ -88,6 +88,11 @@ class Script
 
     bool Compile();
     bool SimulateContext();
+
+    // Runs daslang's C++ lint visitor on the last successfully compiled program and
+    // appends any warnings it finds to `diags`. Safe to call only after Compile()
+    // returns true. Parses Program::lint() text output to extract file/line/col.
+    void RunLint(std::vector<Diagnostic> &diags);
     bool CallScript(das::Func fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
     bool InvokeVoid(das::Func fn);
     bool InvokeWithDelta(das::Func fn, double delta);
@@ -98,12 +103,15 @@ class Script
 
     // Structured compile diagnostics from the most recent Compile() call.
     // Populated alongside lastCompileError; cleared at the start of Compile().
-    const std::vector<Diagnostic> &GetDiagnostics() const { return diagnostics; }
+    const std::vector<Diagnostic> &GetDiagnostics() const
+    {
+        return diagnostics;
+    }
 
     // Runs all exported functions whose names begin with "test_".
     // Returns {passed, failed} counts. Each test is called via evalWithCatch;
     // a non-null exception or a panic counts as a failure.
-    std::pair<int,int> RunTests();
+    std::pair<int, int> RunTests();
 
     // Prepares the same Script instance to compile a different file. Call before Compile().
     //   KeepCachedBindings (default) — reuse promoted daslib + dn_* modules; fast.
@@ -114,6 +122,7 @@ class Script
     }
 
   protected:
+    bool enableProfiling = false;
     bool scriptReady = false;
     bool modulesAreInit = false;
     std::string scriptPath;

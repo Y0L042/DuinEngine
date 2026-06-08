@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <string>
 #include <sstream>
+#include <regex>
 #include <daScript/ast/ast.h>
 #include <daScript/simulate/aot.h>
 #include <daScript/daScriptModule.h>
@@ -47,6 +48,11 @@ void duin::Script::SetDasRoot(const std::string &path)
 void duin::Script::SetProjectFile(const std::string &path)
 {
     projectFile = path;
+}
+
+void duin::Script::SetProfiling(bool enable)
+{
+    enableProfiling = enable;
 }
 
 void duin::Script::SetOverrideContent(const std::string &path, const std::string &content)
@@ -155,6 +161,11 @@ bool duin::Script::Compile()
     policies.log_compile_time = true;        // total time at end
     //policies.log_total_compile_time = true;  // detailed breakdown per phase
     //policies.log_module_compile_time = true; // per-module: parse / infer passes / optimize / macros
+    if (enableProfiling)
+    {
+        policies.profiler = true;
+        fAccess->addExtraModule("profiler", das::getDasRoot() + "/daslib/profiler.das");
+    }
 
     // Attempt compilation
     // only update script program on successful compilation
@@ -208,6 +219,43 @@ bool duin::Script::Compile()
     }
 
     return res;
+}
+
+void duin::Script::RunLint(std::vector<Diagnostic> &diags)
+{
+    if (!program)
+        return;
+    das::TextWriter tw;
+    program->lint(tw, libGroup);
+    const std::string output = tw.str();
+    if (output.empty())
+        return;
+
+    // Each lint line ends with " at <file>:<line>:<col>".
+    // LineInfo::describe() emits  "name:line:column"  (debug_info.cpp:717).
+    static const std::regex kLintLine(R"(^(.+) at (.+):(\d+):(\d+)\s*$)");
+    std::istringstream ss(output);
+    std::string line;
+    while (std::getline(ss, line))
+    {
+        if (line.empty())
+            continue;
+        std::smatch m;
+        Diagnostic d;
+        d.severity = Diagnostic::Severity::Warning;
+        if (std::regex_match(line, m, kLintLine))
+        {
+            d.message = m[1].str();
+            d.file    = m[2].str();
+            d.line    = std::stoi(m[3].str());
+            d.column  = std::stoi(m[4].str());
+        }
+        else
+        {
+            d.message = line;
+        }
+        diags.push_back(std::move(d));
+    }
 }
 
 bool duin::Script::SimulateContext()
