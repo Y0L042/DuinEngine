@@ -87,7 +87,6 @@ void duin::PhysicsServer::Clean()
 
 void duin::PhysicsServer::StepPhysics(double delta)
 {
-    static size_t x = 0;
     physicsSystem.Update(cDeltaTime, cCollisionSteps, tempAllocator.get(), jobSystem.get());
 }
 
