@@ -1,19 +1,20 @@
-// DuinDasHost LSP proxy (M3 step 2).
+// DuinDasHost LSP proxy (M4).
 //
 // A thin, editor-agnostic Language Server that editors launch over stdio:
 //   daslang.exe proxy.das
-// It speaks LSP (Content-Length-framed JSON-RPC) to the editor and forwards compile
-// requests over WebSocket to the per-project DuinDasHost daemon (--serve-ws), mapping the
-// daemon's diagnostics back into LSP publishDiagnostics. The warm Script lives in the C++
-// daemon; this proxy is stateless translation.
+// It speaks LSP (Content-Length-framed JSON-RPC) to the editor and forwards requests
+// over WebSocket to the per-project DuinDasHost daemon (--serve-ws), mapping results
+// back to LSP responses/notifications. The warm Script lives in the C++ daemon; this
+// proxy is stateless translation.
 //
 // Lifecycle: the proxy only CONNECTS to an already-running daemon (reads the project's
 // <project>.das_project.ddh, connects to its wsUrl). Spawning the daemon is the editor
 // plugin's job (daslang has no detached-spawn primitive). If no live daemon is found, the
 // proxy reports it via window/showMessage so the plugin can spawn one.
 //
-// This slice: initialize / initialized / shutdown / exit, and textDocument/didOpen +
-// didSave -> compile -> publishDiagnostics. didChange (on-type) is M5.
+// M3: initialize / initialized / shutdown / exit, textDocument/didOpen + didSave +
+//     didChange -> compile -> publishDiagnostics, workspace/executeCommand (refreshBindings).
+// M4: textDocument/definition, references, hover, formatting; didChange debounce.
 
 options gen2
 options persistent_heap
@@ -24,6 +25,7 @@ require daslib/json public
 require daslib/json_boost public
 require daslib/fio
 require daslib/strings_boost
+require daslib/das_source_formatter
 require strings
 require math
 
@@ -147,6 +149,13 @@ var g_daemon : DaemonClient?
 var g_project_path : string
 var g_ws_url : string
 
+// ===== didChange debounce =====
+// Stores the most recent un-fired didChange so rapid keystrokes collapse into one compile.
+// Fired on the next non-didChange LSP message (cooperative debounce — no background timer).
+var g_pending_uri : string
+var g_pending_content : string
+var g_has_pending = false
+
 // Reads the wsUrl from a project's .ddh sidecar ("" if missing / not a ws daemon).
 def read_ddh_wsurl(project_path : string) : string {
     let ddh = "{project_path}.ddh"
@@ -177,14 +186,32 @@ def connect_daemon(project_path : string) : bool {
 
 // Sends a compile request for `file_path` (native path), returns the reply JSON ("" on fail).
 // Pass refresh=true to trigger RefreshBindings on the daemon (re-reads engine .das from disk).
-def daemon_compile(file_path : string; refresh : bool = false) : string {
+// Pass content (non-empty) to compile unsaved buffer text instead of reading from disk.
+def daemon_compile(file_path : string; refresh : bool = false; content : string = "") : string {
     if (g_daemon == null || !g_daemon.connected) return ""
     g_daemon.got_reply = false
     g_daemon.reply = ""
     let refresh_field = refresh ? ",\"refresh\":true" : ""
-    let req = "\{\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)}{refresh_field}}"
+    let content_field = empty(content) ? "" : ",\"content\":{json_string(content)}"
+    let req = "\{\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)}{refresh_field}{content_field}}"
     g_daemon->send(req)
 
+    var elapsed = 0
+    while (!g_daemon.got_reply && elapsed < 10000) {
+        g_daemon->process_event_que()
+        sleep(5u)
+        elapsed += 5
+    }
+    return g_daemon.got_reply ? g_daemon.reply : ""
+}
+
+// Sends an arbitrary JSON request to the daemon and returns the reply ("" on fail/timeout).
+// Used for action requests (goto_definition, type_of, find_references).
+def daemon_query(req_json : string) : string {
+    if (g_daemon == null || !g_daemon.connected) { return ""; }
+    g_daemon.got_reply = false
+    g_daemon.reply = ""
+    g_daemon->send(req_json)
     var elapsed = 0
     while (!g_daemon.got_reply && elapsed < 10000) {
         g_daemon->process_event_que()
@@ -292,7 +319,7 @@ def handle_initialize(id_json : string; params : JsonValue?) {
     g_project_path = empty(root) ? "" : find_project(root)
     plog("  project_path = {g_project_path}")
 
-    let caps = "\{\"textDocumentSync\":\{\"openClose\":true,\"save\":true},\"executeCommandProvider\":\{\"commands\":[\"duin.refreshBindings\"]}}"
+    let caps = "\{\"textDocumentSync\":\{\"openClose\":true,\"save\":true,\"change\":1},\"hoverProvider\":true,\"definitionProvider\":true,\"referencesProvider\":true,\"documentFormattingProvider\":true,\"executeCommandProvider\":\{\"commands\":[\"duin.refreshBindings\"]}}"
     send_response(id_json, "\{\"capabilities\":{caps}}")
     plog("  initialize response sent")
 
@@ -305,9 +332,9 @@ def handle_initialize(id_json : string; params : JsonValue?) {
     }
 }
 
-def compile_and_publish(uri : string; refresh : bool = false) {
+def compile_and_publish(uri : string; refresh : bool = false; content : string = "") {
     if (g_daemon == null || !g_daemon.connected) return
-    let result = daemon_compile(uri_to_path(uri), refresh)
+    let result = daemon_compile(uri_to_path(uri), refresh, content)
     if (empty(result)) return
 
     // Group diagnostics by the file they belong to, then publish each file separately.
@@ -356,6 +383,132 @@ def handle_execute_command(id_json : string; params : JsonValue?) {
     }
 }
 
+// Fires any pending debounced didChange compile (call before dispatching non-change messages).
+def flush_pending_change {
+    if (!g_has_pending) { return ; }
+    g_has_pending = false
+    let uri = g_pending_uri
+    let content = g_pending_content
+    g_pending_uri = ""
+    g_pending_content = ""
+    plog("flush_pending_change: compiling {uri}")
+    compile_and_publish(uri, false, content)
+}
+
+// Handles textDocument/hover: sends type_of request to daemon, returns Hover response.
+def handle_hover(id_json : string; params : JsonValue?) {
+    let td = params ?["textDocument"]
+    if (td == null) { send_response(id_json, "null"); return ; }
+    let uri = jstr(td, "uri")
+    let pos = params ?["position"]
+    if (pos == null || empty(uri)) { send_response(id_json, "null"); return ; }
+    let lsp_line = jint(pos, "line", 0)
+    let lsp_col = jint(pos, "character", 0)
+    let file_path = uri_to_path(uri)
+    let req = "\{\"action\":\"type_of\",\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)},\"line\":{lsp_line + 1},\"column\":{lsp_col + 1}}"
+    let reply = daemon_query(req)
+    if (empty(reply)) { send_response(id_json, "null"); return ; }
+    var err : string
+    let jv = read_json(reply, err)
+    if (jv == null) { send_response(id_json, "null"); return ; }
+    let hover_text = jstr(jv, "hover")
+    if (empty(hover_text)) { send_response(id_json, "null"); return ; }
+    send_response(id_json, "\{\"contents\":\{\"kind\":\"plaintext\",\"value\":{json_string(hover_text)}}}")
+}
+
+// Handles textDocument/definition: sends goto_definition to daemon, returns Location.
+def handle_definition(id_json : string; params : JsonValue?) {
+    let td = params ?["textDocument"]
+    if (td == null) { send_response(id_json, "null"); return ; }
+    let uri = jstr(td, "uri")
+    let pos = params ?["position"]
+    if (pos == null || empty(uri)) { send_response(id_json, "null"); return ; }
+    let lsp_line = jint(pos, "line", 0)
+    let lsp_col = jint(pos, "character", 0)
+    let file_path = uri_to_path(uri)
+    let req = "\{\"action\":\"goto_definition\",\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)},\"line\":{lsp_line + 1},\"column\":{lsp_col + 1}}"
+    let reply = daemon_query(req)
+    if (empty(reply)) { send_response(id_json, "null"); return ; }
+    var err : string
+    let jv = read_json(reply, err)
+    if (jv == null) { send_response(id_json, "null"); return ; }
+    let foundV = jv ?["found"]
+    let found = foundV != null && (foundV.value is _bool) && (foundV.value as _bool)
+    if (!found) { send_response(id_json, "null"); return ; }
+    let def_file = jstr(jv, "file")
+    let def_line = max(0, jint(jv, "line", 1) - 1)
+    let def_col = max(0, jint(jv, "column", 1) - 1)
+    let def_uri = path_to_uri(def_file)
+    let rng = "\{\"start\":\{\"line\":{def_line},\"character\":{def_col}},\"end\":\{\"line\":{def_line},\"character\":{def_col + 1}}}"
+    send_response(id_json, "\{\"uri\":{json_string(def_uri)},\"range\":{rng}}")
+}
+
+// Handles textDocument/references: sends find_references to daemon, returns Location[].
+def handle_references(id_json : string; params : JsonValue?) {
+    let td = params ?["textDocument"]
+    if (td == null) { send_response(id_json, "[]"); return ; }
+    let uri = jstr(td, "uri")
+    let pos = params ?["position"]
+    if (pos == null || empty(uri)) { send_response(id_json, "[]"); return ; }
+    let lsp_line = jint(pos, "line", 0)
+    let lsp_col = jint(pos, "character", 0)
+    let file_path = uri_to_path(uri)
+    let req = "\{\"action\":\"find_references\",\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)},\"line\":{lsp_line + 1},\"column\":{lsp_col + 1}}"
+    let reply = daemon_query(req)
+    if (empty(reply)) { send_response(id_json, "[]"); return ; }
+    var err : string
+    let jv = read_json(reply, err)
+    if (jv == null) { send_response(id_json, "[]"); return ; }
+    let locsV = jv ?["locations"]
+    if (locsV == null || !(locsV.value is _array)) { send_response(id_json, "[]"); return ; }
+    var entries : array<string>
+    for (loc in locsV.value as _array) {
+        let loc_file = jstr(loc, "file")
+        let loc_line = max(0, jint(loc, "line", 1) - 1)
+        let loc_col = max(0, jint(loc, "column", 1) - 1)
+        let loc_uri = path_to_uri(loc_file)
+        let rng = "\{\"start\":\{\"line\":{loc_line},\"character\":{loc_col}},\"end\":\{\"line\":{loc_line},\"character\":{loc_col + 1}}}"
+        entries |> push("\{\"uri\":{json_string(loc_uri)},\"range\":{rng}}")
+    }
+    send_response(id_json, "[{join(entries, ",")}]")
+    delete entries
+}
+
+// Handles textDocument/formatting: formats the file in-proxy via das_source_formatter.
+// Returns a single whole-document TextEdit replacing all content with the formatted output.
+def handle_formatting(id_json : string; params : JsonValue?) {
+    let td = params ?["textDocument"]
+    if (td == null) { send_response(id_json, "[]"); return ; }
+    let uri = jstr(td, "uri")
+    if (empty(uri)) { send_response(id_json, "[]"); return ; }
+    let file_path = uri_to_path(uri)
+    // Read the file and format it.
+    var original = fread(file_path)
+    if (empty(original)) { send_response(id_json, "[]"); return ; }
+    let formatted = format_source_string(original)
+    if (formatted == original) { send_response(id_json, "[]"); return ; }
+    // Count lines in the original so the TextEdit range covers the whole document.
+    var line_count = 0
+    var last_line_len = 0
+    var i = 0
+    let n = length(original)
+    while (i < n) {
+        let ch = character_at(original, i)
+        if (ch == '\n') {
+            line_count++
+            last_line_len = 0
+        } else {
+            last_line_len++
+        }
+        i++
+    }
+    // Whole-document replacement: range from (0,0) to (line_count, last_line_len).
+    let rng = "\{\"start\":\{\"line\":0,\"character\":0},\"end\":\{\"line\":{line_count},\"character\":{last_line_len}}}"
+    let edit = "\{\"range\":{rng},\"newText\":{json_string(formatted)}}"
+    send_response(id_json, "[{edit}]")
+    plog("formatting: replaced {n} bytes with {length(formatted)} bytes")
+}
+
 def handle_text_document(method : string; params : JsonValue?) {
     let td = params ?["textDocument"]
     if (td == null) return
@@ -363,6 +516,20 @@ def handle_text_document(method : string; params : JsonValue?) {
     if (empty(uri)) return
     if (method == "textDocument/didOpen" || method == "textDocument/didSave") {
         compile_and_publish(uri)
+    } elif (method == "textDocument/didChange") {
+        // Full-document sync (change:1): first element of contentChanges carries the whole buffer.
+        // Debounced: store the latest content and URI; flush on the next non-didChange message.
+        let changesV = params ?["contentChanges"]
+        if (changesV == null) { return ; }
+        if (!(changesV.value is _array)) { return ; }
+        assume arr = changesV.value as _array
+        if (length(arr) == 0) { return ; }
+        let text = jstr(arr[0], "text")
+        if (empty(text)) { return ; }
+        plog("didChange: debouncing {uri}")
+        g_pending_uri = uri
+        g_pending_content = text
+        g_has_pending = true
     }
 }
 
@@ -395,6 +562,11 @@ def main {
         let id_json = idV != null ? write_json(idV) : "null"
         plog("dispatch: method={method} id={id_json}")
 
+        // Flush debounced didChange before processing any non-didChange message.
+        if (method != "textDocument/didChange") {
+            flush_pending_change()
+        }
+
         if (method == "initialize") {
             handle_initialize(id_json, params)
         } elif (method == "initialized") {
@@ -405,6 +577,14 @@ def main {
             break
         } elif (method == "workspace/executeCommand") {
             handle_execute_command(id_json, params)
+        } elif (method == "textDocument/hover") {
+            handle_hover(id_json, params)
+        } elif (method == "textDocument/definition") {
+            handle_definition(id_json, params)
+        } elif (method == "textDocument/references") {
+            handle_references(id_json, params)
+        } elif (method == "textDocument/formatting") {
+            handle_formatting(id_json, params)
         } elif (starts_with(method, "textDocument/")) {
             handle_text_document(method, params)
         }
