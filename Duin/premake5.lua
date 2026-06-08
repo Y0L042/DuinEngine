@@ -102,12 +102,14 @@ defines
     "DAS_ENABLE_DLL=1",
     "DAS_MOD_EXPORTS",
     "JPH_ENABLE_ASSERTS",
-    "JPH_FLOATING_POINT_EXCEPTIONS_ENABLED "
+    "JPH_FLOATING_POINT_EXCEPTIONS_ENABLED ",
+    "TRACY_ENABLE",
 }
 
 -- global_links contains "Duin.lib" which is this project itself; static libs
 -- must not link their own output. Consumers (executables) own the full link.
 -- links(global_links)
+
 
 filter "action:vs*"
 buildoptions {

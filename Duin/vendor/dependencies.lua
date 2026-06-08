@@ -25,6 +25,7 @@ local dep_daslang = require "dep_daslang"
 local dep_dasimgui = require "dep_dasimgui"
 local dep_flecsdaslangbindings = require "dep_flecsdaslangbindings"
 local dep_tomldaslang = require "dep_dastoml"
+local dep_tracy = require "dep_tracy"
 
 -- Define dependencies with explicit build order (array part maintains order)
 local dependencies_ordered = {
@@ -48,6 +49,7 @@ local dependencies_ordered = {
     {name = "DASIMGUI", buildFn = dep_dasimgui.build}, -- must be built after DASLANG and IMGUI
     {name = "FLECSDASLANGBINDINGS", buildFn = dep_flecsdaslangbindings.build},
     {name = "TOMLDASLANG", buildFn = dep_tomldaslang.build},
+    {name = "TRACY", buildFn = dep_tracy.build},
 }
 
 -- Also maintain a hash map for quick lookups
@@ -72,6 +74,7 @@ local dependencies = {
     DASIMGUI = dep_dasimgui.build,
     FLECSDASLANGBINDINGS = dep_flecsdaslangbindings.build,
     TOMLDASLANG = dep_tomldaslang.build,
+    TRACY = dep_tracy.build,
 }
 
 
