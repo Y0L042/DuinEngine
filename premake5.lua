@@ -42,6 +42,7 @@ workspace "Duin"
     IncludeDir["daslang"]   = "Duin/vendor/daslang/include"
     IncludeDir["flecs_das"] = "Duin/vendor/flecs-daslang/flecs_das/src"
     IncludeDir["dasimgui"]  = "Duin/vendor/dasimgui/src"
+    IncludeDir["tracy"]     = "Duin/vendor/tracy/public"
 
     global_files = {}
     global_includedirs = 
@@ -72,6 +73,7 @@ workspace "Duin"
         "Duin/vendor/daslang/src/builtin",
         "%{IncludeDir.flecs_das}",
         "%{IncludeDir.dasimgui}",
+        "%{IncludeDir.tracy}",
     }
     global_libdirs =
     {
@@ -86,6 +88,7 @@ workspace "Duin"
         "Duin/vendor/daslang/lib/Debug",
         "Duin/vendor/flecs-daslang/flecs_das/bin/" .. outputdir .. "/flecs_das",
         "Duin/vendor/dasimgui/bin/Debug-windows-x86_64/dasimgui",
+        "Duin/vendor/tracy/build_vs2026/Debug",
     }
     global_defines =
     {
@@ -101,6 +104,8 @@ workspace "Duin"
         "JPH_PROFILE_ENABLED",
         "JPH_DEBUG_RENDERER",
         "BX_CONFIG_DEBUG=0",
+        "TRACY_ENABLE",
+        "TRACY_ON_DEMAND",
     }
     global_links =
     {
@@ -132,6 +137,7 @@ workspace "Duin"
         "libDaScriptDyn_runtime.lib",
         "libUriParser.lib",
         "dbghelp.lib",
+        "TracyClient.lib",
     }
 
     daslang_dll_src = path.getabsolute("Duin/vendor/daslang/bin/Debug/libDaScriptDyn.dll")
