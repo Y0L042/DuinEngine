@@ -442,8 +442,8 @@ void duin::Application::RunPhysics(double &physicsCurrentTime, double &physicsPr
 {
     physicsCurrentTime = duin::GetTicks();
     double physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
-    physicsAccumTime += physicsDeltaTime;
     if (physicsDeltaTime > 0.25) physicsDeltaTime = 0.25; // Cap max physics steps when delta is too large
+    physicsAccumTime += physicsDeltaTime;
 
     double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
     while (physicsAccumTime >= physicsTimeStep)
