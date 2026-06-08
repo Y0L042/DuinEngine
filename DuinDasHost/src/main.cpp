@@ -36,6 +36,7 @@
 // Exit code: 0 on success/clean exit, 1 on compile errors (one-shot), 2 on bad arguments.
 
 #include <daScript/daScript.h>
+#include <daScript/simulate/aot_builtin.h>
 
 #include <Duin/Core/Debug/DNLog.h>
 #include <Duin/Core/Debug/DNAssert.h>
@@ -301,10 +302,15 @@ struct Args
     std::string project;
     std::string dasRoot;
     bool json = false;
-    bool serve = false;    // daemon mode: warm up once, then compile per stdin request
-    bool serveTcp = false;    // daemon mode over 127.0.0.1:0 (bespoke line protocol); writes .ddh
-    bool serveWs = false;     // daemon mode over WebSocket (editor LSP proxy); writes .ddh
-    int idleTimeoutSecs = 30; // --serve-ws: exit after N idle secs at 0 connections (0 = never)
+    bool serve = false;      // daemon mode: warm up once, then compile per stdin request
+    bool serveTcp = false;   // daemon mode over 127.0.0.1:0 (bespoke line protocol); writes .ddh
+    bool serveWs = false;    // daemon mode over WebSocket (editor LSP proxy); writes .ddh
+    int idleTimeoutSecs = 30;// --serve-ws: exit after N idle secs at 0 connections (0 = never)
+    // --query mode: run a query .das script in-process with engine modules registered.
+    // The query script is run as the "file" with engine modules warm; extra args forwarded.
+    bool query = false;
+    std::string queryScript; // path to query_*.das script
+    std::vector<std::string> queryArgs; // forwarded verbatim to the script
     bool valid = false;
 };
 
@@ -342,13 +348,22 @@ Args ParseArgs(int argc, char **argv)
         {
             a.idleTimeoutSecs = std::atoi(argv[++i]);
         }
+        else if (arg == "--query" && i + 1 < argc)
+        {
+            a.query = true;
+            a.queryScript = argv[++i];
+            // All remaining args are forwarded to the query script.
+            for (++i; i < argc; ++i)
+                a.queryArgs.push_back(argv[i]);
+            break;
+        }
         else if (!arg.empty() && arg[0] != '-' && a.file.empty())
         {
             a.file = arg;
         }
     }
     // One-shot mode needs a file; serve modes read files from requests.
-    a.valid = a.serve || a.serveTcp || a.serveWs || !a.file.empty();
+    a.valid = a.query || a.serve || a.serveTcp || a.serveWs || !a.file.empty();
     return a;
 }
 
@@ -471,11 +486,249 @@ static std::string CompileOne(
     script.SetScriptPath(scriptPath);
     script.PrepareForRecompile(mode);
     bool ok = script.Compile();
-    std::string json = BuildResultJson(displayFile, ok, script.GetDiagnostics());
+    std::vector<duin::Diagnostic> diags = script.GetDiagnostics();
+    if (ok)
+        script.RunLint(diags);
+    std::string json = BuildResultJson(displayFile, ok, diags);
     guard.Restore();
     if (outSuccess)
         *outSuccess = ok;
     return json;
+}
+
+// Runs a query .das script as a subprocess via "DuinDasHost.exe --query <script> <args>".
+// This way the subprocess has all engine modules registered (same binary), so dn_* requires
+// in game scripts compile correctly. Returns stdout of the subprocess, "" on failure.
+static std::string RunQueryScript(
+    const std::string &selfExe, const std::string &scriptPath,
+    const std::string &file, int line, int col, const std::string &project)
+{
+    char lineBuf[32], colBuf[32];
+    std::snprintf(lineBuf, sizeof(lineBuf), "%d", line);
+    std::snprintf(colBuf, sizeof(colBuf), "%d", col);
+
+    auto q = [](const std::string &s) -> std::string { return "\"" + s + "\""; };
+
+#ifdef _WIN32
+    // On Windows use CreateProcess with CREATE_NO_WINDOW + a pipe for stdout so no
+    // console window flashes. _popen goes through cmd.exe which always opens one.
+    HANDLE hReadPipe = NULL, hWritePipe = NULL;
+    SECURITY_ATTRIBUTES sa{};
+    sa.nLength = sizeof(sa);
+    sa.bInheritHandle = TRUE;
+    if (!CreatePipe(&hReadPipe, &hWritePipe, &sa, 0))
+        return "";
+
+    // The child's stdout → write end; don't inherit read end.
+    if (!SetHandleInformation(hReadPipe, HANDLE_FLAG_INHERIT, 0))
+    {
+        CloseHandle(hReadPipe);
+        CloseHandle(hWritePipe);
+        return "";
+    }
+
+    // Redirect stderr to NUL to suppress daslang engine noise.
+    HANDLE hNul = CreateFileA(
+        "NUL", GENERIC_WRITE, FILE_SHARE_WRITE, &sa, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+    STARTUPINFOA si{};
+    si.cb = sizeof(si);
+    si.dwFlags = STARTF_USESTDHANDLES;
+    si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
+    si.hStdOutput = hWritePipe;
+    si.hStdError = (hNul != INVALID_HANDLE_VALUE) ? hNul : GetStdHandle(STD_ERROR_HANDLE);
+
+    // Run ourselves with --query so engine modules are registered in the child.
+    std::string cmd = q(selfExe) + " --query " + q(scriptPath) + " " +
+                      q(file) + " " + lineBuf + " " + colBuf + " " + q(project);
+
+    PROCESS_INFORMATION pi{};
+    BOOL ok = CreateProcessA(
+        NULL, const_cast<char *>(cmd.c_str()), NULL, NULL,
+        /*bInheritHandles=*/TRUE,
+        CREATE_NO_WINDOW, // ← no console flash
+        NULL, NULL, &si, &pi);
+
+    CloseHandle(hWritePipe); // child owns the write end; close our copy so read EOF works
+    if (hNul != INVALID_HANDLE_VALUE)
+        CloseHandle(hNul);
+
+    if (!ok)
+    {
+        CloseHandle(hReadPipe);
+        return "";
+    }
+
+    std::string result;
+    char buf[4096];
+    DWORD nRead = 0;
+    while (ReadFile(hReadPipe, buf, sizeof(buf), &nRead, NULL) && nRead > 0)
+        result.append(buf, nRead);
+
+    WaitForSingleObject(pi.hProcess, INFINITE);
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+    CloseHandle(hReadPipe);
+
+#else
+    std::string cmd = q(selfExe) + " --query " + q(scriptPath) + " " +
+                      q(file) + " " + lineBuf + " " + colBuf + " " + q(project) + " 2>/dev/null";
+    FILE *pipe = popen(cmd.c_str(), "r");
+    if (!pipe)
+        return "";
+    std::string result;
+    char buf[4096];
+    while (std::fgets(buf, sizeof(buf), pipe))
+        result += buf;
+    pclose(pipe);
+#endif
+
+    // Trim trailing whitespace/newlines.
+    while (!result.empty() && (unsigned char)result.back() <= ' ')
+        result.pop_back();
+    return result;
+}
+
+// Returns the path to this running DuinDasHost executable.
+static std::string FindSelfExe()
+{
+#ifdef _WIN32
+    char buf[MAX_PATH];
+    DWORD len = GetModuleFileNameA(NULL, buf, MAX_PATH);
+    if (len == 0 || len >= MAX_PATH)
+        return "";
+    // Normalise backslashes to forward slashes.
+    std::string path(buf, len);
+    for (char &c : path)
+        if (c == '\\')
+            c = '/';
+    return path;
+#else
+    char buf[4096];
+    ssize_t len = readlink("/proc/self/exe", buf, sizeof(buf) - 1);
+    if (len <= 0)
+        return "";
+    buf[len] = '\0';
+    return buf;
+#endif
+}
+
+// Handles an action request (hover/goto_definition/find_references) by running the
+// corresponding query .das script as a subprocess. Returns the script's JSON output,
+// or a fallback JSON on failure.
+static std::string HandleActionRequest(const std::string &req, const std::string &defaultProject)
+{
+    std::string action = JsonExtractString(req, "action");
+    std::string file = JsonExtractString(req, "file");
+    std::string project = JsonExtractString(req, "project");
+    if (project.empty())
+        project = defaultProject;
+    project = MakeAbsoluteUnix(project);
+    file = MakeAbsoluteUnix(file);
+
+    // line/col: minimal inline int extraction (no string value, so JsonExtractString won't work).
+    int line = 0, col = 0;
+    auto extractInt = [&](const std::string &key) -> int {
+        std::string needle = "\"" + key + "\"";
+        size_t k = req.find(needle);
+        if (k == std::string::npos)
+            return 0;
+        size_t colon = req.find(':', k + needle.size());
+        if (colon == std::string::npos)
+            return 0;
+        size_t start = colon + 1;
+        while (start < req.size() && req[start] == ' ')
+            ++start;
+        return std::atoi(req.c_str() + start);
+    };
+    line = extractInt("line");
+    col = extractInt("column");
+
+    std::fprintf(stderr, "[DuinDasHost] action='%s' file='%s' line=%d col=%d project='%s'\n",
+                 action.c_str(), file.c_str(), line, col, project.c_str());
+
+    if (file.empty() || line <= 0 || col <= 0)
+    {
+        std::fprintf(stderr, "[DuinDasHost] action '%s': bad file/line/col, returning fallback\n", action.c_str());
+        if (action == "type_of")
+            return "{\"hover\":\"\"}";
+        if (action == "goto_definition")
+            return "{\"found\":false}";
+        return "{\"locations\":[]}";
+    }
+
+    std::string selfExe = FindSelfExe();
+    std::fprintf(stderr, "[DuinDasHost] action '%s': selfExe='%s'\n", action.c_str(), selfExe.c_str());
+    if (selfExe.empty())
+    {
+        std::fprintf(stderr, "[DuinDasHost] action '%s': could not locate self exe\n", action.c_str());
+        if (action == "type_of")        return "{\"hover\":\"\"}";
+        if (action == "goto_definition") return "{\"found\":false}";
+        return "{\"locations\":[]}";
+    }
+
+    // Scripts dir: walk up from self exe to find DuinDasHost/scripts/ by probing for proxy.das.
+    std::string scriptsDir;
+    {
+        std::string dir = selfExe;
+        // strip exe filename
+        auto slash = dir.find_last_of('/');
+        if (slash != std::string::npos)
+            dir = dir.substr(0, slash);
+        for (int depth = 0; depth < 10; ++depth)
+        {
+            std::string candidate = dir + "/DuinDasHost/scripts";
+            std::string probe = candidate + "/proxy.das";
+            if (FILE *f = std::fopen(probe.c_str(), "rb"))
+            {
+                std::fclose(f);
+                scriptsDir = candidate;
+                break;
+            }
+            auto s = dir.find_last_of('/');
+            if (s == std::string::npos)
+                break;
+            dir = dir.substr(0, s);
+        }
+    }
+
+    if (scriptsDir.empty())
+    {
+        std::fprintf(stderr, "[DuinDasHost] action '%s': could not locate DuinDasHost/scripts\n", action.c_str());
+        if (action == "type_of")        return "{\"hover\":\"\"}";
+        if (action == "goto_definition") return "{\"found\":false}";
+        return "{\"locations\":[]}";
+    }
+
+    std::string scriptPath, fallback;
+    if (action == "type_of")
+    {
+        scriptPath = scriptsDir + "/query_type_of.das";
+        fallback = "{\"hover\":\"\"}";
+    }
+    else if (action == "goto_definition")
+    {
+        scriptPath = scriptsDir + "/query_goto_definition.das";
+        fallback = "{\"found\":false}";
+    }
+    else if (action == "find_references")
+    {
+        scriptPath = scriptsDir + "/query_find_references.das";
+        fallback = "{\"locations\":[]}";
+    }
+    else
+    {
+        return "{\"error\":\"unknown action\"}";
+    }
+
+    std::fprintf(stderr, "[DuinDasHost] action '%s': scriptsDir='%s' scriptPath='%s'\n",
+                 action.c_str(), scriptsDir.c_str(), scriptPath.c_str());
+
+    std::string result = RunQueryScript(selfExe, scriptPath, file, line, col, project);
+    std::fprintf(stderr, "[DuinDasHost] action '%s': result='%s'\n", action.c_str(), result.c_str());
+    if (result.empty())
+        return fallback;
+    return result;
 }
 
 // Outcome of interpreting one request line, shared by the stdin and TCP loops.
@@ -505,6 +758,12 @@ static RequestResult HandleRequestLine(
         out.quit = true;
         return out;
     }
+    // Action requests: hover, goto_definition, find_references.
+    if (req.find("\"action\"") != std::string::npos)
+    {
+        out.response = HandleActionRequest(req, defaultProject);
+        return out;
+    }
     if (req.find("\"ping\"") != std::string::npos)
     {
         char buf[64];
@@ -515,11 +774,13 @@ static RequestResult HandleRequestLine(
 
     std::string displayFile;
     std::string projectArg;
+    std::string overrideContent;
     duin::RecompileMode mode = duin::RecompileMode::KeepCachedBindings;
     if (req.front() == '{')
     {
         displayFile = JsonExtractString(req, "file");
         projectArg = JsonExtractString(req, "project");
+        overrideContent = JsonExtractString(req, "content");
         // "refresh":true re-reads the dn_* engine bindings (and daslib) from disk —
         // for after you edit a binding .das. Absent/false reuses the warm cached graph.
         if (req.find("\"refresh\"") != std::string::npos && req.find("\"refresh\":false") == std::string::npos)
@@ -540,7 +801,11 @@ static RequestResult HandleRequestLine(
 
     std::string projectPath = MakeAbsoluteUnix(projectArg.empty() ? defaultProject : projectArg);
     std::string scriptPath = MakeAbsoluteUnix(displayFile);
+    if (!overrideContent.empty())
+        script.SetOverrideContent(scriptPath, overrideContent);
     out.response = CompileOne(script, displayFile, scriptPath, projectPath, mode);
+    if (!overrideContent.empty())
+        script.ClearOverrideContent();
     return out;
 }
 
@@ -1120,6 +1385,66 @@ int main(int argc, char **argv)
     // stdin serve mode: warm up once, then compile per stdin request (single-client).
     if (args.serve)
         return RunServeLoop(script, defaultProjectPath);
+
+    // Query mode: run a query .das script in-process with engine modules registered.
+    // The script is a standalone daslang program (query_type_of.das, etc.) that uses
+    // compile_file + find_at_cursor. Because we've already registered all engine modules
+    // above, dn_* requires in the game script resolve correctly inside the query script.
+    // We compile the query script itself, simulate it, and call its [export] main().
+    // Args forwarded to the script via das::setCommandLineArguments before simulation.
+    if (args.query)
+    {
+        std::fprintf(stderr, "[DuinDasHost --query] script='%s' nargs=%zu\n",
+                     args.queryScript.c_str(), args.queryArgs.size());
+        std::string queryScriptPath = MakeAbsoluteUnix(args.queryScript);
+        script.SetScriptPath(queryScriptPath);
+        if (!defaultProjectPath.empty())
+            script.SetProjectFile(defaultProjectPath);
+
+        // Forward args: scripts read them via get_command_line_arguments().
+        // daslang convention: argv[0]=exe, argv[1]=script, then user args.
+        // We pass: [selfExe, queryScript, ...queryArgs]
+        {
+            std::vector<std::string> cmdArgStrs;
+            cmdArgStrs.push_back(FindSelfExe());
+            cmdArgStrs.push_back(queryScriptPath);
+            for (const auto &a : args.queryArgs)
+                cmdArgStrs.push_back(a);
+            std::vector<char *> cmdArgPtrs;
+            for (auto &s : cmdArgStrs)
+                cmdArgPtrs.push_back(const_cast<char *>(s.c_str()));
+            das::setCommandLineArguments((int)cmdArgPtrs.size(), cmdArgPtrs.data());
+        }
+
+        StdoutToStderrGuard guard;
+        script.PrepareForRecompile(duin::RecompileMode::KeepCachedBindings);
+        bool ok = script.Compile();
+        if (!ok)
+        {
+            guard.Restore();
+            // Emit fallback based on script name.
+            if (args.queryScript.find("type_of") != std::string::npos)
+                std::fprintf(stdout, "{\"hover\":\"\"}\n");
+            else if (args.queryScript.find("goto_def") != std::string::npos)
+                std::fprintf(stdout, "{\"found\":false}\n");
+            else
+                std::fprintf(stdout, "{\"locations\":[]}\n");
+            std::fflush(stdout);
+            return 1;
+        }
+
+        // Simulate and call main(). The script prints its JSON result to stdout.
+        // Restore stdout BEFORE simulate so the script's print() reaches the parent.
+        guard.Restore();
+
+        script.SimulateContext();
+        das::Func mainFn = script.FindFunction("main");
+        if (mainFn)
+            script.InvokeVoid(mainFn);
+
+        std::fflush(stdout);
+        return 0;
+    }
 
     // One-shot mode: compile the single file given on the command line.
     std::string scriptPath = MakeAbsoluteUnix(args.file);
