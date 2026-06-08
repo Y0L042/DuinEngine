@@ -36,8 +36,6 @@ class _Root : DnGameObject {
     def override _ready() : void {
         game_states = self.add_child(new DnGameStateMachine())
         game_states.switch_state(new State_ProjectSelection())
-        // game_states.switch_state(new State_ProjectEditor())
-        // var x = "5" + 10
     }
 
 
@@ -48,7 +46,7 @@ class _Root : DnGameObject {
     def override _physics_update(delta : double) : void {
 
     }
-
+ 
     def override _draw() : void {
 
     }

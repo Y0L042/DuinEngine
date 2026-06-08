@@ -1,5 +1,12 @@
 options gen2
 
+// Profiler: instruments every function in this context.
+// Default: auto-enabled, dumps call tree to log on exit.
+// To write a Chrome-trace JSON:  --das-profiler-log-file trace.json
+// To profile only a region:      --das-profiler-manual  (then call set_enable_profiler)
+// Memory mode:                   --das-profiler-memory
+require daslib/profiler
+
 require math
 require daslib/rtti
 require daslib/random
