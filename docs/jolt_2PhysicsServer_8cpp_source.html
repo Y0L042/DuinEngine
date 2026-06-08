@@ -205,40 +205,39 @@ $(document).ready(function(){initNavTree('jolt_2PhysicsServer_8cpp_source.html',
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keywordtype">void</span> duin::PhysicsServer::StepPhysics(<span class="keywordtype">double</span> delta)</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>{</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keyword">static</span> <span class="keywordtype">size_t</span> x = 0;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    physicsSystem.Update(cDeltaTime, cCollisionSteps, tempAllocator.get(), jobSystem.get());</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>}</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keywordtype">void</span> duin::PhysicsServer::DebugDrawBodies()</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>{</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    JPH::BodyManager::DrawSettings settings;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    JPH::DebugRenderer *r = <span class="keyword">static_cast&lt;</span>JPH::DebugRenderer *<span class="keyword">&gt;</span>(&amp;debugRenderer.core);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    physicsSystem.DrawBodies(settings, r);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keywordtype">void</span> duin::PhysicsServer::CreatePlane(<span class="keyword">const</span> Vector3 &amp;normal, <span class="keyword">const</span> <span class="keywordtype">float</span> height)</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>{</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    BodyInterface().CreateAndAddBody(</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        JPH::BodyCreationSettings(</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keyword">new</span> JPH::PlaneShape(JPH::Plane(JPH::Vec3(normal.x, normal.y, normal.z).Normalized(), height), <span class="keyword">nullptr</span>),</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            JPH::RVec3(0, 0, 0),</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            JPH::Quat::sIdentity(),</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            JPH::EMotionType::Static,</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            Layers::NON_MOVING),</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        JPH::EActivation::DontActivate);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="keywordtype">void</span> duin::PhysicsServer::CreateBox(<span class="keyword">const</span> Vector3 &amp;position, <span class="keyword">const</span> Vector3 &amp;size)</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>{</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    BodyInterface().CreateAndAddBody(</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        JPH::BodyCreationSettings(</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="keyword">new</span> JPH::BoxShape(JPH::Vec3(size.x / 2.0f, size.y / 2.0f, size.z / 2.0f)),</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            JPH::RVec3(position.x, position.y, position.z),</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            JPH::Quat::sRotation(JPH::Vec3::sAxisZ(), 0.25f * JPH::JPH_PI),</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            JPH::EMotionType::Dynamic,</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            Layers::MOVING),</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        JPH::EActivation::Activate);</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    physicsSystem.Update(cDeltaTime, cCollisionSteps, tempAllocator.get(), jobSystem.get());</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="keywordtype">void</span> duin::PhysicsServer::DebugDrawBodies()</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>{</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    JPH::BodyManager::DrawSettings settings;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    JPH::DebugRenderer *r = <span class="keyword">static_cast&lt;</span>JPH::DebugRenderer *<span class="keyword">&gt;</span>(&amp;debugRenderer.core);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    physicsSystem.DrawBodies(settings, r);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keywordtype">void</span> duin::PhysicsServer::CreatePlane(<span class="keyword">const</span> Vector3 &amp;normal, <span class="keyword">const</span> <span class="keywordtype">float</span> height)</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>{</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    BodyInterface().CreateAndAddBody(</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        JPH::BodyCreationSettings(</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keyword">new</span> JPH::PlaneShape(JPH::Plane(JPH::Vec3(normal.x, normal.y, normal.z).Normalized(), height), <span class="keyword">nullptr</span>),</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            JPH::RVec3(0, 0, 0),</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            JPH::Quat::sIdentity(),</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            JPH::EMotionType::Static,</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            Layers::NON_MOVING),</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        JPH::EActivation::DontActivate);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>}</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="keywordtype">void</span> duin::PhysicsServer::CreateBox(<span class="keyword">const</span> Vector3 &amp;position, <span class="keyword">const</span> Vector3 &amp;size)</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>{</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    BodyInterface().CreateAndAddBody(</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        JPH::BodyCreationSettings(</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="keyword">new</span> JPH::BoxShape(JPH::Vec3(size.x / 2.0f, size.y / 2.0f, size.z / 2.0f)),</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            JPH::RVec3(position.x, position.y, position.z),</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            JPH::Quat::sRotation(JPH::Vec3::sAxisZ(), 0.25f * JPH::JPH_PI),</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            JPH::EMotionType::Dynamic,</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            Layers::MOVING),</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        JPH::EActivation::Activate);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
 <div class="ttc" id="aDNAssert_8h_html"><div class="ttname"><a href="DNAssert_8h.html">DNAssert.h</a></div><div class="ttdoc">Assertion macros for debugging and error checking.</div></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aclassduin_1_1PhysicsServer_html"><div class="ttname"><a href="classduin_1_1PhysicsServer.html">duin::PhysicsServer</a></div><div class="ttdoc">Singleton managing the PhysX physics world.</div><div class="ttdef"><b>Definition</b> <a href="jolt_2PhysicsServer_8h_source.html#l00040">jolt/PhysicsServer.h:41</a></div></div>

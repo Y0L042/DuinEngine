@@ -240,7 +240,7 @@ var searchData=
   ['imvector_3c_20unsigned_20char_20_3e_237',['ImVector&lt; unsigned char &gt;',['../structImVector.html',1,'']]],
   ['in_20texture_238',['Debug Draws Not Appearing in Texture',['../md_docs_2RenderingPipeline.html#autotoc_md32',1,'']]],
   ['in3dmode_239',['in3DMode',['../structduin_1_1RenderState.html#a99b4163be250cbaf705c3a5e656f143b',1,'duin::RenderState']]],
-  ['init_240',['init',['../classRectanglePacker.html#a3aa3b8c8d4f36ab6cca66f0044870910',1,'RectanglePacker::init()'],['../classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b',1,'duin::Log::Init()']]],
+  ['init_240',['init',['../classduin_1_1Log.html#afb090b3f767bb798a8303b8fcf5ec18b',1,'duin::Log::Init()'],['../classRectanglePacker.html#a3aa3b8c8d4f36ab6cca66f0044870910',1,'RectanglePacker::init()']]],
   ['initialize_241',['initialize',['../classduin_1_1PhysicsServer.html#a0539ef81e30be42293ca094122ae4903',1,'duin::PhysicsServer::Initialize()'],['../classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6',1,'duin::GameWorld::Initialize()'],['../classduin_1_1Application.html#adfda04cdbdd2923dc25f509f2c285dd8',1,'duin::Application::Initialize()']]],
   ['input_20output_20module_242',['Input/Output Module',['../group__IO.html',1,'']]],
   ['input_2eh_243',['Input.h',['../Input_8h.html',1,'']]],
