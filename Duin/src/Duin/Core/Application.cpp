@@ -39,6 +39,8 @@
 #include <SDL3/SDL_timer.h>
 #include <SDL3/SDL_video.h>
 
+#include <tracy/Tracy.hpp>
+
 // ---------------------------------------------------------------------------
 // Debug / quit state
 // ---------------------------------------------------------------------------
@@ -257,7 +259,7 @@ double duin::GetTicksNano()
 
 void duin::DelayProcess(float seconds)
 {
-    ::SDL_Delay((uint32_t)seconds * 1000);
+    ::SDL_Delay((uint32_t)(seconds * 1000.0f));
 }
 
 void duin::DelayProcessMilli(float milliseconds)
@@ -441,6 +443,8 @@ void duin::Application::RunPhysics(double &physicsCurrentTime, double &physicsPr
     physicsCurrentTime = duin::GetTicks();
     double physicsDeltaTime = physicsCurrentTime - physicsPreviousTime;
     physicsAccumTime += physicsDeltaTime;
+    if (physicsDeltaTime > 0.25) physicsDeltaTime = 0.25; // Cap max physics steps when delta is too large
+
     double physicsTimeStep = (1.0 / (double)TARGET_PHYSICS_FRAMERATE);
     while (physicsAccumTime >= physicsTimeStep)
     {
@@ -460,6 +464,7 @@ void duin::Application::RunPhysics(double &physicsCurrentTime, double &physicsPr
 
 void duin::Application::PhysicsStep(double frametime)
 {
+    //ZoneScopedN("Physics Update");
     EnginePhysicsUpdate(frametime);
     PhysicsUpdate(frametime);
     EnginePostPhysicsUpdate(frametime);
