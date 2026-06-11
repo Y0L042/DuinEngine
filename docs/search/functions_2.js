@@ -18,7 +18,7 @@ var searchData=
   ['contains_15',['Contains',['../classduin_1_1LookupVector.html#a81a17a655a540734d31b02460b612915',1,'duin::LookupVector']]],
   ['count_16',['count',['../classduin_1_1Iter.html#a38ab4bb9fea2115517cec93a02c70691',1,'duin::Iter::Count()'],['../classduin_1_1Query.html#a84d1d2c6318e850d778b695b04f08caa',1,'duin::Query::Count()']]],
   ['create_17',['create',['../classduin_1_1DynamicBody.html#a725e86c58a4fa273431b8815ced4c8bf',1,'duin::DynamicBody::Create(Transform3D transform, CollisionShape collisionShape)'],['../classduin_1_1DynamicBody.html#a95bb71f093b91dd25846140dd0edf66a',1,'duin::DynamicBody::Create(Transform3D transform, CollisionGeometryVariant geometry, PhysicsMaterial material)']]],
-  ['createapplication_18',['CreateApplication',['../Application_8h.html#a9b4b304a3d35f01eae8e2f4b067cc4eb',1,'duin']]],
+  ['createapplication_18',['CreateApplication',['../Application_8h.html#abec0b47c6d878bd45dfccbcc2719743a',1,'duin']]],
   ['createchildobject_19',['createchildobject',['../classduin_1_1Application.html#ad0801824608dece0311e089d4999cb63',1,'duin::Application::CreateChildObject()'],['../classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe',1,'duin::GameObject::CreateChildObject()']]],
   ['createdir_20',['CreateDir',['../namespaceduin_1_1fs.html#a08310e525fc80e8d8f652941344677de',1,'duin::fs']]],
   ['createinputaction_21',['CreateInputAction',['../InputActions_8h.html#af245978b85d96ad56dc36dc6fd8850b1',1,'duin']]],
