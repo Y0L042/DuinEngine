@@ -1,6 +1,7 @@
 #include "dnpch.h"
 #include "Script.h"
 #include <Duin/Core/Debug/DNLog.h>
+#include <Duin/IO/Filesystem.h>
 #include <chrono>
 #include <memory>
 #include <algorithm>
@@ -13,8 +14,8 @@
 #include <daScript/misc/smart_ptr.h>
 #include <daScript/misc/sysos.h>
 #include <daScript/simulate/fs_file_info.h>
-#include <daScript/simulate/runtime_string.h>
 #include <daScript/simulate/simulate.h>
+#include <daScript/ast/dyn_modules.h>
 #include <vecmath/dag_vecMathDecl.h>
 
 duin::Script::Script()
@@ -55,6 +56,12 @@ void duin::Script::SetProfiling(bool enable)
     enableProfiling = enable;
 }
 
+void duin::Script::SetJitMode(JitMode mode, bool cached)
+{
+    jitEnabled = mode;
+    jitNoCache = !cached;
+}
+
 void duin::Script::SetOverrideContent(const std::string &path, const std::string &content)
 {
     overridePath = path;
@@ -82,6 +89,26 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
         DN_CORE_INFO("No script modules passed.");
     }
 
+    // Register dynamic modules (dasLLVM → the `llvm` mount that just_in_time.das requires)
+    // BEFORE Module::Initialize(), like daScript/main.cpp. The mount lives in the bound
+    // environment's resolve table, consulted by the file resolver at compile time.
+    // Done unconditionally here because SetJitMode may run after InitModules.
+    {
+        das::daScriptEnvironment::ensure();
+        auto bootAccess = das::make_smart<das::FsFileAccess>(); // plain access: scans dasRoot/modules literally
+        std::string projectRoot;
+        if (!projectFile.empty())
+        {
+            const std::string unix = duin::fs::EnsureUnixPath(projectFile);
+            const auto slash = unix.find_last_of('/');
+            if (slash != std::string::npos)
+                projectRoot = unix.substr(0, slash); // dir of project file, not the file path
+        }
+        bool ok = das::require_dynamic_modules(bootAccess, das::getDasRoot(), projectRoot, {}, tout);
+        if (!ok)
+            DN_CORE_ERROR("require_dynamic_modules failed — JIT/LLVM mount may be missing.");
+    }
+
     das::Module::Initialize();
     modulesAreInit = true;
     baseModules = libGroup.getModules();
@@ -89,7 +116,8 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
 
 bool duin::Script::Compile()
 {
-    DN_CORE_WARN("Compiling script {}...", scriptPath);
+    DN_CORE_INFO("Project file set as <{}>", projectFile);
+    DN_CORE_WARN("Compiling script {} ...", scriptPath);
     bool res = false;
 
     diagnostics.clear();
@@ -156,11 +184,38 @@ bool duin::Script::Compile()
         auto info = das::make_unique<das::TextFileInfo>(buf, len, /*own=*/true);
         fAccess->setFileInfo(scriptPath, das::move(info));
     }
+
+    // Set Policies
     das::CodeOfPolicies policies;
     policies.rtti = true;
-    policies.log_compile_time = true;        // total time at end
-    //policies.log_total_compile_time = true;  // detailed breakdown per phase
-    //policies.log_module_compile_time = true; // per-module: parse / infer passes / optimize / macros
+    policies.log_compile_time = true; // total time at end
+    // policies.log_total_compile_time = true;  // detailed breakdown per phase
+    // policies.log_module_compile_time = true; // per-module: parse / infer passes / optimize / macros
+    if (jitEnabled != JitMode::NONE)
+    {
+        policies.jit_enabled = true;
+        switch (jitEnabled)
+        {
+        case JitMode::EXECUTABLE:
+            policies.jit_exe_mode = true;
+            break;
+        case JitMode::DLL:
+            policies.jit_dll_mode = true;
+            break;
+        case JitMode::DIRECT:
+            break;
+        default:
+            break;
+        }
+        if (jitNoCache)
+        {
+            policies.jit_dll_mode = false;
+        }
+        // Dynamic modules (the `llvm` mount) are registered once in InitModules().
+        fAccess->addExtraModule("just_in_time", das::getDasRoot() + "/daslib/just_in_time.das");
+        policies.jit_output_path = jitOutPath;
+        policies.dll_search_paths.emplace_back(das::getDasRoot() + "/lib");
+    }
     if (enableProfiling)
     {
         policies.profiler = true;
@@ -246,9 +301,9 @@ void duin::Script::RunLint(std::vector<Diagnostic> &diags)
         if (std::regex_match(line, m, kLintLine))
         {
             d.message = m[1].str();
-            d.file    = m[2].str();
-            d.line    = std::stoi(m[3].str());
-            d.column  = std::stoi(m[4].str());
+            d.file = m[2].str();
+            d.line = std::stoi(m[3].str());
+            d.column = std::stoi(m[4].str());
         }
         else
         {
@@ -491,6 +546,11 @@ duin::Diagnostic duin::Script::MakeDiagnostic(const das::Error &err)
     }
 
     return d;
+}
+
+das::FileAccessPtr duin::Script::CreateFileAccess()
+{
+    return das::FileAccessPtr();
 }
 
 std::pair<int, int> duin::Script::RunTests()

@@ -129,7 +129,7 @@ bool duin::GameScript::CompileAndSimulate()
             SetGameFunctions();
 
             hasCompiledOnce = true;
-            Ready();
+            Ready_();
         }
         else
         {
@@ -176,7 +176,7 @@ void duin::GameScript::Init()
         });
 }
 
-void duin::GameScript::Ready()
+void duin::GameScript::Ready_()
 {
     if (!SetContextRootObject())
     {

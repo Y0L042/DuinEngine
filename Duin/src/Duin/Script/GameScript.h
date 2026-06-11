@@ -27,7 +27,7 @@ class GameScript : public Script, public GameObject
     void ResetScript() override;
 
     void Init() override;
-    void Ready() override;
+    void Ready_(); // Called on script compile, not by engine
     void OnEvent(Event e) override;
     void Update(double delta) override;
     void PhysicsUpdate(double delta) override;

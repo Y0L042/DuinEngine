@@ -68,6 +68,13 @@ inline AssertContextScope MakeScriptContextScope(ScriptContext *ctx)
 class Script
 {
   public:
+    enum JitMode
+    {
+        NONE,
+        DIRECT,
+        DLL,
+        EXECUTABLE
+    };
     Script();
     Script(const std::string &relScriptPath);
     ~Script();
@@ -78,6 +85,7 @@ class Script
     void SetProjectFile(const std::string &path);
 
     void SetProfiling(bool enable);
+    void SetJitMode(JitMode mode, bool cached = true);
 
     // In-memory override for the script's source. When set, Compile() injects this text as
     // the source for scriptPath (via a daslang TextFileInfo) instead of reading from disk —
@@ -125,6 +133,9 @@ class Script
     bool enableProfiling = false;
     bool scriptReady = false;
     bool modulesAreInit = false;
+    JitMode jitEnabled = JitMode::NONE;
+    bool jitNoCache = false;
+    std::string jitOutPath = "";
     std::string scriptPath;
     std::string lastCompileError;
     std::vector<Diagnostic> diagnostics;
@@ -143,6 +154,7 @@ class Script
     void ResetContext();
     std::string SafeErrorReport(const das::Error &err);
     Diagnostic MakeDiagnostic(const das::Error &err);
+    das::FileAccessPtr CreateFileAccess();
 };
 
 } // namespace duin
