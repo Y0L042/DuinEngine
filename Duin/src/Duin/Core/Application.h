@@ -141,7 +141,7 @@ std::shared_ptr<ScopedConnection> QueueExitCallback(std::function<void()>);
  *     }
  * };
  *
- * duin::Application* duin::CreateApplication() {
+ * duin::Application* duin::CreateApplication(int argc, char **argv) {
  *     return new MyGame();
  * }
  * @endcode
@@ -292,6 +292,6 @@ class DAPI Application
  *
  * @return Pointer to the application instance.
  */
-Application *CreateApplication();
+Application *CreateApplication(int argc, char **argv);
 
 } // namespace duin

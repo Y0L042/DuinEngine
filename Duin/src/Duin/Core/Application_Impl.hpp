@@ -1,7 +1,7 @@
 void duin::Application::Run()
 {
     double physicsCurrentTime = duin::GetTicks();
-    double physicsPreviousTime = duin::GetTicks();
+    double physicsPreviousTime = 0.0;
     double physicsAccumTime = 0.0;
     double deltaTime = 0.0;
 
@@ -127,15 +127,11 @@ void duin::Application::RunRender()
     int displayWidth, displayHeight;
     ::SDL_GetWindowSize(sdlWindow, &displayWidth, &displayHeight);
 
-    if (WINDOW_WIDTH != displayWidth || WINDOW_HEIGHT != displayHeight)
-    {
-        WINDOW_WIDTH = displayWidth;
-        WINDOW_HEIGHT = displayHeight;
+    WINDOW_WIDTH = displayWidth;
+    WINDOW_HEIGHT = displayHeight;
 
-        RHIReset((uint32_t)displayWidth, (uint32_t)displayHeight, RHI_RESET_VSYNC);
-        RHISetViewRect(RHI_VIEW_3D, 0, 0, displayWidth, displayHeight);
-    }
-
+    RHIReset((uint32_t)displayWidth, (uint32_t)displayHeight, RHI_RESET_VSYNC);
+    RHISetViewRect(RHI_VIEW_3D, 0, 0, (uint16_t)displayWidth, (uint16_t)displayHeight);
     RHITouch(RHI_VIEW_3D);
 
     ++renderFrameCount;
@@ -222,7 +218,6 @@ bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTi
 
         double frameEndTime = duin::GetTicks();
         double deltaDrawTime = frameEndTime - frameStartTime;
-        renderFrameTime = deltaDrawTime;
 
         if (TARGET_RENDER_FRAMERATE > 0)
         {
@@ -234,6 +229,9 @@ bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTi
                 duin::DelayProcess((float)waitTime);
             }
         }
+
+        deltaTime = duin::GetTicks() - frameStartTime;
+        renderFrameTime = deltaTime;
 
 #ifdef DN_DEBUG
     }
