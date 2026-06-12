@@ -37,6 +37,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "dn_ecs") {
         res.info = ("dn_ecs", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs.das", "")
     }
+    elif (req == "dn_ecs_boost") {
+        res.info = ("dn_ecs_boost", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs_boost.das", "")
+    }
     elif (req == "dn_ecs_components") {
         res.info = ("dn_ecs_components", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs_components.das", "")
     }
@@ -67,6 +70,55 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "live/live_vars") {
         res.info = ("live_vars", path_to_engine + "vendor/daslang/modules/dasLiveHost/live/live_vars.das", "")
     }
+
+// TODO Quick fix for JIT
+    elif (req == "llvm/daslib/llvm_macro") {
+        res.info = ("llvm_macro", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_macro.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_boost") {
+        res.info = ("llvm_boost", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_boost.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_debug") {
+        res.info = ("llvm_debug", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_debug.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_dll_utils") {
+        res.info = ("llvm_dll_utils", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_dll_utils.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_exe") {
+        res.info = ("llvm_exe", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_exe.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_jit") {
+        res.info = ("llvm_jit", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_jit.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_jit_cli") {
+        res.info = ("llvm_jit_cli", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_jit_cli.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_jit_common") {
+        res.info = ("llvm_jit_common", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_jit_common.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_jit_intrin") {
+        res.info = ("llvm_jit_intrin", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_jit_intrin.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_jit_run") {
+        res.info = ("llvm_jit_run", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_jit_run.das", "")
+    }
+    elif (req == "llvm/daslib/llvm_targets") {
+        res.info = ("llvm_targets", path_to_engine + "vendor/daslang/modules/dasLLVM/daslib/llvm_targets.das", "")
+    }
+    elif (req == "llvm/bindings/llvm_const") {
+        res.info = ("llvm_const", path_to_engine + "vendor/daslang/modules/dasLLVM/bindings/llvm_const.das", "")
+    }
+    elif (req == "llvm/bindings/llvm_enum") {
+        res.info = ("llvm_enum", path_to_engine + "vendor/daslang/modules/dasLLVM/bindings/llvm_enum.das", "")
+    }
+    elif (req == "llvm/bindings/llvm_func") {
+        res.info = ("llvm_func", path_to_engine + "vendor/daslang/modules/dasLLVM/bindings/llvm_func.das", "")
+    }
+    elif (req == "llvm/bindings/llvm_struct") {
+        res.info = ("llvm_struct", path_to_engine + "vendor/daslang/modules/dasLLVM/bindings/llvm_struct.das", "")
+    }
+
+
     else {
         res.info = ("", "", "")
         res.resolved = false

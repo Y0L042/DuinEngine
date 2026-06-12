@@ -4,7 +4,7 @@ local dep_daslang = {}
 local name = "DASLANG"
 
 local repo   = "https://github.com/GaijinEntertainment/daScript"
-local commit    = "6e38cb3" -- "v0.6.2-RC3"
+local commit    = "v0.6.3-RC1-take2" -- "6e38cb3" -- "v0.6.2-RC3"
 local checkout = commit
 local folder = "daslang"
 
@@ -30,12 +30,12 @@ function dep_daslang.build()
     local build_type = "Debug"
 
     local cmake_flags = "-DCMAKE_BUILD_TYPE=" .. build_type
-        .. " -DDAS_TUTORIAL_DISABLED=OFF"
+        .. " -DDAS_TUTORIAL_DISABLED=ON"
         .. " -DDAS_TESTS_DISABLED=ON"
         .. " -DDAS_AOT_EXAMPLES_DISABLED=ON"
         .. " -DDAS_GLFW_DISABLED=ON"
         .. " -DDAS_IMGUI_DISABLED=OFF"
-        .. " -DDAS_CLANG_BIND_DISABLED=OFF"
+        .. " -DDAS_CLANG_BIND_DISABLED=ON"
         .. " -DDAS_LLVM_DISABLED=OFF"
         .. " -DDAS_HV_DISABLED=OFF"
         .. " -DDAS_SQLITE_DISABLED=OFF"
