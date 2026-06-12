@@ -152,6 +152,7 @@ workspace "Duin"
 
     -- Include sub-Premake files
     include "Duin"
+    include "DuinRT"
     include "DuinTests"
     include "DuinEditor"
     include "DuinEditorTests"
