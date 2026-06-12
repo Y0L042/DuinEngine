@@ -4,7 +4,9 @@ options rtti
 module ecs_components shared public
 
 require daslib/rtti
+
 require dn_ecs
+require dn_physics
 
 // --- Rendering ---
 
@@ -45,6 +47,10 @@ struct CameraPitch {
 
 struct CharacterBodyDesc {
     x : int
+}
+
+struct CharacterBodyHandle {
+    cb : DnCharacterBody?
 }
 
 // --- Tags ---

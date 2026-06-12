@@ -11,9 +11,12 @@ require dn_gameobject
 class StateMachine : DnGameObject {
     current_state : State?
 
-    def StateMachine() : void {}
+    def StateMachine() : void {
+        super()
+    }
 
     def StateMachine(var state : State?) : void {
+        super()
         self.change_state(state)
     }
 

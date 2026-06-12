@@ -24,35 +24,43 @@ var query_render_cube        : DnQuery = DnQuery()
 var query_player_input       : DnQuery = DnQuery()
 var query_player_camera      : DnQuery = DnQuery()
 var query_player_gravity     : DnQuery = DnQuery()
+var query_player_jump        : DnQuery = DnQuery()
 
 def construct_queries(var world : DnWorld&) : void {
-    query_integrate_velocity = world.query_builder() \
-        .with_term(type<Transform3D>) \
-        .with_term(type<Velocity3D>) \
-        .cached() \
-        .build()
+    query_integrate_velocity = (world.query_builder()
+        .with_term(type<Transform3D>)
+        .with_term(type<Velocity3D>)
+        .cached()
+        .build())
 
-    query_render_cube = world.query_builder() \
-        .with_term(type<RenderCube>) \
-        .with_term(type<Transform3D>) \
-        .cached() \
-        .build()
+    query_render_cube = (world.query_builder()
+        .with_term(type<RenderCube>)
+        .with_term(type<Transform3D>)
+        .cached()
+        .build())
 
-    query_player_input = world.query_builder() \
-        .with_term(type<IsPlayer>) \
-        .with_term(type<PlayerMoveInput>) \
-        .with_term(type<MoveSpeed>) \
-        .with_term(type<CameraYaw>) \
-        .with_term(type<CameraPitch>) \
-        .cached() \
-        .build()
+    query_player_input = (world.query_builder()
+        .with_term(type<IsPlayer>)
+        .with_term(type<PlayerMoveInput>)
+        .with_term(type<MoveSpeed>)
+        .with_term(type<CameraYaw>)
+        .with_term(type<CameraPitch>)
+        .cached()
+        .build())
 
-    query_player_gravity = world.query_builder() \
-        .with_term(type<IsPlayer>) \
-        .with_term(type<Velocity3D>) \
-        .with_term(type<GravityScale>) \
-        .cached() \
-        .build()
+    query_player_jump = (world.query_builder()
+        .with_term(type<IsPlayer>)
+        .with_term(type<Velocity3D>)
+        .with_term(type<JumpImpulse>)
+        .cached()
+        .build())
+
+    query_player_gravity = (world.query_builder()
+        .with_term(type<IsPlayer>)
+        .with_term(type<Velocity3D>)
+        .with_term(type<GravityScale>)
+        .cached()
+        .build())
 }
 
 def destruct_queries() : void {

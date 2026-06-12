@@ -36,6 +36,8 @@ class Player : DnGameObject {
     observer : ecs_observer_t
 
     def Player(var game_world_ : DnGameWorld?) : void {
+        super()
+
         game_world = game_world_
 
         sm = new StateMachine()
@@ -66,22 +68,28 @@ class Player : DnGameObject {
     def override _init() : void {
         dn_info("Player init!")
 
-        // ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ capture(copy(characterbody), copy(position)) (world : ecs_world_t?, e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
-        //     dn_info("Creating CharacterBody {cb_cmp}")
-        //     characterbody = new DnCharacterBody()
-        //     characterbody.create_capsule(
-        //         70.0,
-        //         1.0,
-        //         60.0,
-        //         true,
-        //         true,
-        //         true,
-        //         true,
-        //         1.8,
-        //         0.25
-        //     )
-        //     characterbody.initialize(position)
-        // })
+        ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ capture(copy(characterbody), copy(position)) (var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
+            dn_info("Creating CharacterBody {cb_cmp}")
+            characterbody = new DnCharacterBody()
+            characterbody.create_capsule(
+                70.0,
+                1.0,
+                60.0,
+                true,
+                true,
+                true,
+                true,
+                1.8,
+                0.25
+            )
+            characterbody.initialize(position)
+            var entity = DnEntity(world=world, entity=e)
+            entity.set(CharacterBodyHandle(cb=characterbody))
+        })
+
+        ecs_add_hook(type<MoveSpeed>, EcsHookEvent.ONSET, @ (var world : ecs_world_t?, var e : ecs_entity_t, cmp : MoveSpeed) : void {
+            dn_info("MoveSpeed ONSET {cmp}")
+        })
 
         player_entity.add(IsPlayer())
         player_entity.set(PlayerMoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
@@ -89,6 +97,7 @@ class Player : DnGameObject {
         player_entity.set(CameraYaw(radians = 0.0f))
         player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
         player_entity.set(CharacterBodyDesc())
+        player_entity.set(GravityScale(value=-9.81f))
     }
 
     def override _ready() : void {

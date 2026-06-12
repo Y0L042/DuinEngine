@@ -1,6 +1,7 @@
 options gen2
 options rtti
 options string_heap_size_limit = 0
+options log
 
 // require daslib/debug
 // require daslib/profiler
@@ -9,8 +10,8 @@ options string_heap_size_limit = 0
 require daslib/rtti
 require daslib/random
 require daslib/class_boost
+require daslib/strings_boost
 require math
-
 
 require flecs_boost
 require imgui_boost
@@ -25,6 +26,7 @@ require dn_input
 require dn_physics 
 require dn_application
  
+require dn_ecs_boost
 require ecs_components
 require ecs_systems
 
@@ -37,13 +39,16 @@ var game_world : DnGameWorld?
 var zeus : Zeus?
 var zeus_mode : bool = false
 
+
 [export]
 def game_ready() {
     // wait_for_debugger()
 
+    test_system()
+
     dn_info("Game Ready!")
     dn_capture_mouse(true)
-
+    
     // GameWorld always re-wraps (smart constructor reuses existing C++ world on reload).
     game_world = new DnGameWorld()
 
@@ -55,13 +60,11 @@ def game_ready() {
     world |> construct_queries()
 
     player = dn_application_add_child(new Player(game_world))
-    player._init()
 
     dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
     dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
 
     zeus = dn_application_add_child(new Zeus())
-    zeus._init()
  
     register_keybinds()
 }
@@ -108,8 +111,8 @@ def game_draw() {
 [export]
 def game_draw_ui() {
     imgui_boost::Begin("Daslang Dashboard!")
-    imgui_boost::Text("Render  Frametime: {dn_get_render_frame_time() * 1000f}")
-    imgui_boost::Text("Physics Frametime: {dn_get_physics_frame_time() * 1000f}")
+    imgui_boost::Text("Render  Frametime: {format("%.2f", dn_get_render_frame_time() * 1000f)}")
+    imgui_boost::Text("Physics Frametime: {format("%.2f", dn_get_physics_frame_time() * 1000f)}")
     imgui_boost::End()
 }
 

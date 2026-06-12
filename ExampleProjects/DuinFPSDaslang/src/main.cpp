@@ -102,7 +102,7 @@ class DuinFPSDaslangApp : public duin::Application
     }
 };
 
-duin::Application *duin::CreateApplication()
+duin::Application *duin::CreateApplication(int argc, char **argv)
 {
 #ifdef DN_DEBUG
     duin::fs::SetBinDebugMode(true);
