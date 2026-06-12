@@ -65,6 +65,9 @@ inline AssertContextScope MakeScriptContextScope(ScriptContext *ctx)
     });
 }
 
+// duin::Script wraps the daslang lifecycle. The public API below is ordered to follow the
+// pipeline a caller drives in practice:
+//   configure → InitModules → Compile → (RunLint) → SimulateContext → invoke → recompile/reset
 class Script
 {
   public:
@@ -75,15 +78,17 @@ class Script
         DLL,
         EXECUTABLE
     };
+
+    // --- Construction / destruction ---
     Script();
     Script(const std::string &relScriptPath);
     ~Script();
 
+    // --- Configuration (call before Compile) ---
     void SetScriptPath(const std::string &path);
     std::string GetScriptPath();
     void SetDasRoot(const std::string &path);
     void SetProjectFile(const std::string &path);
-
     void SetProfiling(bool enable);
     void SetJitMode(JitMode mode, bool cached = true);
 
@@ -92,22 +97,12 @@ class Script
     // used for on-type diagnostics on UNSAVED editor buffers. Pass empty path to clear.
     void SetOverrideContent(const std::string &path, const std::string &content);
     void ClearOverrideContent();
+
+    // --- Stage 1: Module initialization ---
     virtual void InitModules(std::function<void(void)> initModules = [](void) {});
 
+    // --- Stage 2: Compile ---
     bool Compile();
-    bool SimulateContext();
-
-    // Runs daslang's C++ lint visitor on the last successfully compiled program and
-    // appends any warnings it finds to `diags`. Safe to call only after Compile()
-    // returns true. Parses Program::lint() text output to extract file/line/col.
-    void RunLint(std::vector<Diagnostic> &diags);
-    bool CallScript(das::Func fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
-    bool InvokeVoid(das::Func fn);
-    bool InvokeWithDelta(das::Func fn, double delta);
-    virtual void ResetScript();
-
-    das::Func FindFunction(const std::string &func);
-    bool VerifyFunction(das::Func fn);
 
     // Structured compile diagnostics from the most recent Compile() call.
     // Populated alongside lastCompileError; cleared at the start of Compile().
@@ -116,11 +111,28 @@ class Script
         return diagnostics;
     }
 
+    // --- Stage 3: Lint (optional, post-compile) ---
+    // Runs daslang's C++ lint visitor on the last successfully compiled program and
+    // appends any warnings it finds to `diags`. Safe to call only after Compile()
+    // returns true. Parses Program::lint() text output to extract file/line/col.
+    void RunLint(std::vector<Diagnostic> &diags);
+
+    // --- Stage 4: Simulate ---
+    bool SimulateContext();
+
+    // --- Stage 5: Invoke ---
+    das::Func FindFunction(const std::string &func);
+    bool VerifyFunction(das::Func fn);
+    bool CallScript(das::Func fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
+    bool InvokeVoid(das::Func fn);
+    bool InvokeWithDelta(das::Func fn, double delta);
+
     // Runs all exported functions whose names begin with "test_".
     // Returns {passed, failed} counts. Each test is called via evalWithCatch;
     // a non-null exception or a panic counts as a failure.
     std::pair<int, int> RunTests();
 
+    // --- Recompile / teardown ---
     // Prepares the same Script instance to compile a different file. Call before Compile().
     //   KeepCachedBindings (default) — reuse promoted daslib + dn_* modules; fast.
     //   RefreshBindings — re-read promoted .das modules from disk (after editing bindings).
@@ -128,21 +140,25 @@ class Script
     {
         ResetToBaseModules(mode);
     }
+    virtual void ResetScript();
 
   protected:
+    // Configuration state (set via the setters above).
     bool enableProfiling = false;
-    bool scriptReady = false;
-    bool modulesAreInit = false;
     JitMode jitEnabled = JitMode::NONE;
     bool jitNoCache = false;
     std::string jitOutPath = "";
     std::string scriptPath;
-    std::string lastCompileError;
-    std::vector<Diagnostic> diagnostics;
     std::string projectFile;
     bool hasOverrideContent = false; // when true, compile overrideContent for overridePath
     std::string overridePath;        // native path the override applies to (usually scriptPath)
     std::string overrideContent;     // in-memory source text (unsaved buffer)
+
+    // Runtime / pipeline state.
+    bool scriptReady = false;
+    bool modulesAreInit = false;
+    std::string lastCompileError;
+    std::vector<Diagnostic> diagnostics;
     das::ProgramPtr program;
     das::ModuleGroup libGroup;
     das::TextPrinter tout;
@@ -150,11 +166,26 @@ class Script
     std::shared_ptr<ScriptContext> context;
     std::vector<das::Module *> baseModules;
 
-    void ResetToBaseModules(RecompileMode mode = RecompileMode::KeepCachedBindings);
-    void ResetContext();
+    // --- Compile stage helpers (used by Compile, in call order) ---
+    // Rejects a missing project/source file with a 20605 diagnostic before handing paths to
+    // daslang (constructing FsFileAccess on a stale URI faults inside daslang).
+    bool ValidateCompileInputs();
+    // Builds the FsFileAccess (project-aware when projectFile is set), mounts the "scripts"
+    // root, and injects the unsaved-buffer override as a TextFileInfo when active.
+    das::FileAccessPtr BuildFileAccess();
+    // Assembles CodeOfPolicies: rtti/logging plus JIT mode and profiler module wiring.
+    das::CodeOfPolicies BuildPolicies();
+    // Shared guard for the invoke functions: verifies fn against the live context and emits
+    // the null-fn / null-context warnings. Returns false if the call must not proceed.
+    bool EnsureCallable(das::Func fn);
+
+    // --- Compile error reporting helpers ---
     std::string SafeErrorReport(const das::Error &err);
     Diagnostic MakeDiagnostic(const das::Error &err);
-    das::FileAccessPtr CreateFileAccess();
+
+    // --- Teardown helpers ---
+    void ResetToBaseModules(RecompileMode mode = RecompileMode::KeepCachedBindings);
+    void ResetContext();
 };
 
 } // namespace duin
