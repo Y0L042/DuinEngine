@@ -62,7 +62,7 @@ struct DnEntity {
     }
 
     [class_method]
-    def static get_mut(var cmp_type : type<auto(T)>) : T? {
+    def static get_mut(var cmp_type : type<auto(T)>) : T ? {
         if (world != null) {
             unsafe { return reinterpret<T?>(reinterpret<void?>(ecs_get_mut(world, entity, type<T>))); }
         }
@@ -81,7 +81,7 @@ struct DnEntity {
     }
 
     [class_method]
-    def static child_of(var parent : DnEntity?) : DnEntity {
+    def static child_of(var parent : DnEntity ?) : DnEntity {
         if (parent != null) {
             let ChildOf = ecs_lookup(world, "ChildOf")
             ecs_add_id(world, entity, ecs_make_pair(ChildOf, parent.entity))
@@ -232,6 +232,34 @@ struct DnQuery {
     def static ecs_query() : ecs_query_t ? {
         return query
     }
+}
+
+// Lazily-built query cache used by the ecs_query macro (dn_ecs_boost).
+// Keyed by world pointer + call-site key, so the same key is safe across worlds.
+var private _dn_query_cache : table<string, DnQuery>
+
+def _dn_ecs_query_get(world : ecs_world_t?, site_key : string, builder_blk : block<() : DnQuery>) : DnQuery {
+    let full_key = "{unsafe(reinterpret<uint64>(world))}#{site_key}"
+    if (!key_exists(_dn_query_cache, full_key)) {
+        _dn_query_cache[full_key] = invoke(builder_blk)
+    }
+    return _dn_query_cache?[full_key] ?? DnQuery()
+}
+
+// Destroys all cached queries for a world. DnGameWorld.fini calls this;
+// raw ecs_init() worlds must call it manually before ecs_fini.
+def dn_ecs_queries_fini(world : ecs_world_t?) : void {
+    var dead : array<string>
+    for (k, v in keys(_dn_query_cache), values(_dn_query_cache)) {
+        if (v.world == world) {
+            ecs_query_fini(v.query)
+            dead |> push(k)
+        }
+    }
+    for (k in dead) {
+        _dn_query_cache |> erase(k)
+    }
+    delete dead
 }
 
 struct DnQueryBuilder {

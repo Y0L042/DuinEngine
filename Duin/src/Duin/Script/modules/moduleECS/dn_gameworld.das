@@ -84,6 +84,7 @@ class DnGameWorld : DnGameWorld_Adapter {
     [class_method]
     def static fini() : void {
         if (_handle != null) {
+            dn_ecs_queries_fini(world())
             dn_destroy_gameworld_impl(_handle)
             _handle = null
         }
@@ -111,14 +112,14 @@ class DnGameWorld : DnGameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_position(e : DnEntity ==const &; x, y, z : float) {
+    def static set_global_position(e : DnEntity == const &; x, y, z : float) {
         if (_handle != null) {
             dn_gameworld_set_global_position_impl(_handle, e.entity, x, y, z)
         }
     }
 
     [class_method]
-    def static get_global_position(e : DnEntity ==const &) : float3 {
+    def static get_global_position(e : DnEntity == const &) : float3 {
         var x : float = 0.0f
         var y : float = 0.0f
         var z : float = 0.0f
@@ -131,14 +132,14 @@ class DnGameWorld : DnGameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_rotation(e : DnEntity ==const &; x, y, z, w : float) {
+    def static set_global_rotation(e : DnEntity == const &; x, y, z, w : float) {
         if (_handle != null) {
             dn_gameworld_set_global_rotation_impl(_handle, e.entity, x, y, z, w)
         }
     }
 
     [class_method]
-    def static get_global_rotation(e : DnEntity ==const &) : float4 {
+    def static get_global_rotation(e : DnEntity == const &) : float4 {
         var x = 0.0f
         var y = 0.0f
         var z = 0.0f
@@ -152,14 +153,14 @@ class DnGameWorld : DnGameWorld_Adapter {
     }
 
     [class_method]
-    def static set_global_scale(e : DnEntity ==const &; x, y, z : float) {
+    def static set_global_scale(e : DnEntity == const &; x, y, z : float) {
         if (_handle != null) {
             dn_gameworld_set_global_scale_impl(_handle, e.entity, x, y, z)
         }
     }
 
     [class_method]
-    def static get_global_scale(e : DnEntity ==const &) : float3 {
+    def static get_global_scale(e : DnEntity == const &) : float3 {
         var x = 1.0f
         var y = 1.0f
         var z = 1.0f
