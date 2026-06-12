@@ -102,7 +102,7 @@ NEED_MODULE(Module_DuinImGui);
     }
 };
 
-duin::Application* duin::CreateApplication()
+duin::Application* duin::CreateApplication(int argc, char **argv)
 {
     return new DaslangTestApp();
 }

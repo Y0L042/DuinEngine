@@ -8,7 +8,7 @@
 #include "Sandboxes/Scenes/SceneBuilder.h"
 #include "Sandboxes/GUI/ImGuiSandbox.h"
 
-duin::Application *duin::CreateApplication()
+duin::Application *duin::CreateApplication(int argc, char **argv)
 {
     return new Game();
 }
