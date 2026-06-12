@@ -1,7 +1,7 @@
 options gen2
 options rtti
 options string_heap_size_limit = 0
-options log
+// options log
 
 // require daslib/debug
 // require daslib/profiler
@@ -44,8 +44,6 @@ var zeus_mode : bool = false
 def game_ready() {
     // wait_for_debugger()
 
-    test_system()
-
     dn_info("Game Ready!")
     dn_capture_mouse(true)
     
@@ -55,14 +53,14 @@ def game_ready() {
     // Entities and game state are only created on first load.
     assume world = game_world.dn_world()
 
-    // destruct_queries()
     world |> register_components()
-    world |> construct_queries()
 
-    player = dn_application_add_child(new Player(game_world))
-
+    // create physics bodies first: forces PhysicsServer construction before
+    // Player's CharacterBodyDesc hook needs it
     dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
     dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
+
+    player = dn_application_add_child(new Player(game_world))
 
     zeus = dn_application_add_child(new Zeus())
  

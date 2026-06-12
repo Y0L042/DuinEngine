@@ -68,9 +68,11 @@ class Player : DnGameObject {
     def override _init() : void {
         dn_info("Player init!")
 
-        ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ capture(copy(characterbody), copy(position)) (var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
+        // ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ capture(copy(characterbody), copy(position)) (var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
+        ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ (var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
             dn_info("Creating CharacterBody {cb_cmp}")
             characterbody = new DnCharacterBody()
+            dn_info("[bisect] new DnCharacterBody ok")
             characterbody.create_capsule(
                 70.0,
                 1.0,
@@ -82,9 +84,13 @@ class Player : DnGameObject {
                 1.8,
                 0.25
             )
+            dn_info("[bisect] create_capsule ok")
             characterbody.initialize(position)
+            dn_info("[bisect] initialize ok")
             var entity = DnEntity(world=world, entity=e)
+            dn_info("[bisect] DnEntity wrap ok")
             entity.set(CharacterBodyHandle(cb=characterbody))
+            dn_info("[bisect] set CharacterBodyHandle ok")
         })
 
         ecs_add_hook(type<MoveSpeed>, EcsHookEvent.ONSET, @ (var world : ecs_world_t?, var e : ecs_entity_t, cmp : MoveSpeed) : void {
