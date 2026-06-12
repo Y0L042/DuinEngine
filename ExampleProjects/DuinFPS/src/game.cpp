@@ -10,7 +10,7 @@
 
 #define DEBUG
 
-duin::Application *duin::CreateApplication()
+duin::Application *duin::CreateApplication(int argc, char **argv)
 {
 #ifdef DN_DEBUG
     duin::fs::SetBinDebugMode(true);
