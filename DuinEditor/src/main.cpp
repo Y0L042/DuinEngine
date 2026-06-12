@@ -15,7 +15,7 @@
 
 Editor *Editor::instance = nullptr;
 
-duin::Application *duin::CreateApplication()
+duin::Application *duin::CreateApplication(int argc, char **argv)
 {
     return new Editor();
 }
