@@ -21,8 +21,9 @@ struct DnEntity {
 
     [class_method]
     def static is_a(prefab_id : ecs_entity_t) : DnEntity {
-        let IsA = ecs_lookup(world, "IsA")
-        ecs_add_id(world, entity, ecs_make_pair(IsA, prefab_id))
+        if (world != null) {
+            ecs_add_id(world, entity, ecs_make_pair(EcsIsA, prefab_id))
+        }
         return self
     }
 
@@ -34,10 +35,16 @@ struct DnEntity {
         return self
     }
 
+    // Add with a value: stores the value (flecs add-then-set semantics).
+    // Zero-size tag components can't be set in flecs, so they get a plain add.
     [class_method]
     def static add(var tag : auto(T)) : DnEntity {
         if (world != null) {
-            ecs_add(world, entity, tag)
+            static_if (typeinfo sizeof(tag) == 0) {
+                ecs_add(world, entity, ecs_component_register(world, type<T>))
+            } else {
+                ecs_set(world, entity, tag)
+            }
             ecs_emit_hook_event(type<T>, EcsHookEvent.ONADD, world, entity, tag)
         }
         return self
@@ -52,15 +59,33 @@ struct DnEntity {
         return self
     }
 
+    // Hook fires before removal so callbacks can still read the live component value.
+    // Zero-size tags can't be fetched via get_mut, so they emit a default value.
     [class_method]
-    def static remove(var cmp : auto(T)) : DnEntity {
+    def static remove(var cmp_type : type<auto(T)>) : DnEntity {
         if (world != null) {
-            ecs_emit_hook_event(type<T>, EcsHookEvent.ONREMOVE, world, entity, cmp)
-            ecs_remove(world, entity, ecs_component_register(world, type<T>))
+            static_if (typeinfo sizeof(cmp_type) == 0) {
+                let id = ecs_component_register(world, type<T>)
+                if (ecs_has(world, entity, id)) {
+                    var empty_val = default<T>
+                    ecs_emit_hook_event(type<T>, EcsHookEvent.ONREMOVE, world, entity, empty_val)
+                }
+                ecs_remove(world, entity, id)
+            } else {
+                let live = ecs_get_mut(world, entity, type<T>)
+                if (live != null) {
+                    unsafe {
+                        var live_val = *live
+                        ecs_emit_hook_event(type<T>, EcsHookEvent.ONREMOVE, world, entity, live_val)
+                    }
+                }
+                ecs_remove(world, entity, ecs_component_register(world, type<T>))
+            }
         }
         return self
     }
 
+    // reinterpret via void? strips the const propagated from self
     [class_method]
     def static get_mut(var cmp_type : type<auto(T)>) : T ? {
         if (world != null) {
@@ -71,49 +96,65 @@ struct DnEntity {
 
     [class_method]
     def static has_tag(tag_id : ecs_entity_t) : bool {
+        if (world == null) {
+            return false
+        }
         return ecs_has(world, entity, tag_id)
     }
 
     [class_method]
     def static remove_tag(tag_id : ecs_entity_t) : DnEntity {
-        ecs_remove(world, entity, tag_id)
+        if (world != null) {
+            ecs_remove(world, entity, tag_id)
+        }
         return self
     }
 
     [class_method]
     def static child_of(var parent : DnEntity ?) : DnEntity {
-        if (parent != null) {
-            let ChildOf = ecs_lookup(world, "ChildOf")
-            ecs_add_id(world, entity, ecs_make_pair(ChildOf, parent.entity))
+        if (world != null && parent != null) {
+            ecs_add_id(world, entity, ecs_make_pair(EcsChildOf, parent.entity))
         }
         return self
     }
 
     [class_method]
     def static set_name(name : string) : DnEntity {
-        ecs_set_name(world, entity, name)
+        if (world != null) {
+            ecs_set_name(world, entity, name)
+        }
         return self
     }
 
     [class_method]
     def static get_name() : string {
+        if (world == null) {
+            return ""
+        }
         return string(ecs_get_name(world, entity))
     }
 
     [class_method]
     def static enable(v : bool) : DnEntity {
-        ecs_enable(world, entity, v)
+        if (world != null) {
+            ecs_enable(world, entity, v)
+        }
         return self
     }
 
     [class_method]
     def static is_alive() : bool {
+        if (world == null) {
+            return false
+        }
         return ecs_is_alive(world, entity)
     }
 
     [class_method]
     def static destruct() {
-        ecs_delete(world, entity)
+        if (world != null) {
+            ecs_delete(world, entity)
+        }
     }
 
     [class_method]
@@ -175,8 +216,7 @@ struct DnWorld {
             var desc = ecs_entity_desc_t(name = name)
             e.entity = ecs_entity_init(world, addr(desc))
         }
-        let Prefab = ecs_lookup(world, "Prefab")
-        ecs_add(world, e.entity, Prefab)
+        ecs_add(world, e.entity, EcsPrefab)
         e.world = world
         return e
     }
@@ -202,9 +242,12 @@ struct DnWorld {
     }
 }
 
-def DnWorld(var world : ecs_world_t?) : DnWorld {
+// Accepts const world pointers (e.g. function parameters); strips const on copy.
+def DnWorld(world : ecs_world_t?) : DnWorld {
     var w : DnWorld
-    w.world = world
+    unsafe {
+        w.world = reinterpret<ecs_world_t?>(world)
+    }
     return w
 }
 
@@ -217,9 +260,17 @@ struct DnQuery {
     world : ecs_world_t?
 
     [class_method]
-    def static each(var q : DnQuery ?, blk : block<(entity : DnEntity?)>) : void {
-        if (q != null) {
-            q.each(blk)
+    def static each(blk : block<(var entity : DnEntity)>) : void {
+        if (world == null || query == null) {
+            return
+        }
+        var it = ecs_query_iter(world, query)
+        unsafe {
+            while (ecs_query_next_iter(it)) {
+                for (i in range(it.count)) {
+                    invoke(blk, DnEntity(world, it.entities[i]))
+                }
+            }
         }
     }
 
@@ -260,6 +311,61 @@ def dn_ecs_queries_fini(world : ecs_world_t?) : void {
         _dn_query_cache |> erase(k)
     }
     delete dead
+}
+
+// Duin-level systems registry used by the ecs_system macro (no flecs system
+// binding exists). Systems run in phase order via dn_ecs_progress.
+struct DnSystemEntry {
+    name : string
+    phase : int
+    world : ecs_world_t?
+    fn : lambda<(dt : double) : void>
+}
+
+var private _dn_systems : array<DnSystemEntry>
+
+// Idempotent by (world, name): re-registering is a no-op, so calling the
+// ecs_system macro every frame is safe (though once at startup is preferred).
+def dn_ecs_register_system(world : ecs_world_t?, name : string, phase : int, var fn : lambda<(dt : double) : void>) {
+    for (s in _dn_systems) {
+        if (s.world == world && s.name == name) {
+            return
+        }
+    }
+    var entry : DnSystemEntry
+    entry.name := name
+    entry.phase = phase
+    unsafe {
+        entry.world = reinterpret<ecs_world_t?>(world)
+    }
+    entry.fn = fn
+    var insert_at = length(_dn_systems)
+    for (idx, s in iter_range(_dn_systems), _dn_systems) {
+        if (s.phase > phase) {
+            insert_at = idx
+            break
+        }
+    }
+    _dn_systems |> emplace(entry, insert_at)
+}
+
+def dn_ecs_progress(world : ecs_world_t?, dt : double) {
+    for (s in _dn_systems) {
+        if (s.world == world) {
+            invoke(s.fn, dt)
+        }
+    }
+}
+
+// Unregisters all systems for a world. DnGameWorld.fini calls this.
+def dn_ecs_systems_fini(world : ecs_world_t?) {
+    var i = length(_dn_systems) - 1
+    while (i >= 0) {
+        if (_dn_systems[i].world == world) {
+            _dn_systems |> erase(i)
+        }
+        i--
+    }
 }
 
 struct DnQueryBuilder {
@@ -323,10 +429,6 @@ struct DnQueryBuilder {
         return self
     }
 
-    [class_method]
-    def static query_flags(flags : int) : DnQueryBuilder {
-        return self
-    }
 }
 
 def DnQueryBuilder(var world : ecs_world_t?) : DnQueryBuilder {

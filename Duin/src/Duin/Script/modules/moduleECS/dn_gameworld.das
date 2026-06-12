@@ -85,6 +85,7 @@ class DnGameWorld : DnGameWorld_Adapter {
     def static fini() : void {
         if (_handle != null) {
             dn_ecs_queries_fini(world())
+            dn_ecs_systems_fini(world())
             dn_destroy_gameworld_impl(_handle)
             _handle = null
         }
