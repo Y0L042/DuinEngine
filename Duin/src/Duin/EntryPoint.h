@@ -8,7 +8,7 @@
 #include "Duin/ECS/DnFlecs.h"
 #include <daScript/misc/crash_handler.h>
 
-extern duin::Application *duin::CreateApplication();
+extern duin::Application *duin::CreateApplication(int argc, char **argv);
 
 int main(int argc, char **argv)
 {
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     DN_CORE_WARN("Installed daslang crash handler.");
     DN_INFO("Installed daslang crash handler.");
 
-    auto app = duin::CreateApplication();
+    auto app = duin::CreateApplication(argc, argv);
     app->Run();
     delete app;
 
