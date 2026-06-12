@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('EntryPoint_8h_source.html',''); initRe
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;Duin/ECS/DnFlecs.h&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;daScript/misc/crash_handler.h&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">extern</span> <a class="code hl_class" href="classduin_1_1Application.html">duin::Application</a> *<a class="code hl_function" href="Application_8h.html#abec0b47c6d878bd45dfccbcc2719743a">duin::CreateApplication</a>();</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">extern</span> <a class="code hl_class" href="classduin_1_1Application.html">duin::Application</a> *<a class="code hl_function" href="Application_8h.html#abec0b47c6d878bd45dfccbcc2719743a">duin::CreateApplication</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv);</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('EntryPoint_8h_source.html',''); initRe
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    DN_CORE_WARN(<span class="stringliteral">&quot;Installed daslang crash handler.&quot;</span>);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    DN_INFO(<span class="stringliteral">&quot;Installed daslang crash handler.&quot;</span>);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">auto</span> app = <a class="code hl_function" href="Application_8h.html#abec0b47c6d878bd45dfccbcc2719743a">duin::CreateApplication</a>();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">auto</span> app = <a class="code hl_function" href="Application_8h.html#abec0b47c6d878bd45dfccbcc2719743a">duin::CreateApplication</a>(argc, argv);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    app-&gt;Run();</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">delete</span> app;</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
