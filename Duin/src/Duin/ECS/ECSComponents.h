@@ -277,8 +277,8 @@ struct Scale3D
 struct Transform3D
 {
   public:
-    Transform3D(Vector3 position = Vector3Zero(), Vector3 scale = Vector3One(),
-                Quaternion rotation = QuaternionIdentity())
+    Transform3D(
+        Vector3 position = Vector3Zero(), Vector3 scale = Vector3One(), Quaternion rotation = QuaternionIdentity())
         : position_(position), scale_(scale), rotation_(rotation) {};
 
     Transform3D(Vector3 position, Quaternion rotation)
@@ -333,6 +333,69 @@ struct Transform3D
         return rotation_;
     }
 
+    void _UpdateGlobalPositionCache(Vector3 newGlobalPosition)
+    {
+        globalPositionCache = newGlobalPosition;
+        globalPositionCacheDirtyFlag = false;
+    }
+
+    void _UpdateGlobalScaleCache(Vector3 newGlobalScale)
+    {
+        globalScaleCache = newGlobalScale;
+        globalScaleCacheDirtyFlag = false;
+    }
+
+    void _UpdateGlobalRotationCache(Quaternion newGlobalRotation)
+    {
+        globalRotationCache = newGlobalRotation;
+        globalRotationCacheDirtyFlag = false;
+    }
+
+    Vector3 _GetGlobalPositionCache()
+    {
+        return globalPositionCache;
+    }
+
+    Vector3 _GetGlobalScaleCache()
+    {
+        return globalScaleCache;
+    }
+
+    Quaternion _GetGlobalRotationCache()
+    {
+        return globalRotationCache;
+    }
+
+    void _SetGlobalPositionCacheDirtyFlag(bool isDirty)
+    {
+        globalPositionCacheDirtyFlag = isDirty;
+    }
+
+    bool _GetGlobalPositionCacheDirtyFlag() const
+    {
+        return globalPositionCacheDirtyFlag;
+    }
+
+    void _SetGlobalScaleCacheDirtyFlag(bool isDirty)
+    {
+        globalScaleCacheDirtyFlag = isDirty;
+    }
+
+    bool _GetGlobalScaleCacheDirtyFlag() const
+    {
+        return globalScaleCacheDirtyFlag;
+    }
+
+    void _SetGlobalRotationCacheDirtyFlag(bool isDirty)
+    {
+        globalRotationCacheDirtyFlag = isDirty;
+    }
+
+    bool _GetGlobalRotationCacheDirtyFlag() const
+    {
+        return globalRotationCacheDirtyFlag;
+    }
+
     struct Transform3DImpl
     {
         Vector3 pos;
@@ -360,25 +423,6 @@ struct Transform3D
     bool globalPositionCacheDirtyFlag = true;
     bool globalScaleCacheDirtyFlag = true;
     bool globalRotationCacheDirtyFlag = true;
-
-    void UpdateGlobalPositionCache(Vector3 newGlobalPosition)
-    {
-        globalPositionCache = newGlobalPosition;
-        globalPositionCacheDirtyFlag = false;
-    }
-
-    void UpdateGlobalScaleCache(Vector3 newGlobalScale)
-    {
-        globalScaleCache = newGlobalScale;
-        globalScaleCacheDirtyFlag = false;
-    }
-
-    void UpdateGlobalRotationCache(Quaternion newGlobalRotation)
-    {
-        globalRotationCache = newGlobalRotation;
-        globalRotationCacheDirtyFlag = false;
-    }
-
 };
 
 /** @} */

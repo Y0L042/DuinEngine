@@ -34,7 +34,6 @@
 #include "ECSComponents.h"
 #include "ECSPhysics.h"
 #include "ECSPrefabs.h"
-#include "ECSObservers.h"
 
 namespace duin
 {

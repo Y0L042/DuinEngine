@@ -1,128 +1,7 @@
 #include "dnpch.h"
-#include "GameWorld.h"
-#include "ComponentInspector.h"
-#include "Duin/Core/Application.h"
-#include "Duin/Core/Utils/SerialisationManager.h"
-#include "Duin/Render/Camera.h"
-#include "Duin/Render/Renderer.h"
-#include "PrefabRegistry.h"
-#include "Duin/Core/Debug/DNLog.h"
-#include <functional>
+#include "Transform.h"
 
-namespace duin
-{
-
-/*----------------------------------------------------------------------------*/
-//  GameWorld Functions
-/*----------------------------------------------------------------------------*/
-GameWorld::GameWorld()
-{
-}
-
-GameWorld::GameWorld(bool connectSignals)
-{
-    Initialize(connectSignals);
-}
-
-GameWorld::~GameWorld()
-{
-}
-
-void GameWorld::Initialize(bool connectSignals)
-{
-    // Disable for now. Decide if it should happen here, or on daslang side
-#if 0
-    ECSTag::RegisterTags(*this);
-    DN_CORE_INFO("Tags registered.");
-    ECSComponent::RegisterComponents(*this);
-    DN_CORE_INFO("Components registered.");
-    ECSPrefab::RegisterPrefabs(*this);
-    DN_CORE_INFO("Prefabs registered.");
-    ECSObserver::RegisterObservers(*this);
-    DN_CORE_INFO("Observers registered.");
-#endif
-
-    if (connectSignals)
-    {
-        connPostUpdate_ = QueuePostUpdateCallback([this](double delta) { PostUpdateQueryExecution(delta); });
-        connPostPhysicsUpdate_ =
-            QueuePostPhysicsUpdateCallback([this](double delta) { PostPhysicsUpdateQueryExecution(delta); });
-        connPostDraw_ = QueuePostDrawCallback([this]() { PostDrawQueryExecution(); });
-        connPostDrawUI_ = QueuePostDrawUICallback([this]() { PostDrawUIQueryExecution(); });
-    }
-}
-
-void GameWorld::ActivateCameraEntity(duin::Entity entity)
-{
-    if (!entity.IsValid())
-    {
-        DN_CORE_FATAL("Entity invalid!");
-        return;
-    }
-    else if (entity.Has<Camera>())
-    {
-        this->DeferBegin();
-        this->GetFlecsWorld().each([](flecs::entity e, ECSTag::ActiveCamera) { e.remove<ECSTag::ActiveCamera>(); });
-        entity.Add<ECSTag::ActiveCamera>();
-        this->DeferEnd();
-    }
-}
-
-void GameWorld::PostUpdateQueryExecution(double delta)
-{
-}
-
-void GameWorld::PostPhysicsUpdateQueryExecution(double delta)
-{
-
-    Progress(); // TODO testing for remote viewing
-}
-
-void GameWorld::PostDrawQueryExecution()
-{
-
-}
-
-void GameWorld::PostDrawUIQueryExecution()
-{
-}
-
-void GameWorld::Clear()
-{
-    // Clear the query cache before resetting the world — queries hold pointers
-    // into the old ecs_world_t* and must not outlive it.
-    ClearQueryCache();
-
-    this->GetFlecsWorld().reset();
-}
-
-void GameWorld::Reset(bool connectSignals)
-{
-    Clear();
-    Initialize(connectSignals);
-}
-
-void GameWorld::InitializeRemoteExplorer()
-{
-    // Remote viewing
-     GetFlecsWorld().import <flecs::stats>();
-     GetFlecsWorld().set<flecs::Rest>({});
-    //while (GetFlecsWorld().progress())
-    //{
-    //}
-
-    //GetFlecsWorld()
-    //    .app()
-    //    // Optional, gather statistics for explorer
-    //    .enable_stats()
-    //    .enable_rest()
-    //    .run();
-}
-
-/*----------------------------------------------------------------------
- * Global-space transform helpers
-----------------------------------------------------------------------*/
-void GameWorld::SetGlobalTransform(duin::Entity e, ECSComponent::Transform3D tx)
+void duin::transform::SetGlobalTransform(duin::Entity e, ECSComponent::Transform3D tx)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -164,7 +43,7 @@ void GameWorld::SetGlobalTransform(duin::Entity e, ECSComponent::Transform3D tx)
     comp->_UpdateGlobalRotationCache(tx.GetRotation());
 }
 
-ECSComponent::Transform3D GameWorld::GetGlobalTransform(duin::Entity e)
+duin::ECSComponent::Transform3D duin::transform::GetGlobalTransform(duin::Entity e)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -205,7 +84,7 @@ ECSComponent::Transform3D GameWorld::GetGlobalTransform(duin::Entity e)
     }
 }
 
-void GameWorld::SetGlobalPosition(duin::Entity e, Vector3 position)
+void duin::transform::SetGlobalPosition(duin::Entity e, Vector3 position)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -235,7 +114,7 @@ void GameWorld::SetGlobalPosition(duin::Entity e, Vector3 position)
     tx->_UpdateGlobalPositionCache(position);
 }
 
-Vector3 GameWorld::GetGlobalPosition(duin::Entity e)
+duin::Vector3 duin::transform::GetGlobalPosition(duin::Entity e)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -248,7 +127,7 @@ Vector3 GameWorld::GetGlobalPosition(duin::Entity e)
         return Vector3Zero();
     }
 
-    if (tx->globalPositionCacheDirtyFlag)
+    if (tx->_GetGlobalPositionCacheDirtyFlag())
     {
         duin::Entity parent = e.Parent();
         if (!parent.IsValid() || !parent.Has<ECSComponent::Transform3D>())
@@ -267,10 +146,10 @@ Vector3 GameWorld::GetGlobalPosition(duin::Entity e)
         }
     }
 
-    return tx->globalPositionCache;
+    return tx->_GetGlobalPositionCache();
 }
 
-void GameWorld::SetGlobalScale(duin::Entity e, Vector3 scale)
+void duin::transform::SetGlobalScale(duin::Entity e, Vector3 scale)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -295,7 +174,7 @@ void GameWorld::SetGlobalScale(duin::Entity e, Vector3 scale)
     tx->_UpdateGlobalScaleCache(scale);
 }
 
-Vector3 GameWorld::GetGlobalScale(duin::Entity e)
+duin::Vector3 duin::transform::GetGlobalScale(duin::Entity e)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -307,7 +186,7 @@ Vector3 GameWorld::GetGlobalScale(duin::Entity e)
         return Vector3One();
     }
 
-    if (tx->globalScaleCacheDirtyFlag)
+    if (tx->_GetGlobalScaleCacheDirtyFlag())
     {
         duin::Entity parent = e.Parent();
         if (!parent.IsValid() || !parent.Has<ECSComponent::Transform3D>())
@@ -322,10 +201,10 @@ Vector3 GameWorld::GetGlobalScale(duin::Entity e)
         }
     }
 
-    return tx->globalScaleCache;
+    return tx->_GetGlobalScaleCache();
 }
 
-void GameWorld::SetGlobalRotation(duin::Entity e, Quaternion rotation)
+void duin::transform::SetGlobalRotation(duin::Entity e, Quaternion rotation)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -353,7 +232,7 @@ void GameWorld::SetGlobalRotation(duin::Entity e, Quaternion rotation)
     tx->_UpdateGlobalRotationCache(rotation);
 }
 
-Quaternion GameWorld::GetGlobalRotation(duin::Entity e)
+duin::Quaternion duin::transform::GetGlobalRotation(duin::Entity e)
 {
     if (!e.IsValid() || !e.Has<ECSComponent::Transform3D>())
     {
@@ -366,7 +245,7 @@ Quaternion GameWorld::GetGlobalRotation(duin::Entity e)
         return QuaternionIdentity();
     }
 
-    if (tx->globalRotationCacheDirtyFlag)
+    if (tx->_GetGlobalRotationCacheDirtyFlag())
     {
         duin::Entity parent = e.Parent();
         if (!parent.IsValid() || !parent.Has<ECSComponent::Transform3D>())
@@ -380,7 +259,5 @@ Quaternion GameWorld::GetGlobalRotation(duin::Entity e)
             tx->_UpdateGlobalRotationCache(globalRot);
         }
     }
-    return tx->globalRotationCache;
+    return tx->_GetGlobalRotationCache();
 }
-
-} // namespace duin
