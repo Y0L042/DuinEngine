@@ -20,7 +20,7 @@ struct Velocity2D {
 
 struct Transform3D {
     pos : float3
-    rot : float3
+    rot : float4
     scale : float3
 }
 

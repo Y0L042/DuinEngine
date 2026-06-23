@@ -12,7 +12,8 @@ require daslib/strings_boost
 require daslib/ast_block_to_loop
 require daslib/macro_boost
 
-require dn_ecs
+require flecs public
+require dn_ecs public
 
 /*
     ecs_query(world) $(eid : ecs_entity_t; vel : Velocity3D; var tx : Transform3D) {
@@ -147,7 +148,8 @@ class DnEcsQueryMacro : AstCallMacro {
 
     def implement(var expr : ExprCallMacro?, block_arg_idx : int, key_arg_idx : int, find_mode : bool) : ExpressionPtr {
         for (arg in expr.arguments) {
-            macro_verify(!arg._type.isAutoOrAlias, compiling_program(), expr.at, "ecs_query: argument types are not fully inferred")
+            macro_verify(arg._type != null, compiling_program(), expr.at, "ecs_query: struct/type does not exist. Ensure that all component types are correct; no auto or alias (check spelling and such too) ")
+            macro_verify(!arg._type.isAutoOrAlias, compiling_program(), expr.at, "ecs_query: argument types are not fully inferred ")
         }
         macro_verify(expr.arguments[block_arg_idx] is ExprMakeBlock, compiling_program(), expr.at, "ecs_query: expecting $(block_with_arguments)")
 

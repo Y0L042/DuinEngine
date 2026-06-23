@@ -85,6 +85,15 @@ struct DnEntity {
         return self
     }
 
+    [class_method]
+    def static get(var t : type<auto(T)>) : T const {
+        unsafe { 
+            let cmp : T? = reinterpret<T?>(ecs_get(world, entity, type<T>))
+            let return_cmp = cmp != null ? *cmp : T()
+            return return_cmp
+        }
+    }
+
     // reinterpret via void? strips the const propagated from self
     [class_method]
     def static get_mut(var cmp_type : type<auto(T)>) : T ? {
@@ -93,6 +102,7 @@ struct DnEntity {
         }
         return null
     }
+
 
     [class_method]
     def static has_tag(tag_id : ecs_entity_t) : bool {
@@ -111,8 +121,8 @@ struct DnEntity {
     }
 
     [class_method]
-    def static child_of(var parent : DnEntity ?) : DnEntity {
-        if (world != null && parent != null) {
+    def static child_of(var parent : DnEntity) : DnEntity {
+        if (world != null) {
             ecs_add_id(world, entity, ecs_make_pair(EcsChildOf, parent.entity))
         }
         return self
@@ -251,8 +261,8 @@ def DnWorld(world : ecs_world_t?) : DnWorld {
     return w
 }
 
-def dn_register_component(var dn_world : DnWorld, var cmp_type : type<auto(T)>) : void {
-    ecs_component_register(dn_world.world, type<T>)
+def dn_register_component(var dn_world : DnWorld, var cmp_type : type<auto(T)>) : ecs_entity_t {
+    return ecs_component_register(dn_world.world, type<T>)
 }
 
 struct DnQuery {
