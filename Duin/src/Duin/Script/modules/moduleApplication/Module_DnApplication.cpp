@@ -125,6 +125,15 @@ class Module_DnApplication : public das::Module
             *this, lib, "dn_set_framerate", das::SideEffects::modifyExternal, "duin::SetFramerate")
             ->args({"framerate"});
 
+        // Quit control (used by headless test scripts to terminate the app).
+        // The setter is wrapped by a defaulted dn_set_game_should_quit() in
+        // dn_application.das so scripts can call it with no argument.
+        addExtern<DAS_BIND_FUN(duin::GetGameShouldQuit)>(
+            *this, lib, "dn_get_game_should_quit", das::SideEffects::accessGlobal, "duin::GetGameShouldQuit");
+        addExtern<DAS_BIND_FUN(duin::SetGameShouldQuit)>(
+            *this, lib, "dn_set_game_should_quit_impl", das::SideEffects::modifyExternal, "duin::SetGameShouldQuit")
+            ->args({"shouldQuit"});
+
         // Draw FPS overlays
         addExtern<DAS_BIND_FUN(duin::DrawPhysicsFPS)>(
             *this, lib, "dn_draw_physics_fps", das::SideEffects::modifyExternal, "duin::DrawPhysicsFPS")

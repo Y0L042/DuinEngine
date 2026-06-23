@@ -16,3 +16,10 @@ def dn_application_add_child(var child : auto?) : auto? {
     }
     return null
 }
+
+// Wrapper so the quit flag can be set with no argument (defaults to true),
+// mirroring the C++ SetGameShouldQuit(bool = true). Forwards to the raw extern
+// dn_set_game_should_quit_impl, which takes the bool explicitly.
+def dn_set_game_should_quit(shouldQuit : bool = true) : void {
+    dn_set_game_should_quit_impl(shouldQuit)
+}
