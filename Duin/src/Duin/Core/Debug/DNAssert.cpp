@@ -76,6 +76,26 @@ void duin::SetAssertContextCallback(std::function<std::string()> callback)
     assertContextCallback = std::move(callback);
 }
 
+void duin::ReportAssert(const char *expr, const char *msg, const char *file, int line)
+{
+    using namespace doctest;
+
+    std::cout << Color::LightGrey << (file ? skipPathFromFilename(file) : "?") << "(" << line << "): ";
+    std::cout << Color::Red << "ASSERT FAILED: ";
+    std::cout << Color::Cyan << "( " << (expr ? expr : "") << " )";
+    if (msg && msg[0])
+        std::cout << Color::None << " — " << msg;
+
+    if (assertContextCallback)
+    {
+        std::string extra = assertContextCallback();
+        if (!extra.empty())
+            std::cout << "\n[Script callstack]\n" << extra;
+    }
+
+    std::cout << Color::None << std::endl;
+}
+
 void duin::OnCrash(const char *message)
 {
     std::cout << doctest::Color::Red << "[CRASH] " << (message ? message : "(no message)") << "\n";
