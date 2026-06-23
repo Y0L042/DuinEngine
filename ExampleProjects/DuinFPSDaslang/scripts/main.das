@@ -93,6 +93,15 @@ def game_physics_update(delta : double) {
             player.enable_physics_update(false)
         }
     }
+
+    system_set_input_velocity(game_world.ecs_world(), delta)
+    system_gravity(game_world.ecs_world(), delta)
+    system_ground_friction(game_world.ecs_world(), delta)
+    system_air_friction(game_world.ecs_world(), delta)
+    system_resolve_external_velocities(game_world.ecs_world(), delta)
+
+    system_characterbody_move(game_world.ecs_world(), delta)
+    system_update_position(game_world.ecs_world(), delta)
 }
 
 [export]

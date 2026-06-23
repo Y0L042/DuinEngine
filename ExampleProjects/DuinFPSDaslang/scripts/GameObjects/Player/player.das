@@ -29,11 +29,14 @@ class Player : DnGameObject {
     position : float3 = float3(5.0, 2.0, 5.0)
 
 
+    observer : ecs_observer_t
     game_world : DnGameWorld?
     player_entity : DnEntity = DnEntity()
-    characterbody : DnCharacterBody?
+    camera_entity : DnEntity = DnEntity()
+
     camera : DnCamera?
-    observer : ecs_observer_t
+    characterbody : DnCharacterBody?
+
 
     def Player(var game_world_ : DnGameWorld?) : void {
         super()
@@ -43,10 +46,10 @@ class Player : DnGameObject {
         sm = new StateMachine()
         sm.change_state(new Player_OnGround_Idle())
 
-
         assume world = game_world.ecs_world()
 
         player_entity = game_world.create_entity("Player")
+        camera_entity = game_world.create_entity("PlayerCamera")
 
         camera = dn_camera_init(new DnCamera())
         camera.set_impl(
@@ -68,7 +71,6 @@ class Player : DnGameObject {
     def override _init() : void {
         dn_info("Player init!")
 
-        // ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ capture(copy(characterbody), copy(position)) (var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
         ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ (var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
             dn_info("Creating CharacterBody {cb_cmp}")
             characterbody = new DnCharacterBody()
@@ -84,13 +86,9 @@ class Player : DnGameObject {
                 1.8,
                 0.25
             )
-            dn_info("[bisect] create_capsule ok")
             characterbody.initialize(position)
-            dn_info("[bisect] initialize ok")
             var entity = DnEntity(world=world, entity=e)
-            dn_info("[bisect] DnEntity wrap ok")
             entity.set(CharacterBodyHandle(cb=characterbody))
-            dn_info("[bisect] set CharacterBodyHandle ok")
         })
 
         ecs_add_hook(type<MoveSpeed>, EcsHookEvent.ONSET, @ (var world : ecs_world_t?, var e : ecs_entity_t, cmp : MoveSpeed) : void {
@@ -98,12 +96,17 @@ class Player : DnGameObject {
         })
 
         player_entity.add(IsPlayer())
-        player_entity.set(PlayerMoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
-        player_entity.set(MoveSpeed(walk = 7.0f, sprint = 12.0f))
+        player_entity.set(MoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
+        player_entity.set(MoveSpeed(walk = 700.0f, sprint = 1200.0f))
         player_entity.set(CameraYaw(radians = 0.0f))
         player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
         player_entity.set(CharacterBodyDesc())
+        player_entity.set(Velocity3D())
         player_entity.set(GravityScale(value=-9.81f))
+
+        camera_entity.child_of(player_entity)
+        camera_entity.set(Transform3D(pos=float3(0f, 2f, 0f), rot=float4(1f, 0f, 0f, 0f), scale=float3(1f, 1f, 1f)))
+ 
     }
 
     def override _ready() : void {
@@ -120,14 +123,15 @@ class Player : DnGameObject {
         }
         system_player_input(game_world.ecs_world(), camera)
  
-        var input : PlayerMoveInput? = player_entity.get_mut(type<PlayerMoveInput>)
+        var input : MoveInput? = player_entity.get_mut(type<MoveInput>)
         if (input != null && characterbody != null) {
-            characterbody.move(input.dir, delta)
+            // characterbody.move(input.dir, delta)
         }
 
-        position = characterbody != null ? characterbody.get_position() : position
+        // position = characterbody != null ? characterbody.get_position() : position
         // position = characterbody.get_position()
-        camera.move_to(position + v_offset)
+        var cam_pos = camera_entity.get(Transform3D()).pos
+        // camera.move_to(position + v_offset)
         // dn_info("PLAYER _physics_update {double(get_time_usec(ref)) / 1000d}")
     }
 

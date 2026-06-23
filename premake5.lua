@@ -10,7 +10,7 @@ end
 
 workspace "Duin"
     architecture "x64"
-    startproject "DuinFPS"
+    startproject "DuinFPSDaslang"
 
     configurations { "Debug", "DebugCoverage", "Release", "Dist", "Archive" }
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
