@@ -630,5 +630,314 @@ TEST_SUITE("Query")
 
         CHECK(validDepthRelations == maxDepth); // All 5 parent-child relationships are valid
     }
+
+    // Multi-type With<A, B>() should mean "has A AND has B" (two filter terms),
+    // matching the behaviour of chaining .With<A>().With<B>(). It must NOT build a
+    // relationship pair term (A, B).
+    TEST_CASE("Query With<A, B>() filters entities having both tags")
+    {
+        duin::World w;
+        struct Position
+        {
+            float x = 0.0f;
+        };
+        struct Enemy
+        {
+        };
+        struct Flying
+        {
+        };
+        w.Component<Position>();
+        w.Component<Enemy>();
+        w.Component<Flying>();
+
+        duin::Entity ground = w.Entity("GroundEnemy");
+        duin::Entity flyer = w.Entity("FlyingEnemy");
+        duin::Entity bird = w.Entity("Bird");
+
+        ground.Set<Position>({0.0f}).Add<Enemy>();
+        flyer.Set<Position>({10.0f}).Add<Enemy>().Add<Flying>();
+        bird.Set<Position>({20.0f}).Add<Flying>();
+
+        // Single variadic call with two types.
+        auto q = w.QueryBuilder<Position>().With<Enemy, Flying>().Build();
+
+        int count = 0;
+        q.Each([&](duin::Entity entity, Position &pos) {
+            count++;
+            CHECK(entity.GetName() == "FlyingEnemy");
+        });
+
+        CHECK(count == 1); // Only flyer has both Enemy and Flying
+    }
+
+    // The chained form is the established equivalent and must produce the same
+    // result as the multi-type variadic form above.
+    TEST_CASE("Query With<A>().With<B>() chain matches the same entities")
+    {
+        duin::World w;
+        struct Position
+        {
+            float x = 0.0f;
+        };
+        struct Enemy
+        {
+        };
+        struct Flying
+        {
+        };
+        w.Component<Position>();
+        w.Component<Enemy>();
+        w.Component<Flying>();
+
+        duin::Entity ground = w.Entity("GroundEnemy");
+        duin::Entity flyer = w.Entity("FlyingEnemy");
+        duin::Entity bird = w.Entity("Bird");
+
+        ground.Set<Position>({0.0f}).Add<Enemy>();
+        flyer.Set<Position>({10.0f}).Add<Enemy>().Add<Flying>();
+        bird.Set<Position>({20.0f}).Add<Flying>();
+
+        auto q = w.QueryBuilder<Position>().With<Enemy>().With<Flying>().Build();
+
+        int count = 0;
+        q.Each([&](duin::Entity entity, Position &pos) {
+            count++;
+            CHECK(entity.GetName() == "FlyingEnemy");
+        });
+
+        CHECK(count == 1);
+    }
+
+    // Multi-type tag-only With<A, B>() with no component terms should match
+    // entities having both tags.
+    TEST_CASE("Query tag-only With<A, B>() with no components")
+    {
+        duin::World w;
+        struct Active
+        {
+        };
+        struct Visible
+        {
+        };
+        w.Component<Active>();
+        w.Component<Visible>();
+
+        duin::Entity activeVisible = w.Entity("ActiveVisible");
+        duin::Entity activeOnly = w.Entity("ActiveOnly");
+        duin::Entity visibleOnly = w.Entity("VisibleOnly");
+
+        activeVisible.Add<Active>().Add<Visible>();
+        activeOnly.Add<Active>();
+        visibleOnly.Add<Visible>();
+
+        auto q = w.QueryBuilder<>().With<Active, Visible>().Build();
+
+        int count = 0;
+        q.Each([&](duin::Entity entity) {
+            count++;
+            CHECK(entity.GetName() == "ActiveVisible");
+        });
+
+        CHECK(count == 1);
+    }
+
+    // Multi-type Without<A, B>() should exclude entities having either tag,
+    // matching .Without<A>().Without<B>().
+    TEST_CASE("Query Without<A, B>() excludes entities having either tag")
+    {
+        duin::World w;
+        struct Health
+        {
+            int hp = 100;
+        };
+        struct Dead
+        {
+        };
+        struct Stunned
+        {
+        };
+        w.Component<Health>();
+        w.Component<Dead>();
+        w.Component<Stunned>();
+
+        duin::Entity healthy = w.Entity("Healthy");
+        duin::Entity dead = w.Entity("Dead");
+        duin::Entity stunned = w.Entity("Stunned");
+
+        healthy.Set<Health>({100});
+        dead.Set<Health>({0}).Add<Dead>();
+        stunned.Set<Health>({50}).Add<Stunned>();
+
+        auto q = w.QueryBuilder<Health>().Without<Dead, Stunned>().Build();
+
+        int count = 0;
+        q.Each([&](duin::Entity entity, Health &health) {
+            count++;
+            CHECK(entity.GetName() == "Healthy");
+        });
+
+        CHECK(count == 1); // Only healthy has neither Dead nor Stunned
+    }
+
+    // ======================================================================
+    // Query aggregate accessors: Count, IsTrue, First
+    // ======================================================================
+
+    TEST_CASE("Query Count and IsTrue reflect matches")
+    {
+        duin::World w;
+        struct Health
+        {
+            int hp = 0;
+        };
+        struct Tag
+        {
+        };
+        w.Component<Health>();
+        w.Component<Tag>();
+
+        w.Entity("A").Set<Health>({1});
+        w.Entity("B").Set<Health>({2});
+
+        auto present = w.QueryBuilder<Health>().Build();
+        CHECK(present.Count() == 2);
+        CHECK(present.IsTrue());
+
+        auto absent = w.QueryBuilder<Health>().With<Tag>().Build();
+        CHECK(absent.Count() == 0);
+        CHECK(absent.IsTrue() == false);
+    }
+
+    TEST_CASE("Query First returns a matching entity")
+    {
+        duin::World w;
+        struct Only
+        {
+            int v = 0;
+        };
+        w.Component<Only>();
+        duin::Entity e = w.Entity("Solo");
+        e.Set<Only>({99});
+
+        auto q = w.QueryBuilder<Only>().Build();
+        flecs::entity first = q.First();
+        CHECK(static_cast<bool>(first));
+        CHECK(first.id() == e.GetID());
+    }
+
+    // ======================================================================
+    // Default-constructed / invalid query safety
+    // ======================================================================
+
+    TEST_CASE("Default-constructed query is invalid and safe")
+    {
+        duin::Query<> q;
+        CHECK(q.IsValid() == false);
+        CHECK(q.Count() == 0);
+        CHECK(q.IsTrue() == false);
+        // Each on an invalid query must be a no-op, not a crash.
+        int count = 0;
+        q.Each([&](duin::Entity) { count++; });
+        CHECK(count == 0);
+    }
+
+    // ======================================================================
+    // Optional (pointer) component term
+    // ======================================================================
+
+    TEST_CASE("Query with optional component matches presence and absence")
+    {
+        duin::World w;
+        struct Position
+        {
+            float x = 0.0f;
+        };
+        struct Velocity
+        {
+            float x = 0.0f;
+        };
+        w.Component<Position>();
+        w.Component<Velocity>();
+
+        w.Entity("Moving").Set<Position>({0.0f}).Set<Velocity>({3.0f});
+        w.Entity("Still").Set<Position>({0.0f});
+
+        auto q = w.QueryBuilder<Position, const Velocity *>().Build();
+
+        int matched = 0;
+        int withVel = 0;
+        q.Each([&](duin::Entity, Position &, const Velocity *v) {
+            matched++;
+            if (v)
+                withVel++;
+        });
+        CHECK(matched == 2);
+        CHECK(withVel == 1);
+    }
+
+    // ======================================================================
+    // Query Run (per-table) callback
+    // ======================================================================
+
+    TEST_CASE("Query Run iterates matching tables")
+    {
+        duin::World w;
+        struct Marker
+        {
+            int v = 0;
+        };
+        w.Component<Marker>();
+        w.Entity("E1").Set<Marker>({1});
+        w.Entity("E2").Set<Marker>({2});
+
+        int total = 0;
+        auto q = w.QueryBuilder<Marker>().Build();
+        q.Run([&](duin::Iter &it) {
+            while (it.Next())
+            {
+                total += static_cast<int>(it.Count());
+            }
+        });
+        CHECK(total == 2);
+    }
+
+    // ======================================================================
+    // Builder move-safety: many queries built from one world stay independent
+    // ======================================================================
+
+    TEST_CASE("Multiple queries from the same world keep distinct filters")
+    {
+        duin::World w;
+        struct Health
+        {
+            int hp = 0;
+        };
+        struct Enemy
+        {
+        };
+        struct Ally
+        {
+        };
+        w.Component<Health>();
+        w.Component<Enemy>();
+        w.Component<Ally>();
+
+        w.Entity("Enemy").Set<Health>({1}).Add<Enemy>();
+        w.Entity("Ally").Set<Health>({1}).Add<Ally>();
+
+        auto enemyQ = w.QueryBuilder<Health>().With<Enemy>().Build();
+        auto allyQ = w.QueryBuilder<Health>().With<Ally>().Build();
+
+        CHECK(enemyQ.Count() == 1);
+        CHECK(allyQ.Count() == 1);
+
+        int enemySeen = 0;
+        enemyQ.Each([&](duin::Entity e, Health &) {
+            enemySeen++;
+            CHECK(e.GetName() == "Enemy");
+        });
+        CHECK(enemySeen == 1);
+    }
 }
 } // namespace TestQuery

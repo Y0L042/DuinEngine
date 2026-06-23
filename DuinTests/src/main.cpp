@@ -44,7 +44,9 @@ int main(int argc, char **argv)
     int res = 0;
 
     //RunCtx runCtx = RunCtx::ALL;
-     RunCtx runCtx = RunCtx::DAS;
+    //RunCtx runCtx = RunCtx::DAS;
+     RunCtx runCtx = RunCtx::CPP;
+
 
     if (argc > 1)
     {

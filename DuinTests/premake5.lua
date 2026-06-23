@@ -72,13 +72,14 @@ filter {}
 
 filter "system:windows"
 buildoptions { "/openmp" }
-cppdialect "C++20"
+cppdialect "C++23"
 
 filter "action:vs*"
 buildoptions {
     "/utf-8",
     '/Zc:__cplusplus',
     '/Zc:preprocessor',
+    '/bigobj'
 }
 multiprocessorcompile "On"
 filter {}
