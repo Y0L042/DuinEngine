@@ -89,6 +89,10 @@ void SetImGuiINIPath(const std::string &newPath);
 /** @brief Returns the underlying SDL window handle. */
 ::SDL_Window *GetSDLWindow();
 
+bool GetGameShouldQuit();
+void SetGameShouldQuit(bool shouldQuit = true);
+void PushQuitEvent();
+
 /**
  * @name Post-Callback Registration
  * Register callbacks to be invoked after engine lifecycle stages.
@@ -146,6 +150,8 @@ std::shared_ptr<ScopedConnection> QueueExitCallback(std::function<void()>);
  * }
  * @endcode
  */
+class EcsPipeline;
+class World;
 class DAPI Application
 {
   public:
@@ -252,6 +258,8 @@ class DAPI Application
     void AddChildObject(std::shared_ptr<GameObject> child);
     /** @brief Removes a child GameObject from the root. */
     void RemoveChildObject(std::shared_ptr<GameObject> child);
+
+    std::shared_ptr<EcsPipeline> CreateEcsPipeline(World *world);
 
   private:
 #ifdef DN_HEADLESS

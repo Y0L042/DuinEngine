@@ -149,7 +149,7 @@ void duin::Application::ProcessEvents()
             ::ImGui_ImplSDL3_ProcessEvent(&e);
     }
     duin::Input::UpdateMouseFrameDelta();
-    gameShouldQuit = eventHandler.IsCloseRequested();
+    gameShouldQuit = gameShouldQuit || eventHandler.IsCloseRequested();
 }
 
 void duin::Application::RunRender()

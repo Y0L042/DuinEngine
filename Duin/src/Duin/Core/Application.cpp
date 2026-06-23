@@ -7,6 +7,8 @@
 #include "Duin/Core/Events/EngineInput.h"
 #include "Duin/Core/Events/Input.h"
 #include "Duin/Render/Renderer.h"
+#include "Duin/ECS/Pipeline.h"
+#include "Duin/ECS/DECS/World.h"
 
 #define SDL_MAIN_HANDLED
 
@@ -308,6 +310,21 @@ SDL_Window *duin::GetSDLWindow()
     return sdlWindow;
 }
 
+bool duin::GetGameShouldQuit()
+{
+    return gameShouldQuit;
+}
+
+void duin::SetGameShouldQuit(bool shouldQuit)
+{
+    gameShouldQuit = shouldQuit;
+}
+
+void duin::PushQuitEvent()
+{
+    // TODO allow closing application through event system
+}
+
 // --- ImGui ---
 
 void duin::SetImGuiINIPath(const std::string &newPath)
@@ -454,7 +471,7 @@ void duin::Application::RunPhysics(double &physicsCurrentTime, double &physicsPr
             return; // TODO Debugging, refactor
 
         PhysicsStep(physicsDeltaTime);
-        
+
     } // End of Physics
 }
 
@@ -617,6 +634,25 @@ void duin::Application::AddChildObject(std::shared_ptr<GameObject> child)
 void duin::Application::RemoveChildObject(std::shared_ptr<GameObject> child)
 {
     rootGameObject->RemoveChildObject(child);
+}
+
+std::shared_ptr<duin::EcsPipeline> duin::Application::CreateEcsPipeline(World *world)
+{
+    std::shared_ptr<EcsPipeline> pipeline = std::make_shared<EcsPipeline>(world);
+
+    pipeline->onReadyConnection = QueuePostReadyCallback([pipeline]() { pipeline->RunStep(ExecutionStep::READY); });
+    pipeline->onEventConnection =
+        QueuePostInputCallback([pipeline](Event) { pipeline->RunStep(ExecutionStep::ONEVENT); });
+    pipeline->onUpdateConnection = QueuePostUpdateCallback(
+        [pipeline](double delta) { pipeline->RunStep(ExecutionStep::UPDATE, static_cast<float>(delta)); });
+    pipeline->onPhysicsUpdateConnection = QueuePostPhysicsUpdateCallback(
+        [pipeline](double delta) { pipeline->RunStep(ExecutionStep::PHYSICSUPDATE, static_cast<float>(delta)); });
+    pipeline->onDrawConnection = QueuePostDrawCallback([pipeline]() { pipeline->RunStep(ExecutionStep::DRAW); });
+    pipeline->onDrawUIConnection = QueuePostDrawUICallback([pipeline]() { pipeline->RunStep(ExecutionStep::DRAWUI); });
+    pipeline->onDebugConnection = QueuePostDebugCallback([pipeline]() { pipeline->RunStep(ExecutionStep::DEBUG); });
+    pipeline->onExitConnection = QueueExitCallback([pipeline]() { pipeline->RunStep(ExecutionStep::EXIT); });
+
+    return pipeline;
 }
 
 // ============================================================
