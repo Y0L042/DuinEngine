@@ -146,6 +146,9 @@ class DaemonClient : HvWebSocketClient {
 var g_daemon : DaemonClient?
 var g_project_path : string
 var g_ws_url : string
+// Gate for the "no running daemon" notice so it fires once per disconnect episode instead of
+// on every save/change. Cleared on a successful connect so a later disconnect can warn again.
+var g_warned_no_daemon = false
 
 // Debounce state for textDocument/didChange. The latest unsaved buffer content is stored
 // here and flushed (compiled) on the next non-didChange message so rapid keystroke bursts
@@ -164,11 +167,26 @@ def read_ddh_wsurl(project_path : string) : string {
 }
 
 def connect_daemon(project_path : string) : bool {
+    // Always re-read the .ddh: the wsUrl/port changes every time the daemon respawns
+    // (OS-assigned free port). Caching the old url across reconnects would dial a dead port.
     g_ws_url = read_ddh_wsurl(project_path)
-    if (empty(g_ws_url)) return false
+    if (empty(g_ws_url)) {
+        plog("connect_daemon: no live .ddh wsUrl for {project_path}")
+        return false
+    }
+
+    // Drop any previous (dead) client before creating a new one.
+    if (g_daemon != null) {
+        g_daemon->close()
+        unsafe { delete g_daemon; }
+        g_daemon = null
+    }
 
     g_daemon = new DaemonClient()
-    if (g_daemon->init(g_ws_url) != 0) return false
+    if (g_daemon->init(g_ws_url) != 0) {
+        plog("connect_daemon: init({g_ws_url}) failed")
+        return false
+    }
 
     var elapsed = 0
     while (!g_daemon.connected && elapsed < 2000) {
@@ -176,28 +194,61 @@ def connect_daemon(project_path : string) : bool {
         sleep(10u)
         elapsed += 10
     }
+    if (g_daemon.connected) {
+        plog("connect_daemon: connected to {g_ws_url}")
+        // Reconnected: re-arm the warning so a future disconnect surfaces once more.
+        g_warned_no_daemon = false
+    } else {
+        plog("connect_daemon: timed out connecting to {g_ws_url}")
+    }
     return g_daemon.connected
+}
+
+// Returns a live daemon connection, lazily (re)connecting if the current one is missing or
+// dead. This is the self-heal seam: the daemon may not be up yet when initialize runs (it is
+// spawned detached by the editor plugin, racing this proxy), and it idles out / can crash
+// mid-session. Every compile path goes through here so a momentarily-absent daemon recovers
+// on the next keystroke instead of silently dropping diagnostics forever.
+def ensure_daemon_connected() : bool {
+    if (g_daemon != null && g_daemon.connected) return true
+    if (empty(g_project_path)) return false
+    return connect_daemon(g_project_path)
 }
 
 // Sends a compile request for `file_path` (native path), returns the reply JSON ("" on fail).
 // Pass refresh=true to trigger RefreshBindings on the daemon (re-reads engine .das from disk).
 // Pass non-empty content to compile an unsaved in-memory buffer instead of the file on disk.
 def daemon_compile(file_path : string; refresh : bool = false; content : string = "") : string {
-    if (g_daemon == null || !g_daemon.connected) return ""
-    g_daemon.got_reply = false
-    g_daemon.reply = ""
-    let refresh_field = refresh ? ",\"refresh\":true" : ""
-    let content_field = !empty(content) ? ",\"content\":{json_string(content)}" : ""
-    let req = "\{\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)}{refresh_field}{content_field}}"
-    g_daemon->send(req)
+    // Try once; if the connection died between calls (idle-timeout/crash), reconnect and retry.
+    for (attempt in range(0, 2)) {
+        if (!ensure_daemon_connected()) {
+            plog("daemon_compile: no daemon connection (attempt {attempt})")
+            return ""
+        }
+        g_daemon.got_reply = false
+        g_daemon.reply = ""
+        let refresh_field = refresh ? ",\"refresh\":true" : ""
+        let content_field = !empty(content) ? ",\"content\":{json_string(content)}" : ""
+        let req = "\{\"file\":{json_string(file_path)},\"project\":{json_string(g_project_path)}{refresh_field}{content_field}}"
+        g_daemon->send(req)
 
-    var elapsed = 0
-    while (!g_daemon.got_reply && elapsed < 10000) {
-        g_daemon->process_event_que()
-        sleep(5u)
-        elapsed += 5
+        var elapsed = 0
+        while (!g_daemon.got_reply && g_daemon.connected && elapsed < 10000) {
+            g_daemon->process_event_que()
+            sleep(5u)
+            elapsed += 5
+        }
+        if (g_daemon.got_reply) return g_daemon.reply
+
+        // Either the daemon dropped the connection (got onClose) or the request timed out.
+        // If the socket closed, loop to reconnect; otherwise (genuine timeout) give up.
+        if (g_daemon.connected) {
+            plog("daemon_compile: timed out waiting for reply (still connected); giving up")
+            return ""
+        }
+        plog("daemon_compile: connection lost mid-request; reconnecting (attempt {attempt})")
     }
-    return g_daemon.got_reply ? g_daemon.reply : ""
+    return ""
 }
 
 // ===== URI <-> path =====
@@ -262,8 +313,17 @@ def send_notification(method : string; params_json : string) {
 }
 
 def show_message(typ : int; text : string) {
-    // window/showMessage — typ: 1=error 2=warning 3=info
+    // window/showMessage — typ: 1=error 2=warning 3=info.
+    // NOTE: in nvim this routes through vim.notify and can steal cursor focus, so it must
+    // only be used for rare, genuinely-actionable events. Status/progress noise goes through
+    // log_message (window/logMessage) instead, which lands in the LSP log and never grabs focus.
     send_notification("window/showMessage", "\{\"type\":{typ},\"message\":{json_string(text)}}")
+}
+
+def log_message(typ : int; text : string) {
+    // window/logMessage — same type codes as show_message, but goes to the LSP log only.
+    // Never surfaces a popup, so it can never grab the cursor focus in nvim.
+    send_notification("window/logMessage", "\{\"type\":{typ},\"message\":{json_string(text)}}")
 }
 
 // Nearest *.das_project at or above root_path ("" if none).
@@ -305,17 +365,32 @@ def handle_initialize(id_json : string; params : JsonValue?) {
     if (empty(g_project_path)) {
         show_message(2, "Duin LSP: no .das_project found under {root}")
     } elif (!connect_daemon(g_project_path)) {
-        show_message(2, "Duin LSP: no running daemon for {g_project_path} (editor plugin must start one)")
+        // Not fatal: the daemon may still be warming up (spawned detached by the plugin,
+        // racing us). compile_and_publish reconnects lazily, so a save/keystroke recovers.
+        plog("handle_initialize: daemon not reachable yet for {g_project_path}; will retry on compile")
+        log_message(3, "Duin LSP: daemon not up yet; will connect on first compile")
     } else {
-        show_message(3, "Duin LSP: connected to daemon at {g_ws_url}")
+        log_message(3, "Duin LSP: connected to daemon at {g_ws_url}")
     }
 }
 
 
 def compile_and_publish(uri : string; refresh : bool = false; content : string = "") {
-    if (g_daemon == null || !g_daemon.connected) return
+    if (!ensure_daemon_connected()) {
+        plog("compile_and_publish: no daemon for {uri}; cannot produce diagnostics")
+        // Notify once per disconnect episode (g_warned_no_daemon is re-armed on reconnect),
+        // and via logMessage so it never steals cursor focus in nvim.
+        if (!g_warned_no_daemon) {
+            log_message(2, "Duin LSP: no running daemon (start it, then save to refresh)")
+            g_warned_no_daemon = true
+        }
+        return
+    }
     let result = daemon_compile(uri_to_path(uri), refresh, content)
-    if (empty(result)) return
+    if (empty(result)) {
+        plog("compile_and_publish: empty compile result for {uri}")
+        return
+    }
 
     // Group diagnostics by the file they belong to, then publish each file separately.
     // This prevents errors in required files (e.g. fileB.das) from being shown on the
@@ -357,7 +432,7 @@ def handle_execute_command(id_json : string; params : JsonValue?) {
         if (empty(uri)) {
             show_message(2, "Duin LSP: refreshBindings needs a file URI (pass current buffer URI)")
         } else {
-            show_message(3, "Duin LSP: refreshing engine bindings...")
+            log_message(3, "Duin LSP: refreshing engine bindings...")
             compile_and_publish(uri, true)
         }
     }
