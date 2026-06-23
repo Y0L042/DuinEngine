@@ -124,7 +124,7 @@ filter {}
 
 filter "system:windows"
 buildoptions { "/openmp" }
-cppdialect "C++20"
+cppdialect "C++23"
 
 filter "configurations:Debug"
 defines { "DN_DEBUG", "_DEBUG" }
