@@ -333,9 +333,23 @@ class Entity
     World *GetWorld() const;
     /**
      * @brief Check if the entity is valid.
+     *
+     * An entity is valid when it has an owning Duin world and the underlying
+     * flecs id is valid in its world (non-zero, alive, correct generation).
+     *
+     * flecs::entity::is_valid() already performs the world-level validity check
+     * (it calls ecs_is_valid against the entity's stored world, which is always
+     * this entity's world), so no separate world->is_valid() call is needed.
+     * Kept header-inline and free of any World.h dependency so it inlines at
+     * every call site.
      * @return True if valid.
      */
-    bool IsValid() const;
+    bool IsValid() const
+    {
+        // world != nullptr first: cheapest, and short-circuits the common
+        // default-constructed/invalid case before touching flecs.
+        return world != nullptr && flecsEntity.is_valid();
+    }
     /**
      * @brief Check if the entity is alive.
      * @return True if alive.
@@ -1508,6 +1522,21 @@ class Entity
     friend class World;
     template <typename... Components>
     friend class Query;
+
+    /**
+     * @brief Assert that the entity is valid and report whether it is.
+     *
+     * Asserts on IsValid() (active in debug/test builds) and returns the same
+     * value so callers can early-return in release builds instead of calling
+     * into flecs with an invalid id. IsValid() is evaluated exactly once.
+     * @return True if the entity is valid.
+     */
+    bool RequireValid() const
+    {
+        const bool valid = IsValid();
+        DN_CORE_ASSERT(valid, "Operation called on an invalid Entity");
+        return valid;
+    }
 
     World *world = nullptr;    ///< Pointer to the world this entity belongs to (non-owning).
     flecs::entity flecsEntity; ///< Internal flecs entity handle.

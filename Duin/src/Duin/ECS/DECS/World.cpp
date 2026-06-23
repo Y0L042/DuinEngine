@@ -9,7 +9,15 @@ duin::World::World()
 
 duin::World::World(flecs::world &&w) : flecsWorld(std::move(w)) {};
 
+duin::World::World(ecs_world_t *world) : flecsWorld(world) {};
+
 duin::World::~World() {};
+
+duin::System duin::World::System(const duin::Entity &e) const
+{
+    // Adopt the existing system entity; does NOT create a new system.
+    return duin::System(e, const_cast<World *>(this));
+}
 
 duin::Entity duin::World::Entity(const std::string &name)
 {
@@ -141,8 +149,8 @@ void duin::World::Quit()
     flecsWorld.quit();
 }
 
-duin::Entity duin::World::Lookup(const std::string &name, const std::string &sep, const std::string &root_sep,
-                                 bool recursive)
+duin::Entity duin::World::Lookup(
+    const std::string &name, const std::string &sep, const std::string &root_sep, bool recursive)
 {
     duin::Entity e;
     e.SetWorld(this);

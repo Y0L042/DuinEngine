@@ -4,5 +4,6 @@
 
 #include "World.h"
 #include "Entity.h"
-#include "Component.h"
+#include "Iter.h"
 #include "Query.h"
+#include "System.h"

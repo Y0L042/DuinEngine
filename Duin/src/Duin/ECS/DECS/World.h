@@ -12,8 +12,11 @@
 namespace duin
 {
 class Entity;
+class System;
 template <typename... Components>
 class QueryBuilder;
+template <typename... Components>
+class SystemBuilder;
 
 class World
 {
@@ -24,6 +27,8 @@ class World
     World();
 
     World(flecs::world &&w);
+
+    World(ecs_world_t *world);
 
     /**
      * @brief Destroy the World object.
@@ -179,9 +184,9 @@ class World
             if (filterBuiltins)
             {
                 // Filter out known FLECS internal entity categories:
-                //   flecs::Component  (struct type)  � component/tag type descriptor entities
-                //   flecs::Observer   (entity_t tag) � internal observer entities
-                //   flecs::Module     (entity_t tag) � module scope entities
+                //   flecs::Component  (struct type)   component/tag type descriptor entities
+                //   flecs::Observer   (entity_t tag)  internal observer entities
+                //   flecs::Module     (entity_t tag)  module scope entities
                 if (child.has<flecs::Component>())
                     return;
                 if (child.has(flecs::Observer))
@@ -228,6 +233,27 @@ class World
     {
         return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>(), const_cast<World *>(this));
     }
+
+    template <typename... Comps>
+    duin::SystemBuilder<Comps...> System(const char *name = nullptr) const
+    {
+        // Pass the raw flecs world + name so SystemBuilder constructs the flecs
+        // system_builder in place (heap-held). It must NOT be constructed here
+        // and moved in: flecs::system_builder has no move ctor that re-points
+        // its internal desc_/term_ pointers, so a move would dangle them.
+        return duin::SystemBuilder<Comps...>(flecsWorld.c_ptr(), name, const_cast<World *>(this));
+    }
+
+    /**
+     * @brief Adopt an existing system entity as a runnable System.
+     *
+     * Mirrors flecs::world::system(flecs::entity): does NOT create a new system,
+     * it wraps the existing system entity. Defined out-of-line in World.cpp
+     * because it returns the complete duin::System type.
+     */
+    duin::System System(const duin::Entity &e) const;
+
+
 
     template <typename T>
     duin::Entity::ID IDIfRegistered()

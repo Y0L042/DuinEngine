@@ -26,6 +26,10 @@ duin::Entity::Entity(uint64_t id, World *world)
 
 duin::Entity duin::Entity::GetTarget(uint64_t relationship, int32_t index) const
 {
+    if (!RequireValid())
+    {
+        return Entity();
+    }
     return Entity(flecsEntity.target(relationship, index));
 }
 
@@ -81,12 +85,6 @@ duin::World *duin::Entity::GetWorld() const
     return world;
 }
 
-bool duin::Entity::IsValid() const
-{
-    bool res = true && world != nullptr && world->flecsWorld.is_valid(flecsEntity) && flecsEntity.is_valid();
-    return res;
-}
-
 bool duin::Entity::IsAlive() const
 {
     return flecsEntity.is_alive();
@@ -94,6 +92,10 @@ bool duin::Entity::IsAlive() const
 
 bool duin::Entity::IsTag() const
 {
+    if (!RequireValid())
+    {
+        return false;
+    }
     bool res = ecs_id_is_tag(world->GetFlecsWorld().c_ptr(), flecsEntity.raw_id());
     return res;
 }
@@ -111,28 +113,48 @@ uint64_t duin::Entity::GetID() const
 
 std::string duin::Entity::GetName() const
 {
+    if (!RequireValid())
+    {
+        return std::string();
+    }
     return flecsEntity.name().c_str();
 }
 
 std::string duin::Entity::GetPath(const std::string &sep, const std::string &init_sep) const
 {
+    if (!RequireValid())
+    {
+        return std::string();
+    }
     return static_cast<std::string>(flecsEntity.path());
 }
 
 duin::Entity duin::Entity::Lookup(const std::string &childName, bool searchPath)
 {
+    if (!RequireValid())
+    {
+        return Entity();
+    }
     flecs::entity e = flecsEntity.lookup(childName.c_str(), searchPath);
     return Entity(e, world);
 }
 
 duin::Entity &duin::Entity::ChildOf(const Entity &parent)
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     flecsEntity.child_of(parent.flecsEntity);
     return *this;
 }
 
 duin::Entity &duin::Entity::SetName(const std::string &name)
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     Entity e;
     if (Parent().IsValid())
     {
@@ -150,8 +172,11 @@ duin::Entity &duin::Entity::SetName(const std::string &name)
     }
     else
     {
-        DN_CORE_WARN("Entity {} with name <{}> already exist when trying to set name for entity {}.",
-                     e.flecsEntity.raw_id(), name, flecsEntity.raw_id());
+        DN_CORE_WARN(
+            "Entity {} with name <{}> already exist when trying to set name for entity {}.",
+            e.flecsEntity.raw_id(),
+            name,
+            flecsEntity.raw_id());
     }
 
     return *this;
@@ -159,12 +184,20 @@ duin::Entity &duin::Entity::SetName(const std::string &name)
 
 duin::Entity &duin::Entity::Enable()
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     flecsEntity.enable();
     return *this;
 }
 
 duin::Entity &duin::Entity::Disable()
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     flecsEntity.disable();
     return *this;
 }
@@ -181,18 +214,30 @@ bool duin::Entity::operator!=(const Entity &other) const
 
 duin::Entity &duin::Entity::Destruct()
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     flecsEntity.destruct();
     return *this;
 }
 
 duin::Entity &duin::Entity::Clear()
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     flecsEntity.clear();
     return *this;
 }
 
 duin::Entity duin::Entity::Clone(bool clone_value) const
 {
+    if (!RequireValid())
+    {
+        return Entity();
+    }
     Entity e;
     e.SetFlecsEntity(flecsEntity.clone());
     e.SetWorld(world);
@@ -201,12 +246,20 @@ duin::Entity duin::Entity::Clone(bool clone_value) const
 
 duin::Entity &duin::Entity::IsA(const Entity &second)
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     flecsEntity.is_a(second.flecsEntity);
     return *this;
 }
 
 duin::Entity duin::Entity::First()
 {
+    if (!RequireValid())
+    {
+        return Entity();
+    }
     Entity e;
     e.SetFlecsEntity(flecsEntity.first());
     e.SetWorld(world);
@@ -216,6 +269,10 @@ duin::Entity duin::Entity::First()
 
 duin::Entity duin::Entity::Second()
 {
+    if (!RequireValid())
+    {
+        return Entity();
+    }
     Entity e;
     e.SetFlecsEntity(flecsEntity.second());
     e.SetWorld(world);
@@ -225,6 +282,10 @@ duin::Entity duin::Entity::Second()
 
 duin::Entity &duin::Entity::Add(const Entity &relationship, const Entity &target)
 {
+    if (!RequireValid())
+    {
+        return *this;
+    }
     flecsEntity.add(relationship.GetID(), target.GetID());
 
     return *this;
@@ -232,11 +293,19 @@ duin::Entity &duin::Entity::Add(const Entity &relationship, const Entity &target
 
 duin::Entity duin::Entity::GetParent() const
 {
+    if (!RequireValid())
+    {
+        return Entity();
+    }
     return Entity(flecsEntity.parent(), world);
 }
 
 std::vector<duin::Entity> duin::Entity::GetChildren() const
 {
+    if (!RequireValid())
+    {
+        return std::vector<Entity>();
+    }
     std::vector<Entity> children;
     flecsEntity.children([&](flecs::entity child) { children.emplace_back(Entity(child, world)); });
     return children;
