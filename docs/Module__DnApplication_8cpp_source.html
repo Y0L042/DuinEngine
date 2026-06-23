@@ -244,67 +244,76 @@ $(document).ready(function(){initNavTree('Module__DnApplication_8cpp_source.html
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_set_framerate&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::SetFramerate&quot;</span>)</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            -&gt;args({<span class="stringliteral">&quot;framerate&quot;</span>});</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <span class="comment">// Draw FPS overlays</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        addExtern&lt;DAS_BIND_FUN(duin::DrawPhysicsFPS)&gt;(</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_physics_fps&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DrawPhysicsFPS&quot;</span>)</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            -&gt;args({<span class="stringliteral">&quot;x&quot;</span>, <span class="stringliteral">&quot;y&quot;</span>});</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        addExtern&lt;DAS_BIND_FUN(duin::DrawRenderFPS)&gt;(</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_render_fps&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DrawRenderFPS&quot;</span>)</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            -&gt;args({<span class="stringliteral">&quot;x&quot;</span>, <span class="stringliteral">&quot;y&quot;</span>});</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        <span class="comment">// FPS / frame-time queries</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        addExtern&lt;DAS_BIND_FUN(duin::GetPhysicsFPS)&gt;(</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_physics_fps&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetPhysicsFPS&quot;</span>);</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        addExtern&lt;DAS_BIND_FUN(duin::GetPhysicsFrameTime)&gt;(</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_physics_frame_time&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetPhysicsFrameTime&quot;</span>);</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        addExtern&lt;DAS_BIND_FUN(duin::GetRenderFPS)&gt;(</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_render_fps&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetRenderFPS&quot;</span>);</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        addExtern&lt;DAS_BIND_FUN(duin::GetRenderFrameTime)&gt;(</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_render_frame_time&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetRenderFrameTime&quot;</span>);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="comment">// Frame counts (size_t → int)</span></div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        addExtern&lt;DAS_BIND_FUN(dn_get_physics_frame_count_impl)&gt;(</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            *<span class="keyword">this</span>,</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            lib,</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            <span class="stringliteral">&quot;dn_get_physics_frame_count&quot;</span>,</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            das::SideEffects::accessGlobal,</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="stringliteral">&quot;dn_get_physics_frame_count_impl&quot;</span>);</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        addExtern&lt;DAS_BIND_FUN(dn_get_render_frame_count_impl)&gt;(</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_render_frame_count&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;dn_get_render_frame_count_impl&quot;</span>);</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="comment">// Timing</span></div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        addExtern&lt;DAS_BIND_FUN(duin::GetTicks)&gt;(</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_ticks&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetTicks&quot;</span>);</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        addExtern&lt;DAS_BIND_FUN(duin::GetTicksMilli)&gt;(</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_ticks_milli&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetTicksMilli&quot;</span>);</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        addExtern&lt;DAS_BIND_FUN(duin::GetTicksNano)&gt;(</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_ticks_nano&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetTicksNano&quot;</span>);</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="comment">// Delay</span></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        addExtern&lt;DAS_BIND_FUN(duin::DelayProcess)&gt;(</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_delay_process&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DelayProcess&quot;</span>)</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            -&gt;args({<span class="stringliteral">&quot;seconds&quot;</span>});</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        addExtern&lt;DAS_BIND_FUN(duin::DelayProcessMilli)&gt;(</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_delay_process_milli&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DelayProcessMilli&quot;</span>)</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            -&gt;args({<span class="stringliteral">&quot;milliseconds&quot;</span>});</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="comment">// Window queries</span></div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        addExtern&lt;DAS_BIND_FUN(duin::GetWindowWidth)&gt;(</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_window_width&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetWindowWidth&quot;</span>);</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        addExtern&lt;DAS_BIND_FUN(duin::GetWindowHeight)&gt;(</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_window_height&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetWindowHeight&quot;</span>);</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        DN_CORE_INFO(<span class="stringliteral">&quot;Script Module [dn_application_core] initialized.&quot;</span>);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    }</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>};</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <span class="comment">// Quit control (used by headless test scripts to terminate the app).</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="comment">// The setter is wrapped by a defaulted dn_set_game_should_quit() in</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <span class="comment">// dn_application.das so scripts can call it with no argument.</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        addExtern&lt;DAS_BIND_FUN(duin::GetGameShouldQuit)&gt;(</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_game_should_quit&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetGameShouldQuit&quot;</span>);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        addExtern&lt;DAS_BIND_FUN(duin::SetGameShouldQuit)&gt;(</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_set_game_should_quit_impl&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::SetGameShouldQuit&quot;</span>)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            -&gt;args({<span class="stringliteral">&quot;shouldQuit&quot;</span>});</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="comment">// Draw FPS overlays</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        addExtern&lt;DAS_BIND_FUN(duin::DrawPhysicsFPS)&gt;(</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_physics_fps&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DrawPhysicsFPS&quot;</span>)</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            -&gt;args({<span class="stringliteral">&quot;x&quot;</span>, <span class="stringliteral">&quot;y&quot;</span>});</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        addExtern&lt;DAS_BIND_FUN(duin::DrawRenderFPS)&gt;(</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_draw_render_fps&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DrawRenderFPS&quot;</span>)</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            -&gt;args({<span class="stringliteral">&quot;x&quot;</span>, <span class="stringliteral">&quot;y&quot;</span>});</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="comment">// FPS / frame-time queries</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        addExtern&lt;DAS_BIND_FUN(duin::GetPhysicsFPS)&gt;(</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_physics_fps&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetPhysicsFPS&quot;</span>);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        addExtern&lt;DAS_BIND_FUN(duin::GetPhysicsFrameTime)&gt;(</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_physics_frame_time&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetPhysicsFrameTime&quot;</span>);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        addExtern&lt;DAS_BIND_FUN(duin::GetRenderFPS)&gt;(</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_render_fps&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetRenderFPS&quot;</span>);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        addExtern&lt;DAS_BIND_FUN(duin::GetRenderFrameTime)&gt;(</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_render_frame_time&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetRenderFrameTime&quot;</span>);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        <span class="comment">// Frame counts (size_t → int)</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        addExtern&lt;DAS_BIND_FUN(dn_get_physics_frame_count_impl)&gt;(</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            *<span class="keyword">this</span>,</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            lib,</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <span class="stringliteral">&quot;dn_get_physics_frame_count&quot;</span>,</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            das::SideEffects::accessGlobal,</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <span class="stringliteral">&quot;dn_get_physics_frame_count_impl&quot;</span>);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        addExtern&lt;DAS_BIND_FUN(dn_get_render_frame_count_impl)&gt;(</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_render_frame_count&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;dn_get_render_frame_count_impl&quot;</span>);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="comment">// Timing</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        addExtern&lt;DAS_BIND_FUN(duin::GetTicks)&gt;(</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_ticks&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetTicks&quot;</span>);</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        addExtern&lt;DAS_BIND_FUN(duin::GetTicksMilli)&gt;(</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_ticks_milli&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetTicksMilli&quot;</span>);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        addExtern&lt;DAS_BIND_FUN(duin::GetTicksNano)&gt;(</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_ticks_nano&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetTicksNano&quot;</span>);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="comment">// Delay</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        addExtern&lt;DAS_BIND_FUN(duin::DelayProcess)&gt;(</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_delay_process&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DelayProcess&quot;</span>)</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            -&gt;args({<span class="stringliteral">&quot;seconds&quot;</span>});</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        addExtern&lt;DAS_BIND_FUN(duin::DelayProcessMilli)&gt;(</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_delay_process_milli&quot;</span>, das::SideEffects::modifyExternal, <span class="stringliteral">&quot;duin::DelayProcessMilli&quot;</span>)</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            -&gt;args({<span class="stringliteral">&quot;milliseconds&quot;</span>});</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="comment">// Window queries</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        addExtern&lt;DAS_BIND_FUN(duin::GetWindowWidth)&gt;(</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_window_width&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetWindowWidth&quot;</span>);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        addExtern&lt;DAS_BIND_FUN(duin::GetWindowHeight)&gt;(</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            *<span class="keyword">this</span>, lib, <span class="stringliteral">&quot;dn_get_window_height&quot;</span>, das::SideEffects::accessGlobal, <span class="stringliteral">&quot;duin::GetWindowHeight&quot;</span>);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        DN_CORE_INFO(<span class="stringliteral">&quot;Script Module [dn_application_core] initialized.&quot;</span>);</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    }</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>};</div>
 </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>REGISTER_MODULE(<a class="code hl_class" href="classModule__DnApplication.html">Module_DnApplication</a>);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>REGISTER_MODULE(<a class="code hl_class" href="classModule__DnApplication.html">Module_DnApplication</a>);</div>
 <div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
-<div class="ttc" id="aApplication_8h_html_a3bd3cde8d117614051151b4ccf54334d"><div class="ttname"><a href="Application_8h.html#a3bd3cde8d117614051151b4ccf54334d">duin::GetPhysicsFrameCount</a></div><div class="ttdeci">size_t GetPhysicsFrameCount()</div><div class="ttdoc">Returns total physics frames since start.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00233">Application.cpp:233</a></div></div>
-<div class="ttc" id="aApplication_8h_html_afb8840e3b2602e2d7b9cc0d185f3d796"><div class="ttname"><a href="Application_8h.html#afb8840e3b2602e2d7b9cc0d185f3d796">duin::GetRootDirectory</a></div><div class="ttdeci">std::string GetRootDirectory()</div><div class="ttdoc">Returns the root directory path of the application.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00089">Application.cpp:89</a></div></div>
-<div class="ttc" id="aApplication_8h_html_aff6ed05b01f54e7fed91ef3b05d3effd"><div class="ttname"><a href="Application_8h.html#aff6ed05b01f54e7fed91ef3b05d3effd">duin::GetRenderFrameCount</a></div><div class="ttdeci">size_t GetRenderFrameCount()</div><div class="ttdoc">Returns total render frames since start.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00238">Application.cpp:238</a></div></div>
+<div class="ttc" id="aApplication_8h_html_a3bd3cde8d117614051151b4ccf54334d"><div class="ttname"><a href="Application_8h.html#a3bd3cde8d117614051151b4ccf54334d">duin::GetPhysicsFrameCount</a></div><div class="ttdeci">size_t GetPhysicsFrameCount()</div><div class="ttdoc">Returns total physics frames since start.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00235">Application.cpp:235</a></div></div>
+<div class="ttc" id="aApplication_8h_html_afb8840e3b2602e2d7b9cc0d185f3d796"><div class="ttname"><a href="Application_8h.html#afb8840e3b2602e2d7b9cc0d185f3d796">duin::GetRootDirectory</a></div><div class="ttdeci">std::string GetRootDirectory()</div><div class="ttdoc">Returns the root directory path of the application.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00091">Application.cpp:91</a></div></div>
+<div class="ttc" id="aApplication_8h_html_aff6ed05b01f54e7fed91ef3b05d3effd"><div class="ttname"><a href="Application_8h.html#aff6ed05b01f54e7fed91ef3b05d3effd">duin::GetRenderFrameCount</a></div><div class="ttdeci">size_t GetRenderFrameCount()</div><div class="ttdoc">Returns total render frames since start.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00240">Application.cpp:240</a></div></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aGameObject_8h_html"><div class="ttname"><a href="GameObject_8h.html">GameObject.h</a></div><div class="ttdoc">Scene graph node with lifecycle callbacks.</div></div>
 <div class="ttc" id="aclassModule__DnApplication_html"><div class="ttname"><a href="classModule__DnApplication.html">Module_DnApplication</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnApplication_8cpp_source.html#l00071">Module_DnApplication.cpp:72</a></div></div>

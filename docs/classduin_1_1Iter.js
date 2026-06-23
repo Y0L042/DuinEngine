@@ -22,6 +22,8 @@ var classduin_1_1Iter =
     [ "IsSelf", "classduin_1_1Iter.html#a1d8b760131c400f9dff1cdad01af02fc", null ],
     [ "IsSet", "classduin_1_1Iter.html#ab7455bdac286fe80088ec01ad2eae019", null ],
     [ "Next", "classduin_1_1Iter.html#af985e8071e6a91ddd8fa294960a32ffa", null ],
+    [ "Param", "classduin_1_1Iter.html#afd4a2371d20210d6c6e6bdf6afabf493", null ],
+    [ "Param", "classduin_1_1Iter.html#af8f015580e1a94427208536ca61670c1", null ],
     [ "Size", "classduin_1_1Iter.html#abce113016082365e3781612b7e2d363c", null ],
     [ "Skip", "classduin_1_1Iter.html#ac9ff7bf0039724f6563561777e5db50d", null ]
 ];

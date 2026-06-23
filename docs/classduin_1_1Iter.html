@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('classduin_1_1Iter.html',''); initResiz
 <p>Wrapper for flecs::iter to provide iterator functionality. This class wraps the flecs iterator and provides safe access to iteration data. All public-facing APIs use duin types rather than exposing flecs types directly.  
  <a href="classduin_1_1Iter.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="Query_8h_source.html">Query.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="Iter_8h_source.html">Iter.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -140,6 +140,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af8edea9c6f4c497b8eea212dca4ef32e" id="r_af8edea9c6f4c497b8eea212dca4ef32e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Iter.html#af8edea9c6f4c497b8eea212dca4ef32e">DeltaSystemTime</a> () const</td></tr>
 <tr class="memdesc:af8edea9c6f4c497b8eea212dca4ef32e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get delta time since last system invocation.  <br /></td></tr>
 <tr class="separator:af8edea9c6f4c497b8eea212dca4ef32e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd4a2371d20210d6c6e6bdf6afabf493" id="r_afd4a2371d20210d6c6e6bdf6afabf493"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Iter.html#afd4a2371d20210d6c6e6bdf6afabf493">Param</a> () const</td></tr>
+<tr class="memdesc:afd4a2371d20210d6c6e6bdf6afabf493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the user parameter passed to System::Run(deltaTime, param).  <br /></td></tr>
+<tr class="separator:afd4a2371d20210d6c6e6bdf6afabf493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8f015580e1a94427208536ca61670c1" id="r_af8f015580e1a94427208536ca61670c1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af8f015580e1a94427208536ca61670c1"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1Iter.html#af8f015580e1a94427208536ca61670c1">Param</a> () const</td></tr>
+<tr class="memdesc:af8f015580e1a94427208536ca61670c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typed accessor for the user parameter passed to <a class="el" href="classduin_1_1System.html#ad32a296ce58ee47f4d060183e9425ac0" title="Run the system once immediately (outside the pipeline), like ecs_run.">System::Run</a>.  <br /></td></tr>
+<tr class="separator:af8f015580e1a94427208536ca61670c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab34b636ad0867e1a764bdba61e44a60a" id="r_ab34b636ad0867e1a764bdba61e44a60a"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Iter.html#ab34b636ad0867e1a764bdba61e44a60a">GetEntityId</a> (size_t row) const</td></tr>
 <tr class="memdesc:ab34b636ad0867e1a764bdba61e44a60a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get entity at specified row.  <br /></td></tr>
 <tr class="separator:ab34b636ad0867e1a764bdba61e44a60a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,7 +205,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper for flecs::iter to provide iterator functionality. This class wraps the flecs iterator and provides safe access to iteration data. All public-facing APIs use duin types rather than exposing flecs types directly. </p>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00019">19</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00013">13</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a34d866dcb4bf6e57acaf62a011d25045" name="a34d866dcb4bf6e57acaf62a011d25045"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a34d866dcb4bf6e57acaf62a011d25045">&#9670;&#160;</a></span>Iter() <span class="overload">[1/2]</span></h2>
@@ -232,7 +239,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00026">26</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00020">20</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -268,7 +275,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00034">34</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00028">28</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -299,7 +306,7 @@ Public Member Functions</h2></td></tr>
 <p>Range-based for loop support - begin iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Begin iterator for range-based for loops. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00176">176</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00196">196</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -329,7 +336,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the number of entities in current iteration. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of entities to iterate. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00051">51</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00045">45</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -359,7 +366,7 @@ Public Member Functions</h2></td></tr>
 <p>Get delta time since last system invocation. </p>
 <dl class="section return"><dt>Returns</dt><dd>Delta system time in seconds. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00069">69</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00063">63</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -389,7 +396,7 @@ Public Member Functions</h2></td></tr>
 <p>Get delta time since last frame. </p>
 <dl class="section return"><dt>Returns</dt><dd>Delta time in seconds. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00060">60</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00054">54</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -419,7 +426,7 @@ Public Member Functions</h2></td></tr>
 <p>Range-based for loop support - end iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>End iterator for range-based for loops. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00185">185</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00205">205</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -449,7 +456,7 @@ Public Member Functions</h2></td></tr>
 <p>Get number of fields in iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of fields. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00118">118</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00138">138</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -478,7 +485,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Free iterator resources. This operation only needs to be called when the iterator is not iterated until completion (e.g. the last call to <a class="el" href="classduin_1_1Iter.html#af985e8071e6a91ddd8fa294960a32ffa" title="Progress iterator (use in run() callbacks). This operation should only be called from a context where...">Next()</a> did not return false). </p>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00260">260</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00280">280</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -515,7 +522,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Column index. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00158">158</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00178">178</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -552,7 +559,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1Entity.html" title="Represents an entity in the ECS world.">Entity</a> ID at the specified row. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00079">79</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00099">99</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -589,7 +596,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1Entity.html" title="Represents an entity in the ECS world.">Entity</a> ID matched for the field. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00148">148</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00168">168</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -619,7 +626,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the underlying flecs iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the underlying flecs::iter. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00042">42</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00036">36</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -649,7 +656,7 @@ Public Member Functions</h2></td></tr>
 <p>Get group id for current table (grouped queries only). </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structGroup.html">Group</a> ID. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00204">204</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00224">224</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -686,7 +693,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1Entity.html" title="Represents an entity in the ECS world.">Entity</a> ID of the field source. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00138">138</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00158">158</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -716,7 +723,7 @@ Public Member Functions</h2></td></tr>
 <p>Get term index that triggered an observer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Term index. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00167">167</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00187">187</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -753,7 +760,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1Entity.html" title="Represents an entity in the ECS world.">Entity</a> ID of the variable value, or 0 if not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00224">224</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00244">244</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -790,7 +797,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classduin_1_1Entity.html" title="Represents an entity in the ECS world.">Entity</a> ID of the variable value. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00214">214</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00234">234</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -827,7 +834,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if field is readonly, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00109">109</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00129">129</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -864,7 +871,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if field is matched on self, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00089">89</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00109">109</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -901,7 +908,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if field is set, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00099">99</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00119">119</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -931,7 +938,76 @@ Public Member Functions</h2></td></tr>
 <p>Progress iterator (use in run() callbacks). This operation should only be called from a context where the iterator is not being progressed automatically. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if iteration should continue, false if complete. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00240">240</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00260">260</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
+
+</div>
+</div>
+<a id="afd4a2371d20210d6c6e6bdf6afabf493" name="afd4a2371d20210d6c6e6bdf6afabf493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd4a2371d20210d6c6e6bdf6afabf493">&#9670;&#160;</a></span>Param() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * duin::Iter::Param </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the user parameter passed to System::Run(deltaTime, param). </p>
+<p>This is the <code>param</code> argument forwarded to ecs_run; it is null when the system runs from the pipeline (<a class="el" href="classduin_1_1World.html#a2b14f69e148eb0439f583e75b1e57631" title="Progress the world simulation by a time step.">World::Progress</a>) or when no param was given. </p><dl class="section return"><dt>Returns</dt><dd>The raw parameter pointer, or nullptr if none was passed. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00075">75</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
+
+</div>
+</div>
+<a id="af8f015580e1a94427208536ca61670c1" name="af8f015580e1a94427208536ca61670c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8f015580e1a94427208536ca61670c1">&#9670;&#160;</a></span>Param() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * duin::Iter::Param </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Typed accessor for the user parameter passed to <a class="el" href="classduin_1_1System.html#ad32a296ce58ee47f4d060183e9425ac0" title="Run the system once immediately (outside the pipeline), like ecs_run.">System::Run</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type the parameter was passed as. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The parameter reinterpreted as T*, or nullptr if none was passed.</dd></dl>
+<p>The caller is responsible for ensuring T matches the type of the object whose address was passed to Run(); no type checking is performed. </p>
+
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00089">89</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -968,7 +1044,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Size of the field in bytes. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00128">128</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00148">148</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
@@ -997,12 +1073,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Skip current table. This indicates to the query that the data in the current table is not modified. By default, iterating a table will mark components as dirty. </p>
 
-<p class="definition">Definition at line <a class="el" href="Query_8h_source.html#l00195">195</a> of file <a class="el" href="Query_8h_source.html">Query.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Iter_8h_source.html#l00215">215</a> of file <a class="el" href="Iter_8h_source.html">Iter.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="Query_8h_source.html">Query.h</a></li>
+<li><a class="el" href="Iter_8h_source.html">Iter.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

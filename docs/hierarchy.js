@@ -102,11 +102,14 @@ var hierarchy =
     [ "DnIOStreamHandle", "structDnIOStreamHandle.html", null ],
     [ "DnLiveHostState", "structDnLiveHostState.html", null ],
     [ "ebuf_t", "structebuf__t.html", null ],
+    [ "duin::EcsPipeline", "classduin_1_1EcsPipeline.html", null ],
     [ "ImCurveEdit::EditPoint", "structImCurveEdit_1_1EditPoint.html", null ],
     [ "std::enable_shared_from_this", null, [
       [ "duin::GameObjectImpl", "classduin_1_1GameObjectImpl.html", null ]
     ] ],
-    [ "duin::Entity", "classduin_1_1Entity.html", null ],
+    [ "duin::Entity", "classduin_1_1Entity.html", [
+      [ "duin::System", "classduin_1_1System.html", null ]
+    ] ],
     [ "duin::EntityData", "structduin_1_1EntityData.html", null ],
     [ "das::Enumeration", null, [
       [ "EnumerationDN_Scancode", "classEnumerationDN__Scancode.html", null ]
@@ -574,6 +577,7 @@ var hierarchy =
     [ "SpriteHandle", "structSpriteHandle.html", null ],
     [ "SpriteT< MaxHandlesT, TextureSizeT >", "structSpriteT.html", null ],
     [ "SpriteT< 256, SPRITE_TEXTURE_SIZE >", "structSpriteT.html", null ],
+    [ "duin::Stage", "structduin_1_1Stage.html", null ],
     [ "DebugDrawEncoderImpl::State", "structDebugDrawEncoderImpl_1_1State.html", null ],
     [ "STB_TexteditState", "structSTB__TexteditState.html", null ],
     [ "stbrp_context", "structstbrp__context.html", null ],
@@ -594,6 +598,8 @@ var hierarchy =
     [ "StbUndoRecord", "structStbUndoRecord.html", null ],
     [ "StbUndoState", "structStbUndoState.html", null ],
     [ "IMGUIZMO_NAMESPACE::Style", "structIMGUIZMO__NAMESPACE_1_1Style.html", null ],
+    [ "duin::SystemBuilder< Components >", "classduin_1_1SystemBuilder.html", null ],
+    [ "duin::SystemHandle", "structduin_1_1SystemHandle.html", null ],
     [ "GraphEditor::Template", "structGraphEditor_1_1Template.html", null ],
     [ "MeshState::Texture", "structMeshState_1_1Texture.html", null ],
     [ "duin::Timer", "classduin_1_1Timer.html", null ],

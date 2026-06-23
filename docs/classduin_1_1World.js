@@ -25,5 +25,6 @@ var classduin_1_1World =
     [ "RemoveAll", "classduin_1_1World.html#ac1ab2ec052397515d1798d2408ebaa86", null ],
     [ "RemoveAll", "classduin_1_1World.html#aa4d6f1aca7e06b4197ad3a9ab6330aa6", null ],
     [ "RemoveAll", "classduin_1_1World.html#a02e8e39cdd6d1fe77cc443b526e31772", null ],
-    [ "SetVersion", "classduin_1_1World.html#a836de3d15c9a49fde1c665e8a8d555c9", null ]
+    [ "SetVersion", "classduin_1_1World.html#a836de3d15c9a49fde1c665e8a8d555c9", null ],
+    [ "System", "classduin_1_1World.html#a2eb0bd43ab3948318bd76f10d602624d", null ]
 ];

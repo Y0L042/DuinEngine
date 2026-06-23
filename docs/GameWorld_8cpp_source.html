@@ -291,9 +291,9 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        comp-&gt;SetScale(tx.GetScale());</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        comp-&gt;SetRotation(tx.GetRotation());</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    }</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    comp-&gt;UpdateGlobalPositionCache(tx.GetPosition());</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    comp-&gt;UpdateGlobalScaleCache(tx.GetScale());</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    comp-&gt;UpdateGlobalRotationCache(tx.GetRotation());</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    comp-&gt;_UpdateGlobalPositionCache(tx.GetPosition());</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    comp-&gt;_UpdateGlobalScaleCache(tx.GetScale());</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    comp-&gt;_UpdateGlobalRotationCache(tx.GetRotation());</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>}</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>ECSComponent::Transform3D GameWorld::GetGlobalTransform(<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e)</div>
@@ -321,17 +321,17 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        Quaternion globalRot = QuaternionMultiply(parentGlobal.GetRotation(), tx-&gt;GetRotation());</div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        tx-&gt;UpdateGlobalPositionCache(globalPos);</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        tx-&gt;UpdateGlobalScaleCache(globalScale);</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        tx-&gt;UpdateGlobalRotationCache(globalRot);</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        tx-&gt;_UpdateGlobalPositionCache(globalPos);</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        tx-&gt;_UpdateGlobalScaleCache(globalScale);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        tx-&gt;_UpdateGlobalRotationCache(globalRot);</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">return</span> ECSComponent::Transform3D(globalPos, globalScale, globalRot);</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    }</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    {</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        tx-&gt;UpdateGlobalPositionCache(tx-&gt;GetPosition());</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        tx-&gt;UpdateGlobalScaleCache(tx-&gt;GetScale());</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        tx-&gt;UpdateGlobalRotationCache(tx-&gt;GetRotation());</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        tx-&gt;_UpdateGlobalPositionCache(tx-&gt;GetPosition());</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        tx-&gt;_UpdateGlobalScaleCache(tx-&gt;GetScale());</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        tx-&gt;_UpdateGlobalRotationCache(tx-&gt;GetRotation());</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordflow">return</span> *tx;</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    }</div>
@@ -364,7 +364,7 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    {</div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        tx-&gt;SetPosition(position);</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    }</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    tx-&gt;UpdateGlobalPositionCache(position);</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    tx-&gt;_UpdateGlobalPositionCache(position);</div>
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>}</div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>Vector3 GameWorld::GetGlobalPosition(<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e)</div>
@@ -385,7 +385,7 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        <a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> parent = e.<a class="code hl_function" href="classduin_1_1Entity.html#a066e2a35998f291a61c7733d8cd7a219">Parent</a>();</div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <span class="keywordflow">if</span> (!parent.<a class="code hl_function" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">IsValid</a>() || !parent.<a class="code hl_function" href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">Has</a>&lt;ECSComponent::Transform3D&gt;())</div>
 <div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        {</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            tx-&gt;UpdateGlobalPositionCache(tx-&gt;GetPosition());</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            tx-&gt;_UpdateGlobalPositionCache(tx-&gt;GetPosition());</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        }</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        {</div>
@@ -395,7 +395,7 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            Vector3 scaledLocalPos = Vector3Multiply(tx-&gt;GetPosition(), parentGlobalScale);</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            Vector3 rotatedPos = Vector3RotateByQuaternion(scaledLocalPos, parentGlobalRot);</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>            Vector3 globalPos = Vector3Add(parentGlobalPos, rotatedPos);</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>            tx-&gt;UpdateGlobalPositionCache(globalPos);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>            tx-&gt;_UpdateGlobalPositionCache(globalPos);</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        }</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    }</div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
@@ -424,7 +424,7 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    {</div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        tx-&gt;SetScale(scale);</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    }</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    tx-&gt;UpdateGlobalScaleCache(scale);</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    tx-&gt;_UpdateGlobalScaleCache(scale);</div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>}</div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>Vector3 GameWorld::GetGlobalScale(<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e)</div>
@@ -444,13 +444,13 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        <a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> parent = e.<a class="code hl_function" href="classduin_1_1Entity.html#a066e2a35998f291a61c7733d8cd7a219">Parent</a>();</div>
 <div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        <span class="keywordflow">if</span> (!parent.<a class="code hl_function" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">IsValid</a>() || !parent.<a class="code hl_function" href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">Has</a>&lt;ECSComponent::Transform3D&gt;())</div>
 <div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        {</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>            tx-&gt;UpdateGlobalScaleCache(tx-&gt;GetScale());</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>            tx-&gt;_UpdateGlobalScaleCache(tx-&gt;GetScale());</div>
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        }</div>
 <div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>        <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        {</div>
 <div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            Vector3 parentGlobalScale = GetGlobalScale(parent);</div>
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            Vector3 globalScale = Vector3Multiply(parentGlobalScale, tx-&gt;GetScale());</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            tx-&gt;UpdateGlobalScaleCache(globalScale);</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            tx-&gt;_UpdateGlobalScaleCache(globalScale);</div>
 <div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        }</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>    }</div>
 <div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
@@ -482,7 +482,7 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    {</div>
 <div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>        tx-&gt;SetRotation(rotation);</div>
 <div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    }</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>    tx-&gt;UpdateGlobalRotationCache(rotation);</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>    tx-&gt;_UpdateGlobalRotationCache(rotation);</div>
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>}</div>
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span> </div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>Quaternion GameWorld::GetGlobalRotation(<a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> e)</div>
@@ -503,13 +503,13 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        <a class="code hl_class" href="classduin_1_1Entity.html">duin::Entity</a> parent = e.<a class="code hl_function" href="classduin_1_1Entity.html#a066e2a35998f291a61c7733d8cd7a219">Parent</a>();</div>
 <div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        <span class="keywordflow">if</span> (!parent.<a class="code hl_function" href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">IsValid</a>() || !parent.<a class="code hl_function" href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">Has</a>&lt;ECSComponent::Transform3D&gt;())</div>
 <div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        {</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>            tx-&gt;UpdateGlobalRotationCache(tx-&gt;GetRotation());</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>            tx-&gt;_UpdateGlobalRotationCache(tx-&gt;GetRotation());</div>
 <div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        }</div>
 <div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        {</div>
 <div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>            Quaternion parentGlobalRot = GetGlobalRotation(parent);</div>
 <div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>            Quaternion globalRot = QuaternionMultiply(parentGlobalRot, tx-&gt;GetRotation());</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            tx-&gt;UpdateGlobalRotationCache(globalRot);</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            tx-&gt;_UpdateGlobalRotationCache(globalRot);</div>
 <div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        }</div>
 <div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>    }</div>
 <div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>    <span class="keywordflow">return</span> tx-&gt;globalRotationCache;</div>
@@ -524,10 +524,10 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="ttc" id="aclassduin_1_1Camera_html"><div class="ttname"><a href="classduin_1_1Camera.html">duin::Camera</a></div><div class="ttdoc">3D camera with position, target, and orientation.</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00042">Camera.h:43</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html"><div class="ttname"><a href="classduin_1_1Entity.html">duin::Entity</a></div><div class="ttdoc">Represents an entity in the ECS world.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00021">Entity.h:22</a></div></div>
 <div class="ttc" id="aclassduin_1_1Entity_html_a066e2a35998f291a61c7733d8cd7a219"><div class="ttname"><a href="classduin_1_1Entity.html#a066e2a35998f291a61c7733d8cd7a219">duin::Entity::Parent</a></div><div class="ttdeci">Entity Parent() const</div><div class="ttdoc">Get the parent entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00324">Entity.h:324</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a537de7ca63c0877259d234b6b8f8cd84"><div class="ttname"><a href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a></div><div class="ttdeci">Entity &amp; Add()</div><div class="ttdoc">Add a component to the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00636">Entity.h:636</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a5593c6b08b0e1330801b3c93f4fc944c"><div class="ttname"><a href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">duin::Entity::IsValid</a></div><div class="ttdeci">bool IsValid() const</div><div class="ttdoc">Check if the entity is valid.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8cpp_source.html#l00084">Entity.cpp:84</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a60815f2c735bdf18348e2d8ca066b9f4"><div class="ttname"><a href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">duin::Entity::Has</a></div><div class="ttdeci">bool Has() const</div><div class="ttdoc">Check if the entity has a component.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00491">Entity.h:491</a></div></div>
-<div class="ttc" id="aclassduin_1_1Entity_html_a9119f6121cf475a11c2bbce0daa4e4a1"><div class="ttname"><a href="classduin_1_1Entity.html#a9119f6121cf475a11c2bbce0daa4e4a1">duin::Entity::TryGetMut</a></div><div class="ttdeci">T * TryGetMut()</div><div class="ttdoc">Try to get a mutable pointer to a component.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00961">Entity.h:961</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a537de7ca63c0877259d234b6b8f8cd84"><div class="ttname"><a href="classduin_1_1Entity.html#a537de7ca63c0877259d234b6b8f8cd84">duin::Entity::Add</a></div><div class="ttdeci">Entity &amp; Add()</div><div class="ttdoc">Add a component to the entity.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00650">Entity.h:650</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a5593c6b08b0e1330801b3c93f4fc944c"><div class="ttname"><a href="classduin_1_1Entity.html#a5593c6b08b0e1330801b3c93f4fc944c">duin::Entity::IsValid</a></div><div class="ttdeci">bool IsValid() const</div><div class="ttdoc">Check if the entity is valid.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00347">Entity.h:347</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a60815f2c735bdf18348e2d8ca066b9f4"><div class="ttname"><a href="classduin_1_1Entity.html#a60815f2c735bdf18348e2d8ca066b9f4">duin::Entity::Has</a></div><div class="ttdeci">bool Has() const</div><div class="ttdoc">Check if the entity has a component.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00505">Entity.h:505</a></div></div>
+<div class="ttc" id="aclassduin_1_1Entity_html_a9119f6121cf475a11c2bbce0daa4e4a1"><div class="ttname"><a href="classduin_1_1Entity.html#a9119f6121cf475a11c2bbce0daa4e4a1">duin::Entity::TryGetMut</a></div><div class="ttdeci">T * TryGetMut()</div><div class="ttdoc">Try to get a mutable pointer to a component.</div><div class="ttdef"><b>Definition</b> <a href="Entity_8h_source.html#l00975">Entity.h:975</a></div></div>
 <div class="ttc" id="aclassduin_1_1GameWorld_html_a0532566ca2ffb5b73301fbe1c66383ee"><div class="ttname"><a href="classduin_1_1GameWorld.html#a0532566ca2ffb5b73301fbe1c66383ee">duin::GameWorld::PostDrawUIQueryExecution</a></div><div class="ttdeci">virtual void PostDrawUIQueryExecution()</div><div class="ttdoc">Runs post-draw-UI queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00086">GameWorld.cpp:86</a></div></div>
 <div class="ttc" id="aclassduin_1_1GameWorld_html_a12e1eb9bf6dba1752335fe6cab47f427"><div class="ttname"><a href="classduin_1_1GameWorld.html#a12e1eb9bf6dba1752335fe6cab47f427">duin::GameWorld::PostUpdateQueryExecution</a></div><div class="ttdeci">virtual void PostUpdateQueryExecution(double delta)</div><div class="ttdoc">Runs post-update queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00071">GameWorld.cpp:71</a></div></div>
 <div class="ttc" id="aclassduin_1_1GameWorld_html_a44342598a5d0659b4351edde8cac6611"><div class="ttname"><a href="classduin_1_1GameWorld.html#a44342598a5d0659b4351edde8cac6611">duin::GameWorld::ActivateCameraEntity</a></div><div class="ttdeci">void ActivateCameraEntity(duin::Entity entity)</div><div class="ttdoc">Sets the given entity as the active camera.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00055">GameWorld.cpp:55</a></div></div>
@@ -535,9 +535,9 @@ $(document).ready(function(){initNavTree('GameWorld_8cpp_source.html',''); initR
 <div class="ttc" id="aclassduin_1_1GameWorld_html_aa45d73f776ae24b631b953da028c7957"><div class="ttname"><a href="classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957">duin::GameWorld::Clear</a></div><div class="ttdeci">void Clear()</div><div class="ttdoc">Clears all entities from the world.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00090">GameWorld.cpp:90</a></div></div>
 <div class="ttc" id="aclassduin_1_1GameWorld_html_ae69ba1ff0a5318d40268a0bdbeeb2601"><div class="ttname"><a href="classduin_1_1GameWorld.html#ae69ba1ff0a5318d40268a0bdbeeb2601">duin::GameWorld::PostPhysicsUpdateQueryExecution</a></div><div class="ttdeci">virtual void PostPhysicsUpdateQueryExecution(double delta)</div><div class="ttdoc">Runs post-physics queries. Called by engine.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00075">GameWorld.cpp:75</a></div></div>
 <div class="ttc" id="aclassduin_1_1GameWorld_html_afd125edcd34384538fa3a1814403b1b6"><div class="ttname"><a href="classduin_1_1GameWorld.html#afd125edcd34384538fa3a1814403b1b6">duin::GameWorld::Initialize</a></div><div class="ttdeci">void Initialize(bool connectSignals=true)</div><div class="ttdoc">Initializes the ECS world and registers components.</div><div class="ttdef"><b>Definition</b> <a href="GameWorld_8cpp_source.html#l00031">GameWorld.cpp:31</a></div></div>
-<div class="ttc" id="aclassduin_1_1World_html_a2b14f69e148eb0439f583e75b1e57631"><div class="ttname"><a href="classduin_1_1World.html#a2b14f69e148eb0439f583e75b1e57631">duin::World::Progress</a></div><div class="ttdeci">bool Progress(float deltaTime=0.0f)</div><div class="ttdoc">Progress the world simulation by a time step.</div><div class="ttdef"><b>Definition</b> <a href="World_8cpp_source.html#l00091">World.cpp:91</a></div></div>
-<div class="ttc" id="aclassduin_1_1World_html_a2bf5807fc0ce1e71375b7f30bf9ea79a"><div class="ttname"><a href="classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a">duin::World::DeferEnd</a></div><div class="ttdeci">void DeferEnd()</div><div class="ttdoc">End deferred execution of commands.</div><div class="ttdef"><b>Definition</b> <a href="World_8cpp_source.html#l00081">World.cpp:81</a></div></div>
-<div class="ttc" id="aclassduin_1_1World_html_a475f2d4b926dafc8dbffc49b8f928a87"><div class="ttname"><a href="classduin_1_1World.html#a475f2d4b926dafc8dbffc49b8f928a87">duin::World::DeferBegin</a></div><div class="ttdeci">void DeferBegin()</div><div class="ttdoc">Begin deferred execution of commands.</div><div class="ttdef"><b>Definition</b> <a href="World_8cpp_source.html#l00076">World.cpp:76</a></div></div>
+<div class="ttc" id="aclassduin_1_1World_html_a2b14f69e148eb0439f583e75b1e57631"><div class="ttname"><a href="classduin_1_1World.html#a2b14f69e148eb0439f583e75b1e57631">duin::World::Progress</a></div><div class="ttdeci">bool Progress(float deltaTime=0.0f)</div><div class="ttdoc">Progress the world simulation by a time step.</div><div class="ttdef"><b>Definition</b> <a href="World_8cpp_source.html#l00099">World.cpp:99</a></div></div>
+<div class="ttc" id="aclassduin_1_1World_html_a2bf5807fc0ce1e71375b7f30bf9ea79a"><div class="ttname"><a href="classduin_1_1World.html#a2bf5807fc0ce1e71375b7f30bf9ea79a">duin::World::DeferEnd</a></div><div class="ttdeci">void DeferEnd()</div><div class="ttdoc">End deferred execution of commands.</div><div class="ttdef"><b>Definition</b> <a href="World_8cpp_source.html#l00089">World.cpp:89</a></div></div>
+<div class="ttc" id="aclassduin_1_1World_html_a475f2d4b926dafc8dbffc49b8f928a87"><div class="ttname"><a href="classduin_1_1World.html#a475f2d4b926dafc8dbffc49b8f928a87">duin::World::DeferBegin</a></div><div class="ttdeci">void DeferBegin()</div><div class="ttdoc">Begin deferred execution of commands.</div><div class="ttdef"><b>Definition</b> <a href="World_8cpp_source.html#l00084">World.cpp:84</a></div></div>
 <div class="ttc" id="astructduin_1_1ECSTag_1_1ActiveCamera_html"><div class="ttname"><a href="structduin_1_1ECSTag_1_1ActiveCamera.html">duin::ECSTag::ActiveCamera</a></div><div class="ttdoc">Singleton tag for the active camera entity.</div><div class="ttdef"><b>Definition</b> <a href="ECSTag_8h_source.html#l00072">ECSTag.h:73</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

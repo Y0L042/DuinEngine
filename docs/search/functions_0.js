@@ -11,6 +11,9 @@ var searchData=
   ['addpair_8',['addpair',['../classduin_1_1Entity.html#ab104a4cfc2fbd5faaf1a395b616f3824',1,'duin::Entity::AddPair(uint64_t first, uint64_t second)'],['../classduin_1_1Entity.html#ad2f6ded422d5c348e9c635ea9e7abde9',1,'duin::Entity::AddPair()']]],
   ['addrectangle_9',['addRectangle',['../classRectanglePacker.html#a3b08f7cff97b1c1bfb6052e743628919',1,'RectanglePacker']]],
   ['addregion_10',['addRegion',['../classAtlas.html#a4b62a1b4eaf492865cdd72db69e4ee5a',1,'Atlas']]],
-  ['assign_11',['assign',['../classduin_1_1Entity.html#a61b0fb5d5cc523df91dd00b919eb4219',1,'duin::Entity::Assign(const T &amp;value)'],['../classduin_1_1Entity.html#a6f9bbf386091df246f83072d0ba7c2bb',1,'duin::Entity::Assign(T &amp;&amp;value)']]],
-  ['atlas_12',['atlas',['../classAtlas.html#a226154ccd3bfd64dcc8c119377e15924',1,'Atlas::Atlas(uint16_t _textureSize, uint16_t _maxRegionsCount=4096)'],['../classAtlas.html#a108e8c56ea6d84501971cac219b522ca',1,'Atlas::Atlas(uint16_t _textureSize, const uint8_t *_textureBuffer, uint16_t _regionCount, const uint8_t *_regionBuffer, uint16_t _maxRegionsCount=4096)']]]
+  ['addstage_11',['AddStage',['../classduin_1_1EcsPipeline.html#ac1760deec6980a9c7bc360e2c826d21d',1,'duin::EcsPipeline']]],
+  ['addstages_12',['AddStages',['../classduin_1_1EcsPipeline.html#aad1f35aa234237605b693dce7a4d4684',1,'duin::EcsPipeline']]],
+  ['addsystem_13',['AddSystem',['../classduin_1_1EcsPipeline.html#a4f471d6390b9e1c876dc80b4d9aaa2ff',1,'duin::EcsPipeline']]],
+  ['assign_14',['assign',['../classduin_1_1Entity.html#a61b0fb5d5cc523df91dd00b919eb4219',1,'duin::Entity::Assign(const T &amp;value)'],['../classduin_1_1Entity.html#a6f9bbf386091df246f83072d0ba7c2bb',1,'duin::Entity::Assign(T &amp;&amp;value)']]],
+  ['atlas_15',['atlas',['../classAtlas.html#a226154ccd3bfd64dcc8c119377e15924',1,'Atlas::Atlas(uint16_t _textureSize, uint16_t _maxRegionsCount=4096)'],['../classAtlas.html#a108e8c56ea6d84501971cac219b522ca',1,'Atlas::Atlas(uint16_t _textureSize, const uint8_t *_textureBuffer, uint16_t _regionCount, const uint8_t *_regionBuffer, uint16_t _maxRegionsCount=4096)']]]
 ];

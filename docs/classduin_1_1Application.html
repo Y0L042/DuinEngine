@@ -203,6 +203,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad2fdd5e8818eece60d84960591f57954" id="r_ad2fdd5e8818eece60d84960591f57954"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954">RemoveChildObject</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1GameObject.html">GameObject</a> &gt; child)</td></tr>
 <tr class="memdesc:ad2fdd5e8818eece60d84960591f57954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a child <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> from the root.  <br /></td></tr>
 <tr class="separator:ad2fdd5e8818eece60d84960591f57954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd229f02d1112632f8aac7e488afffd3" id="r_acd229f02d1112632f8aac7e488afffd3"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1EcsPipeline.html">EcsPipeline</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1Application.html#acd229f02d1112632f8aac7e488afffd3">CreateEcsPipeline</a> (<a class="el" href="classduin_1_1World.html">World</a> *world)</td></tr>
+<tr class="separator:acd229f02d1112632f8aac7e488afffd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for Duin applications. </p>
@@ -235,9 +237,9 @@ Public Member Functions</h2></td></tr>
 <div class="line">    <span class="keywordflow">return</span> <span class="keyword">new</span> MyGame();</div>
 <div class="line">}</div>
 <div class="ttc" id="aApplication_8h_html_abec0b47c6d878bd45dfccbcc2719743a"><div class="ttname"><a href="Application_8h.html#abec0b47c6d878bd45dfccbcc2719743a">duin::CreateApplication</a></div><div class="ttdeci">Application * CreateApplication(int argc, char **argv)</div><div class="ttdoc">User-defined factory function for the application.</div></div>
-<div class="ttc" id="aclassduin_1_1Application_html"><div class="ttname"><a href="classduin_1_1Application.html">duin::Application</a></div><div class="ttdoc">Base class for Duin applications.</div><div class="ttdef"><b>Definition</b> <a href="Application_8h_source.html#l00149">Application.h:150</a></div></div>
+<div class="ttc" id="aclassduin_1_1Application_html"><div class="ttname"><a href="classduin_1_1Application.html">duin::Application</a></div><div class="ttdoc">Base class for Duin applications.</div><div class="ttdef"><b>Definition</b> <a href="Application_8h_source.html#l00155">Application.h:156</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00149">149</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00155">155</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adc213d08308816aa92f34e71ae40e092" name="adc213d08308816aa92f34e71ae40e092"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc213d08308816aa92f34e71ae40e092">&#9670;&#160;</a></span>Application()</h2>
@@ -254,7 +256,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00376">376</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00393">393</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -281,7 +283,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00381">381</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00398">398</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -304,7 +306,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Adds an existing <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> as a child of the root. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00612">612</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00629">629</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -350,7 +352,27 @@ template&lt;typename T , typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Shared pointer to the created object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00247">247</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8h_source.html#l00253">253</a> of file <a class="el" href="Application_8h_source.html">Application.h</a>.</p>
+
+</div>
+</div>
+<a id="acd229f02d1112632f8aac7e488afffd3" name="acd229f02d1112632f8aac7e488afffd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd229f02d1112632f8aac7e488afffd3">&#9670;&#160;</a></span>CreateEcsPipeline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1EcsPipeline.html">duin::EcsPipeline</a> &gt; duin::Application::CreateEcsPipeline </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classduin_1_1World.html">World</a> *&#160;</td>
+          <td class="paramname"><em>world</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00639">639</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -379,7 +401,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Override for debug rendering and logic. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00586">586</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00603">603</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -408,7 +430,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Override for 3D rendering. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00549">549</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00566">566</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -437,7 +459,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Override for ImGui UI rendering. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00563">563</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00580">580</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -456,7 +478,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00573">573</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00590">590</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -475,7 +497,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00545">545</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00562">562</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -494,7 +516,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00559">559</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00576">576</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -513,7 +535,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00601">601</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00618">618</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -534,7 +556,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Internal engine initialization. Do not call directly. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00470">470</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00487">487</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -554,7 +576,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00499">499</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00516">516</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -574,7 +596,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00529">529</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00546">546</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -593,7 +615,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00590">590</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00607">607</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -612,7 +634,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00553">553</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00570">570</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -631,7 +653,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00567">567</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00584">584</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -650,7 +672,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00596">596</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00613">613</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -670,7 +692,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00537">537</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00554">554</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -689,7 +711,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00488">488</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00505">505</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -709,7 +731,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00523">523</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00540">540</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -728,7 +750,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00494">494</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00511">511</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -747,7 +769,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00480">480</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00497">497</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -767,7 +789,7 @@ template&lt;typename T , typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00515">515</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00532">532</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -796,7 +818,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Override for cleanup before shutdown. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00606">606</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00623">623</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -825,7 +847,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Override to perform one-time setup. Called before <a class="el" href="classduin_1_1Application.html#ad1509250d55438ec832e886d0a6caa89" title="Override to perform setup after all systems are initialized.">Ready()</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00476">476</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00493">493</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -861,7 +883,7 @@ template&lt;typename T , typename... Args&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00511">511</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00528">528</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -897,7 +919,7 @@ template&lt;typename T , typename... Args&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00533">533</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00550">550</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -926,7 +948,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Override to perform setup after all systems are initialized. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00484">484</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00501">501</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -948,7 +970,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Removes a child <a class="el" href="classduin_1_1GameObject.html" title="Base class for objects in the scene hierarchy.">GameObject</a> from the root. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00617">617</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00634">634</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -991,7 +1013,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Sets the window title. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00391">391</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00408">408</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -1023,7 +1045,7 @@ template&lt;typename T , typename... Args&gt; </div>
 
 <p>Sets initial window dimensions before <a class="el" href="classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522" title="Starts the main loop. Call once after configuration.">Run()</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00385">385</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00402">402</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -1059,7 +1081,7 @@ template&lt;typename T , typename... Args&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00519">519</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l00536">536</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>

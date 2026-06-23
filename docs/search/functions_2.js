@@ -5,7 +5,7 @@ var searchData=
   ['capturemouse_2',['CaptureMouse',['../namespaceduin_1_1Input.html#abb44090b33cbcfb4b27326da213f4e7e',1,'duin::Input']]],
   ['childof_3',['ChildOf',['../classduin_1_1Entity.html#a53ded7d74bbab23fe2cd4f316cec5f32',1,'duin::Entity']]],
   ['clean_4',['Clean',['../classduin_1_1PhysicsServer.html#a7207ac5cd5f6d3e3297578fe2c2f9f9a',1,'duin::PhysicsServer']]],
-  ['clear_5',['clear',['../classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca',1,'duin::Entity::Clear()'],['../classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957',1,'duin::GameWorld::Clear()'],['../classRectanglePacker.html#afb92dc6a0d96dc70efeeda5f936bdef0',1,'RectanglePacker::clear()']]],
+  ['clear_5',['clear',['../classRectanglePacker.html#afb92dc6a0d96dc70efeeda5f936bdef0',1,'RectanglePacker::clear()'],['../classduin_1_1Entity.html#ab1a7be9396a631a4adfb421b99975bca',1,'duin::Entity::Clear()'],['../classduin_1_1GameWorld.html#aa45d73f776ae24b631b953da028c7957',1,'duin::GameWorld::Clear()']]],
   ['clone_6',['clone',['../classduin_1_1Entity.html#a0c54493457b4f09126b4204ce10b522d',1,'duin::Entity::Clone()'],['../classduin_1_1JSONValue.html#ad0452d11bf60219d89c177929bd47e15',1,'duin::JSONValue::Clone()']]],
   ['close_7',['Close',['../classduin_1_1io_1_1IOStream.html#a0885c4aef32a7830d273c011962f1a92',1,'duin::io::IOStream']]],
   ['collisionshape_8',['CollisionShape',['../classduin_1_1CollisionShape.html#a6aa804363ecb98861dce849988faf6f0',1,'duin::CollisionShape']]],
@@ -22,5 +22,6 @@ var searchData=
   ['createchildobject_19',['createchildobject',['../classduin_1_1Application.html#ad0801824608dece0311e089d4999cb63',1,'duin::Application::CreateChildObject()'],['../classduin_1_1GameObject.html#ad95ae2a5c75925c02085b3fce76c21fe',1,'duin::GameObject::CreateChildObject()']]],
   ['createdir_20',['CreateDir',['../namespaceduin_1_1fs.html#a08310e525fc80e8d8f652941344677de',1,'duin::fs']]],
   ['createinputaction_21',['CreateInputAction',['../InputActions_8h.html#af245978b85d96ad56dc36dc6fd8850b1',1,'duin']]],
-  ['createprocess_22',['CreateProcess',['../Process_8h.html#a66aa7e632561ba16e7089d64c2732760',1,'duin']]]
+  ['createprocess_22',['CreateProcess',['../Process_8h.html#a66aa7e632561ba16e7089d64c2732760',1,'duin']]],
+  ['ctx_23',['ctx',['../classduin_1_1SystemBuilder.html#a3b1a99d9532e9faecfdca216e62499cc',1,'duin::SystemBuilder::Ctx()'],['../classduin_1_1System.html#a00aaf65467e8761a8e68d226c4c5c2a9',1,'duin::System::Ctx(void *ptr)'],['../classduin_1_1System.html#ad60f3667b740c07114ce87e6fea7cb41',1,'duin::System::Ctx() const']]]
 ];
