@@ -11,8 +11,6 @@
 #include <memory>
 #include <csignal>
 
-#include "ArgParser.h"
-
 #ifndef DEBUG
 #define DEBUG
 #endif
@@ -124,6 +122,7 @@ void DuinRT::Ready()
         NEED_MODULE(Module_DnGameObject);
         NEED_MODULE(Module_DnGameStateMachine);
         NEED_MODULE(Module_DnECS);
+        NEED_MODULE(Module_DnPipeline);
         NEED_MODULE(Module_DnSceneBuilder);
         NEED_MODULE(Module_DecsGameWorld);
         NEED_MODULE(Module_DnInput);
