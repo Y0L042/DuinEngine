@@ -37,6 +37,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "dn_ecs") {
         res.info = ("dn_ecs", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs.das", "")
     }
+    elif (req == "dn_pipeline") {
+        res.info = ("dn_pipeline", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_pipeline.das", "")
+    }
     elif (req == "dn_ecs_boost") {
         res.info = ("dn_ecs_boost", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_ecs_boost.das", "")
     }

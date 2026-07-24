@@ -9,6 +9,7 @@
 #include "./modules/moduleGameObject/Module_DnGameStateMachine.h"
 #include "./modules/moduleECS/Module_DnECS.h"
 #include "./modules/moduleECS/Module_DnGameWorld.h"
+#include "./modules/moduleECS/Module_DnPipeline.h"
 #include "./modules/moduleInput/Module_DnInput.h"
 #include "./modules/modulePhysics/Module_DnPhysicsServer.h"
 #include "./modules/modulePhysics/ModuleDnCharacterBody.h"

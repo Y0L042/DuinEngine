@@ -84,7 +84,7 @@ static void dn_gameworld_set_global_position_impl(void *handle, uint64_t entityI
     if (!handle || !entityId)
         return;
     auto *gw = static_cast<duin::GameWorld *>(handle);
-    duin::Entity e(entityId, gw);
+    duin::Entity e(gw->GetFlecsWorld(), entityId);
     gw->SetGlobalPosition(e, duin::Vector3{x, y, z});
 }
 
@@ -93,7 +93,7 @@ static void dn_gameworld_get_global_position_impl(void *handle, uint64_t entityI
     if (!handle || !entityId)
         return;
     auto *gw = static_cast<duin::GameWorld *>(handle);
-    duin::Entity e(entityId, gw);
+    duin::Entity e(gw->GetFlecsWorld(), entityId);
     duin::Vector3 pos = gw->GetGlobalPosition(e);
     *x = pos.x;
     *y = pos.y;
@@ -105,7 +105,7 @@ static void dn_gameworld_set_global_rotation_impl(void *handle, uint64_t entityI
     if (!handle || !entityId)
         return;
     auto *gw = static_cast<duin::GameWorld *>(handle);
-    duin::Entity e(entityId, gw);
+    duin::Entity e(gw->GetFlecsWorld(), entityId);
     gw->SetGlobalRotation(e, duin::Quaternion{x, y, z, w});
 }
 
@@ -115,7 +115,7 @@ static void dn_gameworld_get_global_rotation_impl(
     if (!handle || !entityId)
         return;
     auto *gw = static_cast<duin::GameWorld *>(handle);
-    duin::Entity e(entityId, gw);
+    duin::Entity e(gw->GetFlecsWorld(), entityId);
     duin::Quaternion rot = gw->GetGlobalRotation(e);
     *x = rot.x;
     *y = rot.y;
@@ -128,7 +128,7 @@ static void dn_gameworld_set_global_scale_impl(void *handle, uint64_t entityId, 
     if (!handle || !entityId)
         return;
     auto *gw = static_cast<duin::GameWorld *>(handle);
-    duin::Entity e(entityId, gw);
+    duin::Entity e(gw->GetFlecsWorld(), entityId);
     gw->SetGlobalScale(e, duin::Vector3{x, y, z});
 }
 
@@ -137,7 +137,7 @@ static void dn_gameworld_get_global_scale_impl(void *handle, uint64_t entityId, 
     if (!handle || !entityId)
         return;
     auto *gw = static_cast<duin::GameWorld *>(handle);
-    duin::Entity e(entityId, gw);
+    duin::Entity e(gw->GetFlecsWorld(), entityId);
     duin::Vector3 scale = gw->GetGlobalScale(e);
     *x = scale.x;
     *y = scale.y;
