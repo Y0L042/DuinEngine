@@ -1242,7 +1242,7 @@ TEST_SUITE("Relationship and Pair Tests")
         INFO("DN2 ", target2.GetID(), " vs flecs2 ", target2flecs.raw_id());
         REQUIRE(child2.IsValid());
         REQUIRE(target2.IsValid());
-        CHECK(child2.Has<Targets>(582));
+        CHECK(child2.Has<Targets>(world2.Entity(582)));
         CHECK(child2.Has<Targets>(target2));
         // ChildOf must still be intact
         duin::Entity parent2 = world2.Lookup("Parent");

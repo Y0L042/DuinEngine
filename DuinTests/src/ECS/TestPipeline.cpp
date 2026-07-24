@@ -11,7 +11,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("AddStage registers a stage under the given execution step")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Movement");
 
@@ -24,7 +24,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("AddStage appends multiple stages to the same step")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Input");
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Move");
@@ -36,7 +36,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("AddStages registers stages in bulk")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStages(duin::ExecutionStep::UPDATE, {"Input", "Move", "Resolve"});
 
@@ -48,7 +48,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("GetStage returns a copy of the matching stage by name")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStages(duin::ExecutionStep::UPDATE, {"Input", "Move"});
 
@@ -61,7 +61,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("GetStage returns nullopt when no stage matches")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Input");
 
@@ -71,12 +71,12 @@ TEST_SUITE("Pipeline")
     TEST_CASE("SetStage overwrites the matching stage by name")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Move");
 
         duin::Entity systemEntity = w.Entity("MoveSystem");
-        duin::SystemHandle handle{&w, systemEntity};
+        duin::SystemHandle handle{w, systemEntity};
         duin::Stage updated{"Move", duin::ExecutionStep::UPDATE, {handle}};
 
         REQUIRE(pipeline.SetStage(duin::ExecutionStep::UPDATE, updated));
@@ -96,7 +96,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("SetStage returns false when no stage matches")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Move");
 
@@ -107,7 +107,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("Stages registered to different steps stay separate")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "UpdateStage");
         pipeline.AddStage(duin::ExecutionStep::DRAW, "DrawStage");
@@ -121,12 +121,12 @@ TEST_SUITE("Pipeline")
     TEST_CASE("AddSystem adds a system handle to the named stage")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Movement");
 
         duin::Entity systemEntity = w.Entity("MoveSystem");
-        duin::SystemHandle handle(&w, systemEntity);
+        duin::SystemHandle handle{w, systemEntity};
         pipeline.AddSystem(duin::ExecutionStep::UPDATE, "Movement", handle);
 
         std::optional<duin::Stage> stage = pipeline.GetStage(duin::ExecutionStep::UPDATE, "Movement");
@@ -144,7 +144,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("RunStep executes without affecting registered stages")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Movement");
         pipeline.RunStep(duin::ExecutionStep::UPDATE, 0.016f);
@@ -155,7 +155,7 @@ TEST_SUITE("Pipeline")
     TEST_CASE("RunAll runs every execution step without throwing")
     {
         duin::World w;
-        duin::EcsPipeline pipeline(&w);
+        duin::EcsPipeline pipeline(w);
 
         pipeline.AddStage(duin::ExecutionStep::INITIALIZE, "Init");
         pipeline.AddStage(duin::ExecutionStep::UPDATE, "Update");

@@ -27,7 +27,7 @@ TEST_SUITE("Entity")
         CHECK(e.IsValid());
         CHECK(e.IsAlive());
         CHECK(e.GetID() != 0);
-        CHECK(e.GetWorld() == &w);
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
     }
 
     TEST_CASE("operator== and operator!=")
@@ -637,34 +637,25 @@ TEST_SUITE("Entity Constructors")
     {
         duin::Entity e;
         CHECK(!e.IsValid());
-        CHECK(e.GetWorld() == nullptr);
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == nullptr);
         CHECK(e.GetFlecsEntity().world().c_ptr() == nullptr);
     }
 
-    TEST_CASE("Entity(uint64_t id, World* world) - valid id with world")
+    TEST_CASE("Entity(const flecs::world&, uint64_t id) - valid id with world")
     {
         duin::World w;
         duin::Entity src = w.Entity("CtorSource");
         uint64_t id = src.GetID();
 
-        duin::Entity e(id, &w);
+        duin::Entity e(w.GetFlecsWorld(), id);
 
         CHECK(e.IsValid());
         CHECK(e.IsAlive());
         CHECK(e.GetID() == id);
-        CHECK(e.GetWorld() == &w);
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
         CHECK(flecsHasWorld(e));
         // Must not assert - previously this would crash when flecs tried to resolve name
         CHECK(e.GetName() == "CtorSource");
-    }
-
-    TEST_CASE("Entity(uint64_t id, World* world) - null world gives invalid entity")
-    {
-        duin::Entity e(42, nullptr);
-        CHECK(!e.IsValid());
-        CHECK(e.GetWorld() == nullptr);
-        // flecs entity has no world when constructed without one
-        CHECK(e.GetFlecsEntity().world().c_ptr() == nullptr);
     }
 
     TEST_CASE("Entity(const flecs::entity&) - flecs entity carries its own world")
@@ -674,25 +665,14 @@ TEST_SUITE("Entity Constructors")
 
         duin::Entity e(fe);
 
-        // duin world pointer is null (not set via this ctor), but flecs world is valid
-        CHECK(e.GetWorld() == nullptr);
-        CHECK(!e.IsValid()); // IsValid() requires duin world != nullptr
-        CHECK(e.GetFlecsEntity().world().c_ptr() != nullptr);
-        CHECK(fe.is_valid());
-    }
-
-    TEST_CASE("Entity(const flecs::entity&, World*) - both worlds set")
-    {
-        duin::World w;
-        flecs::entity fe = w.GetFlecsWorld().entity("FlecsAndDuinWorld");
-
-        duin::Entity e(fe, &w);
-
+        // The flecs entity carries its own world, so the duin Entity is valid and
+        // resolves to the same underlying ecs_world_t* with no separate association.
         CHECK(e.IsValid());
         CHECK(e.IsAlive());
-        CHECK(e.GetWorld() == &w);
-        CHECK(flecsHasWorld(e));
-        CHECK(e.GetName() == "FlecsAndDuinWorld");
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
+        CHECK(e.GetFlecsEntity().world().c_ptr() != nullptr);
+        CHECK(e.GetName() == "FlecsCtorEntity");
+        CHECK(fe.is_valid());
     }
 
     TEST_CASE("Copy constructor - copies world and flecs entity")
@@ -705,7 +685,7 @@ TEST_SUITE("Entity Constructors")
         CHECK(copy.IsValid());
         CHECK(copy.IsAlive());
         CHECK(copy.GetID() == src.GetID());
-        CHECK(copy.GetWorld() == &w);
+        CHECK(copy.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
         CHECK(flecsHasWorld(copy));
         CHECK(copy.GetName() == "CopyCtorEntity");
         CHECK(copy == src);
@@ -722,12 +702,12 @@ TEST_SUITE("Entity Constructors")
         CHECK(e.IsValid());
         CHECK(e.IsAlive());
         CHECK(e.GetID() == src.GetID());
-        CHECK(e.GetWorld() == &w);
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
         CHECK(flecsHasWorld(e));
         CHECK(e.GetName() == "CopyAssignEntity");
     }
 
-    TEST_CASE("Move constructor - transfers world and flecs entity, source loses world")
+    TEST_CASE("Move constructor - transfers the flecs entity (and its world)")
     {
         duin::World w;
         duin::Entity src = w.Entity("MoveCtorEntity");
@@ -738,14 +718,12 @@ TEST_SUITE("Entity Constructors")
         CHECK(moved.IsValid());
         CHECK(moved.IsAlive());
         CHECK(moved.GetID() == id);
-        CHECK(moved.GetWorld() == &w);
+        CHECK(moved.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
         CHECK(flecsHasWorld(moved));
         CHECK(moved.GetName() == "MoveCtorEntity");
-        // Source world pointer is cleared after move
-        CHECK(src.GetWorld() == nullptr);
     }
 
-    TEST_CASE("Move assignment - transfers world and flecs entity, source loses world")
+    TEST_CASE("Move assignment - transfers the flecs entity (and its world)")
     {
         duin::World w;
         duin::Entity src = w.Entity("MoveAssignEntity");
@@ -757,10 +735,9 @@ TEST_SUITE("Entity Constructors")
         CHECK(e.IsValid());
         CHECK(e.IsAlive());
         CHECK(e.GetID() == id);
-        CHECK(e.GetWorld() == &w);
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
         CHECK(flecsHasWorld(e));
         CHECK(e.GetName() == "MoveAssignEntity");
-        CHECK(src.GetWorld() == nullptr);
     }
 
     TEST_CASE("World::Entity(uint64_t id) - constructs valid entity from existing id")
@@ -774,25 +751,47 @@ TEST_SUITE("Entity Constructors")
         CHECK(e.IsValid());
         CHECK(e.IsAlive());
         CHECK(e.GetID() == id);
-        CHECK(e.GetWorld() == &w);
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
         CHECK(flecsHasWorld(e));
         CHECK(e.GetName() == "WorldEntityById");
     }
 
-    TEST_CASE("SetWorld and SetFlecsEntity - manually assembled entity is valid")
+    TEST_CASE("SetFlecsEntity - entity assembled from a flecs entity resolves its world")
     {
         duin::World w;
         flecs::entity fe = w.GetFlecsWorld().entity("ManualEntity");
 
+        // No SetWorld: the flecs entity already carries its own ecs_world_t*.
         duin::Entity e;
-        e.SetWorld(&w);
         e.SetFlecsEntity(fe);
 
         CHECK(e.IsValid());
         CHECK(e.IsAlive());
-        CHECK(e.GetWorld() == &w);
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
         CHECK(flecsHasWorld(e));
         CHECK(e.GetName() == "ManualEntity");
+    }
+
+    TEST_CASE("World is a value type - entities survive a World move")
+    {
+        // Build a World, create an entity, then MOVE the World. Because the entity
+        // resolves its world through the underlying ecs_world_t* (not the World
+        // wrapper's address), it must remain valid and point at the same C world.
+        duin::World moved = []() {
+            duin::World w;
+            return w; // forces move/NRVO out of the local
+        }();
+
+        duin::Entity e = moved.Entity("SurvivesMove");
+        ecs_world_t *raw = moved.GetFlecsWorld().c_ptr();
+
+        duin::World relocated = std::move(moved);
+
+        CHECK(e.IsValid());
+        CHECK(e.IsAlive());
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == raw);
+        CHECK(relocated.GetFlecsWorld().c_ptr() == raw);
+        CHECK(e.GetName() == "SurvivesMove");
     }
 }
 
@@ -802,7 +801,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::Entity::ID id;
         CHECK(id.GetID() == 0);
-        CHECK(id.GetWorld() == nullptr);
+        CHECK(id.GetWorld().GetFlecsWorld().c_ptr() == nullptr);
     }
 
     TEST_CASE("Construct from raw ID value")
@@ -810,7 +809,7 @@ TEST_SUITE("Entity::ID")
         flecs::id_t rawValue = 12345;
         duin::Entity::ID id(rawValue);
         CHECK(id.GetID() == rawValue);
-        CHECK(id.GetWorld() == nullptr);
+        CHECK(id.GetWorld().GetFlecsWorld().c_ptr() == nullptr);
     }
 
     TEST_CASE("Construct from world and ID value")
@@ -819,9 +818,9 @@ TEST_SUITE("Entity::ID")
         duin::Entity e = w.Entity("TestEntity");
         flecs::id_t entityId = e.GetID();
 
-        duin::Entity::ID id(&w, entityId);
+        duin::Entity::ID id(w.GetFlecsWorld(), entityId);
         CHECK(id.GetID() == entityId);
-        CHECK(id.GetWorld() == &w);
+        CHECK(id.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
     }
 
     TEST_CASE("Construct pair ID from two raw IDs")
@@ -832,7 +831,7 @@ TEST_SUITE("Entity::ID")
 
         duin::Entity::ID pairId(first.GetID(), second.GetID());
         CHECK(pairId.IsPair());
-        CHECK(pairId.GetWorld() == nullptr);
+        CHECK(pairId.GetWorld().GetFlecsWorld().c_ptr() == nullptr);
     }
 
     TEST_CASE("Construct pair ID from world and two raw IDs")
@@ -841,9 +840,9 @@ TEST_SUITE("Entity::ID")
         duin::Entity first = w.Entity("First");
         duin::Entity second = w.Entity("Second");
 
-        duin::Entity::ID pairId(&w, first.GetID(), second.GetID());
+        duin::Entity::ID pairId(w.GetFlecsWorld(), first.GetID(), second.GetID());
         CHECK(pairId.IsPair());
-        CHECK(pairId.GetWorld() == &w);
+        CHECK(pairId.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
     }
 
     TEST_CASE("Construct pair ID from two Entity::ID objects")
@@ -852,19 +851,19 @@ TEST_SUITE("Entity::ID")
         duin::Entity first = w.Entity("First");
         duin::Entity second = w.Entity("Second");
 
-        duin::Entity::ID firstId(&w, first.GetID());
-        duin::Entity::ID secondId(&w, second.GetID());
+        duin::Entity::ID firstId(w.GetFlecsWorld(), first.GetID());
+        duin::Entity::ID secondId(w.GetFlecsWorld(), second.GetID());
         duin::Entity::ID pairId(firstId, secondId);
 
         CHECK(pairId.IsPair());
-        CHECK(pairId.GetWorld() == &w);
+        CHECK(pairId.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
     }
 
     TEST_CASE("IsEntity returns true for entity IDs")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         CHECK(id.IsEntity());
         CHECK(!id.IsPair());
@@ -876,7 +875,7 @@ TEST_SUITE("Entity::ID")
         duin::Entity first = w.Entity("First");
         duin::Entity second = w.Entity("Second");
 
-        duin::Entity::ID pairId(&w, first.GetID(), second.GetID());
+        duin::Entity::ID pairId(w.GetFlecsWorld(), first.GetID(), second.GetID());
 
         CHECK(pairId.IsPair());
         CHECK(!pairId.IsEntity());
@@ -886,7 +885,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         duin::Entity retrieved = id.GetEntity();
         CHECK(retrieved.IsValid());
@@ -899,7 +898,7 @@ TEST_SUITE("Entity::ID")
         duin::Entity first = w.Entity("First");
         duin::Entity second = w.Entity("Second");
 
-        duin::Entity::ID pairId(&w, first.GetID(), second.GetID());
+        duin::Entity::ID pairId(w.GetFlecsWorld(), first.GetID(), second.GetID());
 
         duin::Entity retrievedFirst = pairId.First();
         duin::Entity retrievedSecond = pairId.Second();
@@ -916,7 +915,7 @@ TEST_SUITE("Entity::ID")
         duin::Entity relation = w.Entity("Relation");
         duin::Entity target = w.Entity("Target");
 
-        duin::Entity::ID pairId(&w, relation.GetID(), target.GetID());
+        duin::Entity::ID pairId(w.GetFlecsWorld(), relation.GetID(), target.GetID());
 
         CHECK(pairId.HasRelation(relation.GetID()));
         CHECK(!pairId.HasRelation(target.GetID()));
@@ -926,7 +925,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         std::string str = id.Str();
         CHECK(!str.empty());
@@ -936,7 +935,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         flecs::id_t GetID = id;
         CHECK(GetID == e.GetID());
@@ -946,7 +945,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         flecs::id flecsId = id.GetFlecsId();
         CHECK(flecsId.raw_id() == e.GetID());
@@ -962,7 +961,7 @@ TEST_SUITE("Entity::ID")
 
         // Register component
         duin::Entity compEntity = w.Component<TestComp>();
-        duin::Entity::ID componentId(&w, compEntity.GetID());
+        duin::Entity::ID componentId(w.GetFlecsWorld(), compEntity.GetID());
 
         // AddFlags returns an ID (not Entity) with the flags applied
         duin::Entity::ID idWithFlags = componentId.AddFlags(flecs::AUTO_OVERRIDE);
@@ -984,7 +983,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         // Entity IDs without flags should return false
         CHECK(!id.HasFlags());
@@ -994,7 +993,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         // RemoveGeneration returns an ID without generation
         duin::Entity::ID idNoGen = id.RemoveGeneration();
@@ -1011,7 +1010,7 @@ TEST_SUITE("Entity::ID")
         w.Component<TestComponent>();
 
         duin::Entity compEntity = w.Component<TestComponent>();
-        duin::Entity::ID id(&w, compEntity.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), compEntity.GetID());
 
         duin::Entity typeId = id.TypeId();
         CHECK(typeId.IsValid());
@@ -1037,7 +1036,7 @@ TEST_SUITE("Entity::ID")
 
         // Create ID for the relation
         duin::Entity relationEntity = w.Component<RelationType>();
-        duin::Entity::ID relationId(&w, relationEntity.GetID());
+        duin::Entity::ID relationId(w.GetFlecsWorld(), relationEntity.GetID());
 
         CHECK(relationId.IsEntity());
         CHECK(relationId.GetEntity().IsValid());
@@ -1047,7 +1046,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         // Regular entities are not wildcards
         CHECK(!id.IsWildcard());
@@ -1057,7 +1056,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         std::string flagsStr = id.FlagsStr();
         // Should not throw, may be empty for entities without flags
@@ -1068,7 +1067,7 @@ TEST_SUITE("Entity::ID")
     {
         duin::World w;
         duin::Entity e = w.Entity("TestEntity");
-        duin::Entity::ID id(&w, e.GetID());
+        duin::Entity::ID id(w.GetFlecsWorld(), e.GetID());
 
         duin::Entity flags = id.GetFlags();
         // Should return a valid entity (may be 0 for no flags)

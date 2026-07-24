@@ -142,6 +142,7 @@ TEST_SUITE("World")
         bool called = false;
         w.DeferBegin();
         w.Defer([&]() { called = true; });
+        CHECK(!called);
         w.DeferEnd();
         CHECK(called);
     }
