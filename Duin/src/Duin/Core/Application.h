@@ -19,11 +19,13 @@
 #include "Duin/Core/Events/EventHandler.h"
 #include "Duin/Objects/GameObject.h"
 #include "Duin/Core/Signals/SignalsModule.h"
+#include "Duin/ECS/DECS/World.h"
 
 #include "DEBUG_DEFINES.h"
 
 namespace duin
 {
+class EcsPipeline;
 
 /** @brief Returns the root directory path of the application. */
 std::string GetRootDirectory();
@@ -93,6 +95,8 @@ bool GetGameShouldQuit();
 void SetGameShouldQuit(bool shouldQuit = true);
 void PushQuitEvent();
 
+std::shared_ptr<EcsPipeline> CreateEcsPipeline(World world);
+
 /**
  * @name Post-Callback Registration
  * Register callbacks to be invoked after engine lifecycle stages.
@@ -150,8 +154,6 @@ std::shared_ptr<ScopedConnection> QueueExitCallback(std::function<void()>);
  * }
  * @endcode
  */
-class EcsPipeline;
-class World;
 class DAPI Application
 {
   public:
@@ -184,14 +186,13 @@ class DAPI Application
     void BeginRenderFrame();
     void EndRenderFrame();
 
-
 #ifdef DN_HEADLESS
-    bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
-                      double &physicsAccumTime);
+    bool ProcessFrame(
+        double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime, double &physicsAccumTime);
     bool PushSDLEvent(::SDL_Event *e);
 #else
-    bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
-                      double &physicsAccumTime);
+    bool ProcessFrame(
+        double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime, double &physicsAccumTime);
 #endif /* DN_HEADLESS */
 #endif /* DN_TESTING */
 
@@ -259,8 +260,6 @@ class DAPI Application
     /** @brief Removes a child GameObject from the root. */
     void RemoveChildObject(std::shared_ptr<GameObject> child);
 
-    std::shared_ptr<EcsPipeline> CreateEcsPipeline(World *world);
-
   private:
 #ifdef DN_HEADLESS
     bool headlessMode = false;
@@ -279,8 +278,8 @@ class DAPI Application
     void ShutdownRHI();
     void ShutdownSDL();
 
-    bool ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
-                      double &physicsAccumTime);
+    bool ProcessFrame(
+        double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime, double &physicsAccumTime);
 #endif
 
     // Per-frame
@@ -301,5 +300,7 @@ class DAPI Application
  * @return Pointer to the application instance.
  */
 Application *CreateApplication(int argc, char **argv);
+
+Application *GetApplication();
 
 } // namespace duin

@@ -42,6 +42,11 @@
 #include <SDL3/SDL_video.h>
 
 // ---------------------------------------------------------------------------
+// Application Singleton Instance
+// ---------------------------------------------------------------------------
+ duin::Application *app = nullptr;
+
+// ---------------------------------------------------------------------------
 // Debug / quit state
 // ---------------------------------------------------------------------------
 static int debugIsGamePaused_ = 0;
@@ -87,6 +92,11 @@ static duin::Signal<> postDebugSignal;
 static duin::Signal<> exitSignal;
 
 // --- Utility / Accessors ---
+
+duin::Application *duin::GetApplication()
+{
+    return app;
+}
 
 std::string duin::GetRootDirectory()
 {
@@ -636,7 +646,7 @@ void duin::Application::RemoveChildObject(std::shared_ptr<GameObject> child)
     rootGameObject->RemoveChildObject(child);
 }
 
-std::shared_ptr<duin::EcsPipeline> duin::Application::CreateEcsPipeline(World *world)
+std::shared_ptr<duin::EcsPipeline> duin::CreateEcsPipeline(World world)
 {
     std::shared_ptr<EcsPipeline> pipeline = std::make_shared<EcsPipeline>(world);
 
