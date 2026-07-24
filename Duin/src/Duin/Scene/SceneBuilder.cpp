@@ -212,8 +212,8 @@ duin::PackedPair duin::SceneBuilder::PackPairWBothEntities(Entity::ID pairID, UU
 
 void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
 {
-    World *w = e.GetWorld();
-    if (!w)
+    World w = e.GetWorld();
+    if (!w.GetFlecsWorld().c_ptr())
     {
         DN_CORE_WARN("SceneBuilder::InstantiatePair - Entity has no world");
         return;
@@ -242,7 +242,7 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
     // and uses "::" as the separator, matching how C++ component paths are stored.
     auto lookupComponent = [&](const std::string &path, const std::string &name) -> Entity {
         const std::string &key = path.empty() ? name : path;
-        return w->Lookup(key);
+        return w.Lookup(key);
     };
 
     Entity relationship;
@@ -257,12 +257,12 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
             auto it = packedEntityToInstanceMap.find(pp.relationshipUUID);
             if (it != packedEntityToInstanceMap.end())
             {
-                relationship = w->MakeAlive(it->second);
+                relationship = w.MakeAlive(it->second);
             }
         }
         if (!relationship.IsValid())
         {
-            relationship = w->Lookup(pp.relationshipName);
+            relationship = w.Lookup(pp.relationshipName);
         }
     }
 
@@ -280,12 +280,12 @@ void duin::SceneBuilder::InstantiatePair(const PackedPair &pp, Entity e)
             auto it = packedEntityToInstanceMap.find(pp.targetUUID);
             if (it != packedEntityToInstanceMap.end())
             {
-                target = w->MakeAlive(it->second);
+                target = w.MakeAlive(it->second);
             }
         }
         if (!target.IsValid())
         {
-            target = w->Lookup(pp.targetName);
+            target = w.Lookup(pp.targetName);
         }
     }
 
@@ -513,7 +513,10 @@ void duin::SceneBuilder::InstantiateEntity(const PackedEntity &pe, Entity e)
 {
     DN_CORE_ASSERT(e.IsValid(), "Entity is not valid!");
 
-    World *world = e.GetWorld();
+    // GetWorld() returns a non-owning World view by value; bind it to a local so
+    // its address stays valid for the World*-taking helpers below.
+    World worldView = e.GetWorld();
+    World *world = &worldView;
     packedEntityToInstanceMap[pe.uuid] = e.GetID();
 
     std::string cachedName;
@@ -1080,8 +1083,11 @@ duin::Entity duin::SceneBuilder::InstantiateSceneAsChildren(PackedScene &pscn, E
     instanceToPackedEntityMap.clear();
     packedEntityToInstanceMap.clear();
 
-    World *w = parent.GetWorld();
-    if (!w)
+    // GetWorld() returns a non-owning World view by value; bind it to a local so
+    // its address stays valid for the World*-taking helpers below.
+    World worldView = parent.GetWorld();
+    World *w = &worldView;
+    if (!w->GetFlecsWorld().c_ptr())
     {
         return Entity();
     }
