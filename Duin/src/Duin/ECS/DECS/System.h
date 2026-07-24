@@ -6,6 +6,7 @@
 #include "Duin/Core/Debug/DNLog.h"
 #include "Iter.h"   // duin::Iter (constructed in Run)
 #include "Entity.h" // full Entity type (constructed in Each and Entity())
+#include "World.h"  // full World type (SystemHandle holds World by value)
 
 // TODO Add Asserts
 
@@ -37,9 +38,8 @@ template <typename... Components>
 class SystemBuilder
 {
   public:
-    SystemBuilder(flecs::world_t *flecsWorld, const char *name, World *world = nullptr)
-        : flecsSystemBuilder(std::make_unique<flecs::system_builder<Components...>>(flecsWorld, name)),
-          world_(world)
+    SystemBuilder(flecs::world_t *flecsWorld, const char *name)
+        : flecsSystemBuilder(std::make_unique<flecs::system_builder<Components...>>(flecsWorld, name))
     {
     }
 
@@ -144,19 +144,18 @@ class SystemBuilder
     System Each(Func &&func)
     {
         // NOTE: a system callback is stored and invoked later (every progress),
-        // so the functor and world pointer must be captured BY VALUE. This
-        // differs from Query::Each, which captures by reference because the
-        // query callback runs synchronously and immediately.
+        // so the functor must be captured BY VALUE. This differs from
+        // Query::Each, which captures by reference because the query callback
+        // runs synchronously and immediately. The flecs entity passed to the
+        // callback already carries its own world.
         flecs::system sys = flecsSystemBuilder->each(
-            [func = std::forward<Func>(func), world = world_](
+            [func = std::forward<Func>(func)](
                 flecs::entity flecsEntity,
                 std::conditional_t<std::is_pointer_v<Components>, Components, Components &>... comps) {
-                duin::Entity duinEntity;
-                duinEntity.SetFlecsEntity(flecsEntity);
-                duinEntity.SetWorld(world);
+                duin::Entity duinEntity(flecsEntity);
                 func(duinEntity, comps...);
             });
-        return System(std::move(sys), world_);
+        return System(std::move(sys));
     }
 
     /**
@@ -174,17 +173,16 @@ class SystemBuilder
             duin::Iter duinIter(flecsIter);
             func(duinIter);
         });
-        return System(std::move(sys), world_);
+        return System(std::move(sys));
     }
 
   private:
     std::unique_ptr<flecs::system_builder<Components...>> flecsSystemBuilder;
-    World *world_ = nullptr;
 };
 
 struct SystemHandle
 {
-    World *world;
+    World world;
     Entity system;
 };
 
@@ -211,17 +209,17 @@ class System : public Entity
 
     /**
      * @brief Construct from a built flecs system (move). flecs::system IS-A
-     * flecs::entity, so this just adopts its entity + world.
+     * flecs::entity, so this just adopts its entity (which carries its world).
      */
-    System(flecs::system &&other, World *world = nullptr)
-        : Entity(static_cast<const flecs::entity &>(other), world)
+    System(flecs::system &&other)
+        : Entity(static_cast<const flecs::entity &>(other))
     {
     }
 
     /**
      * @brief Construct from a built flecs system (copy).
      */
-    System(const flecs::system &other, World *world = nullptr) : Entity(other, world)
+    System(const flecs::system &other) : Entity(static_cast<const flecs::entity &>(other))
     {
     }
 
@@ -229,13 +227,11 @@ class System : public Entity
      * @brief Construct a System wrapper from an existing system entity.
      *
      * Mirrors flecs::world::system(entity): adopts the entity as a runnable
-     * system; it does NOT create a new system.
+     * system; it does NOT create a new system. The entity already carries its
+     * own world.
      */
-    System(const Entity &entity, World *world = nullptr) : Entity(entity)
+    System(const Entity &entity) : Entity(entity)
     {
-        DN_CORE_ASSERT(world, "World is nullptr!");
-        if (world)
-            SetWorld(world);
     }
 
     ~System() = default;
@@ -261,6 +257,8 @@ class System : public Entity
     {
         return SystemHandle{GetWorld(), *this};
     }
+    // NOTE: GetWorld() now returns a World by value (non-owning view); the
+    // SystemHandle stores it by value.
 
     /**
      * @brief Run the system once immediately (outside the pipeline), like ecs_run.

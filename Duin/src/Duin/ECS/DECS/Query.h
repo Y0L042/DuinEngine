@@ -23,8 +23,8 @@ template <typename... Components>
 class QueryBuilder
 {
   public:
-    QueryBuilder(flecs::query_builder<Components...> &&builder, World *world = nullptr)
-        : flecsQueryBuilder(std::move(builder)), world_(world)
+    QueryBuilder(flecs::query_builder<Components...> &&builder)
+        : flecsQueryBuilder(std::move(builder))
     {
     }
 
@@ -84,12 +84,11 @@ class QueryBuilder
      */
     Query<Components...> Build()
     {
-        return Query<Components...>(flecsQueryBuilder.build(), world_);
+        return Query<Components...>(flecsQueryBuilder.build());
     }
 
   private:
     flecs::query_builder<Components...> flecsQueryBuilder;
-    World *world_ = nullptr;
 };
 
 /**
@@ -109,7 +108,7 @@ class Query
      * @brief Constructor from flecs query (move).
      * @param other The flecs query to wrap.
      */
-    Query(flecs::query<Components...> &&other, World *world = nullptr) : rawQuery(std::move(other)), world_(world)
+    Query(flecs::query<Components...> &&other) : rawQuery(std::move(other))
     {
         //DN_CORE_INFO("Constructing query using r-value move");
     }
@@ -118,7 +117,7 @@ class Query
      * @brief Constructor from flecs query (copy).
      * @param other The flecs query to wrap.
      */
-    Query(const flecs::query<Components...> &other, World *world = nullptr) : rawQuery(other), world_(world)
+    Query(const flecs::query<Components...> &other) : rawQuery(other)
     {
         DN_CORE_INFO("Constructing query using l-value");
     }
@@ -133,8 +132,7 @@ class Query
      */
     bool IsValid() const
     {
-        bool res = static_cast<bool>(rawQuery) && world_;
-        return res;
+        return static_cast<bool>(rawQuery);
     }
 
     void Destruct()
@@ -171,13 +169,12 @@ class Query
             return;
         // Use std::conditional so pointer components (optional terms) are passed
         // by value (T*) rather than by reference (T*&), which flecs requires.
-        rawQuery.each([&func, this](flecs::entity flecsEntity,
-                                    std::conditional_t<std::is_pointer_v<Components>,
-                                                       Components,
-                                                       Components &>...comps) {
-            Entity duinEntity;
-            duinEntity.flecsEntity = flecsEntity;
-            duinEntity.world = world_;
+        rawQuery.each([&func](flecs::entity flecsEntity,
+                              std::conditional_t<std::is_pointer_v<Components>,
+                                                 Components,
+                                                 Components &>...comps) {
+            // flecsEntity already carries its own world.
+            Entity duinEntity(flecsEntity);
             func(duinEntity, comps...);
         });
     }
@@ -257,6 +254,5 @@ class Query
     friend class World;
     friend class Entity;
     flecs::query<Components...> rawQuery;
-    World *world_ = nullptr;
 };
 } // namespace duin

@@ -83,7 +83,7 @@ struct Stage
 class EcsPipeline
 {
   public:
-    EcsPipeline(World *world);
+    EcsPipeline(World world);
 
     /**
      * @brief Register a new stage under the given execution step.
@@ -170,11 +170,10 @@ class EcsPipeline
     bool SetStage(ExecutionStep step, const Stage &stage);
 
   private:
-    friend class Application;
-
-    World *world = nullptr;
+    World world;
     std::array<std::vector<Stage>, static_cast<size_t>(ExecutionStep::COUNT)> stages;
 
+  public:
     std::shared_ptr<ScopedConnection> onReadyConnection;
     std::shared_ptr<ScopedConnection> onEventConnection;
     std::shared_ptr<ScopedConnection> onUpdateConnection;

@@ -19,8 +19,8 @@ duin::Entity::Entity() : flecsEntity(flecs::entity_t(0))
 {
 }
 
-duin::Entity::Entity(uint64_t id, World *world)
-    : flecsEntity(world ? flecs::entity(world->GetFlecsWorld().c_ptr(), id) : flecs::entity(id)), world(world)
+duin::Entity::Entity(const flecs::world &world, uint64_t id)
+    : flecsEntity(world.c_ptr(), id)
 {
 }
 
@@ -42,11 +42,7 @@ duin::Entity::Entity(const flecs::entity &entity) : flecsEntity(entity)
 {
 }
 
-duin::Entity::Entity(const flecs::entity &entity, World *world) : flecsEntity(entity), world(world)
-{
-}
-
-duin::Entity::Entity(const Entity &other) : world(other.world), flecsEntity(other.flecsEntity)
+duin::Entity::Entity(const Entity &other) : flecsEntity(other.flecsEntity)
 {
 }
 
@@ -54,24 +50,20 @@ duin::Entity &duin::Entity::operator=(const Entity &other)
 {
     if (this != &other)
     {
-        world = other.world;
         flecsEntity = other.flecsEntity;
     }
     return *this;
 }
 
-duin::Entity::Entity(Entity &&other) noexcept : world(other.world), flecsEntity(std::move(other.flecsEntity))
+duin::Entity::Entity(Entity &&other) noexcept : flecsEntity(std::move(other.flecsEntity))
 {
-    other.world = nullptr;
 }
 
 duin::Entity &duin::Entity::operator=(Entity &&other) noexcept
 {
     if (this != &other)
     {
-        world = other.world;
         flecsEntity = std::move(other.flecsEntity);
-        other.world = nullptr;
     }
     return *this;
 }
@@ -80,9 +72,9 @@ duin::Entity::~Entity()
 {
 }
 
-duin::World *duin::Entity::GetWorld() const
+duin::World duin::Entity::GetWorld() const
 {
-    return world;
+    return World(flecsEntity.world().c_ptr());
 }
 
 bool duin::Entity::IsAlive() const
@@ -96,7 +88,7 @@ bool duin::Entity::IsTag() const
     {
         return false;
     }
-    bool res = ecs_id_is_tag(world->GetFlecsWorld().c_ptr(), flecsEntity.raw_id());
+    bool res = ecs_id_is_tag(flecsEntity.world().c_ptr(), flecsEntity.raw_id());
     return res;
 }
 
@@ -136,7 +128,7 @@ duin::Entity duin::Entity::Lookup(const std::string &childName, bool searchPath)
         return Entity();
     }
     flecs::entity e = flecsEntity.lookup(childName.c_str(), searchPath);
-    return Entity(e, world);
+    return Entity(e);
 }
 
 duin::Entity &duin::Entity::ChildOf(const Entity &parent)
@@ -162,7 +154,7 @@ duin::Entity &duin::Entity::SetName(const std::string &name)
     }
     else
     {
-        e = world->Lookup(name);
+        e = GetWorld().Lookup(name);
     }
 
     DN_CORE_ASSERT(!e.IsValid(), "No duplicate names allowed!");
@@ -238,10 +230,7 @@ duin::Entity duin::Entity::Clone(bool clone_value) const
     {
         return Entity();
     }
-    Entity e;
-    e.SetFlecsEntity(flecsEntity.clone());
-    e.SetWorld(world);
-    return e;
+    return Entity(flecsEntity.clone());
 }
 
 duin::Entity &duin::Entity::IsA(const Entity &second)
@@ -260,11 +249,7 @@ duin::Entity duin::Entity::First()
     {
         return Entity();
     }
-    Entity e;
-    e.SetFlecsEntity(flecsEntity.first());
-    e.SetWorld(world);
-
-    return e;
+    return Entity(flecsEntity.first());
 }
 
 duin::Entity duin::Entity::Second()
@@ -273,11 +258,7 @@ duin::Entity duin::Entity::Second()
     {
         return Entity();
     }
-    Entity e;
-    e.SetFlecsEntity(flecsEntity.second());
-    e.SetWorld(world);
-
-    return e;
+    return Entity(flecsEntity.second());
 }
 
 duin::Entity &duin::Entity::Add(const Entity &relationship, const Entity &target)
@@ -297,7 +278,7 @@ duin::Entity duin::Entity::GetParent() const
     {
         return Entity();
     }
-    return Entity(flecsEntity.parent(), world);
+    return Entity(flecsEntity.parent());
 }
 
 std::vector<duin::Entity> duin::Entity::GetChildren() const
@@ -307,13 +288,8 @@ std::vector<duin::Entity> duin::Entity::GetChildren() const
         return std::vector<Entity>();
     }
     std::vector<Entity> children;
-    flecsEntity.children([&](flecs::entity child) { children.emplace_back(Entity(child, world)); });
+    flecsEntity.children([&](flecs::entity child) { children.emplace_back(Entity(child)); });
     return children;
-}
-
-void duin::Entity::SetWorld(World *world)
-{
-    this->world = world;
 }
 
 void duin::Entity::SetFlecsEntity(const flecs::entity &entity)
@@ -323,35 +299,35 @@ void duin::Entity::SetFlecsEntity(const flecs::entity &entity)
 
 // ========== Entity::ID Implementation ==========
 
-duin::Entity::ID::ID() : world_(nullptr), flecsId_(static_cast<flecs::id_t>(0))
+duin::Entity::ID::ID() : flecsId_(static_cast<flecs::id_t>(0))
 {
 }
 
-duin::Entity::ID::ID(flecs::id_t value) : world_(nullptr), flecsId_(value)
+duin::Entity::ID::ID(flecs::id_t value) : flecsId_(value)
 {
 }
 
-duin::Entity::ID::ID(World *world, flecs::id_t value)
-    : world_(world), flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, value)
+duin::Entity::ID::ID(flecs::id_t first, flecs::id_t second) : flecsId_(first, second)
 {
 }
 
-duin::Entity::ID::ID(World *world, flecs::id_t first, flecs::id_t second)
-    : world_(world), flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, first, second)
+duin::Entity::ID::ID(const flecs::world &world, flecs::id_t value)
+    : flecsId_(world.c_ptr(), value)
 {
 }
 
-duin::Entity::ID::ID(World *world, const char *expr)
-    : world_(world), flecsId_(world ? world->GetFlecsWorld().c_ptr() : nullptr, expr)
+duin::Entity::ID::ID(const flecs::world &world, flecs::id_t first, flecs::id_t second)
+    : flecsId_(world.c_ptr(), first, second)
 {
 }
 
-duin::Entity::ID::ID(flecs::id_t first, flecs::id_t second) : world_(nullptr), flecsId_(first, second)
+duin::Entity::ID::ID(const flecs::world &world, const char *expr)
+    : flecsId_(world.c_ptr(), expr)
 {
 }
 
 duin::Entity::ID::ID(const ID &first, const ID &second)
-    : world_(first.world_), flecsId_(first.flecsId_, second.flecsId_)
+    : flecsId_(first.flecsId_, second.flecsId_)
 {
 }
 
@@ -372,37 +348,33 @@ bool duin::Entity::ID::IsEntity() const
 
 duin::Entity duin::Entity::ID::GetEntity() const
 {
-    return Entity(flecsId_.entity(), world_);
+    return Entity(flecsId_.entity());
 }
 
 duin::Entity::ID duin::Entity::ID::AddFlags(flecs::id_t flags) const
 {
-    flecs::id newId = flecsId_.add_flags(flags);
-    return ID(world_, newId.raw_id());
+    return ID(flecsId_.add_flags(flags));
 }
 
 duin::Entity::ID duin::Entity::ID::RemoveFlags(flecs::id_t flags) const
 {
-    flecs::id newId = flecsId_.remove_flags(flags);
-    return ID(world_, newId.raw_id());
+    return ID(flecsId_.remove_flags(flags));
 }
 
 duin::Entity::ID duin::Entity::ID::RemoveFlags() const
 {
-    flecs::id newId = flecsId_.remove_flags();
-    return ID(world_, newId.raw_id());
+    return ID(flecsId_.remove_flags());
 }
 
 duin::Entity::ID duin::Entity::ID::RemoveGeneration() const
 {
     // TODO
-    flecs::entity newEntity = flecsId_.entity();
-    return ID(world_, newEntity.raw_id());
+    return ID(flecsId_.entity());
 }
 
 duin::Entity duin::Entity::ID::TypeId() const
 {
-    return Entity(flecsId_.type_id(), world_);
+    return Entity(flecsId_.type_id());
 }
 
 bool duin::Entity::ID::HasFlags(flecs::id_t flags) const
@@ -417,7 +389,7 @@ bool duin::Entity::ID::HasFlags() const
 
 duin::Entity duin::Entity::ID::GetFlags() const
 {
-    return Entity(flecsId_.flags(), world_);
+    return Entity(flecsId_.flags());
 }
 
 bool duin::Entity::ID::HasRelation(flecs::id_t first) const
@@ -427,12 +399,12 @@ bool duin::Entity::ID::HasRelation(flecs::id_t first) const
 
 duin::Entity duin::Entity::ID::First() const
 {
-    return Entity(flecsId_.first(), world_);
+    return Entity(flecsId_.first());
 }
 
 duin::Entity duin::Entity::ID::Second() const
 {
-    return Entity(flecsId_.second(), world_);
+    return Entity(flecsId_.second());
 }
 
 std::string duin::Entity::ID::Str() const
@@ -455,9 +427,9 @@ duin::Entity::ID::operator flecs::id_t() const
     return flecsId_.raw_id();
 }
 
-duin::World *duin::Entity::ID::GetWorld() const
+duin::World duin::Entity::ID::GetWorld() const
 {
-    return world_;
+    return World(flecsId_.world().c_ptr());
 }
 
 flecs::id duin::Entity::ID::GetFlecsId() const

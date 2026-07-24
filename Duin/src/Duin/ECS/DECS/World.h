@@ -194,9 +194,8 @@ class World
                 if (child.has(flecs::Module))
                     return;
             }
-            duin::Entity e;
-            e.SetWorld(const_cast<World *>(this));
-            e.SetFlecsEntity(child);
+            // child already carries its own world.
+            duin::Entity e(child);
             f(e);
         });
     }
@@ -218,9 +217,8 @@ class World
     {
         flecs::entity typeEntity = flecsWorld.component<T>();
 
-        duin::Entity e;
-        e.SetFlecsEntity(typeEntity);
-        e.SetWorld(this);
+        // typeEntity carries its own world.
+        duin::Entity e(typeEntity);
 
         auto &si = ComponentSerializer::Get();
         si.RegisterComponent<T>(flecsWorld, typeEntity);
@@ -231,7 +229,7 @@ class World
     template <typename... Comps>
     duin::QueryBuilder<Comps...> QueryBuilder() const
     {
-        return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>(), const_cast<World *>(this));
+        return duin::QueryBuilder<Comps...>(flecsWorld.query_builder<Comps...>());
     }
 
     template <typename... Comps>
@@ -241,7 +239,7 @@ class World
         // system_builder in place (heap-held). It must NOT be constructed here
         // and moved in: flecs::system_builder has no move ctor that re-points
         // its internal desc_/term_ pointers, so a move would dangle them.
-        return duin::SystemBuilder<Comps...>(flecsWorld.c_ptr(), name, const_cast<World *>(this));
+        return duin::SystemBuilder<Comps...>(flecsWorld.c_ptr(), name);
     }
 
     /**
@@ -259,7 +257,7 @@ class World
     duin::Entity::ID IDIfRegistered()
     {
         flecs::id_t f_id = flecsWorld.id_if_registered<T>();
-        return duin::Entity::ID(this, f_id);
+        return duin::Entity::ID(flecsWorld, f_id);
     }
 
     std::string ExportRegisteredComponentMeta();
@@ -271,16 +269,18 @@ class World
     duin::Entity GetWorldEntity();
 
     flecs::world &GetFlecsWorld();
+    const flecs::world &GetFlecsWorld() const;
 
   private:
     friend class Entity;
     flecs::world flecsWorld;
 
-    // Prevent copying
-    World(const World &) = delete;
-    World &operator=(const World &) = delete;
-
-    // Allow moving
+  public:
+    // World is a value type: flecs::world is a refcounted, non-owning handle to
+    // the underlying ecs_world_t*, so copying/moving a World is cheap and safe
+    // (it never prematurely calls ecs_fini). Many Worlds may view the same world.
+    World(const World &) = default;
+    World &operator=(const World &) = default;
     World(World &&) = default;
     World &operator=(World &&) = default;
 };

@@ -16,7 +16,8 @@ duin::World::~World() {};
 duin::System duin::World::System(const duin::Entity &e) const
 {
     // Adopt the existing system entity; does NOT create a new system.
-    return duin::System(e, const_cast<World *>(this));
+    // The entity already carries its own world.
+    return duin::System(e);
 }
 
 duin::Entity duin::World::Entity(const std::string &name)
@@ -26,29 +27,18 @@ duin::Entity duin::World::Entity(const std::string &name)
         DN_CORE_FATAL("World is uninitialized!");
         return duin::Entity();
     }
-    duin::Entity e;
-    flecs::entity flecsEntity = flecsWorld.entity(name.c_str());
-    e.SetWorld(this);
-    e.SetFlecsEntity(flecsEntity);
-    return e;
+    // The flecs entity carries its own world; no back-pointer needed.
+    return duin::Entity(flecsWorld.entity(name.c_str()));
 }
 
 duin::Entity duin::World::Entity(uint64_t id)
 {
-    duin::Entity e;
-    flecs::entity flecsEntity = flecsWorld.entity(id);
-    e.SetWorld(this);
-    e.SetFlecsEntity(flecsEntity);
-    return e;
+    return duin::Entity(flecsWorld.entity(id));
 }
 
 duin::Entity duin::World::Prefab(const std::string &name)
 {
-    duin::Entity e;
-    flecs::entity flecsEntity = flecsWorld.prefab(name.c_str());
-    e.SetWorld(this);
-    e.SetFlecsEntity(flecsEntity);
-    return e;
+    return duin::Entity(flecsWorld.prefab(name.c_str()));
 }
 
 void duin::World::DeleteEntity(uint64_t id)
@@ -118,11 +108,7 @@ void duin::World::SetVersion(uint64_t id)
 
 duin::Entity duin::World::MakeAlive(uint64_t id)
 {
-    duin::Entity e;
-    flecs::entity flecsEntity = flecsWorld.make_alive(id);
-    e.SetWorld(this);
-    e.SetFlecsEntity(flecsEntity);
-    return e;
+    return duin::Entity(flecsWorld.make_alive(id));
 }
 
 std::string duin::World::ExportRegisteredComponentMeta()
@@ -132,11 +118,7 @@ std::string duin::World::ExportRegisteredComponentMeta()
 
 duin::Entity duin::World::GetWorldEntity()
 {
-    duin::Entity e;
-    e.SetWorld(this);
-    e.SetFlecsEntity(flecsWorld.entity());
-
-    return e;
+    return duin::Entity(flecsWorld.entity());
 }
 
 void duin::World::Release()
@@ -152,11 +134,7 @@ void duin::World::Quit()
 duin::Entity duin::World::Lookup(
     const std::string &name, const std::string &sep, const std::string &root_sep, bool recursive)
 {
-    duin::Entity e;
-    e.SetWorld(this);
-    e.SetFlecsEntity(flecsWorld.lookup(name.c_str(), sep.c_str(), root_sep.c_str(), recursive));
-
-    return e;
+    return duin::Entity(flecsWorld.lookup(name.c_str(), sep.c_str(), root_sep.c_str(), recursive));
 }
 
 std::vector<duin::Entity> duin::World::GetChildren(bool filterBuiltins)
@@ -177,16 +155,19 @@ std::vector<duin::Entity> duin::World::GetChildren(bool filterBuiltins)
             if (child.has(flecs::Module))
                 return;
         }
-        duin::Entity e;
-        e.SetWorld(const_cast<World *>(this));
-        e.SetFlecsEntity(child);
-        children.push_back(e);
+        // child already carries its own world.
+        children.push_back(duin::Entity(child));
     });
 
     return children;
 }
 
 flecs::world &duin::World::GetFlecsWorld()
+{
+    return flecsWorld;
+}
+
+const flecs::world &duin::World::GetFlecsWorld() const
 {
     return flecsWorld;
 }

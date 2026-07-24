@@ -35,37 +35,15 @@ class Entity
          */
         ID();
 
-        ID(flecs::id id, World *world) : flecsId_(id), world_(world)
+        explicit ID(flecs::id id) : flecsId_(id)
         {
         }
 
         /**
-         * @brief Construct from raw ID value.
+         * @brief Construct from raw ID value (no world association).
          * @param value The raw ID value.
          */
         explicit ID(flecs::id_t value);
-
-        /**
-         * @brief Construct from world and ID value.
-         * @param world Pointer to the world.
-         * @param value The raw ID value.
-         */
-        explicit ID(World *world, flecs::id_t value = 0);
-
-        /**
-         * @brief Construct a pair ID from two IDs.
-         * @param world Pointer to the world.
-         * @param first First ID.
-         * @param second Second ID.
-         */
-        explicit ID(World *world, flecs::id_t first, flecs::id_t second);
-
-        /**
-         * @brief Construct from world and string expression.
-         * @param world Pointer to the world.
-         * @param expr String expression.
-         */
-        explicit ID(World *world, const char *expr);
 
         /**
          * @brief Construct a pair ID from two raw IDs.
@@ -73,6 +51,28 @@ class Entity
          * @param second Second ID.
          */
         explicit ID(flecs::id_t first, flecs::id_t second);
+
+        /**
+         * @brief Construct an ID associated with a world from a raw ID value.
+         * @param world The flecs world the id belongs to (carries validity).
+         * @param value The raw ID value.
+         */
+        explicit ID(const flecs::world &world, flecs::id_t value = 0);
+
+        /**
+         * @brief Construct a world-associated pair ID from two raw IDs.
+         * @param world The flecs world the id belongs to.
+         * @param first First ID.
+         * @param second Second ID.
+         */
+        explicit ID(const flecs::world &world, flecs::id_t first, flecs::id_t second);
+
+        /**
+         * @brief Construct a world-associated ID from a string expression.
+         * @param world The flecs world the id belongs to.
+         * @param expr String expression.
+         */
+        explicit ID(const flecs::world &world, const char *expr);
 
         /**
          * @brief Construct a pair ID from two Entity::ID objects.
@@ -206,9 +206,10 @@ class Entity
 
         /**
          * @brief Get the world this ID belongs to.
-         * @return Pointer to the World.
+         * @return A non-owning World view over the underlying ecs_world_t*
+         *         (invalid/empty when the id has no associated world).
          */
-        World *GetWorld() const;
+        World GetWorld() const;
 
         /**
          * @brief Get the underlying flecs::id object.
@@ -219,9 +220,7 @@ class Entity
       private:
         friend class Entity;
 
-        World *world_ =
-            nullptr; ///< World is optional, but guarantees that entity identifiers extracted from the id are valid
-        flecs::id flecsId_; ///< Internal flecs id handle.
+        flecs::id flecsId_; ///< Internal flecs id handle (carries its own world).
     };
 
     static const std::string ID_DELIM;
@@ -232,11 +231,11 @@ class Entity
     Entity();
 
     /**
-     * @brief Construct an entity from a raw ID and optional world pointer.
+     * @brief Construct an entity from a raw ID, associated with a world.
+     * @param world The flecs world the entity belongs to.
      * @param id The raw entity ID.
-     * @param world Optional pointer to the world.
      */
-    Entity(uint64_t id, World *world = nullptr);
+    Entity(const flecs::world &world, uint64_t id);
 
     /**
      * @brief Copy constructor.
@@ -246,22 +245,12 @@ class Entity
 
     /**
      * @brief Construct an entity from a flecs entity.
+     *
+     * The flecs entity already carries its own ecs_world_t*, so no separate
+     * world association is needed.
      * @param entity The flecs entity.
      */
     Entity(const flecs::entity &entity);
-
-    /**
-     * @brief Construct an entity from a flecs entity, and a world.
-     * @param entity The flecs entity.
-     * @param world The World.
-     */
-    Entity(const flecs::entity &entity, World *world);
-
-    /**
-     * @brief Set the world pointer for this entity.
-     * @param world The world pointer.
-     */
-    void SetWorld(World *world);
 
     /**
      * @brief Set the internal flecs entity handle.
@@ -323,32 +312,31 @@ class Entity
      */
     Entity Parent() const
     {
-        return Entity(flecsEntity.parent(), world);
+        return Entity(flecsEntity.parent());
     }
 
     /**
      * @brief Get the world this entity belongs to.
-     * @return Pointer to the World.
+     * @return A non-owning World view over the entity's underlying ecs_world_t*
+     *         (invalid/empty when the entity has no world).
      */
-    World *GetWorld() const;
+    World GetWorld() const;
     /**
      * @brief Check if the entity is valid.
      *
-     * An entity is valid when it has an owning Duin world and the underlying
-     * flecs id is valid in its world (non-zero, alive, correct generation).
+     * An entity is valid when the underlying flecs id is valid in its world
+     * (non-zero, alive, correct generation).
      *
      * flecs::entity::is_valid() already performs the world-level validity check
-     * (it calls ecs_is_valid against the entity's stored world, which is always
-     * this entity's world), so no separate world->is_valid() call is needed.
-     * Kept header-inline and free of any World.h dependency so it inlines at
-     * every call site.
+     * (it calls ecs_is_valid against the entity's stored world). A default-
+     * constructed flecs::entity has a null world, so is_valid() already returns
+     * false for the empty case. Kept header-inline and free of any World.h
+     * dependency so it inlines at every call site.
      * @return True if valid.
      */
     bool IsValid() const
     {
-        // world != nullptr first: cheapest, and short-circuits the common
-        // default-constructed/invalid case before touching flecs.
-        return world != nullptr && flecsEntity.is_valid();
+        return flecsEntity.is_valid();
     }
     /**
      * @brief Check if the entity is alive.
@@ -471,10 +459,8 @@ class Entity
     void EachChild(Func &&func) const
     {
         flecsEntity.children([&](flecs::entity child) {
-            Entity childEntity;
-            childEntity.SetWorld(world);
-            childEntity.SetFlecsEntity(child);
-            func(childEntity);
+            // child already carries its own world.
+            func(Entity(child));
         });
     }
 
@@ -489,7 +475,7 @@ class Entity
     Entity &Each(Func &&func)
     {
         flecsEntity.each<First>([&](flecs::id fID) {
-            Entity::ID id(fID, world);
+            Entity::ID id(fID); // fID carries its own world.
             func(id);
         });
     };
@@ -1442,10 +1428,8 @@ class Entity
         flecsEntity.children([&](flecs::entity child) {
             if ((child.has<Components>() && ...))
             {
-                Entity childEntity;
-                childEntity.SetWorld(world);
-                childEntity.SetFlecsEntity(child);
-                func(childEntity, child.get<Components>()...);
+                // child already carries its own world.
+                func(Entity(child), child.get<Components>()...);
             }
         });
     }
@@ -1498,7 +1482,7 @@ class Entity
             for (int32_t i = 0; i < type->count; i++)
             {
                 flecs::id id(flecsEntity.world(), type->array[i]);
-                ID id_(id, world);
+                ID id_(id); // id carries its own world.
                 func(id_);
             }
         }
@@ -1538,8 +1522,7 @@ class Entity
         return valid;
     }
 
-    World *world = nullptr;    ///< Pointer to the world this entity belongs to (non-owning).
-    flecs::entity flecsEntity; ///< Internal flecs entity handle.
+    flecs::entity flecsEntity; ///< Internal flecs entity handle (carries its own world).
 
     /**
      * @brief Internal helper for recursive Set operations.

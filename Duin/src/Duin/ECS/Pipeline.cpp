@@ -6,7 +6,7 @@
 namespace duin
 {
 
-EcsPipeline::EcsPipeline(World *world) : world(world)
+EcsPipeline::EcsPipeline(World world) : world(world)
 {
 }
 
@@ -70,11 +70,12 @@ void EcsPipeline::RunStage(const Stage &stage, float deltaTime)
 
 void EcsPipeline::RunSystem(const SystemHandle &systemHandle, float deltaTime)
 {
-    if (!systemHandle.world)
+    // world is a non-owning view; an empty handle has a null underlying world.
+    if (!systemHandle.world.GetFlecsWorld().c_ptr())
         return;
 
     // Adopt the stored system entity as a runnable System and run it once.
-    systemHandle.world->System(systemHandle.system).Run(deltaTime);
+    systemHandle.world.System(systemHandle.system).Run(deltaTime);
 }
 
 const std::vector<Stage> &EcsPipeline::GetStages(ExecutionStep step) const

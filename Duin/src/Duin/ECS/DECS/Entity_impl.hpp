@@ -12,7 +12,7 @@ template <typename Func>
 Entity &Entity::WithScope(Func &&func)
 {
     // Use flecs scope builder pattern
-    if (world)
+    if (flecsEntity.world())
     {
         flecsEntity.scope([&]() {
             func(*this);
@@ -29,7 +29,7 @@ template <typename Func>
 Entity &Entity::WithComponent(Func &&func)
 {
     // Use flecs with builder pattern
-    if (world)
+    if (flecsEntity.world())
     {
         flecsEntity.with([&]() {
             func(*this);
@@ -45,21 +45,23 @@ Entity &Entity::WithComponent(Func &&func)
 template <typename Relationship, typename Func>
 void Entity::ForEachTarget(Func &&func) const
 {
+    flecs::world world = flecsEntity.world();
     if (!world)
     {
         return;
     }
-    
+
     // Get the relationship component ID through the world
-    Entity relationshipEntity = world->Component<Relationship>();
+    World duinWorld(world.c_ptr());
+    Entity relationshipEntity = duinWorld.Component<Relationship>();
     flecs::id_t relationId = relationshipEntity.GetID();
-    
+
     // Iterate through the entity's type to find pair relationships
     flecsEntity.each([&](flecs::id id) {
         if (id.is_pair() && id.first() == relationId)
         {
-            Entity targetEntity(id.second(), world);
-            func(targetEntity);
+            // id.second() is a world-carrying flecs handle.
+            func(Entity(id.second()));
         }
     });
 }
