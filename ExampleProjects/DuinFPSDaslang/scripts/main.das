@@ -19,6 +19,7 @@ require imgui_boost
 require dn_log
 require dn_gameobject
 require dn_ecs
+require dn_pipeline
 require dn_gameworld
 require dn_renderer
 require dn_camera
@@ -38,6 +39,7 @@ var player : Player?
 var game_world : DnGameWorld?
 var zeus : Zeus?
 var zeus_mode : bool = false
+var pipeline : DnPipeline?
 
 
 [export]
@@ -52,6 +54,8 @@ def game_ready() {
 
     // Entities and game state are only created on first load.
     assume world = game_world.dn_world()
+    pipeline = new DnPipeline(world)
+    pipeline.add_stage(DnExecutionStep.READY, "Ready")
 
     world |> register_components()
 

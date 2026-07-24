@@ -25,7 +25,6 @@ require dn_ecs_boost
 
 // Queries are created lazily per call site by the ecs_query macro and cached
 // in dn_ecs; DnGameWorld.fini destroys them. No construct/destruct needed.
-
 def system_player_input(world : ecs_world_t?; var camera : DnCamera?) : void {
     let mouse_sensitivity = 0.0015f
     let MAX_PITCH = 87.0f * (PI / 180.0f)
@@ -133,4 +132,8 @@ def system_draw_rendercube(var game_world : DnGameWorld?) : void {
     }
 }
 
+[ecs_system(PHYSICSUPDATE::POST)]
+def update_position(world : ecs_world_t?, delta : double) : void {
+    tx.pos = cbh.cb.get_position()
+}
 
