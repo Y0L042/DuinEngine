@@ -96,9 +96,6 @@ var hierarchy =
     [ "DnGameStateMachineAdapterBase", null, [
       [ "ScriptGameStateMachine", "classScriptGameStateMachine.html", null ]
     ] ],
-    [ "DnGameWorldAdapterBase", null, [
-      [ "ScriptGameWorld", "classScriptGameWorld.html", null ]
-    ] ],
     [ "DnIOStreamHandle", "structDnIOStreamHandle.html", null ],
     [ "DnLiveHostState", "structDnLiveHostState.html", null ],
     [ "ebuf_t", "structebuf__t.html", null ],
@@ -434,7 +431,6 @@ var hierarchy =
     [ "Mesh", "structMesh.html", null ],
     [ "MeshState", "structMeshState.html", null ],
     [ "das::Module", null, [
-      [ "Module_DecsGameWorld", "classModule__DecsGameWorld.html", null ],
       [ "Module_DnApplication", "classModule__DnApplication.html", null ],
       [ "Module_DnCamera", "classModule__DnCamera.html", null ],
       [ "Module_DnCharacterBody", "classModule__DnCharacterBody.html", null ],
@@ -630,9 +626,5 @@ var hierarchy =
     [ "duin::ECSComponent::Velocity3D", "structduin_1_1ECSComponent_1_1Velocity3D.html", null ],
     [ "duin::ECSComponent::Velocity3D::Velocity3DImpl", "structduin_1_1ECSComponent_1_1Velocity3D_1_1Velocity3DImpl.html", null ],
     [ "GraphEditor::ViewState", "structGraphEditor_1_1ViewState.html", null ],
-    [ "duin::World", "classduin_1_1World.html", [
-      [ "duin::GameWorld", "classduin_1_1GameWorld.html", [
-        [ "ScriptGameWorld", "classScriptGameWorld.html", null ]
-      ] ]
-    ] ]
+    [ "duin::World", "classduin_1_1World.html", null ]
 ];

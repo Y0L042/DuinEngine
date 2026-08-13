@@ -12,8 +12,6 @@ var dir_442b83e730904a442a2c3e7502d47646 =
     [ "ECSPrefabs.h", "ECSPrefabs_8h.html", null ],
     [ "ECSTag.cpp", "ECSTag_8cpp_source.html", null ],
     [ "ECSTag.h", "ECSTag_8h.html", "ECSTag_8h" ],
-    [ "GameWorld.cpp", "GameWorld_8cpp_source.html", null ],
-    [ "GameWorld.h", "GameWorld_8h.html", null ],
     [ "Pipeline.cpp", "Pipeline_8cpp_source.html", null ],
     [ "Pipeline.h", "Pipeline_8h_source.html", null ],
     [ "PrefabRegistry.h", "PrefabRegistry_8h_source.html", null ],

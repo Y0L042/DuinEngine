@@ -101,12 +101,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"VirtualFilesystem_8h_source.html",
-"classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4",
-"classduin_1_1World.html#a3a8d661c83d637671e28ff341806dc98",
-"group__Physics__Collision.html#ga4408f3577d4052de176268bc5b7f3b53",
-"structImGuiStorage.html",
-"structduin_1_1RenderTexture.html#a289a927fcbeaa152db213b1fb807d6f1"
+"World_8h_source.html",
+"classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4",
+"classduin_1_1io_1_1IOStream.html#a0371aa3b510686a8be4a7013433de11a",
+"imgui__impl__sdl3_8h_source.html",
+"structImGuiTextFilter_1_1ImGuiTextRange.html",
+"structduin_1_1Stage.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
