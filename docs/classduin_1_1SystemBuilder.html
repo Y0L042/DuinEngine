@@ -122,8 +122,8 @@ $(document).ready(function(){initNavTree('classduin_1_1SystemBuilder.html',''); 
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a899524cb56147a4a8a10bd77cecda82b" id="r_a899524cb56147a4a8a10bd77cecda82b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1SystemBuilder.html#a899524cb56147a4a8a10bd77cecda82b">SystemBuilder</a> (flecs::world_t *flecsWorld, const char *name, <a class="el" href="classduin_1_1World.html">World</a> *world=nullptr)</td></tr>
-<tr class="separator:a899524cb56147a4a8a10bd77cecda82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2035f9e07c2922cabe9d47281fde1c63" id="r_a2035f9e07c2922cabe9d47281fde1c63"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1SystemBuilder.html#a2035f9e07c2922cabe9d47281fde1c63">SystemBuilder</a> (flecs::world_t *flecsWorld, const char *name)</td></tr>
+<tr class="separator:a2035f9e07c2922cabe9d47281fde1c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a8d1410251992d19630b61f210fa76d" id="r_a4a8d1410251992d19630b61f210fa76d"><td class="memTemplParams" colspan="2">template&lt;typename... Filters&gt; </td></tr>
 <tr class="memitem:a4a8d1410251992d19630b61f210fa76d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1SystemBuilder.html">SystemBuilder</a>&lt; Components... &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classduin_1_1SystemBuilder.html#a4a8d1410251992d19630b61f210fa76d">With</a> ()</td></tr>
 <tr class="separator:a4a8d1410251992d19630b61f210fa76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,10 +165,10 @@ class duin::SystemBuilder&lt; Components &gt;</div><p>Wrapper for flecs::system_
 <p>Mirrors <a class="el" href="classduin_1_1QueryBuilder.html" title="Wrapper for flecs::query_builder to provide a unified query builder API.">QueryBuilder</a>. Unlike <a class="el" href="classduin_1_1QueryBuilder.html" title="Wrapper for flecs::query_builder to provide a unified query builder API.">QueryBuilder</a> there is no Build(): the terminal methods <a class="el" href="classduin_1_1SystemBuilder.html#add684b757df5f48beae9af9937c65530" title="Build the system with a per-entity callback. Automatically wraps flecs::entity into duin::Entity for ...">Each()</a>/Run() register the callback and return the constructed <a class="el" href="classduin_1_1System.html" title="A flecs system, modelled exactly like flecs::system.">System</a>.</p>
 <p>IMPORTANT: flecs::system_builder (via node_builder) defines NO copy/move constructor, so its internal desc_/term_ pointers reference its own storage by raw address. Moving or copying it leaves those pointers dangling at the source object, and any term added afterwards (With/Without/Each) writes into freed memory. (flecs::query_builder is safe because its base DOES re-point on move/copy.) We therefore heap-hold the flecs builder in a unique_ptr and never move it after construction, keeping its internal pointers valid for the whole lifetime of the chain. </p>
 
-<p class="definition">Definition at line <a class="el" href="System_8h_source.html#l00037">37</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="System_8h_source.html#l00038">38</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a899524cb56147a4a8a10bd77cecda82b" name="a899524cb56147a4a8a10bd77cecda82b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a899524cb56147a4a8a10bd77cecda82b">&#9670;&#160;</a></span>SystemBuilder()</h2>
+<a id="a2035f9e07c2922cabe9d47281fde1c63" name="a2035f9e07c2922cabe9d47281fde1c63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2035f9e07c2922cabe9d47281fde1c63">&#9670;&#160;</a></span>SystemBuilder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,13 +188,7 @@ template&lt;typename... Components&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classduin_1_1World.html">World</a> *&#160;</td>
-          <td class="paramname"><em>world</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -209,7 +203,7 @@ template&lt;typename... Components&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="System_8h_source.html#l00040">40</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="System_8h_source.html#l00041">41</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
 </div>
 </div>
@@ -505,7 +499,7 @@ template&lt;typename Func &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Constructed <a class="el" href="classduin_1_1System.html" title="A flecs system, modelled exactly like flecs::system.">System</a> object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="System_8h_source.html#l00171">171</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="System_8h_source.html#l00170">170</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
 </div>
 </div>

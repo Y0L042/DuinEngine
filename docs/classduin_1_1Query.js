@@ -1,8 +1,8 @@
 var classduin_1_1Query =
 [
     [ "Query", "classduin_1_1Query.html#a6b549459169da1d3b689f8b6c86eba48", null ],
-    [ "Query", "classduin_1_1Query.html#a90dd868cef2d67116719d9c9677dee05", null ],
-    [ "Query", "classduin_1_1Query.html#abbf7fa5f4f6433ff810616b9f237bd24", null ],
+    [ "Query", "classduin_1_1Query.html#a1286c4e72a928e41f3de17c058ae4df0", null ],
+    [ "Query", "classduin_1_1Query.html#a7b2dfa7e664823204ab68ecf70a5d747", null ],
     [ "~Query", "classduin_1_1Query.html#a6db31c88bb80d0f3c2d973d1f2a24f3e", null ],
     [ "Count", "classduin_1_1Query.html#a84d1d2c6318e850d778b695b04f08caa", null ],
     [ "Each", "classduin_1_1Query.html#a4e54e8d236ca3058dc4f8dfce43860eb", null ],

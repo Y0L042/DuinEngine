@@ -33,11 +33,10 @@ var searchData=
   ['setwindowresizable_30',['SetWindowResizable',['../Application_8h.html#ac0cbf88f2a926d339b057fdb7c12371b',1,'duin']]],
   ['setwindowstartupsize_31',['SetWindowStartupSize',['../classduin_1_1Application.html#ac39d5885beb8dba6e1fc22ac9ad07257',1,'duin::Application']]],
   ['setworkspacepath_32',['SetWorkspacePath',['../namespaceduin_1_1fs.html#a47a9e3d6a1fd88211f84d33f5ab81d66',1,'duin::fs']]],
-  ['setworld_33',['SetWorld',['../classduin_1_1Entity.html#a1958572abac481940ed080113b247764',1,'duin::Entity']]],
-  ['size_34',['Size',['../classduin_1_1Iter.html#abce113016082365e3781612b7e2d363c',1,'duin::Iter']]],
-  ['skip_35',['Skip',['../classduin_1_1Iter.html#ac9ff7bf0039724f6563561777e5db50d',1,'duin::Iter']]],
-  ['stepphysics_36',['StepPhysics',['../classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb',1,'duin::PhysicsServer']]],
-  ['str_37',['Str',['../structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269',1,'duin::Entity::ID']]],
-  ['switchstate_38',['SwitchState',['../classduin_1_1GameStateMachine.html#af38da22c2d87b9df8ee50da8e3d8d45c',1,'duin::GameStateMachine']]],
-  ['system_39',['system',['../classduin_1_1System.html#ab01147f6d88132dfaf4b4d62eb10324f',1,'duin::System::System()'],['../classduin_1_1World.html#a2eb0bd43ab3948318bd76f10d602624d',1,'duin::World::System()'],['../classduin_1_1System.html#a0db61bcc8a9ff32573720c7cbc700cd8',1,'duin::System::System(const flecs::system &amp;other, World *world=nullptr)'],['../classduin_1_1System.html#a7001b41c85c0a4b9c36fa4af13ca73c9',1,'duin::System::System(flecs::system &amp;&amp;other, World *world=nullptr)'],['../classduin_1_1System.html#a3ed1e3200e783e3a32dc5c01fc2d1dff',1,'duin::System::System()=default']]]
+  ['size_33',['Size',['../classduin_1_1Iter.html#abce113016082365e3781612b7e2d363c',1,'duin::Iter']]],
+  ['skip_34',['Skip',['../classduin_1_1Iter.html#ac9ff7bf0039724f6563561777e5db50d',1,'duin::Iter']]],
+  ['stepphysics_35',['StepPhysics',['../classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb',1,'duin::PhysicsServer']]],
+  ['str_36',['Str',['../structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269',1,'duin::Entity::ID']]],
+  ['switchstate_37',['SwitchState',['../classduin_1_1GameStateMachine.html#af38da22c2d87b9df8ee50da8e3d8d45c',1,'duin::GameStateMachine']]],
+  ['system_38',['system',['../classduin_1_1System.html#a36b0de59135998fef133a17bef116b8e',1,'duin::System::System()'],['../classduin_1_1World.html#a2eb0bd43ab3948318bd76f10d602624d',1,'duin::World::System()'],['../classduin_1_1System.html#af8447a34bae6dab13f69e70c5b627375',1,'duin::System::System(const flecs::system &amp;other)'],['../classduin_1_1System.html#ad782a6569b41470769e13136040d0f99',1,'duin::System::System(flecs::system &amp;&amp;other)'],['../classduin_1_1System.html#a3ed1e3200e783e3a32dc5c01fc2d1dff',1,'duin::System::System()=default']]]
 ];

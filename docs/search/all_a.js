@@ -111,7 +111,7 @@ var searchData=
   ['getwindowheight_108',['GetWindowHeight',['../Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4',1,'duin']]],
   ['getwindowwidth_109',['GetWindowWidth',['../Application_8h.html#a62446673e5e806e310ac470542c2ace9',1,'duin']]],
   ['getworkspacepath_110',['GetWorkspacePath',['../namespaceduin_1_1fs.html#a8c0989ddb540e1d7942577051cf040d6',1,'duin::fs']]],
-  ['getworld_111',['getworld',['../classduin_1_1Entity.html#ac6721645b73d406b0937df4138859dc4',1,'duin::Entity::GetWorld()'],['../structduin_1_1Entity_1_1ID.html#a7692090b67e97cac9177207be2a4a2ca',1,'duin::Entity::ID::GetWorld()']]],
+  ['getworld_111',['getworld',['../classduin_1_1Entity.html#a2e19b9fd198cacdea74cbb6ac6b8aefc',1,'duin::Entity::GetWorld()'],['../structduin_1_1Entity_1_1ID.html#a0bc5a591306dac1d828a2ea5fc899f15',1,'duin::Entity::ID::GetWorld()']]],
   ['getworldentity_112',['GetWorldEntity',['../classduin_1_1World.html#ab30e43eeb95ec838041700aefd762bba',1,'duin::World']]],
   ['global_113',['Global',['../structduin_1_1ECSTag_1_1Global.html',1,'duin::ECSTag']]],
   ['globdirectory_114',['GlobDirectory',['../namespaceduin_1_1fs.html#a5da0e36c95e9ec24c41d77ee3c975586',1,'duin::fs']]],
