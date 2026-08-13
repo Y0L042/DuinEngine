@@ -19,7 +19,6 @@ require dn_log public
 require dn_application public
 require dn_gameobject public
 require dn_gamestatemachine public
-require dn_gameworld public
 require dn_scenebuilder public
 require dn_input public
 require dn_camera public
@@ -84,21 +83,15 @@ def document_gamestatemachine() {
     documents("GameStateMachine", mods, "gamestatemachine.rst", groups)
 }
 
-def document_gameworld() {
+def document_scenebuilder() {
     var mods : array<Module?>
-    mods |> push_if_exists("dn_gameworld_core")
-    mods |> push_if_exists("dn_gameworld_class")
-    mods |> push_if_exists("dn_gameworld")
     mods |> push_if_exists("dn_scenebuilder_core")
     mods |> push_if_exists("dn_scenebuilder")
     if (length(mods) == 0) { return; }
     var groups : array<DocGroup>
-    groups |> emplace(group_by_regex("DnGameWorld_Core",    find_module("dn_gameworld_core"),    %regex~.*%%))
-    groups |> emplace(group_by_regex("DnGameWorld_Class",   find_module("dn_gameworld_class"),   %regex~.*%%))
-    groups |> emplace(group_by_regex("DnGameWorld",         find_module("dn_gameworld"),         %regex~.*%%))
     groups |> emplace(group_by_regex("DnSceneBuilder_Core", find_module("dn_scenebuilder_core"), %regex~.*%%))
     groups |> emplace(group_by_regex("DnSceneBuilder",      find_module("dn_scenebuilder"),      %regex~.*%%))
-    documents("GameWorld", mods, "gameworld.rst", groups)
+    documents("SceneBuilder", mods, "scenebuilder.rst", groups)
 }
 
 def document_input() {
@@ -247,7 +240,6 @@ def game_ready() {
     touch_module_stub("dn_application_core")
     touch_module_stub("dn_gameobject_core")
     touch_module_stub("dn_gamestatemachine_core")
-    touch_module_stub("dn_gameworld_core")
     touch_module_stub("dn_input")
     touch_module_stub("dn_camera_core")
     touch_module_stub("dn_renderer")
@@ -266,7 +258,7 @@ def game_ready() {
     document_application()
     document_gameobject()
     document_gamestatemachine()
-    document_gameworld()
+    document_scenebuilder()
     document_input()
     document_renderer()
     document_physics()

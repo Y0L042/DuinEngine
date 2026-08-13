@@ -2,60 +2,53 @@ options gen2
 
 module dn_ecs_components shared
 
-struct Position2D {
-    val : float2
+require dn_ecs public
+
+// 2D
+
+struct DnTransform2D {
+    pos : float2
+    rot : float2
+    scale : float2
 }
 
-struct Rotation2D {
-    val : float
+struct DnVelocity2D {
+    lin : float2
+    rot : float2
 }
 
-struct Scale2D {
-    val : float2
-}
 
-struct Velocity2D {
-    val : float2
-}
 
-struct Transform3D {
+
+// 3D
+
+struct DnTransform3D {
     pos : float3
     rot : float4
     scale : float3
 }
 
-struct Position3D {
-    val : float3
-}
-
-struct Rotation3D {
-    val : float3
-}
-
-struct Scale3D {
-    val : float3
-}
-
-struct Velocity3D {
-    val : float3
+struct DnVelocity3D {
+    lin : float3
+    rot : float4
 }
 
 // Marker components
-struct CubeComponent {}
+struct DnCubeComponent {}
+struct DnStaticBodyComponent {}
+struct DnKinematicBodyComponent {}
+struct DnDynamicBodyComponent {}
+struct DnCharacterBodyComponent {}
+struct DnPhysicsStaticCubeComponent {}
+struct DnDebugCapsuleComponent {}
+struct DnDebugCubeComponent {}
 
-struct StaticBodyComponent {}
+// struct DnCamera {}
 
-struct KinematicBodyComponent {}
+def dn_register_internal_components(var world: DnWorld&) : void {
+    world.dn_register_component(type<DnTransform2D>)
+    world.dn_register_component(type<DnVelocity2D>)
 
-struct DynamicBodyComponent {}
-
-struct CharacterBodyComponent {}
-
-struct PhysicsStaticCubeComponent {}
-
-struct DebugCapsuleComponent {}
-
-struct DebugCubeComponent {}
-
-struct Camera {}
-
+    world.dn_register_component(type<DnTransform3D>)
+    world.dn_register_component(type<DnVelocity3D>)
+}

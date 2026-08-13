@@ -31,6 +31,7 @@ vim.g.project_ignore_patterns = {
   -- "modules/",
   "node_modules/",
   "some_dir/",
+  "%.inc$",
 }
 
 
@@ -120,6 +121,11 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         end, { buffer = true, silent = true, desc = "Jump to next def" })
     end,
 })
+
+
+
+
+
 
 
 -- Key mappings for switching files

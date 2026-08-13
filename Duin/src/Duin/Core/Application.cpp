@@ -330,11 +330,6 @@ void duin::SetGameShouldQuit(bool shouldQuit)
     gameShouldQuit = shouldQuit;
 }
 
-void duin::PushQuitEvent()
-{
-    // TODO allow closing application through event system
-}
-
 // --- ImGui ---
 
 void duin::SetImGuiINIPath(const std::string &newPath)

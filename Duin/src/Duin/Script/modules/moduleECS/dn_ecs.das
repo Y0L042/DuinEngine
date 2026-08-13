@@ -87,7 +87,7 @@ struct DnEntity {
 
     [class_method]
     def static get(var t : type<auto(T)>) : T const {
-        unsafe { 
+        unsafe {
             let cmp : T? = reinterpret<T?>(ecs_get(world, entity, type<T>))
             let return_cmp = cmp != null ? *cmp : T()
             return return_cmp
@@ -120,12 +120,142 @@ struct DnEntity {
         return self
     }
 
+    // ---- Hierarchy -------------------------------------------------------
+    // Flecs has two hierarchy storages, and an entity must use exactly one:
+    //   child_of()    -> ChildOf pair storage (fragmenting). Best for large,
+    //                    dynamic hierarchies such as scenes.
+    //   set_parent()  -> Parent component storage (non-fragmenting, 4.1.6).
+    //                    Best for small, deeply nested hierarchies such as
+    //                    prefabs; does not put the parent in the entity's type.
+    // parent(), children() and path() read from either storage.
+
     [class_method]
     def static child_of(var parent : DnEntity) : DnEntity {
         if (world != null) {
             ecs_add_id(world, entity, ecs_make_pair(EcsChildOf, parent.entity))
         }
         return self
+    }
+
+    // Non-fragmenting Parent storage. Do not combine with child_of() on the
+    // same entity.
+    [class_method]
+    def static set_parent(var parent : DnEntity) : DnEntity {
+        if (world != null) {
+            ecs_set_parent(world, entity, parent.entity)
+        }
+        return self
+    }
+
+    // Parent of this entity, for either storage.
+    // The result is invalid (entity == 0) when this entity has no parent.
+    [class_method]
+    def static parent() : DnEntity {
+        if (world == null) {
+            return DnEntity()
+        }
+        return dn_make_entity(world, ecs_get_parent(world, entity))
+    }
+
+    [class_method]
+    def static has_parent() : bool {
+        if (world == null) {
+            return false
+        }
+        return ecs_get_parent(world, entity) != 0ul
+    }
+
+    // Detach from the parent, for either storage.
+    [class_method]
+    def static remove_parent() : DnEntity {
+        if (world != null) {
+            if (ecs_has_parent_component(world, entity)) {
+                ecs_remove_parent(world, entity)
+            } else {
+                let p = ecs_get_parent(world, entity)
+                if (p != 0ul) {
+                    ecs_remove(world, entity, ecs_make_pair(EcsChildOf, p))
+                }
+            }
+        }
+        return self
+    }
+
+    // Invoke `blk` once per direct child, for either storage.
+    [class_method]
+    def static children(blk : block<(var child : DnEntity)>) : void {
+        if (world == null) {
+            return
+        }
+        var w = world
+        ecs_children_each(world, entity) <| $(child : ecs_entity_t) {
+            invoke(blk, dn_make_entity(w, child))
+        }
+    }
+
+    // Invoke `blk` once per descendant, depth-first.
+    [class_method]
+    def static children_recursive(blk : block<(var child : DnEntity)>) : void {
+        if (world == null) {
+            return
+        }
+        var w = world
+        ecs_children_each_recursive(world, entity) <| $(child : ecs_entity_t) {
+            invoke(blk, dn_make_entity(w, child))
+        }
+    }
+
+    // Direct children as an array, for either storage. Prefer children() when a
+    // callback will do; this materializes the list, which is what you want when
+    // the order or the count has to be inspected as a whole.
+    [class_method]
+    def static children_array() : array<DnEntity> {
+        var result : array<DnEntity>
+        if (world == null) {
+            return <- result
+        }
+        for (child in ecs_children_array(world, entity)) {
+            result |> push(dn_make_entity(world, child))
+        }
+        return <- result
+    }
+
+    [class_method]
+    def static child_count() : int {
+        if (world == null) {
+            return 0
+        }
+        return ecs_children_count(world, entity)
+    }
+
+    // Depth in a Parent-storage hierarchy; 0 for roots and ChildOf children.
+    [class_method]
+    def static depth() : int {
+        if (world == null) {
+            return 0
+        }
+        return ecs_get_parent_depth(world, entity)
+    }
+
+    // ---- Paths -----------------------------------------------------------
+
+    // Full "::"-separated path from the root, e.g. "Ship::Cockpit".
+    [class_method]
+    def static path() : string {
+        if (world == null) {
+            return ""
+        }
+        return string(ecs_get_path(world, entity))
+    }
+
+    // Look up a descendant by "::"-separated path relative to this entity.
+    // The result is invalid (entity == 0) when the path does not resolve.
+    [class_method]
+    def static lookup(path : string) : DnEntity {
+        if (world == null) {
+            return DnEntity()
+        }
+        return dn_make_entity(world, ecs_lookup_from(world, entity, path))
     }
 
     [class_method]
@@ -176,6 +306,11 @@ struct DnEntity {
     def static ecs_world() : ecs_world_t ? {
         return world
     }
+
+    [class_method]
+    def static dn_world() : DnWorld {
+        return DnWorld(world)
+    }
 }
 
 def DnEntity(var world : ecs_world_t?, var name : string = "") : DnEntity {
@@ -191,6 +326,27 @@ def DnEntity(var world : ecs_world_t?, var entity : ecs_entity_t) : DnEntity {
     var e : DnEntity = DnEntity()
     if (world != null) {
         e.world = world
+        e.entity = entity
+    }
+    return e
+}
+
+// Explicitly-named factory used by the ecs_query/ecs_observer macros: calling
+// `DnEntity(world, id)` from generated code can resolve to the default struct
+// constructor instead of the overload below, so macros call this instead.
+def dn_make_entity(var world : ecs_world_t?; entity : ecs_entity_t) : DnEntity {
+    var e : DnEntity = DnEntity()
+    if (world != null) {
+        e.world = world
+        e.entity = entity
+    }
+    return e
+}
+
+def DnEntity(var dn_world : DnWorld, var entity : ecs_entity_t) : DnEntity {
+    var e : DnEntity = DnEntity()
+    if (dn_world.world != null) {
+        e.world = dn_world.world
         e.entity = entity
     }
     return e
@@ -217,6 +373,40 @@ struct DnWorld {
         e.entity = ecs_entity_new(world, name)
         e.world = world
         return e
+    }
+
+    // Create a child of `parent` using the non-fragmenting Parent storage.
+    // For ChildOf storage instead, use create_entity(...).child_of(parent).
+    [class_method]
+    def static create_child(var parent : DnEntity, name : string = "") : DnEntity {
+        var e : DnEntity = DnEntity()
+        if (world != null) {
+            e.entity = ecs_new_child(world, parent.entity, name)
+            e.world = world
+        }
+        return e
+    }
+
+    // Look up an entity by "::"-separated path from the root.
+    // The result is invalid (entity == 0) when the path does not resolve.
+    [class_method]
+    def static lookup(path : string) : DnEntity {
+        if (world == null) {
+            return DnEntity()
+        }
+        return dn_make_entity(world, ecs_lookup_from(world, 0ul, path))
+    }
+
+    // Invoke `blk` once per root-level entity.
+    [class_method]
+    def static root_children(blk : block<(var child : DnEntity)>) : void {
+        if (world == null) {
+            return
+        }
+        var w = world
+        ecs_children_each(world, 0ul) <| $(child : ecs_entity_t) {
+            invoke(blk, dn_make_entity(w, child))
+        }
     }
 
     [class_method]
@@ -261,8 +451,57 @@ def DnWorld(world : ecs_world_t?) : DnWorld {
     return w
 }
 
+// Identity constructor so macros can uniformly wrap either a raw ecs_world_t?
+// or a DnWorld via DnWorld(world) without a double-wrap failing to compile.
+def DnWorld(var world : DnWorld) : DnWorld {
+    return world
+}
+
 def dn_register_component(var dn_world : DnWorld, var cmp_type : type<auto(T)>) : ecs_entity_t {
     return ecs_component_register(dn_world.world, type<T>)
+}
+
+def set_global_position(w : DnWorld; e : DnEntity; x, y, z : float) {
+    dn_world_set_global_position_impl(w.world, e.entity, x, y, z)
+}
+
+def get_global_position(w : DnWorld; e : DnEntity) : float3 {
+    var x : float = 0.0f
+    var y : float = 0.0f
+    var z : float = 0.0f
+    unsafe {
+        dn_world_get_global_position_impl(w.world, e.entity, addr(x), addr(y), addr(z))
+    }
+    return float3(x, y, z)
+}
+
+def set_global_rotation(w : DnWorld; e : DnEntity; x, y, z, rw : float) {
+    dn_world_set_global_rotation_impl(w.world, e.entity, x, y, z, rw)
+}
+
+def get_global_rotation(w : DnWorld; e : DnEntity) : float4 {
+    var x = 0.0f
+    var y = 0.0f
+    var z = 0.0f
+    var rw = 1.0f
+    unsafe {
+        dn_world_get_global_rotation_impl(w.world, e.entity, addr(x), addr(y), addr(z), addr(rw))
+    }
+    return float4(x, y, z, rw)
+}
+
+def set_global_scale(w : DnWorld; e : DnEntity; x, y, z : float) {
+    dn_world_set_global_scale_impl(w.world, e.entity, x, y, z)
+}
+
+def get_global_scale(w : DnWorld; e : DnEntity) : float3 {
+    var x = 1.0f
+    var y = 1.0f
+    var z = 1.0f
+    unsafe {
+        dn_world_get_global_scale_impl(w.world, e.entity, addr(x), addr(y), addr(z))
+    }
+    return float3(x, y, z)
 }
 
 struct DnQuery {
@@ -307,7 +546,7 @@ def _dn_ecs_query_get(world : ecs_world_t?, site_key : string, builder_blk : blo
     return _dn_query_cache?[full_key] ?? DnQuery()
 }
 
-// Destroys all cached queries for a world. DnGameWorld.fini calls this;
+// Destroys all cached queries for a world.
 // raw ecs_init() worlds must call it manually before ecs_fini.
 def dn_ecs_queries_fini(world : ecs_world_t?) : void {
     var dead : array<string>
@@ -367,7 +606,7 @@ def dn_ecs_progress(world : ecs_world_t?, dt : double) {
     }
 }
 
-// Unregisters all systems for a world. DnGameWorld.fini calls this.
+// Unregisters all systems for a world.
 def dn_ecs_systems_fini(world : ecs_world_t?) {
     var i = length(_dn_systems) - 1
     while (i >= 0) {
@@ -402,6 +641,46 @@ struct DnQueryBuilder {
         return self
     }
 
+    // ---- Relationship traversal -------------------------------------------
+    // These read the component from an ANCESTOR rather than from the matched
+    // entity. `flags` is an OR of EcsUp / EcsCascade / EcsSelf / EcsDesc, and a
+    // `trav` of 0 lets flecs default to EcsChildOf.
+    //
+    // NOTE: a non-optional traversal term does NOT match root entities, since a
+    // root has no ancestor to read from. Pass optional = true (oper =
+    // EcsOptional) to keep roots in the result; their field is then unset, and
+    // ecs_field_get returns null for it.
+    //
+    // A traversed field is SHARED across the whole result: ecs_field_get
+    // returns a pointer to one value, not a per-entity array. Read it at [0].
+    [class_method]
+    def static with_term_up(var cmp : type<auto(T)>, flags : uint64, inout : int = EcsInOutDefault, oper : int = EcsAnd, trav : ecs_entity_t = 0ul) : DnQueryBuilder {
+        let id = ecs_component_register(world, type<T>)
+        flecs_query_desc_set_term_src(q_desc, term_count, id, inout, oper, flags, trav)
+        term_count++
+        return self
+    }
+
+    // Breadth-first parent-ordered traversal: parents are visited before their
+    // children. The workhorse for transform propagation down a hierarchy.
+    [class_method]
+    def static with_term_cascade(var cmp : type<auto(T)>, inout : int = EcsInOutDefault, optional : bool = false) : DnQueryBuilder {
+        return with_term_up(cmp, EcsCascade, inout, optional ? EcsOptional : EcsAnd, 0ul)
+    }
+
+    // Bottom-up: children are visited before their parents.
+    [class_method]
+    def static with_term_cascade_desc(var cmp : type<auto(T)>, inout : int = EcsInOutDefault, optional : bool = false) : DnQueryBuilder {
+        return with_term_up(cmp, EcsCascade | EcsDesc, inout, optional ? EcsOptional : EcsAnd, 0ul)
+    }
+
+    // Use the entity's own component when it has one, otherwise inherit the
+    // nearest ancestor's.
+    [class_method]
+    def static with_term_self_up(var cmp : type<auto(T)>, inout : int = EcsInOutDefault, optional : bool = false) : DnQueryBuilder {
+        return with_term_up(cmp, EcsSelf | EcsUp, inout, optional ? EcsOptional : EcsAnd, 0ul)
+    }
+
     [class_method]
     def static term(var cmp : type<auto(T)>, inout : int = EcsInOutDefault) : ecs_term_t {
         return ecs_term(world, cmp, inout)
@@ -411,7 +690,9 @@ struct DnQueryBuilder {
     [class_method]
     def static terms(var bulk_terms : array<ecs_term_t>) : DnQueryBuilder {
         for (t in bulk_terms) {
-            flecs_query_desc_set_term_full(q_desc, term_count, t.id, int(t.inout), int(t.oper))
+            // set_term_src so a caller-supplied src/trav (e.g. from ecs_term_up)
+            // survives instead of being silently dropped
+            flecs_query_desc_set_term_src(q_desc, term_count, t.id, int(t.inout), int(t.oper), t.src.id, t.trav)
             term_count++
         }
         return self

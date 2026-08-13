@@ -6,7 +6,7 @@ require ../../Headers.das
 require dn_log
 require dn_gameobject
 require dn_ecs
-require dn_gameworld
+require dn_ecs_components
 require dn_renderer
 require dn_camera
 require dn_input
@@ -30,7 +30,7 @@ class Player : DnGameObject {
 
 
     observer : ecs_observer_t
-    game_world : DnGameWorld?
+    world : DnWorld
     player_entity : DnEntity = DnEntity()
     camera_entity : DnEntity = DnEntity()
 
@@ -38,18 +38,16 @@ class Player : DnGameObject {
     characterbody : DnCharacterBody?
 
 
-    def Player(var game_world_ : DnGameWorld?) : void {
+    def Player(var world_ : DnWorld) : void {
         super()
 
-        game_world = game_world_
+        world = world_
 
         sm = new StateMachine()
         sm.change_state(new Player_OnGround_Idle())
 
-        assume world = game_world.ecs_world()
-
-        player_entity = game_world.create_entity("Player")
-        camera_entity = game_world.create_entity("PlayerCamera")
+        player_entity = world.create_entity("Player")
+        camera_entity = world.create_entity("PlayerCamera")
 
         camera = dn_camera_init(new DnCamera())
         camera.set_impl(
@@ -71,7 +69,7 @@ class Player : DnGameObject {
     def override _init() : void {
         dn_info("Player init!")
 
-        ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @ (var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
+        ecs_add_hook(type<CharacterBodyDesc>, EcsHookEvent.ONSET, @(var world : ecs_world_t?, var e : ecs_entity_t, cb_cmp : CharacterBodyDesc) : void {
             dn_info("Creating CharacterBody {cb_cmp}")
             characterbody = new DnCharacterBody()
             dn_info("[bisect] new DnCharacterBody ok")
@@ -87,11 +85,11 @@ class Player : DnGameObject {
                 0.25
             )
             characterbody.initialize(position)
-            var entity = DnEntity(world=world, entity=e)
-            entity.set(CharacterBodyHandle(cb=characterbody))
+            var entity = DnEntity(world = world, entity = e)
+            entity.set(CharacterBodyHandle(cb = characterbody))
         })
 
-        ecs_add_hook(type<MoveSpeed>, EcsHookEvent.ONSET, @ (var world : ecs_world_t?, var e : ecs_entity_t, cmp : MoveSpeed) : void {
+        ecs_add_hook(type<MoveSpeed>, EcsHookEvent.ONSET, @(var world : ecs_world_t?, var e : ecs_entity_t, cmp : MoveSpeed) : void {
             dn_info("MoveSpeed ONSET {cmp}")
         })
 
@@ -101,28 +99,29 @@ class Player : DnGameObject {
         player_entity.set(CameraYaw(radians = 0.0f))
         player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
         player_entity.set(CharacterBodyDesc())
-        player_entity.set(Velocity3D())
-        player_entity.set(GravityScale(value=-9.81f))
+        player_entity.set(DnVelocity3D())
+        player_entity.set(GravityScale(value = -9.81f))
 
         camera_entity.child_of(player_entity)
-        camera_entity.set(Transform3D(pos=float3(0f, 2f, 0f), rot=float4(1f, 0f, 0f, 0f), scale=float3(1f, 1f, 1f)))
- 
+        camera_entity.set(CameraHandle(handle = camera))
+        camera_entity.set(DnTransform3D(pos = float3(0f, 2f, 0f), rot = float4(1f, 0f, 0f, 0f), scale = float3(1f, 1f, 1f)))
+
     }
 
     def override _ready() : void {
         dn_info("Player ready!")
-    } 
+    }
 
     def override _update(delta : double) : void {}
 
     def override _physics_update(delta : double) : void {
         let ref = ref_time_ticks()
-        if (game_world == null) {
-            dn_warn("player_entity \{{player_entity}\} | game_world \{{game_world}\}")
+        if (!world.is_valid()) {
+            dn_warn("player_entity \{{player_entity}\} | world \{{world}\}")
             return
         }
-        system_player_input(game_world.ecs_world(), camera)
- 
+        system_player_input(world, camera)
+
         var input : MoveInput? = player_entity.get_mut(type<MoveInput>)
         if (input != null && characterbody != null) {
             // characterbody.move(input.dir, delta)
@@ -130,7 +129,7 @@ class Player : DnGameObject {
 
         // position = characterbody != null ? characterbody.get_position() : position
         // position = characterbody.get_position()
-        var cam_pos = camera_entity.get(Transform3D()).pos
+        var cam_pos = camera_entity.get(type<DnTransform3D>).pos
         // camera.move_to(position + v_offset)
         // dn_info("PLAYER _physics_update {double(get_time_usec(ref)) / 1000d}")
     }

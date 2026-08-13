@@ -6,6 +6,7 @@ module ecs_components shared public
 require daslib/rtti
 
 require dn_ecs
+require dn_ecs_components
 require dn_camera
 require dn_physics
 
@@ -82,6 +83,8 @@ struct ActiveCamera {}
 // --- Registration ---
  
 def register_components(var world : DnWorld&) : void {
+    dn_register_internal_components(world)
+
     world.dn_register_component(type<RenderCube>)
 
     world.dn_register_component(type<MoveInput>)

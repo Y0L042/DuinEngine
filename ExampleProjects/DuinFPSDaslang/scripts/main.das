@@ -20,13 +20,12 @@ require dn_log
 require dn_gameobject
 require dn_ecs
 require dn_pipeline
-require dn_gameworld
 require dn_renderer
 require dn_camera
 require dn_input
-require dn_physics 
+require dn_physics
 require dn_application
- 
+
 require dn_ecs_boost
 require ecs_components
 require ecs_systems
@@ -36,7 +35,7 @@ require ./GameObjects/Frogger/frogger.das
 require ./GameObjects/Zeus/zeus.das
 
 var player : Player?
-var game_world : DnGameWorld?
+var world : DnWorld
 var zeus : Zeus?
 var zeus_mode : bool = false
 var pipeline : DnPipeline?
@@ -48,12 +47,11 @@ def game_ready() {
 
     dn_info("Game Ready!")
     dn_capture_mouse(true)
-    
-    // GameWorld always re-wraps (smart constructor reuses existing C++ world on reload).
-    game_world = new DnGameWorld()
+
+    // DnWorld owns the flecs world directly.
+    world.initialize()
 
     // Entities and game state are only created on first load.
-    assume world = game_world.dn_world()
     pipeline = new DnPipeline(world)
     pipeline.add_stage(DnExecutionStep.READY, "Ready")
 
@@ -64,10 +62,10 @@ def game_ready() {
     dn_physics_server_create_plane(float3(0.0, 1.0, 0.0), 0.0)
     dn_physics_server_create_box(float3(0.0, 15.0, 0.0), float3(1.0, 1.0, 1.0))
 
-    player = dn_application_add_child(new Player(game_world))
+    player = dn_application_add_child(new Player(world))
 
     zeus = dn_application_add_child(new Zeus())
- 
+
     register_keybinds()
 }
 
@@ -98,14 +96,15 @@ def game_physics_update(delta : double) {
         }
     }
 
-    system_set_input_velocity(game_world.ecs_world(), delta)
-    system_gravity(game_world.ecs_world(), delta)
-    system_ground_friction(game_world.ecs_world(), delta)
-    system_air_friction(game_world.ecs_world(), delta)
-    system_resolve_external_velocities(game_world.ecs_world(), delta)
+    system_set_input_velocity(world, delta)
+    system_gravity(world, delta)
+    system_ground_friction(world, delta)
+    system_air_friction(world, delta)
+    system_resolve_external_velocities(world, delta)
 
-    system_characterbody_move(game_world.ecs_world(), delta)
-    system_update_position(game_world.ecs_world(), delta)
+    system_characterbody_move(world, delta)
+    system_update_position(world, delta)
+    system_update_active_camera_position(world, delta)
 }
 
 [export]

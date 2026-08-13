@@ -31,7 +31,7 @@ class DaslangDocGeneratorApp : public duin::Application
             NEED_MODULE(Module_DnGameObject);
             NEED_MODULE(Module_DnGameStateMachine);
             NEED_MODULE(Module_DnECS);
-            NEED_MODULE(Module_DecsGameWorld);
+            NEED_MODULE(Module_DnPipeline);
             NEED_MODULE(Module_DnSceneBuilder);
             NEED_MODULE(Module_DnInput);
             NEED_MODULE(Module_DnPhysicsServer);

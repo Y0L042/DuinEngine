@@ -93,7 +93,6 @@ void SetImGuiINIPath(const std::string &newPath);
 
 bool GetGameShouldQuit();
 void SetGameShouldQuit(bool shouldQuit = true);
-void PushQuitEvent();
 
 std::shared_ptr<EcsPipeline> CreateEcsPipeline(World world);
 

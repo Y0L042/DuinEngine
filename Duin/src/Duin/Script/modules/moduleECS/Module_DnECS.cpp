@@ -5,7 +5,7 @@
 #include "Duin/ECS/DECS/DECS.h"
 #include "Duin/ECS/ECSComponents.h"
 #include "Duin/ECS/ECSTag.h"
-#include "Duin/ECS/GameWorld.h"
+#include "Duin/ECS/Transform.h"
 #include "Duin/ECS/PrefabRegistry.h"
 #include "Duin/Script/ScriptContext.h"
 #include "Duin/Core/Maths/DuinMaths.h"
@@ -16,7 +16,7 @@
 MAKE_EXTERNAL_TYPE_FACTORY(ecs_world_t, ecs_world_t)
 
 // ---- Direct type bindings ----
-
+#if 0
 DAS_TYPE_DECL(DnVector3, duin::Vector3);
 DAS_TYPE_DECL(DnQuaternion, duin::Quaternion);
 DAS_TYPE_DECL(DnPosition3D, duin::ECSComponent::Position3D);
@@ -296,93 +296,72 @@ static duin::ECSComponent::Velocity3D dn_entity_get_velocity3d(ecs_world_t *w, u
     }
     return result;
 }
+#endif
 
-// ---- GameWorld externs ----
+// ---- Global-space transform externs ----
+// Operate directly on an ecs_world_t*; delegate to the duin::transform free
+// functions so scripted code gets hierarchy-aware global transforms.
 
-static ecs_world_t *dn_get_flecs_world_impl(das::Context *context)
+static void dn_world_set_global_position_impl(ecs_world_t *w, uint64_t entityId, float x, float y, float z)
 {
-    auto *dnCtx = static_cast<duin::ScriptContext *>(context);
-    if (!dnCtx || dnCtx->gameWorld.expired())
-    {
-        return nullptr;
-    }
-    return dnCtx->gameWorld.lock()->GetFlecsWorld().c_ptr();
-}
-
-static void *dn_get_gameworld_ptr_impl(das::Context *context)
-{
-    auto *dnCtx = static_cast<duin::ScriptContext *>(context);
-    return dnCtx ? static_cast<void *>(dnCtx->gameWorld.lock().get()) : nullptr;
-}
-
-static uint64_t dn_gameworld_find_prefab_impl(void *gwPtr, const char *name)
-{
-    if (!gwPtr || !name)
-        return 0;
-    duin::Entity prefab = duin::PrefabRegistry::Get().Find(name);
-    return prefab.GetID();
-}
-
-static void dn_gameworld_set_global_position_impl(void *gwPtr, uint64_t entityId, float x, float y, float z)
-{
-    if (!gwPtr || !entityId)
+    if (!w || !entityId)
         return;
-    auto *gw = static_cast<duin::GameWorld *>(gwPtr);
-    duin::Entity e(gw->GetFlecsWorld(), entityId);
-    gw->SetGlobalPosition(e, duin::Vector3{x, y, z});
+    flecs::world fw(w);
+    duin::Entity e(fw, entityId);
+    duin::transform::SetGlobalPosition(e, duin::Vector3{x, y, z});
 }
 
-static void dn_gameworld_get_global_position_impl(void *gwPtr, uint64_t entityId, float *x, float *y, float *z)
+static void dn_world_get_global_position_impl(ecs_world_t *w, uint64_t entityId, float *x, float *y, float *z)
 {
-    if (!gwPtr || !entityId)
+    if (!w || !entityId)
         return;
-    auto *gw = static_cast<duin::GameWorld *>(gwPtr);
-    duin::Entity e(gw->GetFlecsWorld(), entityId);
-    duin::Vector3 pos = gw->GetGlobalPosition(e);
+    flecs::world fw(w);
+    duin::Entity e(fw, entityId);
+    duin::Vector3 pos = duin::transform::GetGlobalPosition(e);
     *x = pos.x;
     *y = pos.y;
     *z = pos.z;
 }
 
-static void dn_gameworld_set_global_rotation_impl(void *gwPtr, uint64_t entityId, float x, float y, float z, float w)
+static void dn_world_set_global_rotation_impl(ecs_world_t *w, uint64_t entityId, float x, float y, float z, float ww)
 {
-    if (!gwPtr || !entityId)
+    if (!w || !entityId)
         return;
-    auto *gw = static_cast<duin::GameWorld *>(gwPtr);
-    duin::Entity e(gw->GetFlecsWorld(), entityId);
-    gw->SetGlobalRotation(e, duin::Quaternion{x, y, z, w});
+    flecs::world fw(w);
+    duin::Entity e(fw, entityId);
+    duin::transform::SetGlobalRotation(e, duin::Quaternion{x, y, z, ww});
 }
 
-static void dn_gameworld_get_global_rotation_impl(void *gwPtr, uint64_t entityId, float *x, float *y, float *z,
-                                                  float *w)
+static void dn_world_get_global_rotation_impl(ecs_world_t *w, uint64_t entityId, float *x, float *y, float *z,
+                                              float *ww)
 {
-    if (!gwPtr || !entityId)
+    if (!w || !entityId)
         return;
-    auto *gw = static_cast<duin::GameWorld *>(gwPtr);
-    duin::Entity e(gw->GetFlecsWorld(), entityId);
-    duin::Quaternion rot = gw->GetGlobalRotation(e);
+    flecs::world fw(w);
+    duin::Entity e(fw, entityId);
+    duin::Quaternion rot = duin::transform::GetGlobalRotation(e);
     *x = rot.x;
     *y = rot.y;
     *z = rot.z;
-    *w = rot.w;
+    *ww = rot.w;
 }
 
-static void dn_gameworld_set_global_scale_impl(void *gwPtr, uint64_t entityId, float x, float y, float z)
+static void dn_world_set_global_scale_impl(ecs_world_t *w, uint64_t entityId, float x, float y, float z)
 {
-    if (!gwPtr || !entityId)
+    if (!w || !entityId)
         return;
-    auto *gw = static_cast<duin::GameWorld *>(gwPtr);
-    duin::Entity e(gw->GetFlecsWorld(), entityId);
-    gw->SetGlobalScale(e, duin::Vector3{x, y, z});
+    flecs::world fw(w);
+    duin::Entity e(fw, entityId);
+    duin::transform::SetGlobalScale(e, duin::Vector3{x, y, z});
 }
 
-static void dn_gameworld_get_global_scale_impl(void *gwPtr, uint64_t entityId, float *x, float *y, float *z)
+static void dn_world_get_global_scale_impl(ecs_world_t *w, uint64_t entityId, float *x, float *y, float *z)
 {
-    if (!gwPtr || !entityId)
+    if (!w || !entityId)
         return;
-    auto *gw = static_cast<duin::GameWorld *>(gwPtr);
-    duin::Entity e(gw->GetFlecsWorld(), entityId);
-    duin::Vector3 scale = gw->GetGlobalScale(e);
+    flecs::world fw(w);
+    duin::Entity e(fw, entityId);
+    duin::Vector3 scale = duin::transform::GetGlobalScale(e);
     *x = scale.x;
     *y = scale.y;
     *z = scale.z;
@@ -417,7 +396,7 @@ class Module_DnECS : public das::Module
         if (!flecsMod)
             DN_CORE_ERROR("decs: failed to find required module 'flecs_core'");
         addBuiltinDependency(lib, flecsMod);
-
+#if 0
         addAnnotation(new DnVector3Annotation(lib));
         addAnnotation(new DnQuaternionAnnotation(lib));
         addAnnotation(new DnPosition3DAnnotation(lib));
@@ -503,6 +482,33 @@ class Module_DnECS : public das::Module
         addExtern<DAS_BIND_FUN(dn_entity_get_velocity3d), das::SimNode_ExtFuncCallAndCopyOrMove>(
             *this, lib, "dn_entity_get_velocity3d", das::SideEffects::none, "dn_entity_get_velocity3d")
             ->args({"world", "eid"});
+
+#endif
+
+        addExtern<DAS_BIND_FUN(dn_world_set_global_position_impl)>(
+            *this, lib, "dn_world_set_global_position_impl", das::SideEffects::modifyExternal,
+            "dn_world_set_global_position_impl")
+            ->args({"world", "eid", "x", "y", "z"});
+        addExtern<DAS_BIND_FUN(dn_world_get_global_position_impl)>(
+            *this, lib, "dn_world_get_global_position_impl", das::SideEffects::modifyExternal,
+            "dn_world_get_global_position_impl")
+            ->args({"world", "eid", "x", "y", "z"});
+        addExtern<DAS_BIND_FUN(dn_world_set_global_rotation_impl)>(
+            *this, lib, "dn_world_set_global_rotation_impl", das::SideEffects::modifyExternal,
+            "dn_world_set_global_rotation_impl")
+            ->args({"world", "eid", "x", "y", "z", "w"});
+        addExtern<DAS_BIND_FUN(dn_world_get_global_rotation_impl)>(
+            *this, lib, "dn_world_get_global_rotation_impl", das::SideEffects::modifyExternal,
+            "dn_world_get_global_rotation_impl")
+            ->args({"world", "eid", "x", "y", "z", "w"});
+        addExtern<DAS_BIND_FUN(dn_world_set_global_scale_impl)>(
+            *this, lib, "dn_world_set_global_scale_impl", das::SideEffects::modifyExternal,
+            "dn_world_set_global_scale_impl")
+            ->args({"world", "eid", "x", "y", "z"});
+        addExtern<DAS_BIND_FUN(dn_world_get_global_scale_impl)>(
+            *this, lib, "dn_world_get_global_scale_impl", das::SideEffects::modifyExternal,
+            "dn_world_get_global_scale_impl")
+            ->args({"world", "eid", "x", "y", "z"});
 
         //compileBuiltinModule("dn_ecs.das", dn_ecs_das, sizeof(dn_ecs_das));
 

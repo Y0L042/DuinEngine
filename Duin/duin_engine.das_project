@@ -28,9 +28,6 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "dn_gamestatemachine") {
         res.info = ("dn_gamestatemachine", path_to_engine + "src/Duin/Script/modules/moduleGameObject/dn_gamestatemachine.das", "")
     }
-    elif (req == "dn_gameworld") {
-        res.info = ("dn_gameworld", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_gameworld.das", "")
-    }
     elif (req == "dn_scenebuilder") {
         res.info = ("dn_scenebuilder", path_to_engine + "src/Duin/Script/modules/moduleECS/dn_scenebuilder.das", "")
     }

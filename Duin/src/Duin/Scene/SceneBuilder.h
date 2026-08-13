@@ -11,7 +11,6 @@
 #pragma once
 
 #include "Duin/IO/JSONValue.h"
-#include "Duin/ECS/GameWorld.h"
 #include "Duin/ECS/DECS/World.h"
 #include "Duin/Assets/AssetRef.h"
 

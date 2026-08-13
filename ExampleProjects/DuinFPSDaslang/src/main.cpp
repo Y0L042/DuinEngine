@@ -2,7 +2,6 @@
 
 #include <Duin.h>
 #include <Duin/EntryPoint.h>
-#include <Duin/ECS/GameWorld.h>
 #include <Duin/Scene/SceneBuilder.h>
 #include <Duin/IO/FileModule.h>
 #include <Duin/Script/GameScript.h>
@@ -57,7 +56,6 @@ class DuinFPSDaslangApp : public duin::Application
             NEED_MODULE(Module_DnGameObject);
             NEED_MODULE(Module_DnECS);
             NEED_MODULE(Module_DnPipeline);
-            NEED_MODULE(Module_DecsGameWorld);
             NEED_MODULE(Module_DnInput);
             NEED_MODULE(Module_DnPhysicsServer);
             NEED_MODULE(Module_DnCharacterBody);

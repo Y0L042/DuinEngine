@@ -19,7 +19,6 @@ require imgui_boost
 require dn_log
 require dn_gameobject
 require dn_ecs
-require dn_gameworld
 require dn_renderer
 require dn_camera
 require dn_input

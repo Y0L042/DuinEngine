@@ -4,7 +4,7 @@ local dep_flecs = {}
 local name = "FLECS"
 
 local repo   = "https://github.com/SanderMertens/flecs"
-local tag    = "v4.1.4"
+local tag    = "v4.1.6"
 local folder = "flecs"
 
 function dep_flecs.build()
@@ -25,8 +25,11 @@ function dep_flecs.build()
     print(name .. " downloaded.")
 
     utils.deleteFolder(folder .. "/build_vs2026")
-    local crt_flag = (Cfg.CRT == "MT") and "/MTd" or "/MDd"
-    utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug .. ' -DCMAKE_C_FLAGS_DEBUG="' .. crt_flag .. '" -DCMAKE_CXX_FLAGS_DEBUG="' .. crt_flag .. '"')
+    -- Pin the generator: this is often invoked from an MSYS2 shell where CMake
+    -- defaults to Ninja + gcc, which chokes on the MSVC runtime settings below.
+    -- The VS generator is also what produces the Debug/ subdir that
+    -- premake5.lua expects flecs_static.lib to live in.
+    utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026 -G "' .. Cfg.cmake_generator .. '" -A ' .. Cfg.cmake_arch .. ' -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug)
     utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug")
 
     print("END: " .. name)

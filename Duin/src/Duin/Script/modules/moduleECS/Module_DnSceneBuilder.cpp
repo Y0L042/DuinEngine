@@ -2,7 +2,7 @@
 #include <daScript/daScript.h>
 #include <daScript/daScriptBind.h>
 #include "Duin/Scene/SceneBuilder.h"
-#include "Duin/ECS/GameWorld.h"
+#include "Duin/ECS/DECS/World.h"
 #include "Duin/Core/Debug/DNLog.h"
 
 static void *dn_scenebuilder_create_impl()
@@ -22,35 +22,35 @@ static void dn_packedscene_destroy_impl(void *handle)
         delete static_cast<duin::PackedScene *>(handle);
 }
 
-static void *dn_scenebuilder_pack_world_impl(void *sbHandle, void *gwHandle)
+static void *dn_scenebuilder_pack_world_impl(void *sbHandle, void *worldHandle)
 {
     auto *sb = static_cast<duin::SceneBuilder *>(sbHandle);
-    auto *gw = static_cast<duin::GameWorld *>(gwHandle);
-    if (!sb || !gw)
+    if (!sb || !worldHandle)
         return nullptr;
-    return new duin::PackedScene(sb->PackScene(gw));
+    duin::World world(static_cast<ecs_world_t *>(worldHandle));
+    return new duin::PackedScene(sb->PackScene(&world));
 }
 
-static uint64_t dn_scenebuilder_instantiate_impl(void *sbHandle, void *psHandle, void *gwHandle)
+static uint64_t dn_scenebuilder_instantiate_impl(void *sbHandle, void *psHandle, void *worldHandle)
 {
     auto *sb = static_cast<duin::SceneBuilder *>(sbHandle);
     auto *ps = static_cast<duin::PackedScene *>(psHandle);
-    auto *gw = static_cast<duin::GameWorld *>(gwHandle);
-    if (!sb || !ps || !gw)
+    if (!sb || !ps || !worldHandle)
         return 0;
-    duin::Entity root = sb->InstantiateScene(*ps, gw);
+    duin::World world(static_cast<ecs_world_t *>(worldHandle));
+    duin::Entity root = sb->InstantiateScene(*ps, &world);
     return root.GetID();
 }
 
 static uint64_t dn_scenebuilder_instantiate_as_children_impl(void *sbHandle, void *psHandle, uint64_t parentId,
-                                                              void *gwHandle)
+                                                              void *worldHandle)
 {
     auto *sb = static_cast<duin::SceneBuilder *>(sbHandle);
     auto *ps = static_cast<duin::PackedScene *>(psHandle);
-    auto *gw = static_cast<duin::GameWorld *>(gwHandle);
-    if (!sb || !ps || !gw)
+    if (!sb || !ps || !worldHandle)
         return 0;
-    duin::Entity parent = gw->MakeAlive(parentId);
+    duin::World world(static_cast<ecs_world_t *>(worldHandle));
+    duin::Entity parent = world.MakeAlive(parentId);
     duin::Entity root = sb->InstantiateSceneAsChildren(*ps, parent);
     return root.GetID();
 }

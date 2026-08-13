@@ -15,8 +15,6 @@
 namespace duin
 {
 
-class GameWorld;
-
 /**
  * @namespace ECSComponent
  * @brief Data components for entities.
@@ -412,8 +410,6 @@ struct Transform3D
     }
 
   private:
-    friend class duin::GameWorld;
-
     Vector3 position_;
     Vector3 scale_;
     Quaternion rotation_;

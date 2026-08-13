@@ -65,7 +65,7 @@ project "DuinFPSTests"
 
     filter "system:windows"
         buildoptions { "/openmp" }
-        cppdialect "C++20"
+        cppdialect "C++23"
 
     filter "action:vs*"
         buildoptions {

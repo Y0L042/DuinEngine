@@ -789,3 +789,138 @@ def test_world_query_builder_returns_builder() {
     var qb = w.query_builder()
     assert(qb.world == w.world, "query_builder().world matches DnWorld.world")
 }
+
+// ---------------------------------------------------------------------------
+// Hierarchy traversal (up / cascade)
+// ---------------------------------------------------------------------------
+
+// root -> mid -> leaf, each with a DnTransform3D whose pos.x encodes its depth.
+def make_hierarchy(var w : DnWorld; var root, mid, leaf : DnEntity&) {
+    root = w.create_entity("root")
+    root |> set(DnTransform3D(pos = float3(0.0f, 0.0f, 0.0f)))
+
+    mid = w.create_entity("mid")
+    mid |> child_of(root)
+    mid |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+
+    leaf = w.create_entity("leaf")
+    leaf |> child_of(mid)
+    leaf |> set(DnTransform3D(pos = float3(2.0f, 0.0f, 0.0f)))
+}
+
+[test]
+def test_children_array_returns_direct_children() {
+    var w = make_world()
+    var root, mid, leaf : DnEntity
+    make_hierarchy(w, root, mid, leaf)
+
+    let kids = root |> children_array()
+    verify(length(kids) == 1, "root has exactly one direct child")
+    if (length(kids) == 1) {
+        verify(kids[0].entity == mid.entity, "root's child is mid")
+    }
+}
+
+[test]
+def test_with_term_up_reads_parent_component() {
+    var w = make_world()
+    var root, mid, leaf : DnEntity
+    make_hierarchy(w, root, mid, leaf)
+
+    var q = (w.query_builder()
+        .with_term(type<DnTransform3D>, EcsIn)
+        .with_term_up(type<DnTransform3D>, EcsUp, EcsIn, EcsAnd, 0ul)
+        .build())
+
+    var count = 0
+    var it = ecs_query_iter(w.world, q.ecs_query())
+    unsafe {
+        while (ecs_query_next_iter(it)) {
+            verify(!ecs_field_is_self(it, 1), "the up-traversed field is not self-owned")
+            count += it.count
+        }
+    }
+    // mid and leaf have parents; root does not, so it is excluded
+    verify(count == 2, "non-optional up term matches only entities that have a parent")
+    q.fini()
+}
+
+[test]
+def test_with_term_cascade_orders_parents_first() {
+    var w = make_world()
+    var root, mid, leaf : DnEntity
+    make_hierarchy(w, root, mid, leaf)
+
+    var q = (w.query_builder()
+        .with_term(type<DnTransform3D>, EcsIn)
+        .with_term_cascade(type<DnTransform3D>, EcsIn, true)
+        .build())
+
+    var order : array<float>
+    var it = ecs_query_iter(w.world, q.ecs_query())
+    unsafe {
+        while (ecs_query_next_iter(it)) {
+            var t = ecs_field_get(it, type<DnTransform3D>, 0)
+            for (i in range(it.count)) {
+                order |> push(t[i].pos.x)
+            }
+        }
+    }
+
+    verify(length(order) == 3, "optional cascade matches all three levels incl. the root")
+    var monotonic = true
+    for (i in range(1, length(order))) {
+        if (order[i] < order[i - 1]) { monotonic = false; }
+    }
+    verify(monotonic, "cascade visits parents before children")
+    q.fini()
+}
+
+[test]
+def test_with_term_cascade_optional_includes_root() {
+    var w = make_world()
+    var root, mid, leaf : DnEntity
+    make_hierarchy(w, root, mid, leaf)
+
+    var q = (w.query_builder()
+        .with_term(type<DnTransform3D>, EcsIn)
+        .with_term_cascade(type<DnTransform3D>, EcsIn, true)
+        .build())
+
+    var unset_seen = 0
+    var it = ecs_query_iter(w.world, q.ecs_query())
+    unsafe {
+        while (ecs_query_next_iter(it)) {
+            if (!ecs_field_is_set(it, 1)) {
+                unset_seen += it.count
+            }
+        }
+    }
+    verify(unset_seen == 1, "exactly the root is matched with an unset parent field")
+    q.fini()
+}
+
+[test]
+def test_terms_preserves_src_and_trav() {
+    var w = make_world()
+    var root, mid, leaf : DnEntity
+    make_hierarchy(w, root, mid, leaf)
+
+    // a traversal term routed through terms() must keep its src/trav
+    var bulk : array<ecs_term_t>
+    bulk |> push(ecs_term(w.world, type<DnTransform3D>, EcsAnd, EcsIn))
+    bulk |> push(ecs_term_up(w.world, type<DnTransform3D>, EcsUp, EcsChildOf, EcsAnd, EcsIn))
+
+    var q = w.query_builder().terms(bulk).build()
+
+    var count = 0
+    var it = ecs_query_iter(w.world, q.ecs_query())
+    unsafe {
+        while (ecs_query_next_iter(it)) {
+            verify(!ecs_field_is_self(it, 1), "term src survived terms(): field is traversed")
+            count += it.count
+        }
+    }
+    verify(count == 2, "terms() built an up query that excludes the root")
+    q.fini()
+}

@@ -101,13 +101,9 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
         DN_CORE_INFO("No script modules passed.");
     }
 
-    // Register dynamic modules (dasLLVM → the `llvm` mount that just_in_time.das requires)
-    // BEFORE Module::Initialize(), like daScript/main.cpp. The mount lives in the bound
-    // environment's resolve table, consulted by the file resolver at compile time.
-    // Done unconditionally here because SetJitMode may run after InitModules.
     {
         das::daScriptEnvironment::ensure();
-        auto bootAccess = das::make_smart<das::FsFileAccess>(); // plain access: scans dasRoot/modules literally
+        auto bootAccess = das::make_smart<das::FsFileAccess>(); 
         std::string projectRoot;
         if (!projectFile.empty())
         {
@@ -128,10 +124,6 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
 
 // =============================================================================
 //  Stage 2: Compile
-//
-//  Compile() drives the pipeline: validate inputs → build file access → build
-//  policies → compile → handle the result. Each step is one self-describing call
-//  below; the per-step detail lives in the helpers that follow.
 // =============================================================================
 
 bool duin::Script::Compile()
@@ -141,25 +133,18 @@ bool duin::Script::Compile()
 
     diagnostics.clear();
 
-    // Step 1: reject missing project/source files before touching daslang.
     if (!ValidateCompileInputs())
         return false;
 
-    // Step 2: build the file-access layer (project root, mounts, unsaved-buffer override).
     auto fAccess = BuildFileAccess();
 
-    // Step 3: assemble compile policies (rtti/logging, JIT, profiler).
     das::CodeOfPolicies policies = BuildPolicies();
 
-    // Step 4: compile. Only promote to `program` on success; time the call for logging.
     auto compileStart = std::chrono::steady_clock::now();
     das::ProgramPtr newProgram = das::compileDaScript(scriptPath, fAccess, tout, libGroup, policies);
     auto compileMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - compileStart).count();
 
-    // Step 5a: compileDaScript can return a null program (e.g. the top-level file can't be
-    // opened — a stale/renamed URI from an editor). Dereferencing it below would crash the
-    // daemon, so synthesize a diagnostic and fail gracefully instead.
     if (!newProgram)
     {
         DN_CORE_ERROR("Compilation returned no program for {} (file missing/unopenable).", scriptPath);
@@ -175,7 +160,6 @@ bool duin::Script::Compile()
         return false;
     }
 
-    // Step 5b: compilation produced a program but with errors — collect diagnostics and fail.
     if (newProgram->failed())
     {
         DN_CORE_FATAL("Compilation failed!");
@@ -195,8 +179,6 @@ bool duin::Script::Compile()
         return false;
     }
 
-    // Step 5c: success — adopt the new program.
-    // Sum all "compiler took X, <file>" lines emitted by log_compile_time.
     {
         double totalDas = 0.0;
         std::istringstream ss(tout.str());
@@ -217,11 +199,6 @@ bool duin::Script::Compile()
     return true;
 }
 
-// Step 1 helper. Validate inputs BEFORE handing them to daslang. Constructing FsFileAccess
-// on a non-existent project file faults inside daslang (it parses/runs the project's
-// module_get) — an editor sending a stale/renamed URI must not crash the daemon. A missing
-// script path is handled gracefully by compileDaScript, but we reject it here too for a
-// cleaner diagnostic. Both checks emit a 20605 (file-not-found) diagnostic.
 bool duin::Script::ValidateCompileInputs()
 {
     auto fileExists = [](const std::string &p) -> bool {
@@ -251,8 +228,6 @@ bool duin::Script::ValidateCompileInputs()
     if (!projectFile.empty() && !fileExists(projectFile))
         return failMissing("project file", projectFile);
 
-    // When compiling in-memory override content for scriptPath, the file need not exist on
-    // disk (unsaved buffer / new file) — skip the source-existence check for that path.
     const bool overrideForScript = hasOverrideContent && overridePath == scriptPath;
     if (!overrideForScript && !fileExists(scriptPath))
         return failMissing("source file", scriptPath);
@@ -260,8 +235,6 @@ bool duin::Script::ValidateCompileInputs()
     return true;
 }
 
-// Step 2 helper. Builds the FsFileAccess used for this compile and stores it in the
-// `fileAccess` member (BuildPolicies() / JIT setup add extra modules to the same instance).
 das::FileAccessPtr duin::Script::BuildFileAccess()
 {
     // Set optional project file, script root, configure policies.
@@ -275,11 +248,6 @@ das::FileAccessPtr duin::Script::BuildFileAccess()
     }
     fileAccess->addFsRoot("scripts", "scripts");
 
-    // On-type override: inject the unsaved buffer text as the source for scriptPath so daslang
-    // compiles the in-memory content instead of reading the (stale or absent) file from disk.
-    // TextFileInfo does NOT copy its source; with own=true its destructor frees it via
-    // das_aligned_free16, so we hand it a matching das_aligned_alloc16 copy (daslang then owns
-    // the buffer — no lifetime coupling to overrideContent).
     const bool overrideForScript = hasOverrideContent && overridePath == scriptPath;
     if (overrideForScript)
     {
@@ -294,8 +262,6 @@ das::FileAccessPtr duin::Script::BuildFileAccess()
     return fileAccess;
 }
 
-// Step 3 helper. Assembles the CodeOfPolicies for this compile: rtti/logging, optional JIT
-// (with the matching just_in_time.das module mounted), and optional profiler.
 das::CodeOfPolicies duin::Script::BuildPolicies()
 {
     das::CodeOfPolicies policies;
@@ -324,12 +290,9 @@ das::CodeOfPolicies duin::Script::BuildPolicies()
         {
             policies.jit_dll_mode = false;
         }
-        // Dynamic modules (the `llvm` mount) are registered once in InitModules().
         fileAccess->addExtraModule("just_in_time", das::getDasRoot() + "/daslib/just_in_time.das");
         policies.jit_output_path = jitOutPath;
         policies.dll_search_paths.emplace_back(das::getDasRoot() + "/lib");
-        // Auto-detection uses the exe's parent folder name as the lib sub-dir, which gives
-        // "DuinRT" instead of "Debug"/"Release" because our bin layout is bin/<cfg>/<proj>/.
 #ifdef NDEBUG
         policies.jit_path_to_shared_lib = das::getDasRoot() + "/lib/Release/libDaScriptDyn_runtime.lib";
 #else
@@ -414,7 +377,6 @@ void duin::Script::RunLint(std::vector<Diagnostic> &diags)
         return;
 
     // Each lint line ends with " at <file>:<line>:<col>".
-    // LineInfo::describe() emits  "name:line:column"  (debug_info.cpp:717).
     static const std::regex kLintLine(R"(^(.+) at (.+):(\d+):(\d+)\s*$)");
     std::istringstream ss(output);
     std::string line;
@@ -490,8 +452,6 @@ bool duin::Script::VerifyFunction(das::Func fn)
     return duin::VerifyFunction(context.get(), fn);
 }
 
-// Shared guard for the invoke functions below: verifies the handle against the live context
-// and emits the null-fn / null-context warnings on failure. Returns false to abort the call.
 bool duin::Script::EnsureCallable(das::Func fn)
 {
     if (!VerifyFunction(fn))

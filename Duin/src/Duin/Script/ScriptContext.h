@@ -11,8 +11,6 @@
 namespace duin
 {
 
-class GameWorld;
-
 class ScriptContext : public das::Context
 {
   public:
@@ -27,7 +25,6 @@ class ScriptContext : public das::Context
     {
         other.scriptMemory = this->scriptMemory;
         other.rootGameObject = this->rootGameObject;
-        other.gameWorld = this->gameWorld;
     }
 
     void Clear()
@@ -35,13 +32,10 @@ class ScriptContext : public das::Context
         scriptMemory.reset();
 
         rootGameObject = nullptr;
-
-        gameWorld.reset();
     }
 
     std::shared_ptr<ScriptMemory> scriptMemory;
     GameObject* rootGameObject;
-    std::weak_ptr<GameWorld> gameWorld;
 };
 
 } // namespace duin

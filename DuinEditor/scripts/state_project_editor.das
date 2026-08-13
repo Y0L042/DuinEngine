@@ -133,7 +133,7 @@ class State_ProjectEditor : DnGameState {
     }
 
     def remove_scene(uuid : DnUUID) : void {
-        // Properly delete GameWorld, then remove scene
+        // Properly delete the scene's world, then remove scene
     }
 }
 

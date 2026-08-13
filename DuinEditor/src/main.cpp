@@ -61,7 +61,6 @@ void Editor::Ready()
         NEED_MODULE(Module_DnECS);
         NEED_MODULE(Module_DnPipeline);
         NEED_MODULE(Module_DnSceneBuilder);
-        NEED_MODULE(Module_DecsGameWorld);
         NEED_MODULE(Module_DnInput);
         NEED_MODULE(Module_DnPhysicsServer);
         NEED_MODULE(Module_DnCharacterBody);

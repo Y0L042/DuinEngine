@@ -16,14 +16,15 @@ require flecs public
 require dn_ecs public
 
 /*
-    ecs_query(world) $(eid : ecs_entity_t; vel : Velocity3D; var tx : Transform3D) {
+    ecs_query(world) $(ent : DnEntity; vel : Velocity3D; var tx : Transform3D) {
         tx.pos += vel.val
     }
 
     Argument convention:
         param : Type        -> read-only term (EcsIn), bound as `Type const&`
         var param : Type    -> mutable term (EcsInOut), bound as `Type&`
-        eid : ecs_entity_t  -> binds the current entity id (no query term)
+        ent : DnEntity      -> binds the current entity as DnEntity (no query term)
+        eid : ecs_entity_t  -> binds the raw entity id instead (no query term)
 
     Optional explicit cache key (default key is per call site):
         ecs_query(world, "my_query") $(...) { }
@@ -32,6 +33,36 @@ require dn_ecs public
         [CACHED]            -> flecs EcsQueryCacheAuto
         [REQUIRE(Tag)]      -> entity must have component/tag, no data binding
         [REQUIRE_NOT(Tag)]  -> entity must NOT have component/tag
+
+    Relationship traversal -- read a component from an ANCESTOR instead of from
+    the matched entity. Each annotation names the block arguments it applies to:
+        [CASCADE(a, b)]     -> breadth-first, parents visited before children
+        [CASCADE_DESC(a)]   -> same, but children visited before parents
+        [UP(a)]             -> nearest ancestor's component, no ordering guarantee
+        [SELF_UP(a)]        -> own component if present, else the ancestor's
+
+    Traversal follows ChildOf and works with both flecs hierarchy storages.
+
+    A traversal argument's optionality is written on the argument itself:
+
+        parent_tx : Transform3D     -> required. Root entities have no ancestor
+                                       to read from, so they DO NOT match the
+                                       query at all. Bound as Transform3D&.
+        parent_tx : Transform3D?    -> optional. Roots DO match, and parent_tx
+                                       is null for them. Bound as Transform3D?.
+
+    The "roots silently drop out" behaviour of the required form is the most
+    common surprise here; prefer the `?` form whenever roots must be processed.
+
+        // propagate position down a hierarchy, roots included
+        ecs_query(world) $ [CACHED, CASCADE(parent_tx)] (
+            var tx : Transform3D;
+            var parent_tx : Transform3D?
+        ) {
+            if (parent_tx != null) {
+                tx.pos = (*parent_tx).pos + tx.local
+            }
+        }
 
     Each call site lazily builds its flecs query once via _dn_ecs_query_get
     (dn_ecs), keyed by world pointer + site key. `return` inside the block
@@ -53,7 +84,7 @@ require dn_ecs public
 
     // Component lifecycle observer (one component arg + optional entity arg).
     // LIMITATION: fires only via DnEntity.add/set/remove, not raw flecs calls.
-    ecs_observer(EcsHookEvent.ONSET) $(eid : ecs_entity_t; v : Velocity3D) { ... }
+    ecs_observer(EcsHookEvent.ONSET) $(ent : DnEntity; v : Velocity3D) { ... }
 */
 
 [block_macro(name="CACHED")]
@@ -71,22 +102,60 @@ class DnEcsRequireNot : AstBlockAnnotation {
     //! List of components/tags the entity must NOT have.
 }
 
+[block_macro(name="CASCADE")]
+class DnEcsCascade : AstBlockAnnotation {
+    //! Names block arguments read from an ancestor, breadth-first with parents
+    //! visited before children (flecs EcsCascade).
+}
+
+[block_macro(name="CASCADE_DESC")]
+class DnEcsCascadeDesc : AstBlockAnnotation {
+    //! Like CASCADE, but bottom-up: children are visited before parents.
+}
+
+[block_macro(name="UP")]
+class DnEcsUp : AstBlockAnnotation {
+    //! Names block arguments read from the nearest ancestor (flecs EcsUp),
+    //! with no ordering guarantee.
+}
+
+[block_macro(name="SELF_UP")]
+class DnEcsSelfUp : AstBlockAnnotation {
+    //! Names block arguments read from the entity when it has the component,
+    //! otherwise inherited from the nearest ancestor (flecs EcsSelf|EcsUp).
+}
+
+// `eid : DnEntity` — bound as a full DnEntity (world + id).
 [macro_function]
-def private is_entity_arg(a : VariablePtr) : bool {
+def private is_dn_entity_arg(a : VariablePtr) : bool {
     if (a._type == null) {
         return false
     }
-    if (a._type.baseType == Type.tUInt64) {
-        return true
+    if ((a._type.baseType == Type.tStructure) && (a._type.structType != null)) {
+        return string(a._type.structType.name) == "DnEntity"
     }
     // pre-infer the alias may not be resolved yet
-    return (a._type.baseType == Type.alias) && (a._type.alias == "ecs_entity_t")
+    return (a._type.baseType == Type.alias) && (a._type.alias == "DnEntity")
+}
+
+// `eid : ecs_entity_t` — bound as the raw uint64 id.
+[macro_function]
+def private is_raw_entity_arg(a : VariablePtr) : bool {
+    if (a._type == null) {
+        return false
+    }
+    return a._type.baseType == Type.tUInt64
 }
 
 [macro_function]
-def private block_has_annotation(qblk : ExprBlock?; name : string) : bool {
-    for (aa in qblk.annotations) {
-        if (aa.annotation.name == name) {
+def private is_entity_arg(a : VariablePtr) : bool {
+    return is_raw_entity_arg(a) || is_dn_entity_arg(a)
+}
+
+[macro_function]
+def private block_has_annotation(query_block : ExprBlock?; name : string) : bool {
+    for (annotation in query_block.annotations) {
+        if (annotation.annotation.name == name) {
             return true
         }
     }
@@ -94,12 +163,28 @@ def private block_has_annotation(qblk : ExprBlock?; name : string) : bool {
 }
 
 [macro_function]
-def private gather_annotation_names(qblk : ExprBlock?; name : string; var names : array<string>) {
-    for (aa in qblk.annotations) {
-        if (aa.annotation.name == name) {
-            for (ab in aa.arguments) {
-                if (ab.basicType == Type.tBool && ab.bValue) {
-                    names |> push(string(ab.name))
+def private gather_annotation_names(query_block : ExprBlock?; name : string; var names : array<string>) {
+    for (annotation in query_block.annotations) {
+        if (annotation.annotation.name == name) {
+            for (annotation_arg in annotation.arguments) {
+                if (annotation_arg.basicType == Type.tBool && annotation_arg.bValue) {
+                    names |> push(string(annotation_arg.name))
+                }
+            }
+        }
+    }
+}
+
+// Record every argument named by a traversal annotation, mapping the argument
+// name to the annotation that named it. A bareword annotation argument parses
+// as a tBool-true whose *name* is the payload, exactly like REQUIRE(Tag).
+[macro_function]
+def private gather_traversal_names(query_block : ExprBlock?; annotation_name : string; var kinds : table<string; string>) {
+    for (annotation in query_block.annotations) {
+        if (annotation.annotation.name == annotation_name) {
+            for (annotation_arg in annotation.arguments) {
+                if (annotation_arg.basicType == Type.tBool && annotation_arg.bValue) {
+                    kinds[string(annotation_arg.name)] = annotation_name
                 }
             }
         }
@@ -116,12 +201,16 @@ def private force_ref_on_block_args(var expr : ExprCallMacro?; minArgs, maxArgs 
     if (!(expr.arguments[block_arg_idx] is ExprMakeBlock)) {
         return
     }
-    var mblk = expr.arguments[block_arg_idx] as ExprMakeBlock
-    var qblk = mblk._block as ExprBlock
-    for (arg in qblk.arguments) {
+    var make_block = expr.arguments[block_arg_idx] as ExprMakeBlock
+    var query_block = make_block._block as ExprBlock
+    for (arg in query_block.arguments) {
         if (arg._type != null && !is_entity_arg(arg)) {
-            // non-const component args are bound by reference
-            if (!arg._type.flags.constant) {
+            // non-const component args are bound by reference. Pointer args are
+            // left alone: they mark an optional traversal term and are bound as
+            // a raw T? so the body can null-check them, and forcing ref here
+            // would make them T?&. This runs before annotations are available,
+            // which is why optionality keys off the pointer and not the marker.
+            if (!arg._type.flags.constant && arg._type.baseType != Type.tPointer) {
                 arg._type.flags.ref = true
             }
         }
@@ -146,6 +235,23 @@ class DnEcsQueryMacro : AstCallMacro {
         return implement(expr, totalArgs - 1, totalArgs == 3 ? 1 : -1, false)
     }
 
+    // Lowers a query call site into cached query construction plus an inline
+    // iteration loop, in three stages:
+    //
+    //   1. classify each block argument (entity / component / traversal) and
+    //      append a .with_term(...) call to `builder_chain`
+    //   2. emit two bodies -- `per_batch_body` gets one ecs_field_get per term,
+    //      `per_entity_body` gets one binding per argument -- and nest the
+    //      latter inside the former via `entity_loop`
+    //   3. splice both into a quote() `skeleton` with apply_template
+    //
+    // Names ending in _expr / _type / _decl hold pieces of GENERATED code, not
+    // values: e.g. `element_expr` is the AST for `_dn_fK[i]`, not an element.
+    // Identifiers inside quote() blocks and the "tag_*" template keys name
+    // generated variables and must not be renamed alongside the locals here.
+    //
+    // Shared by ecs_query, ecs_find_query and ecs_system -- a change here
+    // affects all three.
     def implement(var expr : ExprCallMacro?, block_arg_idx : int, key_arg_idx : int, find_mode : bool) : ExpressionPtr {
         for (arg in expr.arguments) {
             macro_verify(arg._type != null, compiling_program(), expr.at, "ecs_query: struct/type does not exist. Ensure that all component types are correct; no auto or alias (check spelling and such too) ")
@@ -153,9 +259,9 @@ class DnEcsQueryMacro : AstCallMacro {
         }
         macro_verify(expr.arguments[block_arg_idx] is ExprMakeBlock, compiling_program(), expr.at, "ecs_query: expecting $(block_with_arguments)")
 
-        let mblk = expr.arguments[block_arg_idx] as ExprMakeBlock
-        let qblk = mblk._block as ExprBlock
-        macro_verify(!empty(qblk.arguments), compiling_program(), expr.at, "ecs_query: block must declare at least one component argument")
+        let make_block = expr.arguments[block_arg_idx] as ExprMakeBlock
+        let query_block = make_block._block as ExprBlock
+        macro_verify(!empty(query_block.arguments), compiling_program(), expr.at, "ecs_query: block must declare at least one component argument")
 
     // site key: explicit string literal, or module:line:column
         var site_key : string
@@ -165,148 +271,229 @@ class DnEcsQueryMacro : AstCallMacro {
         } else {
             site_key = "{compiling_module().name}:{expr.at.line}:{expr.at.column}"
         }
-        let uniq = "_{expr.at.line}_{expr.at.column}"
+        let site_suffix = "_{expr.at.line}_{expr.at.column}"
 
     // names declared by the quote skeleton get renamed to these; everything
-    // built programmatically below uses the final unique names directly
-        let itname = "_dn_it{uniq}"
-        let iname = "_dn_i{uniq}"
+    // built programmatically below uses the final site_suffixue names directly
+        let it_var = "_dn_it{site_suffix}"
+        let index_var = "_dn_i{site_suffix}"
+        let world_var = "_dn_wp{site_suffix}"
 
     // single pass over block arguments: classify, build query terms,
-    // per-entity ref bindings (qlbody) and per-batch field getters (whilebody)
+    // per-entity ref bindings (per_entity_body) and per-batch field getters (per_batch_body)
         var builder_chain : ExpressionPtr
-        var qlbody = new ExprBlock(at = qblk.at)
-        var whilebody = new ExprBlock(at = qblk.at)
+        var per_entity_body = new ExprBlock(at = query_block.at)
+        var per_batch_body = new ExprBlock(at = query_block.at)
         var entity_name : string = ""
         var comp_count = 0
         unsafe {
             builder_chain = qmacro(DnWorld($e(clone_expression(expr.arguments[0]))).query_builder())
         }
-        for (a in qblk.arguments) {
+    // traversal markers: [CASCADE(a)] / [UP(a)] / ... name the arguments whose
+    // component is sourced from an ancestor rather than the matched entity
+        var traversal_by_arg : table<string; string>
+        gather_traversal_names(query_block, "CASCADE", traversal_by_arg)
+        gather_traversal_names(query_block, "CASCADE_DESC", traversal_by_arg)
+        gather_traversal_names(query_block, "UP", traversal_by_arg)
+        gather_traversal_names(query_block, "SELF_UP", traversal_by_arg)
+        var traversal_seen : table<string; bool>
+        for (a in query_block.arguments) {
             macro_verify(a._type != null && !a._type.isAuto, compiling_program(), a.at, "ecs_query: argument {a.name} must have an explicit type")
             if (is_entity_arg(a)) {
-                macro_verify(empty(entity_name), compiling_program(), a.at, "ecs_query: only one ecs_entity_t argument is allowed")
+                macro_verify(empty(entity_name), compiling_program(), a.at, "ecs_query: only one entity argument (DnEntity or ecs_entity_t) is allowed")
                 macro_verify(a._type.flags.constant, compiling_program(), a.at, "ecs_query: entity argument {a.name} can't be var")
                 entity_name = string(a.name)
-                var eget = qmacro($i(itname).entities[$i(iname)])
-                eget.genFlags.alwaysSafe = true
-                force_generated(eget, true)
-                var etype = clone_type(a._type)
-                etype.flags.ref = false
-                var elet = new ExprLet(at = a.at, atInit = a.at)
-                elet.genFlags.alwaysSafe = true
-                elet.variables |> emplace_new() <| new Variable(at = a.at,
+                var entity_expr : ExpressionPtr
+                unsafe {
+                    // the raw id read indexes a pointer, so it must be marked
+                    // safe itself -- flagging only an enclosing call is not enough
+                    var raw_id_expr = qmacro($i(it_var).entities[$i(index_var)])
+                    raw_id_expr.genFlags.alwaysSafe = true
+                    force_generated(raw_id_expr, true)
+                    if (is_dn_entity_arg(a)) {
+                        entity_expr = qmacro(dn_make_entity($i(world_var), $e(raw_id_expr)))
+                    } else {
+                        entity_expr = raw_id_expr
+                    }
+                }
+                entity_expr.genFlags.alwaysSafe = true
+                force_generated(entity_expr, true)
+                var entity_type = clone_type(a._type)
+                entity_type.flags.ref = false
+                var entity_decl = new ExprLet(at = a.at, atInit = a.at)
+                entity_decl.genFlags.alwaysSafe = true
+                entity_decl.variables |> emplace_new() <| new Variable(at = a.at,
                     name := string(a.name),
-                    _type <- etype,
-                    init <- eget,
+                    _type <- entity_type,
+                    init <- entity_expr,
                     flags = VariableFlags.can_shadow | VariableFlags.generated
                     )
-                qlbody.list |> emplace(elet)
+                per_entity_body.list |> emplace(entity_decl)
                 continue
             }
             macro_verify(!(a._type.flags.ref && a._type.flags.constant), compiling_program(), a.at, "ecs_query: argument {a.name} is both & and constant")
-            macro_verify(a._type.baseType == Type.tStructure, compiling_program(), a.at, "ecs_query: argument {a.name} must be a component struct (or ecs_entity_t)")
+            let arg_name = string(a.name)
+            let is_traversal = key_exists(traversal_by_arg, arg_name)
+            if (is_traversal) {
+                traversal_seen[arg_name] = true
+            }
+        // A pointer argument marks the traversal term optional, so root
+        // entities (which have no ancestor to read from) still match and the
+        // body sees null for them. It is only meaningful on a traversal arg.
+            let is_optional = a._type.baseType == Type.tPointer
+            if (is_optional) {
+                macro_verify(is_traversal, compiling_program(), a.at, "ecs_query: pointer argument {a.name} is only allowed on a CASCADE/CASCADE_DESC/UP/SELF_UP argument, where it marks the term optional")
+                macro_verify(a._type.firstType != null && a._type.firstType.baseType == Type.tStructure, compiling_program(), a.at, "ecs_query: argument {a.name} must point to a component struct")
+            } else {
+                macro_verify(a._type.baseType == Type.tStructure, compiling_program(), a.at, "ecs_query: argument {a.name} must be a component struct (or DnEntity / ecs_entity_t)")
+            }
             let idx = comp_count
             comp_count++
-            let fname = "_dn_f{idx}{uniq}"
-        // query term
-            var ttype = clone_type(a._type)
-            ttype.flags.constant = false
-            ttype.flags.ref = false
+            let field_var = "_dn_f{idx}{site_suffix}"
+        // query term. For a pointer arg the component is the pointee.
+            var term_type = clone_type(is_optional ? a._type.firstType : a._type)
+            term_type.flags.constant = false
+            term_type.flags.ref = false
             unsafe {
-                if (a._type.flags.constant) {
-                    builder_chain = qmacro($e(builder_chain).with_term(type<$t(ttype)>, EcsIn))
+                let inout_expr = a._type.flags.constant ? qmacro(EcsIn) : qmacro(EcsInOut)
+                if (is_traversal) {
+                    // flags are emitted as literal constant expressions rather
+                    // than a computed value: they are uint64 bit flags in bits
+                    // 59..63, and any narrowing would silently zero them and
+                    // degrade the term into a plain one -- wrong results, no error.
+                    let oper_expr = is_optional ? qmacro(EcsOptional) : qmacro(EcsAnd)
+                    let traversal_kind = traversal_by_arg[arg_name]
+                    var flags_expr : ExpressionPtr
+                    if (traversal_kind == "CASCADE") {
+                        flags_expr = qmacro(EcsCascade)
+                    } elif (traversal_kind == "CASCADE_DESC") {
+                        flags_expr = qmacro(EcsCascade | EcsDesc)
+                    } elif (traversal_kind == "SELF_UP") {
+                        flags_expr = qmacro(EcsSelf | EcsUp)
+                    } else {
+                        flags_expr = qmacro(EcsUp)
+                    }
+                    builder_chain = qmacro($e(builder_chain).with_term_up(type<$t(term_type)>, $e(flags_expr), $e(inout_expr), $e(oper_expr), 0ul))
+                } elif (a._type.flags.constant) {
+                    builder_chain = qmacro($e(builder_chain).with_term(type<$t(term_type)>, EcsIn))
                 } else {
-                    builder_chain = qmacro($e(builder_chain).with_term(type<$t(ttype)>, EcsInOut))
+                    builder_chain = qmacro($e(builder_chain).with_term(type<$t(term_type)>, EcsInOut))
                 }
             }
-        // per-entity ref binding: let name : T& = _dn_fK[_dn_i]
-            var iget = qmacro($i(fname)[$i(iname)])
-            iget.genFlags.alwaysSafe = true
-            force_generated(iget, true)
-            var vtype = clone_type(a._type)
-            vtype.flags.ref = true
-            var vlet = new ExprLet(at = a.at, atInit = a.at)
-            vlet.genFlags.alwaysSafe = true
-            vlet.variables |> emplace_new() <| new Variable(at = a.at,
+        // per-entity binding
+            var binding_type : TypeDeclPtr
+            var binding_init : ExpressionPtr
+            if (is_optional) {
+            // optional traversal: bind the raw T? so the body can null-check it.
+            // ecs_field_get yields null when the field is unset, which is
+            // exactly the root-entity case.
+                binding_type = clone_type(a._type)
+                binding_type.flags.ref = false
+                unsafe {
+                    binding_init = qmacro($i(field_var))
+                }
+            } else {
+            // let name : T& = _dn_fK[...]. A traversed field is SHARED across
+            // the whole result -- ecs_field returns a pointer to one value, not
+            // a per-entity array -- so it must be read at [0]. Indexing it by
+            // _dn_i would read past the end for every entity after the first.
+                var element_expr : ExpressionPtr
+                unsafe {
+                    element_expr = is_traversal ? qmacro($i(field_var)[0]) : qmacro($i(field_var)[$i(index_var)])
+                }
+                element_expr.genFlags.alwaysSafe = true
+                force_generated(element_expr, true)
+                binding_type = clone_type(is_traversal ? term_type : a._type)
+                binding_type.flags.ref = true
+                binding_init = element_expr
+            }
+            var binding_decl = new ExprLet(at = a.at, atInit = a.at)
+            binding_decl.genFlags.alwaysSafe = true
+            binding_decl.variables |> emplace_new() <| new Variable(at = a.at,
                 name := string(a.name),
-                _type <- vtype,
-                init <- iget,
+                _type <- binding_type,
+                init <- binding_init,
                 flags = VariableFlags.can_shadow | VariableFlags.generated
                 )
-            qlbody.list |> emplace(vlet)
+            per_entity_body.list |> emplace(binding_decl)
         // per-batch field getter: var _dn_fK : T? = ecs_field_get(_dn_it, type<T>, K)
-            var ftype = clone_type(a._type)
-            ftype.flags.constant = false
-            ftype.flags.ref = false
-            var fget = qmacro(ecs_field_get($i(itname), type<$t(ftype)>, $v(idx)))
-            force_generated(fget, true)
-            var ptype = new TypeDecl(at = a.at, baseType = Type.tPointer)
-            ptype.firstType = clone_type(ftype)
-            var flet = new ExprLet(at = a.at, atInit = a.at)
-            flet.genFlags.alwaysSafe = true
-            flet.variables |> emplace_new() <| new Variable(at = a.at,
-                name := fname,
-                _type <- ptype,
-                init <- fget,
+            var field_type = clone_type(is_optional ? a._type.firstType : a._type)
+            field_type.flags.constant = false
+            field_type.flags.ref = false
+            var field_get_expr = qmacro(ecs_field_get($i(it_var), type<$t(field_type)>, $v(idx)))
+            force_generated(field_get_expr, true)
+            var field_ptr_type = new TypeDecl(at = a.at, baseType = Type.tPointer)
+            field_ptr_type.firstType = clone_type(field_type)
+            var field_decl = new ExprLet(at = a.at, atInit = a.at)
+            field_decl.genFlags.alwaysSafe = true
+            field_decl.variables |> emplace_new() <| new Variable(at = a.at,
+                name := field_var,
+                _type <- field_ptr_type,
+                init <- field_get_expr,
                 flags = VariableFlags.can_shadow | VariableFlags.generated
                 )
-            whilebody.list |> emplace(flet)
+            per_batch_body.list |> emplace(field_decl)
         }
         macro_verify(comp_count > 0, compiling_program(), expr.at, "ecs_query: block must declare at least one component argument")
+    // a traversal annotation naming an argument that does not exist is almost
+    // always a typo, and would otherwise be silently ignored
+        for (arg_name in keys(traversal_by_arg)) {
+            macro_verify(key_exists(traversal_seen, arg_name), compiling_program(), expr.at, "ecs_query: {traversal_by_arg[arg_name]} names unknown block argument '{arg_name}'")
+        }
 
     // filter terms from annotations, then finish the builder chain
         unsafe {
-            var req_names : array<string>
-            gather_annotation_names(qblk, "REQUIRE", req_names)
-            for (nm in req_names) {
-                var td = new TypeDecl(at = expr.at, baseType = Type.alias, alias := nm)
-                builder_chain = qmacro($e(builder_chain).with_term(type<$t(td)>, EcsInOutNone))
+            var require_names : array<string>
+            gather_annotation_names(query_block, "REQUIRE", require_names)
+            for (tag_name in require_names) {
+                var tag_type = new TypeDecl(at = expr.at, baseType = Type.alias, alias := tag_name)
+                builder_chain = qmacro($e(builder_chain).with_term(type<$t(tag_type)>, EcsInOutNone))
             }
-            var reqn_names : array<string>
-            gather_annotation_names(qblk, "REQUIRE_NOT", reqn_names)
-            for (nm in reqn_names) {
-                var td = new TypeDecl(at = expr.at, baseType = Type.alias, alias := nm)
-                builder_chain = qmacro($e(builder_chain).without_term(type<$t(td)>))
+            var require_not_names : array<string>
+            gather_annotation_names(query_block, "REQUIRE_NOT", require_not_names)
+            for (tag_name in require_not_names) {
+                var tag_type = new TypeDecl(at = expr.at, baseType = Type.alias, alias := tag_name)
+                builder_chain = qmacro($e(builder_chain).without_term(type<$t(tag_type)>))
             }
-            if (block_has_annotation(qblk, "CACHED")) {
+            if (block_has_annotation(query_block, "CACHED")) {
                 builder_chain = qmacro($e(builder_chain).cached())
             }
             builder_chain = qmacro($e(builder_chain).build())
         }
 
     // cloned user statements run after the ref bindings
-        for (l in qblk.list) {
-            qlbody.list |> push(clone_expression(l))
+        for (stmt in query_block.list) {
+            per_entity_body.list |> push(clone_expression(stmt))
         }
-        for (fl in qblk.finalList) {
-            qlbody.finalList |> push(clone_expression(fl))
+        for (final_stmt in query_block.finalList) {
+            per_entity_body.finalList |> push(clone_expression(final_stmt))
         }
         // find mode: `return cond` -> stop-with-true / continue; plain mode: `return` -> next entity
-        convert_block_to_loop(qlbody, false, true, find_mode)
-        var qloop = new ExprFor(at = qblk.at, visibility = qblk.at)
-        qloop.allowIteratorOptimization = true
-        qloop.canShadow = true
-        qloop.iterators |> resize(1)
-        qloop.iterators[0] := iname
-        qloop.iteratorsAka |> resize(1)
-        qloop.iteratorsAka[0] := ""
-        qloop.iteratorsAt |> push(qblk.at)
-        qloop.iteratorsTags |> resize(1)
-        qloop.sources |> emplace_new() <| qmacro(range($i(itname).count))
-        qloop.body = qlbody
-        whilebody.list |> emplace(qloop)
+        convert_block_to_loop(per_entity_body, false, true, find_mode)
+        var entity_loop = new ExprFor(at = query_block.at, visibility = query_block.at)
+        entity_loop.allowIteratorOptimization = true
+        entity_loop.canShadow = true
+        entity_loop.iterators |> resize(1)
+        entity_loop.iterators[0] := index_var
+        entity_loop.iteratorsAka |> resize(1)
+        entity_loop.iteratorsAka[0] := ""
+        entity_loop.iteratorsAt |> push(query_block.at)
+        entity_loop.iteratorsTags |> resize(1)
+        entity_loop.sources |> emplace_new() <| qmacro(range($i(it_var).count))
+        entity_loop.body = per_entity_body
+        per_batch_body.list |> emplace(entity_loop)
 
     // outer skeleton
-        var qblock : ExpressionPtr
+        var skeleton : ExpressionPtr
         unsafe {
             if (find_mode) {
-                qblock = quote() {
+                skeleton = quote() {
                     invoke() <| $() : bool {
-                        var _dn_q = _dn_ecs_query_get(tag_world, tag_key) <| $() : DnQuery {
+                        var _dn_wp = DnWorld(tag_world).ecs_world()
+                        var _dn_q = _dn_ecs_query_get(_dn_wp, tag_key) <| $() : DnQuery {
                             return tag_builder
                         }
-                        var _dn_it = ecs_query_iter(tag_world, _dn_q.ecs_query())
+                        var _dn_it = ecs_query_iter(_dn_wp, _dn_q.ecs_query())
                         while (ecs_query_next_iter(_dn_it)) {
                             tag_whilebody
                         }
@@ -314,36 +501,38 @@ class DnEcsQueryMacro : AstCallMacro {
                     }
                 }
             } else {
-                qblock = quote() {
-                    var _dn_q = _dn_ecs_query_get(tag_world, tag_key) <| $() : DnQuery {
+                skeleton = quote() {
+                    var _dn_wp = DnWorld(tag_world).ecs_world()
+                    var _dn_q = _dn_ecs_query_get(_dn_wp, tag_key) <| $() : DnQuery {
                         return tag_builder
                     }
-                    var _dn_it = ecs_query_iter(tag_world, _dn_q.ecs_query())
+                    var _dn_it = ecs_query_iter(_dn_wp, _dn_q.ecs_query())
                     while (ecs_query_next_iter(_dn_it)) {
                         tag_whilebody
                     }
                 }
             }
         }
-        qblock |> force_at(expr.at)
-        apply_template(qblock) $(rules) {
+        skeleton |> force_at(expr.at)
+        apply_template(skeleton) $(rules) {
             rules |> replaceVariable("tag_world") <| clone_expression(expr.arguments[0])
             rules |> replaceVariable("tag_key") <| new ExprConstString(at = expr.at, value := site_key)
             rules |> replaceVariable("tag_builder") <| builder_chain
-            rules |> replaceVariable("tag_whilebody") <| whilebody
-            rules |> renameVariable("_dn_q", "_dn_q{uniq}")
-            rules |> renameVariable("_dn_it", itname)
+            rules |> replaceVariable("tag_whilebody") <| per_batch_body
+            rules |> renameVariable("_dn_q", "_dn_q{site_suffix}")
+            rules |> renameVariable("_dn_wp", world_var)
+            rules |> renameVariable("_dn_it", it_var)
         }
-        var qres = move_unquote_block(qblock)
-        qres |> force_at(expr.at)
-        qres.genFlags.alwaysSafe = true
+        var expansion = move_unquote_block(skeleton)
+        expansion |> force_at(expr.at)
+        expansion.genFlags.alwaysSafe = true
         if (find_mode) {
             // single invoke expression yielding bool
-            var rqres = qres.list[0]
-            rqres.genFlags.alwaysSafe = true
-            return rqres
+            var rexpansion = expansion.list[0]
+            rexpansion.genFlags.alwaysSafe = true
+            return rexpansion
         }
-        return qres
+        return expansion
     }
 }
 
@@ -382,36 +571,37 @@ class DnEcsSystemMacro : DnEcsQueryMacro {
             "expecting ecs_system(world,\"name\",phase,$(block_with_arguments))"
         )
         macro_verify(expr.arguments[1] is ExprConstString, prog, expr.at, "ecs_system: name must be a string literal")
-        var expansion = implement(expr, 3, 1, false)
-        if (expansion == null) {
+        var query_expansion = implement(expr, 3, 1, false)
+        if (query_expansion == null) {
             return null
         }
         let sys_name = "{(expr.arguments[1] as ExprConstString).value}"
-        var qblock : ExpressionPtr
+        var skeleton : ExpressionPtr
         unsafe {
-            qblock = quote() {
-                dn_ecs_register_system(tag_world, tag_name, tag_phase) <| @(dt : double) : void {
+            skeleton = quote() {
+                dn_ecs_register_system(DnWorld(tag_world).ecs_world(), tag_name, tag_phase) <| @(dt : double) : void {
                     tag_sysbody
                 }
             }
         }
-        qblock |> force_at(expr.at)
-        apply_template(qblock) $(rules) {
+        skeleton |> force_at(expr.at)
+        apply_template(skeleton) $(rules) {
             rules |> replaceVariable("tag_world") <| clone_expression(expr.arguments[0])
             rules |> replaceVariable("tag_name") <| new ExprConstString(at = expr.at, value := sys_name)
             rules |> replaceVariable("tag_phase") <| clone_expression(expr.arguments[2])
-            rules |> replaceVariable("tag_sysbody") <| expansion
+            rules |> replaceVariable("tag_sysbody") <| query_expansion
         }
-        var qres = move_unquote_block(qblock)
-        qres |> force_at(expr.at)
-        qres.genFlags.alwaysSafe = true
-        return qres
+        var expansion = move_unquote_block(skeleton)
+        expansion |> force_at(expr.at)
+        expansion.genFlags.alwaysSafe = true
+        return expansion
     }
 }
 
 [call_macro(name="ecs_observer")]
 class DnEcsObserverMacro : AstCallMacro {
-    //! Component lifecycle observer: `ecs_observer(<EcsHookEvent>) $(eid : ecs_entity_t; cmp : T) { }`.
+    //! Component lifecycle observer: `ecs_observer(<EcsHookEvent>) $(ent : DnEntity; cmp : T) { }`.
+    //! The entity argument may also be declared `ecs_entity_t` to get the raw id.
     //! Lowers onto the dn hook registry (ecs_add_hook). LIMITATION: hooks fire
     //! only through DnEntity.add/set/remove, NOT through raw flecs mutations.
     def override visit(prog : ProgramPtr; mod : Module?; var expr : ExprCallMacro?) : ExpressionPtr {
@@ -422,81 +612,93 @@ class DnEcsObserverMacro : AstCallMacro {
             "expecting ecs_observer(event,$(block_with_arguments))"
         )
         macro_verify(expr.arguments[1] is ExprMakeBlock, compiling_program(), expr.at, "ecs_observer: expecting $(block_with_arguments)")
-        let mblk = expr.arguments[1] as ExprMakeBlock
-        let qblk = mblk._block as ExprBlock
+        let make_block = expr.arguments[1] as ExprMakeBlock
+        let query_block = make_block._block as ExprBlock
 
         var entity_name : string = ""
         var comp_count = 0
-        var ctype : TypeDeclPtr
-        for (a in qblk.arguments) {
+        var component_type : TypeDeclPtr
+        for (a in query_block.arguments) {
             macro_verify(a._type != null && !a._type.isAuto, compiling_program(), a.at, "ecs_observer: argument {a.name} must have an explicit type")
+            macro_verify(a._type.baseType != Type.tPointer, compiling_program(), a.at, "ecs_observer: pointer argument {a.name} is not supported; traversal (CASCADE/UP) applies to queries, not hook observers")
             macro_verify(a._type.flags.constant, compiling_program(), a.at, "ecs_observer: argument {a.name} can't be var (hooks receive a value copy)")
             if (is_entity_arg(a)) {
-                macro_verify(empty(entity_name), compiling_program(), a.at, "ecs_observer: only one ecs_entity_t argument is allowed")
+                macro_verify(empty(entity_name), compiling_program(), a.at, "ecs_observer: only one entity argument (DnEntity or ecs_entity_t) is allowed")
                 entity_name = string(a.name)
             } else {
                 comp_count++
-                ctype = clone_type(a._type)
-                ctype.flags.constant = false
-                ctype.flags.ref = false
+                component_type = clone_type(a._type)
+                component_type.flags.constant = false
+                component_type.flags.ref = false
             }
         }
         macro_verify(comp_count == 1, compiling_program(), expr.at, "ecs_observer: block must declare exactly one component argument")
 
     // hook callback body: bind user arg names, then the cloned user statements
-        var cbody = new ExprBlock(at = qblk.at)
-        for (a in qblk.arguments) {
-            var atype = clone_type(a._type)
-            atype.flags.ref = false
+        var hook_body = new ExprBlock(at = query_block.at)
+        for (a in query_block.arguments) {
+            var arg_type = clone_type(a._type)
+            arg_type.flags.ref = false
             var src : ExpressionPtr
             unsafe {
-                if (is_entity_arg(a)) {
+                if (is_dn_entity_arg(a)) {
+                    src = qmacro(dn_make_entity(_dn_hw, _dn_he))
+                } elif (is_raw_entity_arg(a)) {
                     src = qmacro(_dn_he)
                 } else {
                     src = qmacro(_dn_hc)
                 }
             }
             force_generated(src, true)
-            var alet = new ExprLet(at = a.at, atInit = a.at)
-            alet.genFlags.alwaysSafe = true
-            alet.variables |> emplace_new() <| new Variable(at = a.at,
+            var arg_decl = new ExprLet(at = a.at, atInit = a.at)
+            arg_decl.genFlags.alwaysSafe = true
+            arg_decl.variables |> emplace_new() <| new Variable(at = a.at,
                 name := string(a.name),
-                _type <- atype,
+                _type <- arg_type,
                 init <- src,
                 flags = VariableFlags.can_shadow | VariableFlags.generated
                 )
-            cbody.list |> emplace(alet)
+            hook_body.list |> emplace(arg_decl)
         }
-        for (l in qblk.list) {
-            cbody.list |> push(clone_expression(l))
+        for (stmt in query_block.list) {
+            hook_body.list |> push(clone_expression(stmt))
         }
-        for (fl in qblk.finalList) {
-            cbody.finalList |> push(clone_expression(fl))
+        for (final_stmt in query_block.finalList) {
+            hook_body.finalList |> push(clone_expression(final_stmt))
         }
-        convert_block_to_loop(cbody, true, false, false)
+        convert_block_to_loop(hook_body, true, false, false)
 
-        var qblock : ExpressionPtr
+        var skeleton : ExpressionPtr
         unsafe {
-            qblock = quote() {
+            skeleton = quote() {
                 ecs_add_hook(type<tag_cmp_type>, tag_event) <| @(var _dn_hw : ecs_world_t?; var _dn_he : ecs_entity_t; _dn_hc : tag_cmp_type_c) {
                     tag_cbody
                 }
             }
         }
-        qblock |> force_at(expr.at)
+        skeleton |> force_at(expr.at)
         // the rule replaces the whole TypeDecl including flags, so the lambda's
         // const cmp param needs its own const-flagged copy of the type
-        var ctype_c = clone_type(ctype)
-        ctype_c.flags.constant = true
-        apply_template(qblock) $(rules) {
-            rules |> replaceTypeWithTypeDecl("tag_cmp_type") <| ctype
-            rules |> replaceTypeWithTypeDecl("tag_cmp_type_c") <| ctype_c
+        var component_type_c = clone_type(component_type)
+        component_type_c.flags.constant = true
+        apply_template(skeleton) $(rules) {
+            rules |> replaceTypeWithTypeDecl("tag_cmp_type") <| component_type
+            rules |> replaceTypeWithTypeDecl("tag_cmp_type_c") <| component_type_c
             rules |> replaceVariable("tag_event") <| clone_expression(expr.arguments[0])
-            rules |> replaceVariable("tag_cbody") <| cbody
+            rules |> replaceVariable("tag_cbody") <| hook_body
         }
-        var qres = move_unquote_block(qblock)
-        qres |> force_at(expr.at)
-        qres.genFlags.alwaysSafe = true
-        return qres
+        var expansion = move_unquote_block(skeleton)
+        expansion |> force_at(expr.at)
+        expansion.genFlags.alwaysSafe = true
+        return expansion
     }
+}
+
+/*
+def register_components(var world: DnWorld) : void {}
+*/
+
+// Macro to auto-register ECS Components
+[structure_macro(name="ecs_comp")]
+class SerializableMacro : AstStructureAnnotation {
 }
