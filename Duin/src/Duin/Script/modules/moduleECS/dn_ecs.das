@@ -5,6 +5,7 @@ module dn_ecs shared public
 require strings
 require daslib/class_boost
 require daslib/rtti
+require daslib/option
 
 require dn_log public
 require flecs_boost public
@@ -103,6 +104,14 @@ struct DnEntity {
         return null
     }
 
+    [explicit_const_class_method]
+    def static get_mut(var cmp_type : type<auto(T)>) : T ? {
+        if (world != null) {
+            unsafe { return reinterpret<T?>(reinterpret<void?>(ecs_get_mut(world, entity, type<T>))); }
+        }
+        return null
+    }
+
 
     [class_method]
     def static has_tag(tag_id : ecs_entity_t) : bool {
@@ -150,11 +159,12 @@ struct DnEntity {
     // Parent of this entity, for either storage.
     // The result is invalid (entity == 0) when this entity has no parent.
     [class_method]
-    def static parent() : DnEntity {
-        if (world == null) {
-            return DnEntity()
+    def static parent() : Option<DnEntity> {
+        if (world == null || !has_parent()) {
+            return none(type<DnEntity>)
         }
-        return dn_make_entity(world, ecs_get_parent(world, entity))
+        var p = DnEntity(entity=entity, world=world)
+        return move_some(p)
     }
 
     [class_method]

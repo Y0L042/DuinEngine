@@ -1,6 +1,7 @@
 options gen2
 
 module dn_ecs_components shared
+require math
 
 require dn_ecs public
 
@@ -26,6 +27,16 @@ struct DnTransform3D {
     pos : float3
     rot : float4
     scale : float3
+
+}
+
+def add(this: DnTransform3D, other : DnTransform3D&) : DnTransform3D {
+    // TODO Fix this
+    var tx: DnTransform3D = DnTransform3D()
+    tx.pos = this.pos + other.pos
+    tx.rot = quat_mul(this.rot, other.rot)
+    tx.scale = this.scale * other.scale
+    return tx
 }
 
 struct DnVelocity3D {
