@@ -4,6 +4,7 @@ module ecs_systems shared public
 
 // Daslib
 require math
+require daslib/option
 
 // Bindings
 require flecs
@@ -119,9 +120,9 @@ def system_update_position(var world : DnWorld, delta : double) :  void {
 
 // Camera pos is global, so needs to sum with parents' positions
 def system_update_active_camera_position(var world : DnWorld, delta : double) : void {
-    ecs_query(world) $ [CACHED] (tx : DnTransform3D, var cam : CameraHandle) {
+    ecs_query(world) $ [CACHED] (e: DnEntity, tx : DnTransform3D, var cam : CameraHandle) {
         if (cam.handle != null) {
-            cam.handle.set_position(tx.pos)
+            cam.handle.set_position(get_global_transform(e).unwrap().pos)
         }
     }
 }
