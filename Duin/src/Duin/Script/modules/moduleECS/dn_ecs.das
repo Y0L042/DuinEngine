@@ -114,6 +114,14 @@ struct DnEntity {
 
 
     [class_method]
+    def static has(cmp_type : type<auto(T)>) : bool {
+        if (world == null) {
+            return false
+        }
+        return ecs_has(world, entity, ecs_component_register(world, type<T>))
+    }
+
+    [class_method]
     def static has_tag(tag_id : ecs_entity_t) : bool {
         if (world == null) {
             return false
@@ -163,7 +171,7 @@ struct DnEntity {
         if (world == null || !has_parent()) {
             return none(type<DnEntity>)
         }
-        var p = DnEntity(entity=entity, world=world)
+        var p = DnEntity(entity=ecs_get_parent(world, entity), world=world)
         return move_some(p)
     }
 
