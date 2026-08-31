@@ -123,12 +123,14 @@ def get_global_transform(e : DnEntity) : Option<DnTransform3D> {
         return none(type<DnTransform3D>)
     }
 
+    // Get local TX
     var maybe_local = local_transform(e)
     if (!(maybe_local |> is_some())) {
         return none(type<DnTransform3D>)
     }
     let tx = maybe_local.move_unwrap()
 
+    // Get parent TX and compose a global TX
     var parent_g_tx = transform_parent(e)
     var global_tx = DnTransform3D()
     if (parent_g_tx |> is_some()) {
@@ -136,7 +138,8 @@ def get_global_transform(e : DnEntity) : Option<DnTransform3D> {
     } else {
         global_tx = tx
     }
-
+    
+    // Update TX cache values
     var raw = e.get_mut(type<DnTransform3D>)
     if (raw != null) {
         raw.globalPositionCache = global_tx.pos
@@ -159,6 +162,7 @@ def set_global_transform(e : DnEntity; global_tx : DnTransform3D) : void {
         dn_warn("Entity not valid, or does not have Transform3D!")
         return
     }
+    dn_info("Getting Global Transform!")
 
     var parent_g_tx = transform_parent(e)
     var local_tx = DnTransform3D()
@@ -191,10 +195,11 @@ def get_global_position(e : DnEntity) : Option<float3> {
     if (raw == null) {
         return none(type<float3>)
     }
-    if (!raw.gPosCacheDirtyFlag) {
-        var cached = raw.globalPositionCache
-        return move_some(cached)
-    }
+    // TODO cache must be invalidated when position of an entity is set
+    // if (!raw.gPosCacheDirtyFlag) {
+    //     var cached = raw.globalPositionCache
+    //     return move_some(cached)
+    // }
     var g = get_global_transform(e)
     if (!(g |> is_some())) {
         return none(type<float3>)
