@@ -101,10 +101,11 @@ class Player : DnGameObject {
         player_entity.set(CharacterBodyDesc())
         player_entity.set(DnVelocity3D())
         player_entity.set(GravityScale(value = -9.81f))
+        player_entity.set(DnTransform3D(pos = position, rot = float4(0f, 0f, 0f, 1f), scale = float3(1f, 1f, 1f)))
 
         camera_entity.child_of(player_entity)
         camera_entity.set(CameraHandle(handle = camera))
-        camera_entity.set(DnTransform3D(pos = float3(0f, 2f, 0f), rot = float4(1f, 0f, 0f, 0f), scale = float3(1f, 1f, 1f)))
+        camera_entity.set(DnTransform3D(pos = float3(0f, 2f, 0f), rot = float4(0f, 0f, 0f, 1f), scale = float3(1f, 1f, 1f)))
 
     }
 

@@ -23,8 +23,6 @@ require dn_ecs_components
 require dn_ecs_boost
 
 
-// Queries are created lazily per call site by the ecs_query macro and cached
-// in dn_ecs. No construct/destruct needed.
 def system_player_input(var world : DnWorld; var camera : DnCamera?) : void {
     let mouse_sensitivity = 0.0015f
     let MAX_PITCH = 87.0f * (PI / 180.0f)
@@ -122,7 +120,28 @@ def system_update_position(var world : DnWorld, delta : double) :  void {
 def system_update_active_camera_position(var world : DnWorld, delta : double) : void {
     ecs_query(world) $ [CACHED] (e: DnEntity, tx : DnTransform3D, var cam : CameraHandle) {
         if (cam.handle != null) {
-            cam.handle.set_position(get_global_transform(e).unwrap().pos)
+            if (e.parent() |> is_some()) {
+                var parent = e.parent().move_unwrap()
+                var p_gpos = get_global_position(parent)
+                if (p_gpos |> is_some()) {
+                    dn_info("Parent gpos: {p_gpos.unwrap()}")
+                } else {
+                    var ptx : DnTransform3D? = parent.get_mut(type<DnTransform3D>)
+                    if (ptx != null) {
+                        dn_info("ptx {ptx.pos}")
+                    } else {
+                        dn_warn("Camera parent has no local TX")
+                    }
+                    dn_warn("Camera parent has NO POSITION")
+                }
+            } else {
+                dn_warn("Camera has NO PARENT!")
+            }
+            let pos = get_global_position(e).move_unwrap()
+            dn_info("GPOS: {pos.x}, {pos.y}, {pos.z}")
+            cam.handle.move_to(pos)
+        } else {
+            dn_warn("Cam handle is NULL!")
         }
     }
 }
