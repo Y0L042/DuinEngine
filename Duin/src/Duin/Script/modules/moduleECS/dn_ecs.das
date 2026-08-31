@@ -16,7 +16,7 @@ struct DnEntity {
     world : ecs_world_t? = null
 
     [class_method]
-    def static is_valid() : bool {
+    def static const is_valid() : bool {
         return (world != null) && (entity != 0ul)
     }
 
@@ -87,9 +87,10 @@ struct DnEntity {
     }
 
     [class_method]
-    def static get(var t : type<auto(T)>) : T const {
+    def static const get(var t : type<auto(T)>) : T const {
         unsafe {
-            let cmp : T? = reinterpret<T?>(ecs_get(world, entity, type<T>))
+            let w = reinterpret<ecs_world_t?>(world)
+            let cmp : T? = reinterpret<T?>(ecs_get(w, entity, type<T>))
             let return_cmp = cmp != null ? *cmp : T()
             return return_cmp
         }
@@ -97,32 +98,27 @@ struct DnEntity {
 
     // reinterpret via void? strips the const propagated from self
     [class_method]
-    def static get_mut(var cmp_type : type<auto(T)>) : T ? {
+    def static const get_mut(var cmp_type : type<auto(T)>) : T ? {
         if (world != null) {
-            unsafe { return reinterpret<T?>(reinterpret<void?>(ecs_get_mut(world, entity, type<T>))); }
+            unsafe {
+                let w = reinterpret<ecs_world_t?>(world)
+                return reinterpret<T?>(reinterpret<void?>(ecs_get_mut(w, entity, type<T>)));
+            }
         }
         return null
     }
-
-    [explicit_const_class_method]
-    def static get_mut(var cmp_type : type<auto(T)>) : T ? {
-        if (world != null) {
-            unsafe { return reinterpret<T?>(reinterpret<void?>(ecs_get_mut(world, entity, type<T>))); }
-        }
-        return null
-    }
-
 
     [class_method]
-    def static has(cmp_type : type<auto(T)>) : bool {
+    def static const has(cmp_type : type<auto(T)>) : bool {
         if (world == null) {
             return false
         }
-        return ecs_has(world, entity, ecs_component_register(world, type<T>))
+        let w = unsafe(reinterpret<ecs_world_t?>(world))
+        return ecs_has(w, entity, ecs_component_register(w, type<T>))
     }
 
     [class_method]
-    def static has_tag(tag_id : ecs_entity_t) : bool {
+    def static const has_tag(tag_id : ecs_entity_t) : bool {
         if (world == null) {
             return false
         }
@@ -167,16 +163,18 @@ struct DnEntity {
     // Parent of this entity, for either storage.
     // The result is invalid (entity == 0) when this entity has no parent.
     [class_method]
-    def static parent() : Option<DnEntity> {
+    def static const parent() : Option<DnEntity> {
         if (world == null || !has_parent()) {
             return none(type<DnEntity>)
         }
-        var p = DnEntity(entity=ecs_get_parent(world, entity), world=world)
+        var w : ecs_world_t? = null
+        unsafe { w = reinterpret<ecs_world_t?>(reinterpret<void?>(world)); }
+        var p = DnEntity(entity=ecs_get_parent(w, entity), world=w)
         return move_some(p)
     }
 
     [class_method]
-    def static has_parent() : bool {
+    def static const has_parent() : bool {
         if (world == null) {
             return false
         }
@@ -201,11 +199,12 @@ struct DnEntity {
 
     // Invoke `blk` once per direct child, for either storage.
     [class_method]
-    def static children(blk : block<(var child : DnEntity)>) : void {
+    def static const children(blk : block<(var child : DnEntity)>) : void {
         if (world == null) {
             return
         }
-        var w = world
+        var w : ecs_world_t? = null
+        unsafe { w = reinterpret<ecs_world_t?>(reinterpret<void?>(world)); }
         ecs_children_each(world, entity) <| $(child : ecs_entity_t) {
             invoke(blk, dn_make_entity(w, child))
         }
@@ -213,11 +212,12 @@ struct DnEntity {
 
     // Invoke `blk` once per descendant, depth-first.
     [class_method]
-    def static children_recursive(blk : block<(var child : DnEntity)>) : void {
+    def static const children_recursive(blk : block<(var child : DnEntity)>) : void {
         if (world == null) {
             return
         }
-        var w = world
+        var w : ecs_world_t? = null
+        unsafe { w = reinterpret<ecs_world_t?>(reinterpret<void?>(world)); }
         ecs_children_each_recursive(world, entity) <| $(child : ecs_entity_t) {
             invoke(blk, dn_make_entity(w, child))
         }
@@ -227,19 +227,21 @@ struct DnEntity {
     // callback will do; this materializes the list, which is what you want when
     // the order or the count has to be inspected as a whole.
     [class_method]
-    def static children_array() : array<DnEntity> {
+    def static const children_array() : array<DnEntity> {
         var result : array<DnEntity>
         if (world == null) {
             return <- result
         }
+        var w : ecs_world_t? = null
+        unsafe { w = reinterpret<ecs_world_t?>(reinterpret<void?>(world)); }
         for (child in ecs_children_array(world, entity)) {
-            result |> push(dn_make_entity(world, child))
+            result |> push(dn_make_entity(w, child))
         }
         return <- result
     }
 
     [class_method]
-    def static child_count() : int {
+    def static const child_count() : int {
         if (world == null) {
             return 0
         }
@@ -248,7 +250,7 @@ struct DnEntity {
 
     // Depth in a Parent-storage hierarchy; 0 for roots and ChildOf children.
     [class_method]
-    def static depth() : int {
+    def static const depth() : int {
         if (world == null) {
             return 0
         }
@@ -259,7 +261,7 @@ struct DnEntity {
 
     // Full "::"-separated path from the root, e.g. "Ship::Cockpit".
     [class_method]
-    def static path() : string {
+    def static const path() : string {
         if (world == null) {
             return ""
         }
@@ -269,11 +271,13 @@ struct DnEntity {
     // Look up a descendant by "::"-separated path relative to this entity.
     // The result is invalid (entity == 0) when the path does not resolve.
     [class_method]
-    def static lookup(path : string) : DnEntity {
+    def static const lookup(path : string) : DnEntity {
         if (world == null) {
             return DnEntity()
         }
-        return dn_make_entity(world, ecs_lookup_from(world, entity, path))
+        var w : ecs_world_t? = null
+        unsafe { w = reinterpret<ecs_world_t?>(reinterpret<void?>(world)); }
+        return dn_make_entity(w, ecs_lookup_from(world, entity, path))
     }
 
     [class_method]
@@ -285,7 +289,7 @@ struct DnEntity {
     }
 
     [class_method]
-    def static get_name() : string {
+    def static const get_name() : string {
         if (world == null) {
             return ""
         }
@@ -301,7 +305,7 @@ struct DnEntity {
     }
 
     [class_method]
-    def static is_alive() : bool {
+    def static const is_alive() : bool {
         if (world == null) {
             return false
         }
@@ -316,18 +320,23 @@ struct DnEntity {
     }
 
     [class_method]
-    def static ecs_entity() : ecs_entity_t {
+    def static const ecs_entity() : ecs_entity_t {
         return entity
     }
 
     [class_method]
-    def static ecs_world() : ecs_world_t ? {
-        return world
+    def static const ecs_world() : ecs_world_t ? {
+        unsafe {
+            var w = reinterpret<ecs_world_t?>(reinterpret<void?>(world))
+            return w
+        }
     }
 
     [class_method]
-    def static dn_world() : DnWorld {
-        return DnWorld(world)
+    def static const dn_world() : DnWorld {
+        unsafe {
+            return DnWorld(reinterpret<ecs_world_t?>(reinterpret<void?>(world)))
+        }
     }
 }
 
@@ -381,7 +390,7 @@ struct DnWorld {
     }
 
     [class_method]
-    def static is_valid() : bool {
+    def static const is_valid() : bool {
         return (world != null)
     }
 
@@ -408,11 +417,13 @@ struct DnWorld {
     // Look up an entity by "::"-separated path from the root.
     // The result is invalid (entity == 0) when the path does not resolve.
     [class_method]
-    def static lookup(path : string) : DnEntity {
+    def static const lookup(path : string) : DnEntity {
         if (world == null) {
             return DnEntity()
         }
-        return dn_make_entity(world, ecs_lookup_from(world, 0ul, path))
+        var w : ecs_world_t? = null
+        unsafe { w = reinterpret<ecs_world_t?>(reinterpret<void?>(world)); }
+        return dn_make_entity(w, ecs_lookup_from(world, 0ul, path))
     }
 
     // Invoke `blk` once per root-level entity.
@@ -445,22 +456,21 @@ struct DnWorld {
     }
 
     [class_method]
-    def static is_alive(var e : DnEntity) : bool {
+    def static const is_alive(var e : DnEntity) : bool {
         return ecs_is_alive(world, e.entity)
     }
 
     [class_method]
-    def static query_builder() : DnQueryBuilder {
-        return DnQueryBuilder(world)
+    def static const query_builder() : DnQueryBuilder {
+        return DnQueryBuilder(unsafe(reinterpret<ecs_world_t?>(world)))
     }
 
     [class_method]
-    def static ecs_world() : ecs_world_t ? {
-        return world
+    def static const ecs_world() : ecs_world_t ? {
+        return unsafe(reinterpret<ecs_world_t?>(world))
     }
 }
 
-// Accepts const world pointers (e.g. function parameters); strips const on copy.
 def DnWorld(world : ecs_world_t?) : DnWorld {
     var w : DnWorld
     unsafe {

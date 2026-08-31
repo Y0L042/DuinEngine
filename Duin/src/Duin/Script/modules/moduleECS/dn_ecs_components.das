@@ -58,7 +58,7 @@ def quat_inverse(q : float4) : float4 {
 }
 
 def compose(parent_tx : DnTransform3D; local_tx : DnTransform3D) : DnTransform3D {
-    var tx : DnTransform3D
+    var tx = DnTransform3D()
     tx.pos = parent_tx.pos + quat_mul_vec(parent_tx.rot, local_tx.pos * parent_tx.scale)
     tx.rot = quat_mul(parent_tx.rot, local_tx.rot)
     tx.scale = parent_tx.scale * local_tx.scale
@@ -66,7 +66,7 @@ def compose(parent_tx : DnTransform3D; local_tx : DnTransform3D) : DnTransform3D
 }
 
 def decompose(parent_tx : DnTransform3D; global_tx : DnTransform3D) : DnTransform3D {
-    var tx : DnTransform3D
+    var tx = DnTransform3D()
     let inv_parent_rot = quat_inverse(parent_tx.rot)
     tx.pos = quat_mul_vec(inv_parent_rot, global_tx.pos - parent_tx.pos) / parent_tx.scale
     tx.rot = quat_mul(inv_parent_rot, global_tx.rot)
@@ -75,11 +75,11 @@ def decompose(parent_tx : DnTransform3D; global_tx : DnTransform3D) : DnTransfor
 }
 
 def local_transform(e : DnEntity) : Option<DnTransform3D> {
-    let raw = e.get_mut(type<DnTransform3D>)
+    var raw = e.get_mut(type<DnTransform3D>)
     if (raw == null) {
         return none(type<DnTransform3D>)
     }
-    var tx : DnTransform3D
+    var tx = DnTransform3D()
     unsafe {
         tx = *raw
     }
@@ -99,7 +99,7 @@ def transform_parent(e : DnEntity) : Option<DnTransform3D> {
 }
 
 def mark_cache_dirty(e : DnEntity) : void {
-    let raw = e.get_mut(type<DnTransform3D>)
+    var raw = e.get_mut(type<DnTransform3D>)
     if (raw != null) {
         raw.gPosCacheDirtyFlag = true
         raw.gRotCacheDirtyFlag = true
@@ -130,14 +130,14 @@ def get_global_transform(e : DnEntity) : Option<DnTransform3D> {
     let tx = maybe_local.move_unwrap()
 
     var parent_g_tx = transform_parent(e)
-    var global_tx : DnTransform3D
+    var global_tx = DnTransform3D()
     if (parent_g_tx |> is_some()) {
         global_tx = compose(parent_g_tx.move_unwrap(), tx)
     } else {
         global_tx = tx
     }
 
-    let raw = e.get_mut(type<DnTransform3D>)
+    var raw = e.get_mut(type<DnTransform3D>)
     if (raw != null) {
         raw.globalPositionCache = global_tx.pos
         raw.globalRotationCache = global_tx.rot
@@ -161,14 +161,14 @@ def set_global_transform(e : DnEntity; global_tx : DnTransform3D) : void {
     }
 
     var parent_g_tx = transform_parent(e)
-    var local_tx : DnTransform3D
+    var local_tx = DnTransform3D()
     if (parent_g_tx |> is_some()) {
         local_tx = decompose(parent_g_tx.move_unwrap(), global_tx)
     } else {
         local_tx = global_tx
     }
 
-    let raw = e.get_mut(type<DnTransform3D>)
+    var raw = e.get_mut(type<DnTransform3D>)
     if (raw == null) {
         return
     }
@@ -187,7 +187,7 @@ def set_global_transform(e : DnEntity; global_tx : DnTransform3D) : void {
 }
 
 def get_global_position(e : DnEntity) : Option<float3> {
-    let raw = e.get_mut(type<DnTransform3D>)
+    var raw = e.get_mut(type<DnTransform3D>)
     if (raw == null) {
         return none(type<float3>)
     }
@@ -215,7 +215,7 @@ def set_global_position(e : DnEntity; pos : float3) : void {
 }
 
 def get_global_rotation(e : DnEntity) : Option<float4> {
-    let raw = e.get_mut(type<DnTransform3D>)
+    var raw = e.get_mut(type<DnTransform3D>)
     if (raw == null) {
         return none(type<float4>)
     }
@@ -243,7 +243,7 @@ def set_global_rotation(e : DnEntity; rot : float4) : void {
 }
 
 def get_global_scale(e : DnEntity) : Option<float3> {
-    let raw = e.get_mut(type<DnTransform3D>)
+    var raw = e.get_mut(type<DnTransform3D>)
     if (raw == null) {
         return none(type<float3>)
     }
