@@ -71,6 +71,11 @@ void DuinRT::SetDasRoot(const std::string &path)
     dasRoot = path;
 }
 
+std::string DuinRT::FindProjectFile(const std::string& scriptPath)
+{
+    duin::fs::Get
+}
+
 void DuinRT::SetProjectFile(const std::string &path)
 {
     projectFile = path;
@@ -103,7 +108,7 @@ void DuinRT::Ready()
     if (!projectFile.empty() && projectFile.size() > 1)
     {
         // script->SetProjectFile(duin::fs::MapVirtualToSystemPath(projectFile)); // virtual path relative to BIN
-        script->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DuinRT\\.das_project");
+        // script->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DuinRT\\.das_project");
     }
     if (jitMode != duin::Script::JitMode::NONE)
     {
@@ -208,8 +213,11 @@ void DuinRT::ParseArgs(const std::vector<std::string_view> &args)
         }
         else
         {
+            // Parse script path
             DN_INFO("Parsing PARAM arg <{}>", arg);
             SetScriptPath("bin://" + std::string(arg));
+            // Find Project file
+            SetProjectFile(); // Find and set project file based on script path
         }
     }
 }

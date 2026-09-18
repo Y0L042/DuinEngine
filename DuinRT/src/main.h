@@ -22,6 +22,7 @@ class DuinRT : public duin::Application
 
     void SetScriptPath(const std::string& path);
     void SetDasRoot(const std::string& path);
+    std::string FindProjectFile(const std::string &scriptPath);
     void SetProjectFile(const std::string& path);
 
     void Initialize() override;
