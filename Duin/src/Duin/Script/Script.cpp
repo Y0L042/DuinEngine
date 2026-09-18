@@ -136,7 +136,8 @@ bool duin::Script::Compile()
     if (!ValidateCompileInputs())
         return false;
 
-    auto fAccess = BuildFileAccess();
+    std::string error;
+    auto fAccess = BuildFileAccess(error);
 
     das::CodeOfPolicies policies = BuildPolicies();
 
@@ -235,12 +236,31 @@ bool duin::Script::ValidateCompileInputs()
     return true;
 }
 
-das::FileAccessPtr duin::Script::BuildFileAccess()
+das::FileAccessPtr duin::Script::BuildFileAccess(std::string& error)
 {
     // Set optional project file, script root, configure policies.
     if (!projectFile.empty())
     {
-        fileAccess = das::make_smart<das::FsFileAccess>(projectFile, das::make_smart<das::FsFileAccess>());
+        das::ModuleGroup projectLibGroup;
+        das::ProgramPtr projectProgram =
+            das::compileDaScript(projectFile, das::make_smart<das::FsFileAccess>(), tout, projectLibGroup);
+
+        if (!projectProgram)
+        {
+            error = "could not open project file: " + projectFile;
+            return nullptr;
+        }
+        if (projectProgram->failed())
+        {
+            error = "project file failed to compile: " + projectFile;
+            for (auto &err : projectProgram->errors)
+            {
+                error += SafeErrorReport(err);
+            }
+            return nullptr;
+        }
+
+        fileAccess = das::make_smart<das::FsFileAccess>(projectFile, projectProgram);
     }
     else
     {

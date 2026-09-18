@@ -172,7 +172,7 @@ class Script
     bool ValidateCompileInputs();
     // Builds the FsFileAccess (project-aware when projectFile is set), mounts the "scripts"
     // root, and injects the unsaved-buffer override as a TextFileInfo when active.
-    das::FileAccessPtr BuildFileAccess();
+    das::FileAccessPtr BuildFileAccess(std::string& error);
     // Assembles CodeOfPolicies: rtti/logging plus JIT mode and profiler module wiring.
     das::CodeOfPolicies BuildPolicies();
     // Shared guard for the invoke functions: verifies fn against the live context and emits
