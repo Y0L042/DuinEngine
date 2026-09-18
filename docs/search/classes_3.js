@@ -24,6 +24,5 @@ var searchData=
   ['diskrendershape_21',['DiskRenderShape',['../classduin_1_1DiskRenderShape.html',1,'duin']]],
   ['dniostreamhandle_22',['DnIOStreamHandle',['../structDnIOStreamHandle.html',1,'']]],
   ['dniostreamhandleannotation_23',['DnIOStreamHandleAnnotation',['../structDnIOStreamHandleAnnotation.html',1,'']]],
-  ['dnlivehoststate_24',['DnLiveHostState',['../structDnLiveHostState.html',1,'']]],
-  ['dynamicbody_25',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]]
+  ['dynamicbody_24',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]]
 ];

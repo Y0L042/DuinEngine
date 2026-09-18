@@ -13,6 +13,7 @@ var searchData=
   ['transform3dimpl_10',['Transform3DImpl',['../structduin_1_1ECSComponent_1_1Transform3D_1_1Transform3DImpl.html',1,'duin::ECSComponent::Transform3D']]],
   ['trianglemeshgeometry_11',['TriangleMeshGeometry',['../classduin_1_1TriangleMeshGeometry.html',1,'duin']]],
   ['trianglemeshrendergeometry_12',['TriangleMeshRenderGeometry',['../structduin_1_1TriangleMeshRenderGeometry.html',1,'duin']]],
-  ['trianglerendergeometry_13',['TriangleRenderGeometry',['../structduin_1_1TriangleRenderGeometry.html',1,'duin']]],
-  ['trianglerendershape_14',['TriangleRenderShape',['../classduin_1_1TriangleRenderShape.html',1,'duin']]]
+  ['trianglemeshrendershape_13',['TriangleMeshRenderShape',['../classduin_1_1TriangleMeshRenderShape.html',1,'duin']]],
+  ['trianglerendergeometry_14',['TriangleRenderGeometry',['../structduin_1_1TriangleRenderGeometry.html',1,'duin']]],
+  ['trianglerendershape_15',['TriangleRenderShape',['../classduin_1_1TriangleRenderShape.html',1,'duin']]]
 ];

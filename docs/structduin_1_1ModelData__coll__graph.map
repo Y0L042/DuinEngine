@@ -1,0 +1,16 @@
+<map id="duin::ModelData" name="duin::ModelData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="567,143,696,168"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1Asset.html" title=" " alt="" coords="235,44,330,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="344,56,439,68,492,79,544,96,584,117,617,140,613,145,582,122,542,100,491,84,438,73,343,62"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="5,44,97,69"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="111,54,235,54,235,59,111,59"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="33,29,39,21,51,17,62,20,69,27,67,44,62,44,63,29,59,24,51,23,42,25,38,32"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1RHIVertexLayout.html" title=" " alt="" coords="199,93,366,119"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="380,112,543,133,579,140,578,145,542,138,380,117"/>
+<area shape="rect" id="Node000005" href="$structduin_1_1RHIVertexBufferHandle.html" title=" " alt="" coords="179,143,387,168"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="400,153,567,153,567,158,400,158"/>
+<area shape="rect" id="Node000006" href="$structduin_1_1RHIIndexBufferHandle.html" title=" " alt="" coords="181,192,384,217"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="398,192,542,173,578,165,579,171,543,178,399,197"/>
+<area shape="rect" id="Node000007" href="$structduin_1_1RHIShaderHandle.html" title=" " alt="" coords="197,241,369,267"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="382,245,461,232,542,209,581,188,613,166,616,170,584,193,544,214,463,237,383,250"/>
+</map>

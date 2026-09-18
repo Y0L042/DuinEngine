@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('Module__DnLog_8cpp_source.html',''); i
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;Module_DnLog.h&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;daScript/ast/ast_typefactory_bind.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//#include &lt;daScript/ast/ast_typefactory_bind.h&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;daScript/ast/ast_interop.h&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;dn_log.das.inc&quot;</span></div>
@@ -196,7 +196,7 @@ $(document).ready(function(){initNavTree('Module__DnLog_8cpp_source.html',''); i
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                                                   <span class="stringliteral">&quot;dn_log_trace&quot;</span>)</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            -&gt;args({<span class="stringliteral">&quot;msg&quot;</span>, <span class="stringliteral">&quot;at&quot;</span>});</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        compileBuiltinModule(<span class="stringliteral">&quot;dn_log.das&quot;</span>, dn_log_das, <span class="keyword">sizeof</span>(dn_log_das));</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        compileBuiltinModule(<span class="keyword">this</span>, <span class="stringliteral">&quot;dn_log.das&quot;</span>, dn_log_das, <span class="keyword">sizeof</span>(dn_log_das));</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        DN_CORE_INFO(<span class="stringliteral">&quot;Script Module [dn_log] initialized.&quot;</span>);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>

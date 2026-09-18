@@ -11,5 +11,6 @@ var searchData=
   ['velocity2dimpl_8',['Velocity2DImpl',['../structduin_1_1ECSComponent_1_1Velocity2D_1_1Velocity2DImpl.html',1,'duin::ECSComponent::Velocity2D']]],
   ['velocity3d_9',['Velocity3D',['../structduin_1_1ECSComponent_1_1Velocity3D.html',1,'duin::ECSComponent']]],
   ['velocity3dimpl_10',['Velocity3DImpl',['../structduin_1_1ECSComponent_1_1Velocity3D_1_1Velocity3DImpl.html',1,'duin::ECSComponent::Velocity3D']]],
-  ['viewstate_11',['ViewState',['../structGraphEditor_1_1ViewState.html',1,'GraphEditor']]]
+  ['vertex_11',['Vertex',['../structduin_1_1Vertex.html',1,'duin']]],
+  ['viewstate_12',['ViewState',['../structGraphEditor_1_1ViewState.html',1,'GraphEditor']]]
 ];

@@ -133,10 +133,52 @@ $(document).ready(function(){initNavTree('ScriptModules_8h_source.html',''); ini
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;./modules/moduleApplication/Module_DnApplication.h&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;./modules/moduleTOML/Module_TOMLC17.h&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">//#include &quot;./ECS/Module_DecsEntity.h&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">//#include &quot;./ECS/Module_DecsWorld.h&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">//#include &quot;./ECS/Module_DecsComponents.h&quot;</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">//#include &quot;./ECS/Module_DecsQuery.h&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;daScript/daScriptModule.h&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">// As of daslang v0.6.4 NEED_MODULE only *calls* register_Module_X; it no longer</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// declares it. Only the built-in modules are pre-declared (in daScriptModule.h),</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">// so every separately compiled module needs a DECLARE_MODULE at file scope</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// before a NEED_MODULE/PULL_MODULE of it will compile.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>DECLARE_MODULE(Module_flecs);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>DECLARE_MODULE(Module_imgui);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnLog.html">Module_DnLog</a>);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__Doctest.html">Module_Doctest</a>);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnRenderer.html">Module_DnRenderer</a>);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnCamera.html">Module_DnCamera</a>);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnGameObject.html">Module_DnGameObject</a>);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnGameStateMachine.html">Module_DnGameStateMachine</a>);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnECS.html">Module_DnECS</a>);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnPipeline.html">Module_DnPipeline</a>);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnSceneBuilder.html">Module_DnSceneBuilder</a>);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnInput.html">Module_DnInput</a>);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnPhysicsServer.html">Module_DnPhysicsServer</a>);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnCharacterBody.html">Module_DnCharacterBody</a>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnApplication.html">Module_DnApplication</a>);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnFilesystem.html">Module_DnFilesystem</a>);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__TOMLC17.html">Module_TOMLC17</a>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>DECLARE_MODULE(<a class="code hl_class" href="classModule__DnUUID.html">Module_DnUUID</a>);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment">//#include &quot;./ECS/Module_DecsEntity.h&quot;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">//#include &quot;./ECS/Module_DecsWorld.h&quot;</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment">//#include &quot;./ECS/Module_DecsComponents.h&quot;</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment">//#include &quot;./ECS/Module_DecsQuery.h&quot;</span></div>
+<div class="ttc" id="aclassModule__DnApplication_html"><div class="ttname"><a href="classModule__DnApplication.html">Module_DnApplication</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnApplication_8cpp_source.html#l00071">Module_DnApplication.cpp:72</a></div></div>
+<div class="ttc" id="aclassModule__DnCamera_html"><div class="ttname"><a href="classModule__DnCamera.html">Module_DnCamera</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnCamera_8cpp_source.html#l00440">Module_DnCamera.cpp:441</a></div></div>
+<div class="ttc" id="aclassModule__DnCharacterBody_html"><div class="ttname"><a href="classModule__DnCharacterBody.html">Module_DnCharacterBody</a></div><div class="ttdef"><b>Definition</b> <a href="ModuleDnCharacterBody_8cpp_source.html#l00170">ModuleDnCharacterBody.cpp:171</a></div></div>
+<div class="ttc" id="aclassModule__DnECS_html"><div class="ttname"><a href="classModule__DnECS.html">Module_DnECS</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnECS_8cpp_source.html#l00372">Module_DnECS.cpp:373</a></div></div>
+<div class="ttc" id="aclassModule__DnFilesystem_html"><div class="ttname"><a href="classModule__DnFilesystem.html">Module_DnFilesystem</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnFilesystem_8cpp_source.html#l00464">Module_DnFilesystem.cpp:465</a></div></div>
+<div class="ttc" id="aclassModule__DnGameObject_html"><div class="ttname"><a href="classModule__DnGameObject.html">Module_DnGameObject</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnGameObject_8cpp_source.html#l00194">Module_DnGameObject.cpp:195</a></div></div>
+<div class="ttc" id="aclassModule__DnGameStateMachine_html"><div class="ttname"><a href="classModule__DnGameStateMachine.html">Module_DnGameStateMachine</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnGameStateMachine_8cpp_source.html#l00175">Module_DnGameStateMachine.cpp:176</a></div></div>
+<div class="ttc" id="aclassModule__DnInput_html"><div class="ttname"><a href="classModule__DnInput.html">Module_DnInput</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnInput_8cpp_source.html#l00415">Module_DnInput.cpp:416</a></div></div>
+<div class="ttc" id="aclassModule__DnLog_html"><div class="ttname"><a href="classModule__DnLog.html">Module_DnLog</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnLog_8cpp_source.html#l00046">Module_DnLog.cpp:47</a></div></div>
+<div class="ttc" id="aclassModule__DnPhysicsServer_html"><div class="ttname"><a href="classModule__DnPhysicsServer.html">Module_DnPhysicsServer</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnPhysicsServer_8cpp_source.html#l00034">Module_DnPhysicsServer.cpp:35</a></div></div>
+<div class="ttc" id="aclassModule__DnPipeline_html"><div class="ttname"><a href="classModule__DnPipeline.html">Module_DnPipeline</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnPipeline_8cpp_source.html#l00091">Module_DnPipeline.cpp:92</a></div></div>
+<div class="ttc" id="aclassModule__DnRenderer_html"><div class="ttname"><a href="classModule__DnRenderer.html">Module_DnRenderer</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnRenderer_8cpp_source.html#l00173">Module_DnRenderer.cpp:174</a></div></div>
+<div class="ttc" id="aclassModule__DnSceneBuilder_html"><div class="ttname"><a href="classModule__DnSceneBuilder.html">Module_DnSceneBuilder</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnSceneBuilder_8cpp_source.html#l00079">Module_DnSceneBuilder.cpp:80</a></div></div>
+<div class="ttc" id="aclassModule__DnUUID_html"><div class="ttname"><a href="classModule__DnUUID.html">Module_DnUUID</a></div><div class="ttdef"><b>Definition</b> <a href="Module__DnUUID_8cpp_source.html#l00067">Module_DnUUID.cpp:68</a></div></div>
+<div class="ttc" id="aclassModule__Doctest_html"><div class="ttname"><a href="classModule__Doctest.html">Module_Doctest</a></div><div class="ttdef"><b>Definition</b> <a href="Module__Doctest_8cpp_source.html#l00184">Module_Doctest.cpp:185</a></div></div>
+<div class="ttc" id="aclassModule__TOMLC17_html"><div class="ttname"><a href="classModule__TOMLC17.html">Module_TOMLC17</a></div><div class="ttdef"><b>Definition</b> <a href="Module__TOMLC17_8cpp_source.html#l00218">Module_TOMLC17.cpp:219</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

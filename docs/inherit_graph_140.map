@@ -1,3 +1,19 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structduin_1_1RenderState.html" title="Current render configuration." alt="" coords="5,5,144,31"/>
+<area shape="rect" id="Node000000" href="$classduin_1_1RenderShape.html" title=" " alt="" coords="5,179,149,204"/>
+<area shape="rect" id="Node000001" href="$classduin_1_1BoxRenderShape.html" title=" " alt="" coords="212,5,381,31"/>
+<area shape="poly" id="edge59_Node000000_Node000001" title=" " alt="" coords="89,165,131,102,161,68,196,40,219,28,222,33,199,44,164,72,135,105,94,168"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1CapsuleRenderShape.html" title=" " alt="" coords="199,55,395,80"/>
+<area shape="poly" id="edge60_Node000000_Node000002" title=" " alt="" coords="98,166,141,127,167,106,196,89,225,78,227,83,199,94,170,111,144,131,102,170"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1ConeRenderShape.html" title=" " alt="" coords="208,104,385,129"/>
+<area shape="poly" id="edge61_Node000000_Node000003" title=" " alt="" coords="117,170,196,138,236,127,237,132,198,143,119,175"/>
+<area shape="rect" id="Node000004" href="$classduin_1_1CylinderRenderShape.html" title=" " alt="" coords="197,153,396,179"/>
+<area shape="poly" id="edge62_Node000000_Node000004" title=" " alt="" coords="163,179,197,175,197,180,163,184"/>
+<area shape="rect" id="Node000005" href="$classduin_1_1DiskRenderShape.html" title=" " alt="" coords="210,203,383,228"/>
+<area shape="poly" id="edge63_Node000000_Node000005" title=" " alt="" coords="163,198,210,203,210,209,163,203"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1SphereRenderShape.html" title=" " alt="" coords="202,252,391,277"/>
+<area shape="poly" id="edge64_Node000000_Node000006" title=" " alt="" coords="121,207,198,237,242,249,240,255,196,242,119,212"/>
+<area shape="rect" id="Node000007" href="$classduin_1_1TriangleMeshRenderShape.html" title=" " alt="" coords="201,302,392,342"/>
+<area shape="poly" id="edge65_Node000000_Node000007" title=" " alt="" coords="103,212,146,250,199,286,227,299,225,304,196,291,142,254,100,216"/>
+<area shape="rect" id="Node000008" href="$classduin_1_1TriangleRenderShape.html" title=" " alt="" coords="199,367,394,392"/>
+<area shape="poly" id="edge66_Node000000_Node000008" title=" " alt="" coords="92,215,133,284,163,321,199,352,223,364,221,369,196,356,159,325,129,287,88,218"/>
 </map>

@@ -5,7 +5,9 @@ var hierarchy =
     [ "duin::Application", "classduin_1_1Application.html", null ],
     [ "Args", "structArgs.html", null ],
     [ "duin::AssertContextScope", "structduin_1_1AssertContextScope.html", null ],
-    [ "duin::Asset", "structduin_1_1Asset.html", null ],
+    [ "duin::Asset", "structduin_1_1Asset.html", [
+      [ "duin::ModelData", "structduin_1_1ModelData.html", null ]
+    ] ],
     [ "duin::AssetManager", "classduin_1_1AssetManager.html", null ],
     [ "duin::AssetRef", "structduin_1_1AssetRef.html", null ],
     [ "Atlas", "classAtlas.html", null ],
@@ -97,7 +99,6 @@ var hierarchy =
       [ "ScriptGameStateMachine", "classScriptGameStateMachine.html", null ]
     ] ],
     [ "DnIOStreamHandle", "structDnIOStreamHandle.html", null ],
-    [ "DnLiveHostState", "structDnLiveHostState.html", null ],
     [ "ebuf_t", "structebuf__t.html", null ],
     [ "duin::EcsPipeline", "classduin_1_1EcsPipeline.html", null ],
     [ "ImCurveEdit::EditPoint", "structImCurveEdit_1_1EditPoint.html", null ],
@@ -135,10 +136,6 @@ var hierarchy =
     [ "duin::float16", "structduin_1_1float16.html", null ],
     [ "duin::float3", "structduin_1_1float3.html", null ],
     [ "FrameTime", "structFrameTime.html", null ],
-    [ "das::FunctionAnnotation", null, [
-      [ "AfterReloadAnnotation", "structAfterReloadAnnotation.html", null ],
-      [ "BeforeReloadAnnotation", "structBeforeReloadAnnotation.html", null ]
-    ] ],
     [ "duin::GameObject", "classduin_1_1GameObject.html", [
       [ "ScriptGameObject", "classScriptGameObject.html", null ],
       [ "duin::GameScript", "classduin_1_1GameScript.html", null ],
@@ -429,7 +426,10 @@ var hierarchy =
     [ "duin::Matrix::MatrixImpl", "structduin_1_1Matrix_1_1MatrixImpl.html", null ],
     [ "DebugDrawEncoderImpl::MatrixStack", "structDebugDrawEncoderImpl_1_1MatrixStack.html", null ],
     [ "Mesh", "structMesh.html", null ],
+    [ "duin::MeshData", "structduin_1_1MeshData.html", null ],
     [ "MeshState", "structMeshState.html", null ],
+    [ "duin::Model", "classduin_1_1Model.html", null ],
+    [ "duin::ModelLoader", "classduin_1_1ModelLoader.html", null ],
     [ "das::Module", null, [
       [ "Module_DnApplication", "classModule__DnApplication.html", null ],
       [ "Module_DnCamera", "classModule__DnCamera.html", null ],
@@ -439,7 +439,6 @@ var hierarchy =
       [ "Module_DnGameObject", "classModule__DnGameObject.html", null ],
       [ "Module_DnGameStateMachine", "classModule__DnGameStateMachine.html", null ],
       [ "Module_DnInput", "classModule__DnInput.html", null ],
-      [ "Module_DnLiveHost", "classModule__DnLiveHost.html", null ],
       [ "Module_DnLog", "classModule__DnLog.html", null ],
       [ "Module_DnPhysicsServer", "classModule__DnPhysicsServer.html", null ],
       [ "Module_DnPipeline", "classModule__DnPipeline.html", null ],
@@ -480,7 +479,6 @@ var hierarchy =
     [ "duin::PhysicsServer", "classduin_1_1PhysicsServer.html", null ],
     [ "duin::ECSComponent::PhysicsStaticCubeComponent", "structduin_1_1ECSComponent_1_1PhysicsStaticCubeComponent.html", null ],
     [ "pool_t", "structpool__t.html", null ],
-    [ "duin::PosColorVertex", "structduin_1_1PosColorVertex.html", null ],
     [ "duin::ECSComponent::Position2D", "structduin_1_1ECSComponent_1_1Position2D.html", null ],
     [ "duin::ECSComponent::Position2D::Position2DImpl", "structduin_1_1ECSComponent_1_1Position2D_1_1Position2DImpl.html", null ],
     [ "duin::ECSComponent::Position3D", "structduin_1_1ECSComponent_1_1Position3D.html", null ],
@@ -523,6 +521,7 @@ var hierarchy =
       [ "duin::TriangleMeshRenderGeometry", "structduin_1_1TriangleMeshRenderGeometry.html", null ],
       [ "duin::TriangleRenderGeometry", "structduin_1_1TriangleRenderGeometry.html", null ]
     ] ],
+    [ "duin::RenderModel", "structduin_1_1RenderModel.html", null ],
     [ "duin::RenderShape", "classduin_1_1RenderShape.html", [
       [ "duin::BoxRenderShape", "classduin_1_1BoxRenderShape.html", null ],
       [ "duin::CapsuleRenderShape", "classduin_1_1CapsuleRenderShape.html", null ],
@@ -530,9 +529,11 @@ var hierarchy =
       [ "duin::CylinderRenderShape", "classduin_1_1CylinderRenderShape.html", null ],
       [ "duin::DiskRenderShape", "classduin_1_1DiskRenderShape.html", null ],
       [ "duin::SphereRenderShape", "classduin_1_1SphereRenderShape.html", null ],
+      [ "duin::TriangleMeshRenderShape", "classduin_1_1TriangleMeshRenderShape.html", null ],
       [ "duin::TriangleRenderShape", "classduin_1_1TriangleRenderShape.html", null ]
     ] ],
     [ "duin::RenderState", "structduin_1_1RenderState.html", null ],
+    [ "duin::RenderSubmission", "structduin_1_1RenderSubmission.html", null ],
     [ "duin::RenderTexture", "structduin_1_1RenderTexture.html", null ],
     [ "duin::RHIFrameBufferHandle", "structduin_1_1RHIFrameBufferHandle.html", null ],
     [ "duin::RHIIndexBufferHandle", "structduin_1_1RHIIndexBufferHandle.html", null ],
@@ -540,6 +541,7 @@ var hierarchy =
     [ "duin::RHIShaderHandle", "structduin_1_1RHIShaderHandle.html", null ],
     [ "duin::RHITextureHandle", "structduin_1_1RHITextureHandle.html", null ],
     [ "duin::RHIVertexBufferHandle", "structduin_1_1RHIVertexBufferHandle.html", null ],
+    [ "duin::RHIVertexLayout", "structduin_1_1RHIVertexLayout.html", null ],
     [ "duin::ECSComponent::Rotation2D", "structduin_1_1ECSComponent_1_1Rotation2D.html", null ],
     [ "duin::ECSComponent::Rotation2D::Rotation2DImpl", "structduin_1_1ECSComponent_1_1Rotation2D_1_1Rotation2DImpl.html", null ],
     [ "duin::ECSComponent::Rotation3D", "structduin_1_1ECSComponent_1_1Rotation3D.html", null ],
@@ -625,6 +627,9 @@ var hierarchy =
     [ "duin::ECSComponent::Velocity2D::Velocity2DImpl", "structduin_1_1ECSComponent_1_1Velocity2D_1_1Velocity2DImpl.html", null ],
     [ "duin::ECSComponent::Velocity3D", "structduin_1_1ECSComponent_1_1Velocity3D.html", null ],
     [ "duin::ECSComponent::Velocity3D::Velocity3DImpl", "structduin_1_1ECSComponent_1_1Velocity3D_1_1Velocity3DImpl.html", null ],
+    [ "duin::Vertex", "structduin_1_1Vertex.html", [
+      [ "duin::PosColorVertex", "structduin_1_1PosColorVertex.html", null ]
+    ] ],
     [ "GraphEditor::ViewState", "structGraphEditor_1_1ViewState.html", null ],
     [ "duin::World", "classduin_1_1World.html", null ]
 ];

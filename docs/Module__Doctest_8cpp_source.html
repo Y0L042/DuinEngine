@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('Module__Doctest_8cpp_source.html','');
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;Module_Doctest.h&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;daScript/ast/ast_typefactory_bind.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//#include &lt;daScript/ast/ast_typefactory_bind.h&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;daScript/ast/ast_interop.h&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
@@ -352,7 +352,7 @@ $(document).ready(function(){initNavTree('Module__Doctest_8cpp_source.html','');
 <div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            das::SideEffects::modifyExternal, <span class="stringliteral">&quot;dn_register_test&quot;</span>)</div>
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                -&gt;args({<span class="stringliteral">&quot;suite&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>, <span class="stringliteral">&quot;fn_name&quot;</span>, <span class="stringliteral">&quot;at&quot;</span>, <span class="stringliteral">&quot;context&quot;</span>});</div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        compileBuiltinModule(<span class="stringliteral">&quot;dn_doctest.das&quot;</span>, dn_doctest_das, <span class="keyword">sizeof</span>(dn_doctest_das));</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        compileBuiltinModule(<span class="keyword">this</span>, <span class="stringliteral">&quot;dn_doctest.das&quot;</span>, dn_doctest_das, <span class="keyword">sizeof</span>(dn_doctest_das));</div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        DN_CORE_INFO(<span class="stringliteral">&quot;Script Module [dn_doctest] initialized.&quot;</span>);</div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
