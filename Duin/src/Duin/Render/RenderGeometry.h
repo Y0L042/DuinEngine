@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Duin/Core/Utils/UUID.h"
+#include "RHI.h"
 
 #include <cstdint>
 
@@ -8,6 +9,9 @@ namespace duin
 {
 namespace RenderGeometryType
 {
+/*
+* The abstract Geometry data. No world/instance information included
+*/
 typedef enum Type
 {
     BOX = 0,
@@ -24,11 +28,6 @@ typedef enum Type
 } Type;
 }; // namespace RenderGeometryType
 
-struct PosColorVertex
-{
-    float x, y, z;
-    uint32_t abgr;
-};
 
 struct RenderGeometry
 {
@@ -193,7 +192,10 @@ struct TriangleRenderGeometry : public RenderGeometry
 
 struct TriangleMeshRenderGeometry : public RenderGeometry
 {
-    // std::array<float> vertices; // TODO
+    // Has no identity shape
+     std::vector<float> vertices;
+     std::vector<size_t> indices;
+
 
     TriangleMeshRenderGeometry();
 };

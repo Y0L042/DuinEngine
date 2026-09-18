@@ -111,9 +111,9 @@ void InitRenderer()
 
     // Load default shaders
     RHIShaderHandle vsh =
-        RHILoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
+        RHILoadShader("D:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
     RHIShaderHandle fsh =
-        RHILoadShader("C:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
+        RHILoadShader("D:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
 
     // Create default shader program
     RHIProgramHandle program = RHICreateProgram(vsh, fsh, true);
@@ -324,6 +324,40 @@ void EndEncoderFrame()
 // Render queue
 // ---------------------------------------------------------------------------
 
+void QueueRender(
+    RHIVertexBufferHandle vbh, RHIIndexBufferHandle ibh, const Vector3 position, const Quaternion rotation,
+    const Vector3 size)
+{
+    Vector3 eulerRotation = QuaternionToEuler(rotation);
+
+    RHIViewId targetViewID = globalRenderState.viewID;
+    RHIProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program;
+
+    if (!(vbh.IsValid() && ibh.IsValid()))
+    {
+        DN_CORE_WARN("Invalid geometry buffers submitted!");
+        return;
+    }
+
+    float mtx[16];
+    RHIComputeSRTMatrix(
+        mtx,
+        size.x,
+        size.y,
+        size.z,
+        eulerRotation.x,
+        eulerRotation.y,
+        eulerRotation.z,
+        position.x,
+        position.y,
+        position.z);
+
+    RHIEncoderSetTransform(encoder, mtx);
+    RHIEncoderSetVertexBuffer(encoder, 0, vbh);
+    RHIEncoderSetIndexBuffer(encoder, ibh);
+    RHIEncoderSubmit(encoder, targetViewID, program);
+}
+
 void QueueRender(const RenderGeometryType::Type type)
 {
     RHIViewId targetViewID = globalRenderState.viewID;
@@ -470,7 +504,6 @@ void DrawTriangle(const Vector3 position, const Quaternion rotation, const Vecto
     QueueRender(RenderGeometryType::TRIANGLE, position, rotation, size);
 }
 
-
 // Debug Draw functions
 
 void DrawDebugTriangle(const Vector3 c1, const Vector3 c2, const Vector3 c3)
@@ -497,7 +530,6 @@ void DrawDebugBox(const Vector3 min, const Vector3 max)
 {
     RHIDebugDrawAABB(min.x, min.y, min.z, max.x, max.y, max.z);
 }
-
 
 // ---------------------------------------------------------------------------
 // Geometry buffer management

@@ -15,6 +15,10 @@ namespace duin
 
 namespace RenderShapeType
 {
+/*
+ * Instanced RenderGeometry. Includes world position, rotation, space. Many RenderShape instances can
+ * reference one RenderGeometry
+ */
 typedef enum Type
 {
     SPHERE,
@@ -65,96 +69,221 @@ class BoxRenderShape : public RenderShape
 class SphereRenderShape : public RenderShape
 {
   public:
-    SphereRenderShape() { type = RenderShapeType::SPHERE; }
-    SphereRenderShape(SphereRenderGeometry g) : geometry(g) { type = RenderShapeType::SPHERE; }
+    SphereRenderShape()
+    {
+        type = RenderShapeType::SPHERE;
+    }
+    SphereRenderShape(SphereRenderGeometry g) : geometry(g)
+    {
+        type = RenderShapeType::SPHERE;
+    }
 
-    Vector3    GetPosition() { return position; }
-    void       SetPosition(Vector3 p) { position = p; }
-    Quaternion GetRotation() { return rotation; }
-    void       SetRotation(Quaternion r) { rotation = r; }
+    Vector3 GetPosition()
+    {
+        return position;
+    }
+    void SetPosition(Vector3 p)
+    {
+        position = p;
+    }
+    Quaternion GetRotation()
+    {
+        return rotation;
+    }
+    void SetRotation(Quaternion r)
+    {
+        rotation = r;
+    }
 
     SphereRenderGeometry geometry;
-    Vector3    position;
+    Vector3 position;
     Quaternion rotation;
 };
 
 class CapsuleRenderShape : public RenderShape
 {
   public:
-    CapsuleRenderShape() { type = RenderShapeType::CAPSULE; }
-    CapsuleRenderShape(CapsuleRenderGeometry g) : geometry(g) { type = RenderShapeType::CAPSULE; }
+    CapsuleRenderShape()
+    {
+        type = RenderShapeType::CAPSULE;
+    }
+    CapsuleRenderShape(CapsuleRenderGeometry g) : geometry(g)
+    {
+        type = RenderShapeType::CAPSULE;
+    }
 
-    Vector3    GetPosition() { return position; }
-    void       SetPosition(Vector3 p) { position = p; }
-    Quaternion GetRotation() { return rotation; }
-    void       SetRotation(Quaternion r) { rotation = r; }
+    Vector3 GetPosition()
+    {
+        return position;
+    }
+    void SetPosition(Vector3 p)
+    {
+        position = p;
+    }
+    Quaternion GetRotation()
+    {
+        return rotation;
+    }
+    void SetRotation(Quaternion r)
+    {
+        rotation = r;
+    }
 
     CapsuleRenderGeometry geometry;
-    Vector3    position;
+    Vector3 position;
     Quaternion rotation;
 };
 
 class CylinderRenderShape : public RenderShape
 {
   public:
-    CylinderRenderShape() { type = RenderShapeType::CYLINDER; }
-    CylinderRenderShape(CylinderRenderGeometry g) : geometry(g) { type = RenderShapeType::CYLINDER; }
+    CylinderRenderShape()
+    {
+        type = RenderShapeType::CYLINDER;
+    }
+    CylinderRenderShape(CylinderRenderGeometry g) : geometry(g)
+    {
+        type = RenderShapeType::CYLINDER;
+    }
 
-    Vector3    GetPosition() { return position; }
-    void       SetPosition(Vector3 p) { position = p; }
-    Quaternion GetRotation() { return rotation; }
-    void       SetRotation(Quaternion r) { rotation = r; }
+    Vector3 GetPosition()
+    {
+        return position;
+    }
+    void SetPosition(Vector3 p)
+    {
+        position = p;
+    }
+    Quaternion GetRotation()
+    {
+        return rotation;
+    }
+    void SetRotation(Quaternion r)
+    {
+        rotation = r;
+    }
 
     CylinderRenderGeometry geometry;
-    Vector3    position;
+    Vector3 position;
     Quaternion rotation;
 };
 
 class ConeRenderShape : public RenderShape
 {
   public:
-    ConeRenderShape() { type = RenderShapeType::CONE; }
-    ConeRenderShape(ConeRenderGeometry g) : geometry(g) { type = RenderShapeType::CONE; }
+    ConeRenderShape()
+    {
+        type = RenderShapeType::CONE;
+    }
+    ConeRenderShape(ConeRenderGeometry g) : geometry(g)
+    {
+        type = RenderShapeType::CONE;
+    }
 
-    Vector3    GetPosition() { return position; }
-    void       SetPosition(Vector3 p) { position = p; }
-    Quaternion GetRotation() { return rotation; }
-    void       SetRotation(Quaternion r) { rotation = r; }
+    Vector3 GetPosition()
+    {
+        return position;
+    }
+    void SetPosition(Vector3 p)
+    {
+        position = p;
+    }
+    Quaternion GetRotation()
+    {
+        return rotation;
+    }
+    void SetRotation(Quaternion r)
+    {
+        rotation = r;
+    }
 
     ConeRenderGeometry geometry;
-    Vector3    position;
+    Vector3 position;
     Quaternion rotation;
 };
 
 class DiskRenderShape : public RenderShape
 {
   public:
-    DiskRenderShape() { type = RenderShapeType::DISK; }
-    DiskRenderShape(DiskRenderGeometry g) : geometry(g) { type = RenderShapeType::DISK; }
+    DiskRenderShape()
+    {
+        type = RenderShapeType::DISK;
+    }
+    DiskRenderShape(DiskRenderGeometry g) : geometry(g)
+    {
+        type = RenderShapeType::DISK;
+    }
 
-    Vector3    GetPosition() { return position; }
-    void       SetPosition(Vector3 p) { position = p; }
-    Quaternion GetRotation() { return rotation; }
-    void       SetRotation(Quaternion r) { rotation = r; }
+    Vector3 GetPosition()
+    {
+        return position;
+    }
+    void SetPosition(Vector3 p)
+    {
+        position = p;
+    }
+    Quaternion GetRotation()
+    {
+        return rotation;
+    }
+    void SetRotation(Quaternion r)
+    {
+        rotation = r;
+    }
 
     DiskRenderGeometry geometry;
-    Vector3    position;
+    Vector3 position;
     Quaternion rotation;
 };
 
 class TriangleRenderShape : public RenderShape
 {
   public:
-    TriangleRenderShape() { type = RenderShapeType::TRIANGLE; }
-    TriangleRenderShape(TriangleRenderGeometry g) : geometry(g) { type = RenderShapeType::TRIANGLE; }
+    TriangleRenderShape()
+    {
+        type = RenderShapeType::TRIANGLE;
+    }
+    TriangleRenderShape(TriangleRenderGeometry g) : geometry(g)
+    {
+        type = RenderShapeType::TRIANGLE;
+    }
 
-    Vector3    GetPosition() { return position; }
-    void       SetPosition(Vector3 p) { position = p; }
-    Quaternion GetRotation() { return rotation; }
-    void       SetRotation(Quaternion r) { rotation = r; }
+    Vector3 GetPosition()
+    {
+        return position;
+    }
+    void SetPosition(Vector3 p)
+    {
+        position = p;
+    }
+    Quaternion GetRotation()
+    {
+        return rotation;
+    }
+    void SetRotation(Quaternion r)
+    {
+        rotation = r;
+    }
 
     TriangleRenderGeometry geometry;
-    Vector3    position;
+    Vector3 position;
+    Quaternion rotation;
+};
+
+class TriangleMeshRenderShape : public RenderShape
+{
+  public:
+    TriangleMeshRenderShape()
+    {
+        type = RenderShapeType::TRIANGLEMESH;
+    }
+    TriangleMeshRenderShape(TriangleMeshRenderGeometry g) : geometry(g)
+    {
+        type = RenderShapeType::TRIANGLEMESH;
+    }
+
+    TriangleMeshRenderGeometry geometry;
+    Vector3 position;
     Quaternion rotation;
 };
 

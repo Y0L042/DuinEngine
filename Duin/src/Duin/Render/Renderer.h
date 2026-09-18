@@ -146,9 +146,21 @@ void EndEncoderFrame();
  * @name Render Queue
  * @{
  */
-void QueueRender(const RenderGeometryType::Type type);
+//void QueueRender(const GeometryBufferHandle handle);
+//void QueueRender(
+//    const GeometryBufferHandle handle, const Vector3 position, const Quaternion rotation, const Vector3 size);
 void QueueRender(
-    const RenderGeometryType::Type type, const Vector3 position, const Quaternion rotation, const Vector3 size);
+    RHIVertexBufferHandle vbh,
+    RHIIndexBufferHandle ibh,
+    //RHIViewId targetViewID = globalRenderState.viewID,
+    //RHIProgramHandle program = shaderProgramMap[DEFAULT_SHADERPROGRAM_UUID].program,
+    const Vector3 position = Vector3(),
+    const Quaternion rotation = QuaternionIdentity(),
+    const Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
+
+void QueueRender(const RenderGeometryType::Type type); // DEP
+void QueueRender(
+    const RenderGeometryType::Type type, const Vector3 position, const Quaternion rotation, const Vector3 size); // DEP
 void ExecuteRenderPipeline();
 void EmptyRenderStack();
 /** @} */

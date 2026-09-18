@@ -33,8 +33,199 @@ const uint32_t RHI_RESET_VSYNC = BGFX_RESET_VSYNC;
 // Internal helpers
 // ---------------------------------------------------------------------------
 
-static bgfx::VertexLayout s_pcvLayout;
+static bgfx::VertexLayout  s_pcvLayout;
 static DebugDrawEncoder s_dde;
+
+// ---------------------------------------------------------------------------
+// Vertex layout
+// ---------------------------------------------------------------------------
+
+// RHIAttrib / RHIAttribType are 1:1 with their bgfx counterparts, so
+// translation is a cast. Lock that down.
+
+static_assert((int)RHIAttrib::Position  == bgfx::Attrib::Position,  "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Normal    == bgfx::Attrib::Normal,    "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Tangent   == bgfx::Attrib::Tangent,   "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Bitangent == bgfx::Attrib::Bitangent, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color0    == bgfx::Attrib::Color0,    "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color1    == bgfx::Attrib::Color1,    "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color2    == bgfx::Attrib::Color2,    "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color3    == bgfx::Attrib::Color3,    "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Indices   == bgfx::Attrib::Indices,   "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Weight    == bgfx::Attrib::Weight,    "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::TexCoord0 == bgfx::Attrib::TexCoord0, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::TexCoord7 == bgfx::Attrib::TexCoord7, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Count     == bgfx::Attrib::Count,     "RHIAttrib mismatch");
+
+static_assert((int)RHIAttribType::Int8   == bgfx::AttribType::Int8,   "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Uint8  == bgfx::AttribType::Uint8,  "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Uint10 == bgfx::AttribType::Uint10, "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Int16  == bgfx::AttribType::Int16,  "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Uint16 == bgfx::AttribType::Uint16, "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Half   == bgfx::AttribType::Half,   "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Float  == bgfx::AttribType::Float,  "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Count  == bgfx::AttribType::Count,  "RHIAttribType mismatch");
+
+uint16_t RHIAttribTypeSize(RHIAttribType type, uint8_t num)
+{
+    switch (type)
+    {
+        case RHIAttribType::Int8:
+        case RHIAttribType::Uint8:
+            return num;
+        // Uint10 packs 3 or 4 components into a single 32-bit word.
+        case RHIAttribType::Uint10:
+            return 4;
+        case RHIAttribType::Int16:
+        case RHIAttribType::Uint16:
+        case RHIAttribType::Half:
+            return num * 2;
+        case RHIAttribType::Float:
+            return num * 4;
+        default:
+            return 0;
+    }
+}
+
+RHIVertexLayout &RHIVertexLayout::Add(RHIAttrib a, uint8_t n, RHIAttribType t,
+                                      bool norm, bool isInt)
+{
+    if (count >= RHI_MAX_VERTEX_ATTRIBS)
+    {
+        DN_CORE_ERROR("RHIVertexLayout::Add -- attribute limit ({}) reached.",
+                      RHI_MAX_VERTEX_ATTRIBS);
+        return *this;
+    }
+
+    attrib[count]     = a;
+    num[count]        = n;
+    type[count]       = t;
+    normalized[count] = norm;
+    asInt[count]      = isInt;
+    skipBytes[count]  = 0;
+    ++count;
+    return *this;
+}
+
+RHIVertexLayout &RHIVertexLayout::Skip(uint8_t bytes)
+{
+    if (count >= RHI_MAX_VERTEX_ATTRIBS)
+    {
+        DN_CORE_ERROR("RHIVertexLayout::Skip -- attribute limit ({}) reached.",
+                      RHI_MAX_VERTEX_ATTRIBS);
+        return *this;
+    }
+
+    attrib[count]     = RHIAttrib::Count; // no semantic; padding only
+    num[count]        = 0;
+    type[count]       = RHIAttribType::Count;
+    normalized[count] = false;
+    asInt[count]      = false;
+    skipBytes[count]  = bytes;
+    ++count;
+    return *this;
+}
+
+bool RHIVertexLayout::Decode(RHIAttrib a, uint8_t &outNum, RHIAttribType &outType,
+                             bool &outNormalized, bool &outAsInt) const
+{
+    for (uint8_t i = 0; i < count; ++i)
+    {
+        if (skipBytes[i] == 0 && attrib[i] == a)
+        {
+            outNum        = num[i];
+            outType       = type[i];
+            outNormalized = normalized[i];
+            outAsInt      = asInt[i];
+            return true;
+        }
+    }
+    return false;
+}
+
+bool RHIVertexLayout::Has(RHIAttrib a) const
+{
+    for (uint8_t i = 0; i < count; ++i)
+    {
+        if (skipBytes[i] == 0 && attrib[i] == a)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+uint16_t RHIVertexLayout::GetOffset(RHIAttrib a) const
+{
+    uint16_t offset = 0;
+    for (uint8_t i = 0; i < count; ++i)
+    {
+        if (skipBytes[i] > 0)
+        {
+            offset += skipBytes[i];
+            continue;
+        }
+        if (attrib[i] == a)
+        {
+            return offset;
+        }
+        offset += RHIAttribTypeSize(type[i], num[i]);
+    }
+    return UINT16_MAX;
+}
+
+uint16_t RHIVertexLayout::GetStride() const
+{
+    uint16_t stride = 0;
+    for (uint8_t i = 0; i < count; ++i)
+    {
+        stride += (skipBytes[i] > 0) ? skipBytes[i]
+                                     : RHIAttribTypeSize(type[i], num[i]);
+    }
+    return stride;
+}
+
+uint32_t RHIVertexLayout::GetSize(uint32_t numVertices) const
+{
+    return numVertices * GetStride();
+}
+
+// Replays an RHIVertexLayout through bgfx's builder. The only place in the
+// codebase that needs to know both representations.
+static bgfx::VertexLayout ToBgfx(const RHIVertexLayout &layout)
+{
+    bgfx::VertexLayout bl;
+    bl.begin();
+    for (uint8_t i = 0; i < layout.count; ++i)
+    {
+        if (layout.skipBytes[i] > 0)
+        {
+            bl.skip(layout.skipBytes[i]);
+        }
+        else
+        {
+            bl.add((bgfx::Attrib::Enum)layout.attrib[i],
+                   layout.num[i],
+                   (bgfx::AttribType::Enum)layout.type[i],
+                   layout.normalized[i],
+                   layout.asInt[i]);
+        }
+    }
+    bl.end();
+    return bl;
+}
+
+const RHIVertexLayout &RHIGetPosColorLayout()
+{
+    static const RHIVertexLayout layout = []
+    {
+        RHIVertexLayout l;
+        l.Add(RHIAttrib::Position, 3, RHIAttribType::Float)
+         .Add(RHIAttrib::Color0, 4, RHIAttribType::Uint8, true);
+        return l;
+    }();
+    return layout;
+}
 
 // Handle conversions -- both sides store a uint16_t idx, so direct copy.
 
@@ -286,6 +477,14 @@ void RHIDestroyProgram(RHIProgramHandle handle)
 RHIVertexBufferHandle RHICreateVertexBuffer(const void *data, uint32_t sizeBytes)
 {
     bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(bgfx::makeRef(data, sizeBytes), s_pcvLayout);
+    return FromBgfx(vbh);
+}
+
+RHIVertexBufferHandle RHICreateVertexBuffer(const void *data, uint32_t sizeBytes,
+                                            const RHIVertexLayout &layout)
+{
+    bgfx::VertexLayout bl = ToBgfx(layout);
+    bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(bgfx::makeRef(data, sizeBytes), bl);
     return FromBgfx(vbh);
 }
 
