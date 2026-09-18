@@ -20,6 +20,15 @@ Cfg.cmake_generator = ({
 })[Cfg.VISUAL_STUDIO] or error("premakeCfg: no cmake generator mapped for " .. tostring(Cfg.VISUAL_STUDIO))
 Cfg.cmake_arch = "x64"
 
+-- Absolute path to the native Windows cmake. Resolved explicitly rather than by
+-- PATH lookup for two reasons: premake may be launched from a shell that has no
+-- cmake at all, and an MSYS2 shell puts C:/msys64/ucrt64/bin/cmake.exe first,
+-- which defaults to Ninja + MinGW gcc. Falls back to bare "cmake" if absent.
+Cfg.cmake_exe = "C:/Programs/CMake/bin/cmake.exe"
+if not os.isfile(Cfg.cmake_exe) then
+    Cfg.cmake_exe = "cmake"
+end
+
 Cfg.cmake_crt_debug   = (Cfg.CRT == "MT") and "MultiThreadedDebug"     or "MultiThreadedDebugDLL"
 Cfg.cmake_crt_release = (Cfg.CRT == "MT") and "MultiThreaded"          or "MultiThreadedDLL"
 Cfg.premake_staticrt  = (Cfg.CRT == "MT") and "On"                     or "Off"
