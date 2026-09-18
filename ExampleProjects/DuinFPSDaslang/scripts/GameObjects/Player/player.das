@@ -95,7 +95,7 @@ class Player : DnGameObject {
 
         player_entity.add(IsPlayer())
         player_entity.set(MoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
-        player_entity.set(MoveSpeed(walk = 700.0f, sprint = 1200.0f))
+        player_entity.set(MoveSpeed(walk = 300.0f, sprint = 1200.0f))
         player_entity.set(CameraYaw(radians = 0.0f))
         player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
         player_entity.set(CharacterBodyDesc())

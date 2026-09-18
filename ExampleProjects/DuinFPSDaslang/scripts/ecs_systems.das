@@ -124,11 +124,11 @@ def system_update_active_camera_position(var world : DnWorld, delta : double) : 
                 var parent = e.parent().move_unwrap()
                 var p_gpos = get_global_position(parent)
                 if (p_gpos |> is_some()) {
-                    dn_info("Parent gpos: {p_gpos.unwrap()}")
+                    // dn_info("Parent gpos: {p_gpos.unwrap()}")
                 } else {
                     var ptx : DnTransform3D? = parent.get_mut(type<DnTransform3D>)
                     if (ptx != null) {
-                        dn_info("ptx {ptx.pos}")
+                        // dn_info("ptx {ptx.pos}")
                     } else {
                         dn_warn("Camera parent has no local TX")
                     }
@@ -138,7 +138,7 @@ def system_update_active_camera_position(var world : DnWorld, delta : double) : 
                 dn_warn("Camera has NO PARENT!")
             }
             let pos = get_global_position(e).move_unwrap()
-            dn_info("GPOS: {pos.x}, {pos.y}, {pos.z}")
+            // dn_info("GPOS: {pos.x}, {pos.y}, {pos.z}")
             cam.handle.move_to(pos)
         } else {
             dn_warn("Cam handle is NULL!")

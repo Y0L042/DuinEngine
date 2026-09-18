@@ -13,7 +13,12 @@
 
 #include <iostream>
 
+#include "LoadModel.h"
+
 //#define TRACY_ON_DEMAND
+
+static std::optional<duin::Model> model;
+static std::optional<duin::Model> model_too;
 
 
 
@@ -40,9 +45,9 @@ class DuinFPSDaslangApp : public duin::Application
         //das::setCommandLineArguments(2, const_cast<char **>(debugArgv));
 
         mainScript = CreateChildObject<duin::GameScript>(ENTRY_SCRIPT);
-        mainScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
+        mainScript->SetDasRoot("D:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
         //mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\Duin\\duin_engine.das_project");
-        mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\DuinFPSDaslang\\duinfpsdaslang.das_project");
+        mainScript->SetProjectFile("D:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\DuinFPSDaslang\\duinfpsdaslang.das_project");
         mainScript->InitModules([]() {
             NEED_MODULE(Module_UriParser);
             das::register_builtin_modules();
@@ -65,6 +70,11 @@ class DuinFPSDaslangApp : public duin::Application
         mainScript->EnableHotCompile(false, false);
         mainScript->SetHotCompileFileChangeCooldown(1.0f);
         mainScript->CompileAndSimulate();
+
+        model = LoadMesh("bin://models/SM_Prop_Vase_01.obj");
+        model_too =
+            LoadMesh("bin://models/SM_Buildings_Stairs_1x3_02P.obj");
+
     }
 
     void Update(double delta) override
@@ -81,6 +91,8 @@ class DuinFPSDaslangApp : public duin::Application
 
     void Draw() override
     {
+        DrawMesh(model, duin::Vector3(0.0f, 3.0f, 0.0f), 0.05f);
+        DrawMesh(model_too, duin::Vector3(5.0f, 2.0f, 5.0f), 0.05f);
     }
 
     void DrawUI() override

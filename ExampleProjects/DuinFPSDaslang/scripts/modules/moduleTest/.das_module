@@ -1,0 +1,8 @@
+options gen2
+require daslib/fio
+
+[export]
+def initialize(project_path : string) {
+    print("Hello from moduleTest!")
+    print("moduleTest: {project_path}")
+}
