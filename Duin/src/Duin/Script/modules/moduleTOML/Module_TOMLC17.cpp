@@ -2,7 +2,7 @@
 
 #include <daScript/daScript.h>
 #include <daScript/daScriptBind.h>
-#include <daScript/ast/ast_typefactory_bind.h>
+//#include <daScript/ast/ast_typefactory_bind.h>
 #include <daScript/ast/ast_interop.h>
 
 #include "tomlc17.h"

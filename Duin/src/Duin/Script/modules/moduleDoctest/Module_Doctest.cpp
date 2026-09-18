@@ -1,6 +1,6 @@
 #include "Module_Doctest.h"
 
-#include <daScript/ast/ast_typefactory_bind.h>
+//#include <daScript/ast/ast_typefactory_bind.h>
 #include <daScript/ast/ast_interop.h>
 
 #include <functional>
@@ -231,7 +231,7 @@ class Module_Doctest : public das::Module
             das::SideEffects::modifyExternal, "dn_register_test")
                 ->args({"suite", "name", "fn_name", "at", "context"});
 
-        compileBuiltinModule("dn_doctest.das", dn_doctest_das, sizeof(dn_doctest_das));
+        compileBuiltinModule(this, "dn_doctest.das", dn_doctest_das, sizeof(dn_doctest_das));
 
         DN_CORE_INFO("Script Module [dn_doctest] initialized.");
 

@@ -4,7 +4,7 @@
 #include <daScript/simulate/bind_enum.h>
 #include <daScript/daScript.h>
 #include <daScript/daScriptBind.h>
-#include <daScript/ast/ast_typefactory_bind.h>
+//#include <daScript/ast/ast_typefactory_bind.h>
 #include <daScript/ast/ast_interop.h>
 
 #include "Duin/Core/Events/Input.h"

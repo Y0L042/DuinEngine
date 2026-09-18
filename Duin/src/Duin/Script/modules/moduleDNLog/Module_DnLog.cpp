@@ -1,6 +1,6 @@
 #include "Module_DnLog.h"
 
-#include <daScript/ast/ast_typefactory_bind.h>
+//#include <daScript/ast/ast_typefactory_bind.h>
 #include <daScript/ast/ast_interop.h>
 
 #include "dn_log.das.inc"
@@ -77,7 +77,7 @@ class Module_DnLog : public das::Module
                                                    "dn_log_trace")
             ->args({"msg", "at"});
 
-        compileBuiltinModule("dn_log.das", dn_log_das, sizeof(dn_log_das));
+        compileBuiltinModule(this, "dn_log.das", dn_log_das, sizeof(dn_log_das));
 
         DN_CORE_INFO("Script Module [dn_log] initialized.");
 
