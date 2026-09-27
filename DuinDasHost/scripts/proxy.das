@@ -44,6 +44,17 @@ def plog(s : string) : void {
     fflush(g_log)
 }
 
+// Resolves the trace log path: $DUIN_LSP_LOG, else duin_lsp.log in the system temp directory.
+// Never a hardcoded absolute path - a machine-specific one silently disabled tracing when the
+// repo moved drives, which turned every later startup failure into a silent one.
+def resolve_log_path() : string {
+    let env = get_env_variable("DUIN_LSP_LOG")
+    if (!empty(env)) return env
+    var err : string
+    let tmp = temp_directory(err)
+    return path_join(empty(tmp) ? "." : tmp, "duin_lsp.log")
+}
+
 // Reads one header line (terminated by \n; trailing \r stripped). ok=false on EOF.
 def read_header_line(var ok : bool&) : string {
     let chunk = fgets(g_stdin)
@@ -57,9 +68,11 @@ def read_header_line(var ok : bool&) : string {
 }
 
 // Reads exactly n bytes of body from stdin.
+// fload takes an int64 size and a block whose parameter is explicitly typed; passing a bare
+// int or an untyped block matches no overload.
 def read_body(n : int) : string {
     var bytes : array<uint8>
-    fload(g_stdin, n) <| $(data) {
+    fload(g_stdin, int64(n)) <| $(data : array<uint8>) {
         for (b in data) {
             bytes |> push(b)
         }
@@ -466,9 +479,15 @@ def main {
     g_stdout = fstdout()
 
     // Open the trace log (best-effort; bare fopen returns the file without auto-closing).
-    g_log = fopen("C:/Projects/CPP_Projects/Duin/DuinDasHost/scripts/proxy.log", "wb")
+    // The stderr fallback is load-bearing: without it, a log that cannot be opened leaves the
+    // proxy completely silent, which is how the previous hardcoded path hid every failure.
+    let log_path = resolve_log_path()
+    g_log = fopen(log_path, "wb")
     g_log_open = g_log != null
-    plog("=== proxy started ===")
+    if (!g_log_open) {
+        fprint(fstderr(), "duin-lsp: cannot open log {log_path}\n")
+    }
+    plog("=== proxy started === log={log_path}")
 
     while (true) {
         var eof = false

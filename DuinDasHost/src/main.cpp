@@ -452,6 +452,8 @@ static void RegisterEngineModules()
     NEED_MODULE(Module_DnApplication);
     NEED_MODULE(Module_DnFilesystem);
     NEED_MODULE(Module_DnUUID);
+    NEED_MODULE(Module_DnAssetManager);
+    NEED_MODULE(Module_DnModel);
 }
 
 // Compiles one target file against an already-warmed Script and returns the result
