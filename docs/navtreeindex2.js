@@ -1,5 +1,10 @@
 var NAVTREEINDEX2 =
 {
+"classduin_1_1FileUtils.html":[4,0,0,47],
+"classduin_1_1FrameCountFormatter.html":[4,0,0,50],
+"classduin_1_1GameObject.html":[2,4,0,1],
+"classduin_1_1GameObject.html#a01f2b19206778e38ccf7cae3deff12d8":[2,4,0,1,5],
+"classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4":[2,4,0,1,6],
 "classduin_1_1GameObject.html#a8480081c6a79a2e024e6bf7cdb82e226":[2,4,0,1,4],
 "classduin_1_1GameObject.html#a9c0a2398a7cc491d24b655908e27a4e2":[2,4,0,1,0],
 "classduin_1_1GameObject.html#ab269640f8a3d5b2f9608559791acf9d2":[2,4,0,1,3],
@@ -244,10 +249,5 @@ var NAVTREEINDEX2 =
 "classduin_1_1World.html#aa0d9964391cedfd38a85466dfabde49a":[4,0,0,154,13],
 "classduin_1_1World.html#aa4d6f1aca7e06b4197ad3a9ab6330aa6":[4,0,0,154,23],
 "classduin_1_1World.html#ab30e43eeb95ec838041700aefd762bba":[4,0,0,154,12],
-"classduin_1_1World.html#ab75a1ae0712f0e82f0ec2ec52b0a9446":[4,0,0,154,20],
-"classduin_1_1World.html#ac1ab2ec052397515d1798d2408ebaa86":[4,0,0,154,22],
-"classduin_1_1World.html#ac2ea76616131c376b7ab78d3d070c8b7":[4,0,0,154,1],
-"classduin_1_1World.html#ae09fe967922ca19078997066af8c93fc":[4,0,0,154,7],
-"classduin_1_1World.html#ae257698b1a693e83ce3b3040396b0adb":[4,0,0,154,9],
-"classduin_1_1World.html#ae55aaaf75442844fb0883c554685f4fe":[4,0,0,154,10]
+"classduin_1_1World.html#ab75a1ae0712f0e82f0ec2ec52b0a9446":[4,0,0,154,20]
 };

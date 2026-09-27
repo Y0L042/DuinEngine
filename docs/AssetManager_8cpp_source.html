@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('AssetManager_8cpp_source.html',''); in
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>std::optional&lt;duin::Model&gt; duin::AssetManager::LoadModel(<span class="keyword">const</span> std::string &amp;path)</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>{</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    AssetManager&amp; am = AssetManager::Get();</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    Model model;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    Model model(path);</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">if</span> (am.HasAsset(path))</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    {</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        model.data = std::static_pointer_cast&lt;ModelData&gt;(am.assetMap[path]);</div>
@@ -232,7 +232,7 @@ $(document).ready(function(){initNavTree('AssetManager_8cpp_source.html',''); in
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordflow">return</span> modelData;</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
-<div class="ttc" id="aclassduin_1_1AssetManager_html"><div class="ttname"><a href="classduin_1_1AssetManager.html">duin::AssetManager</a></div><div class="ttdef"><b>Definition</b> <a href="AssetManager_8h_source.html#l00025">AssetManager.h:26</a></div></div>
+<div class="ttc" id="aclassduin_1_1AssetManager_html"><div class="ttname"><a href="classduin_1_1AssetManager.html">duin::AssetManager</a></div><div class="ttdef"><b>Definition</b> <a href="AssetManager_8h_source.html#l00024">AssetManager.h:25</a></div></div>
 <div class="ttc" id="aclassduin_1_1UUID_html"><div class="ttname"><a href="classduin_1_1UUID.html">duin::UUID</a></div><div class="ttdoc">A 64-bit universally unique identifier.</div><div class="ttdef"><b>Definition</b> <a href="UUID_8h_source.html#l00058">UUID.h:59</a></div></div>
 <div class="ttc" id="anamespaceduin_1_1fs_html_a17fd6691c1dc6c88412a73e29cd0f12c"><div class="ttname"><a href="namespaceduin_1_1fs.html#a17fd6691c1dc6c88412a73e29cd0f12c">duin::fs::MapVirtualToSystemPath</a></div><div class="ttdeci">std::string MapVirtualToSystemPath(const std::string &amp;path)</div><div class="ttdoc">Map a virtual path to an absolute system path.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00185">Filesystem.cpp:185</a></div></div>
 <div class="ttc" id="anamespaceduin_1_1fs_html_a728b2a4e2019bec9e1af7c235dfce55f"><div class="ttname"><a href="namespaceduin_1_1fs.html#a728b2a4e2019bec9e1af7c235dfce55f">duin::fs::GetBasePath</a></div><div class="ttdeci">std::string GetBasePath(void)</div><div class="ttdoc">Get the directory where the application executable is located.</div><div class="ttdef"><b>Definition</b> <a href="Filesystem_8cpp_source.html#l00096">Filesystem.cpp:96</a></div></div>

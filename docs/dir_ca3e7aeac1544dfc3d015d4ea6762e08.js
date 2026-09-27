@@ -8,6 +8,7 @@ var dir_ca3e7aeac1544dfc3d015d4ea6762e08 =
     [ "AssetsModule.h", "AssetsModule_8h_source.html", null ],
     [ "FileTypes.cpp", "FileTypes_8cpp_source.html", null ],
     [ "FileTypes.h", "FileTypes_8h_source.html", null ],
+    [ "Model.cpp", "Model_8cpp_source.html", null ],
     [ "Model.h", "Model_8h_source.html", null ],
     [ "ModelLoader.h", "ModelLoader_8h_source.html", null ]
 ];

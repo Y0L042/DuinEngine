@@ -1,5 +1,11 @@
 var NAVTREEINDEX4 =
 {
+"imgui__demo_8cpp_source.html":[5,0,1,1,22],
+"imgui__draw_8cpp_source.html":[5,0,1,1,23],
+"imgui__impl__bgfx_8cpp_source.html":[5,0,1,1,0,1],
+"imgui__impl__bgfx_8h_source.html":[5,0,1,1,0,2],
+"imgui__impl__glfw_8cpp_source.html":[5,0,1,1,0,3],
+"imgui__impl__sdl3_8cpp_source.html":[5,0,1,1,0,4],
 "imgui__impl__sdl3_8h_source.html":[5,0,1,1,0,5],
 "imgui__internal_8h_source.html":[5,0,1,1,24],
 "imgui__tables_8cpp_source.html":[5,0,1,1,25],
@@ -243,11 +249,5 @@ var NAVTREEINDEX4 =
 "structImGuiTableHeaderData.html":[4,0,161],
 "structImGuiTableInstanceData.html":[4,0,162],
 "structImGuiTableSettings.html":[4,0,163],
-"structImGuiTableSortSpecs.html":[4,0,164],
-"structImGuiTableTempData.html":[4,0,165],
-"structImGuiTextBuffer.html":[4,0,166],
-"structImGuiTextFilter.html":[4,0,167],
-"structImGuiTextFilter_1_1ImGuiTextRange.html":[4,0,167,0],
-"structImGuiTextIndex.html":[4,0,168],
-"structImGuiTreeNodeStackData.html":[4,0,169]
+"structImGuiTableSortSpecs.html":[4,0,164]
 };
