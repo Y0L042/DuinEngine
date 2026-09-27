@@ -1,5 +1,20 @@
 local Cfg = require "premakeCfg"
 
+local vendorDir = path.getabsolute("Duin/vendor")
+package.path = package.path .. ";" .. vendorDir .. "/?.lua"
+local vendorDeps = require "dependencies"
+
+-- Dependency builds run here and exit before any project script loads, so vendor
+-- projects (which may not be cloned yet, or carry their own --deps handling) never run.
+if _OPTIONS["deps"] then
+    if vendorDeps.isStatusRequest() then
+        vendorDeps.status(vendorDir)
+    else
+        vendorDeps.run(vendorDir)
+    end
+    os.exit(0)
+end
+
 function prependRoot(root, dirs)
     local result = {}
     for _, dir in ipairs(dirs) do

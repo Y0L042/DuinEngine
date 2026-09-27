@@ -4,11 +4,6 @@ package.path = package.path .. ";" .. projectRoot .. "/../?.lua"
 
 local Cfg = require "premakeCfg"
 
-newoption {
-    trigger     = "deps",
-    description = "Process dependencies (update or rebuild based on dependency-specific flags)"
-}
-
 SolutionRoot = ".."
 ProjectRoot = "."
 
@@ -157,42 +152,3 @@ filter "configurations:Dist"
 defines "DN_DIST"
 optimize "On"
 
--- include "vendor"
-
-if _OPTIONS["deps"] then
-    local vendorDeps = require "dependencies"
-    local allDeps = vendorDeps.getDependencyNames()
-    local flaggedDeps = {}
-
-    for _, dep in ipairs(allDeps) do
-        if _OPTIONS[dep] then
-            table.insert(flaggedDeps, dep)
-        end
-    end
-
-    local answer
-    repeat
-        if #flaggedDeps > 0 then
-            io.write("This will fetch and rebuild the following dependencies:\n")
-            for _, dep in ipairs(flaggedDeps) do
-                io.write("  - " .. dep .. "\n")
-            end
-        else
-            io.write("This will fetch and rebuild ALL dependencies:\n")
-            for _, dep in ipairs(allDeps) do
-                io.write("  - " .. dep .. "\n")
-            end
-            io.write("\nThis may take a long time.\n")
-        end
-        io.write("\nContinue with this operation (yes/n)? ")
-        io.flush()
-        answer = io.read()
-    until answer == "yes" or answer == "n"
-
-    if answer == "yes" then
-        print("Operation continued.")
-        vendorDeps.processDependencies()
-    elseif answer == "n" then
-        print("Operation aborted.")
-    end
-end
