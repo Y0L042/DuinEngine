@@ -9,17 +9,18 @@ local folder = "flecs"
 
 function dep_flecs.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git pull")
-        utils.runCommand("git checkout tags/" .. tag)
+        ok = utils.runCommand("git checkout tags/" .. tag) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
@@ -29,9 +30,10 @@ function dep_flecs.build()
     -- defaults to Ninja + gcc, which chokes on the MSVC runtime settings below.
     -- The VS generator is also what produces the Debug/ subdir that
     -- premake5.lua expects flecs_static.lib to live in.
-    utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026 -G "' .. Cfg.cmake_generator .. '" -A ' .. Cfg.cmake_arch .. ' -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug)
-    utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug")
+    ok = utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026 -G "' .. Cfg.cmake_generator .. '" -A ' .. Cfg.cmake_arch .. ' -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug) and ok
+    ok = utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug") and ok
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

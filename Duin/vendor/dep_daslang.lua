@@ -10,22 +10,23 @@ local folder = "daslang"
 
 -- Source for lld-link.exe. Must be an MSVC-targeting LLVM (x86_64-pc-windows-msvc)
 -- with bin/lld-link.exe + bin/LLVM-C.dll; the MSYS2 clang64 mingw layout is the one
--- daslang explicitly rejects in modules/dasLLVM/CMakeLists.txt.
-local llvm_bin = "C:/Programs/LLVM/bin"
+-- daslang explicitly rejects in modules/dasLLVM/CMakeLists.txt. Resolved in premakeCfg.
+local llvm_bin = Cfg.llvm_bin
 
 function dep_daslang.build()
     print("START: " .. name)
+    local fetched = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. checkout)
+        fetched = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and fetched
+        fetched = utils.runCommand("cd " .. folder .. " && git checkout " .. checkout) and fetched
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git pull")
-        utils.runCommand("git checkout " .. checkout)
+        fetched = utils.runCommand("git checkout " .. checkout) and fetched
         utils.popDir()
     end
     print(name .. " downloaded.")
@@ -44,10 +45,47 @@ function dep_daslang.build()
         .. " -DDAS_LLVM_DISABLED=OFF"
         .. " -DDAS_HV_DISABLED=OFF"
         .. " -DDAS_SQLITE_DISABLED=OFF"
-        .. " -DCMAKE_TOOLCHAIN_FILE=D:/Projects/_Tools/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        .. " -DVCPKG_TARGET_TRIPLET=x64-windows"
-        .. " -DOPENSSL_ROOT_DIR=D:/Projects/_Tools/vcpkg/installed/x64-windows"
-        .. " -DOPENSSL_INCLUDE_DIR=D:/Projects/_Tools/vcpkg/installed/x64-windows/include"
+
+    -- dasHV (needed by DuinDasHost's libhv) links OpenSSL. vcpkg is only used for a
+    -- prebuilt one: classic-mode vcpkg has it under installed/x64-windows; VS's bundled
+    -- vcpkg is manifest-only and never does.
+    local build_path_prefix = nil
+    local vcpkg = Cfg.vcpkg_root
+    local vcpkg_openssl = vcpkg and (vcpkg .. "/installed/x64-windows")
+    if vcpkg_openssl and os.isdir(vcpkg_openssl .. "/include/openssl") then
+        print("\t\tUsing vcpkg OpenSSL at " .. vcpkg_openssl)
+        cmake_flags = cmake_flags
+            .. ' -DCMAKE_TOOLCHAIN_FILE="' .. vcpkg .. '/scripts/buildsystems/vcpkg.cmake"'
+            .. " -DVCPKG_TARGET_TRIPLET=x64-windows"
+            .. ' -DOPENSSL_ROOT_DIR="' .. vcpkg_openssl .. '"'
+            .. ' -DOPENSSL_INCLUDE_DIR="' .. vcpkg_openssl .. '/include"'
+    else
+        -- Otherwise dasHV builds OpenSSL 3.5.1 from source into OPENSSL_ROOT_DIR. Point it
+        -- outside build/ (deleted after a successful build) so it is built only once.
+        local openssl = os.getenv("DASLANG_OPENSSL_DIR")
+        openssl = (openssl and openssl ~= "") and path.translate(openssl, "/") or path.getabsolute("_openssl")
+        cmake_flags = cmake_flags .. ' -DOPENSSL_ROOT_DIR="' .. openssl .. '"'
+
+        if os.isfile(openssl .. "/lib/libcrypto.lib") then
+            print("\t\tUsing previously built OpenSSL at " .. openssl)
+        else
+            -- `perl Configure` runs inside the MSBuild step and resolves perl from PATH,
+            -- where Git Bash's MSYS perl fails. Fail now rather than mid-build.
+            if not Cfg.perl_bin then
+                utils.popDir()
+                error("dep_daslang: OpenSSL must be built from source, which needs a native Windows perl.\n" ..
+                      "  Install Strawberry Perl (winget install StrawberryPerl.StrawberryPerl) or set PERL_BIN.\n" ..
+                      "  Alternatively set DASLANG_OPENSSL_DIR to an existing OpenSSL install.")
+            end
+            print("\t\tBuilding OpenSSL from source into " .. openssl .. " (perl: " .. Cfg.perl_bin .. ")")
+            build_path_prefix = path.translate(Cfg.perl_bin, "\\")
+            if Cfg.nasm_bin then
+                build_path_prefix = build_path_prefix .. ";" .. path.translate(Cfg.nasm_bin, "\\")
+            else
+                print("\t\tWarning: NASM not found - OpenSSL Configure may fail. Install NASM or set NASM_BIN.")
+            end
+        end
+    end
 
     cmake_flags = cmake_flags .. " -DCMAKE_CXX_FLAGS_DEBUG=\"/DDAS_SMART_PTR_DEBUG=1 /DDAS_ENABLE_EXCEPTIONS=1\""
 
@@ -64,13 +102,29 @@ function dep_daslang.build()
 
     -- cmd.exe strips the outer quote pair when a command STARTS with a quote, then
     -- re-parses -- splitting the line at the -G "Visual Studio ..." quotes. Wrapping
-    -- the whole command in one more pair survives that, for spaced paths too.
+    -- the whole command in one more pair survives that, for spaced paths too. With a
+    -- PATH prefix the line starts with `set`, so no stripping happens and no wrap is needed.
     local function cmake_cmd(args)
-        return '""' .. Cfg.cmake_exe .. '" ' .. args .. '"'
+        local cmd = '"' .. Cfg.cmake_exe .. '" ' .. args
+        if build_path_prefix then
+            return 'set "PATH=' .. build_path_prefix .. ';%PATH%" && ' .. cmd
+        end
+        return '"' .. cmd .. '"'
+    end
+
+    -- A leftover build/ (failed run, or copied from another machine) keeps cached values
+    -- like CMAKE_TOOLCHAIN_FILE that the flags above no longer set. Drop the cache so
+    -- configure starts clean, while keeping already-built objects (e.g. OpenSSL).
+    if os.isfile("build/CMakeCache.txt") then
+        os.remove("build/CMakeCache.txt")
+        os.rmdir("build/CMakeFiles")
     end
 
     print("\t\tConfiguring with: " .. cmake_flags)
-    utils.runCommand(cmake_cmd("-S . -B build " .. cmake_flags))
+    if not utils.runCommand(cmake_cmd("-S . -B build " .. cmake_flags)) then
+        utils.popDir()
+        error("dep_daslang: CMake configure failed - see output above.")
+    end
 
     -- daslang compiles its utility exes with its own `daslang -exe`, whose JIT backend
     -- shells out to lld-link.exe. module_jit.cpp find_linker probes
@@ -79,11 +133,11 @@ function dep_daslang.build()
     -- modules/dasLLVM/CMakeLists.txt gates that on a sentinel keyed to lib/LLVM.dll
     -- alone -- with LLVM.dll already present the copy never runs. Stage it ourselves.
     if os.target() == "windows" and not utils.fileExists("bin/lld-link.exe") then
-        local src = llvm_bin .. "/lld-link.exe"
-        if not utils.fileExists(src) then
-            error("dep_daslang: lld-link.exe not found at " .. llvm_bin ..
-                  ". Install LLVM for Windows or adjust llvm_bin.")
+        if not llvm_bin then
+            error("dep_daslang: MSVC-targeting LLVM (lld-link.exe + LLVM-C.dll) not found. " ..
+                  "Install LLVM for Windows or set LLVM_ROOT to its install folder.")
         end
+        local src = llvm_bin .. "/lld-link.exe"
         if not os.isdir("bin") then
             os.mkdir("bin")
         end
@@ -106,6 +160,7 @@ function dep_daslang.build()
     end
 
     utils.popDir()
+    utils.reportBuildStatus(name, ok and fetched)
     print("END: " .. name)
 end
 

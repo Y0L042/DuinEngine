@@ -9,16 +9,17 @@ local folder = "physx"
 
 function dep_physx.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git checkout tags/" .. tag)
+        ok = utils.runCommand("git checkout tags/" .. tag) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
@@ -68,9 +69,10 @@ function dep_physx.build()
         "-DNV_USE_DEBUG_WINCRT=True",
         "-DPX_FLOAT_POINT_PRECISE_MATH=False",
     }, " ")
-    utils.runCommand('cd PhysX/physx && cmake -S compiler/public -B compiler/vc18win64 ' .. cmakeFlags)
-    utils.runCommand("cd PhysX/physx && cmake --build compiler/vc18win64 --config Debug")
+    ok = utils.runCommand('cd PhysX/physx && cmake -S compiler/public -B compiler/vc18win64 ' .. cmakeFlags) and ok
+    ok = utils.runCommand("cd PhysX/physx && cmake --build compiler/vc18win64 --config Debug") and ok
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

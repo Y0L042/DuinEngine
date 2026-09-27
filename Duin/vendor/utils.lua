@@ -134,4 +134,47 @@ function utils.copyFiles(sourceDir, targetDir, patterns)
     end
 end
 
+-- Build status log (TOML, one inline table per dependency). Absolute path, set by
+-- dependencies.lua, since the dep scripts change directory while building.
+utils.buildStatusFile = "build_status.log"
+
+function utils.readBuildStatus()
+    local entries = {}
+    local f = io.open(utils.buildStatusFile, "r")
+    if not f then return entries end
+    for line in f:lines() do
+        local name, status, date = line:match('^(%S+)%s*=%s*{%s*status%s*=%s*"(%u+)"%s*,%s*date%s*=%s*([%dT:%-]+)%s*}')
+        if name then
+            entries[name] = { status = status, date = date }
+        end
+    end
+    f:close()
+    return entries
+end
+
+function utils.reportBuildStatus(name, success)
+    local entries = utils.readBuildStatus()
+    local status = success and "BUILT" or "FAILED"
+    entries[name] = { status = status, date = os.date("%Y-%m-%dT%H:%M:%S") }
+
+    local names = {}
+    for n in pairs(entries) do table.insert(names, n) end
+    table.sort(names)
+
+    local f = io.open(utils.buildStatusFile, "w")
+    if not f then
+        print(utils.colors.red .. "Could not write " .. utils.buildStatusFile .. utils.colors.reset)
+        return
+    end
+    f:write("# Written by premake5 --deps. View with: premake5 --deps STATUS\n")
+    for _, n in ipairs(names) do
+        local e = entries[n]
+        f:write(string.format('%s = { status = "%s", date = %s }\n', n, e.status, e.date))
+    end
+    f:close()
+
+    local color = success and utils.colors.green or utils.colors.red
+    print(color .. name .. " -> " .. status .. utils.colors.reset)
+end
+
 return utils

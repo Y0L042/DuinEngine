@@ -9,23 +9,24 @@ local folder = "bgfx"
 
 function dep_bgfx.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. commit)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout " .. commit) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git checkout " .. commit)
+        ok = utils.runCommand("git checkout " .. commit) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
 
     utils.pushDir(folder)
-    utils.runCommand("git submodule update --init --recursive")
-    utils.runCommand("..\\bx\\tools\\bin\\windows\\genie vs2026")
+    ok = utils.runCommand("git submodule update --init --recursive") and ok
+    ok = utils.runCommand("..\\bx\\tools\\bin\\windows\\genie vs2026") and ok
 
     -- Patch genie-generated vcxproj files to use the workspace CRT (MD/MDd).
     -- genie always emits static-CRT entries; /p:RuntimeLibrary= on msbuild is
@@ -50,7 +51,7 @@ function dep_bgfx.build()
         end
     end
 
-    utils.runCommand('cd .build\\projects\\vs2026 && msbuild "bgfx.slnx" /p:Configuration=Debug /p:Platform=x64 /p:CLCompileAdditionalOptions="/Zc:__cplusplus"')
+    ok = utils.runCommand('cd .build\\projects\\vs2026 && "' .. Cfg.msbuild_exe .. '" "bgfx.slnx" /p:Configuration=Debug /p:Platform=x64 /p:CLCompileAdditionalOptions="/Zc:__cplusplus"') and ok
     utils.popDir()
 
     -- Copy example helper files to external/
@@ -78,6 +79,7 @@ function dep_bgfx.build()
         "fs_ocornut_imgui.sc", "vs_ocornut_imgui.sc",
     })
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

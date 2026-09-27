@@ -7,10 +7,11 @@ local folder = "toml-daslang"
 
 function dep_tomldaslang.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
@@ -20,6 +21,7 @@ function dep_tomldaslang.build()
     end
     print(name .. " cloned.")
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

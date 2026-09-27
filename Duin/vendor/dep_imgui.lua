@@ -8,16 +8,17 @@ local folder = "imgui"
 
 function dep_imgui.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout " .. branch)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout " .. branch) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git checkout " .. branch)
+        ok = utils.runCommand("git checkout " .. branch) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
@@ -44,6 +45,7 @@ function dep_imgui.build()
     utils.patchFile(backendsDir .. "/imgui_impl_sdl3.h",   '"imgui%.h"',   '"../../external/imgui.h"')
     utils.patchFile(backendsDir .. "/imgui_impl_sdl3.cpp", '"imgui%.h"',   '"../../external/imgui.h"')
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

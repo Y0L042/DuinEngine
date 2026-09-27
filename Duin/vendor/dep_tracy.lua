@@ -9,32 +9,34 @@ local folder = "tracy"
 
 function dep_tracy.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git pull")
-        utils.runCommand("git checkout tags/" .. tag)
+        ok = utils.runCommand("git checkout tags/" .. tag) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
 
     utils.deleteFolder(folder .. "/build_vs2026")
     local crt_flag = (Cfg.CRT == "MT") and "/MTd" or "/MDd"
-    utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026'
+    ok = utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026'
         .. ' -DTRACY_ENABLE=ON'
         .. ' -DTRACY_ON_DEMAND=ON'
         .. ' -DBUILD_SHARED_LIBS=OFF'
         .. ' -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug
         .. ' -DCMAKE_C_FLAGS_DEBUG="' .. crt_flag .. '"'
-        .. ' -DCMAKE_CXX_FLAGS_DEBUG="' .. crt_flag .. '"')
-    utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug")
+        .. ' -DCMAKE_CXX_FLAGS_DEBUG="' .. crt_flag .. '"') and ok
+    ok = utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug") and ok
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

@@ -8,20 +8,22 @@ local folder = "fmt"
 
 function dep_fmt.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git checkout tags/" .. tag)
+        ok = utils.runCommand("git checkout tags/" .. tag) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

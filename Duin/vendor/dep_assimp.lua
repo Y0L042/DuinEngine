@@ -9,23 +9,24 @@ local folder = "assimp"
 
 function dep_assimp.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
         utils.runCommand("git fetch --tags")
-        utils.runCommand("git checkout tags/" .. tag)
+        ok = utils.runCommand("git checkout tags/" .. tag) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
 
     utils.deleteFolder(folder .. "/build_vs2026")
-    utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026'
+    ok = utils.runCommand('cmake -S ' .. folder .. ' -B ' .. folder .. '/build_vs2026'
         .. ' -G "' .. Cfg.cmake_generator .. '" -A ' .. Cfg.cmake_arch
         .. ' -DBUILD_SHARED_LIBS=OFF'
         .. ' -DASSIMP_BUILD_TESTS=OFF'
@@ -34,9 +35,10 @@ function dep_assimp.build()
         .. ' -DASSIMP_INSTALL=OFF'
         .. ' -DASSIMP_WARNINGS_AS_ERRORS=OFF'
         .. ' -DASSIMP_INJECT_DEBUG_POSTFIX=OFF'
-        .. ' -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug)
-    utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug")
+        .. ' -DCMAKE_MSVC_RUNTIME_LIBRARY=' .. Cfg.cmake_crt_debug) and ok
+    ok = utils.runCommand("cmake --build " .. folder .. "/build_vs2026 --config Debug") and ok
 
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 

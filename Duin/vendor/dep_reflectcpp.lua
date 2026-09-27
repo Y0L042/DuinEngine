@@ -9,16 +9,17 @@ local folder = "reflectcpp"
 
 function dep_reflectcpp.build()
     print("START: " .. name)
+    local ok = true
 
     if not os.isdir(folder) then
         print("\t\tClone")
-        utils.runCommand("git clone --recursive " .. repo .. " " .. folder)
-        utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag)
+        ok = utils.runCommand("git clone --recursive " .. repo .. " " .. folder) and ok
+        ok = utils.runCommand("cd " .. folder .. " && git checkout tags/" .. tag) and ok
     else
         print("\t\tFetch")
         utils.pushDir(folder)
         utils.runCommand("git stash")
-        utils.runCommand("git checkout tags/" .. tag)
+        ok = utils.runCommand("git checkout tags/" .. tag) and ok
         utils.popDir()
     end
     print(name .. " downloaded.")
@@ -39,10 +40,11 @@ function dep_reflectcpp.build()
     end
 
     print("\t\tConfiguring with: " .. cmake_flags)
-    utils.runCommand("cmake -S . -B build " .. cmake_flags)
-    utils.runCommand("cmake --build build --config Debug -j 4")
+    ok = utils.runCommand("cmake -S . -B build " .. cmake_flags) and ok
+    ok = utils.runCommand("cmake --build build --config Debug -j 4") and ok
 
     utils.popDir()
+    utils.reportBuildStatus(name, ok)
     print("END: " .. name)
 end
 
