@@ -358,6 +358,39 @@ void QueueRender(
     RHIEncoderSubmit(encoder, targetViewID, program);
 }
 
+void QueueRender(
+    RHIVertexBufferHandle vbh, RHIIndexBufferHandle ibh, RHIProgramHandle program, const Vector3 position,
+    const Quaternion rotation, const Vector3 size)
+{
+    Vector3 eulerRotation = QuaternionToEuler(rotation);
+
+    RHIViewId targetViewID = globalRenderState.viewID;
+
+    if (!(vbh.IsValid() && ibh.IsValid()))
+    {
+        DN_CORE_WARN("Invalid geometry buffers submitted!");
+        return;
+    }
+
+    float mtx[16];
+    RHIComputeSRTMatrix(
+        mtx,
+        size.x,
+        size.y,
+        size.z,
+        eulerRotation.x,
+        eulerRotation.y,
+        eulerRotation.z,
+        position.x,
+        position.y,
+        position.z);
+
+    RHIEncoderSetTransform(encoder, mtx);
+    RHIEncoderSetVertexBuffer(encoder, 0, vbh);
+    RHIEncoderSetIndexBuffer(encoder, ibh);
+    RHIEncoderSubmit(encoder, targetViewID, program);
+}
+
 void QueueRender(const RenderGeometryType::Type type)
 {
     RHIViewId targetViewID = globalRenderState.viewID;

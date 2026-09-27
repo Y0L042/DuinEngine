@@ -22,8 +22,19 @@ struct ModelData : public Asset
 class Model
 {
   public:
+    std::string path;
     Vector3 baseScale = Vector3(1.0f, 1.0f, 1.0f);
     std::shared_ptr<ModelData> data;
+
+    Model()
+    {
+    }
+
+    Model(const std::string &path) : path(path)
+    {
+    }
+
+    void Draw(Vector3 position, Quaternion rotation, Vector3 scale = Vector3(1.0f, 1.0f, 1.0f)) const;
 };
 
 } // namespace duin

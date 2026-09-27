@@ -32,7 +32,7 @@ duin::AssetManager &duin::AssetManager::Get()
 std::optional<duin::Model> duin::AssetManager::LoadModel(const std::string &path)
 {
     AssetManager& am = AssetManager::Get();
-    Model model;
+    Model model(path);
     if (am.HasAsset(path))
     {
         model.data = std::static_pointer_cast<ModelData>(am.assetMap[path]);

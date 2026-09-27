@@ -40,6 +40,8 @@ DECLARE_MODULE(Module_DnApplication);
 DECLARE_MODULE(Module_DnFilesystem);
 DECLARE_MODULE(Module_TOMLC17);
 DECLARE_MODULE(Module_DnUUID);
+DECLARE_MODULE(Module_DnAssetManager);
+DECLARE_MODULE(Module_DnModel);
 
 //#include "./ECS/Module_DecsEntity.h"
 //#include "./ECS/Module_DecsWorld.h"

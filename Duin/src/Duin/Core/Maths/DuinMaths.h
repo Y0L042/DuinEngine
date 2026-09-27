@@ -152,6 +152,10 @@ typedef struct Vector2
     Vector2(float x, float y) : x(x), y(y)
     {
     }
+
+    Vector2(float a) : x(a), y(a)
+    {
+    }
 } Vector2;
 #define DN_VECTOR2_TYPE
 #endif
@@ -195,6 +199,10 @@ typedef struct Vector3
     }
 
     Vector3(float x, float y, float z) : x(x), y(y), z(z)
+    {
+    }
+
+    Vector3(float a) : x(a), y(a), z(a)
     {
     }
 } Vector3;
@@ -289,8 +297,9 @@ typedef struct Matrix
     {
     }
 
-    Matrix(float m0, float m4, float m8, float m12, float m1, float m5, float m9, float m13, float m2, float m6,
-           float m10, float m14, float m3, float m7, float m11, float m15)
+    Matrix(
+        float m0, float m4, float m8, float m12, float m1, float m5, float m9, float m13, float m2, float m6, float m10,
+        float m14, float m3, float m7, float m11, float m15)
         : m0(m0), m4(m4), m8(m8), m12(m12), m1(m1), m5(m5), m9(m9), m13(m13), m2(m2), m6(m6), m10(m10), m14(m14),
           m3(m3), m7(m7), m11(m11), m15(m15)
     {
@@ -1573,23 +1582,23 @@ DNMAPI Vector3 Vector3Unproject(Vector3 source, Matrix projection, Matrix view)
 
     // Calculate unprojected matrix (multiply view matrix by projection matrix) and invert it
     Matrix matViewProj = {
-        // MatrixMultiply(view, projection);
-        view.m0 * projection.m0 + view.m1 * projection.m4 + view.m2 * projection.m8 + view.m3 * projection.m12,
-        view.m0 * projection.m1 + view.m1 * projection.m5 + view.m2 * projection.m9 + view.m3 * projection.m13,
-        view.m0 * projection.m2 + view.m1 * projection.m6 + view.m2 * projection.m10 + view.m3 * projection.m14,
-        view.m0 * projection.m3 + view.m1 * projection.m7 + view.m2 * projection.m11 + view.m3 * projection.m15,
-        view.m4 * projection.m0 + view.m5 * projection.m4 + view.m6 * projection.m8 + view.m7 * projection.m12,
-        view.m4 * projection.m1 + view.m5 * projection.m5 + view.m6 * projection.m9 + view.m7 * projection.m13,
-        view.m4 * projection.m2 + view.m5 * projection.m6 + view.m6 * projection.m10 + view.m7 * projection.m14,
-        view.m4 * projection.m3 + view.m5 * projection.m7 + view.m6 * projection.m11 + view.m7 * projection.m15,
-        view.m8 * projection.m0 + view.m9 * projection.m4 + view.m10 * projection.m8 + view.m11 * projection.m12,
-        view.m8 * projection.m1 + view.m9 * projection.m5 + view.m10 * projection.m9 + view.m11 * projection.m13,
-        view.m8 * projection.m2 + view.m9 * projection.m6 + view.m10 * projection.m10 + view.m11 * projection.m14,
-        view.m8 * projection.m3 + view.m9 * projection.m7 + view.m10 * projection.m11 + view.m11 * projection.m15,
-        view.m12 * projection.m0 + view.m13 * projection.m4 + view.m14 * projection.m8 + view.m15 * projection.m12,
-        view.m12 * projection.m1 + view.m13 * projection.m5 + view.m14 * projection.m9 + view.m15 * projection.m13,
-        view.m12 * projection.m2 + view.m13 * projection.m6 + view.m14 * projection.m10 + view.m15 * projection.m14,
-        view.m12 * projection.m3 + view.m13 * projection.m7 + view.m14 * projection.m11 + view.m15 * projection.m15};
+      // MatrixMultiply(view, projection);
+      view.m0 * projection.m0 + view.m1 * projection.m4 + view.m2 * projection.m8 + view.m3 * projection.m12,
+      view.m0 * projection.m1 + view.m1 * projection.m5 + view.m2 * projection.m9 + view.m3 * projection.m13,
+      view.m0 * projection.m2 + view.m1 * projection.m6 + view.m2 * projection.m10 + view.m3 * projection.m14,
+      view.m0 * projection.m3 + view.m1 * projection.m7 + view.m2 * projection.m11 + view.m3 * projection.m15,
+      view.m4 * projection.m0 + view.m5 * projection.m4 + view.m6 * projection.m8 + view.m7 * projection.m12,
+      view.m4 * projection.m1 + view.m5 * projection.m5 + view.m6 * projection.m9 + view.m7 * projection.m13,
+      view.m4 * projection.m2 + view.m5 * projection.m6 + view.m6 * projection.m10 + view.m7 * projection.m14,
+      view.m4 * projection.m3 + view.m5 * projection.m7 + view.m6 * projection.m11 + view.m7 * projection.m15,
+      view.m8 * projection.m0 + view.m9 * projection.m4 + view.m10 * projection.m8 + view.m11 * projection.m12,
+      view.m8 * projection.m1 + view.m9 * projection.m5 + view.m10 * projection.m9 + view.m11 * projection.m13,
+      view.m8 * projection.m2 + view.m9 * projection.m6 + view.m10 * projection.m10 + view.m11 * projection.m14,
+      view.m8 * projection.m3 + view.m9 * projection.m7 + view.m10 * projection.m11 + view.m11 * projection.m15,
+      view.m12 * projection.m0 + view.m13 * projection.m4 + view.m14 * projection.m8 + view.m15 * projection.m12,
+      view.m12 * projection.m1 + view.m13 * projection.m5 + view.m14 * projection.m9 + view.m15 * projection.m13,
+      view.m12 * projection.m2 + view.m13 * projection.m6 + view.m14 * projection.m10 + view.m15 * projection.m14,
+      view.m12 * projection.m3 + view.m13 * projection.m7 + view.m14 * projection.m11 + view.m15 * projection.m15};
 
     // Calculate inverted matrix -> MatrixInvert(matViewProj);
     // Cache the matrix values (speed optimization)
@@ -1615,28 +1624,37 @@ DNMAPI Vector3 Vector3Unproject(Vector3 source, Matrix projection, Matrix view)
     float invDet = 1.0f / (b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06);
 
     Matrix matViewProjInv = {
-        (a11 * b11 - a12 * b10 + a13 * b09) * invDet,  (-a01 * b11 + a02 * b10 - a03 * b09) * invDet,
-        (a31 * b05 - a32 * b04 + a33 * b03) * invDet,  (-a21 * b05 + a22 * b04 - a23 * b03) * invDet,
-        (-a10 * b11 + a12 * b08 - a13 * b07) * invDet, (a00 * b11 - a02 * b08 + a03 * b07) * invDet,
-        (-a30 * b05 + a32 * b02 - a33 * b01) * invDet, (a20 * b05 - a22 * b02 + a23 * b01) * invDet,
-        (a10 * b10 - a11 * b08 + a13 * b06) * invDet,  (-a00 * b10 + a01 * b08 - a03 * b06) * invDet,
-        (a30 * b04 - a31 * b02 + a33 * b00) * invDet,  (-a20 * b04 + a21 * b02 - a23 * b00) * invDet,
-        (-a10 * b09 + a11 * b07 - a12 * b06) * invDet, (a00 * b09 - a01 * b07 + a02 * b06) * invDet,
-        (-a30 * b03 + a31 * b01 - a32 * b00) * invDet, (a20 * b03 - a21 * b01 + a22 * b00) * invDet};
+      (a11 * b11 - a12 * b10 + a13 * b09) * invDet,
+      (-a01 * b11 + a02 * b10 - a03 * b09) * invDet,
+      (a31 * b05 - a32 * b04 + a33 * b03) * invDet,
+      (-a21 * b05 + a22 * b04 - a23 * b03) * invDet,
+      (-a10 * b11 + a12 * b08 - a13 * b07) * invDet,
+      (a00 * b11 - a02 * b08 + a03 * b07) * invDet,
+      (-a30 * b05 + a32 * b02 - a33 * b01) * invDet,
+      (a20 * b05 - a22 * b02 + a23 * b01) * invDet,
+      (a10 * b10 - a11 * b08 + a13 * b06) * invDet,
+      (-a00 * b10 + a01 * b08 - a03 * b06) * invDet,
+      (a30 * b04 - a31 * b02 + a33 * b00) * invDet,
+      (-a20 * b04 + a21 * b02 - a23 * b00) * invDet,
+      (-a10 * b09 + a11 * b07 - a12 * b06) * invDet,
+      (a00 * b09 - a01 * b07 + a02 * b06) * invDet,
+      (-a30 * b03 + a31 * b01 - a32 * b00) * invDet,
+      (a20 * b03 - a21 * b01 + a22 * b00) * invDet};
 
     // Create quaternion from source point
     Quaternion quat = {source.x, source.y, source.z, 1.0f};
 
     // Multiply quat point by unprojecte matrix
-    Quaternion qtransformed = {// QuaternionTransform(quat, matViewProjInv)
-                               matViewProjInv.m0 * quat.x + matViewProjInv.m4 * quat.y + matViewProjInv.m8 * quat.z +
-                                   matViewProjInv.m12 * quat.w,
-                               matViewProjInv.m1 * quat.x + matViewProjInv.m5 * quat.y + matViewProjInv.m9 * quat.z +
-                                   matViewProjInv.m13 * quat.w,
-                               matViewProjInv.m2 * quat.x + matViewProjInv.m6 * quat.y + matViewProjInv.m10 * quat.z +
-                                   matViewProjInv.m14 * quat.w,
-                               matViewProjInv.m3 * quat.x + matViewProjInv.m7 * quat.y + matViewProjInv.m11 * quat.z +
-                                   matViewProjInv.m15 * quat.w};
+    Quaternion qtransformed = {
+      // QuaternionTransform(quat, matViewProjInv)
+      matViewProjInv.m0 * quat.x + matViewProjInv.m4 * quat.y + matViewProjInv.m8 * quat.z +
+          matViewProjInv.m12 * quat.w,
+      matViewProjInv.m1 * quat.x + matViewProjInv.m5 * quat.y + matViewProjInv.m9 * quat.z +
+          matViewProjInv.m13 * quat.w,
+      matViewProjInv.m2 * quat.x + matViewProjInv.m6 * quat.y + matViewProjInv.m10 * quat.z +
+          matViewProjInv.m14 * quat.w,
+      matViewProjInv.m3 * quat.x + matViewProjInv.m7 * quat.y + matViewProjInv.m11 * quat.z +
+          matViewProjInv.m15 * quat.w};
 
     // Normalized world points in vectors
     result.x = qtransformed.x / qtransformed.w;
@@ -1876,16 +1894,18 @@ DNMAPI float Vector4DotProduct(Vector4 v1, Vector4 v2)
 // Calculate distance between two vectors
 DNMAPI float Vector4Distance(Vector4 v1, Vector4 v2)
 {
-    float result = sqrtf((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z) +
-                         (v1.w - v2.w) * (v1.w - v2.w));
+    float result = sqrtf(
+        (v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z) +
+        (v1.w - v2.w) * (v1.w - v2.w));
     return result;
 }
 
 // Calculate distance between two vectors using FastSqrt
 DNMAPI float Vector4DistanceF(Vector4 v1, Vector4 v2)
 {
-    float result = FastSqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) +
-                            (v1.z - v2.z) * (v1.z - v2.z) + (v1.w - v2.w) * (v1.w - v2.w));
+    float result = FastSqrt(
+        (v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z) +
+        (v1.w - v2.w) * (v1.w - v2.w));
     return result;
 }
 
@@ -2315,8 +2335,23 @@ DNMAPI Matrix MatrixRotate(Vector3 axis, float angle)
 // NOTE: Angle must be provided in radians
 DNMAPI Matrix MatrixRotateX(float angle)
 {
-    Matrix result = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                     0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}; // MatrixIdentity()
+    Matrix result = {
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f}; // MatrixIdentity()
 
     float cosres = cosf(angle);
     float sinres = sinf(angle);
@@ -2333,8 +2368,23 @@ DNMAPI Matrix MatrixRotateX(float angle)
 // NOTE: Angle must be provided in radians
 DNMAPI Matrix MatrixRotateY(float angle)
 {
-    Matrix result = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                     0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}; // MatrixIdentity()
+    Matrix result = {
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f}; // MatrixIdentity()
 
     float cosres = cosf(angle);
     float sinres = sinf(angle);
@@ -2351,8 +2401,23 @@ DNMAPI Matrix MatrixRotateY(float angle)
 // NOTE: Angle must be provided in radians
 DNMAPI Matrix MatrixRotateZ(float angle)
 {
-    Matrix result = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                     0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}; // MatrixIdentity()
+    Matrix result = {
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f}; // MatrixIdentity()
 
     float cosres = cosf(angle);
     float sinres = sinf(angle);
@@ -2369,8 +2434,23 @@ DNMAPI Matrix MatrixRotateZ(float angle)
 // NOTE: Angle must be provided in radians
 DNMAPI Matrix MatrixRotateXYZ(Vector3 angle)
 {
-    Matrix result = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                     0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}; // MatrixIdentity()
+    Matrix result = {
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f}; // MatrixIdentity()
 
     float cosz = cosf(-angle.z);
     float sinz = sinf(-angle.z);
@@ -2938,8 +3018,8 @@ DNMAPI Quaternion QuaternionSlerp(Quaternion q1, Quaternion q2, float amount)
 // Calculate quaternion cubic spline interpolation using Cubic Hermite Spline algorithm
 // as described in the GLTF 2.0 specification:
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#interpolation-cubic
-DNMAPI Quaternion QuaternionCubicHermiteSpline(Quaternion q1, Quaternion outTangent1, Quaternion q2,
-                                               Quaternion inTangent2, float t)
+DNMAPI Quaternion
+QuaternionCubicHermiteSpline(Quaternion q1, Quaternion outTangent1, Quaternion q2, Quaternion inTangent2, float t)
 {
     float t2 = t * t;
     float t3 = t2 * t;
@@ -2969,8 +3049,10 @@ DNMAPI Quaternion QuaternionFromVector3ToVector3(Vector3 from, Vector3 to)
     Quaternion result;
 
     float cos2Theta = (from.x * to.x + from.y * to.y + from.z * to.z); // Vector3DotProduct(from, to)
-    Vector3 cross = {from.y * to.z - from.z * to.y, from.z * to.x - from.x * to.z,
-                     from.x * to.y - from.y * to.x}; // Vector3CrossProduct(from, to)
+    Vector3 cross = {
+      from.y * to.z - from.z * to.y,
+      from.z * to.x - from.x * to.z,
+      from.x * to.y - from.y * to.x}; // Vector3CrossProduct(from, to)
 
     result.x = cross.x;
     result.y = cross.y;
@@ -3060,8 +3142,23 @@ DNMAPI Quaternion QuaternionFromMatrix(Matrix mat)
 // Get a matrix for a given quaternion
 DNMAPI Matrix QuaternionToMatrix(Quaternion q)
 {
-    Matrix result = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                     0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}; // MatrixIdentity()
+    Matrix result = {
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      0.0f,
+      1.0f}; // MatrixIdentity()
 
     float a2 = q.x * q.x;
     float b2 = q.y * q.y;

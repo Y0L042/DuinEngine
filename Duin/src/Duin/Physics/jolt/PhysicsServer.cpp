@@ -6,6 +6,9 @@
 
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Collision/Shape/PlaneShape.h>
+#include <Jolt/Physics/Collision/Shape/ScaledShape.h>
+
+#include "CollisionShape.h"
 
 JPH_SUPPRESS_WARNINGS
 
@@ -119,4 +122,30 @@ void duin::PhysicsServer::CreateBox(const Vector3 &position, const Vector3 &size
             JPH::EMotionType::Dynamic,
             Layers::MOVING),
         JPH::EActivation::Activate);
+}
+
+void duin::PhysicsServer::CreateStaticBody(
+    duin::CollisionShape &shape, const Vector3 &position, const Vector3 &scale, const Quaternion &rotation)
+{
+    JPH::Shape *joltShape = shape.GetJoltShape<JPH::Shape>();
+    if (joltShape == nullptr)
+    {
+        DN_CORE_ERROR("CreateStaticBody: CollisionShape produced no Jolt shape.");
+        return;
+    }
+
+    JPH::RefConst<JPH::Shape> finalShape = joltShape;
+    if (scale.x != 1.0f || scale.y != 1.0f || scale.z != 1.0f)
+    {
+        finalShape = new JPH::ScaledShape(joltShape, JPH::Vec3(scale.x, scale.y, scale.z));
+    }
+
+    BodyInterface().CreateAndAddBody(
+        JPH::BodyCreationSettings(
+            finalShape,
+            JPH::RVec3(position.x, position.y, position.z),
+            JPH::Quat(rotation.x, rotation.y, rotation.z, rotation.w).Normalized(),
+            JPH::EMotionType::Static,
+            Layers::NON_MOVING),
+        JPH::EActivation::DontActivate);
 }

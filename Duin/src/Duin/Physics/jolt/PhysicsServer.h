@@ -48,8 +48,15 @@ class PhysicsServer
 
     void DebugDrawBodies();
 
+
+    // TODO remove these, replace with generic functions
     void CreatePlane(const Vector3& normal, const float height);
     void CreateBox(const Vector3& position, const Vector3& size);
+    void CreateStaticBody(
+        CollisionShape &shape,
+        const Vector3 &position,
+        const Vector3 &scale = Vector3(1.0f, 1.0f, 1.0f),
+        const Quaternion &rotation = Quaternion());
 
   protected:
     friend class StaticBody;

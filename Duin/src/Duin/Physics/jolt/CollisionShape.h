@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include "Duin/Core/Maths/DuinMaths.h"
+#include "Duin/Core/Debug/DNLog.h"
 #include "PhysicsMaterial.h"
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
@@ -68,13 +69,13 @@ struct PxTriangle
     float   convexRadius = 0.0f;
 };
 
-struct PxConvexMesh
+struct PxConvexHull
 {
     std::vector<Vector3> points;
     float maxConvexRadius = 0.05f;
 };
 
-struct PxTriangleMesh
+struct PxMesh
 {
     std::vector<Vector3>                 vertices;
     std::vector<std::array<uint32_t, 3>> triangles;
@@ -89,7 +90,7 @@ struct PxSquare
 
 using CollisionShapeDesc = std::variant<
     PxBox, PxSphere, PxCapsule, PxPlane,
-    PxCylinder, PxTriangle, PxConvexMesh, PxTriangleMesh, PxSquare>;
+    PxCylinder, PxTriangle, PxConvexHull, PxMesh, PxSquare>;
 
 class CollisionShape
 {
@@ -100,6 +101,7 @@ class CollisionShape
 
   private:
     friend class CharacterBody;
+    friend class PhysicsServer;
 
     CollisionShapeDesc shapeDesc;
     JPH::Shape *shapePtr = nullptr;
@@ -152,9 +154,9 @@ class CollisionShape
                     d.convexRadius);
                 break;
             }
-            case 6: // PxConvexMesh
+            case 6: // PxConvexHull
             {
-                const PxConvexMesh &d = std::get<6>(shapeDesc);
+                const PxConvexHull &d = std::get<6>(shapeDesc);
                 if (!d.points.empty())
                 {
                     JPH::Array<JPH::Vec3> pts;
@@ -164,13 +166,22 @@ class CollisionShape
                     JPH::ConvexHullShapeSettings settings(pts.data(), (int)pts.size(), d.maxConvexRadius);
                     auto result = settings.Create();
                     if (result.IsValid())
+                    {
+                        // Create() hands back a Ref; take our own reference before the
+                        // temporary drops the count to zero and frees the shape.
                         shapePtr = result.Get().GetPtr();
+                        shapePtr->AddRef();
+                    }
+                    else
+                    {
+                        DN_CORE_ERROR("ConvexHullShape creation failed: {}", result.GetError().c_str());
+                    }
                 }
                 break;
             }
-            case 7: // PxTriangleMesh
+            case 7: // PxMesh
             {
-                const PxTriangleMesh &d = std::get<7>(shapeDesc);
+                const PxMesh &d = std::get<7>(shapeDesc);
                 if (!d.vertices.empty() && !d.triangles.empty())
                 {
                     JPH::TriangleList tris;
@@ -183,7 +194,16 @@ class CollisionShape
                     JPH::MeshShapeSettings settings(tris);
                     auto result = settings.Create();
                     if (result.IsValid())
+                    {
+                        // Create() hands back a Ref; take our own reference before the
+                        // temporary drops the count to zero and frees the shape.
                         shapePtr = result.Get().GetPtr();
+                        shapePtr->AddRef();
+                    }
+                    else
+                    {
+                        DN_CORE_ERROR("MeshShape creation failed: {}", result.GetError().c_str());
+                    }
                 }
                 break;
             }
