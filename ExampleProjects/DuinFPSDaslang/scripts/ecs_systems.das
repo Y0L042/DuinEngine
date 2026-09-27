@@ -61,27 +61,74 @@ def system_player_input(var world : DnWorld; var camera : DnCamera?) : void {
 
 // def system_player_sprint()
 
-def system_player_jump(var world : DnWorld, delta : double) : void {
+// Syncs the OnGround tag from the character body so gravity and jump can branch on it.
+def system_update_ground_state(var world : DnWorld, delta : double) : void {
     var wp : ecs_world_t? = world.ecs_world()
-    ecs_query(world) $ [CACHED, REQUIRE(IsPlayer)] (e : ecs_entity_t, var ji : JumpImpulse, var vel : DnVelocity3D) {
-        vel.lin.y += ji.value
+    var gid = world.dn_register_component(type<OnGround>)
+    ecs_query(world) $ [CACHED] (e : ecs_entity_t, var cbh : CharacterBodyHandle) {
+        if (cbh.cb == null) {
+            return
+        }
+        let grounded = cbh.cb.is_on_floor()
         wp.ecs_defer_begin()
-        var jid = world.dn_register_component(type<JumpImpulse>)
-        ecs_remove(wp, e, jid)
+        if (grounded) {
+            ecs_add(wp, e, gid)
+        } else {
+            ecs_remove(wp, e, gid)
+        }
         wp.ecs_defer_end()
     }
 }
 
+// Jump goes through ExternVelocity rather than writing DnVelocity3D directly:
+// system_set_input_velocity assigns the horizontal components wholesale, and
+// ExternVelocity is resolved after that, so the impulse survives.
+def system_player_jump(var world : DnWorld, delta : double) : void {
+    if (!dn_is_input_action_triggered("Player_Jump")) {
+        return
+    }
+
+    ecs_query(world) $ [CACHED, REQUIRE(IsPlayer), REQUIRE(OnGround)] (var ji : JumpImpulse, var vel : DnVelocity3D, var exvel : ExternVelocity) {
+        // Cancel the small downward velocity gravity accumulated while grounded, so
+        // jump height does not depend on how long the player stood still.
+        vel.lin.y = 0f
+        exvel.val.y += ji.value
+    }
+}
+
+// Only the horizontal plane is driven directly by input. vel.lin.y is left alone so
+// gravity can integrate across frames -- overwriting it here would reset the fall
+// speed every tick and make the character drift down at a constant crawl.
 def system_set_input_velocity(var world : DnWorld, delta : double) : void {
     world.ecs_query() $ [CACHED, REQUIRE(IsPlayer)] (var input : MoveInput, speed : MoveSpeed, var vel : DnVelocity3D) {
-        vel.lin = normalize(input.dir) * speed.walk * float(delta)
+        // normalize() on a zero vector divides by zero; guard the idle case.
+        var wish = float3(0f, 0f, 0f)
+        if (dot(input.dir, input.dir) > 0.0001f) {
+            wish = normalize(input.dir) * speed.walk
+        }
+        vel.lin.x = wish.x
+        vel.lin.z = wish.z
         input.dir = float3(0f, 0f, 0f)
     }
 }
 
+// Integrates downward acceleration into the persistent vel.lin.y. Clamped to a terminal
+// velocity so a long fall cannot run the value away.
 def system_gravity(var world : DnWorld; delta : double) : void {
-    ecs_query(world) $ [CACHED] (grav : GravityScale; var vel : DnVelocity3D) {
-        vel.lin.y += grav.value * float(delta)
+    let TERMINAL_VELOCITY = -50.0f
+    ecs_query(world) $ [CACHED, REQUIRE_NOT(OnGround)] (grav : GravityScale; var vel : DnVelocity3D) {
+        vel.lin.y = max(vel.lin.y + grav.value * float(delta), TERMINAL_VELOCITY)
+    }
+}
+
+// While grounded, hold a small constant downward bias instead of integrating. This keeps
+// the character pinned to the floor without letting vel.lin.y run away to a large
+// negative that would cancel out the next jump.
+def system_ground_stick(var world : DnWorld, delta : double) : void {
+    ecs_query(world) $ [CACHED, REQUIRE(OnGround)] (var vel : DnVelocity3D) {
+        if (vel.lin.y < 0f) {
+            vel.lin.y = -1.0f
+        }
     }
 }
 

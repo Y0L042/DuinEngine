@@ -95,17 +95,21 @@ class Player : DnGameObject {
 
         player_entity.add(IsPlayer())
         player_entity.set(MoveInput(dir = float3(0.0f, 0.0f, 0.0f)))
-        player_entity.set(MoveSpeed(walk = 300.0f, sprint = 1200.0f))
+        // m/s -- move() feeds Jolt's SetLinearVelocity, which applies the timestep itself.
+        player_entity.set(MoveSpeed(walk = 6.0f, sprint = 12.0f))
         player_entity.set(CameraYaw(radians = 0.0f))
         player_entity.set(CameraPitch(radians = 0.0f, min_rad = -MAX_PITCH, max_rad = MAX_PITCH))
         player_entity.set(CharacterBodyDesc())
         player_entity.set(DnVelocity3D())
+        player_entity.set(ExternVelocity(val = float3(0f, 0f, 0f)))
+        // Upward velocity in m/s. v = sqrt(2 * g * h); ~4.85 gives roughly a 1.2m jump.
+        player_entity.set(JumpImpulse(value = 7.0f)) //value = 4.85f))
         player_entity.set(GravityScale(value = -9.81f))
         player_entity.set(DnTransform3D(pos = position, rot = float4(0f, 0f, 0f, 1f), scale = float3(1f, 1f, 1f)))
 
         camera_entity.child_of(player_entity)
         camera_entity.set(CameraHandle(handle = camera))
-        camera_entity.set(DnTransform3D(pos = float3(0f, 2f, 0f), rot = float4(0f, 0f, 0f, 1f), scale = float3(1f, 1f, 1f)))
+        camera_entity.set(DnTransform3D(pos = float3(0f, 1.5f, 0f), rot = float4(0f, 0f, 0f, 1f), scale = float3(1f, 1f, 1f)))
 
     }
 

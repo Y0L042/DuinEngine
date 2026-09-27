@@ -11,4 +11,7 @@ class Player_OnGround_Idle : State {
     def override _enter() : void {
         dn_info("Entering State: [Player | OnGround | Idle]")
     }
+
+    def override _physics_update(delta : double) : void {
+    }
 }

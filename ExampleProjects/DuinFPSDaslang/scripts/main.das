@@ -96,8 +96,14 @@ def game_physics_update(delta : double) {
         }
     }
 
+    // Ground state must be refreshed before jump and gravity branch on it.
+    system_update_ground_state(world, delta)
     system_set_input_velocity(world, delta)
     system_gravity(world, delta)
+    // Stick runs before jump: it clamps vel.lin.y for grounded entities, so it must not
+    // see the frame the jump is issued on.
+    system_ground_stick(world, delta)
+    system_player_jump(world, delta)
     system_ground_friction(world, delta)
     system_air_friction(world, delta)
     system_resolve_external_velocities(world, delta)
@@ -178,4 +184,8 @@ def register_keybinds() : void {
 
     dn_create_input_action("Player_Sprint")
     dn_add_keyboard_binding("Player_Sprint", DN_Scancode.DN_SCANCODE_LSHIFT, KeyEvent.HELD, DN_KEY_MOD_NONE)
+
+    // PRESSED, not HELD: holding space must not re-apply the impulse every physics tick.
+    dn_create_input_action("Player_Jump")
+    dn_add_keyboard_binding("Player_Jump", DN_Scancode.DN_SCANCODE_SPACE, KeyEvent.PRESSED, DN_KEY_MOD_NONE)
 }

@@ -16,13 +16,8 @@ std::optional<duin::Model> LoadMesh(const std::string &path)
 
 void DrawMesh(const std::optional<duin::Model> &model, duin::Vector3 position, float scale, duin::Quaternion rotation)
 {
-    if (!model.has_value() || !model->data)
+    if (model.has_value())
     {
-        return;
+        model.value().Draw(position, rotation, duin::Vector3(scale));
     }
-
-    const duin::Vector3 &baseScale = model->baseScale;
-    duin::Vector3 vScale = duin::Vector3(scale * baseScale.x, scale * baseScale.y, scale * baseScale.z);
-
-    duin::QueueRender(model->data->vertexBufferHandle, model->data->indexBufferHandle, position, rotation, vScale);
 }
