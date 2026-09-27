@@ -20,7 +20,6 @@ local dep_rapidjson = require "dep_rapidjson"
 local dep_flecs = require "dep_flecs"
 local dep_doctest = require "dep_doctest"
 local dep_reflectcpp = require "dep_reflectcpp"
-local dep_angelscript = require "dep_angelscript"
 local dep_daslang = require "dep_daslang"
 local dep_dasimgui = require "dep_dasimgui"
 local dep_flecsdaslangbindings = require "dep_flecsdaslangbindings"
@@ -46,7 +45,6 @@ local dependencies_ordered = {
     {name = "TOML11", buildFn = dep_toml11.build},
     {name = "REFLECTCPP", buildFn = dep_reflectcpp.build},
     {name = "DASLANG", buildFn = dep_daslang.build},
-    {name = "ANGELSCRIPT", buildFn = dep_angelscript.build},
     {name = "DASIMGUI", buildFn = dep_dasimgui.build}, -- must be built after DASLANG and IMGUI
     {name = "FLECSDASLANGBINDINGS", buildFn = dep_flecsdaslangbindings.build},
     {name = "TOMLDASLANG", buildFn = dep_tomldaslang.build},
@@ -71,7 +69,6 @@ local dependencies = {
     FLECS = dep_flecs.build,
     DOCTEST = dep_doctest.build,
     REFLECTCPP = dep_reflectcpp.build,
-    ANGELSCRIPT = dep_angelscript.build,
     DASLANG = dep_daslang.build,
     DASIMGUI = dep_dasimgui.build,
     FLECSDASLANGBINDINGS = dep_flecsdaslangbindings.build,
