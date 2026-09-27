@@ -2322,6 +2322,8 @@ struct ImVector
 
     inline T*           begin()                             { return Data; }
     inline const T*     begin() const                       { return Data; }
+    inline T*           data()                              { return Data; }
+    inline const T*     data() const                        { return Data; }
     inline T*           end()                               { return Data + Size; }
     inline const T*     end() const                         { return Data + Size; }
     inline T&           front()                             { IM_ASSERT(Size > 0); return Data[0]; }

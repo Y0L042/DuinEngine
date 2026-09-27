@@ -1,5 +1,5 @@
 #pragma once
-#include "imgui.h"
+#include "external/imgui.h"
 
 namespace ImLightRig
 {
