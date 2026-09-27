@@ -1,5 +1,4 @@
 options gen2
-options always_call_super
 
 require daslib/ansi_colors
 

@@ -59,7 +59,7 @@ class ScenetreeViewer : DnGameObject {
         clear(entity_tree)
 
         var w = active_scene.world
-        if (w == null) { return ; }
+        if (!w.is_valid()) { return ; }
         let ecs_w = w.ecs_world()
         if (ecs_w == null) { return ; }
 
@@ -96,7 +96,7 @@ class ScenetreeViewer : DnGameObject {
         if (imgui_boost::IsItemClicked(0)) {
             selected_entity = node.entity_id
             var w = active_scene.world
-            if (w != null) {
+            if (w.is_valid()) {
                 if (w.ecs_world() == null) {
                     dn_fatal("ECS_WORLD is null!")
                 }

@@ -44,8 +44,8 @@ void Editor::Ready()
     duin::SetWindowResizable(true);
 
     script = CreateChildObject<duin::GameScript>("./scripts/_entry.das");
-    script->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
-    script->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DuinEditor\\duineditor.das_project");
+    script->SetDasRoot("D:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
+    script->SetProjectFile("D:\\Projects\\CPP_Projects\\Duin\\DuinEditor\\duineditor.das_project");
     script->InitModules([]() {
         NEED_MODULE(Module_flecs);
         NEED_MODULE(Module_imgui);
@@ -65,6 +65,8 @@ void Editor::Ready()
         NEED_MODULE(Module_DnPhysicsServer);
         NEED_MODULE(Module_DnCharacterBody);
         NEED_MODULE(Module_DnFilesystem);
+        NEED_MODULE(Module_DnAssetManager);
+        NEED_MODULE(Module_DnModel);
     });
     script->EnableHotCompile(false, false);
     script->SetHotCompileFileChangeCooldown(2.5f);

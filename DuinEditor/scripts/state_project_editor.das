@@ -35,6 +35,7 @@ class State_ProjectEditor : DnGameState {
     active_scene : Scene
 
     def State_ProjectEditor() : void {
+        super()
         _alias = "State_ProjectEditor"
         dn_info("Entered {_alias}")
     }
@@ -82,6 +83,9 @@ class State_ProjectEditor : DnGameState {
         if (node.ext == "pscn") {
             handle_packedscene(node)
         }
+        if (node.ext == "obj") {
+            handle_model(node)
+        }
     }
 
     def handle_packedscene(var node : FSNode?) : void {
@@ -89,6 +93,13 @@ class State_ProjectEditor : DnGameState {
         dn_info("Loading PackedScene {node.name}")
         ensure_instantiated_scene(node)
         dn_info("Finished loading PackedScene {node.name}")
+    }
+
+    def handle_model(var node : FSNode?) : void {
+        dn_info("Selecting 3D Obj Model {node.name}")
+        // Open a new pane/window/tab and display the model - ModelViewer
+        // This will allow the user to view the model, set base scaling,
+        // create collision box for it...
     }
 
     def ensure_instantiated_scene(var node : FSNode?) : void {
