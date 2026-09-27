@@ -61,6 +61,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "dn_uuid") {
         res.info = ("dn_uuid", path_to_engine + "src/Duin/Script/modules/moduleUUID/dn_uuid.das", "")
     }
+    elif (req == "dn_assets") {
+        res.info = ("dn_assets", path_to_engine + "src/Duin/Script/modules/moduleAssets/dn_assets.das", "")
+    }
     elif (req == "tomlc17") {
         res.info = ("tomlc17", path_to_engine + "src/Duin/Script/modules/moduleTOML/tomlc17.das", "")
     }
