@@ -2,11 +2,11 @@
 
 #include <Duin/Objects/GameStateMachine.h>
 
-class SceneBuilder : public duin::GameState
+class MultiWindowSandbox : public duin::GameState
 {
   public:
-    SceneBuilder(duin::GameStateMachine &sm);
-    ~SceneBuilder();
+    MultiWindowSandbox(duin::GameStateMachine &sm);
+    ~MultiWindowSandbox();
 
     void Enter() override;
     void OnEvent(duin::Event e) override;
@@ -19,8 +19,6 @@ class SceneBuilder : public duin::GameState
     void SetUnpause() override;
 
     void Tests();
-    void Test_Misc();
-;
 
   private:
 };

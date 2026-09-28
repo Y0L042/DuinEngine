@@ -289,6 +289,12 @@ int duin::GetWindowHeight()
     return WINDOW_HEIGHT;
 }
 
+uint16_t duin::CreateNewWindow(float posx, float posy, size_t width, size_t height)
+{
+    ::SDL_CreateWindow("New Window", width, height, SDL_WINDOW_RESIZABLE);
+    return 0;
+}
+
 void duin::SetWindowResizable(bool enable)
 {
     SDL_SetWindowResizable(sdlWindow, enable);
