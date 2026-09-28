@@ -87,7 +87,8 @@ class Script
     // --- Configuration (call before Compile) ---
     void SetScriptPath(const std::string &path);
     std::string GetScriptPath();
-    void SetDasRoot(const std::string &path);
+    // Empty/invalid path auto-resolves via duin::fs::ResolveDasRoot (DUIN_DAS_ROOT, then engine vendor dir)
+    void SetDasRoot(const std::string &path = "");
     void SetProjectFile(const std::string &path);
     void SetProfiling(bool enable);
     void SetJitMode(JitMode mode, bool cached = true);

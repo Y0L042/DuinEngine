@@ -8,6 +8,7 @@
 #include "Duin/Core/Debug/DNLog.h"
 #include "Duin/Core/Application.h"
 #include "Duin/Core/Maths/MathsModule.h"
+#include "Duin/IO/Filesystem.h"
 
 namespace duin
 {
@@ -111,9 +112,9 @@ void InitRenderer()
 
     // Load default shaders
     RHIShaderHandle vsh =
-        RHILoadShader("D:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/vs_cubes.bin");
+        RHILoadShader(fs::MapVirtualToSystemPath("eng://src/Duin/Resources/shaders/dx11/vs_cubes.bin").c_str());
     RHIShaderHandle fsh =
-        RHILoadShader("D:/Projects/CPP_Projects/Duin/Duin/src/Duin/Resources/shaders/dx11/fs_cubes.bin");
+        RHILoadShader(fs::MapVirtualToSystemPath("eng://src/Duin/Resources/shaders/dx11/fs_cubes.bin").c_str());
 
     // Create default shader program
     RHIProgramHandle program = RHICreateProgram(vsh, fsh, true);

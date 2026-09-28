@@ -51,11 +51,31 @@ std::string duin::Script::GetScriptPath()
 
 void duin::Script::SetDasRoot(const std::string &path)
 {
-    das::setDasRoot(path);
+    // An invalid or empty path falls back to DUIN_DAS_ROOT, then the engine's vendored daslang
+    std::string root = duin::fs::ResolveDasRoot(path);
+    if (duin::fs::IsPathInvalid(root))
+    {
+        DN_CORE_ERROR("Could not locate daslang root (daslib/builtin.das). Requested <{}>. "
+                      "Pass --dasroot <path>, set DUIN_DAS_ROOT, or run from inside the Duin source tree.",
+                      path);
+        return;
+    }
+    if (!path.empty() && root != duin::fs::EnsureUnixPath(path))
+    {
+        DN_CORE_WARN("daslang root <{}> is invalid, using <{}>", path, root);
+    }
+    das::setDasRoot(root);
 }
 
 void duin::Script::SetProjectFile(const std::string &path)
 {
+    // Accepts INVALID_PATH (e.g. a failed fs::FindProjectFile) as "no project file"
+    if (duin::fs::IsPathInvalid(path))
+    {
+        DN_CORE_WARN("No daslang project file found, compiling without one");
+        projectFile.clear();
+        return;
+    }
     projectFile = path;
 }
 
@@ -316,8 +336,7 @@ das::CodeOfPolicies duin::Script::BuildPolicies()
 #ifdef NDEBUG
         policies.jit_path_to_shared_lib = das::getDasRoot() + "/lib/Release/libDaScriptDyn_runtime.lib";
 #else
-        //policies.jit_path_to_shared_lib = das::getDasRoot() + "/lib/Debug/libDaScriptDyn_runtime.lib";
-        policies.jit_path_to_shared_lib = "C:/Projects/CPP_Projects/Duin/Duin/vendor/daslang/lib/Debug/libDaScriptDyn_runtime.lib";
+        policies.jit_path_to_shared_lib = das::getDasRoot() + "/lib/Debug/libDaScriptDyn_runtime.lib";
 #endif
     }
     if (enableProfiling)
