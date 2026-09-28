@@ -1,13 +1,17 @@
 <map id="Filesystem.cpp" name="Filesystem.cpp">
-<area shape="rect" id="Node000001" title="Implementation of cross&#45;platform filesystem utilities." alt="" coords="2620,5,2740,31"/>
+<area shape="rect" id="Node000001" title="Implementation of cross&#45;platform filesystem utilities." alt="" coords="3643,5,3763,31"/>
 <area shape="rect" id="Node000002" href="$dnpch_8h_source.html" title=" " alt="" coords="1666,79,1739,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2620,26,1753,89,1753,84,2620,21"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="3642,24,1753,91,1753,86,3642,19"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="5,159,91,185"/>
-<area shape="poly" id="edge47_Node000001_Node000006" title=" " alt="" coords="2620,23,2154,32,1423,54,1032,72,662,94,342,121,211,137,103,155,90,158,89,153,102,149,210,132,342,116,661,88,1031,66,1423,49,2154,27,2620,18"/>
-<area shape="rect" id="Node000041" href="$Filesystem_8h_source.html" title=" " alt="" coords="3597,79,3702,104"/>
-<area shape="poly" id="edge42_Node000001_Node000041" title=" " alt="" coords="2740,21,3583,83,3583,88,2740,26"/>
+<area shape="poly" id="edge47_Node000001_Node000006" title=" " alt="" coords="3642,23,2851,43,1655,81,1418,87,1216,86,874,79,710,82,535,92,336,115,103,155,90,158,89,153,102,149,335,110,534,87,710,76,874,74,1216,80,1418,81,1655,76,2851,38,3642,18"/>
+<area shape="rect" id="Node000041" href="$Filesystem_8h_source.html" title=" " alt="" coords="3605,79,3710,104"/>
+<area shape="poly" id="edge42_Node000001_Node000041" title=" " alt="" coords="3697,32,3674,69,3670,66,3693,30"/>
 <area shape="rect" id="Node000043" title=" " alt="" coords="3763,159,3933,185"/>
-<area shape="poly" id="edge46_Node000001_Node000043" title=" " alt="" coords="2740,16,2948,16,3231,22,3377,29,3513,40,3629,55,3716,76,3748,91,3779,110,3828,148,3825,152,3776,114,3746,95,3714,81,3628,61,3512,45,3377,34,3231,27,2948,21,2740,21"/>
+<area shape="poly" id="edge46_Node000001_Node000043" title=" " alt="" coords="3714,29,3777,102,3826,148,3822,152,3773,106,3710,32"/>
+<area shape="rect" id="Node000044" title=" " alt="" coords="3786,79,3851,104"/>
+<area shape="poly" id="edge48_Node000001_Node000044" title=" " alt="" coords="3723,28,3789,69,3787,74,3720,33"/>
+<area shape="rect" id="Node000045" title=" " alt="" coords="3876,79,3967,104"/>
+<area shape="poly" id="edge49_Node000001_Node000045" title=" " alt="" coords="3739,28,3874,72,3872,77,3737,33"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="3183,159,3263,185"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1740,90,2008,91,2423,99,2645,106,2855,117,3036,131,3171,149,3184,152,3182,158,3170,155,3035,136,2854,122,2645,111,2423,104,2007,97,1740,95"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="3287,159,3364,185"/>
@@ -85,8 +89,8 @@
 <area shape="poly" id="edge39_Node000038_Node000031" title=" " alt="" coords="1961,182,2007,189,2261,221,2470,242,2469,247,2260,226,2006,195,1960,187"/>
 <area shape="rect" id="Node000039" href="$Core_8h_source.html" title=" " alt="" coords="1833,240,1965,265"/>
 <area shape="poly" id="edge38_Node000038_Node000039" title=" " alt="" coords="1901,185,1901,226,1896,226,1896,185"/>
-<area shape="poly" id="edge43_Node000041_Node000018" title=" " alt="" coords="3646,105,3627,148,3622,146,3642,103"/>
+<area shape="poly" id="edge43_Node000041_Node000018" title=" " alt="" coords="3653,105,3629,149,3624,146,3649,103"/>
 <area shape="rect" id="Node000042" title=" " alt="" coords="3667,159,3738,185"/>
-<area shape="poly" id="edge44_Node000041_Node000042" title=" " alt="" coords="3659,103,3689,146,3685,149,3655,106"/>
-<area shape="poly" id="edge45_Node000041_Node000043" title=" " alt="" coords="3679,102,3807,152,3805,157,3677,106"/>
+<area shape="poly" id="edge44_Node000041_Node000042" title=" " alt="" coords="3666,103,3691,146,3687,149,3662,106"/>
+<area shape="poly" id="edge45_Node000041_Node000043" title=" " alt="" coords="3686,102,3808,152,3806,157,3684,106"/>
 </map>

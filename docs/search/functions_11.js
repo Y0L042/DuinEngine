@@ -21,7 +21,7 @@ var searchData=
   ['registerinputeventlistener_18',['RegisterInputEventListener',['../classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727',1,'duin::EventHandler']]],
   ['release_19',['release',['../classduin_1_1ScopedConnection.html#aff0ba1250cba480000183e5a8cfc02ef',1,'duin::ScopedConnection::Release()'],['../classduin_1_1World.html#a8af88ebe2e1ac521e250b4a69d0d1930',1,'duin::World::Release()']]],
   ['remove_20',['remove',['../classduin_1_1LookupVector.html#ae9ebdbf0b9eec2a89bc1ca4eaf3070bf',1,'duin::LookupVector::Remove()'],['../classduin_1_1Entity.html#a9276a935d07319ec303fa5974fe99edb',1,'duin::Entity::Remove()']]],
-  ['removeall_21',['removeall',['../classduin_1_1World.html#aa4d6f1aca7e06b4197ad3a9ab6330aa6',1,'duin::World::RemoveAll(uint64_t first, uint64_t second)'],['../classduin_1_1World.html#ac1ab2ec052397515d1798d2408ebaa86',1,'duin::World::RemoveAll()'],['../classduin_1_1World.html#a02e8e39cdd6d1fe77cc443b526e31772',1,'duin::World::RemoveAll(uint64_t id)']]],
+  ['removeall_21',['removeall',['../classduin_1_1World.html#ac1ab2ec052397515d1798d2408ebaa86',1,'duin::World::RemoveAll()'],['../classduin_1_1World.html#a02e8e39cdd6d1fe77cc443b526e31772',1,'duin::World::RemoveAll(uint64_t id)'],['../classduin_1_1World.html#aa4d6f1aca7e06b4197ad3a9ab6330aa6',1,'duin::World::RemoveAll(uint64_t first, uint64_t second)']]],
   ['removechildobject_22',['removechildobject',['../classduin_1_1Application.html#ad2fdd5e8818eece60d84960591f57954',1,'duin::Application::RemoveChildObject()'],['../classduin_1_1GameObject.html#a3b585504b0737a16fd05688ca8116ae4',1,'duin::GameObject::RemoveChildObject()']]],
   ['removeflags_23',['removeflags',['../structduin_1_1Entity_1_1ID.html#af75dd3306c6755b90d5e46a2f09782a1',1,'duin::Entity::ID::RemoveFlags(flecs::id_t flags) const'],['../structduin_1_1Entity_1_1ID.html#ae32c1ba6c5c3e6d132623aba9339caab',1,'duin::Entity::ID::RemoveFlags() const']]],
   ['removegeneration_24',['RemoveGeneration',['../structduin_1_1Entity_1_1ID.html#ac77359e55e5f4c79175232bb21419e68',1,'duin::Entity::ID']]],
@@ -34,10 +34,12 @@ var searchData=
   ['rendertexture_31',['RenderTexture',['../structduin_1_1RenderTexture.html#aed6e70d630aacc05bea37019f057d123',1,'duin::RenderTexture']]],
   ['reportassert_32',['ReportAssert',['../DNAssert_8h.html#a57004bcd92098c167f2e8ed71309dedd',1,'duin']]],
   ['reportassertfmt_33',['ReportAssertFmt',['../DNAssert_8h.html#acd524deb3b60db69e6be526fe2d53d68',1,'duin']]],
-  ['roll_34',['Roll',['../classduin_1_1Camera.html#a9dc807ac3d65ffe6ad50ffa555a5b904',1,'duin::Camera']]],
-  ['run_35',['run',['../classduin_1_1System.html#ad32a296ce58ee47f4d060183e9425ac0',1,'duin::System::Run()'],['../classduin_1_1SystemBuilder.html#a9bbbe56bd64ae5e556bf624b031ec09e',1,'duin::SystemBuilder::Run()'],['../classduin_1_1Query.html#ae82330032f4703b9b9b69a521748cf9e',1,'duin::Query::Run()'],['../classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522',1,'duin::Application::Run()']]],
-  ['runall_36',['RunAll',['../classduin_1_1EcsPipeline.html#af724e4c88e2d5679c4575b99694070fb',1,'duin::EcsPipeline']]],
-  ['runstage_37',['RunStage',['../classduin_1_1EcsPipeline.html#ae7a80b9958e9eb6a01880287e75ce02e',1,'duin::EcsPipeline']]],
-  ['runstep_38',['RunStep',['../classduin_1_1EcsPipeline.html#aaeb6b1a8dd9d5afe0954b3f30028b6a7',1,'duin::EcsPipeline']]],
-  ['runsystem_39',['RunSystem',['../classduin_1_1EcsPipeline.html#a81a448b2fe6ddf5089ecd4fe5bbf1d2e',1,'duin::EcsPipeline']]]
+  ['resolvedasroot_34',['ResolveDasRoot',['../namespaceduin_1_1fs.html#a2f90dd0cb76b88f2f4a2ee1f2d3481df',1,'duin::fs']]],
+  ['resolveengineroot_35',['ResolveEngineRoot',['../namespaceduin_1_1fs.html#ab2c4f679693eabc33c6707998e403ac4',1,'duin::fs']]],
+  ['roll_36',['Roll',['../classduin_1_1Camera.html#a9dc807ac3d65ffe6ad50ffa555a5b904',1,'duin::Camera']]],
+  ['run_37',['run',['../classduin_1_1System.html#ad32a296ce58ee47f4d060183e9425ac0',1,'duin::System::Run()'],['../classduin_1_1SystemBuilder.html#a9bbbe56bd64ae5e556bf624b031ec09e',1,'duin::SystemBuilder::Run()'],['../classduin_1_1Query.html#ae82330032f4703b9b9b69a521748cf9e',1,'duin::Query::Run()'],['../classduin_1_1Application.html#a5b0b785b01aa16b43dc3506716aaa522',1,'duin::Application::Run()']]],
+  ['runall_38',['RunAll',['../classduin_1_1EcsPipeline.html#af724e4c88e2d5679c4575b99694070fb',1,'duin::EcsPipeline']]],
+  ['runstage_39',['RunStage',['../classduin_1_1EcsPipeline.html#ae7a80b9958e9eb6a01880287e75ce02e',1,'duin::EcsPipeline']]],
+  ['runstep_40',['RunStep',['../classduin_1_1EcsPipeline.html#aaeb6b1a8dd9d5afe0954b3f30028b6a7',1,'duin::EcsPipeline']]],
+  ['runsystem_41',['RunSystem',['../classduin_1_1EcsPipeline.html#a81a448b2fe6ddf5089ecd4fe5bbf1d2e',1,'duin::EcsPipeline']]]
 ];
