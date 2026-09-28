@@ -22,7 +22,6 @@ class DuinRT : public duin::Application
 
     void SetScriptPath(const std::string& path);
     void SetDasRoot(const std::string& path);
-    std::string FindProjectFile(const std::string &scriptPath);
     void SetProjectFile(const std::string& path);
 
     void Initialize() override;
@@ -40,8 +39,8 @@ class DuinRT : public duin::Application
     size_t argsCount;
     std::vector<std::string_view> args;
     std::string scriptPath;
-    std::string dasRoot = "C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang";
-    std::string projectFile = "bin://.das_project";
+    std::string dasRoot;     // --dasroot; empty = auto-resolve (DUIN_DAS_ROOT, then engine vendor dir)
+    std::string projectFile; // --project; empty = walk up from the script to the nearest *.das_project
     bool headlessMode = false;
     duin::Script::JitMode jitMode = duin::Script::JitMode::NONE;
     bool jitNoCache = false;

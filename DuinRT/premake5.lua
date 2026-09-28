@@ -1,7 +1,7 @@
 SolutionRoot = ".."
 ProjectRoot = "."
 
-daslang_llvm_dll_src = path.getabsolute("Duin/vendor/daslang/lib/LLVM.dll")
+daslang_llvm_dll_src = path.getabsolute(SolutionRoot .. "/Duin/vendor/daslang/lib/LLVM.dll")
 
 project "DuinRT"
     location ""

@@ -71,11 +71,6 @@ void DuinRT::SetDasRoot(const std::string &path)
     dasRoot = path;
 }
 
-std::string DuinRT::FindProjectFile(const std::string& scriptPath)
-{
-    duin::fs::Get
-}
-
 void DuinRT::SetProjectFile(const std::string &path)
 {
     projectFile = path;
@@ -101,14 +96,15 @@ void DuinRT::Ready()
     duin::SetWindowResizable(true);
 
     script = CreateChildObject<duin::GameScript>(duin::fs::MapVirtualToSystemPath(scriptPath));
-    if (!dasRoot.empty() && dasRoot.size() > 1)
+    script->SetDasRoot(dasRoot);
+    if (projectFile.empty())
     {
-        script->SetDasRoot(dasRoot); // Absolute path
+        script->SetProjectFile(duin::fs::FindProjectFile(scriptPath));
     }
-    if (!projectFile.empty() && projectFile.size() > 1)
+    else
     {
-        // script->SetProjectFile(duin::fs::MapVirtualToSystemPath(projectFile)); // virtual path relative to BIN
-        // script->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DuinRT\\.das_project");
+        script->SetProjectFile(duin::fs::IsVirtualPath(projectFile) ? duin::fs::MapVirtualToSystemPath(projectFile)
+                                                                    : projectFile);
     }
     if (jitMode != duin::Script::JitMode::NONE)
     {
@@ -202,6 +198,18 @@ void DuinRT::ParseArgs(const std::vector<std::string_view> &args)
                 DN_INFO("JIT mode set DLL");
                 continue;
             }
+            if (lFlag.compare("dasroot") == 0 && i + 1 < args.size())
+            {
+                SetDasRoot(std::string(args[++i]));
+                DN_INFO("das root set <{}>", dasRoot);
+                continue;
+            }
+            if (lFlag.compare("project") == 0 && i + 1 < args.size())
+            {
+                SetProjectFile(std::string(args[++i]));
+                DN_INFO("Project file set <{}>", projectFile);
+                continue;
+            }
         }
         else if (args[i].starts_with(SHORT_FLAG_TOK))
         {
@@ -215,9 +223,8 @@ void DuinRT::ParseArgs(const std::vector<std::string_view> &args)
         {
             // Parse script path
             DN_INFO("Parsing PARAM arg <{}>", arg);
+            // Project file is discovered in Ready() unless --project was given
             SetScriptPath("bin://" + std::string(arg));
-            // Find Project file
-            SetProjectFile(); // Find and set project file based on script path
         }
     }
 }
