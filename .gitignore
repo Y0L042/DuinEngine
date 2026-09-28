@@ -128,3 +128,5 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 /DaslangDocGenerator/docs
 *.ddh
 *.lock
+/.nvim.lua
+/generateprojects.sh
