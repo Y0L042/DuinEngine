@@ -98,7 +98,18 @@ class State_ProjectSelection : DnGameState {
             let arr_size : int = toml_datum_arr_size(toml_arr)
             for (i in range(0, arr_size)) {
                 let elem : TomlDatum = toml_datum_arr_elem(toml_arr, i)
-                push(list, string(toml_datum_str(elem)))
+                let dir : string = string(toml_datum_str(elem))
+                // Entries may be virtual (e.g. eng://../ExampleProjects/X) to stay machine-independent
+                if (dn_fs_is_virtual_path(dir)) {
+                    let sys_dir : string = dn_fs_map_virtual_to_system(dir)
+                    if (dn_fs_is_path_invalid(sys_dir)) {
+                        dn_warn("Could not resolve project dir <{dir}> from {EDITOR_CFG_PATH}!")
+                    } else {
+                        push(list, sys_dir)
+                    }
+                } else {
+                    push(list, dir)
+                }
             }
         } else {
             dn_warn("RecentProjectDirs NOT an array!")

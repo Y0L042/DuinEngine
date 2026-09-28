@@ -43,9 +43,10 @@ void Editor::Ready()
 {
     duin::SetWindowResizable(true);
 
-    script = CreateChildObject<duin::GameScript>("./scripts/_entry.das");
-    script->SetDasRoot("D:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
-    script->SetProjectFile("D:\\Projects\\CPP_Projects\\Duin\\DuinEditor\\duineditor.das_project");
+    const std::string entryScript = "./scripts/_entry.das";
+    script = CreateChildObject<duin::GameScript>(entryScript);
+    script->SetDasRoot();
+    script->SetProjectFile(duin::fs::FindProjectFile(entryScript));
     script->InitModules([]() {
         NEED_MODULE(Module_flecs);
         NEED_MODULE(Module_imgui);
