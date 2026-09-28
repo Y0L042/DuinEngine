@@ -217,67 +217,6 @@ std::string BuildResultJson(const std::string &file, bool success, const std::ve
     return os.str();
 }
 
-// Returns true if <root>/daslib/builtin.das exists — the marker that <root> is a
-// valid daslang root.
-bool IsValidDasRoot(const std::string &root)
-{
-    if (root.empty())
-        return false;
-    std::string marker = root + "/daslib/builtin.das";
-    if (FILE *f = std::fopen(marker.c_str(), "rb"))
-    {
-        std::fclose(f);
-        return true;
-    }
-    return false;
-}
-
-// Walks up from the executable directory looking for Duin/vendor/daslang.
-// Uses the native (C:/...) base path, so the result is a path daslang's file
-// layer can open — unlike an MSYS-style /c/... path from a shell env var.
-std::string DeriveDasRootFromExe()
-{
-    std::string base = duin::fs::GetBasePath();
-    if (base.empty() || base == INVALID_PATH)
-        return "";
-    if (base.back() == '/')
-        base.pop_back();
-    std::string dir = base;
-    for (int depth = 0; depth < 8; ++depth)
-    {
-        std::string candidate = dir + "/Duin/vendor/daslang";
-        if (IsValidDasRoot(candidate))
-            return candidate;
-        auto slash = dir.find_last_of('/');
-        if (slash == std::string::npos)
-            break;
-        dir = dir.substr(0, slash);
-    }
-    return "";
-}
-
-// Resolves the daslang root in priority order, but only accepts a source if it
-// actually contains daslib/builtin.das (IsValidDasRoot). This rejects MSYS-style
-// /c/... paths (e.g. from DUIN_DAS_ROOT in a shell env) that the native daslang
-// file layer cannot open, falling through to the exe-derived native path.
-//   1. explicit --dasroot arg (if valid)
-//   2. DUIN_DAS_ROOT environment variable (if valid)
-//   3. derived from the executable base path (standard build layout).
-// Returns empty string if none yield a valid root (caller reports the error).
-std::string ResolveDasRoot(const std::string &argRoot)
-{
-    if (IsValidDasRoot(argRoot))
-        return argRoot;
-
-    if (const char *env = std::getenv("DUIN_DAS_ROOT"))
-    {
-        if (IsValidDasRoot(env))
-            return env;
-    }
-
-    return DeriveDasRootFromExe();
-}
-
 // Makes a path absolute (relative to the current working directory) with forward
 // slashes. daslang's FsFileAccess anchors a project file's module_get() relative
 // paths to the project file's own directory; if the project path itself is relative
@@ -1118,8 +1057,10 @@ int main(int argc, char **argv)
 
     // Resolve the daslang root (arg → env → derived from exe layout). Without it,
     // daslang cannot find daslib/builtin.das and every compile fails internally.
-    std::string dasRoot = ResolveDasRoot(args.dasRoot);
-    if (dasRoot.empty())
+    // Shared engine resolver: --dasroot, DUIN_DAS_ROOT, then walk up from the exe/CWD.
+    // Candidates must contain daslib/builtin.das, which rejects MSYS-style /c/... paths.
+    std::string dasRoot = duin::fs::ResolveDasRoot(args.dasRoot);
+    if (duin::fs::IsPathInvalid(dasRoot))
     {
         std::fprintf(
             stderr,
