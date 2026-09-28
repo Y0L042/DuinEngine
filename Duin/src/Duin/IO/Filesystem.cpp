@@ -2,6 +2,8 @@
 #include "Filesystem.h"
 #include "SDL3/SDL_filesystem.h"
 #include <algorithm>
+#include <cstdlib>
+#include <filesystem>
 
 /**
  * @file Filesystem.cpp
@@ -20,6 +22,7 @@ const std::string APPROOT = "bin://"; // Application executable directory
 const std::string APPDATA = "app://"; // Application user data directory
 const std::string USRDATA = "usr://"; // User's home folder
 const std::string WRKDATA = "wrk://"; // Workspace directory set by app/editor
+const std::string ENGDATA = "eng://"; // Engine root (repo's Duin/ folder), used during dev
 
 // Global variables for app:// virtual path resolution
 // Set via SetPrefPath(), used by MapVirtualToSystemPath()
@@ -29,6 +32,10 @@ static std::string APP = "";
 // Global variable for wrk:// virtual path resolution
 // Set via SetWorkspacePath(), used by MapVirtualToSystemPath()
 static std::string WORKSPACE_PATH = "";
+
+// Global variable for eng:// virtual path resolution (trailing '/')
+// Set via SetEngineRoot(), or lazily resolved by GetEngineRoot()
+static std::string ENGINE_ROOT = "";
 
 // When true, bin:// resolves to the current working directory instead of the executable directory.
 // Useful in debug/development to run from a source tree without copying assets next to the binary.
@@ -237,6 +244,19 @@ std::string duin::fs::MapVirtualToSystemPath(const std::string &path)
         }
     }
 
+    if (drive == ENGDATA)
+    {
+        std::string engineRoot = GetEngineRoot();
+        if (IsPathInvalid(engineRoot))
+        {
+            sysPath = INVALID_PATH;
+        }
+        else
+        {
+            sysPath = engineRoot + path.substr(vpathSize, path.size());
+        }
+    }
+
     return sysPath;
 }
 
@@ -253,6 +273,12 @@ std::string duin::fs::MapSystemToVirtualPath(const std::string &path)
     if (!WORKSPACE_PATH.empty() && normalized.rfind(WORKSPACE_PATH, 0) == 0)
     {
         return WRKDATA + normalized.substr(WORKSPACE_PATH.size());
+    }
+
+    // Check eng:// (engine root; only if already resolved, never triggers a search)
+    if (!ENGINE_ROOT.empty() && normalized.rfind(ENGINE_ROOT, 0) == 0)
+    {
+        return ENGDATA + normalized.substr(ENGINE_ROOT.size());
     }
 
     // Check app:// (user data directory)
@@ -290,7 +316,7 @@ bool duin::fs::IsVirtualPath(const std::string &path)
     }
 
     std::string drive = path.substr(0, vpathSize);
-    return drive == APPROOT || drive == APPDATA || drive == USRDATA || drive == WRKDATA;
+    return drive == APPROOT || drive == APPDATA || drive == USRDATA || drive == WRKDATA || drive == ENGDATA;
 }
 
 char **duin::fs::GlobDirectory(const std::string &path, const std::string &pattern, GlobFlags flags, int *count)
@@ -361,4 +387,187 @@ std::string duin::fs::GetWorkspacePath()
         return INVALID_PATH;
     }
     return WORKSPACE_PATH;
+}
+
+// --- Engine / daslang root resolution ---
+
+static bool FileExists(const std::string &path)
+{
+    std::error_code ec;
+    return std::filesystem::is_regular_file(std::filesystem::u8path(path), ec);
+}
+
+// Absolute, Unix-style, no trailing slash
+static std::string NormalizeDir(const std::string &path)
+{
+    std::error_code ec;
+    std::filesystem::path abs = std::filesystem::absolute(std::filesystem::u8path(path), ec);
+    std::string out = ec ? duin::fs::EnsureUnixPath(path) : abs.lexically_normal().generic_string();
+    while (out.size() > 1 && out.back() == '/')
+    {
+        out.pop_back();
+    }
+    return out;
+}
+
+static bool IsValidDasRoot(const std::string &root)
+{
+    return !root.empty() && FileExists(root + "/daslib/builtin.das");
+}
+
+static bool IsValidEngineRoot(const std::string &root)
+{
+    return !root.empty() && IsValidDasRoot(root + "/vendor/daslang");
+}
+
+// Walks up from startDir looking for <dir>/Duin being a valid engine root
+static std::string FindEngineRootUpwards(const std::string &startDir)
+{
+    if (startDir.empty() || duin::fs::IsPathInvalid(startDir))
+    {
+        return "";
+    }
+    std::string dir = NormalizeDir(startDir);
+    for (int depth = 0; depth < 8; ++depth)
+    {
+        if (IsValidEngineRoot(dir + "/Duin"))
+        {
+            return dir + "/Duin";
+        }
+        auto slash = dir.find_last_of('/');
+        if (slash == std::string::npos || slash == 0)
+        {
+            break;
+        }
+        dir = dir.substr(0, slash);
+    }
+    return "";
+}
+
+std::string duin::fs::ResolveEngineRoot(const std::string &overridePath)
+{
+    if (!overridePath.empty() && IsValidEngineRoot(NormalizeDir(overridePath)))
+    {
+        return NormalizeDir(overridePath);
+    }
+
+    if (const char *env = std::getenv("DUIN_ROOT"))
+    {
+        if (IsValidEngineRoot(NormalizeDir(env)))
+        {
+            return NormalizeDir(env);
+        }
+    }
+
+    std::string found = FindEngineRootUpwards(GetBasePath());
+    if (found.empty())
+    {
+        found = FindEngineRootUpwards(GetCurrentDir());
+    }
+    return found.empty() ? INVALID_PATH : found;
+}
+
+std::string duin::fs::ResolveDasRoot(const std::string &overridePath)
+{
+    if (!overridePath.empty() && IsValidDasRoot(NormalizeDir(overridePath)))
+    {
+        return NormalizeDir(overridePath);
+    }
+
+    if (const char *env = std::getenv("DUIN_DAS_ROOT"))
+    {
+        if (IsValidDasRoot(NormalizeDir(env)))
+        {
+            return NormalizeDir(env);
+        }
+    }
+
+    std::string engineRoot = GetEngineRoot();
+    if (IsPathInvalid(engineRoot))
+    {
+        return INVALID_PATH;
+    }
+    return engineRoot + "vendor/daslang";
+}
+
+bool duin::fs::SetEngineRoot(const std::string &path)
+{
+    std::string root = NormalizeDir(path);
+    if (!IsValidEngineRoot(root))
+    {
+        return false;
+    }
+    ENGINE_ROOT = root + "/";
+    return true;
+}
+
+std::string duin::fs::GetEngineRoot()
+{
+    if (ENGINE_ROOT.empty())
+    {
+        std::string root = ResolveEngineRoot();
+        if (IsPathInvalid(root))
+        {
+            return INVALID_PATH;
+        }
+        ENGINE_ROOT = root + "/";
+    }
+    return ENGINE_ROOT;
+}
+
+std::string duin::fs::FindProjectFile(const std::string &startPath)
+{
+    if (startPath.empty() || IsPathInvalid(startPath))
+    {
+        return INVALID_PATH;
+    }
+
+    std::string resolved = IsVirtualPath(startPath) ? MapVirtualToSystemPath(startPath) : startPath;
+    if (IsPathInvalid(resolved))
+    {
+        return INVALID_PATH;
+    }
+
+    std::error_code ec;
+    std::filesystem::path dir = std::filesystem::absolute(std::filesystem::u8path(resolved), ec);
+    if (ec)
+    {
+        return INVALID_PATH;
+    }
+    dir = dir.lexically_normal();
+    if (!std::filesystem::is_directory(dir, ec))
+    {
+        dir = dir.parent_path();
+    }
+
+    while (!dir.empty())
+    {
+        static const std::string PROJECT_EXT = ".das_project";
+        std::vector<std::filesystem::path> candidates;
+        for (const auto &entry : std::filesystem::directory_iterator(dir, ec))
+        {
+            // Suffix match, not extension(): a bare ".das_project" dotfile (e.g. DuinRT's) has no extension
+            const std::string name = entry.path().filename().generic_string();
+            if (entry.is_regular_file(ec) && name.size() >= PROJECT_EXT.size() &&
+                name.compare(name.size() - PROJECT_EXT.size(), PROJECT_EXT.size(), PROJECT_EXT) == 0)
+            {
+                candidates.push_back(entry.path());
+            }
+        }
+        if (!candidates.empty())
+        {
+            // Deterministic pick when a directory holds several project files
+            std::sort(candidates.begin(), candidates.end());
+            return candidates.front().generic_string();
+        }
+
+        std::filesystem::path parent = dir.parent_path();
+        if (parent == dir)
+        {
+            break;
+        }
+        dir = parent;
+    }
+
+    return INVALID_PATH;
 }

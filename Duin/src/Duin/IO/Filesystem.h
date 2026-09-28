@@ -404,6 +404,7 @@ std::string EnsureUnixPath(const std::string &path);
  * - **app://** - Maps to the application's user data directory (requires SetPrefPath)
  * - **usr://** - Maps to the user's home folder (via GetUserFolder)
  * - **wrk://** - Maps to a custom workspace directory (requires SetWorkspacePath)
+ * - **eng://** - Maps to the engine root, the repo's "Duin/" folder (see GetEngineRoot)
  *
  * @param path Virtual path starting with a recognized prefix (e.g., "bin://config.ini")
  * @return Absolute system path, or INVALID_PATH if the prefix is unrecognized or path is too short
@@ -721,5 +722,68 @@ bool SetWorkspacePath(const std::string &path);
  * @see SetWorkspacePath()
  */
 std::string GetWorkspacePath();
+
+/**
+ * @brief Resolve the engine root directory (the repo's "Duin/" folder).
+ *
+ * The engine root is the directory containing src/Duin and vendor/daslang. It is
+ * validated by the marker file <root>/vendor/daslang/daslib/builtin.das.
+ *
+ * Resolution order (first valid candidate wins):
+ *   1. overridePath (e.g. from a --engineroot CLI flag)
+ *   2. DUIN_ROOT environment variable
+ *   3. walk up from the executable directory looking for <dir>/Duin
+ *   4. walk up from the current working directory looking for <dir>/Duin
+ *
+ * Development-only: assumes the application runs from inside the source tree.
+ *
+ * @param overridePath Optional explicit engine root
+ * @return Absolute Unix-style path without trailing slash, or INVALID_PATH if not found
+ */
+std::string ResolveEngineRoot(const std::string &overridePath = "");
+
+/**
+ * @brief Resolve the daslang root directory (contains daslib/builtin.das).
+ *
+ * Resolution order: overridePath, DUIN_DAS_ROOT environment variable, then
+ * GetEngineRoot() + "/vendor/daslang". Candidates are only accepted if they
+ * contain daslib/builtin.das, which also rejects MSYS-style /c/... paths that
+ * the native file layer cannot open.
+ *
+ * @param overridePath Optional explicit das root (e.g. from a --dasroot CLI flag)
+ * @return Absolute Unix-style path without trailing slash, or INVALID_PATH if not found
+ */
+std::string ResolveDasRoot(const std::string &overridePath = "");
+
+/**
+ * @brief Override the engine root used by GetEngineRoot() and eng:// paths.
+ *
+ * @param path Engine root directory
+ * @return true if path is a valid engine root, false otherwise (root unchanged)
+ */
+bool SetEngineRoot(const std::string &path);
+
+/**
+ * @brief Get the engine root used for eng:// virtual paths.
+ *
+ * Lazily resolved with ResolveEngineRoot() on first use unless SetEngineRoot()
+ * was called.
+ *
+ * @return Engine root with a trailing slash, or INVALID_PATH if it cannot be resolved
+ */
+std::string GetEngineRoot();
+
+/**
+ * @brief Find the daslang project file governing a script.
+ *
+ * Walks up from startPath (a script file or directory, virtual paths allowed) and
+ * returns the first "*.das_project" file found (including a bare ".das_project").
+ * If a directory holds several, the alphabetically first is returned. Paths are returned absolute, because daslang anchors
+ * a project's relative module paths to the project file's own directory.
+ *
+ * @param startPath Script file or directory to start searching from
+ * @return Absolute Unix-style path to the project file, or INVALID_PATH if none found
+ */
+std::string FindProjectFile(const std::string &startPath);
 
 } // namespace duin::fs
