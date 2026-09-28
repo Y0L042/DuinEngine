@@ -87,7 +87,6 @@ Cfg.msbuild_exe = msbuild_bin and (msbuild_bin .. "/MSBuild.exe") or "msbuild"
 Cfg.vcpkg_root = find_dir("VCPKG_ROOT", nil, { "vcpkg.exe", "scripts/buildsystems/vcpkg.cmake" }, {
     "C:/vcpkg",
     "C:/Programs/vcpkg",
-    "D:/Projects/_Tools/vcpkg",
     vs .. "/VC/vcpkg",
 }, true)
 
