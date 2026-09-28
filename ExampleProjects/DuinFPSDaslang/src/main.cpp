@@ -92,10 +92,8 @@ class DuinFPSDaslangApp : public duin::Application
         // das::setCommandLineArguments(2, const_cast<char **>(debugArgv));
 
         mainScript = CreateChildObject<duin::GameScript>(ENTRY_SCRIPT);
-        mainScript->SetDasRoot("D:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
-        // mainScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\Duin\\duin_engine.das_project");
-        mainScript->SetProjectFile(
-            "D:\\Projects\\CPP_Projects\\Duin\\ExampleProjects\\DuinFPSDaslang\\duinfpsdaslang.das_project");
+        mainScript->SetDasRoot();
+        mainScript->SetProjectFile(duin::fs::FindProjectFile(ENTRY_SCRIPT));
         mainScript->InitModules([]() {
             NEED_MODULE(Module_UriParser);
             das::register_builtin_modules();
