@@ -3,7 +3,6 @@
 #include <Duin/Objects/GameObject.h>
 #include <filesystem>
 
-static const std::string DAS_ROOT      = "Duin/vendor/daslang";
 static const std::string ARTIFACTS_DIR = "./artifacts";
 
 static std::string WriteDas(const std::string &name, const std::string &src)
@@ -17,7 +16,7 @@ static std::string WriteDas(const std::string &name, const std::string &src)
 
 static void InitScript(duin::GameScript &gs)
 {
-    gs.SetDasRoot(DAS_ROOT);
+    gs.SetDasRoot(); // auto-resolved: independent of the working directory
     gs.InitModules();
 }
 

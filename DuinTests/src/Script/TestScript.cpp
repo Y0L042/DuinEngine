@@ -3,7 +3,6 @@
 #include <filesystem>
 #include <chrono>
 
-static const std::string DAS_ROOT      = "Duin/vendor/daslang";
 static const std::string ARTIFACTS_DIR = "./artifacts";
 
 static std::string WriteDas(const std::string &name, const std::string &src)
@@ -17,7 +16,7 @@ static std::string WriteDas(const std::string &name, const std::string &src)
 
 static void InitScript(duin::Script &s)
 {
-    s.SetDasRoot(DAS_ROOT);
+    s.SetDasRoot(); // auto-resolved: independent of the working directory
     s.InitModules();
 }
 

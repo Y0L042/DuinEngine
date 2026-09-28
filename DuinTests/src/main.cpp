@@ -12,6 +12,7 @@
 #include <Duin/Script/Script.h>
 #include <Duin/Script/GameScript.h>
 #include <Duin/Script/ScriptModules.h>
+#include <Duin/IO/Filesystem.h>
 
 #include <filesystem>
 
@@ -98,8 +99,9 @@ void RunScriptTests()
     int totalPassed = 0, totalFailed = 0;
 
     duin::Script script;
-    script.SetDasRoot("../Duin/vendor/daslang");
-    script.SetProjectFile("./duintests.das_project");
+    // Resolved at runtime so the test runner works from any working directory
+    script.SetDasRoot();
+    script.SetProjectFile(duin::fs::FindProjectFile("./scripts"));
     script.InitModules([]() {
         NEED_MODULE(Module_flecs);
         NEED_MODULE(Module_imgui);
@@ -116,6 +118,8 @@ void RunScriptTests()
         NEED_MODULE(Module_DnApplication);
         NEED_MODULE(Module_DnFilesystem);
         NEED_MODULE(Module_DnUUID);
+        NEED_MODULE(Module_DnAssetManager);
+        NEED_MODULE(Module_DnModel);
     });
 
     for (const auto &entry : fs::recursive_directory_iterator("./scripts")) {
