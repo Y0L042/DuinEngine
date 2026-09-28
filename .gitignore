@@ -130,3 +130,4 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 *.lock
 /.nvim.lua
 /generateprojects.sh
+/DuinEditor/data/editor_cfg.toml
