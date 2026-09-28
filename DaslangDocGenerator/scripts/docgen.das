@@ -230,8 +230,13 @@ def touch_module_stub(mod_name : string) {
 
 [export]
 def game_ready() {
-    topic_root = "C:/Projects/CPP_Projects/Duin/DaslangDocGenerator/docs/generated"
-    handmade_root = "C:/Projects/CPP_Projects/Duin/DaslangDocGenerator/docs/generated"
+    // wrk:// is set by the host to the DaslangDocGenerator source dir
+    topic_root = dn_fs_map_virtual_to_system("wrk://docs/generated")
+    if (dn_fs_is_path_invalid(topic_root)) {
+        to_log(LOG_ERROR, "DaslangDocGenerator: workspace (wrk://) not set, cannot resolve output dir\n")
+        return
+    }
+    handmade_root = topic_root
     rmdir_rec_result("{topic_root}/handmade")
     mkdir_rec(topic_root)
     to_log(LOG_INFO, "DaslangDocGenerator: writing RST to {topic_root}\n")

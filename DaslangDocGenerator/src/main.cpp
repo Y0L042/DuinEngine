@@ -17,9 +17,20 @@ class DaslangDocGeneratorApp : public duin::Application
 
     void Ready() override
     {
-        docScript = CreateChildObject<duin::GameScript>("scripts/docgen.das");
-        docScript->SetDasRoot("C:\\Projects\\CPP_Projects\\Duin\\Duin\\vendor\\daslang");
-        docScript->SetProjectFile("C:\\Projects\\CPP_Projects\\Duin\\DaslangDocGenerator\\scripts\\docgen.das_project");
+        const std::string entryScript = "scripts/docgen.das";
+        const std::string projectFile = duin::fs::FindProjectFile(entryScript);
+
+        // docgen.das writes to wrk://docs/generated; the workspace is the DaslangDocGenerator
+        // source dir (parent of scripts/, where docgen.das_project lives)
+        if (!duin::fs::IsPathInvalid(projectFile))
+        {
+            std::filesystem::path generatorDir = std::filesystem::path(projectFile).parent_path().parent_path();
+            duin::fs::SetWorkspacePath(generatorDir.generic_string());
+        }
+
+        docScript = CreateChildObject<duin::GameScript>(entryScript);
+        docScript->SetDasRoot();
+        docScript->SetProjectFile(projectFile);
         docScript->InitModules([]() {
             NEED_MODULE(Module_flecs);
             NEED_MODULE(Module_imgui);
