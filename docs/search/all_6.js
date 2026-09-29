@@ -67,12 +67,13 @@ var searchData=
   ['createdir_64',['CreateDir',['../namespaceduin_1_1fs.html#a08310e525fc80e8d8f652941344677de',1,'duin::fs']]],
   ['createexternalref_65',['CreateExternalRef',['../structduin_1_1ECSTag_1_1CreateExternalRef.html',1,'duin::ECSTag']]],
   ['createinputaction_66',['CreateInputAction',['../InputActions_8h.html#af245978b85d96ad56dc36dc6fd8850b1',1,'duin']]],
-  ['createprocess_67',['CreateProcess',['../Process_8h.html#a66aa7e632561ba16e7089d64c2732760',1,'duin']]],
-  ['createtime_68',['createTime',['../structduin_1_1fs_1_1PathInfo.html#a4b7e055f1fb741cbbf3a19aa0ad375a0',1,'duin::fs::PathInfo']]],
-  ['creating_20a_20rendertexture_69',['Creating a RenderTexture',['../md_docs_2RenderingPipeline.html#autotoc_md16',1,'']]],
-  ['ctx_70',['ctx',['../classduin_1_1SystemBuilder.html#a3b1a99d9532e9faecfdca216e62499cc',1,'duin::SystemBuilder::Ctx()'],['../classduin_1_1System.html#a00aaf65467e8761a8e68d226c4c5c2a9',1,'duin::System::Ctx(void *ptr)'],['../classduin_1_1System.html#ad60f3667b740c07114ce87e6fea7cb41',1,'duin::System::Ctx() const']]],
-  ['cubecomponent_71',['CubeComponent',['../structduin_1_1ECSComponent_1_1CubeComponent.html',1,'duin::ECSComponent']]],
-  ['cur_72',['Cur',['../IOStream_8h.html#aafe238ae3610c8171b45e210f21f2ebdadd4b1ecca171981542c71a705aa93f3e',1,'duin::io']]],
-  ['cylinderrendergeometry_73',['CylinderRenderGeometry',['../structduin_1_1CylinderRenderGeometry.html',1,'duin']]],
-  ['cylinderrendershape_74',['CylinderRenderShape',['../classduin_1_1CylinderRenderShape.html',1,'duin']]]
+  ['createnewwindow_67',['CreateNewWindow',['../Application_8h.html#a51ea5279563ee6434c3a88d1ba161761',1,'duin']]],
+  ['createprocess_68',['CreateProcess',['../Process_8h.html#a66aa7e632561ba16e7089d64c2732760',1,'duin']]],
+  ['createtime_69',['createTime',['../structduin_1_1fs_1_1PathInfo.html#a4b7e055f1fb741cbbf3a19aa0ad375a0',1,'duin::fs::PathInfo']]],
+  ['creating_20a_20rendertexture_70',['Creating a RenderTexture',['../md_docs_2RenderingPipeline.html#autotoc_md16',1,'']]],
+  ['ctx_71',['ctx',['../classduin_1_1SystemBuilder.html#a3b1a99d9532e9faecfdca216e62499cc',1,'duin::SystemBuilder::Ctx()'],['../classduin_1_1System.html#a00aaf65467e8761a8e68d226c4c5c2a9',1,'duin::System::Ctx(void *ptr)'],['../classduin_1_1System.html#ad60f3667b740c07114ce87e6fea7cb41',1,'duin::System::Ctx() const']]],
+  ['cubecomponent_72',['CubeComponent',['../structduin_1_1ECSComponent_1_1CubeComponent.html',1,'duin::ECSComponent']]],
+  ['cur_73',['Cur',['../IOStream_8h.html#aafe238ae3610c8171b45e210f21f2ebdadd4b1ecca171981542c71a705aa93f3e',1,'duin::io']]],
+  ['cylinderrendergeometry_74',['CylinderRenderGeometry',['../structduin_1_1CylinderRenderGeometry.html',1,'duin']]],
+  ['cylinderrendershape_75',['CylinderRenderShape',['../classduin_1_1CylinderRenderShape.html',1,'duin']]]
 ];

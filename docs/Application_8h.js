@@ -1,6 +1,7 @@
 var Application_8h =
 [
     [ "CreateApplication", "Application_8h.html#abec0b47c6d878bd45dfccbcc2719743a", null ],
+    [ "CreateNewWindow", "Application_8h.html#a51ea5279563ee6434c3a88d1ba161761", null ],
     [ "DebugIsGamePaused", "Application_8h.html#a06657e4114fe3254de76c06662ca0d30", null ],
     [ "DebugPauseGame", "Application_8h.html#aa905fb66eef95eb73b4d153691ca529f", null ],
     [ "DebugResumeGame", "Application_8h.html#af82d8dfeba8acf5978fd6c6245df78f2", null ],
