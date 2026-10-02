@@ -77,6 +77,8 @@ static SDL_Window *sdlWindow = NULL;
 static SDL_Surface *sdlSurface = NULL;
 static SDL_WindowFlags sdlWindowFlags = 0;
 
+
+
 // ---------------------------------------------------------------------------
 // Lifecycle signals
 // ---------------------------------------------------------------------------
