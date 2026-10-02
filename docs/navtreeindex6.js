@@ -1,5 +1,9 @@
 var NAVTREEINDEX6 =
 {
+"structduin_1_1ShaderProgram.html#ae95422aceb21aacc9a526eac501c4b71":[2,3,3,0,0],
+"structduin_1_1SignalConnections.html":[2,0,2,1],
+"structduin_1_1SignalConnections.html#a3e7588a71b2ab02e03dff563847f02bd":[2,0,2,1,6],
+"structduin_1_1SignalConnections.html#a46b2caaf3eefc3830c2cbd7cc2dcd008":[2,0,2,1,1],
 "structduin_1_1SignalConnections.html#a52dcdac29e3a9bfb580749ed42ccfcfb":[2,0,2,1,0],
 "structduin_1_1SignalConnections.html#aaaaac0c22db2a32e3283655429887b58":[2,0,2,1,8],
 "structduin_1_1SignalConnections.html#ac0da608b0870ae1eafb0f8db4cbaa2a4":[2,0,2,1,2],

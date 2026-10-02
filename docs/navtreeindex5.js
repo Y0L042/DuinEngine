@@ -1,5 +1,9 @@
 var NAVTREEINDEX5 =
 {
+"structImGuiTableHeaderData.html":[4,0,161],
+"structImGuiTableInstanceData.html":[4,0,162],
+"structImGuiTableSettings.html":[4,0,163],
+"structImGuiTableSortSpecs.html":[4,0,164],
 "structImGuiTableTempData.html":[4,0,165],
 "structImGuiTextBuffer.html":[4,0,166],
 "structImGuiTextFilter.html":[4,0,167],
@@ -245,9 +249,5 @@ var NAVTREEINDEX5 =
 "structduin_1_1Scene.html":[4,0,0,121],
 "structduin_1_1ShaderProgram.html":[2,3,3,0],
 "structduin_1_1ShaderProgram.html#a0ddca592a5beb8f4b12db7cd5846079e":[2,3,3,0,1],
-"structduin_1_1ShaderProgram.html#a6fe7b1f3134a66214d065ee0986eda17":[2,3,3,0,2],
-"structduin_1_1ShaderProgram.html#ae95422aceb21aacc9a526eac501c4b71":[2,3,3,0,0],
-"structduin_1_1SignalConnections.html":[2,0,2,1],
-"structduin_1_1SignalConnections.html#a3e7588a71b2ab02e03dff563847f02bd":[2,0,2,1,6],
-"structduin_1_1SignalConnections.html#a46b2caaf3eefc3830c2cbd7cc2dcd008":[2,0,2,1,1]
+"structduin_1_1ShaderProgram.html#a6fe7b1f3134a66214d065ee0986eda17":[2,3,3,0,2]
 };

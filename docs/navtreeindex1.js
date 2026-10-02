@@ -2,6 +2,8 @@ var NAVTREEINDEX1 =
 {
 "VirtualIOStream_8h.html":[5,0,1,0,4,21],
 "VirtualIOStream_8h_source.html":[5,0,1,0,4,21],
+"WindowState_8cpp_source.html":[5,0,1,0,2,6,0],
+"WindowState_8h_source.html":[5,0,1,0,2,6,1],
 "World_8cpp_source.html":[5,0,1,0,3,0,10],
 "World_8h_source.html":[5,0,1,0,3,0,11],
 "_2home_2runner_2work_2DuinEngine_2DuinEngine_2Duin_2src_2Duin_2Core_2Utils_2UUID_8h-example.html":[6,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "classduin_1_1Event.html":[2,0,1,7],
 "classduin_1_1Event.html#a0acf12d5fc855664d832a310cfcabad9":[2,0,1,7,0],
 "classduin_1_1EventHandler.html":[2,0,1,10],
-"classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727":[2,0,1,10,1],
-"classduin_1_1EventHandler.html#af0ecef1acd99e47738883008f48c028c":[2,0,1,10,0],
-"classduin_1_1ExternalSceneDependency.html":[4,0,0,45]
+"classduin_1_1EventHandler.html#ae815faf18ba95fcd9898de2abb96d727":[2,0,1,10,1]
 };
