@@ -46,11 +46,15 @@ class EventHandler
      */
     void RegisterInputEventListener(std::function<void(Event)> listener);
 
+    void RegisterWindowEventListener(std::function<void(Event)> listener);
+
   private:
     int closeRequested;
     std::vector<std::function<void(Event)>> inputEventListeners;
+    std::vector<std::function<void(Event)>> windowEventListeners;
 
     void CallInputEventListeners(Event event);
+    void CallWindowEventListeners(Event event);
 };
 
 } // namespace duin

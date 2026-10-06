@@ -51,7 +51,10 @@ void EventHandler::PollEvent(::SDL_Event e)
 
     if (e.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED)
     {
-        closeRequested = 1;
+        WindowEvent event;
+        event.SetSDLEvent(e);
+        CallWindowEventListeners(event);
+        //closeRequested = 1;
     }
 }
 
@@ -60,9 +63,22 @@ void EventHandler::RegisterInputEventListener(std::function<void(Event)> listene
     inputEventListeners.push_back(listener);
 }
 
+void EventHandler::RegisterWindowEventListener(std::function<void(Event)> listener)
+{
+    windowEventListeners.push_back(listener);
+}
+
 void EventHandler::CallInputEventListeners(Event event)
 {
     for (auto &listener : inputEventListeners)
+    {
+        listener(event);
+    }
+}
+
+void EventHandler::CallWindowEventListeners(Event event)
+{
+    for (auto &listener : windowEventListeners)
     {
         listener(event);
     }
