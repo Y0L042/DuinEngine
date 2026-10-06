@@ -1,6 +1,7 @@
 #include "MultiWindowSandbox.h"
 #include <Duin/Core/Application.h>
 #include <Duin/Core/Debug/DNLog.h>
+#include <Duin/Core/Window/WindowState.h>
 
 MultiWindowSandbox::MultiWindowSandbox(duin::GameStateMachine &sm) : duin::GameState(sm)
 {
