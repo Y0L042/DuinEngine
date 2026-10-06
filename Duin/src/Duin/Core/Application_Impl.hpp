@@ -112,8 +112,10 @@ void duin::Application::ProcessEvents()
     ::SDL_zero(e);
     while (::SDL_PollEvent(&e))
     {
+        // TODO: These currently bypass EventHandler
         duin::Input::ProcessSDLMouseEvent(e);
         duin::Input::ProcessSDLKeyboardEvent(e);
+
         eventHandler.PollEvent(e);
         ::ImGui_ImplSDL3_ProcessEvent(&e);
     }
