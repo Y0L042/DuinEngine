@@ -50,5 +50,5 @@ void MultiWindowSandbox::SetUnpause()
 void MultiWindowSandbox::Tests()
 {
     DN_INFO("Hello!");
-    duin::CreateNewWindow(0.0f, 0.0f, 640, 480);
+    duin::CreateNewWindow(640, 480, "Sandbox #01");
 }

@@ -1,26 +1,72 @@
 #include "dnpch.h"
 #include "WindowState.h"
 
+bool duin::WindowState::IsWindowValid()
+{
+    return sdlWindow != nullptr && ::SDL_GetWindowID(sdlWindow) != 0;
+}
+
 void duin::WindowState::SetSize(int width, int height)
 {
-    this->width = width;
-    this->height = height;
+    if (!IsWindowValid())
+    {
+        DN_CORE_WARN("WindowState::SetSize called on invalid window.");
+        return;
+    }
+    if (!::SDL_SetWindowSize(sdlWindow, width, height))
+    {
+        DN_CORE_WARN("SDL_SetWindowSize failed: {}", ::SDL_GetError());
+    }
 }
 
 void duin::WindowState::GetSize(int &width, int &height)
 {
-    width = this->width;
-    height = this->height;
+    width = 0;
+    height = 0;
+    if (!IsWindowValid())
+    {
+        return;
+    }
+    if (!::SDL_GetWindowSize(sdlWindow, &width, &height))
+    {
+        DN_CORE_WARN("SDL_GetWindowSize failed: {}", ::SDL_GetError());
+    }
 }
 
 int duin::WindowState::GetWidth()
 {
+    int width, height;
+    GetSize(width, height);
     return width;
 }
 
 int duin::WindowState::GetHeight()
 {
+    int width, height;
+    GetSize(width, height);
     return height;
+}
+
+void duin::WindowState::SetTitle(const std::string &title)
+{
+    if (!IsWindowValid())
+    {
+        DN_CORE_WARN("WindowState::SetTitle called on invalid window.");
+        return;
+    }
+    if (!::SDL_SetWindowTitle(sdlWindow, title.c_str()))
+    {
+        DN_CORE_WARN("SDL_SetWindowTitle failed: {}", ::SDL_GetError());
+    }
+}
+
+std::string duin::WindowState::GetTitle()
+{
+    if (!IsWindowValid())
+    {
+        return std::string();
+    }
+    return std::string(::SDL_GetWindowTitle(sdlWindow));
 }
 
 void duin::WindowState::UseCustomImguiPath(bool customImguiPath)
@@ -85,12 +131,53 @@ SDL_Surface *duin::WindowState::GetSDLSurface()
 
 void duin::WindowState::SetSDLWindowFlags(SDL_WindowFlags sdlWindowFlags)
 {
-    this->sdlWindowFlags = sdlWindowFlags;
+    if (!IsWindowValid())
+    {
+        DN_CORE_WARN("WindowState::SetSDLWindowFlags called on invalid window.");
+        return;
+    }
+
+    const SDL_WindowFlags changed = ::SDL_GetWindowFlags(sdlWindow) ^ sdlWindowFlags;
+    auto has = [&](SDL_WindowFlags flag) { return (sdlWindowFlags & flag) != 0; };
+
+    if (changed & SDL_WINDOW_FULLSCREEN)
+        ::SDL_SetWindowFullscreen(sdlWindow, has(SDL_WINDOW_FULLSCREEN));
+    if (changed & SDL_WINDOW_BORDERLESS)
+        ::SDL_SetWindowBordered(sdlWindow, !has(SDL_WINDOW_BORDERLESS));
+    if (changed & SDL_WINDOW_RESIZABLE)
+        ::SDL_SetWindowResizable(sdlWindow, has(SDL_WINDOW_RESIZABLE));
+    if (changed & SDL_WINDOW_ALWAYS_ON_TOP)
+        ::SDL_SetWindowAlwaysOnTop(sdlWindow, has(SDL_WINDOW_ALWAYS_ON_TOP));
+    if (changed & SDL_WINDOW_MODAL)
+        ::SDL_SetWindowModal(sdlWindow, has(SDL_WINDOW_MODAL));
+    if (changed & SDL_WINDOW_NOT_FOCUSABLE)
+        ::SDL_SetWindowFocusable(sdlWindow, !has(SDL_WINDOW_NOT_FOCUSABLE));
+    if (changed & SDL_WINDOW_MOUSE_GRABBED)
+        ::SDL_SetWindowMouseGrab(sdlWindow, has(SDL_WINDOW_MOUSE_GRABBED));
+    if (changed & SDL_WINDOW_KEYBOARD_GRABBED)
+        ::SDL_SetWindowKeyboardGrab(sdlWindow, has(SDL_WINDOW_KEYBOARD_GRABBED));
+    if (changed & SDL_WINDOW_MOUSE_RELATIVE_MODE)
+        ::SDL_SetWindowRelativeMouseMode(sdlWindow, has(SDL_WINDOW_MOUSE_RELATIVE_MODE));
+    if (changed & SDL_WINDOW_HIDDEN)
+        has(SDL_WINDOW_HIDDEN) ? ::SDL_HideWindow(sdlWindow) : ::SDL_ShowWindow(sdlWindow);
+    if (changed & (SDL_WINDOW_MINIMIZED | SDL_WINDOW_MAXIMIZED))
+    {
+        if (has(SDL_WINDOW_MINIMIZED))
+            ::SDL_MinimizeWindow(sdlWindow);
+        else if (has(SDL_WINDOW_MAXIMIZED))
+            ::SDL_MaximizeWindow(sdlWindow);
+        else
+            ::SDL_RestoreWindow(sdlWindow);
+    }
 }
 
 SDL_WindowFlags duin::WindowState::GetSDLWindowFlags()
 {
-    return sdlWindowFlags;
+    if (!IsWindowValid())
+    {
+        return 0;
+    }
+    return ::SDL_GetWindowFlags(sdlWindow);
 }
 
 void duin::WindowState::SetTargetRenderFramerate(int targetRenderFramerate)

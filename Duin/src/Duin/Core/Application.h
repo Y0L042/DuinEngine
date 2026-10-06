@@ -75,9 +75,6 @@ int GetWindowWidth();
 /** @brief Returns window height in pixels. */
 int GetWindowHeight();
 
-/** @brief Create new window and returns handle. */
-uint16_t CreateNewWindow(float posx, float posy, size_t width, size_t height);
-
 /** @brief Enables or disables window resizing. */
 void SetWindowResizable(bool enable);
 /** @brief Maximizes the application window. */

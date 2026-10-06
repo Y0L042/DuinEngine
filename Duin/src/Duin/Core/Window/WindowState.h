@@ -1,16 +1,24 @@
 #pragma once
+#include <Duin/Core/Utils/UUID.h>
 #include <SDL3/SDL_init.h>
+#include <SDL3/SDL_video.h>
 #include <string>
 
 namespace duin
 {
+
 class WindowState
 {
   public:
+    bool IsWindowValid();
+
     void SetSize(int width, int height);
     void GetSize(int &width, int &height);
     int GetWidth();
     int GetHeight();
+
+    void SetTitle(const std::string &title);
+    std::string GetTitle();
 
     void UseCustomImguiPath(bool customImguiPath);
     bool UsingCustomImguiPath();
@@ -37,15 +45,12 @@ class WindowState
     int GetTargetRenderFramerate();
 
   private:
-    int width = 1280;
-    int height = 720;
     bool customImguiPath = false;
     std::string imguiPath = "./";
     bool pauseOnMinimize = false;
     bool allowDockingInMain = false;
-    SDL_Window *sdlWindow = NULL;
-    SDL_Surface *sdlSurface = NULL;
-    SDL_WindowFlags sdlWindowFlags = 0;
+    SDL_Window *sdlWindow = nullptr;
+    SDL_Surface *sdlSurface = nullptr;
     int targetRenderFramerate = 60;
 };
 
