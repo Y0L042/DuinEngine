@@ -1,5 +1,8 @@
 var NAVTREEINDEX5 =
 {
+"structImGuiTableColumnSettings.html":[4,0,158],
+"structImGuiTableColumnSortSpecs.html":[4,0,159],
+"structImGuiTableFixDisplayOrderColumnData.html":[4,0,160],
 "structImGuiTableHeaderData.html":[4,0,161],
 "structImGuiTableInstanceData.html":[4,0,162],
 "structImGuiTableSettings.html":[4,0,163],
@@ -246,8 +249,5 @@ var NAVTREEINDEX5 =
 "structduin_1_1RenderTexture.html#a836bb55a02fa706bc801763a60188707":[2,3,0,4,6],
 "structduin_1_1RenderTexture.html#a9f3e639dd23e0e3524fcf2f29bf5ce9e":[2,3,0,4,3],
 "structduin_1_1RenderTexture.html#aed6e70d630aacc05bea37019f057d123":[2,3,0,4,0],
-"structduin_1_1Scene.html":[4,0,0,121],
-"structduin_1_1ShaderProgram.html":[2,3,3,0],
-"structduin_1_1ShaderProgram.html#a0ddca592a5beb8f4b12db7cd5846079e":[2,3,3,0,1],
-"structduin_1_1ShaderProgram.html#a6fe7b1f3134a66214d065ee0986eda17":[2,3,3,0,2]
+"structduin_1_1Scene.html":[4,0,0,121]
 };

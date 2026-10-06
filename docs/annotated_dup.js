@@ -188,6 +188,7 @@ var annotated_dup =
       [ "Vector4", "structduin_1_1Vector4.html", "structduin_1_1Vector4" ],
       [ "Vertex", "structduin_1_1Vertex.html", null ],
       [ "WindowEvent", "classduin_1_1WindowEvent.html", null ],
+      [ "WindowManager", "classduin_1_1WindowManager.html", null ],
       [ "WindowState", "classduin_1_1WindowState.html", null ],
       [ "World", "classduin_1_1World.html", "classduin_1_1World" ]
     ] ],

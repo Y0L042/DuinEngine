@@ -1,5 +1,8 @@
 var NAVTREEINDEX4 =
 {
+"icons__font__awesome_8ttf_8h_source.html":[5,0,1,1,17],
+"icons__kenney_8ttf_8h_source.html":[5,0,1,1,18],
+"imconfig_8h_source.html":[5,0,1,1,19],
 "imgui_8cpp_source.html":[5,0,1,1,20],
 "imgui_8h_source.html":[5,0,1,1,21],
 "imgui__base_8das_8inc_source.html":[5,0,1,0,9,0,6,0],
@@ -246,8 +249,5 @@ var NAVTREEINDEX4 =
 "structImGuiTabItem.html":[4,0,154],
 "structImGuiTable.html":[4,0,155],
 "structImGuiTableCellData.html":[4,0,156],
-"structImGuiTableColumn.html":[4,0,157],
-"structImGuiTableColumnSettings.html":[4,0,158],
-"structImGuiTableColumnSortSpecs.html":[4,0,159],
-"structImGuiTableFixDisplayOrderColumnData.html":[4,0,160]
+"structImGuiTableColumn.html":[4,0,157]
 };
