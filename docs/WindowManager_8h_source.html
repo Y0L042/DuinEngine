@@ -131,12 +131,26 @@ $(document).ready(function(){initNavTree('WindowManager_8h_source.html',''); ini
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">static</span> std::shared_ptr&lt;WindowState&gt; CreateNewWindow(<span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keyword">const</span> std::string &amp;title = <span class="stringliteral">&quot;Window&quot;</span>);</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    std::unordered_map&lt;SDL_Window *, std::shared_ptr&lt;WindowState&gt;&gt; sdlWindows;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>};</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">void</span> SubscribeToWindowEvents(); </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    SDL_Window* GetPrimarySDLWindow()</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordflow">if</span> (primaryWindow != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            <span class="keywordflow">return</span> primaryWindow-&gt;GetSDLWindow();</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        }</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    }</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    std::shared_ptr&lt;WindowState&gt; primaryWindow;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    std::unordered_map&lt;SDL_Window *, std::shared_ptr&lt;WindowState&gt;&gt; sdlWindows;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">void</span> OnWindowEvent(<a class="code hl_class" href="classduin_1_1WindowEvent.html">WindowEvent</a> event);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>};</div>
 </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>} <span class="comment">// namespace duin</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>} <span class="comment">// namespace duin</span></div>
+<div class="ttc" id="aclassduin_1_1WindowEvent_html"><div class="ttname"><a href="classduin_1_1WindowEvent.html">duin::WindowEvent</a></div><div class="ttdoc">Event class for window-related events (resize, focus, etc.).</div><div class="ttdef"><b>Definition</b> <a href="Event_8h_source.html#l00062">Event.h:63</a></div></div>
 <div class="ttc" id="aclassduin_1_1WindowManager_html"><div class="ttname"><a href="classduin_1_1WindowManager.html">duin::WindowManager</a></div><div class="ttdef"><b>Definition</b> <a href="WindowManager_8h_source.html#l00008">WindowManager.h:9</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
