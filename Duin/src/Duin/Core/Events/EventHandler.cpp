@@ -63,7 +63,7 @@ void EventHandler::RegisterInputEventListener(std::function<void(Event)> listene
     inputEventListeners.push_back(listener);
 }
 
-void EventHandler::RegisterWindowEventListener(std::function<void(Event)> listener)
+void EventHandler::RegisterWindowEventListener(std::function<void(WindowEvent)> listener)
 {
     windowEventListeners.push_back(listener);
 }
@@ -76,7 +76,7 @@ void EventHandler::CallInputEventListeners(Event event)
     }
 }
 
-void EventHandler::CallWindowEventListeners(Event event)
+void EventHandler::CallWindowEventListeners(WindowEvent event)
 {
     for (auto &listener : windowEventListeners)
     {

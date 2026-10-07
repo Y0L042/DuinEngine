@@ -1,5 +1,6 @@
 #include "dnpch.h"
 #include "WindowState.h"
+#include <Duin/Core/Events/Event.h>
 
 bool duin::WindowState::IsWindowValid()
 {
@@ -188,4 +189,8 @@ void duin::WindowState::SetTargetRenderFramerate(int targetRenderFramerate)
 int duin::WindowState::GetTargetRenderFramerate()
 {
     return targetRenderFramerate;
+}
+
+void duin::WindowState::ProcessWindowEvent(WindowEvent event)
+{
 }

@@ -44,6 +44,8 @@ class WindowState
     void SetTargetRenderFramerate(int targetRenderFramerate);
     int GetTargetRenderFramerate();
 
+    void ProcessWindowEvent(WindowEvent event);
+
   private:
     bool customImguiPath = false;
     std::string imguiPath = "./";

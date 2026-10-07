@@ -1,7 +1,7 @@
 #include "MultiWindowSandbox.h"
 #include <Duin/Core/Application.h>
 #include <Duin/Core/Debug/DNLog.h>
-#include <Duin/Core/Window/WindowState.h>
+#include <Duin/Core/Window/WindowManager.h>
 
 MultiWindowSandbox::MultiWindowSandbox(duin::GameStateMachine &sm) : duin::GameState(sm)
 {
@@ -51,5 +51,5 @@ void MultiWindowSandbox::SetUnpause()
 void MultiWindowSandbox::Tests()
 {
     DN_INFO("Hello!");
-    duin::CreateNewWindow(640, 480, "Sandbox #01");
+    std::shared_ptr<duin::WindowState> win = duin::WindowManager::CreateNewWindow(640, 480, "Sandbox #01");
 }
