@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['windowevent_0',['WindowEvent',['../classduin_1_1WindowEvent.html',1,'duin']]],
-  ['windowmanager_1',['WindowManager',['../classduin_1_1WindowManager.html',1,'duin']]],
-  ['windowstate_2',['WindowState',['../classduin_1_1WindowState.html',1,'duin']]],
+  ['windowctx_0',['WindowCtx',['../classduin_1_1WindowCtx.html',1,'duin']]],
+  ['windowevent_1',['WindowEvent',['../classduin_1_1WindowEvent.html',1,'duin']]],
+  ['windowmanager_2',['WindowManager',['../classduin_1_1WindowManager.html',1,'duin']]],
   ['withcomponent_3',['WithComponent',['../classduin_1_1Entity.html#a6422eeea85b2d155a3570951bc12506f',1,'duin::Entity']]],
   ['withscope_4',['WithScope',['../classduin_1_1Entity.html#a1ea44892b3552e8d314546e12d731851',1,'duin::Entity']]],
   ['world_5',['world',['../classduin_1_1World.html',1,'duin::World'],['../classduin_1_1World.html#a5671bad8729f782406f211f7d00d3201',1,'duin::World::World()']]],

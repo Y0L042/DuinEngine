@@ -122,20 +122,24 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aae6505606cca819ee9ec89bd4f356f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6213f415316c6fc7c84fe5c868b09a2" id="r_ac6213f415316c6fc7c84fe5c868b09a2"><td class="memItemLeft" align="right" valign="top">SDL_Window *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1WindowManager.html#ac6213f415316c6fc7c84fe5c868b09a2">GetPrimarySDLWindow</a> ()</td></tr>
 <tr class="separator:ac6213f415316c6fc7c84fe5c868b09a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab08e4edb5a083b67cc85ccd349cabf70" id="r_ab08e4edb5a083b67cc85ccd349cabf70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1WindowManager.html#ab08e4edb5a083b67cc85ccd349cabf70">SetPrimaryWindow</a> (std::shared_ptr&lt; <a class="el" href="classduin_1_1WindowCtx.html">WindowCtx</a> &gt; windowCtx)</td></tr>
+<tr class="separator:ab08e4edb5a083b67cc85ccd349cabf70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb69f60e2aa5fc5ac6035a71eddfe216" id="r_acb69f60e2aa5fc5ac6035a71eddfe216"><td class="memItemLeft" align="right" valign="top">SDL_Surface *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1WindowManager.html#acb69f60e2aa5fc5ac6035a71eddfe216">GetPrimarySDLSurface</a> ()</td></tr>
+<tr class="separator:acb69f60e2aa5fc5ac6035a71eddfe216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a56e877ba5d6182cce104195e27f725d7" id="r_a56e877ba5d6182cce104195e27f725d7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classduin_1_1WindowManager.html">WindowManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1WindowManager.html#a56e877ba5d6182cce104195e27f725d7">Get</a> ()</td></tr>
 <tr class="separator:a56e877ba5d6182cce104195e27f725d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0286a85880aea8c41741d2860d038aef" id="r_a0286a85880aea8c41741d2860d038aef"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1WindowState.html">WindowState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1WindowManager.html#a0286a85880aea8c41741d2860d038aef">CreateNewWindow</a> (int width, int height, const std::string &amp;title=&quot;Window&quot;)</td></tr>
-<tr class="separator:a0286a85880aea8c41741d2860d038aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48f9a6ff84d564962931b15922794fb2" id="r_a48f9a6ff84d564962931b15922794fb2"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classduin_1_1WindowCtx.html">WindowCtx</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classduin_1_1WindowManager.html#a48f9a6ff84d564962931b15922794fb2">CreateNewWindow</a> (const std::string &amp;title, int width, int height, uint64_t flags=0)</td></tr>
+<tr class="separator:a48f9a6ff84d564962931b15922794fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="WindowManager_8h_source.html#l00008">8</a> of file <a class="el" href="WindowManager_8h_source.html">WindowManager.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0286a85880aea8c41741d2860d038aef" name="a0286a85880aea8c41741d2860d038aef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0286a85880aea8c41741d2860d038aef">&#9670;&#160;</a></span>CreateNewWindow()</h2>
+<a id="a48f9a6ff84d564962931b15922794fb2" name="a48f9a6ff84d564962931b15922794fb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48f9a6ff84d564962931b15922794fb2">&#9670;&#160;</a></span>CreateNewWindow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,8 +148,14 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1WindowState.html">duin::WindowState</a> &gt; duin::WindowManager::CreateNewWindow </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classduin_1_1WindowCtx.html">duin::WindowCtx</a> &gt; duin::WindowManager::CreateNewWindow </td>
           <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>title</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em>, </td>
         </tr>
@@ -158,8 +168,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>title</em> = <code>&quot;Window&quot;</code>&#160;</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>flags</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -205,6 +215,33 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="acb69f60e2aa5fc5ac6035a71eddfe216" name="acb69f60e2aa5fc5ac6035a71eddfe216"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb69f60e2aa5fc5ac6035a71eddfe216">&#9670;&#160;</a></span>GetPrimarySDLSurface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_Surface * duin::WindowManager::GetPrimarySDLSurface </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="WindowManager_8h_source.html#l00028">28</a> of file <a class="el" href="WindowManager_8h_source.html">WindowManager.h</a>.</p>
+
+</div>
+</div>
 <a id="ac6213f415316c6fc7c84fe5c868b09a2" name="ac6213f415316c6fc7c84fe5c868b09a2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac6213f415316c6fc7c84fe5c868b09a2">&#9670;&#160;</a></span>GetPrimarySDLWindow()</h2>
 
@@ -228,7 +265,27 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="WindowManager_8h_source.html#l00016">16</a> of file <a class="el" href="WindowManager_8h_source.html">WindowManager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WindowManager_8h_source.html#l00017">17</a> of file <a class="el" href="WindowManager_8h_source.html">WindowManager.h</a>.</p>
+
+</div>
+</div>
+<a id="ab08e4edb5a083b67cc85ccd349cabf70" name="ab08e4edb5a083b67cc85ccd349cabf70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab08e4edb5a083b67cc85ccd349cabf70">&#9670;&#160;</a></span>SetPrimaryWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::WindowManager::SetPrimaryWindow </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classduin_1_1WindowCtx.html">WindowCtx</a> &gt;&#160;</td>
+          <td class="paramname"><em>windowCtx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="WindowManager_8cpp_source.html#l00036">36</a> of file <a class="el" href="WindowManager_8cpp_source.html">WindowManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,7 +304,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="WindowManager_8cpp_source.html#l00026">26</a> of file <a class="el" href="WindowManager_8cpp_source.html">WindowManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="WindowManager_8cpp_source.html#l00030">30</a> of file <a class="el" href="WindowManager_8cpp_source.html">WindowManager.cpp</a>.</p>
 
 </div>
 </div>

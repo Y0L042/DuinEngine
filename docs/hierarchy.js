@@ -633,7 +633,7 @@ var hierarchy =
       [ "duin::PosColorVertex", "structduin_1_1PosColorVertex.html", null ]
     ] ],
     [ "GraphEditor::ViewState", "structGraphEditor_1_1ViewState.html", null ],
+    [ "duin::WindowCtx", "classduin_1_1WindowCtx.html", null ],
     [ "duin::WindowManager", "classduin_1_1WindowManager.html", null ],
-    [ "duin::WindowState", "classduin_1_1WindowState.html", null ],
     [ "duin::World", "classduin_1_1World.html", null ]
 ];
