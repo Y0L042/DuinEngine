@@ -1,5 +1,6 @@
 #pragma once
 #include <Duin/Core/Utils/UUID.h>
+#include <Duin/Core/Events/Event.h>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_video.h>
 #include <string>
@@ -7,7 +8,7 @@
 namespace duin
 {
 
-class WindowState
+class WindowCtx
 {
   public:
     bool IsWindowValid();
@@ -45,6 +46,8 @@ class WindowState
     int GetTargetRenderFramerate();
 
     void ProcessWindowEvent(WindowEvent event);
+
+    void ShutDown();
 
   private:
     bool customImguiPath = false;

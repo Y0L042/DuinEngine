@@ -9,6 +9,7 @@
 #include "Duin/Render/Renderer.h"
 #include "Duin/ECS/Pipeline.h"
 #include "Duin/ECS/DECS/World.h"
+#include "Duin/Core/Window/WindowManager.h"
 
 #define SDL_MAIN_HANDLED
 

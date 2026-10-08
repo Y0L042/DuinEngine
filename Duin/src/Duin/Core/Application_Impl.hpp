@@ -43,7 +43,9 @@ void duin::Application::InitSDL()
     }
     else
     {
-        sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
+        //sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
+        auto window = WindowManager::CreateNewWindow(windowName, WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
+        sdlWindow = window != nullptr ? window->GetSDLWindow() : nullptr;
         if (sdlWindow == nullptr)
         {
             ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
@@ -51,6 +53,7 @@ void duin::Application::InitSDL()
         else
         {
             sdlSurface = ::SDL_GetWindowSurface(sdlWindow);
+            WindowManager::SubscribeToWindowEvents();
         }
     }
 }

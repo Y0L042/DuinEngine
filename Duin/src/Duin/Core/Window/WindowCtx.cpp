@@ -1,17 +1,16 @@
 #include "dnpch.h"
-#include "WindowState.h"
-#include <Duin/Core/Events/Event.h>
+#include "WindowCtx.h"
 
-bool duin::WindowState::IsWindowValid()
+bool duin::WindowCtx::IsWindowValid()
 {
     return sdlWindow != nullptr && ::SDL_GetWindowID(sdlWindow) != 0;
 }
 
-void duin::WindowState::SetSize(int width, int height)
+void duin::WindowCtx::SetSize(int width, int height)
 {
     if (!IsWindowValid())
     {
-        DN_CORE_WARN("WindowState::SetSize called on invalid window.");
+        DN_CORE_WARN("WindowCtx::SetSize called on invalid window.");
         return;
     }
     if (!::SDL_SetWindowSize(sdlWindow, width, height))
@@ -20,7 +19,7 @@ void duin::WindowState::SetSize(int width, int height)
     }
 }
 
-void duin::WindowState::GetSize(int &width, int &height)
+void duin::WindowCtx::GetSize(int &width, int &height)
 {
     width = 0;
     height = 0;
@@ -34,25 +33,25 @@ void duin::WindowState::GetSize(int &width, int &height)
     }
 }
 
-int duin::WindowState::GetWidth()
+int duin::WindowCtx::GetWidth()
 {
     int width, height;
     GetSize(width, height);
     return width;
 }
 
-int duin::WindowState::GetHeight()
+int duin::WindowCtx::GetHeight()
 {
     int width, height;
     GetSize(width, height);
     return height;
 }
 
-void duin::WindowState::SetTitle(const std::string &title)
+void duin::WindowCtx::SetTitle(const std::string &title)
 {
     if (!IsWindowValid())
     {
-        DN_CORE_WARN("WindowState::SetTitle called on invalid window.");
+        DN_CORE_WARN("WindowCtx::SetTitle called on invalid window.");
         return;
     }
     if (!::SDL_SetWindowTitle(sdlWindow, title.c_str()))
@@ -61,7 +60,7 @@ void duin::WindowState::SetTitle(const std::string &title)
     }
 }
 
-std::string duin::WindowState::GetTitle()
+std::string duin::WindowCtx::GetTitle()
 {
     if (!IsWindowValid())
     {
@@ -70,71 +69,71 @@ std::string duin::WindowState::GetTitle()
     return std::string(::SDL_GetWindowTitle(sdlWindow));
 }
 
-void duin::WindowState::UseCustomImguiPath(bool customImguiPath)
+void duin::WindowCtx::UseCustomImguiPath(bool customImguiPath)
 {
     this->customImguiPath = customImguiPath;
 }
 
-bool duin::WindowState::UsingCustomImguiPath()
+bool duin::WindowCtx::UsingCustomImguiPath()
 {
     return customImguiPath;
 }
 
-void duin::WindowState::SetImguiPath(const std::string &imguiPath)
+void duin::WindowCtx::SetImguiPath(const std::string &imguiPath)
 {
     this->imguiPath = imguiPath;
 }
 
-const std::string &duin::WindowState::GetImguiPath()
+const std::string &duin::WindowCtx::GetImguiPath()
 {
     return imguiPath;
 }
 
-void duin::WindowState::SetPauseOnMinimize(bool pauseOnMinimize)
+void duin::WindowCtx::SetPauseOnMinimize(bool pauseOnMinimize)
 {
     this->pauseOnMinimize = pauseOnMinimize;
 }
 
-bool duin::WindowState::GetPauseOnMinimize()
+bool duin::WindowCtx::GetPauseOnMinimize()
 {
     return pauseOnMinimize;
 }
 
-void duin::WindowState::SetAllowDockingInMain(bool allowDockingInMain)
+void duin::WindowCtx::SetAllowDockingInMain(bool allowDockingInMain)
 {
     this->allowDockingInMain = allowDockingInMain;
 }
 
-bool duin::WindowState::GetAllowDockingInMain()
+bool duin::WindowCtx::GetAllowDockingInMain()
 {
     return allowDockingInMain;
 }
 
-void duin::WindowState::SetSDLWindow(SDL_Window *sdlWindow)
+void duin::WindowCtx::SetSDLWindow(SDL_Window *sdlWindow)
 {
     this->sdlWindow = sdlWindow;
 }
 
-SDL_Window *duin::WindowState::GetSDLWindow()
+SDL_Window *duin::WindowCtx::GetSDLWindow()
 {
     return sdlWindow;
 }
 
-void duin::WindowState::SetSDLSurface(SDL_Surface *sdlSurface)
+void duin::WindowCtx::SetSDLSurface(SDL_Surface *sdlSurface)
 {
     this->sdlSurface = sdlSurface;
 }
 
-SDL_Surface *duin::WindowState::GetSDLSurface()
+SDL_Surface *duin::WindowCtx::GetSDLSurface()
 {
     return sdlSurface;
 }
 
-void duin::WindowState::SetSDLWindowFlags(SDL_WindowFlags sdlWindowFlags)
+void duin::WindowCtx::SetSDLWindowFlags(SDL_WindowFlags sdlWindowFlags)
 {
     if (!IsWindowValid())
     {
-        DN_CORE_WARN("WindowState::SetSDLWindowFlags called on invalid window.");
+        DN_CORE_WARN("WindowCtx::SetSDLWindowFlags called on invalid window.");
         return;
     }
 
@@ -172,7 +171,7 @@ void duin::WindowState::SetSDLWindowFlags(SDL_WindowFlags sdlWindowFlags)
     }
 }
 
-SDL_WindowFlags duin::WindowState::GetSDLWindowFlags()
+SDL_WindowFlags duin::WindowCtx::GetSDLWindowFlags()
 {
     if (!IsWindowValid())
     {
@@ -181,16 +180,30 @@ SDL_WindowFlags duin::WindowState::GetSDLWindowFlags()
     return ::SDL_GetWindowFlags(sdlWindow);
 }
 
-void duin::WindowState::SetTargetRenderFramerate(int targetRenderFramerate)
+void duin::WindowCtx::SetTargetRenderFramerate(int targetRenderFramerate)
 {
     this->targetRenderFramerate = targetRenderFramerate;
 }
 
-int duin::WindowState::GetTargetRenderFramerate()
+int duin::WindowCtx::GetTargetRenderFramerate()
 {
     return targetRenderFramerate;
 }
 
-void duin::WindowState::ProcessWindowEvent(WindowEvent event)
+void duin::WindowCtx::ProcessWindowEvent(WindowEvent event)
 {
+    DN_CORE_INFO("Window Event!");
+    if (event.sdlEvent.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED)
+    {
+        ShutDown();
+    }
+}
+
+void duin::WindowCtx::ShutDown()
+{
+    DN_CORE_INFO("Shutting down window...");
+    ::SDL_DestroySurface(sdlSurface);
+    sdlSurface = nullptr;
+    ::SDL_DestroyWindow(sdlWindow);
+    sdlWindow = nullptr;
 }

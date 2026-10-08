@@ -51,5 +51,5 @@ void MultiWindowSandbox::SetUnpause()
 void MultiWindowSandbox::Tests()
 {
     DN_INFO("Hello!");
-    std::shared_ptr<duin::WindowState> win = duin::WindowManager::CreateNewWindow(640, 480, "Sandbox #01");
+    std::shared_ptr<duin::WindowCtx> win = duin::WindowManager::CreateNewWindow("Sandbox #01", 640, 480);
 }
