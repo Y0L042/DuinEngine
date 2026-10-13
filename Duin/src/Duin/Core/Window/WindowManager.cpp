@@ -45,6 +45,7 @@ void duin::WindowManager::OnWindowEvent(WindowEvent event)
     if (state != nullptr)
     {
         // Process event
+        DN_CORE_INFO("WindowManager processing WindowEvent.");
         state->ProcessWindowEvent(event);
     }
     else
