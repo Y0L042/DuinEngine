@@ -117,6 +117,7 @@ class SignalImpl
     std::shared_ptr<ScopedConnection> ConnectScoped(std::shared_ptr<SignalImpl> self,
                                                     std::function<void(types...)> callback)
     {
+        // TODO Defer this; Connections must not be made during call iteration
         UUID id = Connect(std::move(callback));
         std::weak_ptr<SignalImpl> weakSelf = self;
         auto conn = std::shared_ptr<ScopedConnection>(new ScopedConnection(id, [weakSelf, id]() {
@@ -129,6 +130,7 @@ class SignalImpl
 
     void Disconnect(UUID uuid)
     {
+        // TODO ensure signals disconnected mid call iteration are skipped
         for (auto &[id, weakConn] : scopedConnections_)
         {
             if (id == uuid)
