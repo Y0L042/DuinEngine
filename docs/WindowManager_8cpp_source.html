@@ -163,13 +163,14 @@ $(document).ready(function(){initNavTree('WindowManager_8cpp_source.html',''); i
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">if</span> (state != <span class="keyword">nullptr</span>)</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    {</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">// Process event</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        state-&gt;ProcessWindowEvent(event);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    }</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    {</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        DN_CORE_FATAL(<span class="stringliteral">&quot;Event&#39;s Window not found in WindowManager!&quot;</span>);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    }</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        DN_CORE_INFO(<span class="stringliteral">&quot;WindowManager processing WindowEvent.&quot;</span>);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        state-&gt;ProcessWindowEvent(event);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        DN_CORE_FATAL(<span class="stringliteral">&quot;Event&#39;s Window not found in WindowManager!&quot;</span>);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>}</div>
 <div class="ttc" id="aEventHandler_8h_html"><div class="ttname"><a href="EventHandler_8h.html">EventHandler.h</a></div><div class="ttdoc">Event polling and dispatch system.</div></div>
 <div class="ttc" id="aEvent_8h_html"><div class="ttname"><a href="Event_8h.html">Event.h</a></div><div class="ttdoc">Event wrapper classes for SDL events.</div></div>
 <div class="ttc" id="aclassduin_1_1EventHandler_html_abc7346c66f5d6e910082e1a2e8a8b652"><div class="ttname"><a href="classduin_1_1EventHandler.html#abc7346c66f5d6e910082e1a2e8a8b652">duin::EventHandler::Get</a></div><div class="ttdeci">static EventHandler &amp; Get()</div><div class="ttdoc">Returns the singleton instance.</div><div class="ttdef"><b>Definition</b> <a href="EventHandler_8cpp_source.html#l00015">EventHandler.cpp:15</a></div></div>
