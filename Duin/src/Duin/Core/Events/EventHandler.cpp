@@ -45,7 +45,7 @@ void EventHandler::PollEvent(::SDL_Event e)
 
     if (e.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED)
     {
-        DN_CORE_INFO("Window Close Requested.");
+        DN_CORE_DEBUG("Window Close Requested.");
         WindowEvent event;
         event.SetSDLEvent(e);
         CallWindowEventListeners(event);
