@@ -125,6 +125,7 @@ class DAPI Log
 #define DN_CORE_FATAL(...) SPDLOG_LOGGER_CRITICAL(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 #define DN_CORE_ERROR(...) SPDLOG_LOGGER_ERROR(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 #define DN_CORE_WARN(...) SPDLOG_LOGGER_WARN(::duin::Log::GetCoreLogger(), __VA_ARGS__)
+#define DN_CORE_DEBUG(...) SPDLOG_LOGGER_DEBUG(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 #define DN_CORE_INFO(...) SPDLOG_LOGGER_INFO(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 #define DN_CORE_TRACE(...) SPDLOG_LOGGER_TRACE(::duin::Log::GetCoreLogger(), __VA_ARGS__)
 /** @} */
@@ -143,6 +144,9 @@ class DAPI Log
 #define DN_CORE_WARN_IF(condition, ...)                                                                                \
     if (condition)                                                                                                     \
     DN_CORE_WARN(__VA_ARGS__)
+#define DN_CORE_DEBUG_IF(condition, ...)                                                                                \
+    if (condition)                                                                                                     \
+    DN_CORE_DEBUG(__VA_ARGS__)
 #define DN_CORE_INFO_IF(condition, ...)                                                                                \
     if (condition)                                                                                                     \
     DN_CORE_INFO(__VA_ARGS__)
@@ -159,6 +163,7 @@ class DAPI Log
 #define DN_FATAL(...) SPDLOG_LOGGER_CRITICAL(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_ERROR(...) SPDLOG_LOGGER_ERROR(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_WARN(...) SPDLOG_LOGGER_WARN(::duin::Log::GetClientLogger(), __VA_ARGS__)
+#define DN_DEBUG(...) SPDLOG_LOGGER_DEBUG(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_INFO(...) SPDLOG_LOGGER_INFO(::duin::Log::GetClientLogger(), __VA_ARGS__)
 #define DN_TRACE(...) SPDLOG_LOGGER_TRACE(::duin::Log::GetClientLogger(), __VA_ARGS__)
 /** @} */
@@ -177,6 +182,9 @@ class DAPI Log
 #define DN_WARN_IF(condition, ...)                                                                                     \
     if (condition)                                                                                                     \
     DN_WARN(__VA_ARGS__)
+#define DN_DEBUG_IF(condition, ...)                                                                                     \
+    if (condition)                                                                                                     \
+    DN_DEBUG(__VA_ARGS__)
 #define DN_INFO_IF(condition, ...)                                                                                     \
     if (condition)                                                                                                     \
     DN_INFO(__VA_ARGS__)

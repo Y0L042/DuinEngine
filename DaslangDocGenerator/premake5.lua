@@ -83,7 +83,7 @@ multiprocessorcompile "On"
 filter {}
 
 filter "configurations:Debug"
-defines "DN_DEBUG"
+defines "__DN_DEBUG__"
 symbols "On"
 staticruntime(Cfg.premake_staticrt)
 runtime "Debug"
