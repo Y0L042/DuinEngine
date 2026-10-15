@@ -5,6 +5,8 @@ Famous last words:
 
 So, uh, *"a small, simple C++ game engine"* it is not anymore. Welcome 3D, Jolt Physics, BGFX-based renderer, Daslang scripting... This could take a while.
 
+**Start Date**:  26 April 2026
+
 [Documentation](https://y0l042.github.io/DuinEngine/)
 
 
