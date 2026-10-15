@@ -190,19 +190,108 @@ int duin::WindowCtx::GetTargetRenderFramerate()
     return targetRenderFramerate;
 }
 
-void duin::WindowCtx::ProcessWindowEvent(WindowEvent event)
+void *duin::WindowCtx::GetNativeHandle()
 {
-    DN_CORE_INFO("Window Event!");
-    if (event.sdlEvent.type == SDL_EventType::SDL_EVENT_WINDOW_CLOSE_REQUESTED)
+    if (!IsWindowValid())
     {
-        ShutDown();
+        return nullptr;
     }
+    return ::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow), SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
 }
 
-void duin::WindowCtx::ShutDown()
+void duin::WindowCtx::SetCamera(Camera *camera)
 {
-    DN_CORE_INFO("Shutting down window...");
-    ::SDL_DestroySurface(sdlSurface);
+    this->camera = camera;
+}
+
+duin::Camera *duin::WindowCtx::GetCamera()
+{
+    return camera;
+}
+
+void duin::WindowCtx::SetClearColor(uint32_t rgba)
+{
+    clearColor = rgba;
+}
+
+uint32_t duin::WindowCtx::GetClearColor()
+{
+    return clearColor;
+}
+
+void duin::WindowCtx::SetImGuiContext(::ImGuiContext *imguiContext)
+{
+    this->imguiContext = imguiContext;
+}
+
+::ImGuiContext *duin::WindowCtx::GetImGuiContext()
+{
+    return imguiContext;
+}
+
+void duin::WindowCtx::SetFrameBuffer(RHIFrameBufferHandle frameBuffer, int width, int height)
+{
+    this->frameBuffer = frameBuffer;
+    frameBufferWidth = width;
+    frameBufferHeight = height;
+}
+
+duin::RHIFrameBufferHandle duin::WindowCtx::GetFrameBuffer()
+{
+    return frameBuffer;
+}
+
+void duin::WindowCtx::GetFrameBufferSize(int &width, int &height)
+{
+    width = frameBufferWidth;
+    height = frameBufferHeight;
+}
+
+void duin::WindowCtx::SetViewSlot(int viewSlot)
+{
+    this->viewSlot = viewSlot;
+}
+
+int duin::WindowCtx::GetViewSlot()
+{
+    return viewSlot;
+}
+
+duin::RHIViewId duin::WindowCtx::GetSceneView()
+{
+    return (RHIViewId)(RHI_VIEW_WINDOW_BASE + 2 * viewSlot);
+}
+
+duin::RHIViewId duin::WindowCtx::GetUIView()
+{
+    return (RHIViewId)(RHI_VIEW_WINDOW_BASE + 2 * viewSlot + 1);
+}
+
+void duin::WindowCtx::SetPendingDestroy(bool pendingDestroy)
+{
+    this->pendingDestroy = pendingDestroy;
+}
+
+bool duin::WindowCtx::IsPendingDestroy()
+{
+    return pendingDestroy;
+}
+
+void duin::WindowCtx::ProcessWindowEvent(WindowEvent event)
+{
+    //if (event.sdlEvent.type == SDL_EventType::SDL_EVENT_WINDOW_XXX)
+    //{
+    //    
+    //}
+}
+
+void duin::WindowCtx::Destroy()
+{
+    if (sdlWindow == nullptr)
+    {
+        return;
+    }
+    DN_CORE_DEBUG("Shutting down me (Window)...");
     sdlSurface = nullptr;
     ::SDL_DestroyWindow(sdlWindow);
     sdlWindow = nullptr;
