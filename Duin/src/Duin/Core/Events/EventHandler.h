@@ -27,11 +27,8 @@ namespace duin
 class EventHandler
 {
   public:
-    /** @brief Returns the singleton instance. */
-    static EventHandler &Get();
-
     /** @brief Called by engine to process a polled SDL event. */
-    static void GetPolledEvent(::SDL_Event e);
+    void GetPolledEvent(::SDL_Event e);
 
     EventHandler();
     ~EventHandler();

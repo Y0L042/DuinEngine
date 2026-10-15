@@ -12,12 +12,6 @@
 
 namespace duin
 {
-EventHandler &EventHandler::Get()
-{
-    static EventHandler instance;
-    return instance;
-}
-
 EventHandler::EventHandler()
 {
     closeRequested = 0;
@@ -36,8 +30,8 @@ bool EventHandler::IsCloseRequested()
 
 void EventHandler::GetPolledEvent(::SDL_Event e)
 {
-    EventHandler &instance = Get();
-    instance.PollEvent(e);
+    // TODO why does this function exist?
+    PollEvent(e);
 }
 
 void EventHandler::PollEvent(::SDL_Event e)
