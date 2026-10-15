@@ -743,9 +743,9 @@ void RHIImGuiNewFrame()
     ImGui_Implbgfx_NewFrame();
 }
 
-void RHIImGuiRenderDrawLists(ImDrawData *drawData)
+void RHIImGuiRenderDrawLists(::ImDrawData *drawData, RHIViewId viewId)
 {
-    ImGui_Implbgfx_RenderDrawLists((::ImDrawData *)drawData);
+    ImGui_Implbgfx_RenderDrawLists((::ImDrawData *)drawData, viewId);
 }
 
 } // namespace duin

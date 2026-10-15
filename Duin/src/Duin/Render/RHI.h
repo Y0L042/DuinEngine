@@ -159,6 +159,9 @@ static constexpr RHIViewId RHI_VIEW_3D = 0;
 static constexpr RHIViewId RHI_VIEW_RENDERTEXTURE = 1;
 static constexpr RHIViewId RHI_VIEW_IMGUI = 255;
 
+static constexpr RHIViewId RHI_VIEW_WINDOW_BASE = 10;
+static constexpr int       RHI_MAX_WINDOWS = 32;
+
 // ---------------------------------------------------------------------------
 // Setup/Shutdown
 // ---------------------------------------------------------------------------
@@ -202,6 +205,7 @@ void                  RHIDestroyIndexBuffer(RHIIndexBufferHandle handle);
 
 RHITextureHandle     RHICreateTexture2D(uint16_t width, uint16_t height);
 RHIFrameBufferHandle RHICreateFrameBuffer(RHITextureHandle texture);
+RHIFrameBufferHandle RHICreateWindowFrameBuffer(void *nwh, uint16_t width, uint16_t height);
 void                 RHIDestroyTexture(RHITextureHandle handle);
 void                 RHIDestroyFrameBuffer(RHIFrameBufferHandle handle);
 uint16_t             RHIGetTextureIdx(RHITextureHandle handle);
@@ -278,7 +282,7 @@ void RHIReset(uint32_t width, uint32_t height, uint32_t flags);
 void RHIImGuiInit(uint16_t viewId);
 void RHIImGuiShutdown();
 void RHIImGuiNewFrame();
-void RHIImGuiRenderDrawLists(::ImDrawData *drawData);
+void RHIImGuiRenderDrawLists(::ImDrawData *drawData, RHIViewId viewId = RHI_VIEW_IMGUI);
 
 // clang-format on
 
