@@ -1,10 +1,9 @@
 # Duin Engine
 
-A small, simple C++ game engine. The goal is to have a small, simple game engine that makes it nice and simple for coders and hobbyists to make small games.
+Famous last words:
+> "A small, simple C++ game engine. The goal is to have a small, simple game engine that makes it nice and simple for coders and hobbyists to make small games. I wanted an engine, without all the UI, tooling, and extra features that most engines have. While those features can be extremely useful, as someone who likes a code-first approach, most of those features went unused."
 
-I wanted an engine, without all the UI, tooling, and extra features that most engines have. While those features can be extremely useful, as someone who likes a code-first approach, most of those features went unused. 
-
-![Astroids with Boids](./Duin/docs/assets/astroids_boids_01.gif)
+So, uh, *"a small, simple C++ game engine"* it is not anymore. Welcome 3D, Jolt Physics, BGFX-based renderer, Daslang scripting... This could take a while.
 
 [Documentation](https://y0l042.github.io/DuinEngine/)
 
