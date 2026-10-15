@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"VirtualIOStream_8cpp_source.html":[5,0,1,0,4,20],
 "VirtualIOStream_8h.html":[5,0,1,0,4,21],
 "VirtualIOStream_8h_source.html":[5,0,1,0,4,21],
 "WindowCtx_8cpp_source.html":[5,0,1,0,2,6,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "classduin_1_1Entity.html#af6d1a6ab98ab3627e6e64ebecc6cdea2":[4,0,0,41,30],
 "classduin_1_1Entity.html#afc688a5b3067607db06935db9eaf3714":[4,0,0,41,41],
 "classduin_1_1Entity.html#afcc78d5918c24888686828cdaa9df4b4":[4,0,0,41,24],
-"classduin_1_1Event.html":[2,0,1,7],
-"classduin_1_1Event.html#a0acf12d5fc855664d832a310cfcabad9":[2,0,1,7,0]
+"classduin_1_1Event.html":[2,0,1,7]
 };

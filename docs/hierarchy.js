@@ -428,6 +428,7 @@ var hierarchy =
     [ "Mesh", "structMesh.html", null ],
     [ "duin::MeshData", "structduin_1_1MeshData.html", null ],
     [ "MeshState", "structMeshState.html", null ],
+    [ "duin::MessageSystem", "classduin_1_1MessageSystem.html", null ],
     [ "duin::Model", "classduin_1_1Model.html", null ],
     [ "duin::ModelLoader", "classduin_1_1ModelLoader.html", null ],
     [ "das::Module", null, [
@@ -570,6 +571,7 @@ var hierarchy =
     [ "duin::Signal< types >", "classduin_1_1Signal.html", null ],
     [ "duin::Signal< double >", "classduin_1_1Signal.html", null ],
     [ "duin::Signal< duin::Event >", "classduin_1_1Signal.html", null ],
+    [ "duin::Signal< std::shared_ptr< duin::WindowCtx > >", "classduin_1_1Signal.html", null ],
     [ "duin::SignalConnections", "structduin_1_1SignalConnections.html", null ],
     [ "duin::SignalImpl< types >", "classduin_1_1SignalImpl.html", null ],
     [ "SM_Machine", "structSM__Machine.html", null ],

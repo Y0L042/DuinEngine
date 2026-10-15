@@ -262,7 +262,7 @@ var searchData=
   ['interval_259',['interval',['../classduin_1_1System.html#af0234e07f117f87faa1edcc77460978a',1,'duin::System::Interval() const'],['../classduin_1_1System.html#a2d83a5be6edc7344b1e409a50ab06e86',1,'duin::System::Interval(float interval)'],['../classduin_1_1SystemBuilder.html#a52e22aa4ab7ae742529c0f493ebddf31',1,'duin::SystemBuilder::Interval()']]],
   ['intexturemode_260',['inTextureMode',['../structduin_1_1RenderState.html#a63cccf0d345b856ada5148f2308c0018',1,'duin::RenderState']]],
   ['introduction_261',['Introduction',['..//home/runner/work/DuinEngine/DuinEngine/Duin/docs/README.md#intro',1,'']]],
-  ['invalid_262',['invalid',['../classduin_1_1UUID.html#a19962111b37df807cada7d74e5e49357',1,'duin::UUID::INVALID'],['../classduin_1_1JSONValue.html#a5bb54de47471f6e401e13e8d9ccc655e',1,'duin::JSONValue::Invalid()']]],
+  ['invalid_262',['invalid',['../classduin_1_1JSONValue.html#a5bb54de47471f6e401e13e8d9ccc655e',1,'duin::JSONValue::Invalid()'],['../classduin_1_1UUID.html#a19962111b37df807cada7d74e5e49357',1,'duin::UUID::INVALID']]],
   ['invokable_263',['Invokable',['../structfilewatch_1_1Invokable.html',1,'filewatch']]],
   ['iostatus_264',['IOStatus',['../IOStream_8h.html#ad146ec7ac71bbd0e2da84e3e448fd7dd',1,'duin::io']]],
   ['iostream_265',['iostream',['../classduin_1_1io_1_1IOStream.html',1,'duin::io::IOStream'],['../classduin_1_1io_1_1IOStream.html#aff891132b7b500b656662c4d40c7b124',1,'duin::io::IOStream::IOStream()'],['../classduin_1_1io_1_1IOStream.html#ad894dc263a39de2d1d250b8bd7c1c88e',1,'duin::io::IOStream::IOStream(IOStream &amp;&amp;other) noexcept']]],

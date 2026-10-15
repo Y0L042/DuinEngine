@@ -106,6 +106,7 @@ var annotated_dup =
       [ "LookupVector", "classduin_1_1LookupVector.html", "classduin_1_1LookupVector" ],
       [ "Matrix", "structduin_1_1Matrix.html", "structduin_1_1Matrix" ],
       [ "MeshData", "structduin_1_1MeshData.html", null ],
+      [ "MessageSystem", "classduin_1_1MessageSystem.html", null ],
       [ "Model", "classduin_1_1Model.html", null ],
       [ "ModelData", "structduin_1_1ModelData.html", null ],
       [ "ModelLoader", "classduin_1_1ModelLoader.html", null ],
