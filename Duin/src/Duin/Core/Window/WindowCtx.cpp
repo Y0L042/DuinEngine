@@ -33,6 +33,20 @@ void duin::WindowCtx::GetSize(int &width, int &height)
     }
 }
 
+void duin::WindowCtx::GetSizeInPixels(int &width, int &height)
+{
+    width = 0;
+    height = 0;
+    if (!IsWindowValid())
+    {
+        return;
+    }
+    if (!::SDL_GetWindowSizeInPixels(sdlWindow, &width, &height))
+    {
+        DN_CORE_WARN("SDL_GetWindowSizeInPixels failed: {}", ::SDL_GetError());
+    }
+}
+
 int duin::WindowCtx::GetWidth()
 {
     int width, height;
