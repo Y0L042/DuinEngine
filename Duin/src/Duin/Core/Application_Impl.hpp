@@ -1,3 +1,8 @@
+static ::ImGuiContext *PRIMARY_IMGUI_CONTEXT = nullptr;
+static std::array<bool, duin::RHI_MAX_WINDOWS> VIEW_SLOTS_IN_USE{};
+static std::shared_ptr<duin::ScopedConnection> WINDOW_CREATED_CONNECTION;
+static std::shared_ptr<duin::ScopedConnection> WINDOW_DESTROYING_CONNECTION;
+
 void duin::Application::Run()
 {
     double physicsCurrentTime = duin::GetTicks();
@@ -43,17 +48,11 @@ void duin::Application::InitSDL()
     }
     else
     {
-        //sdlWindow = ::SDL_CreateWindow(windowName.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
-        auto window = WindowManager::CreateNewWindow(windowName, WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
-        sdlWindow = window != nullptr ? window->GetSDLWindow() : nullptr;
-        if (sdlWindow == nullptr)
+        std::shared_ptr<WindowCtx> window = windowManager.CreateNewWindow(windowName, WINDOW_WIDTH, WINDOW_HEIGHT, sdlWindowFlags);
+        windowManager.SetPrimaryWindow(window);
+        if (window == nullptr)
         {
             ::SDL_Log("Window could not be created! SDL error: %s\n", ::SDL_GetError());
-        }
-        else
-        {
-            sdlSurface = ::SDL_GetWindowSurface(sdlWindow);
-            WindowManager::SubscribeToWindowEvents();
         }
     }
 }
@@ -64,27 +63,196 @@ void duin::Application::InitRHI()
         RHI_VIEW_3D,
         WINDOW_WIDTH, 
         WINDOW_HEIGHT, 
-        [&]() {
-            return (::HWND)::SDL_GetPointerProperty(::SDL_GetWindowProperties(sdlWindow),
-                                                SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
-        },
+        [&]() { return (::HWND)windowManager.GetPrimaryWindow()->GetNativeHandle(); },
         false // not headless
     );
 }
 
 void duin::Application::InitImGui()
 {
-    ImGui::CreateContext();
+    PRIMARY_IMGUI_CONTEXT = ImGui::CreateContext();
+    ImGui::SetCurrentContext(PRIMARY_IMGUI_CONTEXT);
     RHIImGuiInit(RHI_VIEW_IMGUI);
-    ::ImGui_ImplSDL3_InitForD3D(sdlWindow);
+    ::ImGui_ImplSDL3_InitForD3D(windowManager.GetPrimarySDLWindow());
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    WINDOW_CREATED_CONNECTION = windowManager.OnWindowCreated.ConnectScoped(
+        [this](std::shared_ptr<WindowCtx> windowCtx) {
+            if (windowCtx != windowManager.GetPrimaryWindow())
+            {
+                InitWindowRenderResources(*windowCtx);
+            }
+        });
+    WINDOW_DESTROYING_CONNECTION = windowManager.OnWindowDestroying.ConnectScoped(
+        [this](std::shared_ptr<WindowCtx> windowCtx) { ShutdownWindowRenderResources(*windowCtx); });
+
+    for (const std::shared_ptr<WindowCtx> &windowCtx : windowManager.GetSecondaryWindows())
+    {
+        InitWindowRenderResources(*windowCtx);
+    }
 }
 
 void duin::Application::ShutdownImGui()
 {
+    windowManager.ReleasePendingWindows();
+    for (const std::shared_ptr<WindowCtx> &windowCtx : windowManager.GetSecondaryWindows())
+    {
+        ShutdownWindowRenderResources(*windowCtx);
+    }
+    WINDOW_CREATED_CONNECTION.reset();
+    WINDOW_DESTROYING_CONNECTION.reset();
+
+    ImGui::SetCurrentContext(PRIMARY_IMGUI_CONTEXT);
     ::ImGui_ImplSDL3_Shutdown();
     RHIImGuiShutdown();
-    ImGui::DestroyContext();
+    ImGui::DestroyContext(PRIMARY_IMGUI_CONTEXT);
+    PRIMARY_IMGUI_CONTEXT = nullptr;
+}
+
+void duin::Application::InitWindowRenderResources(WindowCtx &windowCtx)
+{
+    if (windowCtx.GetImGuiContext() != nullptr)
+    {
+        return;
+    }
+
+    int slot = -1;
+    for (int i = 0; i < RHI_MAX_WINDOWS; ++i)
+    {
+        if (!VIEW_SLOTS_IN_USE[i])
+        {
+            slot = i;
+            break;
+        }
+    }
+    if (slot < 0)
+    {
+        DN_CORE_ERROR("No free render view slot for window '{}' (max {}).", windowCtx.GetTitle(), RHI_MAX_WINDOWS);
+        return;
+    }
+
+    int width, height;
+    windowCtx.GetSizeInPixels(width, height);
+    RHIFrameBufferHandle frameBuffer =
+        RHICreateWindowFrameBuffer(windowCtx.GetNativeHandle(), (uint16_t)width, (uint16_t)height);
+    if (!frameBuffer.IsValid())
+    {
+        DN_CORE_ERROR("Failed to create swap chain for window '{}'.", windowCtx.GetTitle());
+        return;
+    }
+
+    VIEW_SLOTS_IN_USE[slot] = true;
+    windowCtx.SetViewSlot(slot);
+    windowCtx.SetFrameBuffer(frameBuffer, width, height);
+
+    ::ImGuiContext *previousContext = ImGui::GetCurrentContext();
+    ImGui::SetCurrentContext(PRIMARY_IMGUI_CONTEXT);
+    ImFontAtlas *sharedAtlas = ImGui::GetIO().Fonts;
+    ImGuiStyle sharedStyle = ImGui::GetStyle();
+
+    ::ImGuiContext *imguiContext = ImGui::CreateContext(sharedAtlas);
+    ImGui::SetCurrentContext(imguiContext);
+    ImGui::GetStyle() = sharedStyle;
+    ImGuiIO &io = ImGui::GetIO();
+    io.IniFilename = nullptr;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    RHIImGuiInit(windowCtx.GetUIView());
+    ::ImGui_ImplSDL3_InitForD3D(windowCtx.GetSDLWindow());
+    windowCtx.SetImGuiContext(imguiContext);
+
+    ImGui::SetCurrentContext(previousContext);
+}
+
+void duin::Application::ShutdownWindowRenderResources(WindowCtx &windowCtx)
+{
+    if (::ImGuiContext *imguiContext = windowCtx.GetImGuiContext())
+    {
+        ::ImGuiContext *previousContext = ImGui::GetCurrentContext();
+        ImGui::SetCurrentContext(imguiContext);
+        ::ImGui_ImplSDL3_Shutdown();
+        RHIImGuiShutdown();
+        ImGui::DestroyContext(imguiContext);
+        ImGui::SetCurrentContext(previousContext != imguiContext ? previousContext : PRIMARY_IMGUI_CONTEXT);
+        windowCtx.SetImGuiContext(nullptr);
+    }
+
+    const int slot = windowCtx.GetViewSlot();
+    if (slot >= 0)
+    {
+        RHISetViewFrameBuffer(windowCtx.GetSceneView(), RHIFrameBufferHandle{});
+        RHISetViewFrameBuffer(windowCtx.GetUIView(), RHIFrameBufferHandle{});
+        VIEW_SLOTS_IN_USE[slot] = false;
+        windowCtx.SetViewSlot(-1);
+    }
+
+    RHIDestroyFrameBuffer(windowCtx.GetFrameBuffer());
+    windowCtx.SetFrameBuffer(RHIFrameBufferHandle{}, 0, 0);
+}
+
+void duin::Application::RenderSecondaryWindow(WindowCtx &windowCtx)
+{
+    ::ImGuiContext *imguiContext = windowCtx.GetImGuiContext();
+    if (imguiContext == nullptr || windowCtx.IsPendingDestroy())
+    {
+        return;
+    }
+    if (windowCtx.GetSDLWindowFlags() & SDL_WINDOW_MINIMIZED)
+    {
+        return;
+    }
+
+    int width, height;
+    windowCtx.GetSizeInPixels(width, height);
+    if (width <= 0 || height <= 0)
+    {
+        return;
+    }
+
+    RHIFrameBufferHandle frameBuffer = windowCtx.GetFrameBuffer();
+    int frameBufferWidth, frameBufferHeight;
+    windowCtx.GetFrameBufferSize(frameBufferWidth, frameBufferHeight);
+    if (frameBuffer.IsValid() && (width != frameBufferWidth || height != frameBufferHeight))
+    {
+        RHIDestroyFrameBuffer(frameBuffer);
+        windowCtx.SetFrameBuffer(RHIFrameBufferHandle{}, 0, 0);
+        return;
+    }
+    if (!frameBuffer.IsValid())
+    {
+        frameBuffer = RHICreateWindowFrameBuffer(windowCtx.GetNativeHandle(), (uint16_t)width, (uint16_t)height);
+        windowCtx.SetFrameBuffer(frameBuffer, width, height);
+        if (!frameBuffer.IsValid())
+        {
+            return;
+        }
+    }
+
+    const RHIViewId sceneView = windowCtx.GetSceneView();
+    const RHIViewId uiView = windowCtx.GetUIView();
+    RHISetViewFrameBuffer(sceneView, frameBuffer);
+    RHISetViewFrameBuffer(uiView, frameBuffer);
+    RHISetViewRect(sceneView, 0, 0, (uint16_t)width, (uint16_t)height);
+    RHISetViewClear(sceneView, windowCtx.GetClearColor(), 1.0f, 0);
+    RHITouch(sceneView);
+
+    ImGui::SetCurrentContext(imguiContext);
+    RHIImGuiNewFrame();
+    ::ImGui_ImplSDL3_NewFrame();
+    ImGui::NewFrame();
+
+    Camera *camera = windowCtx.GetCamera() != nullptr ? windowCtx.GetCamera() : duin::GetActiveCamera();
+    if (camera != nullptr)
+    {
+        duin::BeginDraw3D(*camera, sceneView, (uint16_t)width, (uint16_t)height);
+        windowCtx.OnDraw.Emit();
+        duin::EndDraw3D();
+    }
+
+    windowCtx.OnDrawUI.Emit();
+
+    ImGui::Render();
+    RHIImGuiRenderDrawLists(ImGui::GetDrawData(), uiView);
+    ImGui::SetCurrentContext(PRIMARY_IMGUI_CONTEXT);
 }
 
 void duin::Application::ShutdownRHI()
@@ -95,10 +263,7 @@ void duin::Application::ShutdownRHI()
 
 void duin::Application::ShutdownSDL()
 {
-    ::SDL_DestroySurface(sdlSurface);
-    sdlSurface = nullptr;
-    ::SDL_DestroyWindow(sdlWindow);
-    sdlWindow = nullptr;
+    windowManager.DestroyAllWindows();
 
     DN_CORE_INFO("Quitting...");
     ::SDL_Quit();
@@ -120,7 +285,18 @@ void duin::Application::ProcessEvents()
         duin::Input::ProcessSDLKeyboardEvent(e);
 
         eventHandler.PollEvent(e);
+
+        ::ImGuiContext *eventContext = PRIMARY_IMGUI_CONTEXT;
+        if (std::shared_ptr<WindowCtx> windowCtx = windowManager.GetWindowCtx(::SDL_GetWindowFromEvent(&e)))
+        {
+            if (windowCtx->GetImGuiContext() != nullptr)
+            {
+                eventContext = windowCtx->GetImGuiContext();
+            }
+        }
+        ImGui::SetCurrentContext(eventContext);
         ::ImGui_ImplSDL3_ProcessEvent(&e);
+        ImGui::SetCurrentContext(PRIMARY_IMGUI_CONTEXT);
     }
     duin::Input::UpdateMouseFrameDelta();
     gameShouldQuit = eventHandler.IsCloseRequested();
@@ -128,9 +304,11 @@ void duin::Application::ProcessEvents()
 
 void duin::Application::RunRender()
 {
+    SDL_Window *window = windowManager.GetPrimarySDLWindow();
+
     // Update render rect on window resizing
     int displayWidth, displayHeight;
-    ::SDL_GetWindowSize(sdlWindow, &displayWidth, &displayHeight);
+    ::SDL_GetWindowSize(window, &displayWidth, &displayHeight);
 
     WINDOW_WIDTH = displayWidth;
     WINDOW_HEIGHT = displayHeight;
@@ -140,6 +318,7 @@ void duin::Application::RunRender()
     RHITouch(RHI_VIEW_3D);
 
     ++renderFrameCount;
+    ImGui::SetCurrentContext(PRIMARY_IMGUI_CONTEXT);
     RHIImGuiNewFrame();
     ::ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
@@ -164,7 +343,15 @@ void duin::Application::RunRender()
 
     ImGui::Render();
     RHIImGuiRenderDrawLists(ImGui::GetDrawData());
+
+    for (const std::shared_ptr<WindowCtx> &windowCtx : windowManager.GetSecondaryWindows())
+    {
+        RenderSecondaryWindow(*windowCtx);
+    }
+    windowManager.ReleasePendingWindows();
+
     duin::ExecuteRenderPipeline();
+    windowManager.DestroyPendingWindows();
 }
 
 bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTime, double &physicsPreviousTime,
@@ -175,8 +362,10 @@ bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTi
     {
 #endif /* DN_DEBUG */
 
+        SDL_Window *window = windowManager.GetPrimarySDLWindow();
+
         /* Do not run game when minimized */
-        if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(sdlWindow) && SDL_WINDOW_MINIMIZED)
+        if (PAUSE_ON_MINIMIZE && SDL_GetWindowFlags(window) && SDL_WINDOW_MINIMIZED)
         {
             duin::DelayProcessMilli(100);
             return !gameShouldQuit;
@@ -201,7 +390,7 @@ bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTi
         /* Skip rendering when minimized */
         SDL_Event e;
         SDL_zero(e);
-        if (SDL_GetWindowFlags(sdlWindow) && e.type == SDL_WINDOW_MINIMIZED)
+        if (SDL_GetWindowFlags(window) && e.type == SDL_WINDOW_MINIMIZED)
         {
             ImGui::Render();
             duin::DelayProcessMilli(100);
@@ -210,7 +399,7 @@ bool duin::Application::ProcessFrame(double &deltaTime, double &physicsCurrentTi
 
         /* Skip rendering if window size is 0 */
         int displayWidth, displayHeight;
-        ::SDL_GetWindowSize(sdlWindow, &displayWidth, &displayHeight);
+        ::SDL_GetWindowSize(window, &displayWidth, &displayHeight);
         if (!(displayWidth && displayHeight))
         {
             duin::DelayProcessMilli(100);

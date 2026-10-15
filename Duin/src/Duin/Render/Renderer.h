@@ -126,6 +126,7 @@ struct ShaderProgram
 
 /** @brief Begins 3D rendering with the specified camera. */
 void BeginDraw3D(Camera &camera);
+void BeginDraw3D(Camera &camera, RHIViewId viewID, uint16_t width, uint16_t height);
 /** @brief Ends 3D rendering mode. */
 void EndDraw3D();
 /** @brief Begins rendering to a texture. */

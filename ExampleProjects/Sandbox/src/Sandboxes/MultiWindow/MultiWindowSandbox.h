@@ -1,6 +1,10 @@
 #pragma once
 
 #include <Duin/Objects/GameStateMachine.h>
+#include <Duin/Core/Window/WindowCtx.h>
+#include <memory>
+#include <string>
+#include <vector>
 
 class MultiWindowSandbox : public duin::GameState
 {
@@ -21,4 +25,8 @@ class MultiWindowSandbox : public duin::GameState
     void Tests();
 
   private:
+    std::vector<std::shared_ptr<duin::WindowCtx>> windows;
+    std::vector<std::shared_ptr<duin::ScopedConnection>> connections;
+
+    void OpenWindow(const std::string &title);
 };

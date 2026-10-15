@@ -179,12 +179,18 @@ void SetRenderContextAvailable(bool available)
 
 void BeginDraw3D(Camera &camera)
 {
+    BeginDraw3D(camera, RHI_VIEW_3D, (uint16_t)GetWindowWidth(), (uint16_t)GetWindowHeight());
+    RHISetViewClear(RHI_VIEW_3D, 0x303030ff, 1.0f, 0);
+}
+
+void BeginDraw3D(Camera &camera, RHIViewId viewID, uint16_t width, uint16_t height)
+{
     globalRenderStateStack.push_back(globalRenderState);
-    const RHIViewId viewID = RHI_VIEW_3D;
 
     // Get camera matrices
+    const float aspect = (height > 0) ? (float)width / (float)height : 1.0f;
     Matrix viewMtx = GetCameraViewMatrix(camera.GetImpl());
-    Matrix projMtx = GetCameraProjectionMatrix(camera.GetImpl());
+    Matrix projMtx = GetCameraProjectionMatrix(camera.GetImpl(), aspect);
 
     // Set view transform
     float view[16];
@@ -192,11 +198,11 @@ void BeginDraw3D(Camera &camera)
     MatrixToFloat16(viewMtx, view);
     MatrixToFloat16(projMtx, proj);
     RHISetViewTransform(viewID, view, proj);
-    RHISetViewRect(viewID, 0, 0, (uint16_t)GetWindowWidth(), (uint16_t)GetWindowHeight());
-    RHISetViewClear(viewID, 0x303030ff, 1.0f, 0);
+    RHISetViewRect(viewID, 0, 0, width, height);
 
     // Set new 3D rendering state
     globalRenderState = RenderState();
+    globalRenderState.viewID = viewID;
     globalRenderState.in3DMode = true;
     globalRenderState.inTextureMode = false;
     globalRenderState.camera = &camera;
@@ -222,7 +228,7 @@ void EndDraw3D()
             float proj[16];
             MatrixToFloat16(globalRenderState.viewMatrix, view);
             MatrixToFloat16(globalRenderState.projectionMatrix, proj);
-            RHISetViewTransform(RHI_VIEW_3D, view, proj);
+            RHISetViewTransform(globalRenderState.viewID, view, proj);
         }
     }
     else

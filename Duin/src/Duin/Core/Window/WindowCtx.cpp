@@ -1,6 +1,15 @@
 #include "dnpch.h"
 #include "WindowCtx.h"
 
+duin::WindowCtx::WindowCtx()
+{
+}
+
+duin::WindowCtx::~WindowCtx()
+{
+    Destroy();
+}
+
 bool duin::WindowCtx::IsWindowValid()
 {
     return sdlWindow != nullptr && ::SDL_GetWindowID(sdlWindow) != 0;

@@ -17,6 +17,7 @@
 #include "Duin/Core/Core.h"
 #include "Duin/Core/Events/Event.h"
 #include "Duin/Core/Events/EventHandler.h"
+#include "Duin/Core/Window/WindowManager.h"
 #include "Duin/Objects/GameObject.h"
 #include "Duin/Core/Signals/SignalsModule.h"
 #include "Duin/ECS/DECS/World.h"
@@ -25,6 +26,7 @@
 
 namespace duin
 {
+class WindowCtx;
 class EcsPipeline;
 
 /** @brief Returns the root directory path of the application. */
@@ -74,6 +76,8 @@ void DelayProcessMilli(float milliseconds);
 int GetWindowWidth();
 /** @brief Returns window height in pixels. */
 int GetWindowHeight();
+
+std::shared_ptr<WindowCtx> CreateNewWindow(const std::string &title, int width, int height, uint64_t flags = 0);
 
 /** @brief Enables or disables window resizing. */
 void SetWindowResizable(bool enable);
@@ -163,6 +167,16 @@ class DAPI Application
     void SetWindowStartupSize(int width, int height);
     /** @brief Sets the window title. */
     void SetWindowName(const char *string);
+
+    EventHandler& GetEventManager()
+    {
+        return eventHandler;
+    }
+
+    WindowManager& GetWindowManager()
+    {
+        return windowManager;
+    }
 
     /** @brief Starts the main loop. Call once after configuration. */
     void Run();
@@ -267,6 +281,7 @@ class DAPI Application
     std::string windowName = "Game";
     std::shared_ptr<GameObject> rootGameObject;
     EventHandler eventHandler;
+    WindowManager windowManager;
 
 #ifndef DN_TESTING
     // Init / shutdown
@@ -286,6 +301,10 @@ class DAPI Application
     void RunUpdate(double delta);
     void RunPhysics(double &physicsCurrentTime, double &physicsPreviousTime, double &physicsAccumTime);
     void RunRender();
+
+    void InitWindowRenderResources(WindowCtx &windowCtx);
+    void ShutdownWindowRenderResources(WindowCtx &windowCtx);
+    void RenderSecondaryWindow(WindowCtx &windowCtx);
 
     void PhysicsStep(double frametime);
 };

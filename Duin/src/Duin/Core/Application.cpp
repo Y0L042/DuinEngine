@@ -74,11 +74,7 @@ static bool USE_CUSTOM_IMGUI_INI_PATH = false;
 static std::string IMGUI_INI_PATH = "./";
 static bool PAUSE_ON_MINIMIZE = false;
 static bool ALLOW_DOCKING_IN_MAIN = false;
-static SDL_Window *sdlWindow = NULL;
-static SDL_Surface *sdlSurface = NULL;
 static SDL_WindowFlags sdlWindowFlags = 0;
-
-
 
 // ---------------------------------------------------------------------------
 // Lifecycle signals
@@ -292,20 +288,34 @@ int duin::GetWindowHeight()
     return WINDOW_HEIGHT;
 }
 
+std::shared_ptr<duin::WindowCtx> duin::CreateNewWindow(const std::string &title, int width, int height, uint64_t flags)
+{
+    if (app != nullptr)
+    {
+        return app->GetWindowManager().CreateNewWindow(title, width, height, flags);
+    }
+    return nullptr;
+}
+
+static SDL_Window *GetPrimarySDLWindow()
+{
+    return app != nullptr ? app->GetWindowManager().GetPrimarySDLWindow() : nullptr;
+}
+
 void duin::SetWindowResizable(bool enable)
 {
-    SDL_SetWindowResizable(sdlWindow, enable);
+    SDL_SetWindowResizable(GetPrimarySDLWindow(), enable);
     sdlWindowFlags |= (SDL_WINDOW_RESIZABLE && enable);
 }
 
 void duin::MaximizeWindow()
 {
-    SDL_MaximizeWindow(sdlWindow);
+    SDL_MaximizeWindow(GetPrimarySDLWindow());
 }
 
 void duin::MinimizeWindow()
 {
-    SDL_MinimizeWindow(sdlWindow);
+    SDL_MinimizeWindow(GetPrimarySDLWindow());
 }
 
 void duin::SetPauseOnMinimized(bool enable)
@@ -320,7 +330,7 @@ void duin::SetAllowDockingInMain(bool enable)
 
 SDL_Window *duin::GetSDLWindow()
 {
-    return sdlWindow;
+    return GetPrimarySDLWindow();
 }
 
 bool duin::GetGameShouldQuit()

@@ -534,6 +534,20 @@ RHIFrameBufferHandle RHICreateFrameBuffer(RHITextureHandle texture)
     return FromBgfx(fb);
 }
 
+RHIFrameBufferHandle RHICreateWindowFrameBuffer(void *nwh, uint16_t width, uint16_t height)
+{
+    if (!(bgfx::getCaps()->supported & BGFX_CAPS_SWAP_CHAIN))
+    {
+        DN_CORE_ERROR("RHI backend does not support swap chains; cannot render to additional windows.");
+        return RHIFrameBufferHandle{};
+    }
+    width = (width > 0) ? width : 1;
+    height = (height > 0) ? height : 1;
+    bgfx::FrameBufferHandle fb =
+        bgfx::createFrameBuffer(nwh, width, height, bgfx::TextureFormat::Count, bgfx::TextureFormat::D24S8);
+    return FromBgfx(fb);
+}
+
 void RHIDestroyTexture(RHITextureHandle handle)
 {
     bgfx::TextureHandle bh = ToBgfx(handle);
