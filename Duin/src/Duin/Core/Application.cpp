@@ -494,8 +494,11 @@ void duin::Application::PhysicsStep(double frametime)
 
 void duin::Application::EngineInitialize()
 {
-    duin::EventHandler::Get().RegisterInputEventListener([this](duin::Event e) { EngineOnEvent(e); });
-    duin::EventHandler::Get().RegisterInputEventListener([this](duin::Event e) { OnEvent(e); });
+    windowManager.SetEventHandler(&eventHandler);
+    windowManager.OnPrimaryWindowClosing.Connect(std::function<void(void)>([&]() { SetGameShouldQuit(true); }));
+
+    eventHandler.RegisterInputEventListener([this](duin::Event e) { EngineOnEvent(e); });
+    eventHandler.RegisterInputEventListener([this](duin::Event e) { OnEvent(e); });
 }
 
 void duin::Application::Initialize()
