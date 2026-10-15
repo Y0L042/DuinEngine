@@ -13,22 +13,22 @@
 #include <cstring>
 
 // Data
-static uint8_t g_View = 255;
+static int g_ContextCount = 0;
 static bgfx::ProgramHandle g_ShaderHandle = BGFX_INVALID_HANDLE;
 static bgfx::UniformHandle g_AttribLocationTex = BGFX_INVALID_HANDLE;
 static bgfx::VertexLayout g_VertexLayout;
 
-void ImGui_Implbgfx_RenderDrawLists(ImDrawData *draw_data)
+void ImGui_Implbgfx_RenderDrawLists(ImDrawData *draw_data, int view)
 {
-    ImGuiIO &io = ImGui::GetIO();
-    int fb_width = (int)(io.DisplaySize.x * io.DisplayFramebufferScale.x);
-    int fb_height = (int)(io.DisplaySize.y * io.DisplayFramebufferScale.y);
+    const bgfx::ViewId viewId = (bgfx::ViewId)view;
+    int fb_width = (int)(draw_data->DisplaySize.x * draw_data->FramebufferScale.x);
+    int fb_height = (int)(draw_data->DisplaySize.y * draw_data->FramebufferScale.y);
     if (fb_width == 0 || fb_height == 0)
     {
         return;
     }
 
-    draw_data->ScaleClipRects(io.DisplayFramebufferScale);
+    draw_data->ScaleClipRects(draw_data->FramebufferScale);
 
     // Handle texture lifecycle (create/update/destroy) driven by imgui 1.92+
     if (draw_data->Textures != nullptr)
@@ -81,9 +81,10 @@ void ImGui_Implbgfx_RenderDrawLists(ImDrawData *draw_data)
     const bgfx::Caps *caps = bgfx::getCaps();
 
     float ortho[16];
-    bx::mtxOrtho(ortho, 0.0f, io.DisplaySize.x, io.DisplaySize.y, 0.0f, 0.0f, 1000.0f, 0.0f, caps->homogeneousDepth);
-    bgfx::setViewTransform(g_View, NULL, ortho);
-    bgfx::setViewRect(g_View, 0, 0, (uint16_t)fb_width, (uint16_t)fb_height);
+    bx::mtxOrtho(ortho, 0.0f, draw_data->DisplaySize.x, draw_data->DisplaySize.y, 0.0f, 0.0f, 1000.0f, 0.0f,
+                 caps->homogeneousDepth);
+    bgfx::setViewTransform(viewId, NULL, ortho);
+    bgfx::setViewRect(viewId, 0, 0, (uint16_t)fb_width, (uint16_t)fb_height);
 
     for (int n = 0; n < draw_data->CmdListsCount; n++)
     {
@@ -130,7 +131,7 @@ void ImGui_Implbgfx_RenderDrawLists(ImDrawData *draw_data)
                 bgfx::setTexture(0, g_AttribLocationTex, texture);
                 bgfx::setVertexBuffer(0, &tvb, 0, numVertices);
                 bgfx::setIndexBuffer(&tib, pcmd->IdxOffset, pcmd->ElemCount);
-                bgfx::submit(g_View, g_ShaderHandle);
+                bgfx::submit(viewId, g_ShaderHandle);
             }
         }
     }
@@ -161,13 +162,23 @@ bool ImGui_Implbgfx_CreateDeviceObjects()
 
 void ImGui_Implbgfx_InvalidateDeviceObjects()
 {
-    bgfx::destroy(g_AttribLocationTex);
-    bgfx::destroy(g_ShaderHandle);
+    if (bgfx::isValid(g_AttribLocationTex))
+    {
+        bgfx::destroy(g_AttribLocationTex);
+        g_AttribLocationTex = BGFX_INVALID_HANDLE;
+    }
+    if (bgfx::isValid(g_ShaderHandle))
+    {
+        bgfx::destroy(g_ShaderHandle);
+        g_ShaderHandle = BGFX_INVALID_HANDLE;
+    }
 }
 
 void ImGui_Implbgfx_Init(int view)
 {
-    g_View = (uint8_t)(view & 0xff);
+    ++g_ContextCount;
+
+    bgfx::setViewMode((bgfx::ViewId)view, bgfx::ViewMode::Sequential);
 
     ImGuiIO &io = ImGui::GetIO();
     io.BackendRendererName = "imgui_impl_bgfx";
@@ -184,8 +195,10 @@ void ImGui_Implbgfx_Shutdown()
         io.BackendRendererName = nullptr;
     }
 
-    ImGui_Implbgfx_InvalidateDeviceObjects();
-    g_View = 255;
+    if (g_ContextCount > 0 && --g_ContextCount == 0)
+    {
+        ImGui_Implbgfx_InvalidateDeviceObjects();
+    }
 }
 
 void ImGui_Implbgfx_NewFrame()
