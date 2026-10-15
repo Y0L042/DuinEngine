@@ -202,7 +202,11 @@ Matrix GetCameraViewMatrix(const CameraImpl &cameraImpl)
 
 Matrix GetCameraProjectionMatrix(const CameraImpl &cameraImpl)
 {
-    float aspect = (float)GetWindowWidth() / (float)GetWindowHeight();
+    return GetCameraProjectionMatrix(cameraImpl, (float)GetWindowWidth() / (float)GetWindowHeight());
+}
+
+Matrix GetCameraProjectionMatrix(const CameraImpl &cameraImpl, float aspect)
+{
     float proj[16];
     RHIComputeProjMatrix(proj, cameraImpl.fovy, aspect, 0.1f, 100.0f);
 

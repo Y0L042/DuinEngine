@@ -212,5 +212,6 @@ void CameraRoll(CameraImpl &cameraImpl, float angle);
 Matrix GetCameraViewMatrix(const CameraImpl &cameraImpl);
 /** @brief Computes perspective projection matrix. */
 Matrix GetCameraProjectionMatrix(const CameraImpl &cameraImpl);
+Matrix GetCameraProjectionMatrix(const CameraImpl &cameraImpl, float aspect);
 
 } // namespace duin
