@@ -33,7 +33,7 @@ const uint32_t RHI_RESET_VSYNC = BGFX_RESET_VSYNC;
 // Internal helpers
 // ---------------------------------------------------------------------------
 
-static bgfx::VertexLayout  s_pcvLayout;
+static bgfx::VertexLayout s_pcvLayout;
 static DebugDrawEncoder s_dde;
 
 // ---------------------------------------------------------------------------
@@ -43,66 +43,64 @@ static DebugDrawEncoder s_dde;
 // RHIAttrib / RHIAttribType are 1:1 with their bgfx counterparts, so
 // translation is a cast. Lock that down.
 
-static_assert((int)RHIAttrib::Position  == bgfx::Attrib::Position,  "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Normal    == bgfx::Attrib::Normal,    "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Tangent   == bgfx::Attrib::Tangent,   "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Position == bgfx::Attrib::Position, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Normal == bgfx::Attrib::Normal, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Tangent == bgfx::Attrib::Tangent, "RHIAttrib mismatch");
 static_assert((int)RHIAttrib::Bitangent == bgfx::Attrib::Bitangent, "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Color0    == bgfx::Attrib::Color0,    "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Color1    == bgfx::Attrib::Color1,    "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Color2    == bgfx::Attrib::Color2,    "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Color3    == bgfx::Attrib::Color3,    "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Indices   == bgfx::Attrib::Indices,   "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Weight    == bgfx::Attrib::Weight,    "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color0 == bgfx::Attrib::Color0, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color1 == bgfx::Attrib::Color1, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color2 == bgfx::Attrib::Color2, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Color3 == bgfx::Attrib::Color3, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Indices == bgfx::Attrib::Indices, "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Weight == bgfx::Attrib::Weight, "RHIAttrib mismatch");
 static_assert((int)RHIAttrib::TexCoord0 == bgfx::Attrib::TexCoord0, "RHIAttrib mismatch");
 static_assert((int)RHIAttrib::TexCoord7 == bgfx::Attrib::TexCoord7, "RHIAttrib mismatch");
-static_assert((int)RHIAttrib::Count     == bgfx::Attrib::Count,     "RHIAttrib mismatch");
+static_assert((int)RHIAttrib::Count == bgfx::Attrib::Count, "RHIAttrib mismatch");
 
-static_assert((int)RHIAttribType::Int8   == bgfx::AttribType::Int8,   "RHIAttribType mismatch");
-static_assert((int)RHIAttribType::Uint8  == bgfx::AttribType::Uint8,  "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Int8 == bgfx::AttribType::Int8, "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Uint8 == bgfx::AttribType::Uint8, "RHIAttribType mismatch");
 static_assert((int)RHIAttribType::Uint10 == bgfx::AttribType::Uint10, "RHIAttribType mismatch");
-static_assert((int)RHIAttribType::Int16  == bgfx::AttribType::Int16,  "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Int16 == bgfx::AttribType::Int16, "RHIAttribType mismatch");
 static_assert((int)RHIAttribType::Uint16 == bgfx::AttribType::Uint16, "RHIAttribType mismatch");
-static_assert((int)RHIAttribType::Half   == bgfx::AttribType::Half,   "RHIAttribType mismatch");
-static_assert((int)RHIAttribType::Float  == bgfx::AttribType::Float,  "RHIAttribType mismatch");
-static_assert((int)RHIAttribType::Count  == bgfx::AttribType::Count,  "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Half == bgfx::AttribType::Half, "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Float == bgfx::AttribType::Float, "RHIAttribType mismatch");
+static_assert((int)RHIAttribType::Count == bgfx::AttribType::Count, "RHIAttribType mismatch");
 
 uint16_t RHIAttribTypeSize(RHIAttribType type, uint8_t num)
 {
     switch (type)
     {
-        case RHIAttribType::Int8:
-        case RHIAttribType::Uint8:
-            return num;
-        // Uint10 packs 3 or 4 components into a single 32-bit word.
-        case RHIAttribType::Uint10:
-            return 4;
-        case RHIAttribType::Int16:
-        case RHIAttribType::Uint16:
-        case RHIAttribType::Half:
-            return num * 2;
-        case RHIAttribType::Float:
-            return num * 4;
-        default:
-            return 0;
+    case RHIAttribType::Int8:
+    case RHIAttribType::Uint8:
+        return num;
+    // Uint10 packs 3 or 4 components into a single 32-bit word.
+    case RHIAttribType::Uint10:
+        return 4;
+    case RHIAttribType::Int16:
+    case RHIAttribType::Uint16:
+    case RHIAttribType::Half:
+        return num * 2;
+    case RHIAttribType::Float:
+        return num * 4;
+    default:
+        return 0;
     }
 }
 
-RHIVertexLayout &RHIVertexLayout::Add(RHIAttrib a, uint8_t n, RHIAttribType t,
-                                      bool norm, bool isInt)
+RHIVertexLayout &RHIVertexLayout::Add(RHIAttrib a, uint8_t n, RHIAttribType t, bool norm, bool isInt)
 {
     if (count >= RHI_MAX_VERTEX_ATTRIBS)
     {
-        DN_CORE_ERROR("RHIVertexLayout::Add -- attribute limit ({}) reached.",
-                      RHI_MAX_VERTEX_ATTRIBS);
+        DN_CORE_ERROR("RHIVertexLayout::Add -- attribute limit ({}) reached.", RHI_MAX_VERTEX_ATTRIBS);
         return *this;
     }
 
-    attrib[count]     = a;
-    num[count]        = n;
-    type[count]       = t;
+    attrib[count] = a;
+    num[count] = n;
+    type[count] = t;
     normalized[count] = norm;
-    asInt[count]      = isInt;
-    skipBytes[count]  = 0;
+    asInt[count] = isInt;
+    skipBytes[count] = 0;
     ++count;
     return *this;
 }
@@ -111,32 +109,31 @@ RHIVertexLayout &RHIVertexLayout::Skip(uint8_t bytes)
 {
     if (count >= RHI_MAX_VERTEX_ATTRIBS)
     {
-        DN_CORE_ERROR("RHIVertexLayout::Skip -- attribute limit ({}) reached.",
-                      RHI_MAX_VERTEX_ATTRIBS);
+        DN_CORE_ERROR("RHIVertexLayout::Skip -- attribute limit ({}) reached.", RHI_MAX_VERTEX_ATTRIBS);
         return *this;
     }
 
-    attrib[count]     = RHIAttrib::Count; // no semantic; padding only
-    num[count]        = 0;
-    type[count]       = RHIAttribType::Count;
+    attrib[count] = RHIAttrib::Count; // no semantic; padding only
+    num[count] = 0;
+    type[count] = RHIAttribType::Count;
     normalized[count] = false;
-    asInt[count]      = false;
-    skipBytes[count]  = bytes;
+    asInt[count] = false;
+    skipBytes[count] = bytes;
     ++count;
     return *this;
 }
 
-bool RHIVertexLayout::Decode(RHIAttrib a, uint8_t &outNum, RHIAttribType &outType,
-                             bool &outNormalized, bool &outAsInt) const
+bool RHIVertexLayout::Decode(
+    RHIAttrib a, uint8_t &outNum, RHIAttribType &outType, bool &outNormalized, bool &outAsInt) const
 {
     for (uint8_t i = 0; i < count; ++i)
     {
         if (skipBytes[i] == 0 && attrib[i] == a)
         {
-            outNum        = num[i];
-            outType       = type[i];
+            outNum = num[i];
+            outType = type[i];
             outNormalized = normalized[i];
-            outAsInt      = asInt[i];
+            outAsInt = asInt[i];
             return true;
         }
     }
@@ -179,8 +176,7 @@ uint16_t RHIVertexLayout::GetStride() const
     uint16_t stride = 0;
     for (uint8_t i = 0; i < count; ++i)
     {
-        stride += (skipBytes[i] > 0) ? skipBytes[i]
-                                     : RHIAttribTypeSize(type[i], num[i]);
+        stride += (skipBytes[i] > 0) ? skipBytes[i] : RHIAttribTypeSize(type[i], num[i]);
     }
     return stride;
 }
@@ -204,11 +200,12 @@ static bgfx::VertexLayout ToBgfx(const RHIVertexLayout &layout)
         }
         else
         {
-            bl.add((bgfx::Attrib::Enum)layout.attrib[i],
-                   layout.num[i],
-                   (bgfx::AttribType::Enum)layout.type[i],
-                   layout.normalized[i],
-                   layout.asInt[i]);
+            bl.add(
+                (bgfx::Attrib::Enum)layout.attrib[i],
+                layout.num[i],
+                (bgfx::AttribType::Enum)layout.type[i],
+                layout.normalized[i],
+                layout.asInt[i]);
         }
     }
     bl.end();
@@ -217,11 +214,9 @@ static bgfx::VertexLayout ToBgfx(const RHIVertexLayout &layout)
 
 const RHIVertexLayout &RHIGetPosColorLayout()
 {
-    static const RHIVertexLayout layout = []
-    {
+    static const RHIVertexLayout layout = [] {
         RHIVertexLayout l;
-        l.Add(RHIAttrib::Position, 3, RHIAttribType::Float)
-         .Add(RHIAttrib::Color0, 4, RHIAttribType::Uint8, true);
+        l.Add(RHIAttrib::Position, 3, RHIAttribType::Float).Add(RHIAttrib::Color0, 4, RHIAttribType::Uint8, true);
         return l;
     }();
     return layout;
@@ -357,7 +352,8 @@ static void MatrixAsArray(const float *m, float *r)
 // Setup/Shutdown
 // ---------------------------------------------------------------------------
 
-void RHIStart(RHIViewId viewId, uint32_t width, uint32_t height, std::function<HWND(void)> renderThreadCapture, bool headless)
+void RHIStart(
+    RHIViewId viewId, uint32_t width, uint32_t height, std::function<HWND(void)> renderThreadCapture, bool headless)
 {
     bgfx::Init bgfxInit;
     bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer
@@ -480,8 +476,7 @@ RHIVertexBufferHandle RHICreateVertexBuffer(const void *data, uint32_t sizeBytes
     return FromBgfx(vbh);
 }
 
-RHIVertexBufferHandle RHICreateVertexBuffer(const void *data, uint32_t sizeBytes,
-                                            const RHIVertexLayout &layout)
+RHIVertexBufferHandle RHICreateVertexBuffer(const void *data, uint32_t sizeBytes, const RHIVertexLayout &layout)
 {
     bgfx::VertexLayout bl = ToBgfx(layout);
     bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(bgfx::makeRef(data, sizeBytes), bl);
@@ -521,12 +516,13 @@ RHITextureHandle RHICreateTexture2D(uint16_t width, uint16_t height)
     width = (width > 0) ? width : 1;
     height = (height > 0) ? height : 1;
 
-    bgfx::TextureHandle tex = bgfx::createTexture2D(width, height,
-                                                    false, // mipmaps
-                                                    1,     // num layers
-                                                    bgfx::TextureFormat::RGBA8,
-                                                    BGFX_TEXTURE_RT | BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT |
-                                                        BGFX_SAMPLER_MIP_POINT);
+    bgfx::TextureHandle tex = bgfx::createTexture2D(
+        width,
+        height,
+        false, // mipmaps
+        1,     // num layers
+        bgfx::TextureFormat::RGBA8,
+        BGFX_TEXTURE_RT | BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT | BGFX_SAMPLER_MIP_POINT);
 
     return FromBgfx(tex);
 }
@@ -631,8 +627,8 @@ void RHIEncoderSubmit(RHIEncoder *enc, RHIViewId viewId, RHIProgramHandle progra
 // Matrix Math
 // ---------------------------------------------------------------------------
 
-void RHIComputeViewMatrix(float *out16, float eyeX, float eyeY, float eyeZ, float atX, float atY, float atZ, float upX,
-                          float upY, float upZ)
+void RHIComputeViewMatrix(
+    float *out16, float eyeX, float eyeY, float eyeZ, float atX, float atY, float atZ, float upX, float upY, float upZ)
 {
     bx::Vec3 eye = {eyeX, eyeY, eyeZ};
     bx::Vec3 at = {atX, atY, atZ};
@@ -645,8 +641,8 @@ void RHIComputeProjMatrix(float *out16, float fovy, float aspect, float nearPlan
     bx::mtxProj(out16, fovy, aspect, nearPlane, farPlane, bgfx::getCaps()->homogeneousDepth);
 }
 
-void RHIComputeSRTMatrix(float *out16, float sx, float sy, float sz, float rx, float ry, float rz, float tx, float ty,
-                         float tz)
+void RHIComputeSRTMatrix(
+    float *out16, float sx, float sy, float sz, float rx, float ry, float rz, float tx, float ty, float tz)
 {
     bx::mtxSRT(out16, sx, sy, sz, rx, ry, rz, tx, ty, tz);
 }
@@ -708,11 +704,10 @@ void RHIDebugDrawSetColor(uint32_t abgr)
     s_dde.setColor(abgr);
 }
 
-void RHIDebugDrawLine(float fromX, float fromY, float fromZ,
-                      float toX,   float toY,   float toZ)
+void RHIDebugDrawLine(float fromX, float fromY, float fromZ, float toX, float toY, float toZ)
 {
     s_dde.moveTo(fromX, fromY, fromZ);
-    s_dde.lineTo(toX,   toY,   toZ);
+    s_dde.lineTo(toX, toY, toZ);
 }
 
 // ---------------------------------------------------------------------------
