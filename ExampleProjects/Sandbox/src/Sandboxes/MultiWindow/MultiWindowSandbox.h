@@ -25,8 +25,15 @@ class MultiWindowSandbox : public duin::GameState
     void Tests();
 
   private:
-    std::vector<std::shared_ptr<duin::WindowCtx>> windows;
-    std::vector<std::shared_ptr<duin::ScopedConnection>> connections;
+    struct SandboxWindow
+    {
+        std::shared_ptr<duin::WindowCtx> window;
+        std::string title;
+        float boxHeight = 0.5f;
+    };
+
+    std::vector<std::shared_ptr<SandboxWindow>> windows;
 
     void OpenWindow(const std::string &title);
+    bool CanDraw(const SandboxWindow &sandboxWindow);
 };

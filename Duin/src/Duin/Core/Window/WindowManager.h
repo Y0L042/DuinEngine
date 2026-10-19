@@ -46,6 +46,9 @@ class WindowManager
     void DestroyPendingWindows();
     void DestroyAllWindows();
 
+    void ExecuteWindowDraw();
+    void ExecuteWindowDrawUI();
+
     SDL_Surface *GetPrimarySDLSurface()
     {
         if (primaryWindow != nullptr)

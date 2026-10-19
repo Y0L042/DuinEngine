@@ -244,11 +244,13 @@ void duin::Application::RenderSecondaryWindow(WindowCtx &windowCtx)
     if (camera != nullptr)
     {
         duin::BeginDraw3D(*camera, sceneView, (uint16_t)width, (uint16_t)height);
-        windowCtx.OnDraw.Emit();
+        //windowCtx.OnDraw.Emit();
+        windowCtx.ExecuteDrawQueue();
         duin::EndDraw3D();
     }
 
-    windowCtx.OnDrawUI.Emit();
+    //windowCtx.OnDrawUI.Emit();
+    windowCtx.ExecuteDrawUIQueue();
 
     ImGui::Render();
     RHIImGuiRenderDrawLists(ImGui::GetDrawData(), uiView);

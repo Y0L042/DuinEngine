@@ -33,6 +33,17 @@ void MultiWindowSandbox::PhysicsUpdate(double delta)
 
 void MultiWindowSandbox::Draw()
 {
+    for (const std::shared_ptr<SandboxWindow> &sandboxWindow : windows)
+    {
+        if (!CanDraw(*sandboxWindow))
+        {
+            continue;
+        }
+        sandboxWindow->window->QueueDraw([sandboxWindow]() {
+            duin::DrawDebugGrid(10.0f);
+            duin::DrawBox(duin::Vector3(0.0f, sandboxWindow->boxHeight, 0.0f));
+        });
+    }
 }
 
 void MultiWindowSandbox::DrawUI()
@@ -41,11 +52,28 @@ void MultiWindowSandbox::DrawUI()
     {
         OpenWindow(std::format("Sandbox #{:02}", windows.size() + 1));
     }
+
+    for (const std::shared_ptr<SandboxWindow> &sandboxWindow : windows)
+    {
+        if (!CanDraw(*sandboxWindow))
+        {
+            continue;
+        }
+        sandboxWindow->window->QueueDrawUI([sandboxWindow]() {
+            ImGui::Begin(sandboxWindow->title.c_str());
+            ImGui::Text("Own ImGui context, own swap chain.");
+            ImGui::SliderFloat("Box height", &sandboxWindow->boxHeight, -2.0f, 2.0f);
+            if (ImGui::Button("Random clear color"))
+            {
+                sandboxWindow->window->SetClearColor(((uint32_t)std::rand() << 8) | 0xff);
+            }
+            ImGui::End();
+        });
+    }
 }
 
 void MultiWindowSandbox::Exit()
 {
-    connections.clear();
     windows.clear();
 }
 
@@ -71,25 +99,14 @@ void MultiWindowSandbox::OpenWindow(const std::string &title)
         return;
     }
 
-    std::shared_ptr<float> boxHeight = std::make_shared<float>(0.5f);
-    std::weak_ptr<duin::WindowCtx> weakWin = win;
+    std::shared_ptr<SandboxWindow> sandboxWindow = std::make_shared<SandboxWindow>();
+    sandboxWindow->window = win;
+    sandboxWindow->title = title;
+    windows.push_back(sandboxWindow);
+}
 
-    connections.push_back(win->OnDraw.ConnectScoped([boxHeight]() {
-        duin::DrawDebugGrid(10.0f);
-        duin::DrawBox(duin::Vector3(0.0f, *boxHeight, 0.0f));
-    }));
-    connections.push_back(win->OnDrawUI.ConnectScoped([title, boxHeight, weakWin]() {
-        ImGui::Begin(title.c_str());
-        ImGui::Text("Own ImGui context, own swap chain.");
-        ImGui::SliderFloat("Box height", boxHeight.get(), -2.0f, 2.0f);
-        if (ImGui::Button("Random clear color"))
-        {
-            if (std::shared_ptr<duin::WindowCtx> w = weakWin.lock())
-            {
-                w->SetClearColor(((uint32_t)std::rand() << 8) | 0xff);
-            }
-        }
-        ImGui::End();
-    }));
-    windows.push_back(win);
+bool MultiWindowSandbox::CanDraw(const SandboxWindow &sandboxWindow)
+{
+    duin::WindowCtx &win = *sandboxWindow.window;
+    return win.IsWindowValid() && !win.IsPendingDestroy() && !(win.GetSDLWindowFlags() & SDL_WINDOW_MINIMIZED);
 }

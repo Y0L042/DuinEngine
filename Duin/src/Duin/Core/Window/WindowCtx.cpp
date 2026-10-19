@@ -302,10 +302,40 @@ bool duin::WindowCtx::IsPendingDestroy()
 
 void duin::WindowCtx::ProcessWindowEvent(WindowEvent event)
 {
-    //if (event.sdlEvent.type == SDL_EventType::SDL_EVENT_WINDOW_XXX)
+    // if (event.sdlEvent.type == SDL_EventType::SDL_EVENT_WINDOW_XXX)
     //{
-    //    
-    //}
+    //
+    // }
+}
+
+void duin::WindowCtx::QueueDraw(std::function<void(void)> callback)
+{
+    onDrawCallbacks.push(callback);
+}
+
+void duin::WindowCtx::QueueDrawUI(std::function<void(void)> callback)
+{
+    onDrawUICallbacks.push(callback);
+}
+
+void duin::WindowCtx::ExecuteDrawQueue()
+{
+    while (!onDrawCallbacks.empty())
+    {
+        auto& cb = onDrawCallbacks.front();
+        cb();
+        onDrawCallbacks.pop();
+    }
+}
+
+void duin::WindowCtx::ExecuteDrawUIQueue()
+{
+    while (!onDrawUICallbacks.empty())
+    {
+        auto &cb = onDrawUICallbacks.front();
+        cb();
+        onDrawUICallbacks.pop();
+    }
 }
 
 void duin::WindowCtx::Destroy()

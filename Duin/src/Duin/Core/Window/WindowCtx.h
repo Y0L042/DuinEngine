@@ -6,6 +6,7 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_video.h>
 #include <string>
+#include <functional>
 
 struct ImGuiContext;
 
@@ -16,9 +17,6 @@ class Camera;
 class WindowCtx
 {
   public:
-    Signal<> OnDraw;
-    Signal<> OnDrawUI;
-
     WindowCtx();
     ~WindowCtx();
 
@@ -82,6 +80,12 @@ class WindowCtx
 
     void ProcessWindowEvent(WindowEvent event);
 
+    void QueueDraw(std::function<void(void)> callback);
+    void QueueDrawUI(std::function<void(void)> callback);
+
+    void ExecuteDrawQueue();
+    void ExecuteDrawUIQueue();
+
     void Destroy();
 
   private:
@@ -100,6 +104,8 @@ class WindowCtx
     int frameBufferHeight = 0;
     int viewSlot = -1;
     bool pendingDestroy = false;
+    std::queue<std::function<void(void)>> onDrawCallbacks;
+    std::queue<std::function<void(void)>> onDrawUICallbacks;
 };
 
 } // namespace duin
