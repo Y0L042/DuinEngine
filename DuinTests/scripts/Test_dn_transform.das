@@ -18,7 +18,7 @@ def make_world() : DnWorld {
 
 def make_tx_entity(var w : DnWorld; name : string) : DnEntity {
     var e = w.create_entity(name)
-    e |> set(DnTransform3D())
+    e.set(DnTransform3D())
     return e
 }
 
@@ -40,7 +40,7 @@ def approx4(a, b : float4) : bool {
 
 [test]
 def test_default_transform_is_identity() {
-    var t : DnTransform3D
+    var t = DnTransform3D()
     verify(approx3(t.pos, float3(0.0f, 0.0f, 0.0f)), "default pos is zero")
     verify(approx4(t.rot, float4(0.0f, 0.0f, 0.0f, 1.0f)), "default rot is identity quaternion")
     verify(approx3(t.scale, float3(1.0f, 1.0f, 1.0f)), "default scale is one")
@@ -48,7 +48,7 @@ def test_default_transform_is_identity() {
 
 [test]
 def test_default_transform_caches_start_dirty() {
-    var t : DnTransform3D
+    var t = DnTransform3D()
     verify(t.gPosCacheDirtyFlag, "position cache starts dirty")
     verify(t.gRotCacheDirtyFlag, "rotation cache starts dirty")
     verify(t.gScaleCacheDirtyFlag, "scale cache starts dirty")
@@ -87,21 +87,81 @@ def test_quat_inverse_of_zero_is_identity() {
 def test_root_global_equals_local() {
     var w = make_world()
     var e = w.create_entity("root")
-    e |> set(DnTransform3D(pos = float3(1.0f, 2.0f, 3.0f), scale = float3(2.0f, 2.0f, 2.0f)))
+    e.set(DnTransform3D(pos = float3(1.0f, 2.0f, 3.0f), scale = float3(2.0f, 2.0f, 2.0f)))
 
-    let g = get_global_transform(e)
+    let g = unwrap(get_global_transform(e))
     verify(approx3(g.pos, float3(1.0f, 2.0f, 3.0f)), "root global pos == local pos")
     verify(approx3(g.scale, float3(2.0f, 2.0f, 2.0f)), "root global scale == local scale")
 }
 
 [test]
-def test_entity_without_transform_returns_identity() {
+def test_entity_without_transform_returns_none() {
     var w = make_world()
     var e = w.create_entity("bare")
 
-    verify(approx3(get_global_position(e), float3(0.0f, 0.0f, 0.0f)), "missing transform yields zero position")
-    verify(approx4(get_global_rotation(e), float4(0.0f, 0.0f, 0.0f, 1.0f)), "missing transform yields identity rotation")
-    verify(approx3(get_global_scale(e), float3(1.0f, 1.0f, 1.0f)), "missing transform yields unit scale")
+    verify(is_none(get_global_position(e)), "missing transform yields no position")
+    verify(is_none(get_global_rotation(e)), "missing transform yields no rotation")
+    verify(is_none(get_global_scale(e)), "missing transform yields no scale")
+    verify(is_none(get_global_transform(e)), "missing transform yields no transform")
+    verify(is_none(local_transform(e)), "missing transform yields no local transform")
+}
+
+[test]
+def test_root_has_no_transform_parent() {
+    var w = make_world()
+    var e = make_tx_entity(w, "root")
+    verify(is_none(transform_parent(e)), "root entity has no transform parent")
+}
+
+[test]
+def test_child_transform_parent_is_parent_transform() {
+    var w = make_world()
+    var parent = w.create_entity("parent")
+    parent.set(DnTransform3D(pos = float3(3.0f, 0.0f, 0.0f)))
+    var child = make_tx_entity(w, "child")
+    child.child_of(parent)
+
+    let tp = transform_parent(child)
+    verify(is_some(tp), "child has a transform parent")
+    verify(approx3(unwrap(tp).pos, float3(3.0f, 0.0f, 0.0f)), "transform parent carries the parent transform")
+}
+
+// ---------------------------------------------------------------------------
+// compose / decompose
+// ---------------------------------------------------------------------------
+
+[test]
+def test_compose_then_decompose_round_trips() {
+    let parentTx = DnTransform3D(pos = float3(1.0f, 2.0f, 3.0f),
+                                 rot = quat_from_euler(0.2f, 0.4f, 0.1f),
+                                 scale = float3(2.0f, 2.0f, 2.0f))
+    let localTx = DnTransform3D(pos = float3(0.5f, -1.0f, 2.0f),
+                                rot = quat_from_euler(0.1f, 0.0f, 0.3f),
+                                scale = float3(1.5f, 1.5f, 1.5f))
+
+    let globalTx = compose(parentTx, localTx)
+    let back = decompose(parentTx, globalTx)
+
+    verify(approx3(back.pos, localTx.pos), "decompose(compose(local)) restores local position")
+    verify(approx3(back.scale, localTx.scale), "decompose(compose(local)) restores local scale")
+    let flipped = float4(0.0f - localTx.rot.x, 0.0f - localTx.rot.y, 0.0f - localTx.rot.z, 0.0f - localTx.rot.w)
+    verify(approx4(back.rot, localTx.rot) || approx4(back.rot, flipped), "decompose(compose(local)) restores local rotation")
+}
+
+[test]
+def test_compose_with_identity_parent_is_local() {
+    let localTx = DnTransform3D(pos = float3(4.0f, 5.0f, 6.0f), scale = float3(3.0f, 3.0f, 3.0f))
+    let globalTx = compose(DnTransform3D(), localTx)
+    verify(approx3(globalTx.pos, localTx.pos), "identity parent keeps position")
+    verify(approx3(globalTx.scale, localTx.scale), "identity parent keeps scale")
+    verify(approx4(globalTx.rot, quat_identity()), "identity parent keeps rotation")
+}
+
+[test]
+def test_quat_inverse_composes_to_identity() {
+    let q = quat_from_euler(0.4f, 0.9f, 0.2f)
+    let r = quat_mul(q, quat_inverse(q))
+    verify(approx4(r, quat_identity()) || approx4(r, float4(0.0f, 0.0f, 0.0f, -1.0f)), "q * inverse(q) is identity")
 }
 
 // ---------------------------------------------------------------------------
@@ -112,39 +172,39 @@ def test_entity_without_transform_returns_identity() {
 def test_child_position_offsets_by_parent() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(pos = float3(10.0f, 0.0f, 0.0f)))
+    parent.set(DnTransform3D(pos = float3(10.0f, 0.0f, 0.0f)))
 
     var child = w.create_entity("child")
-    child |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
-    child |> child_of(parent)
+    child.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    child.child_of(parent)
 
-    verify(approx3(get_global_position(child), float3(11.0f, 0.0f, 0.0f)), "child global pos = parent + local")
+    verify(approx3(unwrap(get_global_position(child)), float3(11.0f, 0.0f, 0.0f)), "child global pos = parent + local")
 }
 
 [test]
 def test_child_position_scales_by_parent() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(scale = float3(2.0f, 2.0f, 2.0f)))
+    parent.set(DnTransform3D(scale = float3(2.0f, 2.0f, 2.0f)))
 
     var child = w.create_entity("child")
-    child |> set(DnTransform3D(pos = float3(3.0f, 0.0f, 0.0f)))
-    child |> child_of(parent)
+    child.set(DnTransform3D(pos = float3(3.0f, 0.0f, 0.0f)))
+    child.child_of(parent)
 
-    verify(approx3(get_global_position(child), float3(6.0f, 0.0f, 0.0f)), "parent scale multiplies child offset")
+    verify(approx3(unwrap(get_global_position(child)), float3(6.0f, 0.0f, 0.0f)), "parent scale multiplies child offset")
 }
 
 [test]
 def test_child_position_rotates_by_parent() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(rot = quat_from_euler(0.0f, PI * 0.5f, 0.0f)))
+    parent.set(DnTransform3D(rot = quat_from_euler(0.0f, PI * 0.5f, 0.0f)))
 
     var child = w.create_entity("child")
-    child |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
-    child |> child_of(parent)
+    child.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    child.child_of(parent)
 
-    let g = get_global_position(child)
+    let g = unwrap(get_global_position(child))
     verify(approx_f(length(g), 1.0f), "rotation preserves distance from parent")
     verify(!approx3(g, float3(1.0f, 0.0f, 0.0f)), "parent rotation moves the child off its local axis")
 }
@@ -153,13 +213,13 @@ def test_child_position_rotates_by_parent() {
 def test_child_global_scale_multiplies() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(scale = float3(2.0f, 3.0f, 4.0f)))
+    parent.set(DnTransform3D(scale = float3(2.0f, 3.0f, 4.0f)))
 
     var child = w.create_entity("child")
-    child |> set(DnTransform3D(scale = float3(5.0f, 5.0f, 5.0f)))
-    child |> child_of(parent)
+    child.set(DnTransform3D(scale = float3(5.0f, 5.0f, 5.0f)))
+    child.child_of(parent)
 
-    verify(approx3(get_global_scale(child), float3(10.0f, 15.0f, 20.0f)), "global scale is the product")
+    verify(approx3(unwrap(get_global_scale(child)), float3(10.0f, 15.0f, 20.0f)), "global scale is the product")
 }
 
 // ---------------------------------------------------------------------------
@@ -170,17 +230,17 @@ def test_child_global_scale_multiplies() {
 def test_three_level_chain_accumulates_position() {
     var w = make_world()
     var root = w.create_entity("root")
-    root |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    root.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
 
     var mid = w.create_entity("mid")
-    mid |> set(DnTransform3D(pos = float3(2.0f, 0.0f, 0.0f)))
-    mid |> child_of(root)
+    mid.set(DnTransform3D(pos = float3(2.0f, 0.0f, 0.0f)))
+    mid.child_of(root)
 
     var leaf = w.create_entity("leaf")
-    leaf |> set(DnTransform3D(pos = float3(4.0f, 0.0f, 0.0f)))
-    leaf |> child_of(mid)
+    leaf.set(DnTransform3D(pos = float3(4.0f, 0.0f, 0.0f)))
+    leaf.child_of(mid)
 
-    verify(approx3(get_global_position(leaf), float3(7.0f, 0.0f, 0.0f)), "positions accumulate down the chain")
+    verify(approx3(unwrap(get_global_position(leaf)), float3(7.0f, 0.0f, 0.0f)), "positions accumulate down the chain")
 }
 
 // ---------------------------------------------------------------------------
@@ -193,52 +253,52 @@ def test_set_global_position_round_trips_on_root() {
     var e = make_tx_entity(w, "root")
 
     set_global_position(e, float3(5.0f, 6.0f, 7.0f))
-    verify(approx3(get_global_position(e), float3(5.0f, 6.0f, 7.0f)), "set then get returns the same global position")
+    verify(approx3(unwrap(get_global_position(e)), float3(5.0f, 6.0f, 7.0f)), "set then get returns the same global position")
 }
 
 [test]
 def test_set_global_position_round_trips_under_rotated_scaled_parent() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(pos = float3(1.0f, 2.0f, 3.0f),
+    parent.set(DnTransform3D(pos = float3(1.0f, 2.0f, 3.0f),
                                 rot = quat_from_euler(0.3f, 0.5f, 0.0f),
                                 scale = float3(2.0f, 2.0f, 2.0f)))
 
     var child = make_tx_entity(w, "child")
-    child |> child_of(parent)
+    child.child_of(parent)
 
     let target = float3(9.0f, -4.0f, 2.5f)
     set_global_position(child, target)
-    verify(approx3(get_global_position(child), target), "global position round trips through a rotated+scaled parent")
+    verify(approx3(unwrap(get_global_position(child)), target), "global position round trips through a rotated+scaled parent")
 }
 
 [test]
 def test_set_global_scale_round_trips_under_scaled_parent() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(scale = float3(2.0f, 4.0f, 5.0f)))
+    parent.set(DnTransform3D(scale = float3(2.0f, 4.0f, 5.0f)))
 
     var child = make_tx_entity(w, "child")
-    child |> child_of(parent)
+    child.child_of(parent)
 
     let target = float3(6.0f, 8.0f, 10.0f)
     set_global_scale(child, target)
-    verify(approx3(get_global_scale(child), target), "global scale round trips through a scaled parent")
+    verify(approx3(unwrap(get_global_scale(child)), target), "global scale round trips through a scaled parent")
 }
 
 [test]
 def test_set_global_rotation_round_trips_under_rotated_parent() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(rot = quat_from_euler(0.2f, 0.4f, 0.6f)))
+    parent.set(DnTransform3D(rot = quat_from_euler(0.2f, 0.4f, 0.6f)))
 
     var child = make_tx_entity(w, "child")
-    child |> child_of(parent)
+    child.child_of(parent)
 
     let target = quat_from_euler(0.7f, 0.1f, 0.3f)
     set_global_rotation(child, target)
 
-    let g = get_global_rotation(child)
+    let g = unwrap(get_global_rotation(child))
     let flipped = float4(0.0f - target.x, 0.0f - target.y, 0.0f - target.z, 0.0f - target.w)
     verify(approx4(g, target) || approx4(g, flipped), "global rotation round trips through a rotated parent")
 }
@@ -247,14 +307,14 @@ def test_set_global_rotation_round_trips_under_rotated_parent() {
 def test_set_global_transform_makes_child_local_relative() {
     var w = make_world()
     var parent = w.create_entity("parent")
-    parent |> set(DnTransform3D(pos = float3(10.0f, 0.0f, 0.0f)))
+    parent.set(DnTransform3D(pos = float3(10.0f, 0.0f, 0.0f)))
 
     var child = make_tx_entity(w, "child")
-    child |> child_of(parent)
+    child.child_of(parent)
 
     set_global_position(child, float3(12.0f, 0.0f, 0.0f))
 
-    let local = local_transform(child)
+    let local = unwrap(local_transform(child))
     verify(approx3(local.pos, float3(2.0f, 0.0f, 0.0f)), "local position is stored relative to the parent")
 }
 
@@ -267,14 +327,14 @@ def test_child_global_updates_after_parent_moves() {
     var w = make_world()
     var parent = make_tx_entity(w, "parent")
     var child = w.create_entity("child")
-    child |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
-    child |> child_of(parent)
+    child.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    child.child_of(parent)
 
-    verify(approx3(get_global_position(child), float3(1.0f, 0.0f, 0.0f)), "child starts at parent origin + local")
+    verify(approx3(unwrap(get_global_position(child)), float3(1.0f, 0.0f, 0.0f)), "child starts at parent origin + local")
 
     set_global_position(parent, float3(100.0f, 0.0f, 0.0f))
 
-    verify(approx3(get_global_position(child), float3(101.0f, 0.0f, 0.0f)),
+    verify(approx3(unwrap(get_global_position(child)), float3(101.0f, 0.0f, 0.0f)),
            "child global position follows the parent instead of returning a stale cache")
 }
 
@@ -284,18 +344,18 @@ def test_grandchild_global_updates_after_root_moves() {
     var root = make_tx_entity(w, "root")
 
     var mid = w.create_entity("mid")
-    mid |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
-    mid |> child_of(root)
+    mid.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    mid.child_of(root)
 
     var leaf = w.create_entity("leaf")
-    leaf |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
-    leaf |> child_of(mid)
+    leaf.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    leaf.child_of(mid)
 
-    verify(approx3(get_global_position(leaf), float3(2.0f, 0.0f, 0.0f)), "leaf starts at the accumulated offset")
+    verify(approx3(unwrap(get_global_position(leaf)), float3(2.0f, 0.0f, 0.0f)), "leaf starts at the accumulated offset")
 
     set_global_position(root, float3(10.0f, 0.0f, 0.0f))
 
-    verify(approx3(get_global_position(leaf), float3(12.0f, 0.0f, 0.0f)),
+    verify(approx3(unwrap(get_global_position(leaf)), float3(12.0f, 0.0f, 0.0f)),
            "invalidation reaches descendants, not just direct children")
 }
 
@@ -318,6 +378,55 @@ def test_invalidate_global_cache_marks_entity_dirty() {
     }
 }
 
+[test]
+def test_invalidate_children_cache_dirties_descendants() {
+    var w = make_world()
+    var root = make_tx_entity(w, "root")
+    var child = make_tx_entity(w, "child")
+    child.child_of(root)
+    var grandchild = make_tx_entity(w, "grandchild")
+    grandchild.child_of(child)
+
+    let ignored1 = get_global_transform(child)
+    let ignored2 = get_global_transform(grandchild)
+    unsafe {
+        verify(!child.get_mut(type<DnTransform3D>).gPosCacheDirtyFlag, "child cache clean after read")
+        verify(!grandchild.get_mut(type<DnTransform3D>).gPosCacheDirtyFlag, "grandchild cache clean after read")
+    }
+
+    invalidate_children_cache(root)
+    unsafe {
+        verify(child.get_mut(type<DnTransform3D>).gPosCacheDirtyFlag, "child dirtied by root invalidation")
+        verify(grandchild.get_mut(type<DnTransform3D>).gPosCacheDirtyFlag, "grandchild dirtied by root invalidation")
+    }
+}
+
+[test]
+def test_mark_cache_dirty_sets_all_flags() {
+    var w = make_world()
+    var e = make_tx_entity(w, "e")
+    let ignored = get_global_transform(e)
+    mark_cache_dirty(e)
+    unsafe {
+        let raw = e.get_mut(type<DnTransform3D>)
+        verify(raw.gPosCacheDirtyFlag, "position cache dirty")
+        verify(raw.gRotCacheDirtyFlag, "rotation cache dirty")
+        verify(raw.gScaleCacheDirtyFlag, "scale cache dirty")
+    }
+}
+
+[test]
+def test_set_global_scale_on_parent_updates_child_global_scale() {
+    var w = make_world()
+    var parent = make_tx_entity(w, "parent")
+    var child = make_tx_entity(w, "child")
+    child.child_of(parent)
+
+    verify(approx3(unwrap(get_global_scale(child)), float3(1.0f, 1.0f, 1.0f)), "child starts at unit scale")
+    set_global_scale(parent, float3(3.0f, 3.0f, 3.0f))
+    verify(approx3(unwrap(get_global_scale(child)), float3(3.0f, 3.0f, 3.0f)), "child global scale follows parent")
+}
+
 // ---------------------------------------------------------------------------
 // parent() correctness (regression: used to return the entity's own id)
 // ---------------------------------------------------------------------------
@@ -327,7 +436,7 @@ def test_parent_returns_the_parent_not_self() {
     var w = make_world()
     var parent = w.create_entity("parent")
     var child = w.create_entity("child")
-    child |> child_of(parent)
+    child.child_of(parent)
 
     verify(child.parent() |> is_some(), "child reports a parent")
     var p = child.parent().move_unwrap()
@@ -352,7 +461,7 @@ def test_has_reports_component_presence() {
     var e = w.create_entity("e")
 
     verify(!e.has(type<DnTransform3D>), "entity without the component reports false")
-    e |> set(DnTransform3D())
+    e.set(DnTransform3D())
     verify(e.has(type<DnTransform3D>), "entity with the component reports true")
     verify(!e.has(type<DnVelocity3D>), "unrelated component still reports false")
 }
