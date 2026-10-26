@@ -19,6 +19,9 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "dn_application") {
         res.info = ("dn_application", path_to_engine + "src/Duin/Script/modules/moduleApplication/dn_application.das", "")
     }
+    elif (req == "dn_window") {
+        res.info = ("dn_window", path_to_engine + "src/Duin/Script/modules/moduleApplication/dn_window.das", "")
+    }
     elif (req == "dn_camera") {
         res.info = ("dn_camera", path_to_engine + "src/Duin/Script/modules/moduleRenderer/dn_camera.das", "")
     }

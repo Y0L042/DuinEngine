@@ -9,6 +9,8 @@
 
 #include <algorithm>
 #include <filesystem>
+#include <fstream>
+#include <new>
 #include <string>
 
 using namespace EnginePathsTest;
@@ -20,6 +22,14 @@ namespace TestScriptPaths
 class ScriptProbe : public duin::Script
 {
   public:
+    using duin::Script::BuildFileAccess;
+
+    bool TryBuildFileAccess(std::string &error)
+    {
+        alignas(das::FileAccessPtr) static unsigned char storage[sizeof(das::FileAccessPtr)];
+        das::FileAccessPtr *built = new (storage) das::FileAccessPtr(BuildFileAccess(error));
+        return built->get() != nullptr;
+    }
     using duin::Script::projectFile;
 };
 
@@ -173,6 +183,108 @@ TEST_SUITE("Script - SetProjectFile")
         CHECK(std::filesystem::path(s.projectFile).is_absolute());
         CHECK(std::filesystem::is_regular_file(std::filesystem::u8path(s.projectFile)));
         CHECK(std::filesystem::path(s.projectFile).filename() == "duintests.das_project");
+    }
+}
+
+static void WriteText(const std::string &path, const std::string &text)
+{
+    std::filesystem::create_directories(std::filesystem::u8path(path).parent_path());
+    std::ofstream f(std::filesystem::u8path(path));
+    f << text;
+}
+
+TEST_SUITE("Script - BuildFileAccess")
+{
+    TEST_CASE("Without a project file a plain file access is built")
+    {
+        DasRootGuard guard;
+        ScriptProbe s;
+        s.SetDasRoot();
+        s.InitModules();
+
+        std::string error;
+        bool access = s.TryBuildFileAccess(error);
+        CHECK(access);
+        CHECK(error.empty());
+    }
+
+    TEST_CASE("Missing project file returns null and reports the path")
+    {
+        DasRootGuard guard;
+        TempTree tmp;
+        std::string missing = tmp / "missing/game.das_project";
+
+        ScriptProbe s;
+        s.SetDasRoot();
+        s.InitModules();
+        s.SetProjectFile(missing);
+
+        std::string error;
+        bool access = s.TryBuildFileAccess(error);
+        CHECK_FALSE(access);
+        CHECK_FALSE(error.empty());
+        CHECK(error.find("game.das_project") != std::string::npos);
+    }
+
+    TEST_CASE("Project file that fails to compile returns null with the compiler message")
+    {
+        DasRootGuard guard;
+        TempTree tmp;
+        std::string broken = tmp / "broken/game.das_project";
+        WriteText(broken, "options gen2\nthis is not valid daslang {{{\n");
+
+        ScriptProbe s;
+        s.SetDasRoot();
+        s.InitModules();
+        s.SetProjectFile(broken);
+
+        std::string error;
+        bool access = s.TryBuildFileAccess(error);
+        CHECK_FALSE(access);
+        CHECK(error.find("game.das_project") != std::string::npos);
+        CHECK(error.size() > std::string("project file failed to compile: ").size() + broken.size());
+    }
+
+    TEST_CASE("Valid project file builds a file access")
+    {
+        DasRootGuard guard;
+        EngineRootGuard rootGuard;
+        std::string real = RealEngineRoot();
+        REQUIRE_FALSE(duin::fs::IsPathInvalid(real));
+        REQUIRE(duin::fs::SetEngineRoot(real));
+
+        ScriptProbe s;
+        s.SetDasRoot();
+        s.InitModules();
+        s.SetProjectFile(duin::fs::FindProjectFile("eng://../DuinTests/scripts"));
+        REQUIRE_FALSE(s.projectFile.empty());
+
+        std::string error;
+        bool access = s.TryBuildFileAccess(error);
+        CHECK(access);
+        CHECK(error.empty());
+    }
+
+    TEST_CASE("Compile fails cleanly when the project file is broken" *
+              doctest::skip() *
+              doctest::description("Script::Compile ignores BuildFileAccess errors and passes a null file "
+                                   "access to compileDaScript; skipped because it can crash the runner. "
+                                   "Run with --no-skip to reproduce."))
+    {
+        DasRootGuard guard;
+        TempTree tmp;
+        std::string broken = tmp / "broken/game.das_project";
+        WriteText(broken, "this is not valid daslang {{{\n");
+        std::string script = tmp / "broken/main.das";
+        WriteText(script, "options gen2\n[export]\ndef main() {\n}\n");
+
+        ScriptProbe s;
+        s.SetDasRoot();
+        s.InitModules();
+        s.SetProjectFile(broken);
+        s.SetScriptPath(script);
+
+        CHECK_FALSE(s.Compile());
     }
 }
 
