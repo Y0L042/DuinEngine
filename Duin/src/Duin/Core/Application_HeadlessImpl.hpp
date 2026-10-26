@@ -217,10 +217,14 @@ void duin::Application::RenderSecondaryWindow(WindowCtx &windowCtx)
     ::ImGuiContext *imguiContext = windowCtx.GetImGuiContext();
     if (imguiContext == nullptr || windowCtx.IsPendingDestroy())
     {
+        windowCtx.ClearDrawQueue();
+        windowCtx.ClearDrawUIQueue();
         return;
     }
     if (windowCtx.GetSDLWindowFlags() & SDL_WINDOW_MINIMIZED)
     {
+        windowCtx.ClearDrawQueue();
+        windowCtx.ClearDrawUIQueue();
         return;
     }
 
@@ -228,6 +232,8 @@ void duin::Application::RenderSecondaryWindow(WindowCtx &windowCtx)
     windowCtx.GetSizeInPixels(width, height);
     if (width <= 0 || height <= 0)
     {
+        windowCtx.ClearDrawQueue();
+        windowCtx.ClearDrawUIQueue();
         return;
     }
 
@@ -238,6 +244,8 @@ void duin::Application::RenderSecondaryWindow(WindowCtx &windowCtx)
     {
         RHIDestroyFrameBuffer(frameBuffer);
         windowCtx.SetFrameBuffer(RHIFrameBufferHandle{}, 0, 0);
+        windowCtx.ClearDrawQueue();
+        windowCtx.ClearDrawUIQueue();
         return;
     }
     if (!frameBuffer.IsValid())
@@ -246,6 +254,8 @@ void duin::Application::RenderSecondaryWindow(WindowCtx &windowCtx)
         windowCtx.SetFrameBuffer(frameBuffer, width, height);
         if (!frameBuffer.IsValid())
         {
+            windowCtx.ClearDrawQueue();
+            windowCtx.ClearDrawUIQueue();
             return;
         }
     }
@@ -267,12 +277,10 @@ void duin::Application::RenderSecondaryWindow(WindowCtx &windowCtx)
     if (camera != nullptr)
     {
         duin::BeginDraw3D(*camera, sceneView, (uint16_t)width, (uint16_t)height);
-        //windowCtx.OnDraw.Emit();
         windowCtx.ExecuteDrawQueue();
         duin::EndDraw3D();
     }
 
-    //windowCtx.OnDrawUI.Emit();
     windowCtx.ExecuteDrawUIQueue();
 
     ImGui::Render();

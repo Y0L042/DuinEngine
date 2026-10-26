@@ -338,6 +338,22 @@ void duin::WindowCtx::ExecuteDrawUIQueue()
     }
 }
 
+void duin::WindowCtx::ClearDrawQueue()
+{
+    while (!onDrawCallbacks.empty())
+    {
+        onDrawCallbacks.pop();
+    }
+}
+
+void duin::WindowCtx::ClearDrawUIQueue()
+{
+    while (!onDrawUICallbacks.empty())
+    {
+        onDrawUICallbacks.pop();
+    }
+}
+
 void duin::WindowCtx::Destroy()
 {
     if (sdlWindow == nullptr)

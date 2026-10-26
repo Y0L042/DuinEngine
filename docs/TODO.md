@@ -1,22 +1,21 @@
-# todo list
-
-# LightBulbs
+# TODO list
 
 ## InProgress
 
-- [ ] REF 
+- [ ] #Engine | 2026-10-26 16:35:27 | Add Daslang scripting for multiwindow functionality
 
 ## ToDo
 
-- [ ] REF 
+- [ ] #Editor | X | Add Object Import popup window  
+- [ ] #Editor | X | Add CollisionMesh creation window for objects
+- [ ] #Engine | X | Add way to store/import collision meshes
 
 
 
 ## Done
 
- @12:33 Wed, 30 Oct 2024
+- [x] #Engine | 2026-10-26 16:36:48 | Added C++ multiwindow functionality
 
-- [x] ADD 3d compass (non-interactive)
 
 ## Roadmap
 
@@ -31,3 +30,11 @@
 ## Shelved
 
 
+
+
+---
+Tags:
+- #Engine
+- #Editor
+- #DuinFPSDaslang
+---
