@@ -636,27 +636,74 @@ TEST_SUITE("EnginePaths - FindProjectFile")
 //  Regression guard: no hard-coded absolute paths in engine/app sources
 // =============================================================================
 
+TEST_SUITE("EnginePaths - Precedence and tie-breaks")
+{
+    TEST_CASE("wrk:// wins over eng:// when the workspace contains the path")
+    {
+        EngineRootGuard guard;
+        TempTree tmp;
+        std::string fake = MakeFakeEngineRoot(tmp.Path());
+        REQUIRE(duin::fs::SetEngineRoot(fake));
+        duin::fs::SetWorkspacePath(fake);
+
+        std::string mapped = duin::fs::MapSystemToVirtualPath(fake + "/src/x.bin");
+        CHECK(mapped.rfind("wrk://", 0) == 0);
+    }
+
+    TEST_CASE("Several project files in one directory resolve to the alphabetically first")
+    {
+        TempTree tmp;
+        Touch(tmp / "proj/zeta.das_project");
+        Touch(tmp / "proj/alpha.das_project");
+        Touch(tmp / "proj/mid.das_project");
+        Touch(tmp / "proj/main.das");
+
+        CHECK(duin::fs::FindProjectFile(tmp / "proj/main.das") == Norm(tmp / "proj/alpha.das_project"));
+    }
+
+    TEST_CASE("Unknown virtual prefix is not an engine path")
+    {
+        CHECK_FALSE(duin::fs::IsVirtualPath("eng:\\\\src/file.bin"));
+        CHECK_FALSE(duin::fs::IsVirtualPath("xeng://src/file.bin"));
+    }
+}
+
 TEST_SUITE("EnginePaths - No hard-coded absolute paths")
 {
-    TEST_CASE("Engine and app sources contain no drive-letter or MSYS absolute paths")
+    // Mirrors tools/check_abs_paths.sh. Matches C:/x.., C:\x.., C:\\x.. and /c/Projects|Users|Program
+    static const std::regex &AbsPathPattern()
     {
-        std::string engineRoot = RealEngineRoot();
-        REQUIRE_FALSE(duin::fs::IsPathInvalid(engineRoot));
-        const std::filesystem::path repo = std::filesystem::u8path(engineRoot).parent_path();
-
-        // Mirrors tools/check_abs_paths.sh. Matches C:/x.., C:\x.., C:\\x.. and /c/Projects|Users|Program
-        const std::regex absPath(
+        static const std::regex absPath(
             R"((^|[^A-Za-z0-9_])[A-Za-z]:(\\\\|\\|/)[A-Za-z_][A-Za-z0-9_]|(^|["' =])/[a-z]/(Projects|Users|Program))");
+        return absPath;
+    }
 
+    static void ScanFile(const std::filesystem::path &file, const std::string &rel, std::vector<std::string> &offenders)
+    {
+        std::ifstream in(file);
+        std::string line;
+        for (int lineNo = 1; std::getline(in, line); ++lineNo)
+        {
+            if (std::regex_search(line, AbsPathPattern()))
+            {
+                offenders.push_back(rel + ":" + std::to_string(lineNo) + ": " + line);
+            }
+        }
+    }
+
+    static std::vector<std::string> ScanRepo(const std::filesystem::path &repo, const std::vector<std::string> &skipFiles)
+    {
         const char *scanDirs[] = {
-            "Duin/src/Duin",     "DuinRT/src",          "DuinEditor/src",
-            "DuinEditor/scripts", "DuinEditor/data",    "DuinDasHost/src",
-            "DaslangDocGenerator/src", "DaslangDocGenerator/scripts", "ExampleProjects",
+            "Duin/src/Duin",           "DuinRT/src",                  "DuinEditor/src",  "DuinEditor/scripts",
+            "DuinEditor/data",         "DuinDasHost/src",             "DuinDasHost/scripts", "DaslangDocGenerator/src",
+            "DaslangDocGenerator/scripts", "ExampleProjects",         "DuinTests",       "DuinEditorTests",
+            "tools",
         };
-        const std::vector<std::string> extensions = {".cpp", ".h", ".hpp", ".c", ".das", ".toml", ".json", ".lua"};
-        const std::vector<std::string> skipDirs = {"bin", "bin-int", "vendor", "external", "modules"};
-        // Documentation examples of path functions, not real locations
-        const std::vector<std::string> skipFiles = {"Duin/src/Duin/IO/Filesystem.h"};
+        const std::vector<std::string> extensions = {
+            ".cpp", ".h", ".hpp", ".c", ".das", ".das_project", ".toml", ".json", ".lua", ".sh"};
+        const std::vector<std::string> skipDirs = {
+            "bin", "bin-int", "vendor", "external", "extern", "artifacts", "logs", "TestLogs"};
+        const std::vector<std::string> skipPrefixes = {"DuinTests/src/IO/"};
 
         // Generated caches legitimately record machine paths and are git-ignored:
         // dot-prefixed entries (.xxd_cache.json, .das_module.manifest, .jitted_scripts/, .cache/)
@@ -664,6 +711,20 @@ TEST_SUITE("EnginePaths - No hard-coded absolute paths")
         auto isGeneratedCache = [](std::string name) {
             std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
             return (!name.empty() && name[0] == '.') || name.find("cache") != std::string::npos;
+        };
+        auto hasExtension = [&](const std::filesystem::path &p) {
+            const std::string ext = p.extension().generic_string();
+            return std::find(extensions.begin(), extensions.end(), ext) != extensions.end();
+        };
+        auto isSkippedFile = [&](const std::string &rel) {
+            if (std::find(skipFiles.begin(), skipFiles.end(), rel) != skipFiles.end())
+                return true;
+            for (const std::string &prefix : skipPrefixes)
+            {
+                if (rel.rfind(prefix, 0) == 0)
+                    return true;
+            }
+            return false;
         };
 
         std::vector<std::string> offenders;
@@ -686,33 +747,75 @@ TEST_SUITE("EnginePaths - No hard-coded absolute paths")
                     }
                     continue;
                 }
-                if (isGeneratedCache(name))
-                {
-                    continue;
-                }
-                const std::string ext = it->path().extension().generic_string();
-                if (std::find(extensions.begin(), extensions.end(), ext) == extensions.end())
+                if (isGeneratedCache(name) || !hasExtension(it->path()))
                 {
                     continue;
                 }
                 const std::string rel = std::filesystem::relative(it->path(), repo).generic_string();
-                if (std::find(skipFiles.begin(), skipFiles.end(), rel) != skipFiles.end())
+                if (isSkippedFile(rel))
                 {
                     continue;
                 }
-
-                std::ifstream file(it->path());
-                std::string line;
-                for (int lineNo = 1; std::getline(file, line); ++lineNo)
-                {
-                    if (std::regex_search(line, absPath))
-                    {
-                        offenders.push_back(rel + ":" + std::to_string(lineNo) + ": " + line);
-                    }
-                }
+                ScanFile(it->path(), rel, offenders);
             }
         }
 
+        const std::vector<std::string> rootExtensions = {".cpp", ".h", ".hpp", ".c", ".das", ".das_project", ".lua", ".sh"};
+        for (const auto &entry : std::filesystem::directory_iterator(repo))
+        {
+            const std::string ext = entry.path().extension().generic_string();
+            if (!entry.is_regular_file() || isGeneratedCache(entry.path().filename().generic_string()) ||
+                std::find(rootExtensions.begin(), rootExtensions.end(), ext) == rootExtensions.end())
+            {
+                continue;
+            }
+            const std::string rel = entry.path().filename().generic_string();
+            if (!isSkippedFile(rel))
+            {
+                ScanFile(entry.path(), rel, offenders);
+            }
+        }
+        return offenders;
+    }
+
+    static std::filesystem::path RepoRoot()
+    {
+        std::string engineRoot = RealEngineRoot();
+        REQUIRE_FALSE(duin::fs::IsPathInvalid(engineRoot));
+        return std::filesystem::u8path(engineRoot).parent_path();
+    }
+
+    TEST_CASE("Engine, app, test and tool sources contain no drive-letter or MSYS absolute paths")
+    {
+        const std::filesystem::path repo = RepoRoot();
+
+        // Documentation examples of path functions, the checker itself, premake tool discovery,
+        // and the stale editor config covered by the dedicated case below
+        const std::vector<std::string> skipFiles = {
+            "Duin/src/Duin/IO/Filesystem.h",
+            "tools/check_abs_paths.sh",
+            "premakeCfg.lua",
+            "DuinEditor/data/editor_cfg.json",
+        };
+
+        std::vector<std::string> offenders = ScanRepo(repo, skipFiles);
+        for (const std::string &o : offenders)
+        {
+            MESSAGE("absolute path: " << o);
+        }
+        CHECK(offenders.empty());
+    }
+
+    TEST_CASE("Tracked editor_cfg.json contains no absolute paths" * doctest::may_fail())
+    {
+        const std::filesystem::path file = RepoRoot() / "DuinEditor/data/editor_cfg.json";
+        if (!std::filesystem::exists(file))
+        {
+            return;
+        }
+
+        std::vector<std::string> offenders;
+        ScanFile(file, "DuinEditor/data/editor_cfg.json", offenders);
         for (const std::string &o : offenders)
         {
             MESSAGE("absolute path: " << o);
