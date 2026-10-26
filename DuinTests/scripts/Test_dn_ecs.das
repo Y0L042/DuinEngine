@@ -1,6 +1,9 @@
 options gen2
 require dastest/testing_boost public
 
+require strings
+require daslib/option
+
 require dn_log
 require dn_ecs
 require dn_ecs_components
@@ -36,28 +39,28 @@ def test_world_is_valid_after_init() {
 [test]
 def test_world_not_valid_before_init() {
     var w : DnWorld
-    assert(!w.is_valid(), "DnWorld is not valid before initialize")
+    verify(!w.is_valid(), "DnWorld is not valid before initialize")
 }
 
 [test]
 def test_world_ecs_world_not_null() {
     var w : DnWorld
     w.initialize()
-    assert(w.ecs_world() != null, "DnWorld.ecs_world() is non-null after initialize")
+    verify(w.ecs_world() != null, "DnWorld.ecs_world() is non-null after initialize")
 }
 
 [test]
 def test_world_create_entity_nonzero() {
     var w = make_world()
     var e = w.create_entity("foo")
-    assert(e.entity != 0ul, "create_entity returns non-zero entity id")
+    verify(e.entity != 0ul, "create_entity returns non-zero entity id")
 }
 
 [test]
 def test_world_create_entity_world_pointer() {
     var w = make_world()
     var e = w.create_entity("bar")
-    assert(e.world != null, "created entity has non-null world pointer")
+    verify(e.world != null, "created entity has non-null world pointer")
 }
 
 [test]
@@ -79,7 +82,7 @@ def test_world_delete_entity() {
 def test_world_create_prefab_nonzero() {
     var w = make_world()
     var p = w.create_prefab("MyPrefab")
-    assert(p.entity != 0ul, "create_prefab returns non-zero entity id")
+    verify(p.entity != 0ul, "create_prefab returns non-zero entity id")
 }
 
 [test]
@@ -111,21 +114,21 @@ def test_entity_is_alive_method() {
 def test_entity_ecs_entity_accessor() {
     var w = make_world()
     var e = w.create_entity("accessor_e")
-    assert(e.ecs_entity() == e.entity, "ecs_entity() matches .entity field")
+    verify(e.ecs_entity() == e.entity, "ecs_entity() matches .entity field")
 }
 
 [test]
 def test_entity_ecs_world_accessor() {
     var w = make_world()
     var e = w.create_entity("world_acc_e")
-    assert(e.ecs_world() == e.world, "ecs_world() matches .world field")
+    verify(e.ecs_world() == e.world, "ecs_world() matches .world field")
 }
 
 [test]
 def test_entity_ecs_world_not_null() {
     var w = make_world()
     var e = w.create_entity("world_notnull_e")
-    assert(e.ecs_world() != null, "ecs_world() is non-null")
+    verify(e.ecs_world() != null, "ecs_world() is non-null")
 }
 
 // ---------------------------------------------------------------------------
@@ -137,7 +140,7 @@ def test_entity_get_name_matches_create() {
     var w = make_world()
     var e = w.create_entity("named_one")
     let n = e.get_name()
-    assert(n == "named_one", "get_name() matches name given to create_entity")
+    verify(n == "named_one", "get_name() matches name given to create_entity")
 }
 
 [test]
@@ -146,7 +149,7 @@ def test_entity_set_name() {
     var e = w.create_entity("original")
     e.set_name("renamed")
     let n = e.get_name()
-    assert(n == "renamed", "get_name() reflects name set via set_name()")
+    verify(n == "renamed", "get_name() reflects name set via set_name()")
 }
 
 // ---------------------------------------------------------------------------
@@ -241,7 +244,7 @@ def test_entity_child_of() {
     var w = make_world()
     var parent = w.create_entity("parent_e")
     var child = w.create_entity("child_e")
-    child.child_of(unsafe(addr(parent)))
+    child.child_of(parent)
     // Both entities should remain alive
     verify(w.is_alive(parent), "parent alive after child_of")
     verify(w.is_alive(child), "child alive after child_of")
@@ -261,400 +264,229 @@ def test_entity_is_a_prefab() {
 }
 
 // ---------------------------------------------------------------------------
-// C++ externs — component ID lookups
+// DnEntity — component set/get/has/remove
 // ---------------------------------------------------------------------------
 
+struct EcsTestTag {}
+
+struct EcsTestValue {
+    v : int
+}
+
 [test]
-def test_component_id_position3d_nonzero() {
+def test_entity_set_get_transform3d() {
     var w = make_world()
-    let id = dn_component_id_position3d(w.world)
-    assert(id != 0ul, "position3d component id is non-zero")
+    var e = w.create_entity("tx_e")
+    e.set(DnTransform3D(pos = float3(1.0f, 2.0f, 3.0f), scale = float3(4.0f, 5.0f, 6.0f)))
+    let t = e.get(type<DnTransform3D>)
+    verify(t.pos.x == 1.0f && t.pos.y == 2.0f && t.pos.z == 3.0f, "DnTransform3D pos round-trips")
+    verify(t.scale.x == 4.0f && t.scale.y == 5.0f && t.scale.z == 6.0f, "DnTransform3D scale round-trips")
+    verify(t.rot.w == 1.0f, "DnTransform3D rot keeps identity default")
 }
 
 [test]
-def test_component_id_rotation3d_nonzero() {
+def test_entity_set_overwrites_component() {
     var w = make_world()
-    let id = dn_component_id_rotation3d(w.world)
-    assert(id != 0ul, "rotation3d component id is non-zero")
+    var e = w.create_entity("overwrite_e")
+    e.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    e.set(DnTransform3D(pos = float3(9.0f, 0.0f, 0.0f)))
+    verify(e.get(type<DnTransform3D>).pos.x == 9.0f, "second set overwrites the first")
 }
 
 [test]
-def test_component_id_scale3d_nonzero() {
-    var w = make_world()
-    let id = dn_component_id_scale3d(w.world)
-    assert(id != 0ul, "scale3d component id is non-zero")
-}
-
-[test]
-def test_component_id_transform3d_nonzero() {
-    var w = make_world()
-    let id = dn_component_id_transform3d(w.world)
-    assert(id != 0ul, "transform3d component id is non-zero")
-}
-
-[test]
-def test_component_id_velocity3d_nonzero() {
-    var w = make_world()
-    let id = dn_component_id_velocity3d(w.world)
-    assert(id != 0ul, "velocity3d component id is non-zero")
-}
-
-[test]
-def test_component_ids_all_distinct() {
-    var w = make_world()
-    let pos_id   = dn_component_id_position3d(w.world)
-    let rot_id   = dn_component_id_rotation3d(w.world)
-    let scale_id = dn_component_id_scale3d(w.world)
-    let xfm_id   = dn_component_id_transform3d(w.world)
-    let vel_id   = dn_component_id_velocity3d(w.world)
-    assert(pos_id   != rot_id,   "position id != rotation id")
-    assert(pos_id   != scale_id, "position id != scale id")
-    assert(pos_id   != xfm_id,   "position id != transform id")
-    assert(pos_id   != vel_id,   "position id != velocity id")
-    assert(rot_id   != scale_id, "rotation id != scale id")
-    assert(scale_id != xfm_id,   "scale id != transform id")
-    assert(vel_id   != xfm_id,   "velocity id != transform id")
-}
-
-[test]
-def test_component_id_null_world_returns_zero() {
-    let id = dn_component_id_position3d(null)
-    assert(id == 0ul, "null world returns 0 for position3d id")
-}
-
-// ---------------------------------------------------------------------------
-// C++ externs — tag ID lookups
-// ---------------------------------------------------------------------------
-
-[test]
-def test_tag_id_local_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_local(w.world)
-    assert(id != 0ul, "Local tag id is non-zero")
-}
-
-[test]
-def test_tag_id_global_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_global(w.world)
-    assert(id != 0ul, "Global tag id is non-zero")
-}
-
-[test]
-def test_tag_id_pxkinematic_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_pxkinematic(w.world)
-    assert(id != 0ul, "PxKinematic tag id is non-zero")
-}
-
-[test]
-def test_tag_id_pxdynamic_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_pxdynamic(w.world)
-    assert(id != 0ul, "PxDynamic tag id is non-zero")
-}
-
-[test]
-def test_tag_id_pxstatic_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_pxstatic(w.world)
-    assert(id != 0ul, "PxStatic tag id is non-zero")
-}
-
-[test]
-def test_tag_id_nonpx_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_nonpx(w.world)
-    assert(id != 0ul, "NonPx tag id is non-zero")
-}
-
-[test]
-def test_tag_id_set_camera_as_active_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_set_camera_as_active(w.world)
-    assert(id != 0ul, "SetCameraAsActive tag id is non-zero")
-}
-
-[test]
-def test_tag_id_camera_is_active_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_camera_is_active(w.world)
-    assert(id != 0ul, "CameraIsActive tag id is non-zero")
-}
-
-[test]
-def test_tag_id_active_camera_nonzero() {
-    var w = make_world()
-    let id = dn_tag_id_active_camera(w.world)
-    assert(id != 0ul, "ActiveCamera tag id is non-zero")
-}
-
-[test]
-def test_tag_ids_all_distinct() {
-    var w = make_world()
-    let local_id  = dn_tag_id_local(w.world)
-    let global_id = dn_tag_id_global(w.world)
-    let kinem_id  = dn_tag_id_pxkinematic(w.world)
-    let dyn_id    = dn_tag_id_pxdynamic(w.world)
-    let stat_id   = dn_tag_id_pxstatic(w.world)
-    let nonpx_id  = dn_tag_id_nonpx(w.world)
-    assert(local_id  != global_id, "Local id != Global id")
-    assert(local_id  != kinem_id,  "Local id != PxKinematic id")
-    assert(kinem_id  != dyn_id,    "PxKinematic id != PxDynamic id")
-    assert(dyn_id    != stat_id,   "PxDynamic id != PxStatic id")
-    assert(stat_id   != nonpx_id,  "PxStatic id != NonPx id")
-}
-
-[test]
-def test_tag_id_null_world_returns_zero() {
-    let id = dn_tag_id_local(null)
-    assert(id == 0ul, "null world returns 0 for Local tag id")
-}
-
-// ---------------------------------------------------------------------------
-// C++ externs — Position3D set/get
-// ---------------------------------------------------------------------------
-
-[test]
-def test_set_get_position3d_roundtrip() {
-    var w = make_world()
-    var e = w.create_entity("pos_e")
-    var pos : DnPosition3D
-    pos.value.x = 1.0f
-    pos.value.y = 2.0f
-    pos.value.z = 3.0f
-    dn_entity_set_position3d(w.world, e.entity, pos)
-    let got = dn_entity_get_position3d(w.world, e.entity)
-    verify(got.value.x == 1.0f, "position x roundtrips")
-    verify(got.value.y == 2.0f, "position y roundtrips")
-    verify(got.value.z == 3.0f, "position z roundtrips")
-}
-
-[test]
-def test_get_position3d_default_zero() {
-    var w = make_world()
-    var e = w.create_entity("pos_default_e")
-    let got = dn_entity_get_position3d(w.world, e.entity)
-    verify(got.value.x == 0.0f, "default position x is zero")
-    verify(got.value.y == 0.0f, "default position y is zero")
-    verify(got.value.z == 0.0f, "default position z is zero")
-}
-
-[test]
-def test_set_position3d_null_world_no_crash() {
-    var pos : DnPosition3D
-    dn_entity_set_position3d(null, 1ul, pos)
-}
-
-[test]
-def test_set_position3d_zero_eid_no_crash() {
-    var w = make_world()
-    var pos : DnPosition3D
-    dn_entity_set_position3d(w.world, 0ul, pos)
-}
-
-// ---------------------------------------------------------------------------
-// C++ externs — Rotation3D set/get
-// ---------------------------------------------------------------------------
-
-[test]
-def test_set_get_rotation3d_roundtrip() {
-    var w = make_world()
-    var e = w.create_entity("rot_e")
-    var rot : DnRotation3D
-    rot.value.x = 0.1f
-    rot.value.y = 0.2f
-    rot.value.z = 0.3f
-    dn_entity_set_rotation3d(w.world, e.entity, rot)
-    let got = dn_entity_get_rotation3d(w.world, e.entity)
-    verify(got.value.x == 0.1f, "rotation x roundtrips")
-    verify(got.value.y == 0.2f, "rotation y roundtrips")
-    verify(got.value.z == 0.3f, "rotation z roundtrips")
-}
-
-[test]
-def test_get_rotation3d_default_zero() {
-    var w = make_world()
-    var e = w.create_entity("rot_default_e")
-    let got = dn_entity_get_rotation3d(w.world, e.entity)
-    verify(got.value.x == 0.0f, "default rotation x is zero")
-    verify(got.value.y == 0.0f, "default rotation y is zero")
-    verify(got.value.z == 0.0f, "default rotation z is zero")
-}
-
-[test]
-def test_set_rotation3d_null_world_no_crash() {
-    var rot : DnRotation3D
-    dn_entity_set_rotation3d(null, 1ul, rot)
-}
-
-// ---------------------------------------------------------------------------
-// C++ externs — Scale3D set/get
-// ---------------------------------------------------------------------------
-
-[test]
-def test_set_get_scale3d_roundtrip() {
-    var w = make_world()
-    var e = w.create_entity("scale_e")
-    var sc : DnScale3D
-    sc.value.x = 2.0f
-    sc.value.y = 3.0f
-    sc.value.z = 4.0f
-    dn_entity_set_scale3d(w.world, e.entity, sc)
-    let got = dn_entity_get_scale3d(w.world, e.entity)
-    verify(got.value.x == 2.0f, "scale x roundtrips")
-    verify(got.value.y == 3.0f, "scale y roundtrips")
-    verify(got.value.z == 4.0f, "scale z roundtrips")
-}
-
-[test]
-def test_get_scale3d_default_zero() {
-    var w = make_world()
-    var e = w.create_entity("scale_default_e")
-    let got = dn_entity_get_scale3d(w.world, e.entity)
-    verify(got.value.x == 0.0f, "default scale x is zero")
-    verify(got.value.y == 0.0f, "default scale y is zero")
-    verify(got.value.z == 0.0f, "default scale z is zero")
-}
-
-[test]
-def test_set_scale3d_null_world_no_crash() {
-    var sc : DnScale3D
-    dn_entity_set_scale3d(null, 1ul, sc)
-}
-
-// ---------------------------------------------------------------------------
-// C++ externs — Transform3D set/get
-// ---------------------------------------------------------------------------
-
-[test]
-def test_set_get_transform3d_roundtrip() {
-    var w = make_world()
-    var e = w.create_entity("xfm_e")
-    var xfm : DnTransform3D
-    xfm.pos.x = 5.0f
-    xfm.pos.y = 6.0f
-    xfm.pos.z = 7.0f
-    xfm.scale.x = 1.0f
-    xfm.scale.y = 2.0f
-    xfm.scale.z = 3.0f
-    xfm.rot.x = 0.0f
-    xfm.rot.y = 0.0f
-    xfm.rot.z = 0.0f
-    xfm.rot.w = 1.0f
-    dn_entity_set_transform3d(w.world, e.entity, xfm)
-    let got = dn_entity_get_transform3d(w.world, e.entity)
-    verify(got.pos.x == 5.0f, "transform pos.x roundtrips")
-    verify(got.pos.y == 6.0f, "transform pos.y roundtrips")
-    verify(got.pos.z == 7.0f, "transform pos.z roundtrips")
-    verify(got.scale.x == 1.0f, "transform scale.x roundtrips")
-    verify(got.scale.y == 2.0f, "transform scale.y roundtrips")
-    verify(got.scale.z == 3.0f, "transform scale.z roundtrips")
-}
-
-[test]
-def test_set_transform3d_null_world_no_crash() {
-    var xfm : DnTransform3D
-    dn_entity_set_transform3d(null, 1ul, xfm)
-}
-
-// ---------------------------------------------------------------------------
-// C++ externs — Velocity3D set/get
-// ---------------------------------------------------------------------------
-
-[test]
-def test_set_get_velocity3d_roundtrip() {
+def test_entity_set_get_velocity3d() {
     var w = make_world()
     var e = w.create_entity("vel_e")
-    var vel : DnVelocity3D
-    vel.value.x = 10.0f
-    vel.value.y = 20.0f
-    vel.value.z = 30.0f
-    dn_entity_set_velocity3d(w.world, e.entity, vel)
-    let got = dn_entity_get_velocity3d(w.world, e.entity)
-    verify(got.value.x == 10.0f, "velocity x roundtrips")
-    verify(got.value.y == 20.0f, "velocity y roundtrips")
-    verify(got.value.z == 30.0f, "velocity z roundtrips")
+    e.set(DnVelocity3D(lin = float3(1.0f, -2.0f, 3.0f), rot = float4(0.0f, 0.0f, 0.0f, 1.0f)))
+    let v = e.get(type<DnVelocity3D>)
+    verify(v.lin.x == 1.0f && v.lin.y == -2.0f && v.lin.z == 3.0f, "DnVelocity3D lin round-trips")
+    verify(v.rot.w == 1.0f, "DnVelocity3D rot round-trips")
 }
 
 [test]
-def test_get_velocity3d_default_zero() {
+def test_entity_get_missing_component_returns_default() {
     var w = make_world()
-    var e = w.create_entity("vel_default_e")
-    let got = dn_entity_get_velocity3d(w.world, e.entity)
-    verify(got.value.x == 0.0f, "default velocity x is zero")
-    verify(got.value.y == 0.0f, "default velocity y is zero")
-    verify(got.value.z == 0.0f, "default velocity z is zero")
+    var e = w.create_entity("missing_e")
+    let t = e.get(type<DnTransform3D>)
+    verify(t.scale.x == 1.0f && t.pos.x == 0.0f, "get on a missing component returns the default value")
 }
 
 [test]
-def test_set_velocity3d_null_world_no_crash() {
-    var vel : DnVelocity3D
-    dn_entity_set_velocity3d(null, 1ul, vel)
+def test_entity_get_mut_modifies_in_place() {
+    var w = make_world()
+    var e = w.create_entity("mut_e")
+    e.set(DnTransform3D())
+    unsafe {
+        var t = e.get_mut(type<DnTransform3D>)
+        verify(t != null, "get_mut returns a pointer for a present component")
+        t.pos.y = 5.0f
+    }
+    verify(e.get(type<DnTransform3D>).pos.y == 5.0f, "get_mut writes are visible to get")
+}
+
+[test]
+def test_entity_get_mut_missing_is_null() {
+    var w = make_world()
+    var e = w.create_entity("mut_missing_e")
+    verify(e.get_mut(type<DnVelocity3D>) == null, "get_mut on a missing component is null")
+}
+
+[test]
+def test_entity_has_and_remove() {
+    var w = make_world()
+    var e = w.create_entity("has_e")
+    verify(!e.has(type<EcsTestValue>), "has is false before set")
+    e.set(EcsTestValue(v = 3))
+    verify(e.has(type<EcsTestValue>), "has is true after set")
+    e.remove(type<EcsTestValue>)
+    verify(!e.has(type<EcsTestValue>), "has is false after remove")
+}
+
+[test]
+def test_entity_add_zero_size_tag() {
+    var w = make_world()
+    var e = w.create_entity("tag_struct_e")
+    e.add(EcsTestTag())
+    verify(e.has(type<EcsTestTag>), "zero-size struct can be added as a tag")
+    e.remove(type<EcsTestTag>)
+    verify(!e.has(type<EcsTestTag>), "zero-size tag can be removed")
+}
+
+[test]
+def test_entity_add_with_value_stores_value() {
+    var w = make_world()
+    var e = w.create_entity("add_value_e")
+    e.add(EcsTestValue(v = 11))
+    verify(e.get(type<EcsTestValue>).v == 11, "add with a value stores the value")
+}
+
+[test]
+def test_invalid_entity_component_calls_are_safe() {
+    var e = DnEntity()
+    verify(!e.is_valid(), "default DnEntity is invalid")
+    e.set(EcsTestValue(v = 1))
+    e.remove(type<EcsTestValue>)
+    verify(!e.has(type<EcsTestValue>), "has on an invalid entity is false")
+    verify(e.get_mut(type<EcsTestValue>) == null, "get_mut on an invalid entity is null")
 }
 
 // ---------------------------------------------------------------------------
-// Bound struct fields — DnVector3
+// Component struct defaults
 // ---------------------------------------------------------------------------
 
 [test]
-def test_dnvector3_fields_readable() {
-    var v : DnVector3
-    v.x = 1.0f
-    v.y = 2.0f
-    v.z = 3.0f
-    assert(v.x == 1.0f, "DnVector3 x field")
-    assert(v.y == 2.0f, "DnVector3 y field")
-    assert(v.z == 3.0f, "DnVector3 z field")
+def test_dntransform3d_defaults() {
+    let t = DnTransform3D()
+    verify(t.pos.x == 0.0f && t.pos.y == 0.0f && t.pos.z == 0.0f, "default pos is zero")
+    verify(t.scale.x == 1.0f && t.scale.y == 1.0f && t.scale.z == 1.0f, "default scale is one")
+    verify(t.rot.x == 0.0f && t.rot.w == 1.0f, "default rot is identity")
+    verify(t.gPosCacheDirtyFlag && t.gRotCacheDirtyFlag && t.gScaleCacheDirtyFlag, "caches start dirty")
+}
+
+[test]
+def test_dnvelocity3d_defaults() {
+    let v = DnVelocity3D()
+    verify(v.lin.x == 0.0f && v.lin.y == 0.0f && v.lin.z == 0.0f, "default linear velocity is zero")
+    verify(v.rot.w == 1.0f, "default angular velocity is the identity quaternion")
 }
 
 // ---------------------------------------------------------------------------
-// Bound struct fields — DnQuaternion
+// DnEntity — hierarchy
 // ---------------------------------------------------------------------------
 
 [test]
-def test_dnquaternion_fields_readable() {
-    var q : DnQuaternion
-    q.x = 0.0f
-    q.y = 0.0f
-    q.z = 0.0f
-    q.w = 1.0f
-    assert(q.x == 0.0f, "DnQuaternion x field")
-    assert(q.y == 0.0f, "DnQuaternion y field")
-    assert(q.z == 0.0f, "DnQuaternion z field")
-    assert(q.w == 1.0f, "DnQuaternion w field")
-}
+def test_entity_parent_and_has_parent() {
+    var w = make_world()
+    var parent = w.create_entity("h_parent")
+    var child = w.create_entity("h_child")
+    verify(!child.has_parent(), "fresh entity has no parent")
+    verify(is_none(child.parent()), "parent() of a root is none")
 
-// ---------------------------------------------------------------------------
-// Bound struct fields — DnPosition3D / DnRotation3D / DnScale3D / DnVelocity3D
-// ---------------------------------------------------------------------------
-
-[test]
-def test_dnposition3d_value_field() {
-    var p : DnPosition3D
-    p.value.x = 7.0f
-    assert(p.value.x == 7.0f, "DnPosition3D.value.x readable")
+    child.child_of(parent)
+    verify(child.has_parent(), "child_of sets a parent")
+    let p = child.parent()
+    verify(is_some(p) && p._value.entity == parent.entity, "parent() returns the parent")
 }
 
 [test]
-def test_dnrotation3d_value_field() {
-    var r : DnRotation3D
-    r.value.y = 5.0f
-    assert(r.value.y == 5.0f, "DnRotation3D.value.y readable")
+def test_entity_set_parent_and_remove_parent() {
+    var w = make_world()
+    var a = w.create_entity("sp_a")
+    var b = w.create_entity("sp_b")
+    var child = w.create_entity("sp_child")
+
+    child.set_parent(a)
+    verify(child.parent()._value.entity == a.entity, "set_parent attaches to the first parent")
+    child.set_parent(b)
+    verify(child.parent()._value.entity == b.entity, "set_parent re-parents")
+    verify(a.child_count() == 0, "old parent loses the child")
+
+    child.remove_parent()
+    verify(!child.has_parent(), "remove_parent detaches the entity")
 }
 
 [test]
-def test_dnscale3d_value_field() {
-    var s : DnScale3D
-    s.value.z = 3.0f
-    assert(s.value.z == 3.0f, "DnScale3D.value.z readable")
+def test_entity_depth_and_child_count() {
+    var w = make_world()
+    var root = w.create_entity("d_root")
+    var mid = w.create_child(root, "d_mid")
+    var leaf = w.create_child(mid, "d_leaf")
+    w.create_child(root, "d_sibling")
+
+    verify(root.depth() == 0, "root depth is 0")
+    verify(mid.depth() == 1, "mid depth is 1")
+    verify(leaf.depth() == 2, "leaf depth is 2")
+    verify(root.child_count() == 2, "root has two direct children")
+    verify(leaf.child_count() == 0, "leaf has no children")
 }
 
 [test]
-def test_dnvelocity3d_value_field() {
-    var v : DnVelocity3D
-    v.value.x = 9.0f
-    assert(v.value.x == 9.0f, "DnVelocity3D.value.x readable")
+def test_entity_children_and_children_recursive() {
+    var w = make_world()
+    var root = w.create_entity("c_root")
+    var mid = w.create_child(root, "c_mid")
+    w.create_child(mid, "c_leaf")
+
+    var direct = 0
+    root.children() $(var c : DnEntity) {
+        direct++
+    }
+    var all = 0
+    root.children_recursive() $(var c : DnEntity) {
+        all++
+    }
+    verify(direct == 1, "children visits direct children only")
+    verify(all == 2, "children_recursive visits every descendant")
+}
+
+[test]
+def test_entity_path_and_lookup() {
+    var w = make_world()
+    var root = w.create_entity("p_root")
+    var child = w.create_child(root, "p_child")
+
+    let path = child.path()
+    verify(find(path, "p_root") >= 0 && find(path, "p_child") >= 0, "path contains parent and child names")
+    verify(root.lookup("p_child").entity == child.entity, "lookup finds a child by name")
+    verify(w.lookup(path).entity == child.entity, "world lookup by full path finds the child")
+}
+
+[test]
+def test_entity_is_valid_after_destruct_pins_current_behaviour() {
+    var w = make_world()
+    var e = w.create_entity("valid_after_destruct")
+    e.destruct()
+    verify(!e.is_alive(), "destructed entity is not alive")
+    verify(e.is_valid(), "is_valid only checks world and id, so it stays true after destruct")
+}
+
+[test]
+def test_known_bug_entity_is_valid_false_after_destruct() {
+    // KNOWN BUG: DnEntity.is_valid() does not check liveness.
+    var w = make_world()
+    var e = w.create_entity("known_bug_valid_after_destruct")
+    e.destruct()
+    verify(!e.is_valid(), "a destructed entity should not be valid")
 }
 
 // ---------------------------------------------------------------------------
@@ -663,23 +495,23 @@ def test_dnvelocity3d_value_field() {
 
 [test]
 def test_dntransform3d_pos_field() {
-    var t : DnTransform3D
+    var t = DnTransform3D()
     t.pos.x = 1.0f
-    assert(t.pos.x == 1.0f, "DnTransform3D.pos.x readable")
+    verify(t.pos.x == 1.0f, "DnTransform3D.pos.x readable")
 }
 
 [test]
 def test_dntransform3d_scale_field() {
-    var t : DnTransform3D
+    var t = DnTransform3D()
     t.scale.y = 2.0f
-    assert(t.scale.y == 2.0f, "DnTransform3D.scale.y readable")
+    verify(t.scale.y == 2.0f, "DnTransform3D.scale.y readable")
 }
 
 [test]
 def test_dntransform3d_rot_field() {
-    var t : DnTransform3D
+    var t = DnTransform3D()
     t.rot.w = 1.0f
-    assert(t.rot.w == 1.0f, "DnTransform3D.rot.w readable")
+    verify(t.rot.w == 1.0f, "DnTransform3D.rot.w readable")
 }
 
 // ---------------------------------------------------------------------------
@@ -687,9 +519,12 @@ def test_dntransform3d_rot_field() {
 // ---------------------------------------------------------------------------
 
 [test]
-def test_dn_register_component_no_crash() {
+def test_dn_register_component_is_stable() {
     var w = make_world()
-    dn_register_component(w, type<DnPosition3D>)
+    let first = dn_register_component(w, type<DnTransform3D>)
+    let second = dn_register_component(w, type<DnTransform3D>)
+    verify(first != 0ul, "registered component id is non-zero")
+    verify(first == second, "registering twice returns the same id")
 }
 
 // ---------------------------------------------------------------------------
@@ -700,86 +535,111 @@ def test_dn_register_component_no_crash() {
 def test_query_builder_build_not_null() {
     var w = make_world()
     var qb = w.query_builder()
-    qb.with_term(type<DnPosition3D>)
+    qb.with_term(type<DnTransform3D>)
     var q = qb.build()
-    assert(q.query != null, "built query has non-null ecs_query_t pointer")
+    verify(q.query != null, "built query has non-null ecs_query_t pointer")
+    q.fini()
 }
 
 [test]
 def test_query_builder_cached_build_not_null() {
     var w = make_world()
     var qb = w.query_builder()
-    qb.with_term(type<DnPosition3D>)
+    qb.with_term(type<DnTransform3D>)
     qb.cached()
     var q = qb.build()
-    assert(q.query != null, "cached query has non-null ecs_query_t pointer")
+    verify(q.query != null, "cached query has non-null ecs_query_t pointer")
+    q.fini()
 }
 
 [test]
 def test_query_builder_with_multiple_terms() {
     var w = make_world()
     var qb = w.query_builder()
-    qb.with_term(type<DnPosition3D>)
+    qb.with_term(type<DnTransform3D>)
     qb.with_term(type<DnVelocity3D>)
     var q = qb.build()
-    assert(q.query != null, "query with two terms builds successfully")
+    verify(q.query != null, "query with two terms builds successfully")
+    q.fini()
 }
 
 [test]
 def test_query_builder_without_term() {
     var w = make_world()
     var qb = w.query_builder()
-    qb.with_term(type<DnPosition3D>)
+    qb.with_term(type<DnTransform3D>)
     qb.without_term(type<DnVelocity3D>)
     var q = qb.build()
-    assert(q.query != null, "query with without_term builds successfully")
+    verify(q.query != null, "query with without_term builds successfully")
+    q.fini()
 }
 
 [test]
 def test_query_ecs_query_accessor() {
     var w = make_world()
-    var q = w.query_builder().with_term(type<DnPosition3D>).build()
-    assert(q.ecs_query() == q.query, "DnQuery.ecs_query() matches .query field")
+    var q = w.query_builder().with_term(type<DnTransform3D>).build()
+    verify(q.ecs_query() == q.query, "DnQuery.ecs_query() matches .query field")
+    q.fini()
 }
 
 [test]
 def test_query_each_runs_on_matching_entity() {
     var w = make_world()
     var e = w.create_entity("query_target")
-    var pos : DnPosition3D
-    pos.value.x = 42.0f
-    dn_entity_set_position3d(w.world, e.entity, pos)
+    e.set(DnTransform3D(pos = float3(42.0f, 0.0f, 0.0f)))
 
-    var q = w.query_builder().with_term(type<DnPosition3D>).build()
+    var q = w.query_builder().with_term(type<DnTransform3D>).build()
     var found = 0
-    q.each(q) <| $(ent : DnEntity?) {
+    var seen = 0ul
+    q.each() $(var ent : DnEntity) {
         found++
+        seen = ent.entity
     }
-    assert(found >= 1, "query each visits at least one matching entity")
+    verify(found == 1, "query each visits the matching entity")
+    verify(seen == e.entity, "query each passes the matching entity")
+    q.fini()
 }
 
 [test]
 def test_query_each_skips_non_matching_entity() {
     var w = make_world()
-    // Create entity without Position3D
-    var e = w.create_entity("no_pos_e")
-    var vel : DnVelocity3D
-    dn_entity_set_velocity3d(w.world, e.entity, vel)
+    var e = w.create_entity("no_tx_e")
+    e.set(DnVelocity3D())
 
-    // Build query requiring Position3D
-    var q = w.query_builder().with_term(type<DnPosition3D>).build()
+    var q = w.query_builder().with_term(type<DnTransform3D>).build()
     var found = 0
-    q.each(q) <| $(ent : DnEntity?) {
+    q.each() $(var ent : DnEntity) {
         found++
     }
-    // The entity without Position3D should not be counted
-    assert(found == 0, "query each visits zero entities when none match")
+    verify(found == 0, "query each visits zero entities when none match")
+    q.fini()
+}
+
+[test]
+def test_query_without_term_excludes_entities() {
+    var w = make_world()
+    var moving = w.create_entity("moving")
+    moving.set(DnTransform3D())
+    moving.set(DnVelocity3D())
+    var still = w.create_entity("still")
+    still.set(DnTransform3D())
+
+    var q = w.query_builder().with_term(type<DnTransform3D>).without_term(type<DnVelocity3D>).build()
+    var seen = 0ul
+    var found = 0
+    q.each() $(var ent : DnEntity) {
+        found++
+        seen = ent.entity
+    }
+    verify(found == 1, "without_term excludes the moving entity")
+    verify(seen == still.entity, "without_term keeps the still entity")
+    q.fini()
 }
 
 [test]
 def test_query_fini_no_crash() {
     var w = make_world()
-    var q = w.query_builder().with_term(type<DnPosition3D>).build()
+    var q = w.query_builder().with_term(type<DnTransform3D>).build()
     q.fini()
 }
 
@@ -787,7 +647,7 @@ def test_query_fini_no_crash() {
 def test_world_query_builder_returns_builder() {
     var w = make_world()
     var qb = w.query_builder()
-    assert(qb.world == w.world, "query_builder().world matches DnWorld.world")
+    verify(qb.world == w.world, "query_builder().world matches DnWorld.world")
 }
 
 // ---------------------------------------------------------------------------
@@ -797,24 +657,26 @@ def test_world_query_builder_returns_builder() {
 // root -> mid -> leaf, each with a DnTransform3D whose pos.x encodes its depth.
 def make_hierarchy(var w : DnWorld; var root, mid, leaf : DnEntity&) {
     root = w.create_entity("root")
-    root |> set(DnTransform3D(pos = float3(0.0f, 0.0f, 0.0f)))
+    root.set(DnTransform3D(pos = float3(0.0f, 0.0f, 0.0f)))
 
     mid = w.create_entity("mid")
-    mid |> child_of(root)
-    mid |> set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
+    mid.child_of(root)
+    mid.set(DnTransform3D(pos = float3(1.0f, 0.0f, 0.0f)))
 
     leaf = w.create_entity("leaf")
-    leaf |> child_of(mid)
-    leaf |> set(DnTransform3D(pos = float3(2.0f, 0.0f, 0.0f)))
+    leaf.child_of(mid)
+    leaf.set(DnTransform3D(pos = float3(2.0f, 0.0f, 0.0f)))
 }
 
 [test]
 def test_children_array_returns_direct_children() {
     var w = make_world()
-    var root, mid, leaf : DnEntity
+    var root = DnEntity()
+    var mid = DnEntity()
+    var leaf = DnEntity()
     make_hierarchy(w, root, mid, leaf)
 
-    let kids = root |> children_array()
+    let kids = root.children_array()
     verify(length(kids) == 1, "root has exactly one direct child")
     if (length(kids) == 1) {
         verify(kids[0].entity == mid.entity, "root's child is mid")
@@ -824,7 +686,9 @@ def test_children_array_returns_direct_children() {
 [test]
 def test_with_term_up_reads_parent_component() {
     var w = make_world()
-    var root, mid, leaf : DnEntity
+    var root = DnEntity()
+    var mid = DnEntity()
+    var leaf = DnEntity()
     make_hierarchy(w, root, mid, leaf)
 
     var q = (w.query_builder()
@@ -836,7 +700,7 @@ def test_with_term_up_reads_parent_component() {
     var it = ecs_query_iter(w.world, q.ecs_query())
     unsafe {
         while (ecs_query_next_iter(it)) {
-            verify(!ecs_field_is_self(it, 1), "the up-traversed field is not self-owned")
+            verify(!ecs_field_is_self(addr(it), int8(1)), "the up-traversed field is not self-owned")
             count += it.count
         }
     }
@@ -848,12 +712,14 @@ def test_with_term_up_reads_parent_component() {
 [test]
 def test_with_term_cascade_orders_parents_first() {
     var w = make_world()
-    var root, mid, leaf : DnEntity
+    var root = DnEntity()
+    var mid = DnEntity()
+    var leaf = DnEntity()
     make_hierarchy(w, root, mid, leaf)
 
     var q = (w.query_builder()
         .with_term(type<DnTransform3D>, EcsIn)
-        .with_term_cascade(type<DnTransform3D>, EcsIn, true)
+        .with_term_up(type<DnTransform3D>, EcsCascade, EcsIn, EcsOptional, 0ul)
         .build())
 
     var order : array<float>
@@ -879,19 +745,21 @@ def test_with_term_cascade_orders_parents_first() {
 [test]
 def test_with_term_cascade_optional_includes_root() {
     var w = make_world()
-    var root, mid, leaf : DnEntity
+    var root = DnEntity()
+    var mid = DnEntity()
+    var leaf = DnEntity()
     make_hierarchy(w, root, mid, leaf)
 
     var q = (w.query_builder()
         .with_term(type<DnTransform3D>, EcsIn)
-        .with_term_cascade(type<DnTransform3D>, EcsIn, true)
+        .with_term_up(type<DnTransform3D>, EcsCascade, EcsIn, EcsOptional, 0ul)
         .build())
 
     var unset_seen = 0
     var it = ecs_query_iter(w.world, q.ecs_query())
     unsafe {
         while (ecs_query_next_iter(it)) {
-            if (!ecs_field_is_set(it, 1)) {
+            if (!ecs_field_is_set(addr(it), int8(1))) {
                 unset_seen += it.count
             }
         }
@@ -903,7 +771,9 @@ def test_with_term_cascade_optional_includes_root() {
 [test]
 def test_terms_preserves_src_and_trav() {
     var w = make_world()
-    var root, mid, leaf : DnEntity
+    var root = DnEntity()
+    var mid = DnEntity()
+    var leaf = DnEntity()
     make_hierarchy(w, root, mid, leaf)
 
     // a traversal term routed through terms() must keep its src/trav
@@ -917,7 +787,7 @@ def test_terms_preserves_src_and_trav() {
     var it = ecs_query_iter(w.world, q.ecs_query())
     unsafe {
         while (ecs_query_next_iter(it)) {
-            verify(!ecs_field_is_self(it, 1), "term src survived terms(): field is traversed")
+            verify(!ecs_field_is_self(addr(it), int8(1)), "term src survived terms(): field is traversed")
             count += it.count
         }
     }
