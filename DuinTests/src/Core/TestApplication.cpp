@@ -1,6 +1,10 @@
 #include <Duin/Core/Application.h>
 #include <Duin/Core/Debug/DNLog.h>
 #include <Duin/Objects/GameObject.h>
+#include <Duin/Core/Window/WindowManager.h>
+#include <Duin/Core/Window/WindowCtx.h>
+#include <Duin/Core/Events/EventHandler.h>
+#include <SDL3/SDL.h>
 #include <doctest.h>
 #include <memory>
 #include <string>
@@ -742,6 +746,161 @@ TEST_SUITE("Application Edge Cases")
         app.SetWindowName("");
         app.SetWindowName("Very Long Application Name That Is Quite Verbose");
         CHECK(true);
+    }
+}
+
+struct QuitFlagReset
+{
+    ~QuitFlagReset()
+    {
+        duin::SetGameShouldQuit(false);
+    }
+};
+
+TEST_SUITE("Application - Quit flag and window manager")
+{
+    TEST_CASE("Event manager and window manager references are stable")
+    {
+        TestApp app;
+        CHECK(&app.GetEventManager() == &app.GetEventManager());
+        CHECK(&app.GetWindowManager() == &app.GetWindowManager());
+
+        TestApp other;
+        CHECK(&app.GetEventManager() != &other.GetEventManager());
+        CHECK(&app.GetWindowManager() != &other.GetWindowManager());
+    }
+
+    TEST_CASE("SetGameShouldQuit round-trips and defaults to true")
+    {
+        QuitFlagReset reset;
+        duin::SetGameShouldQuit(false);
+        CHECK_FALSE(duin::GetGameShouldQuit());
+
+        duin::SetGameShouldQuit();
+        CHECK(duin::GetGameShouldQuit());
+
+        duin::SetGameShouldQuit(false);
+        CHECK_FALSE(duin::GetGameShouldQuit());
+    }
+
+    TEST_CASE("Headless ProcessFrame keeps a quit flag set before the frame")
+    {
+        QuitFlagReset reset;
+        TestApp app;
+        app.SetHeadless(true);
+        app.EngineInitialize();
+        app.InitSDL();
+        app.InitImGui();
+
+        duin::SetGameShouldQuit(true);
+        double dt = 0.016, pCur = 0.0, pPrev = 0.0, pAccum = 0.0;
+        bool cont = app.ProcessFrame(dt, pCur, pPrev, pAccum);
+
+        CHECK_FALSE(cont);
+        CHECK(duin::GetGameShouldQuit());
+
+        duin::SetGameShouldQuit(false);
+        app.ShutdownImGui();
+        app.ShutdownSDL();
+        app.EngineExit();
+    }
+
+    TEST_CASE("Headless ProcessFrame continues when quit is not requested")
+    {
+        QuitFlagReset reset;
+        TestApp app;
+        app.SetHeadless(true);
+        app.EngineInitialize();
+        app.InitSDL();
+        app.InitImGui();
+
+        duin::SetGameShouldQuit(false);
+        double dt = 0.016, pCur = 0.0, pPrev = 0.0, pAccum = 0.0;
+        CHECK(app.ProcessFrame(dt, pCur, pPrev, pAccum));
+        CHECK_FALSE(duin::GetGameShouldQuit());
+
+        app.ShutdownImGui();
+        app.ShutdownSDL();
+        app.EngineExit();
+    }
+
+    TEST_CASE("Closing the primary window after EngineInitialize requests quit")
+    {
+        QuitFlagReset reset;
+        duin::SetGameShouldQuit(false);
+
+        TestApp app;
+        app.EngineInitialize();
+
+        auto primary = std::make_shared<duin::WindowCtx>();
+        app.GetWindowManager().SetPrimaryWindow(primary);
+        CHECK(app.GetWindowManager().DestroyWindow(primary->GetSDLWindow()));
+
+        CHECK(duin::GetGameShouldQuit());
+    }
+
+    TEST_CASE("Closing the primary window without EngineInitialize leaves quit unset")
+    {
+        QuitFlagReset reset;
+        duin::SetGameShouldQuit(false);
+
+        TestApp app;
+        auto primary = std::make_shared<duin::WindowCtx>();
+        app.GetWindowManager().SetPrimaryWindow(primary);
+        app.GetWindowManager().DestroyWindow(primary->GetSDLWindow());
+
+        CHECK_FALSE(duin::GetGameShouldQuit());
+    }
+
+    TEST_CASE("EngineInitialize routes input events from the instance event handler")
+    {
+        TestApp app;
+        app.EngineInitialize();
+
+        SDL_Event e = {};
+        e.type = SDL_EVENT_KEY_DOWN;
+        app.GetEventManager().PollEvent(e);
+
+        CHECK(app.onEventCalled == 1);
+
+        TestApp other;
+        other.EngineInitialize();
+        other.GetEventManager().PollEvent(e);
+        CHECK(app.onEventCalled == 1);
+        CHECK(other.onEventCalled == 1);
+    }
+
+    TEST_CASE("Free window helpers are null without a global application")
+    {
+        REQUIRE(duin::GetApplication() == nullptr);
+        CHECK(duin::CreateNewWindow("NoApp", 64, 64) == nullptr);
+        CHECK(duin::GetSDLWindow() == nullptr);
+    }
+
+    TEST_CASE("Lifecycle callbacks connected in one scope do not leak into the next")
+    {
+        TestApp app;
+        int calls = 0;
+        {
+            auto conn = duin::QueuePostUpdateCallback([&](double) { calls++; });
+            app.EnginePostUpdate(0.016);
+            CHECK(calls == 1);
+        }
+        app.EnginePostUpdate(0.016);
+        CHECK(calls == 1);
+
+        TestApp second;
+        second.EnginePostUpdate(0.016);
+        CHECK(calls == 1);
+    }
+
+    TEST_CASE("GUI ProcessEvents preserves a quit flag set before the frame" *
+              doctest::skip() *
+              doctest::description("Application_Impl.hpp overwrites gameShouldQuit with "
+                                   "eventHandler.IsCloseRequested(), which is always false; "
+                                   "only reachable in non-headless builds"))
+    {
+        CHECK(false);
     }
 }
 

@@ -78,6 +78,10 @@ int GetWindowWidth();
 int GetWindowHeight();
 
 std::shared_ptr<WindowCtx> CreateNewWindow(const std::string &title, int width, int height, uint64_t flags = 0);
+/** @brief Requests destruction of a secondary window. Returns false for the primary window or unknown windows. */
+bool DestroyWindow(const std::shared_ptr<WindowCtx> &window);
+/** @brief Returns all open secondary (non-primary) windows. */
+std::vector<std::shared_ptr<WindowCtx>> GetSecondaryWindows();
 
 /** @brief Enables or disables window resizing. */
 void SetWindowResizable(bool enable);

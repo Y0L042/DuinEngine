@@ -7,7 +7,7 @@
 #include <SDL3/SDL_video.h>
 #include <string>
 #include <functional>
-
+#include <queue>
 struct ImGuiContext;
 
 namespace duin
@@ -85,6 +85,9 @@ class WindowCtx
 
     void ExecuteDrawQueue();
     void ExecuteDrawUIQueue();
+
+    void ClearDrawQueue();
+    void ClearDrawUIQueue();
 
     void Destroy();
 

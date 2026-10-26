@@ -297,6 +297,24 @@ std::shared_ptr<duin::WindowCtx> duin::CreateNewWindow(const std::string &title,
     return nullptr;
 }
 
+bool duin::DestroyWindow(const std::shared_ptr<WindowCtx> &window)
+{
+    if (app == nullptr || window == nullptr || window == app->GetWindowManager().GetPrimaryWindow())
+    {
+        return false;
+    }
+    return app->GetWindowManager().DestroyWindow(window->GetSDLWindow());
+}
+
+std::vector<std::shared_ptr<duin::WindowCtx>> duin::GetSecondaryWindows()
+{
+    if (app != nullptr)
+    {
+        return app->GetWindowManager().GetSecondaryWindows();
+    }
+    return {};
+}
+
 static SDL_Window *GetPrimarySDLWindow()
 {
     return app != nullptr ? app->GetWindowManager().GetPrimarySDLWindow() : nullptr;
