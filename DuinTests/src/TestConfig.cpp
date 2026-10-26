@@ -1,3 +1,3 @@
 #include "TestConfig.h"
 
-const std::string ARTIFACT_PATH = "./Artifacts";
+const std::string ARTIFACT_PATH = "./artifacts";
