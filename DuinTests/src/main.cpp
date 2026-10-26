@@ -96,10 +96,20 @@ void RunScriptTests()
 
     int totalPassed = 0, totalFailed = 0;
 
+    std::string scriptsDir = "./scripts";
+    if (!fs::is_directory(scriptsDir))
+    {
+        std::string basePath = duin::fs::GetBasePath();
+        if (!duin::fs::IsPathInvalid(basePath) && fs::is_directory(basePath + "scripts"))
+        {
+            scriptsDir = basePath + "scripts";
+        }
+    }
+
     duin::Script script;
     // Resolved at runtime so the test runner works from any working directory
     script.SetDasRoot();
-    script.SetProjectFile(duin::fs::FindProjectFile("./scripts"));
+    script.SetProjectFile(duin::fs::FindProjectFile(scriptsDir));
     script.InitModules([]() {
         NEED_MODULE(Module_flecs);
         NEED_MODULE(Module_imgui);
@@ -110,6 +120,7 @@ void RunScriptTests()
         NEED_MODULE(Module_DnGameObject);
         NEED_MODULE(Module_DnECS);
         NEED_MODULE(Module_DnPipeline);
+        NEED_MODULE(Module_DnSceneBuilder);
         NEED_MODULE(Module_DnInput);
         NEED_MODULE(Module_DnPhysicsServer);
         NEED_MODULE(Module_DnCharacterBody);
@@ -120,7 +131,7 @@ void RunScriptTests()
         NEED_MODULE(Module_DnModel);
     });
 
-    for (const auto &entry : fs::recursive_directory_iterator("./scripts")) {
+    for (const auto &entry : fs::recursive_directory_iterator(scriptsDir)) {
         if (entry.path().extension() != ".das") continue;
 
         std::string path = entry.path().generic_string();
