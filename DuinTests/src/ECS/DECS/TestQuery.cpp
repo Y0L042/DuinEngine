@@ -939,5 +939,64 @@ TEST_SUITE("Query")
         });
         CHECK(enemySeen == 1);
     }
+
+    TEST_CASE("Query With<A, B>() builds one term per type")
+    {
+        duin::World w;
+        struct Position
+        {
+            float x = 0.0f;
+        };
+        struct TagA
+        {
+        };
+        struct TagB
+        {
+        };
+        w.Component<Position>();
+        w.Component<TagA>();
+        w.Component<TagB>();
+
+        auto q = w.QueryBuilder<Position>().With<TagA, TagB>().Build();
+        const ecs_query_t *raw = q.GetFlecsQuery().c_ptr();
+        REQUIRE(raw != nullptr);
+        CHECK(raw->term_count == 3);
+        for (int i = 0; i < raw->term_count; ++i)
+        {
+            CHECK_FALSE(ECS_IS_PAIR(raw->terms[i].id));
+        }
+    }
+
+    TEST_CASE("Query Without<A, B>() builds one negated term per type")
+    {
+        duin::World w;
+        struct Position
+        {
+            float x = 0.0f;
+        };
+        struct TagA
+        {
+        };
+        struct TagB
+        {
+        };
+        w.Component<Position>();
+        w.Component<TagA>();
+        w.Component<TagB>();
+
+        auto q = w.QueryBuilder<Position>().Without<TagA, TagB>().Build();
+        const ecs_query_t *raw = q.GetFlecsQuery().c_ptr();
+        REQUIRE(raw != nullptr);
+        CHECK(raw->term_count == 3);
+
+        int notTerms = 0;
+        for (int i = 0; i < raw->term_count; ++i)
+        {
+            CHECK_FALSE(ECS_IS_PAIR(raw->terms[i].id));
+            if (raw->terms[i].oper == EcsNot)
+                notTerms++;
+        }
+        CHECK(notTerms == 2);
+    }
 }
 } // namespace TestQuery
