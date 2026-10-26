@@ -1076,3 +1076,106 @@ TEST_SUITE("Entity::ID")
     }
 }
 } // namespace TestEntity
+
+namespace TestEntityValidity
+{
+TEST_SUITE("Entity - Invalid entity guards")
+{
+    TEST_CASE("Guarded queries on a default entity return defaults")
+    {
+        duin::Entity e;
+        REQUIRE_FALSE(e.IsValid());
+
+        CHECK_FALSE(e.IsTag());
+        CHECK(e.GetName().empty());
+        CHECK(e.GetPath().empty());
+        CHECK_FALSE(e.Lookup("Anything").IsValid());
+        CHECK_FALSE(e.Clone().IsValid());
+        CHECK_FALSE(e.First().IsValid());
+        CHECK_FALSE(e.Second().IsValid());
+        CHECK_FALSE(e.GetParent().IsValid());
+        CHECK(e.GetChildren().empty());
+    }
+
+    TEST_CASE("Guarded mutators on a default entity are no-ops returning self")
+    {
+        duin::World w;
+        duin::Entity other = w.Entity("Other");
+        duin::Entity e;
+
+        SUBCASE("SetName")
+        {
+            CHECK(&e.SetName("Name") == &e);
+        }
+        SUBCASE("Enable")
+        {
+            CHECK(&e.Enable() == &e);
+        }
+        SUBCASE("Disable")
+        {
+            CHECK(&e.Disable() == &e);
+        }
+        SUBCASE("Destruct")
+        {
+            CHECK(&e.Destruct() == &e);
+        }
+        SUBCASE("Clear")
+        {
+            CHECK(&e.Clear() == &e);
+        }
+        SUBCASE("ChildOf")
+        {
+            CHECK(&e.ChildOf(other) == &e);
+            CHECK(other.GetChildren().empty());
+        }
+        SUBCASE("IsA")
+        {
+            CHECK(&e.IsA(other) == &e);
+        }
+        SUBCASE("Add relationship")
+        {
+            CHECK(&e.Add(other, other) == &e);
+        }
+
+        CHECK_FALSE(e.IsValid());
+        CHECK(other.IsValid());
+    }
+
+    TEST_CASE("Guards apply to a destructed entity")
+    {
+        duin::World w;
+        duin::Entity e = w.Entity("Doomed");
+        e.Destruct();
+
+        CHECK_FALSE(e.IsValid());
+        CHECK(e.GetName().empty());
+        CHECK(e.GetChildren().empty());
+        CHECK_FALSE(e.GetParent().IsValid());
+    }
+}
+
+TEST_SUITE("Entity::ID - Expression constructor")
+{
+    TEST_CASE("ID from world and name expression resolves the named entity")
+    {
+        duin::World w;
+        duin::Entity e = w.Entity("ExprTarget");
+
+        duin::Entity::ID id(w.GetFlecsWorld(), "ExprTarget");
+        CHECK(id.GetID() == e.GetID());
+        CHECK(id.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
+    }
+
+    TEST_CASE("ID from world and pair expression builds a pair")
+    {
+        duin::World w;
+        duin::Entity rel = w.Entity("ExprRel");
+        duin::Entity tgt = w.Entity("ExprTgt");
+
+        duin::Entity::ID id(w.GetFlecsWorld(), "(ExprRel, ExprTgt)");
+        CHECK(id.IsPair());
+        CHECK(id.First().GetID() == rel.GetID());
+        CHECK(id.Second().GetID() == tgt.GetID());
+    }
+}
+} // namespace TestEntityValidity
