@@ -1910,4 +1910,45 @@ TEST_SUITE("System Manual Run")
         CHECK(e.Get<Position>().x == doctest::Approx(10.0f));
     }
 }
+
+TEST_SUITE("System - Handles")
+{
+    TEST_CASE("GetHandle carries the owning world and the system entity")
+    {
+        duin::World w;
+        duin::System sys = w.System<>("HandleSystem").Run([](duin::Iter &) {});
+
+        duin::SystemHandle handle = sys.GetHandle();
+        CHECK(handle.world.GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
+        CHECK(handle.system.GetID() == sys.Id());
+    }
+
+    TEST_CASE("System adopted from a handle runs the same system")
+    {
+        duin::World w;
+        int count = 0;
+        duin::System sys = w.System<>("HandleRunSystem").Run([&](duin::Iter &) { count++; });
+
+        duin::SystemHandle handle = sys.GetHandle();
+        handle.world.System(handle.system).Run(0.016f);
+        CHECK(count == 1);
+    }
+
+    TEST_CASE("GetFlecsSystem returns the underlying flecs system")
+    {
+        duin::World w;
+        duin::System sys = w.System<>("FlecsSystem").Run([](duin::Iter &) {});
+
+        flecs::system fs = sys.GetFlecsSystem();
+        CHECK(fs.id() == sys.Id());
+        CHECK(fs.is_valid());
+    }
+
+    TEST_CASE("GetFlecsSystem on an invalid system returns an invalid flecs system")
+    {
+        duin::System sys;
+        flecs::system fs = sys.GetFlecsSystem();
+        CHECK(fs.id() == 0);
+    }
+}
 } // namespace TestSystem

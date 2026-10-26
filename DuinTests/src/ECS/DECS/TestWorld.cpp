@@ -2,6 +2,7 @@
 #include "TestWorld.h"
 #include <Duin/ECS/DECS/World.h>
 #include <Duin/ECS/DECS/Entity.h>
+#include <Duin/ECS/DECS/System.h>
 #include <string>
 
 namespace TestWorld
@@ -139,12 +140,24 @@ TEST_SUITE("World")
     TEST_CASE("Defer<Func>")
     {
         duin::World w;
+        struct DeferComp
+        {
+            int v;
+        };
+        w.Component<DeferComp>();
+        duin::Entity e = w.Entity("DeferEntity");
+
         bool called = false;
         w.DeferBegin();
-        w.Defer([&]() { called = true; });
-        CHECK(!called);
-        w.DeferEnd();
+        w.Defer([&]() {
+            called = true;
+            CHECK(w.IsDeferred());
+            e.Set<DeferComp>({1});
+        });
         CHECK(called);
+        CHECK_FALSE(e.Has<DeferComp>());
+        w.DeferEnd();
+        CHECK(e.Has<DeferComp>());
     }
 
     TEST_CASE("Component<T>")
@@ -195,5 +208,84 @@ TEST_SUITE("World")
         CHECK(found.GetID() == child.GetID());
     }
 
+}
+
+TEST_SUITE("World - Value semantics")
+{
+    TEST_CASE("World(ecs_world_t*) wraps an existing world")
+    {
+        duin::World owner;
+        duin::Entity e = owner.Entity("Wrapped");
+
+        duin::World view(owner.GetFlecsWorld().c_ptr());
+        CHECK(view.GetFlecsWorld().c_ptr() == owner.GetFlecsWorld().c_ptr());
+        CHECK(view.Lookup("Wrapped").GetID() == e.GetID());
+    }
+
+    TEST_CASE("Copies share the same flecs world")
+    {
+        duin::World a;
+        duin::World b = a;
+        duin::World c;
+        c = a;
+
+        CHECK(b.GetFlecsWorld().c_ptr() == a.GetFlecsWorld().c_ptr());
+        CHECK(c.GetFlecsWorld().c_ptr() == a.GetFlecsWorld().c_ptr());
+
+        duin::Entity e = b.Entity("SharedEntity");
+        CHECK(a.Lookup("SharedEntity").GetID() == e.GetID());
+        CHECK(c.Lookup("SharedEntity").GetID() == e.GetID());
+    }
+
+    TEST_CASE("Moved-to world keeps the flecs world")
+    {
+        duin::World a;
+        ecs_world_t *raw = a.GetFlecsWorld().c_ptr();
+        duin::World b = std::move(a);
+        CHECK(b.GetFlecsWorld().c_ptr() == raw);
+    }
+
+    TEST_CASE("Copy outlives the original")
+    {
+        duin::World *original = new duin::World();
+        duin::Entity e = original->Entity("Survivor");
+        duin::World copy = *original;
+        delete original;
+
+        CHECK(copy.Lookup("Survivor").GetID() == e.GetID());
+    }
+
+    TEST_CASE("const GetFlecsWorld returns the same world")
+    {
+        duin::World w;
+        const duin::World &cw = w;
+        CHECK(cw.GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
+    }
+
+    TEST_CASE("Entity GetWorld returns a view of the owning world")
+    {
+        duin::World w;
+        duin::Entity e = w.Entity("Owned");
+        CHECK(e.GetWorld().GetFlecsWorld().c_ptr() == w.GetFlecsWorld().c_ptr());
+
+        duin::Entity empty;
+        CHECK(empty.GetWorld().GetFlecsWorld().c_ptr() == nullptr);
+    }
+
+    TEST_CASE("World::System(entity) adopts an existing system")
+    {
+        duin::World w;
+        int count = 0;
+        duin::System built = w.System<>("AdoptedSystem").Run([&](duin::Iter &) { count++; });
+
+        duin::Entity asEntity = built;
+        duin::System adopted = w.System(asEntity);
+
+        CHECK(adopted.IsValid());
+        CHECK(adopted.Id() == built.Id());
+
+        adopted.Run(0.016f);
+        CHECK(count == 1);
+    }
 }
 } // namespace TestWorld
