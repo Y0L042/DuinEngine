@@ -54,3 +54,23 @@ def test_debug_pause_resume() {
     dn_debug_resume_game()
     verify(dn_debug_is_game_paused() == 0, "game is running after dn_debug_resume_game")
 }
+
+[test]
+def test_game_should_quit_round_trip() {
+    dn_set_game_should_quit(false)
+    verify(!dn_get_game_should_quit(), "quit flag is false after clearing it")
+
+    dn_set_game_should_quit(true)
+    verify(dn_get_game_should_quit(), "quit flag is true after setting it")
+
+    dn_set_game_should_quit(false)
+    verify(!dn_get_game_should_quit(), "quit flag can be cleared again")
+}
+
+[test]
+def test_game_should_quit_defaults_to_true() {
+    dn_set_game_should_quit(false)
+    dn_set_game_should_quit()
+    verify(dn_get_game_should_quit(), "dn_set_game_should_quit() with no argument requests quit")
+    dn_set_game_should_quit(false)
+}
