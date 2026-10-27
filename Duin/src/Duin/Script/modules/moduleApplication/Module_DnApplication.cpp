@@ -239,7 +239,11 @@ class Module_DnApplication : public das::Module
 
         // Add child to application root
         addExtern<DAS_BIND_FUN(dn_app_add_child_object_impl)>(
-            *this, lib, "dn_app_add_child_object_impl", das::SideEffects::modifyExternal, "dn_app_add_child_object_impl")
+            *this,
+            lib,
+            "dn_app_add_child_object_impl",
+            das::SideEffects::modifyExternal,
+            "dn_app_add_child_object_impl")
             ->args({"child", "context"});
 
         // Root directory
@@ -380,13 +384,19 @@ class Module_DnApplication : public das::Module
         addExtern<DAS_BIND_FUN(dn_window_set_flags_impl)>(
             *this, lib, "dn_window_set_flags_impl", das::SideEffects::modifyExternal, "dn_window_set_flags_impl")
             ->args({"handle", "flags"});
-        addExtern<DAS_BIND_FUN(dn_window_get_clear_color_impl)>(*this, lib, "dn_window_get_clear_color_impl",
-                                                                das::SideEffects::accessExternal,
-                                                                "dn_window_get_clear_color_impl")
+        addExtern<DAS_BIND_FUN(dn_window_get_clear_color_impl)>(
+            *this,
+            lib,
+            "dn_window_get_clear_color_impl",
+            das::SideEffects::accessExternal,
+            "dn_window_get_clear_color_impl")
             ->args({"handle"});
-        addExtern<DAS_BIND_FUN(dn_window_set_clear_color_impl)>(*this, lib, "dn_window_set_clear_color_impl",
-                                                                das::SideEffects::modifyExternal,
-                                                                "dn_window_set_clear_color_impl")
+        addExtern<DAS_BIND_FUN(dn_window_set_clear_color_impl)>(
+            *this,
+            lib,
+            "dn_window_set_clear_color_impl",
+            das::SideEffects::modifyExternal,
+            "dn_window_set_clear_color_impl")
             ->args({"handle", "rgba"});
         addExtern<DAS_BIND_FUN(dn_window_set_camera_impl)>(
             *this, lib, "dn_window_set_camera_impl", das::SideEffects::modifyExternal, "dn_window_set_camera_impl")
@@ -394,9 +404,12 @@ class Module_DnApplication : public das::Module
         addExtern<DAS_BIND_FUN(dn_window_queue_draw_impl)>(
             *this, lib, "dn_window_queue_draw_impl", das::SideEffects::modifyExternal, "dn_window_queue_draw_impl")
             ->args({"handle", "fn", "context"});
-        addExtern<DAS_BIND_FUN(dn_window_queue_draw_ui_impl)>(*this, lib, "dn_window_queue_draw_ui_impl",
-                                                              das::SideEffects::modifyExternal,
-                                                              "dn_window_queue_draw_ui_impl")
+        addExtern<DAS_BIND_FUN(dn_window_queue_draw_ui_impl)>(
+            *this,
+            lib,
+            "dn_window_queue_draw_ui_impl",
+            das::SideEffects::modifyExternal,
+            "dn_window_queue_draw_ui_impl")
             ->args({"handle", "fn", "context"});
         addExtern<DAS_BIND_FUN(dn_window_count_impl)>(
             *this, lib, "dn_window_count", das::SideEffects::accessGlobal, "dn_window_count_impl");
