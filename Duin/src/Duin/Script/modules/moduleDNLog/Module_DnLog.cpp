@@ -3,6 +3,7 @@
 //#include <daScript/ast/ast_typefactory_bind.h>
 #include <daScript/ast/ast_interop.h>
 
+// TODO remove this, the file is empty
 #include "dn_log.das.inc"
 
 static std::string dn_log_location(const das::LineInfoArg *at, das::Context *ctx = nullptr)
