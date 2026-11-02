@@ -9,6 +9,7 @@
 - [ ] #Editor | X | Add Object Import popup window  
 - [ ] #Editor | X | Add CollisionMesh creation window for objects
 - [ ] #Engine | X | Add way to store/import collision meshes
+- [ ] #Engine | X | Refactor Signals to only register and deregister at end of Physics Frame
 
 
 
