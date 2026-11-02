@@ -216,7 +216,7 @@ class SignalImpl
         }
         else
         {
-            EraseQueue();
+            EraseQueue(); // TODO Do not erase here, queue for erasure at end of Physics Frame
         }
 
         bool res = recursionLimitHit;
