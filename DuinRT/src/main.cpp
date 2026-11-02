@@ -112,7 +112,8 @@ void DuinRT::Ready()
     }
     script->InitModules([&]() {
         NEED_MODULE(Module_flecs);
-        NEED_MODULE(Module_imgui);
+        NEED_MODULE(Module_dasIMGUI);
+        NEED_MODULE(Module_LiveHost);
         NEED_MODULE(Module_TOMLC17);
 
         NEED_MODULE(Module_DnLog);

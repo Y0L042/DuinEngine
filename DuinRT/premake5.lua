@@ -12,7 +12,7 @@ project "DuinRT"
     linkoptions { "-IGNORE:4006" }
     externalwarnings    "Off"
 
-    dependson { "Duin" }
+    dependson { "Duin", "dasimgui", "flecs_das" }
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")

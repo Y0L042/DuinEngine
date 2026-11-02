@@ -1,6 +1,5 @@
 #pragma once
 
-#include <module_imgui.h>
 #include "./modules/moduleDNLog/Module_DnLog.h"
 #include "./modules/moduleDoctest/Module_Doctest.h"
 #include "./modules/moduleRenderer/Module_DnRenderer.h"
@@ -22,7 +21,8 @@
 // so every separately compiled module needs a DECLARE_MODULE at file scope
 // before a NEED_MODULE/PULL_MODULE of it will compile.
 DECLARE_MODULE(Module_flecs);
-DECLARE_MODULE(Module_imgui);
+DECLARE_MODULE(Module_dasIMGUI);
+DECLARE_MODULE(Module_LiveHost);
 
 DECLARE_MODULE(Module_DnLog);
 DECLARE_MODULE(Module_Doctest);

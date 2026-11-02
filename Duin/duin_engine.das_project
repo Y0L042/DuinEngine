@@ -10,11 +10,34 @@ struct PathResolution {
     info : module_info
 }
 
+def get_imgui_subdir(name : string) : string {
+    if (name == "imgui_boost") {
+        return "daslib"
+    }
+    elif (name == "imgui_commands") {
+        return "commands"
+    }
+    elif (name == "imgui_document_model" || name == "imgui_text_find" || name == "imgui_text_flow" || name == "imgui_text_source_model") {
+        return "text"
+    }
+    elif (name == "imgui_boost_runtime" || name == "imgui_boost_v2" || name == "imgui_colors" || name == "imgui_containers_builtin"
+            || name == "imgui_docking_builtin" || name == "imgui_drawlist_builtin" || name == "imgui_enums" || name == "imgui_file_dialog"
+            || name == "imgui_fonts" || name == "imgui_harness_lint" || name == "imgui_icons" || name == "imgui_id_builtin"
+            || name == "imgui_layout_builtin" || name == "imgui_lint" || name == "imgui_live_core" || name == "imgui_scope_builtin"
+            || name == "imgui_style_builtin" || name == "imgui_table_builtin" || name == "imgui_theme_daslang"
+            || name == "imgui_widgets_builtin" || name == "imgui_window_constraints_builtin") {
+        return "widgets"
+    }
+    return ""
+}
+
 def get_engine_module(req, path_to_engine : string) : PathResolution {
     var res : PathResolution
     res.resolved = true
-    if (req == "imgui" || req == "imgui_boost") {
-        res.info = ("imgui_boost", path_to_engine + "vendor/dasimgui/src/scripts/imgui_boost.das", "")
+    let imguiName = starts_with(req, "imgui/") ? slice(req, 6) : (req == "imgui_boost" ? req : "")
+    let imguiSubdir = get_imgui_subdir(imguiName)
+    if (imguiSubdir != "") {
+        res.info = (imguiName, path_to_engine + "vendor/dasimgui/das/{imguiSubdir}/{imguiName}.das", "")
     }
     elif (req == "dn_application") {
         res.info = ("dn_application", path_to_engine + "src/Duin/Script/modules/moduleApplication/dn_application.das", "")
@@ -70,8 +93,8 @@ def get_engine_module(req, path_to_engine : string) : PathResolution {
     elif (req == "tomlc17") {
         res.info = ("tomlc17", path_to_engine + "src/Duin/Script/modules/moduleTOML/tomlc17.das", "")
     }
-    elif (req == "dn_live_host" || req == "live_host") {
-        res.info = ("dn_live_host", path_to_engine + "src/Duin/Script/modules/moduleLiveHost/dn_live_host.das", "")
+    elif (req == "live/live_commands") {
+        res.info = ("live_commands", path_to_engine + "vendor/daslang/modules/dasLiveHost/live/live_commands.das", "")
     }
     elif (req == "live/live_vars") {
         res.info = ("live_vars", path_to_engine + "vendor/daslang/modules/dasLiveHost/live/live_vars.das", "")

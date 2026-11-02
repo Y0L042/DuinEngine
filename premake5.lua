@@ -126,6 +126,8 @@ workspace "Duin"
         "BX_CONFIG_DEBUG=0",
         "TRACY_ENABLE",
         "TRACY_ON_DEMAND",
+        "IMGUI_DISABLE_OBSOLETE_FUNCTIONS",
+        "IMGUI_USE_WCHAR32",
     }
     global_links =
     {

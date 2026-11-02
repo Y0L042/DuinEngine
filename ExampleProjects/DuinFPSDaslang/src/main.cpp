@@ -99,7 +99,8 @@ class DuinFPSDaslangApp : public duin::Application
             das::register_builtin_modules();
 
             NEED_MODULE(Module_flecs);
-            NEED_MODULE(Module_imgui);
+            NEED_MODULE(Module_dasIMGUI);
+            NEED_MODULE(Module_LiveHost);
 
             NEED_MODULE(Module_DnLog);
             NEED_MODULE(Module_DnRenderer);
