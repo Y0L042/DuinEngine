@@ -17,6 +17,7 @@ class GameScript : public Script, public GameObject
     void SetGameFunctions();
     void ResetGameFunctions();
     void ResetMuteWarningFlags();
+    void ResetDisableFunctionFlags();
 
 
     void EnableHotCompile(bool enable, bool halt = false);
@@ -48,6 +49,12 @@ class GameScript : public Script, public GameObject
     int64_t scriptLastModified = 0;
     float uptimeAccum = 0.0f;
     bool hasCompiledOnce = false;
+
+    bool disableReady = false;
+    bool disableUpdate = false;
+    bool disablePhysicsUpdate = false;
+    bool disableDraw = false;
+    bool disableDrawUI = false;
 
     bool muteReadyWarning = false;
     bool muteUpdateWarning = false;

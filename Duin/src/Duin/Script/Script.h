@@ -1,17 +1,18 @@
 #pragma once
 
+#include "ScriptContext.h"
 #include <daScript/daScript.h>
+#include <Duin/Core/Debug/DNAssert.h>
 #include <daScript/simulate/aot.h>
 #include <string>
 #include <functional>
 #include <vector>
-#include "ScriptContext.h"
-#include <Duin/Core/Debug/DNAssert.h>
+#include <expected>
 
 namespace duin
 {
 
-bool VerifyFunction(das::Context *ctx, das::Func fn);
+std::expected<void, std::string> VerifyFunction(das::Context *ctx, das::Func fn);
 
 // Controls how much of the previously-compiled module graph survives a recompile.
 //   KeepCachedBindings — reuse all already-promoted .das modules (daslib + the dn_*
@@ -123,10 +124,10 @@ class Script
 
     // --- Stage 5: Invoke ---
     das::Func FindFunction(const std::string &func);
-    bool VerifyFunction(das::Func fn);
-    bool CallScript(das::Func fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
-    bool InvokeVoid(das::Func fn);
-    bool InvokeWithDelta(das::Func fn, double delta);
+    std::expected<void, std::string> VerifyFunction(das::Func fn);
+    std::expected<void, std::string> CallScript(das::Func fn, vec4f *args = (vec4f *)nullptr, void *res = (void *)nullptr);
+    std::expected<void, std::string> InvokeVoid(das::Func fn);
+    std::expected<void, std::string> InvokeWithDelta(das::Func fn, double delta);
 
     // Runs all exported functions whose names begin with "test_".
     // Returns {passed, failed} counts. Each test is called via evalWithCatch;
@@ -176,9 +177,6 @@ class Script
     das::FileAccessPtr BuildFileAccess(std::string& error);
     // Assembles CodeOfPolicies: rtti/logging plus JIT mode and profiler module wiring.
     das::CodeOfPolicies BuildPolicies();
-    // Shared guard for the invoke functions: verifies fn against the live context and emits
-    // the null-fn / null-context warnings. Returns false if the call must not proceed.
-    bool EnsureCallable(das::Func fn);
 
     // --- Compile error reporting helpers ---
     std::string SafeErrorReport(const das::Error &err);

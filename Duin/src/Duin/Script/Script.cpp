@@ -1,10 +1,12 @@
 #include "dnpch.h"
 #include "Script.h"
 #include <Duin/Core/Debug/DNLog.h>
+#include <Duin/Core/Debug/DNAssert.h>
 #include <Duin/IO/Filesystem.h>
 #include <chrono>
 #include <memory>
 #include <algorithm>
+#include <format>
 #include <string>
 #include <sstream>
 #include <regex>
@@ -55,9 +57,10 @@ void duin::Script::SetDasRoot(const std::string &path)
     std::string root = duin::fs::ResolveDasRoot(path);
     if (duin::fs::IsPathInvalid(root))
     {
-        DN_CORE_ERROR("Could not locate daslang root (daslib/builtin.das). Requested <{}>. "
-                      "Pass --dasroot <path>, set DUIN_DAS_ROOT, or run from inside the Duin source tree.",
-                      path);
+        DN_CORE_ERROR(
+            "Could not locate daslang root (daslib/builtin.das). Requested <{}>. "
+            "Pass --dasroot <path>, set DUIN_DAS_ROOT, or run from inside the Duin source tree.",
+            path);
         return;
     }
     if (!path.empty() && root != duin::fs::EnsureUnixPath(path))
@@ -123,7 +126,7 @@ void duin::Script::InitModules(std::function<void(void)> initModules)
 
     {
         das::daScriptEnvironment::ensure();
-        auto bootAccess = das::make_smart<das::FsFileAccess>(); 
+        auto bootAccess = das::make_smart<das::FsFileAccess>();
         std::string projectRoot;
         if (!projectFile.empty())
         {
@@ -210,7 +213,13 @@ bool duin::Script::Compile()
             auto pos = line.find(prefix);
             if (pos == std::string::npos)
                 continue;
-            try { totalDas += std::stod(line.substr(pos + prefix.size())); } catch (...) {}
+            try
+            {
+                totalDas += std::stod(line.substr(pos + prefix.size()));
+            }
+            catch (...)
+            {
+            }
         }
         DN_CORE_INFO("Total daslang compile time: {:.6f}s", totalDas);
     }
@@ -256,7 +265,7 @@ bool duin::Script::ValidateCompileInputs()
     return true;
 }
 
-das::FileAccessPtr duin::Script::BuildFileAccess(std::string& error)
+das::FileAccessPtr duin::Script::BuildFileAccess(std::string &error)
 {
     // Set optional project file, script root, configure policies.
     if (!projectFile.empty())
@@ -462,6 +471,7 @@ bool duin::Script::SimulateContext()
             DN_CORE_FATAL("{}", SafeErrorReport(err));
         }
         ResetContext();
+        scriptReady = false;
         res = false;
     }
     else
@@ -486,84 +496,92 @@ das::Func duin::Script::FindFunction(const std::string &func)
     return das::Func();
 }
 
-bool duin::Script::VerifyFunction(das::Func fn)
+std::expected<void, std::string> duin::Script::VerifyFunction(das::Func fn)
 {
     return duin::VerifyFunction(context.get(), fn);
 }
 
-bool duin::Script::EnsureCallable(das::Func fn)
+std::expected<void, std::string> duin::Script::CallScript(das::Func fn, vec4f *args, void *res)
 {
-    if (!VerifyFunction(fn))
+    if (auto verified = VerifyFunction(fn); verified.has_value())
     {
-        if (!fn)
-        {
-            DN_CORE_WARN("Called script function is null!");
-        }
-        if (!context)
-        {
-            DN_CORE_WARN("Context is not set!");
-        }
-        return false;
-    }
-    return true;
-}
+        auto _dasCtx = MakeScriptContextScope(context.get());
+        context->evalWithCatch(fn.PTR, args, res);
 
-bool duin::Script::CallScript(das::Func fn, vec4f *args, void *res)
-{
-    if (!EnsureCallable(fn))
-        return false;
-
-    auto _dasCtx = MakeScriptContextScope(context.get());
-    context->evalWithCatch(fn.PTR, args, res);
-
-    if (auto ex = context->getException())
-    {
-        DN_CORE_FATAL("Script Exception: \n{}\n", ex);
-        context->clearException();
-        return false;
-    }
-    return true;
-}
-
-bool duin::Script::InvokeVoid(das::Func fn)
-{
-    if (!EnsureCallable(fn))
-        return false;
-
-    auto _dasCtx = MakeScriptContextScope(context.get());
-    bool ok = context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn); });
-
-    if (!ok)
-    {
         if (auto ex = context->getException())
         {
-            DN_CORE_FATAL("Script Exception: \n{}\n", ex);
+            std::string msg = std::format("Script Exception: \n{}\n", ex);
+            context->clearException();
+            return std::unexpected<std::string>(std::move(msg));
         }
-        context->clearException();
-        return false;
     }
-    return true;
+    else
+    {
+        return verified;
+    }
+
+    return {};
 }
 
-bool duin::Script::InvokeWithDelta(das::Func fn, double delta)
+std::expected<void, std::string> duin::Script::InvokeVoid(das::Func fn)
 {
-    if (!EnsureCallable(fn))
-        return false;
-
-    auto _dasCtx = MakeScriptContextScope(context.get());
-    bool ok =
-        context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn, delta); });
-
-    if (!ok)
+    if (auto verified = VerifyFunction(fn); verified.has_value())
     {
-        if (auto ex = context->getException())
+        auto _dasCtx = MakeScriptContextScope(context.get());
+        bool ok = context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn); });
+
+        if (!ok)
         {
-            DN_CORE_FATAL("Script Exception: \n{}\n", ex);
+            std::string msg;
+            if (auto ex = context->getException())
+            {
+                msg = std::format("Script Exception: \n{}\n", ex);
+            }
+            else
+            {
+                msg = "Script Exception: \nUNKNOWN\n";
+            }
+            context->clearException();
+            return std::unexpected<std::string>(std::move(msg));
         }
-        context->clearException();
-        return false;
     }
-    return true;
+    else
+    {
+        return verified;
+    }
+
+    return {};
+}
+
+std::expected<void, std::string> duin::Script::InvokeWithDelta(das::Func fn, double delta)
+{
+    if (auto verified = VerifyFunction(fn); verified.has_value())
+    {
+        auto _dasCtx = MakeScriptContextScope(context.get());
+        bool ok =
+            context->runWithCatch([&]() { das::das_invoke_function<void>::invoke(context.get(), nullptr, fn, delta); });
+
+        if (!ok)
+        {
+            std::string msg;
+            if (auto ex = context->getException())
+            {
+                msg = std::format("Script Exception: \n{}\n", ex);
+            }
+            else
+            {
+                msg = "Script Exception: \nUNKNOWN\n";
+            }
+            context->clearException();
+            return std::unexpected<std::string>(std::move(msg));
+        }
+    }
+    else
+    {
+        return verified;
+    }
+
+    return {};
 }
 
 std::pair<int, int> duin::Script::RunTests()
@@ -668,19 +686,15 @@ void duin::Script::ResetContext()
 //  Free functions
 // =============================================================================
 
-bool duin::VerifyFunction(das::Context *ctx, das::Func fn)
+std::expected<void, std::string> duin::VerifyFunction(das::Context *ctx, das::Func fn)
 {
     if (!fn)
     {
-        DN_CORE_FATAL("VerifyFunction: null function handle.");
+        return std::unexpected<std::string>("VerifyFunction: null function handle.");
     }
     if (!ctx)
     {
-        DN_CORE_FATAL("VerifyFunction: null context.");
-    }
-    if (!ctx || !fn)
-    {
-        return false;
+        return std::unexpected<std::string>("VerifyFunction: null context.");
     }
 
     // TODO This is a temporary workaround, as it is specific to MSVC++ debug heap fill patterns.
@@ -689,23 +703,23 @@ bool duin::VerifyFunction(das::Context *ctx, das::Func fn)
     constexpr uintptr_t kFreedFill = 0xDDDDDDDDDDDDDDDDull;
     if (reinterpret_cast<uintptr_t>(fn.PTR) == kFreedFill)
     {
-        DN_CORE_FATAL(
+        return std::unexpected<std::string>(
             "VerifyFunction: function pointer contains freed-memory fill (0xDDDDDDDD...). The owning context was "
             "likely destroyed.");
-        return false;
     }
+
     // Pointer-range check: valid handles live inside the current context's
     // contiguous function table.
     const das::SimFunction *begin = ctx->getFunction(0);
     const das::SimFunction *end = begin + ctx->getTotalFunctions();
     if (fn.PTR < begin || fn.PTR >= end)
     {
-        DN_CORE_FATAL(
+        return std::unexpected<std::string>(std::format(
             "VerifyFunction: function pointer {:p} is outside the context's function table [{:p}, {:p}).",
             static_cast<const void *>(fn.PTR),
             static_cast<const void *>(begin),
-            static_cast<const void *>(end));
-        return false;
+            static_cast<const void *>(end)));
     }
-    return true;
+
+    return {};
 }

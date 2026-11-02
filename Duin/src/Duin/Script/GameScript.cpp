@@ -95,6 +95,15 @@ void duin::GameScript::ResetMuteWarningFlags()
     muteDrawUIWarning = false;
 }
 
+void duin::GameScript::ResetDisableFunctionFlags()
+{
+    disableReady = false;
+    disableUpdate = false;
+    disablePhysicsUpdate = false;
+    disableDraw = false;
+    disableDrawUI = false;
+}
+
 void duin::GameScript::EnableHotCompile(bool enable, bool halt)
 {
     hotCompileEnabled = enable;
@@ -161,6 +170,8 @@ bool duin::GameScript::SetContextRootObject()
 void duin::GameScript::ResetScript()
 {
     ResetGameFunctions();
+    ResetMuteWarningFlags();
+    ResetDisableFunctionFlags();
     Script::ResetScript();
 }
 
@@ -194,7 +205,22 @@ void duin::GameScript::Ready_()
 
     if (scriptReady)
     {
-        InvokeVoid(fnGameReady);
+        if (muteReadyWarning && !disableReady)
+        {
+            muteReadyWarning = false;
+        }
+        if (!disableReady)
+        {
+            if (auto expected = InvokeVoid(fnGameReady); !expected.has_value())
+            {
+                if (!muteReadyWarning)
+                {
+                    DN_CORE_FATAL("(Ready) {}", expected.error());
+                    muteReadyWarning = true;
+                }
+                disableReady = true;
+            }
+        }
     }
     else
     {
@@ -209,7 +235,6 @@ void duin::GameScript::Ready_()
 void duin::GameScript::OnEvent(Event e)
 {
 }
-
 
 void duin::GameScript::Update(double delta)
 {
@@ -249,7 +274,22 @@ void duin::GameScript::Update(double delta)
 
     if (scriptReady)
     {
-        InvokeWithDelta(fnGameUpdate, delta);
+        if (muteUpdateWarning && !disableUpdate)
+        {
+            muteUpdateWarning = false;
+        }
+        if (!disableUpdate)
+        {
+            if (auto expected = InvokeWithDelta(fnGameUpdate, delta); !expected.has_value())
+            {
+                if (!muteUpdateWarning)
+                {
+                    DN_CORE_FATAL("(Update) {}", expected.error());
+                    muteUpdateWarning = true;
+                }
+                disableUpdate = true;
+            }
+        }
     }
     else
     {
@@ -261,11 +301,29 @@ void duin::GameScript::Update(double delta)
     }
 }
 
+// TODO rewrite how these work!!! We don't want Invoke* to run when we know that that function/script is broken
+// TODO find out how often scripts are called when not ready
+// On recompile, it is possible for script not to be ready when update/draw functions are called
 void duin::GameScript::PhysicsUpdate(double delta)
 {
     if (scriptReady)
     {
-        InvokeWithDelta(fnGamePhysicsUpdate, delta);
+        if (mutePhysicsUpdateWarning && !disablePhysicsUpdate)
+        {
+            mutePhysicsUpdateWarning = false;
+        }
+        if (!disablePhysicsUpdate)
+        {
+            if (auto expected = InvokeWithDelta(fnGamePhysicsUpdate, delta); !expected.has_value())
+            {
+                if (!mutePhysicsUpdateWarning)
+                {
+                    DN_CORE_FATAL("(PhysicsUpdate) {}", expected.error());
+                    mutePhysicsUpdateWarning = true;
+                }
+                disablePhysicsUpdate = true;
+            }
+        }
     }
     else
     {
@@ -281,7 +339,22 @@ void duin::GameScript::Draw()
 {
     if (scriptReady)
     {
-        InvokeVoid(fnGameDraw);
+        if (muteDrawWarning && !disableDraw)
+        {
+            muteDrawWarning = false;
+        }
+        if (!disableDraw)
+        {
+            if (auto expected = InvokeVoid(fnGameDraw); !expected.has_value())
+            {
+                if (!muteDrawWarning)
+                {
+                    DN_CORE_FATAL("(Draw) {}", expected.error());
+                    muteDrawWarning = true;
+                }
+                disableDraw = true;
+            }
+        }
     }
     else
     {
@@ -297,7 +370,22 @@ void duin::GameScript::DrawUI()
 {
     if (scriptReady)
     {
-        InvokeVoid(fnGameDrawUI);
+        if (muteDrawUIWarning && !disableDrawUI)
+        {
+            muteDrawUIWarning = false;
+        }
+        if (!disableDrawUI)
+        {
+            if (auto expected = InvokeVoid(fnGameDrawUI); !expected.has_value())
+            {
+                if (!muteDrawUIWarning)
+                {
+                    DN_CORE_FATAL("(DrawUI) {}", expected.error());
+                    muteDrawUIWarning = true;
+                }
+                disableDrawUI = true;
+            }
+        }
     }
     else
     {
