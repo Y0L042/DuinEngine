@@ -46,6 +46,8 @@ int main(int argc, char **argv)
 
     RunCtx runCtx = RunCtx::ALL;
 
+    duin::SetAssertsFatal(false);
+
 
     if (argc > 1)
     {

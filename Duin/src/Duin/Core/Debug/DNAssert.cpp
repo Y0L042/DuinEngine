@@ -11,6 +11,7 @@
 #include "Duin/Core/Debug/DNAssert.h"
 #include <iostream>
 
+static bool assertsFatal = true;
 static std::function<std::string()> assertContextCallback;
 
 static void assert_handler(const doctest::AssertData &ad)
@@ -53,10 +54,9 @@ static void assert_handler(const doctest::AssertData &ad)
     }
 
     std::cout << std::endl;
-
 }
 
-static doctest::Context* g_assertContext = nullptr;
+static doctest::Context *g_assertContext = nullptr;
 
 void duin::InitAsserts()
 {
@@ -94,15 +94,33 @@ void duin::ReportAssert(const char *expr, const char *msg, const char *file, int
     }
 
     std::cout << Color::None << std::endl;
+
+    if (!assertsFatal)
+    {
+        return;
+    }
+#if defined(_MSC_VER)
+    if (IsDebuggerPresent())
+    {
+        __debugbreak();
+    }
+#endif
+    std::abort();
 }
 
 void duin::OnCrash(const char *message)
 {
     std::cout << doctest::Color::Red << "[CRASH] " << (message ? message : "(no message)") << "\n";
-    if (assertContextCallback) {
+    if (assertContextCallback)
+    {
         std::string stack = assertContextCallback();
         if (!stack.empty())
             std::cout << doctest::Color::None << "[Script callstack]\n" << stack << "\n";
     }
     std::abort();
+}
+
+void duin::SetAssertsFatal(bool fatal)
+{
+    assertsFatal = fatal;
 }

@@ -9,6 +9,7 @@ namespace duin
 void InitAsserts();
 void SetAssertContextCallback(std::function<std::string()> callback);
 void OnCrash(const char *message);
+void SetAssertsFatal(bool fatal); // Fatal by default. Set to non-fatal for tests
 
 /**
  * @brief Single sink for failed DN asserts: logs (with script callstack) but
