@@ -20,6 +20,27 @@ static void InitScript(duin::Script &s)
     s.InitModules();
 }
 
+static std::string FreshCachePath(const std::string &name)
+{
+    const std::string dir = ARTIFACTS_DIR + "/module_cache";
+    std::filesystem::create_directories(dir);
+    const std::string path = dir + "/" + name + ".dascache";
+    std::filesystem::remove(path);
+    return path;
+}
+
+static const std::string CACHE_SRC_V1 = "options gen2\n"
+                                        "require daslib/strings_boost\n"
+                                        "[export]\n"
+                                        "def fn_v1() : void {}\n";
+
+static const std::string CACHE_SRC_V2 = "options gen2\n"
+                                        "require daslib/strings_boost\n"
+                                        "[export]\n"
+                                        "def fn_v2() : void {}\n";
+
+using CacheVerdict = das::ModuleFileCache::ReadVerdict;
+
 namespace TestScript
 {
 
@@ -451,6 +472,142 @@ TEST_SUITE("Script")
         CHECK_FALSE(s.InvokeVoid(das::Func{}));
         CHECK_FALSE(s.InvokeWithDelta(das::Func{}, 0.016));
         CHECK_FALSE(s.CallScript(das::Func{}));
+    }
+
+    // =========================================================================
+    // Module cache tests
+    // =========================================================================
+
+    TEST_CASE("Module cache — first compile writes the cache file")
+    {
+        const std::string path = WriteDas("cache_write.das", CACHE_SRC_V1);
+        const std::string cache = FreshCachePath("cache_write");
+        duin::Script s(path);
+        s.SetModuleCache(true, cache);
+        InitScript(s);
+        REQUIRE(s.Compile());
+        CHECK(s.GetModuleCacheResult().verdict == CacheVerdict::none);
+        CHECK(s.GetModuleCacheResult().wrote);
+        CHECK(std::filesystem::exists(cache));
+        s.ResetScript();
+    }
+
+    TEST_CASE("Module cache — second cold compile is served from the cache")
+    {
+        const std::string path = WriteDas("cache_served.das", CACHE_SRC_V1);
+        const std::string cache = FreshCachePath("cache_served");
+        {
+            duin::Script s(path);
+            s.SetModuleCache(true, cache);
+            InitScript(s);
+            REQUIRE(s.Compile());
+            s.ResetScript();
+        }
+        {
+            duin::Script s(path);
+            s.SetModuleCache(true, cache);
+            InitScript(s);
+            REQUIRE(s.Compile());
+            CHECK(s.GetModuleCacheResult().verdict == CacheVerdict::clean);
+            CHECK(s.GetModuleCacheResult().served > 0);
+            REQUIRE(s.SimulateContext());
+            das::Func fn = s.FindFunction("fn_v1");
+            REQUIRE(fn);
+            CHECK(s.InvokeVoid(fn));
+            s.ResetScript();
+        }
+    }
+
+    TEST_CASE("Module cache — editing the script invalidates its record")
+    {
+        const std::string path = WriteDas("cache_edit.das", CACHE_SRC_V1);
+        const std::string cache = FreshCachePath("cache_edit");
+        {
+            duin::Script s(path);
+            s.SetModuleCache(true, cache);
+            InitScript(s);
+            REQUIRE(s.Compile());
+            s.ResetScript();
+        }
+        WriteDas("cache_edit.das", CACHE_SRC_V2);
+        {
+            duin::Script s(path);
+            s.SetModuleCache(true, cache);
+            InitScript(s);
+            REQUIRE(s.Compile());
+            CHECK(s.GetModuleCacheResult().verdict == CacheVerdict::fallback);
+            CHECK(s.GetModuleCacheResult().served > 0);
+            REQUIRE(s.SimulateContext());
+            CHECK(s.FindFunction("fn_v2"));
+            CHECK_FALSE(s.FindFunction("fn_v1"));
+            s.ResetScript();
+        }
+        {
+            duin::Script s(path);
+            s.SetModuleCache(true, cache);
+            InitScript(s);
+            REQUIRE(s.Compile());
+            CHECK(s.GetModuleCacheResult().verdict == CacheVerdict::clean);
+            s.ResetScript();
+        }
+    }
+
+    TEST_CASE("Module cache — override content skips the cache")
+    {
+        const std::string path = WriteDas("cache_override.das", CACHE_SRC_V1);
+        const std::string cache = FreshCachePath("cache_override");
+        {
+            duin::Script s(path);
+            s.SetModuleCache(true, cache);
+            InitScript(s);
+            REQUIRE(s.Compile());
+            s.ResetScript();
+        }
+        REQUIRE(std::filesystem::exists(cache));
+        const auto before = std::filesystem::last_write_time(cache);
+        {
+            duin::Script s(path);
+            s.SetModuleCache(true, cache);
+            s.SetOverrideContent(path, CACHE_SRC_V2);
+            InitScript(s);
+            REQUIRE(s.Compile());
+            CHECK(s.GetModuleCacheResult().verdict == CacheVerdict::none);
+            CHECK_FALSE(s.GetModuleCacheResult().wrote);
+            s.ResetScript();
+        }
+        CHECK(std::filesystem::last_write_time(cache) == before);
+    }
+
+    TEST_CASE("Module cache — warm KeepCachedBindings recompile skips the cache")
+    {
+        const std::string path = WriteDas("cache_warm.das", CACHE_SRC_V1);
+        const std::string cache = FreshCachePath("cache_warm");
+        duin::Script s(path);
+        s.SetModuleCache(true, cache);
+        InitScript(s);
+        REQUIRE(s.Compile());
+        REQUIRE(std::filesystem::exists(cache));
+        const auto before = std::filesystem::last_write_time(cache);
+
+        s.PrepareForRecompile(duin::RecompileMode::KeepCachedBindings);
+        REQUIRE(s.Compile());
+        CHECK(s.GetModuleCacheResult().verdict == CacheVerdict::none);
+        CHECK_FALSE(s.GetModuleCacheResult().wrote);
+        CHECK(std::filesystem::last_write_time(cache) == before);
+        s.ResetScript();
+    }
+
+    TEST_CASE("Module cache — disabled cache creates no file")
+    {
+        const std::string path = WriteDas("cache_disabled.das", CACHE_SRC_V1);
+        const std::string cache = FreshCachePath("cache_disabled");
+        duin::Script s(path);
+        s.SetModuleCache(false, cache);
+        InitScript(s);
+        REQUIRE(s.Compile());
+        CHECK(s.GetModuleCacheResult().verdict == CacheVerdict::none);
+        CHECK_FALSE(std::filesystem::exists(cache));
+        s.ResetScript();
     }
 
 } // TEST_SUITE("Script")

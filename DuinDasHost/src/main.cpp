@@ -244,6 +244,7 @@ struct Args
     bool serveTcp = false;    // daemon mode over 127.0.0.1:0 (bespoke line protocol); writes .ddh
     bool serveWs = false;     // daemon mode over WebSocket (editor LSP proxy); writes .ddh
     int idleTimeoutSecs = 300; // --serve-ws: exit after N idle secs at 0 connections (0 = never)
+    bool noModuleCache = false;
     bool valid = false;
 };
 
@@ -280,6 +281,10 @@ Args ParseArgs(int argc, char **argv)
         else if (arg == "--idle-timeout" && i + 1 < argc)
         {
             a.idleTimeoutSecs = std::atoi(argv[++i]);
+        }
+        else if (arg == "--no-module-cache")
+        {
+            a.noModuleCache = true;
         }
         else if (!arg.empty() && arg[0] != '-' && a.file.empty())
         {
@@ -1107,6 +1112,8 @@ int main(int argc, char **argv)
     // cost (daslib + engine module graph); in serve mode it is paid a single time
     // and every subsequent request reuses the warm base module set.
     duin::Script script;
+    if (args.noModuleCache)
+        script.SetModuleCache(false);
     {
         StdoutToStderrGuard guard;
         std::fprintf(stderr, "[DuinDasHost] resolved dasRoot = '%s'\n", dasRoot.c_str());

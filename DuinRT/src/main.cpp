@@ -110,6 +110,10 @@ void DuinRT::Ready()
     {
         script->SetJitMode(jitMode, !jitNoCache);
     }
+    if (noModuleCache)
+    {
+        script->SetModuleCache(false);
+    }
     script->InitModules([&]() {
         NEED_MODULE(Module_flecs);
         NEED_MODULE(Module_dasIMGUI);
@@ -197,6 +201,12 @@ void DuinRT::ParseArgs(const std::vector<std::string_view> &args)
             {
                 jitMode = duin::Script::JitMode::DLL;
                 DN_INFO("JIT mode set DLL");
+                continue;
+            }
+            if (lFlag.compare("no-module-cache") == 0)
+            {
+                noModuleCache = true;
+                DN_INFO("Module cache disabled");
                 continue;
             }
             if (lFlag.compare("dasroot") == 0 && i + 1 < args.size())

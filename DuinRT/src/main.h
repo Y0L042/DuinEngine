@@ -44,6 +44,7 @@ class DuinRT : public duin::Application
     bool headlessMode = false;
     duin::Script::JitMode jitMode = duin::Script::JitMode::NONE;
     bool jitNoCache = false;
+    bool noModuleCache = false;
 
     void ParseArgs(const std::vector<std::string_view>& args);
 };
