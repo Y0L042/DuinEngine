@@ -4,13 +4,20 @@ module scenetree_viewer public
 
 require daslib/delegate
 
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
+require imgui/imgui_layout_builtin
 require dn_gameobject
 require dn_ecs
 
 require ../scene.das
 
 typedef OnEntitySelected = delegate(type<function<(var selected : DnEntity) : void>>)
+
+var private ST_NODE : table<string; TreeNodeState>
 
 struct STNode {
     entity_id   : ecs_entity_t
@@ -42,13 +49,11 @@ class ScenetreeViewer : DnGameObject {
     }
 
     def override _draw_ui() : void {
-        imgui_boost::Begin("Scenetree Viewer", null, int(ImGuiWindowFlags.ImGuiWindowFlags_NoCollapse))
-
-        for (node in entity_tree) {
-            draw_entity_node(node)
+        window(SCENETREE_WIN, (text = "Scenetree Viewer", closable = false, flags = ImGuiWindowFlags.NoCollapse)) {
+            for (node in entity_tree) {
+                draw_entity_node(node)
+            }
         }
-
-        imgui_boost::End()
     }
 
     def update_scene(var new_scn : Scene) : void {
@@ -80,20 +85,21 @@ class ScenetreeViewer : DnGameObject {
     }
 
     def draw_entity_node(var node : STNode&) : void {
-        var flags = int(ImGuiTreeNodeFlags.ImGuiTreeNodeFlags_OpenOnArrow) | int(ImGuiTreeNodeFlags.ImGuiTreeNodeFlags_DefaultOpen)
+        var flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.DefaultOpen
 
         let display_name = node.entity_name == "" ? "Unnamed Entity" : node.entity_name
         let node_id = "{display_name}##{node.entity_id}"
+        let state_key = "{node.entity_id}"
 
         var opened = false
         if (length(node.children) == 0) {
-            flags |= int(ImGuiTreeNodeFlags.ImGuiTreeNodeFlags_Leaf) | int(ImGuiTreeNodeFlags.ImGuiTreeNodeFlags_NoTreePushOnOpen)
-            imgui_boost::TreeNodeEx(node_id, flags, display_name)
+            flags |= ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.NoTreePushOnOpen
+            tree_node_ex(ST_NODE[state_key], (text = node_id, flags = flags))
         } else {
-            opened = imgui_boost::TreeNodeEx(node_id, flags, display_name)
+            opened = tree_node_ex(ST_NODE[state_key], (text = node_id, flags = flags))
         }
 
-        if (imgui_boost::IsItemClicked(0)) {
+        if (IsItemClicked(ImGuiMouseButton.Left)) {
             selected_entity = node.entity_id
             var w = active_scene.world
             if (w.is_valid()) {
@@ -110,7 +116,7 @@ class ScenetreeViewer : DnGameObject {
             for (child in node.children) {
                 draw_entity_node(child)
             }
-            imgui_boost::TreePop()
+            tree_pop()
         }
     }
 }

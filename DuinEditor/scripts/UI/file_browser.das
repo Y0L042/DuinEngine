@@ -5,7 +5,12 @@ module file_browser public
 require daslib/delegate
 require daslib/ansi_colors
 
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
+require imgui/imgui_layout_builtin
 require dn_log
 require dn_gameobject
 require dn_filesystem
@@ -14,6 +19,9 @@ require ../editor_context.das
 require ../filemanager.das
 
 typedef OnFileSelected = delegate(type<function<(var selected : FSNode?) : void>>)
+
+var private FB_DIR : table<string; TreeNodeState>
+var private FB_FILE : table<string; ClickState>
 
 class FileBrowser : DnGameObject {
     selected_path : string
@@ -38,28 +46,26 @@ class FileBrowser : DnGameObject {
     }
 
     def override _draw_ui() : void {
-        imgui_boost::Begin("File Browser")
-
-        var fm : FileManager? = filemanager_get()
-        var root = fm?.root_node
-        if (root != null) {
-            for (child in root.children) {
-                draw_node(child)
+        window(FILE_BROWSER_WIN, (text = "File Browser", closable = false, flags = ImGuiWindowFlags.None)) {
+            var fm : FileManager? = filemanager_get()
+            var root = fm?.root_node
+            if (root != null) {
+                for (child in root.children) {
+                    draw_node(child)
+                }
+            } else {
+                fm.build_tree()
             }
-        } else {
-            fm.build_tree()
         }
-
-        imgui_boost::End()
     }
 
     def draw_node(var node : FSNode?) : void {
         if (node == null) return
 
         if (node.typev == DnPathType.DNFS_PATHTYPE_DIRECTORY) {
-            let opened : bool = imgui_boost::TreeNode(node.path, node.name)
-            
-            if (imgui_boost::IsItemClicked(0)) {
+            let opened : bool = tree_node_ex(FB_DIR[node.path], (text = "{node.name}##{node.path}", flags = ImGuiTreeNodeFlags.None))
+
+            if (IsItemClicked(ImGuiMouseButton.Left)) {
                 selected_path = node.path
             }
 
@@ -67,15 +73,15 @@ class FileBrowser : DnGameObject {
                 for (child in node.children) {
                     draw_node(child)
                 }
-                imgui_boost::TreePop()
+                tree_pop()
             }
         } else {
             // file leaf
-            let sel = imgui_boost::Selectable(node.name, selected_path == node.path)
-            if (sel) { 
-                selected_path = node.path 
+            let sel = selectable_label(FB_FILE[node.path], (text = "{node.name}##{node.path}", selected = selected_path == node.path))
+            if (sel) {
+                selected_path = node.path
             }
-            if (imgui_boost::IsItemHovered() && imgui_boost::IsMouseDoubleClicked(0)) {
+            if (IsItemHovered() && IsMouseDoubleClicked(ImGuiMouseButton.Left)) {
                 on_file_selected.invoke(node)
             }
         }

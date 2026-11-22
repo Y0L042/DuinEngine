@@ -3,7 +3,11 @@ options gen2
 require daslib/ansi_colors
 
 require tomlc17
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
 require dn_log
 require dn_gamestatemachine
 require dn_filesystem
@@ -11,6 +15,8 @@ require dn_filesystem
 require editor_context
 require state_project_editor
 require filemanager
+
+var private PROJECT_ROW : table<string; ClickState>
 
 class State_ProjectSelection : DnGameState {
     // CFG Structure
@@ -44,30 +50,29 @@ class State_ProjectSelection : DnGameState {
     def override _draw() : void {}
 
     def override _draw_ui() : void {
-        imgui_boost::Begin("Project Selection Menu")
-        imgui_boost::Text("Select project   ")
+        window(PROJ_SEL_WIN, (text = "Project Selection Menu", closable = false, flags = ImGuiWindowFlags.None)) {
+            text("Select project   ")
 
-        if (imgui_boost::Button("Import Project")) {
-            dn_info("Import project pressed!")
-        }
-        imgui_boost::SameLine()
-        if (imgui_boost::Button("Load Project")) {
-            dn_info("Load project pressed!")
-            load_selected_project(selected_project)
-        }
-
-        for (path in recent_project_dirs) {
-            let project_selected : bool = imgui_boost::Selectable(path, selected_project == path)
-            if (project_selected) {
-                selected_project = path
+            if (button(IMPORT_BTN, (text = "Import Project"))) {
+                dn_info("Import project pressed!")
             }
-            if (imgui_boost::IsItemHovered() && imgui_boost::IsMouseDoubleClicked(0)) {
-                dn_info("Load project [{path}]")
-                load_selected_project(path)
+            same_line()
+            if (button(LOAD_BTN, (text = "Load Project"))) {
+                dn_info("Load project pressed!")
+                load_selected_project(selected_project)
+            }
+
+            for (path in recent_project_dirs) {
+                let project_selected : bool = selectable_label(PROJECT_ROW[path], (text = path, selected = selected_project == path))
+                if (project_selected) {
+                    selected_project = path
+                }
+                if (IsItemHovered() && IsMouseDoubleClicked(ImGuiMouseButton.Left)) {
+                    dn_info("Load project [{path}]")
+                    load_selected_project(path)
+                }
             }
         }
-
-        imgui_boost::End()
     }
 
     def override _exit() : void {}

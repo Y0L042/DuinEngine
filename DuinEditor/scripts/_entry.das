@@ -14,7 +14,11 @@ require daslib/class_boost
 require daslib/ansi_colors
 
 require flecs_boost
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
 
 require dn_log
 require dn_gameobject
@@ -40,7 +44,7 @@ def game_ready() {
 
 [export]
 def game_update(delta : double) {
-
+    begin_frame()
 }
 
 [export]
@@ -55,4 +59,5 @@ def game_draw() {
 
 [export]
 def game_draw_ui() {
+    end_of_frame()
 }

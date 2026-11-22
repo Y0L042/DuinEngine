@@ -7,7 +7,11 @@ require daslib/class_boost
 require math
 
 require flecs_boost
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
 
 require dn_log
 require dn_gameobject
@@ -51,10 +55,10 @@ class _Root : DnGameObject {
     }
 
     def override _draw_ui() : void {
-        imgui_boost::Begin("Daslang Dashboard!")
-        imgui_boost::Text("Render  FPS: {dn_get_render_frame_time() * 1000f}")
-        imgui_boost::Text("Physics FPS: {dn_get_physics_frame_time() * 1000f}")
-        imgui_boost::Text("Editor state: {game_states?.current_state?._alias}")
-        imgui_boost::End()        
+        window(ROOT_DASH_WIN, (text = "Daslang Dashboard!", closable = false, flags = ImGuiWindowFlags.None)) {
+            text("Render  FPS: {dn_get_render_frame_time() * 1000f}")
+            text("Physics FPS: {dn_get_physics_frame_time() * 1000f}")
+            text("Editor state: {game_states?.current_state?._alias}")
+        }
     }
 }

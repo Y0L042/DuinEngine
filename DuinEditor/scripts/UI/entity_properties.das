@@ -6,13 +6,20 @@ module entity_properties public
 require daslib/delegate
 require daslib/rtti
 
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
+require imgui/imgui_scope_builtin
 require dn_log
 require dn_gameobject
 require dn_ecs
 
 require ../scene.das
 
+var private COMP_HDR : table<string; CollapsingHeaderState>
+var private COMP_SIZE : table<string; NarrativeState>
 
 
 class EntityProperties : DnGameObject {
@@ -30,23 +37,25 @@ class EntityProperties : DnGameObject {
     }
 
     def override _draw_ui() : void {
-        imgui_boost::Begin("Entity Properties")
-
-        if (!selected_entity.is_valid()) {
-            imgui_boost::TextDisabled("No entity selected")
-            imgui_boost::End()
-            return;
+        window(ENTITY_PROPS_WIN, (text = "Entity Properties", closable = false, flags = ImGuiWindowFlags.None)) {
+            if (!selected_entity.is_valid()) {
+                text_disabled("No entity selected")
+            } else {
+                draw_selected_entity()
+            }
         }
+    }
 
+    def draw_selected_entity() : void {
         assume world = selected_entity.world
         assume entity = selected_entity.entity
 
         // --- Entity header ---
         let entity_name = string(ecs_get_name(world, entity))
         let display_name = entity_name == "" ? "Unnamed Entity" : entity_name
-        imgui_boost::SeparatorText(display_name)
-        imgui_boost::TextDisabled("ID: {entity}")
-        imgui_boost::Spacing()
+        separator_text(ENTITY_NAME_SEP, (text = display_name))
+        text_disabled("ID: {entity}")
+        spacing()
 
         // --- Collect ids into buckets ---
         var inscope tags  : array<ecs_entity_t>
@@ -66,19 +75,18 @@ class EntityProperties : DnGameObject {
         // --- Components ---
         for (comp_id in comps) {
             // imgui_boost::Text(string("{comp_id}"))
-            imgui_boost::PushID(string("{comp_id}"))
+            let key = "{comp_id}"
             let ti = ecs_get_type_info(world, comp_id)
             let ti_name = ti != null ? string(ti.name) : ""
             let comp_name = ti_name != "" ? ti_name : ecs_get_path(world, comp_id)
-            imgui_boost::SetNextItemOpen(true, int(ImGuiCond.ImGuiCond_Once))
-            if (imgui_boost::CollapsingHeader(comp_name, int(ImGuiTreeNodeFlags.ImGuiTreeNodeFlags_None))) {
-                imgui_boost::Indent()
-                if (ti != null) {
-                    imgui_boost::TextDisabled("size: {ti.size} bytes")
+            SetNextItemOpen(true, ImGuiCond.Once)
+            collapsing_header(COMP_HDR[key], (text = "{comp_name}##{key}", closable = false, flags = ImGuiTreeNodeFlags.None)) {
+                with_indent(0.0f) {
+                    if (ti != null) {
+                        text_disabled(COMP_SIZE[key], (text = "size: {ti.size} bytes"))
+                    }
                 }
-                imgui_boost::Unindent()
             }
-            imgui_boost::PopID()
         }
         //
         // // --- Tags ---
@@ -119,8 +127,6 @@ class EntityProperties : DnGameObject {
         // delete tags
         // delete comps
         // delete pairs
-
-        imgui_boost::End()
     }
 
     def update_scene(var new_scn : Scene) : void {

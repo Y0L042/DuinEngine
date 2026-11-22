@@ -5,7 +5,11 @@ require daslib/class_boost
 require daslib/json
 require daslib/json_boost
 
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
 require dn_log
 require dn_uuid
 require dn_gamestatemachine
@@ -67,9 +71,9 @@ class State_ProjectEditor : DnGameState {
     def override _draw() : void {}
 
     def override _draw_ui() : void {
-        imgui_boost::Begin("Project Editor")
-        imgui_boost::Text("Edit Project.")
-        imgui_boost::End()
+        window(PROJ_EDIT_WIN, (text = "Project Editor", closable = false, flags = ImGuiWindowFlags.None)) {
+            text("Edit Project.")
+        }
     }
 
     def override _exit() : void {}

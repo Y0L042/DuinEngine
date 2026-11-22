@@ -14,7 +14,11 @@ require daslib/strings_boost
 require math
 
 require flecs_boost
-require imgui_boost
+require imgui
+require imgui/imgui_boost_runtime
+require imgui/imgui_boost_v2
+require imgui/imgui_widgets_builtin
+require imgui/imgui_containers_builtin
 
 require dn_log
 require dn_gameobject
@@ -126,10 +130,12 @@ def game_draw() {
 
 [export]
 def game_draw_ui() {
-    imgui_boost::Begin("Daslang Dashboard!")
-    imgui_boost::Text("Render  Frametime: {format("%.2f", dn_get_render_frame_time() * 1000f)}")
-    imgui_boost::Text("Physics Frametime: {format("%.2f", dn_get_physics_frame_time() * 1000f)}")
-    imgui_boost::End()
+    begin_frame()
+    window(DASH_WIN, (text = "Daslang Dashboard!", closable = false, flags = ImGuiWindowFlags.None)) {
+        text("Render  Frametime: {format("%.2f", dn_get_render_frame_time() * 1000f)}")
+        text("Physics Frametime: {format("%.2f", dn_get_physics_frame_time() * 1000f)}")
+    }
+    end_of_frame()
 }
 
 def register_keybinds() : void {
