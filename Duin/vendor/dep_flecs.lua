@@ -4,7 +4,7 @@ local dep_flecs = {}
 local name = "FLECS"
 
 local repo   = "https://github.com/SanderMertens/flecs"
-local tag    = "v4.1.6"
+local tag    = "v4.2.0"
 local folder = "flecs"
 
 function dep_flecs.build()
