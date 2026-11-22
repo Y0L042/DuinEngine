@@ -62,14 +62,16 @@ TEST_SUITE("World")
         w.RemoveAll(idC, idD);
     }
 
-    TEST_CASE("DeferBegin, DeferEnd, IsDeferred")
+    TEST_CASE("Deferred provides a stage and merges afterwards")
     {
         duin::World w;
-        CHECK_FALSE(w.IsDeferred());
-        w.DeferBegin();
-        CHECK(w.IsDeferred());
-        w.DeferEnd();
-        CHECK_FALSE(w.IsDeferred());
+        bool called = false;
+        w.Deferred([&](duin::World &stage) {
+            called = true;
+            CHECK(stage.GetFlecsWorld().is_stage());
+        });
+        CHECK(called);
+        CHECK_FALSE(w.GetFlecsWorld().is_stage());
     }
 
     TEST_CASE("Progress")
@@ -137,27 +139,63 @@ TEST_SUITE("World")
         w.RemoveAll<DummyComponent>();
     }
 
-    TEST_CASE("Defer<Func>")
+    TEST_CASE("Query::Each with a stage queues changes until Deferred merges")
     {
         duin::World w;
         struct DeferComp
         {
             int v;
         };
+        struct DeferTag
+        {
+        };
         w.Component<DeferComp>();
+        w.Component<DeferTag>();
         duin::Entity e = w.Entity("DeferEntity");
+        e.Set<DeferComp>({1});
+        auto q = w.QueryBuilder<DeferComp>().Build();
 
-        bool called = false;
-        w.DeferBegin();
-        w.Defer([&]() {
-            called = true;
-            CHECK(w.IsDeferred());
-            e.Set<DeferComp>({1});
+        int calls = 0;
+        w.Deferred([&](duin::World &stage) {
+            q.Each(stage, [&](duin::Entity ent, DeferComp &) {
+                calls++;
+                ent.Add<DeferTag>();
+            });
+            CHECK_FALSE(e.Has<DeferTag>());
         });
-        CHECK(called);
-        CHECK_FALSE(e.Has<DeferComp>());
-        w.DeferEnd();
-        CHECK(e.Has<DeferComp>());
+        CHECK(calls == 1);
+        CHECK(e.Has<DeferTag>());
+    }
+
+    TEST_CASE("Query::Run with a stage queues changes until Deferred merges")
+    {
+        duin::World w;
+        struct DeferComp
+        {
+            int v;
+        };
+        struct DeferTag
+        {
+        };
+        w.Component<DeferComp>();
+        w.Component<DeferTag>();
+        duin::Entity e = w.Entity("DeferRunEntity");
+        e.Set<DeferComp>({1});
+        auto q = w.QueryBuilder<DeferComp>().Build();
+
+        w.Deferred([&](duin::World &stage) {
+            q.Run(stage, [&](duin::Iter &it) {
+                while (it.Next())
+                {
+                    for (size_t i = 0; i < it.Count(); i++)
+                    {
+                        flecs::entity(stage.GetFlecsWorld().c_ptr(), it.GetEntityId(i)).add<DeferTag>();
+                    }
+                }
+            });
+            CHECK_FALSE(e.Has<DeferTag>());
+        });
+        CHECK(e.Has<DeferTag>());
     }
 
     TEST_CASE("Component<T>")

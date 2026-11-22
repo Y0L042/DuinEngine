@@ -1944,6 +1944,36 @@ TEST_SUITE("System - Handles")
         CHECK(fs.is_valid());
     }
 
+    TEST_CASE("Run applies structural changes made through the callback entity")
+    {
+        duin::World w;
+        struct RunComp
+        {
+            int v = 0;
+        };
+        struct RunTag
+        {
+        };
+        w.Component<RunComp>();
+        w.Component<RunTag>();
+        duin::Entity e1 = w.Entity("RunEntity1");
+        duin::Entity e2 = w.Entity("RunEntity2");
+        e1.Set<RunComp>({1});
+        e2.Set<RunComp>({2});
+
+        int calls = 0;
+        duin::System sys = w.System<RunComp>("RunTagSystem").Each([&calls](duin::Entity entity, RunComp &) {
+            calls++;
+            entity.Add<RunTag>();
+        });
+
+        sys.Run(0.016f);
+
+        CHECK(calls == 2);
+        CHECK(e1.Has<RunTag>());
+        CHECK(e2.Has<RunTag>());
+    }
+
     TEST_CASE("GetFlecsSystem on an invalid system returns an invalid flecs system")
     {
         duin::System sys;

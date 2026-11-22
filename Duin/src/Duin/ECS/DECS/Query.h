@@ -12,6 +12,8 @@ namespace duin
 class World;
 class Entity;
 
+ecs_world_t *GetRawWorld(const World &world);
+
 // Forward declare Query template before QueryBuilder
 template <typename... Components>
 class Query;
@@ -179,6 +181,19 @@ class Query
         });
     }
 
+    template <typename Func>
+    void Each(const World &stage, Func &&func) const
+    {
+        if (!IsValid())
+            return;
+        rawQuery.iter(GetRawWorld(stage))
+            .each([&func](flecs::entity flecsEntity,
+                          std::conditional_t<std::is_pointer_v<Components>, Components, Components &>...comps) {
+                Entity duinEntity(flecsEntity);
+                func(duinEntity, comps...);
+            });
+    }
+
     /**
      * @brief Iterate the query using a duin iterator and callback.
      * Automatically wraps flecs::iter into duin::Iter for the callback.
@@ -213,6 +228,17 @@ class Query
             duin::Iter duinIter(flecsIter);
 
             // Call user's callback with duin::Iter only
+            func(duinIter);
+        });
+    }
+
+    template <typename Func>
+    void Run(const World &stage, Func &&func) const
+    {
+        if (!IsValid())
+            return;
+        rawQuery.iter(GetRawWorld(stage)).run([&func](flecs::iter &flecsIter) {
+            duin::Iter duinIter(flecsIter);
             func(duinIter);
         });
     }

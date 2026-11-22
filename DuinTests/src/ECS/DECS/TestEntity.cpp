@@ -424,7 +424,7 @@ TEST_SUITE("Entity")
         CHECK(e.Get<CompE>().e == 321);
     }
 
-    TEST_CASE("WithScope and WithComponent")
+    TEST_CASE("WithScope")
     {
         duin::World w;
         struct CompF
@@ -443,16 +443,6 @@ TEST_SUITE("Entity")
             CHECK(child.IsValid());
         });
         CHECK(calledScope);
-
-        // Test WithComponent - components added inside should include the parent entity
-        duin::Entity e = w.Entity("WithCompEntity");
-        bool calledComp = false;
-        e.WithComponent([&](duin::Entity &ent) {
-            calledComp = true;
-            ent.Set<CompF>(CompF{555});
-        });
-        CHECK(calledComp);
-        CHECK(e.Get<CompF>().f == 555);
     }
 
     TEST_CASE("Emit and Modified")

@@ -1384,16 +1384,6 @@ class Entity
     Entity &WithScope(Func &&func);
 
     /**
-     * @brief Execute a function with this entity as the "with" context.
-     * Creates a with context where components added within the callback will include this entity.
-     * @tparam Func The function type.
-     * @param func The function to execute, receives a reference to this entity.
-     * @return Reference to this entity.
-     */
-    template <typename Func>
-    Entity &WithComponent(Func &&func);
-
-    /**
      * @brief Emit an event from this entity.
      * @tparam Event The event type.
      * @tparam Args Event argument types.

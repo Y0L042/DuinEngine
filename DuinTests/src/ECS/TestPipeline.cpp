@@ -199,6 +199,32 @@ TEST_SUITE("Pipeline")
         CHECK(e.TryGet<Counter>()->value == 2);
     }
 
+    TEST_CASE("RunStep applies structural changes made by a system")
+    {
+        duin::World w;
+        struct StepComp
+        {
+            int value = 0;
+        };
+        struct StepTag
+        {
+        };
+        w.Component<StepComp>();
+        w.Component<StepTag>();
+        duin::Entity e = w.Entity("StepEntity");
+        e.Set<StepComp>({0});
+
+        duin::System sys =
+            w.System<StepComp>("StepTagSystem").Each([](duin::Entity entity, StepComp &) { entity.Add<StepTag>(); });
+
+        duin::EcsPipeline pipeline(w);
+        pipeline.AddStage(duin::ExecutionStep::UPDATE, "Logic");
+        pipeline.AddSystem(duin::ExecutionStep::UPDATE, "Logic", sys.GetHandle());
+
+        pipeline.RunStep(duin::ExecutionStep::UPDATE, 0.016f);
+        CHECK(e.Has<StepTag>());
+    }
+
     TEST_CASE("RunStage runs only the given stage")
     {
         duin::World w;

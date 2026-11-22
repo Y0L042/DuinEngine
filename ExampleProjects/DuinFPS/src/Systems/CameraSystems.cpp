@@ -71,16 +71,16 @@ void ExecuteQueryMoveDebugCamera(duin::GameWorld &world)
                         .With<DebugCameraTag>()
                         .Build();
 
-    world.DeferBegin();
-    q.Each([&world](duin::Entity e, Movement3DInput &input, Transform3D &tx) {
-        double delta = duin::GetPhysicsFrameTime();
-        duin::Vector3 inputV(input.x, input.y, input.z);
-        inputV = duin::Vector3Scale(inputV, PlayerConstants::DEBUG_CAMERA_SPEED);
-        world.SetGlobalPosition(
-            e, duin::Vector3Add(world.GetGlobalPosition(e), duin::Vector3Scale(inputV, (float)delta)));
-        input.x = 0.0f;
-        input.y = 0.0f;
-        input.z = 0.0f;
+    world.Deferred([&](duin::World &stage) {
+        q.Each(stage, [&world](duin::Entity e, Movement3DInput &input, Transform3D &tx) {
+            double delta = duin::GetPhysicsFrameTime();
+            duin::Vector3 inputV(input.x, input.y, input.z);
+            inputV = duin::Vector3Scale(inputV, PlayerConstants::DEBUG_CAMERA_SPEED);
+            world.SetGlobalPosition(
+                e, duin::Vector3Add(world.GetGlobalPosition(e), duin::Vector3Scale(inputV, (float)delta)));
+            input.x = 0.0f;
+            input.y = 0.0f;
+            input.z = 0.0f;
+        });
     });
-    world.DeferEnd();
 }

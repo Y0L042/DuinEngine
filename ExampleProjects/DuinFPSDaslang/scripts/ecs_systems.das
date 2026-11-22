@@ -65,19 +65,19 @@ def system_player_input(var world : DnWorld; var camera : DnCamera?) : void {
 def system_update_ground_state(var world : DnWorld, delta : double) : void {
     var wp : ecs_world_t? = world.ecs_world()
     var gid = world.dn_register_component(type<OnGround>)
+    var stage = ecs_get_stage(wp, 0)
     ecs_query(world) $ [CACHED] (e : ecs_entity_t, var cbh : CharacterBodyHandle) {
         if (cbh.cb == null) {
             return
         }
         let grounded = cbh.cb.is_on_floor()
-        wp.ecs_defer_begin()
         if (grounded) {
-            ecs_add(wp, e, gid)
+            ecs_add(stage, e, gid)
         } else {
-            ecs_remove(wp, e, gid)
+            ecs_remove(stage, e, gid)
         }
-        wp.ecs_defer_end()
     }
+    ecs_merge(stage)
 }
 
 // Jump goes through ExternVelocity rather than writing DnVelocity3D directly:

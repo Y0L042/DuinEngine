@@ -32,14 +32,14 @@ void ExecuteQueryOnGroundJump(duin::GameWorld &world)
             .With<OnGroundTag>()
             .Build();
 
-    world.DeferBegin();
-    q.Each([](duin::Entity e, InputForces &inputForces, const CanJumpComponent &moveSpeed) {
-        debugConsole.Log("Jumping!");
-        duin::Vector3 iForce(0.0f, moveSpeed.impulse, 0.0f);
-        inputForces.vec.push_back(iForce);
-        e.Remove<JumpTag>();
+    world.Deferred([&](duin::World &stage) {
+        q.Each(stage, [](duin::Entity e, InputForces &inputForces, const CanJumpComponent &moveSpeed) {
+            debugConsole.Log("Jumping!");
+            duin::Vector3 iForce(0.0f, moveSpeed.impulse, 0.0f);
+            inputForces.vec.push_back(iForce);
+            e.Remove<JumpTag>();
+        });
     });
-    world.DeferEnd();
 }
 
 void ExecuteQueryResolveInputVelocities(duin::GameWorld &world)

@@ -28,37 +28,37 @@ void ExecuteQueryIdle(duin::GameWorld &world)
                         .With<IdleTag>()
                         .Build();
 
-    world.DeferBegin();
-    q.Each([](duin::Entity e, InputVelocities &inputVels, const Velocity3D &velocity) {
-        double delta = duin::GetPhysicsFrameTime();
+    world.Deferred([&](duin::World &stage) {
+        q.Each(stage, [](duin::Entity e, InputVelocities &inputVels, const Velocity3D &velocity) {
+            double delta = duin::GetPhysicsFrameTime();
 
-        duin::Vector3 targetVel = duin::Vector3Zero();
+            duin::Vector3 targetVel = duin::Vector3Zero();
 
-        float smoothFactor = PlayerConstants::IDLE_SMOOTH_FACTOR;
-        float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
+            float smoothFactor = PlayerConstants::IDLE_SMOOTH_FACTOR;
+            float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
 
-        float outputVelX = targetVel.x - velocity.value.x;
-        float outputVelZ = targetVel.z - velocity.value.z;
+            float outputVelX = targetVel.x - velocity.value.x;
+            float outputVelZ = targetVel.z - velocity.value.z;
 
-        debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
+            debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
 
-        float friction = PlayerConstants::GROUND_FRICTION;
-        if (e.Has<OnGroundTag>())
-        {
-            friction = PlayerConstants::GROUND_FRICTION;
-        }
-        else if (e.Has<InAirTag>())
-        {
-            friction = PlayerConstants::AIR_FRICTION;
-        }
+            float friction = PlayerConstants::GROUND_FRICTION;
+            if (e.Has<OnGroundTag>())
+            {
+                friction = PlayerConstants::GROUND_FRICTION;
+            }
+            else if (e.Has<InAirTag>())
+            {
+                friction = PlayerConstants::AIR_FRICTION;
+            }
 
-        duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
-        outputVel = duin::Vector3Scale(outputVel, friction);
-        outputVel = duin::Vector3Scale(outputVel, alpha);
+            duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+            outputVel = duin::Vector3Scale(outputVel, friction);
+            outputVel = duin::Vector3Scale(outputVel, alpha);
 
-        inputVels.vec.push_back(outputVel);
+            inputVels.vec.push_back(outputVel);
+        });
     });
-    world.DeferEnd();
 }
 
 void ExecuteQueryRun(duin::GameWorld &world)
@@ -68,44 +68,44 @@ void ExecuteQueryRun(duin::GameWorld &world)
             .With<RunTag>()
             .Build();
 
-    world.DeferBegin();
-    q.Each([](duin::Entity e, InputVelocities &inputVels, InputVelocityDirection &iDir,
-              const CanRunComponent &moveSpeed, const Velocity3D &velocity) {
-        float acceleration = PlayerConstants::GROUND_ACCELERATION;
-        float targetSpeed = moveSpeed.speed;
+    world.Deferred([&](duin::World &stage) {
+        q.Each(stage, [](duin::Entity e, InputVelocities &inputVels, InputVelocityDirection &iDir,
+                  const CanRunComponent &moveSpeed, const Velocity3D &velocity) {
+            float acceleration = PlayerConstants::GROUND_ACCELERATION;
+            float targetSpeed = moveSpeed.speed;
 
-        if (e.Has<OnGroundTag>())
-        {
-            acceleration = PlayerConstants::GROUND_ACCELERATION;
-        }
-        else if (e.Has<InAirTag>())
-        {
-            acceleration = PlayerConstants::AIR_ACCELERATION;
-            duin::Vector3 velXZ(velocity.value.x, 0.0f, velocity.value.z);
-            float currentSpeed = duin::Vector3LengthF(velXZ);
-            targetSpeed = std::max(currentSpeed, moveSpeed.speed * PlayerConstants::AIR_SPEED_FACTOR);
-        }
+            if (e.Has<OnGroundTag>())
+            {
+                acceleration = PlayerConstants::GROUND_ACCELERATION;
+            }
+            else if (e.Has<InAirTag>())
+            {
+                acceleration = PlayerConstants::AIR_ACCELERATION;
+                duin::Vector3 velXZ(velocity.value.x, 0.0f, velocity.value.z);
+                float currentSpeed = duin::Vector3LengthF(velXZ);
+                targetSpeed = std::max(currentSpeed, moveSpeed.speed * PlayerConstants::AIR_SPEED_FACTOR);
+            }
 
-        double delta = duin::GetPhysicsFrameTime();
+            double delta = duin::GetPhysicsFrameTime();
 
-        duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, targetSpeed);
+            duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, targetSpeed);
 
-        float smoothFactor = PlayerConstants::RUN_SMOOTH_FACTOR;
-        float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
+            float smoothFactor = PlayerConstants::RUN_SMOOTH_FACTOR;
+            float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
 
-        float outputVelX = targetVel.x - velocity.value.x;
-        float outputVelZ = targetVel.z - velocity.value.z;
+            float outputVelX = targetVel.x - velocity.value.x;
+            float outputVelZ = targetVel.z - velocity.value.z;
 
-        debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
+            debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
 
-        duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+            duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
 
-        outputVel = duin::Vector3Scale(outputVel, acceleration);
-        outputVel = duin::Vector3Scale(outputVel, alpha);
+            outputVel = duin::Vector3Scale(outputVel, acceleration);
+            outputVel = duin::Vector3Scale(outputVel, alpha);
 
-        inputVels.vec.push_back(outputVel);
+            inputVels.vec.push_back(outputVel);
+        });
     });
-    world.DeferEnd();
 }
 
 void ExecuteQuerySprint(duin::GameWorld &world)
@@ -117,29 +117,29 @@ void ExecuteQuerySprint(duin::GameWorld &world)
                         .With<OnGroundTag>()
                         .Build();
 
-    world.DeferBegin();
-    q.Each([](duin::Entity e, InputVelocities &inputVels, InputVelocityDirection &iDir,
-              const CanRunComponent &runSpeed, const CanSprintComponent &moveSpeed, const Velocity3D &velocity) {
-        double delta = duin::GetPhysicsFrameTime();
+    world.Deferred([&](duin::World &stage) {
+        q.Each(stage, [](duin::Entity e, InputVelocities &inputVels, InputVelocityDirection &iDir,
+                  const CanRunComponent &runSpeed, const CanSprintComponent &moveSpeed, const Velocity3D &velocity) {
+            double delta = duin::GetPhysicsFrameTime();
 
-        duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
+            duin::Vector3 targetVel = duin::Vector3Scale(iDir.value, moveSpeed.speed);
 
-        float smoothFactor = PlayerConstants::SPRINT_SMOOTH_FACTOR;
-        if (duin::Vector3LengthSqr(velocity.value) < (runSpeed.speed * runSpeed.speed))
-        {
-            smoothFactor = PlayerConstants::RUN_SMOOTH_FACTOR;
-        }
-        float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
+            float smoothFactor = PlayerConstants::SPRINT_SMOOTH_FACTOR;
+            if (duin::Vector3LengthSqr(velocity.value) < (runSpeed.speed * runSpeed.speed))
+            {
+                smoothFactor = PlayerConstants::RUN_SMOOTH_FACTOR;
+            }
+            float alpha = 1.0f - std::expf(-smoothFactor * (float)delta);
 
-        float outputVelX = targetVel.x - velocity.value.x;
-        float outputVelZ = targetVel.z - velocity.value.z;
+            float outputVelX = targetVel.x - velocity.value.x;
+            float outputVelZ = targetVel.z - velocity.value.z;
 
-        debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
+            debugWatchlist.Post("outputVel:", "{ %.2f, 0.00, %.2f }", outputVelX, outputVelZ);
 
-        duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
-        outputVel = duin::Vector3Scale(outputVel, alpha);
+            duin::Vector3 outputVel(outputVelX, 0.0f, outputVelZ);
+            outputVel = duin::Vector3Scale(outputVel, alpha);
 
-        inputVels.vec.push_back(outputVel);
+            inputVels.vec.push_back(outputVel);
+        });
     });
-    world.DeferEnd();
 }

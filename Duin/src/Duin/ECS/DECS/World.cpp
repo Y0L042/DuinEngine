@@ -13,6 +13,11 @@ duin::World::World(ecs_world_t *world) : flecsWorld(world) {};
 
 duin::World::~World() {};
 
+ecs_world_t *duin::GetRawWorld(const World &world)
+{
+    return world.GetFlecsWorld().c_ptr();
+}
+
 duin::System duin::World::System(const duin::Entity &e) const
 {
     // Adopt the existing system entity; does NOT create a new system.
@@ -69,21 +74,6 @@ void duin::World::RemoveAll(uint64_t id)
 void duin::World::RemoveAll(uint64_t first, uint64_t second)
 {
     flecsWorld.remove_all(first, second);
-}
-
-void duin::World::DeferBegin()
-{
-    flecsWorld.defer_begin();
-}
-
-void duin::World::DeferEnd()
-{
-    flecsWorld.defer_end();
-}
-
-bool duin::World::IsDeferred() const
-{
-    return flecsWorld.is_deferred();
 }
 
 bool duin::World::Progress(float deltaTime)

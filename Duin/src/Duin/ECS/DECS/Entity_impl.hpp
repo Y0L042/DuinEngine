@@ -25,23 +25,6 @@ Entity &Entity::WithScope(Func &&func)
     return *this;
 }
 
-template <typename Func>
-Entity &Entity::WithComponent(Func &&func)
-{
-    // Use flecs with builder pattern
-    if (flecsEntity.world())
-    {
-        flecsEntity.with([&]() {
-            func(*this);
-        });
-    }
-    else
-    {
-        func(*this);
-    }
-    return *this;
-}
-
 template <typename Relationship, typename Func>
 void Entity::ForEachTarget(Func &&func) const
 {

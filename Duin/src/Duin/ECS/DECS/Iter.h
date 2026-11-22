@@ -261,13 +261,13 @@ class Iter
     {
         if (iter_->flags & EcsIterIsValid && iter_->table)
         {
-            ECS_TABLE_UNLOCK(iter_->world, iter_->table);
+            ECS_TABLE_UNLOCK(iter_->stage, iter_->table);
         }
         bool result = iter_->next(iter_);
         iter_->flags |= EcsIterIsValid;
         if (result && iter_->table)
         {
-            ECS_TABLE_LOCK(iter_->world, iter_->table);
+            ECS_TABLE_LOCK(iter_->stage, iter_->table);
         }
         return result;
     }
@@ -281,7 +281,7 @@ class Iter
     {
         if (iter_->flags & EcsIterIsValid && iter_->table)
         {
-            ECS_TABLE_UNLOCK(iter_->world, iter_->table);
+            ECS_TABLE_UNLOCK(iter_->stage, iter_->table);
         }
         ecs_iter_fini(iter_);
     }

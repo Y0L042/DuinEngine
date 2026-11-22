@@ -103,28 +103,13 @@ class World
      */
     void RemoveAll(uint64_t first, uint64_t second);
 
-    /**
-     * @brief Begin deferred execution of commands.
-     */
-    void DeferBegin();
-    /**
-     * @brief End deferred execution of commands.
-     */
-    void DeferEnd();
-    /**
-     * @brief Check if execution is currently deferred.
-     * @return True if deferred, false otherwise.
-     */
-    bool IsDeferred() const;
-    /**
-     * @brief Defer a function for later execution.
-     * @tparam Func The function type.
-     * @param func The function to defer.
-     */
     template <typename Func>
-    void Defer(Func &&func)
+    void Deferred(Func &&func)
     {
-        flecsWorld.defer(std::forward<Func>(func));
+        flecs::world flecsStage = flecsWorld.get_stage(0);
+        World stage(flecsStage.c_ptr());
+        func(stage);
+        flecsStage.merge();
     }
 
     /**
