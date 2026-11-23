@@ -295,7 +295,6 @@ void ProcessSDLMouseEvent(::SDL_Event e)
 
     if (e.type == SDL_EVENT_MOUSE_WHEEL)
     {
-        DN_CORE_INFO("MOUSE_WHEEL {} {}", e.wheel.x, e.wheel.y);
         mouseScrollDelta.x += e.wheel.x;
         mouseScrollDelta.y += e.wheel.y;
     }
