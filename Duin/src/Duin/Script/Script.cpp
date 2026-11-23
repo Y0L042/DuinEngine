@@ -584,79 +584,19 @@ std::expected<void, std::string> duin::Script::InvokeWithDelta(das::Func fn, dou
     return {};
 }
 
-std::pair<int, int> duin::Script::RunTests()
-{
-    if (!program || !context)
-        return {0, 0};
-
-    int passed = 0, failed = 0;
-
-    auto *mod = program->thisModule.get();
-    mod->functions.foreach ([&](das::FunctionPtr &fn) {
-        if (!fn || !fn->exports)
-            return;
-        if (fn->name.find("test_") != 0)
-            return;
-        // Only run 0-argument test functions.
-        // [test] functions with a T? argument require a live testing::T object
-        // that must be constructed daslang-side; skip them here.
-        if (!fn->arguments.empty())
-            return;
-
-        const std::string name = fn->name;
-        auto simFn = context->findFunction(name.c_str());
-        if (!simFn)
-            return;
-
-        context->evalWithCatch(simFn, nullptr, nullptr);
-
-        if (auto ex = context->getException())
-        {
-            std::cout << "  FAIL  " << name << " -- " << ex << "\n";
-            context->clearException();
-            ++failed;
-        }
-        else
-        {
-            std::cout << "  PASS  " << name << "\n";
-            ++passed;
-        }
-    });
-
-    return {passed, failed};
-}
-
 // =============================================================================
 //  Recompile / teardown
 // =============================================================================
 
 void duin::Script::ResetToBaseModules(RecompileMode mode)
 {
-    // Step 1 (both modes): libGroup.reset() clears the group's local module vector.
-    // It deletes only !builtIn modules; the promoted .das modules (builtIn==true) are
-    // left alive in the global daScriptEnvironment::modules list, just dropped from the
-    // group. Doing this first avoids a double-free in the RefreshBindings path below.
     libGroup.reset();
 
-    // Step 2 (RefreshBindings only): Module::Reset(false) walks the global module list
-    // and deletes every promoted==true entry — i.e. all daslib/*.das AND the dn_* engine
-    // binding .das files promoted to builtins by a previous compile. This forces them to
-    // be re-read from disk on the next compile, so edits to engine bindings take effect.
-    // Duin's own C++ modules (builtIn==true, promoted==false) are never touched and
-    // survive across recompiles either way.
-    //
-    // KeepCachedBindings SKIPS this: the promoted modules stay in the global list, so the
-    // next compileDaScript resolves `require daslib/... | dn_...` against the already-
-    // compiled modules instead of recompiling them. Only the target file is re-read. This
-    // is the daemon fast path — warm graph reused, per-request cost is just the one file.
     if (mode == RecompileMode::RefreshBindings)
     {
         das::Module::Reset(false);
     }
 
-    // Step 3 (both modes): re-add the C++ base modules (captured right after InitModules)
-    // to the now-cleared group. In KeepCachedBindings the promoted .das modules remain
-    // resolvable from the global list; they do not need to be in the group to be found.
     for (das::Module *m : baseModules)
     {
         libGroup.addModule(m);
