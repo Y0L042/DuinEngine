@@ -1,7 +1,7 @@
 var classduin_1_1JSONValue =
 [
-    [ "ConstDataIterator", "classduin_1_1JSONValue_1_1ConstDataIterator.html", "classduin_1_1JSONValue_1_1ConstDataIterator" ],
     [ "DataIterator", "classduin_1_1JSONValue_1_1DataIterator.html", "classduin_1_1JSONValue_1_1DataIterator" ],
+    [ "ConstDataIterator", "classduin_1_1JSONValue_1_1ConstDataIterator.html", "classduin_1_1JSONValue_1_1ConstDataIterator" ],
     [ "JSONValue", "classduin_1_1JSONValue.html#a75f955b6b7bcbf087630048ad04d29df", null ],
     [ "JSONValue", "classduin_1_1JSONValue.html#abaa9353ac157d1c49f7aa359a3d03033", null ],
     [ "JSONValue", "classduin_1_1JSONValue.html#afd961637e248af4d13d3e3205b40f30d", null ],

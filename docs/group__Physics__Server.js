@@ -6,5 +6,6 @@ var group__Physics__Server =
       [ "Initialize", "classduin_1_1PhysicsServer.html#a0539ef81e30be42293ca094122ae4903", null ],
       [ "StepPhysics", "classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb", null ],
       [ "pxPvd", "classduin_1_1PhysicsServer.html#ab3868c5b747ccf43c36bbb4c5aa9a068", null ]
-    ] ]
+    ] ],
+    [ "duin::PhysicsServerError", "group__Physics__Server.html#gaa70721e338d1fef3353e286d86458683", null ]
 ];

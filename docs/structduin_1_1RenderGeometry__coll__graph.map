@@ -1,6 +1,6 @@
 <map id="duin::RenderGeometry" name="duin::RenderGeometry">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,175,119"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="44,5,136,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,45,93,93,87,93,87,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="151,9,163,18,154,26,136,29,136,23,152,21,157,18,148,14"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,106,174,134"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="44,5,135,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,47,92,106,87,105,87,50"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="151,9,162,19,154,28,137,31,135,26,151,24,157,19,151,14"/>
 </map>

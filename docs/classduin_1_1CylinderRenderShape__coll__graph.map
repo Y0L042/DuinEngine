@@ -1,20 +1,20 @@
 <map id="duin::CylinderRenderShape" name="duin::CylinderRenderShape">
-<area shape="rect" id="Node000001" title=" " alt="" coords="281,405,479,431"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1RenderShape.html" title=" " alt="" coords="5,249,149,275"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,283,127,313,163,340,204,362,247,379,327,403,325,408,245,384,201,366,160,345,123,317,94,287"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="53,5,145,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="98,44,92,94,81,249,75,249,87,93,93,44"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="160,9,171,18,163,26,145,29,144,23,161,21,166,18,157,14"/>
-<area shape="rect" id="Node000004" href="$structduin_1_1RenderGeometry.html" title=" " alt="" coords="135,93,305,119"/>
-<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="128,37,205,91,202,95,125,41"/>
-<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="187,128,164,145,139,172,117,201,86,251,81,248,112,198,135,168,161,141,183,124"/>
-<area shape="rect" id="Node000005" href="$structduin_1_1CylinderRenderGeometry.html" title=" " alt="" coords="174,249,397,275"/>
-<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="233,130,283,248,278,250,228,132"/>
-<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="301,285,357,380,373,404,369,407,352,383,296,288"/>
-<area shape="rect" id="Node000006" href="$structduin_1_1Vector3.html" title=" " alt="" coords="421,249,528,275"/>
-<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="470,289,453,334,425,383,399,407,396,403,421,380,448,332,465,287"/>
-<area shape="poly" id="edge9_Node000006_Node000006" title=" " alt="" coords="504,241,522,238,538,241,550,248,555,262,548,277,532,285,512,285,490,277,492,272,513,279,531,280,544,274,549,262,546,252,536,246,522,244,505,247"/>
-<area shape="rect" id="Node000007" href="$structduin_1_1Vector4.html" title=" " alt="" coords="635,249,741,275"/>
-<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="676,288,654,318,624,345,584,368,540,385,457,408,455,403,539,380,581,363,621,341,650,314,672,285"/>
-<area shape="poly" id="edge11_Node000007_Node000007" title=" " alt="" coords="717,241,735,238,751,241,763,248,768,262,762,277,746,285,725,285,704,277,706,272,726,279,744,280,758,274,763,262,759,252,749,246,735,244,718,247"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="278,528,476,556"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1RenderShape.html" title=" " alt="" coords="5,317,149,345"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,356,120,406,140,431,163,453,200,478,241,498,321,527,316,528,239,503,197,483,159,457,136,435,116,409,89,361"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="53,5,144,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="95,45,92,106,80,317,75,316,86,106,95,51"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="159,9,171,19,162,28,146,31,143,27,160,24,165,19,160,14"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1RenderGeometry.html" title=" " alt="" coords="137,106,305,134"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="126,40,207,104,202,106,126,45"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="175,144,159,159,129,200,107,245,83,318,77,316,102,243,124,198,155,156,178,139"/>
+<area shape="rect" id="Node000005" href="$structduin_1_1CylinderRenderGeometry.html" title=" " alt="" coords="172,317,395,345"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="230,146,236,157,283,317,277,316,230,158,230,151"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="293,357,316,426,351,503,368,529,363,527,346,505,311,428,290,362"/>
+<area shape="rect" id="Node000006" href="$structduin_1_1Vector3.html" title=" " alt="" coords="418,317,525,345"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="470,358,455,429,441,469,422,506,398,530,395,525,418,502,436,466,450,428,466,362"/>
+<area shape="poly" id="edge9_Node000006_Node000006" title=" " alt="" coords="495,305,514,298,533,300,546,311,551,331,544,353,527,363,504,361,483,348,484,342,506,356,526,358,540,350,546,331,542,314,531,305,515,304,497,310"/>
+<area shape="rect" id="Node000007" href="$structduin_1_1Vector4.html" title=" " alt="" coords="638,317,745,345"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="686,358,665,409,648,435,628,457,591,484,550,504,507,519,466,530,465,525,506,514,548,499,588,479,625,453,644,431,660,407,681,361"/>
+<area shape="poly" id="edge11_Node000007_Node000007" title=" " alt="" coords="715,305,734,298,753,300,766,311,771,331,764,353,747,363,724,361,703,348,704,342,726,356,746,358,760,350,766,331,762,314,751,305,735,304,717,310"/>
 </map>

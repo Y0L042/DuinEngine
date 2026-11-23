@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Duin", "index.html", [
+    [ "Duin Engine", "index.html", "index" ],
     [ "Physics", "page_Physics.html", null ],
     [ "Duin Rendering Pipeline", "md_docs_2RenderingPipeline.html", [
       [ "Overview", "md_docs_2RenderingPipeline.html#autotoc_md3", null ],
@@ -101,13 +102,16 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp_source.html",
-"VirtualIOStream_8cpp_source.html",
-"classduin_1_1Event.html#a0acf12d5fc855664d832a310cfcabad9",
-"classduin_1_1World.html#a53417b177bde457d39d578c660299028",
-"group__Render__Geometry.html",
-"structImGuiTable.html",
-"structduin_1_1RenderTexture.html#a9f3e639dd23e0e3524fcf2f29bf5ce9e"
+"RenderModel_8h_source.html",
+"classduin_1_1Entity.html#a234751dd79e5f68f6cab1e8316d41119",
+"classduin_1_1Iter.html#ab34b636ad0867e1a764bdba61e44a60a",
+"classduin_1_1QueryBuilder.html#a9bc3926d719148dda5045b1b88d8ed44",
+"dir_8d8e52d9be0fc624462dd48d4601aef7.html",
+"namespaceduin_1_1Input.html#a4440e583f86b08250aa4074302c9434fa75d0bb08d162d1a8c6e1c784b24b94c3",
+"structImGuiTableColumn.html",
+"structduin_1_1PackedPair.html#a404ef015aa12700806d28dc58e7ed604"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
+var LISTOFALLMEMBERS = 'List of all members';

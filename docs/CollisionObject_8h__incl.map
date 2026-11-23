@@ -1,18 +1,18 @@
 <map id="CollisionObject.h" name="CollisionObject.h">
-<area shape="rect" id="Node000001" title="Base interface for collision&#45;enabled physics objects." alt="" coords="171,5,303,31"/>
-<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="152,79,323,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="240,31,240,65,235,65,235,31"/>
-<area shape="rect" id="Node000007" href="$CollisionMeta_8h.html" title="Collision layer and mask type definitions." alt="" coords="5,79,128,104"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="211,33,108,76,106,71,209,28"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="347,79,424,104"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="262,28,350,70,348,75,260,33"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="125,152,211,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="228,106,191,144,187,140,224,102"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="33,152,100,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="211,106,108,149,106,144,209,102"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="236,152,295,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="244,103,258,138,253,140,239,105"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="319,152,382,177"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="257,102,322,142,319,147,254,106"/>
-<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="69,104,69,138,64,138,64,104"/>
+<area shape="rect" id="Node000001" title="Base interface for collision&#45;enabled physics objects." alt="" coords="170,5,302,33"/>
+<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="151,81,320,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,31,238,66,233,64,234,36"/>
+<area shape="rect" id="Node000007" href="$CollisionMeta_8h.html" title="Collision layer and mask type definitions." alt="" coords="5,81,128,109"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="204,36,112,77,109,72,207,31"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="344,81,421,109"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="262,31,346,73,340,74,262,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="123,157,210,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="226,108,191,147,188,143,221,110"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="34,157,99,184"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="208,109,111,153,109,148,203,109"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="233,157,292,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="242,107,255,143,250,141,239,111"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="315,157,378,184"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="256,107,317,148,312,148,255,112"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="68,107,69,142,64,140,65,111"/>
 </map>

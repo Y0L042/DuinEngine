@@ -1,5 +1,5 @@
 <map id="scanner_t" name="scanner_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,91,119"/>
-<area shape="rect" id="Node000002" href="$structebuf__t.html" title=" " alt="" coords="17,5,79,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="51,45,51,93,45,93,45,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,106,90,134"/>
+<area shape="rect" id="Node000002" href="$structebuf__t.html" title=" " alt="" coords="16,5,79,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="50,47,50,106,45,105,45,50"/>
 </map>

@@ -1,9 +1,9 @@
 <map id="DNLog.h" name="DNLog.h">
-<area shape="rect" id="Node000001" title="Logging system and macros." alt="" coords="185,5,262,31"/>
-<area shape="rect" id="Node000002" href="$Core_8h_source.html" title=" " alt="" coords="5,79,137,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,33,109,75,107,70,198,28"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="161,79,285,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,31,226,65,221,65,221,31"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="309,79,372,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="244,28,311,69,308,74,241,33"/>
+<area shape="rect" id="Node000001" title="Logging system and macros." alt="" coords="185,5,261,33"/>
+<area shape="rect" id="Node000002" href="$Core_8h_source.html" title=" " alt="" coords="5,81,137,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,33,113,76,110,72,193,34"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="161,81,285,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="225,32,225,67,221,64,221,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="309,81,372,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="245,31,310,73,304,73,243,36"/>
 </map>

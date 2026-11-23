@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classduin_1_1EventHandler.html" title="Singleton that polls SDL events and dispatches them to listeners." alt="" coords="5,5,152,31"/>
+<area shape="rect" id="Node000000" href="$classduin_1_1Event.html" title="Base wrapper for SDL events." alt="" coords="5,32,100,60"/>
+<area shape="rect" id="Node000001" href="$classduin_1_1InputEvent.html" title="Event class for keyboard and mouse input." alt="" coords="157,5,284,33"/>
+<area shape="poly" id="edge48_Node000000_Node000001" title=" " alt="" coords="114,33,159,28,154,30,116,39"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1WindowEvent.html" title="Event class for window&#45;related events (resize, focus, etc.)." alt="" coords="148,57,294,85"/>
+<area shape="poly" id="edge49_Node000000_Node000002" title=" " alt="" coords="115,53,150,60,145,61,115,58"/>
 </map>

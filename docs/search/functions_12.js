@@ -2,12 +2,12 @@ var searchData=
 [
   ['savefile_0',['SaveFile',['../classduin_1_1io_1_1IOStream.html#a94b99a69ecbf2c43b2186224593830b8',1,'duin::io::IOStream']]],
   ['savefileio_1',['SaveFileIO',['../classduin_1_1io_1_1IOStream.html#ac9dce8f261411ec23a475bb0263e84d5',1,'duin::io::IOStream']]],
-  ['second_2',['second',['../structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be',1,'duin::Entity::ID::Second()'],['../classduin_1_1Entity.html#a60f08518d58237c7b525711eb3aa94e3',1,'duin::Entity::Second()']]],
+  ['second_2',['Second',['../structduin_1_1Entity_1_1ID.html#a53db2b6739f3d24c41c6b71f48c671be',1,'duin::Entity::ID::Second()'],['../classduin_1_1Entity.html#a60f08518d58237c7b525711eb3aa94e3',1,'duin::Entity::Second()']]],
   ['seek_3',['Seek',['../classduin_1_1io_1_1IOStream.html#ae8fd757fa74e273f90b88b5c560ed0a5',1,'duin::io::IOStream']]],
-  ['set_4',['set',['../classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89',1,'duin::Entity::Set(const T &amp;value)'],['../classduin_1_1Entity.html#ab4f974c7a169d9ecb1ae29d68b8ed548',1,'duin::Entity::Set(T &amp;&amp;value)'],['../classduin_1_1Entity.html#a471c5755bca0422b83c6cbfe9b50cb6b',1,'duin::Entity::Set(Args &amp;&amp;...args)'],['../classduin_1_1Entity.html#a8b0ab45f7102206d6d68cd58e90c727d',1,'duin::Entity::Set(const T1 &amp;val1, const T2 &amp;val2, const Rest &amp;...rest)']]],
+  ['set_4',['Set',['../classduin_1_1Entity.html#ad856326f85d286d3e3f36cbacabeba89',1,'duin::Entity::Set(const T &amp;value)'],['../classduin_1_1Entity.html#ab4f974c7a169d9ecb1ae29d68b8ed548',1,'duin::Entity::Set(T &amp;&amp;value)'],['../classduin_1_1Entity.html#a471c5755bca0422b83c6cbfe9b50cb6b',1,'duin::Entity::Set(Args &amp;&amp;...args)'],['../classduin_1_1Entity.html#a8b0ab45f7102206d6d68cd58e90c727d',1,'duin::Entity::Set(const T1 &amp;val1, const T2 &amp;val2, const Rest &amp;...rest)']]],
   ['setallowdockinginmain_5',['SetAllowDockingInMain',['../Application_8h.html#a55e1aa953e36ea6cbe2895e33e1df4bd',1,'duin']]],
   ['setarray_6',['SetArray',['../classduin_1_1JSONValue.html#a7b18e340800be47780f66b3d35f3b199',1,'duin::JSONValue']]],
-  ['setautooverride_7',['setautooverride',['../classduin_1_1Entity.html#a37e5a4c1912a3ad8cedbf02b6cf103c3',1,'duin::Entity::SetAutoOverride(T &amp;&amp;value)'],['../classduin_1_1Entity.html#ae56ccc425472abba6fe50d40fe413811',1,'duin::Entity::SetAutoOverride(const T &amp;value)']]],
+  ['setautooverride_7',['SetAutoOverride',['../classduin_1_1Entity.html#ae56ccc425472abba6fe50d40fe413811',1,'duin::Entity::SetAutoOverride(const T &amp;value)'],['../classduin_1_1Entity.html#a37e5a4c1912a3ad8cedbf02b6cf103c3',1,'duin::Entity::SetAutoOverride(T &amp;&amp;value)']]],
   ['setbindebugmode_8',['SetBinDebugMode',['../namespaceduin_1_1fs.html#a9ed395a69b8fcc79b4a4a687866ea1ee',1,'duin::fs']]],
   ['setbool_9',['SetBool',['../classduin_1_1JSONValue.html#abc259cffaacdd6fd00e0e12bf92f25d1',1,'duin::JSONValue']]],
   ['setcollisionlayer_10',['SetCollisionLayer',['../classduin_1_1CollisionObject.html#a21d9f630f10aa732bfd0d9e7f2a072a7',1,'duin::CollisionObject']]],
@@ -24,7 +24,7 @@ var searchData=
   ['setmousescale_21',['SetMouseScale',['../namespaceduin_1_1Input.html#a14e9b1731645f19b9708900ff52bb70f',1,'duin::Input']]],
   ['setname_22',['SetName',['../classduin_1_1Entity.html#a1136c1f55672360d6f12aa841bc353e9',1,'duin::Entity']]],
   ['setobject_23',['SetObject',['../classduin_1_1JSONValue.html#a09520cb59b0af14d6a50ebef2a24f368',1,'duin::JSONValue']]],
-  ['setpair_24',['setpair',['../classduin_1_1Entity.html#a2c8228c51547918b8ca5913cbb6f55c6',1,'duin::Entity::SetPair(const PairStorageType_t&lt; First, Second &gt; &amp;value)'],['../classduin_1_1Entity.html#a81971ffb396bd2197793eaa04fa40990',1,'duin::Entity::SetPair(PairStorageType_t&lt; First, Second &gt; &amp;&amp;value)']]],
+  ['setpair_24',['SetPair',['../classduin_1_1Entity.html#a2c8228c51547918b8ca5913cbb6f55c6',1,'duin::Entity::SetPair(const PairStorageType_t&lt; First, Second &gt; &amp;value)'],['../classduin_1_1Entity.html#a81971ffb396bd2197793eaa04fa40990',1,'duin::Entity::SetPair(PairStorageType_t&lt; First, Second &gt; &amp;&amp;value)']]],
   ['setpauseonminimized_25',['SetPauseOnMinimized',['../Application_8h.html#aea988cdf444fa525083de50e329db4ac',1,'duin']]],
   ['setprefpath_26',['SetPrefPath',['../namespaceduin_1_1fs.html#ab850f1508d5e66f30104b06ae772d064',1,'duin::fs']]],
   ['setstage_27',['SetStage',['../classduin_1_1EcsPipeline.html#af8d64c357d23e4cac66136c7807b669c',1,'duin::EcsPipeline']]],
@@ -39,5 +39,5 @@ var searchData=
   ['stepphysics_36',['StepPhysics',['../classduin_1_1PhysicsServer.html#af9c5bdf4e040c3eff5b28b7cdc53fabb',1,'duin::PhysicsServer']]],
   ['str_37',['Str',['../structduin_1_1Entity_1_1ID.html#a1ed4d4fdcad5414b63f5bb8e747e8269',1,'duin::Entity::ID']]],
   ['switchstate_38',['SwitchState',['../classduin_1_1GameStateMachine.html#af38da22c2d87b9df8ee50da8e3d8d45c',1,'duin::GameStateMachine']]],
-  ['system_39',['system',['../classduin_1_1World.html#a2eb0bd43ab3948318bd76f10d602624d',1,'duin::World::System()'],['../classduin_1_1System.html#a36b0de59135998fef133a17bef116b8e',1,'duin::System::System(const Entity &amp;entity)'],['../classduin_1_1System.html#af8447a34bae6dab13f69e70c5b627375',1,'duin::System::System(const flecs::system &amp;other)'],['../classduin_1_1System.html#ad782a6569b41470769e13136040d0f99',1,'duin::System::System(flecs::system &amp;&amp;other)'],['../classduin_1_1System.html#a3ed1e3200e783e3a32dc5c01fc2d1dff',1,'duin::System::System()=default']]]
+  ['system_39',['System',['../classduin_1_1System.html#a3ed1e3200e783e3a32dc5c01fc2d1dff',1,'duin::System::System()=default'],['../classduin_1_1System.html#ad782a6569b41470769e13136040d0f99',1,'duin::System::System(flecs::system &amp;&amp;other)'],['../classduin_1_1System.html#af8447a34bae6dab13f69e70c5b627375',1,'duin::System::System(const flecs::system &amp;other)'],['../classduin_1_1System.html#a36b0de59135998fef133a17bef116b8e',1,'duin::System::System(const Entity &amp;entity)'],['../classduin_1_1World.html#a2eb0bd43ab3948318bd76f10d602624d',1,'duin::World::System()']]]
 ];

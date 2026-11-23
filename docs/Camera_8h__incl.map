@@ -1,23 +1,23 @@
 <map id="Camera.h" name="Camera.h">
-<area shape="rect" id="Node000001" title="3D camera for rendering." alt="" coords="341,5,426,31"/>
-<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="103,79,274,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="353,33,234,76,232,71,351,28"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="291,152,353,177"/>
-<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="373,33,355,54,339,80,330,110,326,139,320,138,325,109,334,78,351,50,369,29"/>
-<area shape="rect" id="Node000007" href="$DuinMaths_8h_source.html" title=" " alt="" coords="349,79,565,104"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="397,29,437,67,433,71,394,33"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="589,79,713,104"/>
-<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="427,28,596,73,594,78,426,33"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,92,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="167,106,85,148,82,143,165,102"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="117,152,183,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="185,106,165,141,160,139,180,103"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="207,152,266,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="199,103,224,139,219,142,194,106"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="211,102,289,143,287,148,209,106"/>
-<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="436,106,357,148,355,143,434,102"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="396,152,499,177"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="458,105,453,139,448,138,452,104"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="523,152,591,177"/>
-<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="474,102,531,142,528,146,471,106"/>
+<area shape="rect" id="Node000001" title="3D camera for rendering." alt="" coords="337,5,421,33"/>
+<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="100,81,269,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="342,35,234,78,232,73,347,32"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="287,157,349,184"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="368,32,350,56,335,82,326,112,321,143,317,139,321,111,330,80,346,53,364,35"/>
+<area shape="rect" id="Node000007" href="$DuinMaths_8h_source.html" title=" " alt="" coords="345,81,560,109"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="393,31,431,70,426,69,391,36"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="584,81,708,109"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="422,29,586,76,581,77,421,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,157,92,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="163,109,87,151,85,147,158,109"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="116,157,181,184"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="180,108,164,144,160,141,176,111"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="205,157,263,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="195,107,219,144,214,143,192,112"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="209,107,284,149,279,149,208,112"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="431,109,356,152,354,147,426,110"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="392,157,494,184"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="453,107,449,143,445,140,449,111"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="518,157,585,184"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="471,107,524,148,519,147,469,112"/>
 </map>

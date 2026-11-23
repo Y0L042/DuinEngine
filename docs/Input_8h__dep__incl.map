@@ -1,39 +1,39 @@
 <map id="Input.h" name="Input.h">
-<area shape="rect" id="Node000001" title="Low&#45;level input query functions." alt="" coords="419,5,485,31"/>
-<area shape="rect" id="Node000002" href="$Application_8cpp_source.html" title=" " alt="" coords="5,79,128,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="406,31,129,81,128,76,405,25"/>
-<area shape="rect" id="Node000003" href="$EventHandler_8cpp_source.html" title=" " alt="" coords="152,79,288,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="406,36,258,81,256,76,405,31"/>
-<area shape="rect" id="Node000004" href="$EventsModule_8h_source.html" title=" " alt="" coords="657,299,783,324"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="443,44,432,79,425,132,429,176,436,195,447,214,484,249,525,272,570,288,615,298,657,304,656,309,614,303,569,293,523,276,481,253,443,217,431,198,423,177,420,132,427,78,438,42"/>
-<area shape="rect" id="Node000007" href="$Input_8cpp_source.html" title=" " alt="" coords="712,79,795,104"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="499,28,712,78,711,83,498,33"/>
-<area shape="rect" id="Node000008" href="$InputActions_8h.html" title="Action&#45;based input system." alt="" coords="472,79,587,104"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="476,38,518,76,515,80,473,42"/>
-<area shape="rect" id="Node000010" href="$InputDevice__Keyboard_8h.html" title="Keyboard input device implementation." alt="" coords="857,152,1037,177"/>
-<area shape="poly" id="edge21_Node000001_Node000010" title=" " alt="" coords="500,30,641,76,701,101,799,129,888,149,887,155,798,134,699,107,639,81,498,35"/>
-<area shape="rect" id="Node000013" href="$Module__DnInput_8cpp_source.html" title=" " alt="" coords="555,225,709,251"/>
-<area shape="poly" id="edge23_Node000001_Node000013" title=" " alt="" coords="446,45,440,74,436,109,440,144,454,176,474,196,499,212,527,222,555,229,554,234,525,227,497,216,471,201,450,179,435,145,431,109,435,73,441,43"/>
-<area shape="rect" id="Node000014" href="$InputDevice__Mouse_8h.html" title="Mouse input device implementation." alt="" coords="669,152,832,177"/>
-<area shape="poly" id="edge22_Node000001_Node000014" title=" " alt="" coords="497,33,600,76,674,115,733,150,731,154,672,120,598,81,495,38"/>
-<area shape="rect" id="Node000005" href="$Duin_8h_source.html" title=" " alt="" coords="688,372,752,397"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="723,338,723,372,717,372,717,338"/>
-<area shape="rect" id="Node000006" href="$Duin_8cpp_source.html" title=" " alt="" coords="681,445,759,471"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="723,411,723,445,717,445,717,411"/>
-<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="495,113,476,126,460,141,452,158,455,176,471,203,492,225,517,245,544,261,602,284,657,298,656,304,601,289,542,265,514,249,488,229,467,206,449,178,447,157,456,138,472,122,492,109"/>
-<area shape="rect" id="Node000009" href="$InputActions_8cpp_source.html" title=" " alt="" coords="464,152,595,177"/>
-<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="532,118,532,152,527,152,527,118"/>
-<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="601,102,880,149,879,155,600,107"/>
-<area shape="poly" id="edge20_Node000008_Node000013" title=" " alt="" coords="564,109,588,127,609,151,626,190,633,225,628,226,621,192,604,153,584,131,560,113"/>
-<area shape="poly" id="edge16_Node000008_Node000014" title=" " alt="" coords="578,106,716,149,714,154,577,111"/>
-<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="947,192,939,223,931,239,920,253,897,267,861,280,780,301,778,296,860,275,894,262,917,249,927,236,934,221,942,190"/>
-<area shape="rect" id="Node000011" href="$InputDevices_8h_source.html" title=" " alt="" coords="787,225,906,251"/>
-<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="921,187,865,227,861,223,918,183"/>
-<area shape="poly" id="edge15_Node000010_Node000013" title=" " alt="" coords="883,183,684,228,682,223,882,178"/>
-<area shape="poly" id="edge13_Node000011_Node000004" title=" " alt="" coords="816,260,742,301,739,296,813,255"/>
-<area shape="rect" id="Node000012" href="$InputDevices_8cpp_source.html" title=" " alt="" coords="807,299,942,324"/>
-<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="859,263,873,298,868,300,854,265"/>
-<area shape="poly" id="edge17_Node000014_Node000004" title=" " alt="" coords="748,191,725,299,720,298,743,190"/>
-<area shape="poly" id="edge18_Node000014_Node000011" title=" " alt="" coords="779,183,833,223,829,227,776,188"/>
-<area shape="poly" id="edge19_Node000014_Node000013" title=" " alt="" coords="721,187,653,227,650,223,718,182"/>
+<area shape="rect" id="Node000001" title="Low&#45;level input query functions." alt="" coords="417,5,483,33"/>
+<area shape="rect" id="Node000002" href="$Application_8cpp_source.html" title=" " alt="" coords="5,81,127,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="400,32,128,84,126,79,403,27"/>
+<area shape="rect" id="Node000003" href="$EventHandler_8cpp_source.html" title=" " alt="" coords="150,81,286,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="400,38,261,83,258,78,404,34"/>
+<area shape="rect" id="Node000004" href="$EventsModule_8h_source.html" title=" " alt="" coords="655,308,781,336"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="439,45,430,82,423,137,426,182,433,203,445,222,461,240,484,258,525,281,569,297,614,308,658,317,652,317,613,313,568,303,522,286,480,262,458,244,441,225,429,205,421,184,417,137,425,80,436,50"/>
+<area shape="rect" id="Node000007" href="$Input_8cpp_source.html" title=" " alt="" coords="711,81,792,109"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="498,29,713,82,708,85,498,35"/>
+<area shape="rect" id="Node000008" href="$InputActions_8h.html" title="Action&#45;based input system." alt="" coords="470,81,584,109"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="475,41,516,80,511,81,475,47"/>
+<area shape="rect" id="Node000010" href="$InputDevice__Keyboard_8h.html" title="Keyboard input device implementation." alt="" coords="854,157,1033,184"/>
+<area shape="poly" id="edge21_Node000001_Node000010" title=" " alt="" coords="498,31,567,52,642,79,671,93,700,106,791,134,878,156,873,156,790,139,698,111,669,98,640,83,565,57,498,36"/>
+<area shape="rect" id="Node000013" href="$Module__DnInput_8cpp_source.html" title=" " alt="" coords="553,232,707,260"/>
+<area shape="poly" id="edge23_Node000001_Node000013" title=" " alt="" coords="443,46,438,79,435,114,439,150,454,183,473,203,498,218,525,229,555,238,550,239,523,234,495,223,470,207,449,186,434,152,429,114,432,78,440,50"/>
+<area shape="rect" id="Node000014" href="$InputDevice__Mouse_8h.html" title="Mouse input device implementation." alt="" coords="668,157,829,184"/>
+<area shape="poly" id="edge22_Node000001_Node000014" title=" " alt="" coords="498,36,598,79,671,119,731,156,726,156,669,123,596,83,498,41"/>
+<area shape="rect" id="Node000005" href="$Duin_8h_source.html" title=" " alt="" coords="686,384,750,411"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="720,350,720,385,716,382,716,353"/>
+<area shape="rect" id="Node000006" href="$Duin_8cpp_source.html" title=" " alt="" coords="679,459,757,487"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="720,425,720,461,716,457,716,429"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="491,116,473,133,459,148,451,165,454,183,470,210,491,233,516,253,543,269,601,293,658,311,652,311,599,298,541,274,513,257,487,237,466,213,449,185,446,165,454,146,469,129,487,119"/>
+<area shape="rect" id="Node000009" href="$InputActions_8cpp_source.html" title=" " alt="" coords="463,157,592,184"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="529,122,530,157,525,155,526,127"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="600,106,871,155,866,157,600,112"/>
+<area shape="poly" id="edge20_Node000008_Node000013" title=" " alt="" coords="564,115,588,133,607,155,624,195,631,233,626,231,619,197,602,158,584,137,564,120"/>
+<area shape="poly" id="edge16_Node000008_Node000014" title=" " alt="" coords="581,111,712,156,706,157,581,117"/>
+<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="943,198,936,232,917,262,895,276,861,289,782,310,781,305,859,284,892,272,913,258,931,230,939,202"/>
+<area shape="rect" id="Node000011" href="$InputDevices_8h_source.html" title=" " alt="" coords="786,232,904,260"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="916,193,863,234,861,230,911,195"/>
+<area shape="poly" id="edge15_Node000010_Node000013" title=" " alt="" coords="870,189,687,234,686,229,875,188"/>
+<area shape="poly" id="edge13_Node000011_Node000004" title=" " alt="" coords="812,267,742,310,739,305,807,269"/>
+<area shape="rect" id="Node000012" href="$InputDevices_8cpp_source.html" title=" " alt="" coords="805,308,938,336"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="856,272,869,309,864,306,853,277"/>
+<area shape="poly" id="edge17_Node000014_Node000004" title=" " alt="" coords="745,197,723,309,719,306,741,201"/>
+<area shape="poly" id="edge18_Node000014_Node000011" title=" " alt="" coords="779,192,830,232,825,232,777,197"/>
+<area shape="poly" id="edge19_Node000014_Node000013" title=" " alt="" coords="717,191,652,234,650,230,712,194"/>
 </map>

@@ -1,13 +1,13 @@
 <map id="duin::RenderSubmission" name="duin::RenderSubmission">
-<area shape="rect" id="Node000001" title=" " alt="" coords="297,181,475,207"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1MeshData.html" title=" " alt="" coords="239,93,363,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="324,127,376,179,372,183,320,131"/>
-<area shape="rect" id="Node000003" href="$structduin_1_1RHIVertexLayout.html" title=" " alt="" coords="5,5,172,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,34,206,67,269,91,268,96,204,72,126,39"/>
-<area shape="rect" id="Node000004" href="$structduin_1_1RHIVertexBufferHandle.html" title=" " alt="" coords="197,5,405,31"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="303,45,303,93,298,93,298,45"/>
-<area shape="rect" id="Node000005" href="$structduin_1_1RHIIndexBufferHandle.html" title=" " alt="" coords="429,5,631,31"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="501,40,439,72,359,96,357,91,437,67,499,36"/>
-<area shape="rect" id="Node000006" href="$structduin_1_1RHIShaderHandle.html" title=" " alt="" coords="387,93,559,119"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="455,131,428,159,401,183,398,179,424,155,451,127"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="295,207,474,234"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1MeshData.html" title=" " alt="" coords="238,106,361,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="321,143,376,206,370,206,319,148"/>
+<area shape="rect" id="Node000003" href="$structduin_1_1RHIVertexLayout.html" title=" " alt="" coords="5,5,172,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,39,201,80,262,105,257,106,199,84,123,44"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1RHIVertexBufferHandle.html" title=" " alt="" coords="196,5,403,33"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="301,47,302,107,297,104,298,51"/>
+<area shape="rect" id="Node000005" href="$structduin_1_1RHIIndexBufferHandle.html" title=" " alt="" coords="426,5,628,33"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="503,42,473,66,440,84,401,99,362,110,361,105,400,94,438,80,470,61,498,44"/>
+<area shape="rect" id="Node000006" href="$structduin_1_1RHIShaderHandle.html" title=" " alt="" coords="386,106,557,134"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="460,146,434,184,406,208,404,204,431,181,455,148"/>
 </map>

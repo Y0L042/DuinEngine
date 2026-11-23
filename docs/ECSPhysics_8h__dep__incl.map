@@ -1,7 +1,7 @@
 <map id="ECSPhysics.h" name="ECSPhysics.h">
-<area shape="rect" id="Node000001" title="Physics body and debug/visual component structs." alt="" coords="111,5,219,31"/>
-<area shape="rect" id="Node000002" href="$ECSComponents_8cpp_source.html" title=" " alt="" coords="5,79,161,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,42,98,80,95,76,140,38"/>
-<area shape="rect" id="Node000003" href="$ECSPrefabs_8cpp_source.html" title=" " alt="" coords="186,79,309,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,38,236,76,232,80,187,42"/>
+<area shape="rect" id="Node000001" title="Physics body and debug/visual component structs." alt="" coords="111,5,218,33"/>
+<area shape="rect" id="Node000002" href="$ECSComponents_8cpp_source.html" title=" " alt="" coords="5,81,161,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,43,99,83,96,78,136,44"/>
+<area shape="rect" id="Node000003" href="$ECSPrefabs_8cpp_source.html" title=" " alt="" coords="184,81,307,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,41,234,81,229,80,189,46"/>
 </map>

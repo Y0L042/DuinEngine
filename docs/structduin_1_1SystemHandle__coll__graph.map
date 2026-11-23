@@ -1,7 +1,7 @@
 <map id="duin::SystemHandle" name="duin::SystemHandle">
-<area shape="rect" id="Node000001" title=" " alt="" coords="36,93,189,119"/>
-<area shape="rect" id="Node000002" href="$classduin_1_1World.html" title=" " alt="" coords="5,5,100,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,41,106,91,102,94,67,44"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1Entity.html" title="Represents an entity in the ECS world." alt="" coords="125,5,221,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,44,123,94,119,91,154,41"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="35,106,187,134"/>
+<area shape="rect" id="Node000002" href="$classduin_1_1World.html" title=" " alt="" coords="5,5,100,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,44,106,105,101,106,66,49"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1Entity.html" title="Represents an entity in the ECS world." alt="" coords="124,5,219,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="160,46,140,83,123,108,119,104,136,81,156,49"/>
 </map>

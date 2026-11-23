@@ -1,11 +1,11 @@
 <map id="ImGuiDebugItemPathQuery" name="ImGuiDebugItemPathQuery">
-<area shape="rect" id="Node000001" title=" " alt="" coords="103,211,303,236"/>
-<area shape="rect" id="Node000002" href="$structImVector.html" title=" " alt="" coords="5,93,211,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,142,194,208,190,212,131,145"/>
-<area shape="rect" id="Node000003" href="$structImGuiStackLevelInfo.html" title=" " alt="" coords="29,5,187,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="111,44,111,93,105,93,105,44"/>
-<area shape="rect" id="Node000004" href="$structImGuiTextBuffer.html" title=" " alt="" coords="235,101,362,126"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="281,138,215,212,211,208,277,135"/>
-<area shape="rect" id="Node000005" href="$structImVector.html" title=" " alt="" coords="229,5,368,31"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="301,44,301,101,296,101,296,44"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="101,246,300,274"/>
+<area shape="rect" id="Node000002" href="$structImVector.html" title=" " alt="" coords="5,106,210,151"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,161,194,245,189,246,130,165"/>
+<area shape="rect" id="Node000003" href="$structImGuiStackLevelInfo.html" title=" " alt="" coords="29,5,186,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,46,110,106,105,105,107,51"/>
+<area shape="rect" id="Node000004" href="$structImGuiTextBuffer.html" title=" " alt="" coords="234,114,360,142"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="283,154,236,224,215,248,212,243,232,220,278,157"/>
+<area shape="rect" id="Node000005" href="$structImVector.html" title=" " alt="" coords="228,5,366,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="298,47,299,115,294,113,295,51"/>
 </map>

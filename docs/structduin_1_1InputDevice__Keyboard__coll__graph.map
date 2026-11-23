@@ -1,8 +1,8 @@
 <map id="duin::InputDevice_Keyboard" name="duin::InputDevice_Keyboard">
-<area shape="rect" id="Node000001" title="Keyboard implementation of InputDevice." alt="" coords="5,168,209,193"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1InputDevice.html" title="Base interface for input devices." alt="" coords="39,93,175,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,133,110,168,105,168,105,133"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="61,5,153,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,45,110,93,105,93,105,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="168,9,180,18,172,26,154,29,153,23,169,21,175,18,165,14"/>
+<area shape="rect" id="Node000001" title="Keyboard implementation of InputDevice." alt="" coords="5,183,209,211"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1InputDevice.html" title="Base interface for input devices." alt="" coords="39,106,175,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,147,109,184,105,182,105,151"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="61,5,153,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,46,110,106,104,105,106,51"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="168,9,179,19,171,28,154,31,152,26,169,24,174,19,168,15"/>
 </map>

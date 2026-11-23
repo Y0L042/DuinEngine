@@ -1,9 +1,9 @@
 <map id="ECSTag.h" name="ECSTag.h">
-<area shape="rect" id="Node000001" title="Tag components for entity categorization." alt="" coords="159,5,241,31"/>
-<area shape="rect" id="Node000002" href="$ECSPrefabs_8cpp_source.html" title=" " alt="" coords="5,79,128,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,39,90,81,87,76,165,35"/>
-<area shape="rect" id="Node000003" href="$ECSTag_8cpp_source.html" title=" " alt="" coords="152,79,248,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,44,203,79,197,79,197,44"/>
-<area shape="rect" id="Node000004" href="$Module__DnECS_8cpp_source.html" title=" " alt="" coords="272,79,419,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="237,34,323,76,320,81,234,39"/>
+<area shape="rect" id="Node000001" title="Tag components for entity categorization." alt="" coords="160,5,240,33"/>
+<area shape="rect" id="Node000002" href="$ECSPrefabs_8cpp_source.html" title=" " alt="" coords="5,81,128,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,41,91,83,89,78,160,40"/>
+<area shape="rect" id="Node000003" href="$ECSTag_8cpp_source.html" title=" " alt="" coords="152,81,248,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,47,202,82,198,79,198,51"/>
+<area shape="rect" id="Node000004" href="$Module__DnECS_8cpp_source.html" title=" " alt="" coords="272,81,418,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="240,38,322,80,317,81,239,43"/>
 </map>

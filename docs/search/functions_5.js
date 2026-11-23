@@ -5,7 +5,7 @@ var searchData=
   ['findmember_2',['FindMember',['../classduin_1_1JSONValue.html#a9f56c90a23f38d6b7200902a255a6586',1,'duin::JSONValue']]],
   ['findprojectfile_3',['FindProjectFile',['../namespaceduin_1_1fs.html#a3f1f2413e4214b94becea60aab6fc9c4',1,'duin::fs']]],
   ['fini_4',['Fini',['../classduin_1_1Iter.html#a51531b5826a0c84c5cfdce74bad2029c',1,'duin::Iter']]],
-  ['first_5',['first',['../classduin_1_1Query.html#ad6119bd529d8b90f1f58c6e370325637',1,'duin::Query::First()'],['../structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97',1,'duin::Entity::ID::First()'],['../classduin_1_1Entity.html#a4e4b41854325ef5a7adaab1b6060eb47',1,'duin::Entity::First()']]],
+  ['first_5',['First',['../structduin_1_1Entity_1_1ID.html#ab0212508643cd0aa7df5f61b0783dc97',1,'duin::Entity::ID::First()'],['../classduin_1_1Entity.html#a4e4b41854325ef5a7adaab1b6060eb47',1,'duin::Entity::First()'],['../classduin_1_1Query.html#ad6119bd529d8b90f1f58c6e370325637',1,'duin::Query::First()']]],
   ['flagsstr_6',['FlagsStr',['../structduin_1_1Entity_1_1ID.html#a7fbf2df23028c05a544f74055649cbab',1,'duin::Entity::ID']]],
   ['flush_7',['Flush',['../classduin_1_1io_1_1IOStream.html#a8cc49ef39aa449d9962ce6cf07013903',1,'duin::io::IOStream']]],
   ['flushandswitchstate_8',['FlushAndSwitchState',['../classduin_1_1GameStateMachine.html#acc85786c887f4b546fec63ade4d9b027',1,'duin::GameStateMachine']]],

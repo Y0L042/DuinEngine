@@ -1,6 +1,6 @@
 <map id="duin::ECSComponent::Scale2D::Scale2DImpl" name="duin::ECSComponent::Scale2D::Scale2DImpl">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,185,179,225"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1Vector2.html" title=" " alt="" coords="39,51,145,77"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,90,95,185,89,185,89,90"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="129,46,158,47,168,54,172,64,166,76,153,82,135,83,116,79,117,74,135,78,152,77,163,72,167,64,164,57,156,53,129,51"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,260,178,304"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1Vector2.html" title=" " alt="" coords="38,82,145,110"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,124,94,260,89,259,89,126"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="120,73,139,70,155,72,167,81,171,96,165,113,149,122,128,121,108,113,107,108,129,116,148,116,161,110,166,96,162,84,153,77,139,75,123,78"/>
 </map>

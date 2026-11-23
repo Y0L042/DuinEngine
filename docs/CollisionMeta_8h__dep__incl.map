@@ -1,31 +1,31 @@
 <map id="CollisionMeta.h" name="CollisionMeta.h">
-<area shape="rect" id="Node000001" title="Collision layer and mask type definitions." alt="" coords="217,5,339,31"/>
-<area shape="rect" id="Node000002" href="$CollisionObject_8h.html" title="Base interface for collision&#45;enabled physics objects." alt="" coords="212,79,344,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="281,44,281,79,275,79,275,44"/>
-<area shape="rect" id="Node000003" href="$Area_8h_source.html" title=" " alt="" coords="82,152,146,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="240,112,142,154,140,149,238,107"/>
-<area shape="rect" id="Node000005" href="$CollisionObject_8cpp_source.html" title=" " alt="" coords="205,152,351,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="281,118,281,152,275,152,275,118"/>
-<area shape="rect" id="Node000006" href="$physx_2PhysicsObject_8h_source.html" title=" " alt="" coords="393,152,518,177"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="320,107,427,149,425,154,318,112"/>
-<area shape="rect" id="Node000004" href="$Area_8cpp_source.html" title=" " alt="" coords="5,225,84,251"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="95,189,58,227,54,223,91,185"/>
-<area shape="rect" id="Node000007" href="$physx_2CharacterBody_8h_source.html" title=" " alt="" coords="109,225,237,251"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="397,183,219,228,218,223,396,178"/>
-<area shape="rect" id="Node000009" href="$DynamicBody_8h.html" title="Fully simulated rigid body." alt="" coords="261,225,383,251"/>
-<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="423,186,345,227,343,223,421,181"/>
-<area shape="rect" id="Node000011" href="$KinematicBody_8h_source.html" title=" " alt="" coords="407,225,538,251"/>
-<area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="464,190,472,225,467,226,459,191"/>
-<area shape="rect" id="Node000013" href="$PhysicsObject_8cpp_source.html" title=" " alt="" coords="563,225,703,251"/>
-<area shape="poly" id="edge12_Node000006_Node000013" title=" " alt="" coords="498,180,605,223,603,228,496,185"/>
-<area shape="rect" id="Node000014" href="$StaticBody_8h_source.html" title=" " alt="" coords="727,225,829,251"/>
-<area shape="poly" id="edge13_Node000006_Node000014" title=" " alt="" coords="521,178,727,223,726,228,520,183"/>
-<area shape="rect" id="Node000008" href="$physx_2CharacterBody_8cpp_source.html" title=" " alt="" coords="85,299,228,324"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="170,265,162,299,157,298,164,263"/>
-<area shape="rect" id="Node000010" href="$DynamicBody_8cpp_source.html" title=" " alt="" coords="253,299,391,324"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="325,264,325,299,319,299,319,264"/>
-<area shape="rect" id="Node000012" href="$KinematicBody_8cpp_source.html" title=" " alt="" coords="415,299,562,324"/>
-<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="481,263,489,298,483,299,476,265"/>
-<area shape="rect" id="Node000015" href="$StaticBody_8cpp_source.html" title=" " alt="" coords="719,299,837,324"/>
-<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="781,264,781,299,775,299,775,264"/>
+<area shape="rect" id="Node000001" title="Collision layer and mask type definitions." alt="" coords="215,5,338,33"/>
+<area shape="rect" id="Node000002" href="$CollisionObject_8h.html" title="Base interface for collision&#45;enabled physics objects." alt="" coords="211,81,342,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="278,46,279,81,274,80,275,51"/>
+<area shape="rect" id="Node000003" href="$Area_8h_source.html" title=" " alt="" coords="81,157,144,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,117,143,158,140,154,235,113"/>
+<area shape="rect" id="Node000005" href="$CollisionObject_8cpp_source.html" title=" " alt="" coords="203,157,350,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="278,122,279,157,274,155,275,127"/>
+<area shape="rect" id="Node000006" href="$physx_2PhysicsObject_8h_source.html" title=" " alt="" coords="392,157,516,184"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="323,112,425,156,420,157,322,118"/>
+<area shape="rect" id="Node000004" href="$Area_8cpp_source.html" title=" " alt="" coords="5,232,84,260"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="89,198,59,234,54,230,91,194"/>
+<area shape="rect" id="Node000007" href="$physx_2CharacterBody_8h_source.html" title=" " alt="" coords="108,232,235,260"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="387,190,223,234,221,229,391,187"/>
+<area shape="rect" id="Node000009" href="$DynamicBody_8h.html" title="Fully simulated rigid body." alt="" coords="259,232,382,260"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="420,191,345,234,343,229,415,193"/>
+<area shape="rect" id="Node000011" href="$KinematicBody_8h_source.html" title=" " alt="" coords="406,232,536,260"/>
+<area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="462,198,470,233,466,231,459,202"/>
+<area shape="rect" id="Node000013" href="$PhysicsObject_8cpp_source.html" title=" " alt="" coords="560,232,700,260"/>
+<area shape="poly" id="edge12_Node000006_Node000013" title=" " alt="" coords="500,188,601,232,596,232,499,193"/>
+<area shape="rect" id="Node000014" href="$StaticBody_8h_source.html" title=" " alt="" coords="723,232,824,260"/>
+<area shape="poly" id="edge13_Node000006_Node000014" title=" " alt="" coords="526,186,725,233,720,234,526,191"/>
+<area shape="rect" id="Node000008" href="$physx_2CharacterBody_8cpp_source.html" title=" " alt="" coords="85,308,228,336"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="168,274,161,309,157,306,163,277"/>
+<area shape="rect" id="Node000010" href="$DynamicBody_8cpp_source.html" title=" " alt="" coords="252,308,389,336"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="322,274,323,309,318,306,319,278"/>
+<area shape="rect" id="Node000012" href="$KinematicBody_8cpp_source.html" title=" " alt="" coords="413,308,558,336"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="478,273,485,309,481,306,475,277"/>
+<area shape="rect" id="Node000015" href="$StaticBody_8cpp_source.html" title=" " alt="" coords="716,308,832,336"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="776,274,776,309,772,306,772,278"/>
 </map>

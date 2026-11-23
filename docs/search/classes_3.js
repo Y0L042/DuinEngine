@@ -1,7 +1,7 @@
 var searchData=
 [
   ['dastestentry_0',['DasTestEntry',['../structDasTestEntry.html',1,'']]],
-  ['dataiterator_1',['dataiterator',['../classDataIterator.html',1,'DataIterator'],['../classduin_1_1JSONValue_1_1DataIterator.html',1,'duin::JSONValue::DataIterator']]],
+  ['dataiterator_1',['DataIterator',['../classDataIterator.html',1,'DataIterator'],['../classduin_1_1JSONValue_1_1DataIterator.html',1,'duin::JSONValue::DataIterator']]],
   ['datum_2',['Datum',['../classtoml_1_1Datum.html',1,'toml']]],
   ['ddvertex_3',['DdVertex',['../structDdVertex.html',1,'']]],
   ['debugcapsulecomponent_4',['DebugCapsuleComponent',['../structduin_1_1ECSComponent_1_1DebugCapsuleComponent.html',1,'duin::ECSComponent']]],
@@ -16,13 +16,14 @@ var searchData=
   ['debugshapevertex_13',['DebugShapeVertex',['../structDebugShapeVertex.html',1,'']]],
   ['debuguvvertex_14',['DebugUvVertex',['../structDebugUvVertex.html',1,'']]],
   ['debugvertex_15',['DebugVertex',['../structDebugVertex.html',1,'']]],
-  ['delegate_16',['delegate',['../structGraphEditor_1_1Delegate.html',1,'GraphEditor::Delegate'],['../structImCurveEdit_1_1Delegate.html',1,'ImCurveEdit::Delegate'],['../structImGradient_1_1Delegate.html',1,'ImGradient::Delegate']]],
-  ['deleteexternalref_17',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
-  ['diagnostic_18',['Diagnostic',['../structduin_1_1Diagnostic.html',1,'duin']]],
-  ['dircallbackwrapper_19',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
-  ['diskrendergeometry_20',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
-  ['diskrendershape_21',['DiskRenderShape',['../classduin_1_1DiskRenderShape.html',1,'duin']]],
-  ['dniostreamhandle_22',['DnIOStreamHandle',['../structDnIOStreamHandle.html',1,'']]],
-  ['dniostreamhandleannotation_23',['DnIOStreamHandleAnnotation',['../structDnIOStreamHandleAnnotation.html',1,'']]],
-  ['dynamicbody_24',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]]
+  ['debugwatchlist_16',['DebugWatchlist',['../classduin_1_1DebugWatchlist.html',1,'duin']]],
+  ['delegate_17',['Delegate',['../structGraphEditor_1_1Delegate.html',1,'GraphEditor::Delegate'],['../structImCurveEdit_1_1Delegate.html',1,'ImCurveEdit::Delegate'],['../structImGradient_1_1Delegate.html',1,'ImGradient::Delegate']]],
+  ['deleteexternalref_18',['DeleteExternalRef',['../structduin_1_1ECSTag_1_1DeleteExternalRef.html',1,'duin::ECSTag']]],
+  ['diagnostic_19',['Diagnostic',['../structduin_1_1Diagnostic.html',1,'duin']]],
+  ['dircallbackwrapper_20',['DirCallbackWrapper',['../structduin_1_1fs_1_1DirCallbackWrapper.html',1,'duin::fs']]],
+  ['diskrendergeometry_21',['DiskRenderGeometry',['../structduin_1_1DiskRenderGeometry.html',1,'duin']]],
+  ['diskrendershape_22',['DiskRenderShape',['../classduin_1_1DiskRenderShape.html',1,'duin']]],
+  ['dniostreamhandle_23',['DnIOStreamHandle',['../structDnIOStreamHandle.html',1,'']]],
+  ['dniostreamhandleannotation_24',['DnIOStreamHandleAnnotation',['../structDnIOStreamHandleAnnotation.html',1,'']]],
+  ['dynamicbody_25',['DynamicBody',['../classduin_1_1DynamicBody.html',1,'duin']]]
 ];

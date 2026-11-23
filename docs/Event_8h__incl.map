@@ -1,5 +1,5 @@
 <map id="Event.h" name="Event.h">
-<area shape="rect" id="Node000001" title="Event wrapper classes for SDL events." alt="" coords="43,5,114,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,152,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,31,81,65,76,65,76,31"/>
+<area shape="rect" id="Node000001" title="Event wrapper classes for SDL events." alt="" coords="43,5,114,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,152,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,32,81,66,76,65,77,36"/>
 </map>

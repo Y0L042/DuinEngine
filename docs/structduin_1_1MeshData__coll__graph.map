@@ -1,9 +1,9 @@
 <map id="duin::MeshData" name="duin::MeshData">
-<area shape="rect" id="Node000001" title=" " alt="" coords="239,93,363,119"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1RHIVertexLayout.html" title=" " alt="" coords="5,5,172,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,34,206,67,269,91,268,96,204,72,126,39"/>
-<area shape="rect" id="Node000003" href="$structduin_1_1RHIVertexBufferHandle.html" title=" " alt="" coords="197,5,405,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="303,45,303,93,298,93,298,45"/>
-<area shape="rect" id="Node000004" href="$structduin_1_1RHIIndexBufferHandle.html" title=" " alt="" coords="429,5,631,31"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="501,40,439,72,359,96,357,91,437,67,499,36"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="238,106,361,134"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1RHIVertexLayout.html" title=" " alt="" coords="5,5,172,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,39,201,80,262,105,257,106,199,84,122,44"/>
+<area shape="rect" id="Node000003" href="$structduin_1_1RHIVertexBufferHandle.html" title=" " alt="" coords="196,5,403,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="301,47,301,107,297,104,297,50"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1RHIIndexBufferHandle.html" title=" " alt="" coords="426,5,628,33"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="503,42,473,66,440,84,401,99,362,110,361,105,400,94,438,80,470,61,498,44"/>
 </map>

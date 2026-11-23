@@ -1,8 +1,8 @@
 <map id="duin::TriangleRenderGeometry" name="duin::TriangleRenderGeometry">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,168,225,193"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1RenderGeometry.html" title=" " alt="" coords="31,93,200,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,133,118,168,113,168,113,133"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="69,5,161,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="118,45,118,93,113,93,113,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="176,9,188,18,180,26,162,29,161,23,177,21,183,18,173,14"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,183,225,211"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1RenderGeometry.html" title=" " alt="" coords="31,106,199,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,147,117,184,113,182,113,151"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="69,5,161,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="116,46,118,106,112,105,114,51"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="176,9,187,19,179,28,162,31,160,26,177,24,182,19,176,15"/>
 </map>

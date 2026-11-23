@@ -1,6 +1,6 @@
 <map id="duin::ECSComponent::Velocity2D::Velocity2DImpl" name="duin::ECSComponent::Velocity2D::Velocity2DImpl">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,185,212,225"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1Vector2.html" title=" " alt="" coords="55,51,162,77"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,90,111,185,106,185,106,90"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="146,46,175,47,185,54,189,64,183,76,169,82,152,83,132,79,133,74,152,78,168,77,179,72,183,64,181,57,173,53,146,51"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,260,212,304"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1Vector2.html" title=" " alt="" coords="55,82,162,110"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,124,111,260,106,259,106,126"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="137,73,156,70,172,72,184,81,188,96,182,113,166,122,145,121,125,113,124,108,146,116,165,116,178,110,183,96,179,84,170,77,156,75,140,78"/>
 </map>

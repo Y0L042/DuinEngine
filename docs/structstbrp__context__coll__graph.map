@@ -1,6 +1,6 @@
 <map id="stbrp_context" name="stbrp_context">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,123,116,148"/>
-<area shape="rect" id="Node000002" href="$structstbrp__node.html" title=" " alt="" coords="13,5,108,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,44,63,123,58,123,58,44"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="123,7,131,11,135,18,127,28,109,32,108,26,124,24,129,18,127,14,121,11"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,151,116,178"/>
+<area shape="rect" id="Node000002" href="$structstbrp__node.html" title=" " alt="" coords="14,5,107,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,48,63,150,58,150,58,50"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="122,6,131,11,134,19,126,31,109,35,106,30,123,27,129,19,127,14,123,11"/>
 </map>

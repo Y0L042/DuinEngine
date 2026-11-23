@@ -1,3 +1,21 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structduin_1_1RenderModel.html" title=" " alt="" coords="5,5,149,31"/>
+<area shape="rect" id="Node000000" href="$structduin_1_1RenderGeometry.html" title=" " alt="" coords="5,213,174,241"/>
+<area shape="rect" id="Node000001" href="$structduin_1_1BoxRenderGeometry.html" title=" " alt="" coords="236,5,430,33"/>
+<area shape="poly" id="edge52_Node000000_Node000001" title=" " alt="" coords="101,198,119,162,146,120,180,79,220,44,247,32,244,36,223,48,183,82,150,123,124,165,106,200"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1CapsuleRenderGeometry.html" title=" " alt="" coords="223,57,443,85"/>
+<area shape="poly" id="edge53_Node000000_Node000002" title=" " alt="" coords="108,200,155,146,186,119,220,95,252,84,248,87,223,100,189,123,159,150,112,203"/>
+<area shape="rect" id="Node000003" href="$structduin_1_1ConeRenderGeometry.html" title=" " alt="" coords="232,109,434,137"/>
+<area shape="poly" id="edge54_Node000000_Node000003" title=" " alt="" coords="121,202,168,174,221,147,261,136,257,139,223,152,170,178,125,206"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1CylinderRenderGeometry.html" title=" " alt="" coords="222,161,444,189"/>
+<area shape="poly" id="edge55_Node000000_Node000004" title=" " alt="" coords="171,207,266,188,262,191,174,212"/>
+<area shape="rect" id="Node000005" href="$structduin_1_1DiskRenderGeometry.html" title=" " alt="" coords="234,213,432,241"/>
+<area shape="poly" id="edge56_Node000000_Node000005" title=" " alt="" coords="188,225,236,226,231,228,190,230"/>
+<area shape="rect" id="Node000006" href="$structduin_1_1PlaneRenderGeometry.html" title=" " alt="" coords="231,265,435,293"/>
+<area shape="poly" id="edge57_Node000000_Node000006" title=" " alt="" coords="172,242,267,263,262,266,173,247"/>
+<area shape="rect" id="Node000007" href="$structduin_1_1SphereRenderGeometry.html" title=" " alt="" coords="226,317,440,345"/>
+<area shape="poly" id="edge58_Node000000_Node000007" title=" " alt="" coords="123,247,170,276,223,302,262,316,256,317,221,307,168,281,123,253"/>
+<area shape="rect" id="Node000008" href="$structduin_1_1TriangleMeshRenderGeometry.html" title=" " alt="" coords="238,369,428,414"/>
+<area shape="poly" id="edge59_Node000000_Node000008" title=" " alt="" coords="111,251,160,304,190,331,223,354,248,368,243,368,220,359,187,335,156,307,110,256"/>
+<area shape="rect" id="Node000009" href="$structduin_1_1TriangleRenderGeometry.html" title=" " alt="" coords="223,437,442,465"/>
+<area shape="poly" id="edge60_Node000000_Node000009" title=" " alt="" coords="102,253,121,293,147,339,181,385,223,424,245,437,239,436,220,428,177,389,143,342,117,296,101,258"/>
 </map>

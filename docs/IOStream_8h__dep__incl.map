@@ -1,19 +1,19 @@
 <map id="IOStream.h" name="IOStream.h">
-<area shape="rect" id="Node000001" title="C++ RAII wrapper around SDL3&#39;s SDL_IOStream API." alt="" coords="265,5,359,31"/>
-<area shape="rect" id="Node000002" href="$FileModule_8h_source.html" title=" " alt="" coords="91,152,197,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,34,209,52,189,65,171,80,160,98,153,117,147,152,142,152,148,116,155,95,167,77,186,60,206,47,250,29"/>
-<area shape="rect" id="Node000005" href="$IOStream_8cpp.html" title="Implementation of the duin::IOStream RAII wrapper around SDL3&#39;s SDL_IOStream." alt="" coords="182,79,293,104"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="292,42,251,80,248,77,288,38"/>
-<area shape="rect" id="Node000006" href="$Module__DnFilesystem_8cpp_source.html" title=" " alt="" coords="398,152,591,177"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="374,27,424,45,449,59,470,77,482,95,490,116,497,151,492,152,485,117,478,98,466,80,446,63,422,50,372,32"/>
-<area shape="rect" id="Node000007" href="$VirtualIOStream_8h.html" title="Virtual&#45;path wrappers around duin::io::IOStream file operations." alt="" coords="317,79,456,104"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="336,38,376,77,373,80,332,42"/>
-<area shape="rect" id="Node000003" href="$GameScript_8cpp_source.html" title=" " alt="" coords="5,225,131,251"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="124,189,82,227,79,223,120,185"/>
-<area shape="rect" id="Node000004" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="155,225,288,251"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="168,185,210,223,207,227,165,189"/>
-<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="336,110,184,154,183,149,334,105"/>
-<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="417,109,478,150,476,154,414,114"/>
-<area shape="rect" id="Node000008" href="$VirtualIOStream_8cpp_source.html" title=" " alt="" coords="221,152,374,177"/>
-<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="363,115,314,154,310,150,360,110"/>
+<area shape="rect" id="Node000001" title="C++ RAII wrapper around SDL3&#39;s SDL_IOStream API." alt="" coords="262,5,356,33"/>
+<area shape="rect" id="Node000002" href="$FileModule_8h_source.html" title=" " alt="" coords="91,157,196,184"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="245,36,206,55,187,67,171,83,160,100,152,120,146,157,141,155,147,119,155,98,167,79,184,63,204,50,249,33"/>
+<area shape="rect" id="Node000005" href="$IOStream_8cpp.html" title="Implementation of the duin::IOStream RAII wrapper around SDL3&#39;s SDL_IOStream." alt="" coords="181,81,290,109"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="287,43,250,83,247,79,283,46"/>
+<area shape="rect" id="Node000006" href="$Module__DnFilesystem_8cpp_source.html" title=" " alt="" coords="395,157,588,184"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="371,28,422,47,446,61,467,79,479,98,487,119,493,157,489,155,482,120,475,100,463,83,443,65,420,52,371,34"/>
+<area shape="rect" id="Node000007" href="$VirtualIOStream_8h.html" title="Virtual&#45;path wrappers around duin::io::IOStream file operations." alt="" coords="315,81,452,109"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="334,42,373,81,368,80,333,47"/>
+<area shape="rect" id="Node000003" href="$GameScript_8cpp_source.html" title=" " alt="" coords="5,232,130,260"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,195,83,234,79,230,117,196"/>
+<area shape="rect" id="Node000004" href="$SceneBuilder_8cpp_source.html" title=" " alt="" coords="153,232,286,260"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="169,193,209,232,203,232,167,198"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="324,115,187,159,186,154,328,112"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="416,115,475,156,470,156,415,120"/>
+<area shape="rect" id="Node000008" href="$VirtualIOStream_8cpp_source.html" title=" " alt="" coords="219,157,372,184"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="359,118,313,158,310,154,354,120"/>
 </map>

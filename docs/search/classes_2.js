@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['camera_0',['camera',['../classduin_1_1Camera.html',1,'duin::Camera'],['../structCamera.html',1,'Camera']]],
+  ['camera_0',['Camera',['../structCamera.html',1,'Camera'],['../classduin_1_1Camera.html',1,'duin::Camera']]],
   ['cameraimpl_1',['CameraImpl',['../structduin_1_1CameraImpl.html',1,'duin']]],
   ['cameraisactive_2',['CameraIsActive',['../structduin_1_1ECSTag_1_1CameraIsActive.html',1,'duin::ECSTag']]],
   ['capsulegeometry_3',['CapsuleGeometry',['../classduin_1_1CapsuleGeometry.html',1,'duin']]],
@@ -18,7 +18,7 @@ var searchData=
   ['conerendergeometry_15',['ConeRenderGeometry',['../structduin_1_1ConeRenderGeometry.html',1,'duin']]],
   ['conerendershape_16',['ConeRenderShape',['../classduin_1_1ConeRenderShape.html',1,'duin']]],
   ['configvalue_17',['ConfigValue',['../classduin_1_1ConfigValue.html',1,'duin']]],
-  ['constdataiterator_18',['constdataiterator',['../classConstDataIterator.html',1,'ConstDataIterator'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html',1,'duin::JSONValue::ConstDataIterator']]],
+  ['constdataiterator_18',['ConstDataIterator',['../classConstDataIterator.html',1,'ConstDataIterator'],['../classduin_1_1JSONValue_1_1ConstDataIterator.html',1,'duin::JSONValue::ConstDataIterator']]],
   ['context_19',['Context',['../structIMGUIZMO__NAMESPACE_1_1Context.html',1,'IMGUIZMO_NAMESPACE']]],
   ['convexmeshgeometry_20',['ConvexMeshGeometry',['../classduin_1_1ConvexMeshGeometry.html',1,'duin']]],
   ['createexternalref_21',['CreateExternalRef',['../structduin_1_1ECSTag_1_1CreateExternalRef.html',1,'duin::ECSTag']]],

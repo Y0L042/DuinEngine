@@ -1,13 +1,13 @@
 <map id="SignalConnections.h" name="SignalConnections.h">
-<area shape="rect" id="Node000001" title="Bundle of signal connection UUIDs for lifecycle events." alt="" coords="115,5,270,31"/>
-<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="107,79,278,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,31,195,65,190,65,190,31"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,92,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="171,106,86,148,83,143,168,102"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="117,152,183,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="188,106,166,142,162,139,183,103"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="207,152,266,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="202,103,225,139,220,142,198,106"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="291,152,353,177"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="215,102,290,143,287,147,212,106"/>
+<area shape="rect" id="Node000001" title="Bundle of signal connection UUIDs for lifecycle events." alt="" coords="114,5,268,33"/>
+<area shape="rect" id="Node000002" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="106,81,276,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,31,194,66,189,64,190,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,157,92,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,110,88,152,86,147,163,109"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="116,157,181,184"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="186,108,165,145,162,141,181,111"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="205,157,263,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="200,107,221,144,216,143,198,112"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="287,157,349,184"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="215,107,285,149,280,149,213,112"/>
 </map>

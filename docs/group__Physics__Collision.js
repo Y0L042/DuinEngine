@@ -23,5 +23,5 @@ var group__Physics__Collision =
       [ "restitutionCoeff", "classduin_1_1PhysicsMaterial.html#abb612d607bd1f7bb9e9f1d7c0cf43598", null ],
       [ "staticFriction", "classduin_1_1PhysicsMaterial.html#a4f91757d1b5bf554c6d244d849dbacde", null ]
     ] ],
-    [ "duin::CollisionGeometryVariant", "group__Physics__Collision.html#ga4408f3577d4052de176268bc5b7f3b53", null ]
+    [ "duin::CollisionGeometryVariant", "group__Physics__Collision.html#ga59c656805771e23035fbda3f8c59da7e", null ]
 ];

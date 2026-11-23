@@ -1,17 +1,17 @@
 <map id="duin::RenderState" name="duin::RenderState">
-<area shape="rect" id="Node000001" title="Current render configuration." alt="" coords="321,196,459,221"/>
-<area shape="rect" id="Node000002" href="$structduin_1_1RenderTexture.html" title="Offscreen render target." alt="" coords="198,93,350,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="300,126,379,194,375,198,296,130"/>
-<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="5,5,97,31"/>
-<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="63,42,84,81,98,100,116,117,165,147,218,170,272,186,321,196,320,201,271,191,216,175,162,152,112,121,94,104,79,84,58,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="95,33,245,91,243,96,93,38"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="112,9,124,18,116,26,98,29,97,23,113,21,119,18,109,14"/>
-<area shape="rect" id="Node000004" href="$structduin_1_1RHITextureHandle.html" title=" " alt="" coords="203,5,377,31"/>
-<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="288,45,279,93,274,92,283,44"/>
-<area shape="rect" id="Node000005" href="$structduin_1_1RHIFrameBufferHandle.html" title=" " alt="" coords="401,5,608,31"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="462,38,306,96,304,91,460,33"/>
-<area shape="rect" id="Node000006" href="$classduin_1_1Camera.html" title="3D camera with position, target, and orientation." alt="" coords="374,93,483,119"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="422,132,397,197,392,195,417,130"/>
-<area shape="rect" id="Node000007" href="$structduin_1_1Matrix.html" title=" " alt="" coords="508,93,608,119"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="536,130,473,174,422,198,420,193,470,170,533,125"/>
+<area shape="rect" id="Node000001" title="Current render configuration." alt="" coords="321,229,458,257"/>
+<area shape="rect" id="Node000002" href="$structduin_1_1RenderTexture.html" title="Offscreen render target." alt="" coords="201,106,352,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="298,143,353,203,378,229,373,228,349,207,296,148"/>
+<area shape="rect" id="Node000003" href="$classduin_1_1UUID.html" title="A 64&#45;bit universally unique identifier." alt="" coords="5,5,97,33"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="60,45,83,90,97,112,115,132,164,166,218,193,272,212,323,229,318,229,270,218,216,198,161,171,112,136,93,116,78,93,60,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="93,37,190,80,247,105,242,106,188,84,93,42"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="112,9,123,19,115,28,99,31,96,26,113,24,118,19,113,14"/>
+<area shape="rect" id="Node000004" href="$structduin_1_1RHITextureHandle.html" title=" " alt="" coords="205,5,380,33"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="290,46,281,107,276,104,286,50"/>
+<area shape="rect" id="Node000005" href="$structduin_1_1RHIFrameBufferHandle.html" title=" " alt="" coords="404,5,610,33"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="460,41,308,108,306,103,465,38"/>
+<area shape="rect" id="Node000006" href="$classduin_1_1Camera.html" title="3D camera with position, target, and orientation." alt="" coords="376,106,484,134"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="423,147,396,230,392,227,418,150"/>
+<area shape="rect" id="Node000007" href="$structduin_1_1Matrix.html" title=" " alt="" coords="508,106,607,134"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="541,145,514,178,480,207,433,231,431,226,478,203,510,174,537,147"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="SpriteT&lt; MaxHandlesT, TextureSizeT &gt;" name="SpriteT&lt; MaxHandlesT, TextureSizeT &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="22,93,198,133"/>
-<area shape="rect" id="Node000002" href="$structPack2D.html" title=" " alt="" coords="5,5,76,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,40,98,92,94,95,55,43"/>
-<area shape="rect" id="Node000003" href="$classRectPack2DT.html" title=" " alt="" coords="100,5,261,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="166,43,126,95,122,92,162,40"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="22,106,197,151"/>
+<area shape="rect" id="Node000002" href="$structPack2D.html" title=" " alt="" coords="5,5,75,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="58,44,98,105,93,106,55,48"/>
+<area shape="rect" id="Node000003" href="$classRectPack2DT.html" title=" " alt="" coords="98,5,259,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="166,45,145,83,128,107,124,103,140,81,162,48"/>
 </map>
