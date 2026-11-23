@@ -4,6 +4,7 @@
 #include "Script.h"
 #include <string>
 #include <memory>
+#include <atomic>
 #include "external/FileWatch.h"
 
 namespace duin
@@ -44,6 +45,7 @@ class GameScript : public Script, public GameObject
     bool haltOnCompilationFail = false;
     bool queueHotCompileFlag = false;
     float hotCompileFileChangeCooldownTimer = -999.999f;
+    std::atomic<bool> fileChangePending{false};
     std::unique_ptr<filewatch::FileWatch<std::wstring>> directoryWatch;
 
     int64_t scriptLastModified = 0;
@@ -68,6 +70,8 @@ class GameScript : public Script, public GameObject
     das::Func fnGameDraw;
     das::Func fnGameDrawUI;
 
+    void StartDirectoryWatch();
+    void StopDirectoryWatch();
     void ClearScriptGameObjects();
     void RestartSGORecurse(std::shared_ptr<GameObject> child);
 };

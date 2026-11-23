@@ -2,6 +2,8 @@
 #include "GameScript.h"
 #include "Duin/IO/FileModule.h"
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
+#include <algorithm>
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <regex>
@@ -108,6 +110,15 @@ void duin::GameScript::EnableHotCompile(bool enable, bool halt)
 {
     hotCompileEnabled = enable;
     haltOnCompilationFail = halt;
+    if (enable)
+    {
+        if (!directoryWatch)
+            StartDirectoryWatch();
+    }
+    else
+    {
+        StopDirectoryWatch();
+    }
 }
 
 bool duin::GameScript::IsHotCompileEnabled()
@@ -177,14 +188,49 @@ void duin::GameScript::ResetScript()
 
 void duin::GameScript::Init()
 {
+    if (hotCompileEnabled && !directoryWatch)
+        StartDirectoryWatch();
+}
+
+void duin::GameScript::StartDirectoryWatch()
+{
     std::string path = duin::fs::MapVirtualToSystemPath("bin://");
     std::wregex wrgx(L".*\\.das$");
     std::wstring wpath(path.begin(), path.end());
     directoryWatch = std::make_unique<filewatch::FileWatch<std::wstring>>(
-        wpath, wrgx, [this](const std::wstring &path, const filewatch::Event change_type) {
-            // queueHotCompileFlag = true;
-            hotCompileFileChangeCooldownTimer = HOT_COMPILE_FILE_CHANGE_COOLDOWN;
+        wpath, wrgx, [this](const std::wstring &changedPath, const filewatch::Event changeType) {
+            const char *eventName = nullptr;
+            switch (changeType)
+            {
+            case filewatch::Event::modified:
+                eventName = "modified";
+                break;
+            case filewatch::Event::added:
+                eventName = "added";
+                break;
+            case filewatch::Event::renamed_new:
+                eventName = "renamed";
+                break;
+            default:
+                return;
+            }
+
+            std::wstring normalized = L"/" + changedPath;
+            std::replace(normalized.begin(), normalized.end(), L'\\', L'/');
+            if (normalized.find(L"/daslib/") != std::wstring::npos)
+                return;
+
+            const auto u8Path = std::filesystem::path(changedPath).u8string();
+            const std::string utf8Path(reinterpret_cast<const char *>(u8Path.data()), u8Path.size());
+            DN_CORE_INFO("Hot compile: change detected in {} ({})", utf8Path, eventName);
+            fileChangePending.store(true);
         });
+}
+
+void duin::GameScript::StopDirectoryWatch()
+{
+    directoryWatch.reset();
+    fileChangePending.store(false);
 }
 
 void duin::GameScript::Ready_()
@@ -242,33 +288,38 @@ void duin::GameScript::Update(double delta)
 
     // Only hot recompile if it has been X seconds since last file change (with no further changes).
     // Timer then disabled to prevent continual recompilation, only reset when file is changed again.
-    float cooldownTimerPrev = hotCompileFileChangeCooldownTimer;
-    if (hotCompileFileChangeCooldownTimer > 0.0f)
+    if (hotCompileEnabled)
     {
-        hotCompileFileChangeCooldownTimer -= static_cast<float>(delta);
-    }
-    bool cooldownReachedZero =
-        (hotCompileFileChangeCooldownTimer <= 0.0f) && ((hotCompileFileChangeCooldownTimer * cooldownTimerPrev) < 0.0f);
-    if (cooldownReachedZero)
-    {
-        queueHotCompileFlag = true;
-        hotCompileFileChangeCooldownTimer = -999.999f;
-    }
-
-    if (queueHotCompileFlag)
-    {
-        queueHotCompileFlag = false;
-        if (hotCompileEnabled)
+        if (fileChangePending.exchange(false))
         {
+            hotCompileFileChangeCooldownTimer = HOT_COMPILE_FILE_CHANGE_COOLDOWN;
+        }
+
+        float cooldownTimerPrev = hotCompileFileChangeCooldownTimer;
+        if (hotCompileFileChangeCooldownTimer > 0.0f)
+        {
+            hotCompileFileChangeCooldownTimer -= static_cast<float>(delta);
+        }
+        bool cooldownReachedZero = (hotCompileFileChangeCooldownTimer <= 0.0f) &&
+                                   ((hotCompileFileChangeCooldownTimer * cooldownTimerPrev) < 0.0f);
+        if (cooldownReachedZero)
+        {
+            queueHotCompileFlag = true;
+            hotCompileFileChangeCooldownTimer = -999.999f;
+        }
+
+        if (queueHotCompileFlag)
+        {
+            queueHotCompileFlag = false;
             duin::fs::PathInfo pInfo;
             if (duin::vfs::GetPathInfo("bin://" + scriptPath, &pInfo))
             {
                 scriptLastModified = pInfo.modifyTime;
             }
-        }
-        if (!CompileAndSimulate())
-        {
-            DN_CORE_WARN("Compilation of {} failed! Continuing with previous version.", "bin://" + scriptPath);
+            if (!CompileAndSimulate())
+            {
+                DN_CORE_WARN("Compilation of {} failed! Continuing with previous version.", "bin://" + scriptPath);
+            }
         }
     }
 
