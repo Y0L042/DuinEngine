@@ -267,7 +267,6 @@ bool duin::Script::ValidateCompileInputs()
 
 das::FileAccessPtr duin::Script::BuildFileAccess(std::string &error)
 {
-    // Set optional project file, script root, configure policies.
     if (!projectFile.empty())
     {
         das::ModuleGroup projectLibGroup;
@@ -368,7 +367,6 @@ std::string duin::Script::SafeErrorReport(const das::Error &err)
     oss << "Extra: " << err.extra << "\n";
     oss << "Fixme: " << err.fixme << "\n";
 
-    // Guard against null fileInfo
     if (err.at.fileInfo != nullptr)
     {
         try
@@ -401,7 +399,6 @@ duin::Diagnostic duin::Script::MakeDiagnostic(const das::Error &err)
     d.line = (int)err.at.line;
     d.column = (int)err.at.column;
 
-    // Guard against null fileInfo, mirroring SafeErrorReport.
     if (err.at.fileInfo != nullptr)
     {
         d.file = err.at.fileInfo->name.c_str();
@@ -638,8 +635,6 @@ std::expected<void, std::string> duin::VerifyFunction(das::Context *ctx, das::Fu
     }
 
     // TODO This is a temporary workaround, as it is specific to MSVC++ debug heap fill patterns.
-    // Reject Windows debug-heap fill pattern (0xDDDDDDDDDDDDDDDD) so we never
-    // dereference a pointer into freed memory.
     constexpr uintptr_t kFreedFill = 0xDDDDDDDDDDDDDDDDull;
     if (reinterpret_cast<uintptr_t>(fn.PTR) == kFreedFill)
     {
@@ -648,8 +643,6 @@ std::expected<void, std::string> duin::VerifyFunction(das::Context *ctx, das::Fu
             "likely destroyed.");
     }
 
-    // Pointer-range check: valid handles live inside the current context's
-    // contiguous function table.
     const das::SimFunction *begin = ctx->getFunction(0);
     const das::SimFunction *end = begin + ctx->getTotalFunctions();
     if (fn.PTR < begin || fn.PTR >= end)
