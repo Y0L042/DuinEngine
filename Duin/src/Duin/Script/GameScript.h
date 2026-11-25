@@ -35,6 +35,7 @@ class GameScript : public Script, public GameObject
     void PhysicsUpdate(double delta) override;
     void Draw() override;
     void DrawUI() override;
+    void PostFrame();
 
     void SetHotCompileFileChangeCooldown(float val);
 
@@ -74,5 +75,6 @@ class GameScript : public Script, public GameObject
     void StopDirectoryWatch();
     void ClearScriptGameObjects();
     void RestartSGORecurse(std::shared_ptr<GameObject> child);
+    std::shared_ptr<ScopedConnection> postFrameConnection;
 };
 } // namespace duin

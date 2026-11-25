@@ -1,5 +1,6 @@
 #include "dnpch.h"
 #include "GameScript.h"
+#include "Duin/Core/Application.h"
 #include "Duin/IO/FileModule.h"
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
 #include <algorithm>
@@ -77,6 +78,8 @@ void duin::GameScript::SetGameFunctions()
             DN_CORE_WARN("game_draw_ui: signature mismatch — expected void()");
         }
     }
+
+    postFrameConnection = QueuePostFrameCallback([&]() { PostFrame(); });
 }
 
 void duin::GameScript::ResetGameFunctions()
@@ -446,6 +449,11 @@ void duin::GameScript::DrawUI()
             muteDrawUIWarning = true;
         }
     }
+}
+
+void duin::GameScript::PostFrame()
+{
+    context->CollectHeap();
 }
 
 void duin::GameScript::SetHotCompileFileChangeCooldown(float val)

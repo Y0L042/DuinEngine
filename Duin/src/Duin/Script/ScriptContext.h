@@ -16,26 +16,20 @@ class ScriptContext : public das::Context
   public:
     using das::Context::Context;
 
-    ~ScriptContext()
-    {
-        Clear();
-    }
+    ~ScriptContext();
 
-    void TransferMemoryTo(ScriptContext &other)
-    {
-        other.scriptMemory = this->scriptMemory;
-        other.rootGameObject = this->rootGameObject;
-    }
+    void TransferMemoryTo(ScriptContext &other);
+    void Clear();
 
-    void Clear()
-    {
-        scriptMemory.reset();
+    /*
+     *  Only collect heap when NO daslang code is being executed!
+     */
+    void CollectHeap();
 
-        rootGameObject = nullptr;
-    }
+    void Restart();
 
     std::shared_ptr<ScriptMemory> scriptMemory;
-    GameObject* rootGameObject;
+    GameObject* rootGameObject = nullptr;
 };
 
 } // namespace duin
