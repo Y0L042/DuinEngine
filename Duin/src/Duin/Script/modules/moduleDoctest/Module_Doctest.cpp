@@ -1,3 +1,4 @@
+#include "dnpch.h"
 #include "Module_Doctest.h"
 
 //#include <daScript/ast/ast_typefactory_bind.h>

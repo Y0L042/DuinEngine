@@ -1,3 +1,4 @@
+#include "dnpch.h"
 #include "Module_DnLog.h"
 
 //#include <daScript/ast/ast_typefactory_bind.h>

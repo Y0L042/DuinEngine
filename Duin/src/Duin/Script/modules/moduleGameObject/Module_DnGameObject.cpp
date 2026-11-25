@@ -1,3 +1,4 @@
+#include "dnpch.h"
 #include "Module_DnGameObject.h"
 #include <daScript/ast/ast.h>
 #include <daScript/simulate/simulate.h>
