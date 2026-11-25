@@ -1,11 +1,7 @@
 <map id="UUID.h" name="UUID.h">
-<area shape="rect" id="Node000001" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="158,5,225,33"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,92,109"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,34,88,76,86,71,163,33"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="116,81,181,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="186,32,165,70,162,66,181,35"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="205,81,263,109"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="200,31,221,68,216,67,198,36"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="287,81,349,109"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="215,31,285,73,280,73,213,36"/>
+<area shape="rect" id="Node000001" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="47,5,114,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,71,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,32,55,69,51,66,71,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="94,81,152,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="90,31,111,68,106,68,87,36"/>
 </map>

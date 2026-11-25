@@ -1,51 +1,48 @@
 <map id="DynamicBody.h" name="DynamicBody.h">
-<area shape="rect" id="Node000001" title="Fully simulated rigid body." alt="" coords="314,5,437,33"/>
-<area shape="rect" id="Node000002" href="$physx_2PhysicsObject_8h_source.html" title=" " alt="" coords="163,81,287,109"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="346,35,267,76,264,72,351,32"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="5,232,82,260"/>
-<area shape="poly" id="edge29_Node000001_Node000010" title=" " alt="" coords="312,28,233,47,191,62,152,83,118,113,90,149,70,187,55,219,51,217,65,184,86,147,114,109,149,79,189,57,232,42,316,25"/>
-<area shape="rect" id="Node000011" href="$DuinMaths_8h_source.html" title=" " alt="" coords="445,232,660,260"/>
-<area shape="poly" id="edge28_Node000001_Node000011" title=" " alt="" coords="369,31,355,64,342,103,339,145,343,165,352,183,368,195,394,207,464,228,459,229,393,212,366,200,348,186,338,167,333,146,337,102,351,62,366,36"/>
-<area shape="rect" id="Node000014" href="$physx_2CollisionShape_8h.html" title="Collision shape combining geometry and material." alt="" coords="672,81,802,109"/>
-<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="437,30,659,76,654,78,437,36"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="736,232,855,260"/>
-<area shape="poly" id="edge30_Node000001_Node000016" title=" " alt="" coords="437,21,574,33,740,57,820,74,891,96,947,123,967,138,982,155,989,173,986,188,977,202,961,213,919,229,871,239,870,234,918,224,959,208,973,198,982,186,983,173,977,158,963,142,944,127,889,101,819,80,739,62,573,38,437,27"/>
-<area shape="rect" id="Node000019" href="$physx_2PhysicsStructs_8h_source.html" title=" " alt="" coords="362,157,490,184"/>
-<area shape="poly" id="edge25_Node000001_Node000019" title=" " alt="" coords="381,31,419,142,414,141,378,35"/>
-<area shape="rect" id="Node000003" href="$CollisionObject_8h.html" title="Base interface for collision&#45;enabled physics objects." alt="" coords="102,157,233,184"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="216,107,189,146,185,143,213,111"/>
-<area shape="poly" id="edge11_Node000002_Node000011" title=" " alt="" coords="234,107,264,145,285,165,308,182,368,209,433,229,428,230,366,214,305,187,281,169,260,149,233,112"/>
+<area shape="rect" id="Node000001" title="Fully simulated rigid body." alt="" coords="429,5,551,33"/>
+<area shape="rect" id="Node000002" href="$physx_2PhysicsObject_8h_source.html" title=" " alt="" coords="277,81,402,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="461,35,381,76,379,72,466,32"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,232,82,260"/>
+<area shape="poly" id="edge27_Node000001_Node000008" title=" " alt="" coords="426,34,350,55,266,83,199,116,138,159,100,191,68,223,64,219,97,187,135,155,196,111,264,79,349,49,431,31"/>
+<area shape="rect" id="Node000009" href="$DuinMaths_8h_source.html" title=" " alt="" coords="445,232,660,260"/>
+<area shape="poly" id="edge26_Node000001_Node000009" title=" " alt="" coords="485,31,473,63,461,101,457,143,460,164,467,183,485,205,509,225,504,224,481,209,463,186,455,165,452,143,456,100,468,61,481,35"/>
+<area shape="rect" id="Node000012" href="$physx_2CollisionShape_8h.html" title="Collision shape combining geometry and material." alt="" coords="859,81,988,109"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="552,28,846,79,841,81,552,34"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="696,232,815,260"/>
+<area shape="poly" id="edge28_Node000001_Node000014" title=" " alt="" coords="504,31,573,98,669,182,725,224,719,223,666,186,570,102,502,36"/>
+<area shape="rect" id="Node000018" href="$physx_2PhysicsStructs_8h_source.html" title=" " alt="" coords="477,157,604,184"/>
+<area shape="poly" id="edge23_Node000001_Node000018" title=" " alt="" coords="496,31,534,142,529,141,493,35"/>
+<area shape="rect" id="Node000003" href="$CollisionObject_8h.html" title="Base interface for collision&#45;enabled physics objects." alt="" coords="148,157,280,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="315,111,251,151,248,147,319,108"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="349,106,381,144,422,182,461,206,503,226,497,226,459,210,419,186,377,147,348,112"/>
 <area shape="rect" id="Node000004" href="$UUID_8h.html" title="Defines the UUID class for generating and managing unique identifiers." alt="" coords="252,232,422,260"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="198,182,295,225,290,227,197,188"/>
-<area shape="rect" id="Node000009" href="$CollisionMeta_8h.html" title="Collision layer and mask type definitions." alt="" coords="106,232,229,260"/>
-<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="169,183,170,218,165,216,166,187"/>
-<area shape="poly" id="edge10_Node000003_Node000010" title=" " alt="" coords="144,187,80,226,77,222,147,183"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="270,308,356,336"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="335,259,324,295,320,291,330,262"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="163,308,228,336"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="314,260,235,303,233,298,309,261"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="380,308,438,336"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="351,258,388,297,383,296,349,263"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="690,308,752,336"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="422,258,542,279,675,305,677,308,672,308,674,311,541,284,421,263"/>
-<area shape="poly" id="edge9_Node000009_Node000006" title=" " alt="" coords="174,258,188,294,183,293,171,263"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="561,308,662,336"/>
-<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="564,258,594,297,589,295,562,263"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="470,308,537,336"/>
-<area shape="poly" id="edge13_Node000011_Node000013" title=" " alt="" coords="546,259,522,297,519,293,542,262"/>
-<area shape="poly" id="edge24_Node000014_Node000008" title=" " alt="" coords="802,93,869,97,935,111,961,123,979,139,987,160,982,185,965,215,942,240,914,260,885,278,823,302,768,316,767,311,821,297,882,273,911,256,938,236,960,212,977,183,982,160,975,142,958,127,933,116,869,103,802,98"/>
-<area shape="rect" id="Node000015" title=" " alt="" coords="514,157,581,184"/>
-<area shape="poly" id="edge15_Node000014_Node000015" title=" " alt="" coords="706,108,596,153,594,148,700,110"/>
-<area shape="poly" id="edge16_Node000014_Node000016" title=" " alt="" coords="746,107,771,156,791,219,786,216,766,158,744,112"/>
-<area shape="rect" id="Node000017" href="$physx_2PhysicsMaterial_8h.html" title="Physical material properties for collision." alt="" coords="831,157,968,184"/>
-<area shape="poly" id="edge17_Node000014_Node000017" title=" " alt="" coords="766,107,860,150,854,150,766,112"/>
-<area shape="rect" id="Node000018" href="$CollisionGeometry_8h_source.html" title=" " alt="" coords="605,157,757,184"/>
-<area shape="poly" id="edge20_Node000014_Node000018" title=" " alt="" coords="729,108,701,147,698,142,725,111"/>
-<area shape="poly" id="edge19_Node000017_Node000008" title=" " alt="" coords="900,183,892,222,883,243,869,262,847,281,821,296,768,314,767,309,818,291,844,276,866,258,878,241,887,221,896,187"/>
-<area shape="poly" id="edge18_Node000017_Node000016" title=" " alt="" coords="883,184,827,226,825,221,878,186"/>
-<area shape="poly" id="edge23_Node000018_Node000008" title=" " alt="" coords="686,182,716,294,711,292,683,187"/>
-<area shape="poly" id="edge21_Node000018_Node000011" title=" " alt="" coords="660,184,589,227,587,222,655,186"/>
-<area shape="poly" id="edge22_Node000018_Node000016" title=" " alt="" coords="702,182,765,224,760,223,701,187"/>
-<area shape="poly" id="edge26_Node000019_Node000011" title=" " alt="" coords="449,182,520,225,515,224,448,187"/>
-<area shape="poly" id="edge27_Node000019_Node000016" title=" " alt="" coords="491,182,723,229,718,231,490,187"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="237,182,305,224,299,225,236,188"/>
+<area shape="rect" id="Node000007" href="$CollisionMeta_8h.html" title="Collision layer and mask type definitions." alt="" coords="106,232,229,260"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="208,183,186,221,182,218,204,187"/>
+<area shape="poly" id="edge8_Node000003_Node000008" title=" " alt="" coords="182,187,89,228,86,224,185,183"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="178,308,243,336"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="317,260,247,303,244,298,312,261"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="308,308,366,336"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="339,259,339,294,335,291,335,262"/>
+<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="176,258,198,295,192,294,174,263"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="448,308,549,336"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="545,259,518,298,516,293,541,262"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="572,308,640,336"/>
+<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="564,258,590,296,585,294,561,263"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="855,157,922,184"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="919,108,903,145,900,140,915,111"/>
+<area shape="poly" id="edge14_Node000012_Node000014" title=" " alt="" coords="931,107,944,145,944,166,936,186,915,208,889,224,860,235,831,242,830,237,858,230,886,219,912,204,932,183,939,165,939,145,929,111"/>
+<area shape="rect" id="Node000015" href="$physx_2PhysicsMaterial_8h.html" title="Physical material properties for collision." alt="" coords="997,157,1133,184"/>
+<area shape="poly" id="edge15_Node000012_Node000015" title=" " alt="" coords="949,107,1029,149,1023,149,948,112"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="1034,232,1096,260"/>
+<area shape="poly" id="edge22_Node000012_Node000016" title=" " alt="" coords="989,102,1082,123,1122,137,1147,155,1153,175,1145,195,1128,212,1106,227,1104,222,1124,208,1140,192,1148,175,1143,158,1119,142,1081,128,989,108"/>
+<area shape="rect" id="Node000017" href="$CollisionGeometry_8h_source.html" title=" " alt="" coords="679,157,832,184"/>
+<area shape="poly" id="edge18_Node000012_Node000017" title=" " alt="" coords="896,108,800,153,798,148,891,110"/>
+<area shape="poly" id="edge16_Node000015_Node000014" title=" " alt="" coords="1012,185,826,231,825,226,1007,185"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="1067,183,1067,218,1063,215,1063,187"/>
+<area shape="poly" id="edge19_Node000017_Node000009" title=" " alt="" coords="722,184,604,229,603,224,717,186"/>
+<area shape="poly" id="edge20_Node000017_Node000014" title=" " alt="" coords="757,183,758,218,753,215,754,187"/>
+<area shape="poly" id="edge21_Node000017_Node000016" title=" " alt="" coords="811,182,1021,234,1016,234,811,188"/>
+<area shape="poly" id="edge24_Node000018_Node000009" title=" " alt="" coords="545,183,551,218,546,216,541,187"/>
+<area shape="poly" id="edge25_Node000018_Node000014" title=" " alt="" coords="580,182,705,227,700,227,579,188"/>
 </map>
