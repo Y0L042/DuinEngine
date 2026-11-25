@@ -6,6 +6,7 @@
 #include <Duin/Script/ScriptModules.h>
 #include <flecs_das.h>
 #include <external/imgui.h>
+#include <Duin/Core/Globals.h>
 
 #include <memory>
 

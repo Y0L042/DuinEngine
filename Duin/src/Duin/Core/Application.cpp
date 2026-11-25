@@ -1,4 +1,5 @@
 #include "dnpch.h"
+#include "Globals.h"
 #include "Application.h"
 
 #include "Duin/Core/Events/EventHandler.h"

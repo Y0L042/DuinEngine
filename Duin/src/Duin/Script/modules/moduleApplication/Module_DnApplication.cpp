@@ -4,6 +4,7 @@
 #include <daScript/daScriptBind.h>
 
 #include "Duin/Core/Application.h"
+#include "Duin/Core/Globals.h"
 #include "Duin/Core/Window/WindowCtx.h"
 #include "Duin/Core/Debug/DNLog.h"
 #include "Duin/Script/ScriptContext.h"

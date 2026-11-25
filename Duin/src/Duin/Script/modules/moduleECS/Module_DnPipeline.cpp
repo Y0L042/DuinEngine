@@ -4,7 +4,7 @@
 #include <daScript/daScript.h>
 #include <daScript/daScriptBind.h>
 
-#include "Duin/Core/Application.h"
+#include "Duin/Core/Globals.h"
 #include "Duin/ECS/Pipeline.h"
 #include "Duin/ECS/DECS/DECS.h"
 #include "Duin/Script/ScriptContext.h"

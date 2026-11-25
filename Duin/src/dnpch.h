@@ -25,6 +25,7 @@
 #include <external/imgui.h>
 
 #include <rapidjson/rapidjson.h>
+#include <daScript/daScript.h>
 #include <toml.hpp>
 #include <rfl.hpp>
 

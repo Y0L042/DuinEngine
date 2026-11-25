@@ -1,6 +1,6 @@
 #include "dnpch.h"
 #include "GameScript.h"
-#include "Duin/Core/Application.h"
+#include "Duin/Core/Globals.h"
 #include "Duin/IO/FileModule.h"
 #include "./modules/moduleGameObject/Module_DnGameObject.h"
 #include <algorithm>

@@ -313,10 +313,23 @@ das::FileAccessPtr duin::Script::BuildFileAccess(std::string &error)
 das::CodeOfPolicies duin::Script::BuildPolicies()
 {
     das::CodeOfPolicies policies;
-    policies.rtti = true;
+    policies.version_2_syntax = true;
+    policies.gen2_make_syntax = true;
+
     policies.log_compile_time = true; // total time at end
     // policies.log_total_compile_time = true;  // detailed breakdown per phase
     // policies.log_module_compile_time = true; // per-module: parse / infer passes / optimize / macros
+    
+    policies.rtti = true;
+
+    //policies.scoped_stack_allocator = true; // Leave off for debugging
+
+    policies.persistent_heap = true;
+    policies.log_gc_time = true;
+
+    #ifndef NDEBUG
+    //policies.track_allocations = true;
+    #endif
 
     if (jitEnabled != JitMode::NONE)
     {
@@ -460,6 +473,7 @@ bool duin::Script::SimulateContext()
         std::max(program->getContextStackSize(), 512 * 1024)); // For daslang debugger overhead
     context->scriptMemory = std::make_shared<ScriptMemory>();
 
+    program->options.emplace_back("gc", true); // force set garbage collection
     if (!program->simulate(*context.get(), tout))
     {
         DN_CORE_FATAL("Simulation failed!");

@@ -1,7 +1,7 @@
 #include "dnpch.h"
 #include "Camera.h"
 
-#include "Duin/Core/Application.h"
+#include "Duin/Core/Globals.h"
 #include "Duin/Core/Debug/DNLog.h"
 
 #include "RHI.h"
