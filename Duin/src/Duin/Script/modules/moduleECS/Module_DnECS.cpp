@@ -1,3 +1,4 @@
+#include "dnpch.h"
 #include "Module_DnECS.h"
 
 #include <daScript/daScript.h>
