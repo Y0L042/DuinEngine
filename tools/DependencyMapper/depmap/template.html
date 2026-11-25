@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dependency Mapper</title>
+<script src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --fg: #1d1d1f; --dim: #6e6e73; --line: #e2e2e0;
+  --hover: #efefec; --sel: #dde8ff; --accent: #2f6fe4;
+  --k-tu: #2f6fe4; --k-project: #1f9d6b; --k-external: #c07a12; --k-unresolved: #9a9aa0;
+  --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #18181a; --panel: #212124; --fg: #e8e8ea; --dim: #8e8e94; --line: #333337;
+    --hover: #2a2a2e; --sel: #24365a; --accent: #6b9bff;
+    --k-tu: #6b9bff; --k-project: #3ec48d; --k-external: #e0a040; --k-unresolved: #7a7a80;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--fg); display: grid; grid-template-columns: 340px 1fr; grid-template-rows: auto 1fr; height: 100vh; }
+header { grid-column: 1 / 3; display: flex; align-items: center; gap: 16px; padding: 8px 14px; border-bottom: 1px solid var(--line); background: var(--panel); }
+header h1 { font-size: 14px; margin: 0; font-weight: 600; }
+header .meta { color: var(--dim); }
+header .legend { margin-left: auto; display: flex; gap: 12px; color: var(--dim); }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; flex: none; }
+.k-tu { background: var(--k-tu); } .k-project { background: var(--k-project); } .k-external { background: var(--k-external); } .k-unresolved { background: var(--k-unresolved); }
+aside { border-right: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; }
+.controls { padding: 10px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+.seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { flex: 1; border: 0; background: transparent; color: var(--fg); padding: 5px 0; cursor: pointer; font: inherit; }
+.seg button.on { background: var(--accent); color: #fff; }
+input[type=search] { width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); font: inherit; }
+.row-flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; color: var(--dim); }
+.row-flex label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+select { font: inherit; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: 2px 4px; }
+#list { overflow: auto; flex: 1; min-height: 0; }
+.item { padding: 5px 10px; cursor: pointer; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid transparent; }
+.item:hover { background: var(--hover); }
+.item.sel { background: var(--sel); }
+.item .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item .name small { color: var(--dim); }
+.item .num { font: 11px var(--mono); color: var(--dim); text-align: right; white-space: nowrap; }
+.item.all { font-weight: 600; border-bottom: 1px solid var(--line); }
+main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.tabs { display: flex; gap: 2px; padding: 6px 10px 0; border-bottom: 1px solid var(--line); background: var(--panel); align-items: flex-end; }
+.tabs button { border: 0; background: transparent; color: var(--dim); padding: 6px 12px; cursor: pointer; font: inherit; border-bottom: 2px solid transparent; }
+.tabs button.on { color: var(--fg); border-bottom-color: var(--accent); }
+.tabs .title { margin-left: auto; padding: 6px 4px; color: var(--dim); font: 12px var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 55%; }
+.view { flex: 1; min-height: 0; overflow: auto; padding: 12px 16px; display: none; }
+.view.on { display: block; }
+#v-graph { padding: 0; position: relative; }
+#v-graph.on { display: flex; flex-direction: column; }
+#cy { flex: 1; min-height: 0; }
+.graph-bar { padding: 6px 12px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: center; color: var(--dim); }
+.graph-bar button, .tree-bar button { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--fg); border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+.tree-bar { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; color: var(--dim); }
+.tree { font: 12px/1.6 var(--mono); }
+.tn { display: flex; align-items: center; gap: 4px; white-space: nowrap; padding-left: calc(var(--d) * 16px); }
+.tn:hover { background: var(--hover); }
+.caret { width: 14px; text-align: center; color: var(--dim); cursor: pointer; user-select: none; flex: none; }
+.tn .fn { cursor: pointer; }
+.tn .fn b { font-weight: 600; }
+.tn .dir { color: var(--dim); }
+.tn .ln, .tn .cnt { color: var(--dim); font-size: 11px; }
+.tn .cnt { margin-left: 6px; }
+.tn.dup { opacity: .45; }
+.tn.focus { background: var(--sel); }
+h2 { font-size: 13px; margin: 18px 0 6px; text-transform: uppercase; letter-spacing: .04em; color: var(--dim); font-weight: 600; }
+h2:first-child { margin-top: 0; }
+table { border-collapse: collapse; width: 100%; font: 12px var(--mono); }
+td, th { text-align: left; padding: 3px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--dim); font-weight: 500; font-family: system-ui, sans-serif; }
+td.n { text-align: right; width: 1%; white-space: nowrap; }
+.link { cursor: pointer; color: var(--accent); }
+.link:hover { text-decoration: underline; }
+.chain { font: 12px var(--mono); display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.chain .arr { color: var(--dim); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 8px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.card .v { font-size: 20px; font-weight: 600; }
+.card .l { color: var(--dim); font-size: 12px; }
+.empty { color: var(--dim); padding: 20px 0; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 1200px) { .two { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Dependency Mapper</h1>
+  <span class="meta" id="meta"></span>
+  <span class="legend">
+    <span><span class="dot k-tu"></span>translation unit</span>
+    <span><span class="dot k-project"></span>project header</span>
+    <span><span class="dot k-external"></span>external</span>
+    <span><span class="dot k-unresolved"></span>unresolved / system</span>
+  </span>
+</header>
+<aside>
+  <div class="controls">
+    <div class="seg" id="listmode">
+      <button data-m="tu" class="on">Translation units</button>
+      <button data-m="hdr">Headers</button>
+    </div>
+    <input type="search" id="search" placeholder="Filter by path…">
+    <div class="row-flex">
+      <span>Sort</span>
+      <select id="sort"></select>
+    </div>
+    <div class="row-flex">
+      <label><input type="checkbox" id="f-ext">External</label>
+      <label><input type="checkbox" id="f-unres">Unresolved</label>
+      <label><input type="checkbox" id="f-pch" checked>PCH</label>
+    </div>
+  </div>
+  <div id="list"></div>
+</aside>
+<main>
+  <div class="tabs" id="tabs">
+    <button data-t="tree" class="on">Tree</button>
+    <button data-t="graph">Graph</button>
+    <button data-t="details">Details</button>
+    <button data-t="stats">Stats</button>
+    <span class="title" id="title"></span>
+  </div>
+  <div class="view on" id="v-tree"></div>
+  <div class="view" id="v-graph">
+    <div class="graph-bar">
+      <span id="graph-info"></span>
+      <label><input type="checkbox" id="g-tus">Show TUs in “all” graph</label>
+      <button id="g-fit">Fit</button>
+      <button id="g-layout">Re-layout</button>
+    </div>
+    <div id="cy"></div>
+  </div>
+  <div class="view" id="v-details"></div>
+  <div class="view" id="v-stats"></div>
+</main>
+<script type="application/json" id="data">/*__DATA__*/null</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const N = D.nodes;
+const E = {};
+for (const k in D.edges) E[+k] = D.edges[k];
+const IN = N.map(() => []);
+for (const k in E) for (const [c, line] of E[k]) IN[c].push([+k, line]);
+const UNIT = new Map(D.units.map(u => [u.n, u]));
+const pchName = (D.pch || '').toLowerCase();
+const isPch = i => pchName && !N[i].tu && N[i].id.toLowerCase().split('/').pop() === pchName;
+const kindOf = i => N[i].tu ? 'tu' : N[i].k;
+const base = id => id.split('/').pop();
+const dir = id => { const p = id.split('/'); p.pop(); return p.length ? p.join('/') + '/' : ''; };
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => n.toLocaleString();
+
+const S = { list: 'tu', tab: 'tree', tu: -1, sel: -1, q: '', ext: false, unres: false, pch: true, sort: 'name' };
+
+function visible(i) {
+  const k = N[i].k;
+  if (!S.ext && k === 'external' && !N[i].tu) return false;
+  if (!S.unres && k === 'unresolved') return false;
+  if (!S.pch && isPch(i)) return false;
+  return true;
+}
+
+function nodeLabel(i) {
+  const id = N[i].id;
+  return `<span class="dot k-${kindOf(i)}"></span><span class="link" data-sel="${i}">${esc(base(id))}</span>`;
+}
+
+const SORTS = {
+  tu: [['name', 'Name'], ['count', 'Transitive headers'], ['lines', 'Transitive lines']],
+  hdr: [['name', 'Name'], ['tus', 'TUs reaching it'], ['in', 'Direct includers'], ['lines', 'Lines']],
+};
+
+function renderSort() {
+  const sel = document.getElementById('sort');
+  sel.innerHTML = SORTS[S.list].map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+  if (!SORTS[S.list].some(([v]) => v === S.sort)) S.sort = 'name';
+  sel.value = S.sort;
+}
+
+function renderList() {
+  const el = document.getElementById('list');
+  const q = S.q.toLowerCase();
+  let rows;
+  if (S.list === 'tu') {
+    rows = D.units.filter(u => N[u.n].id.toLowerCase().includes(q));
+    const key = { name: u => N[u.n].id, count: u => -u.c, lines: u => -u.l }[S.sort];
+    rows.sort((a, b) => { const x = key(a), y = key(b); return x < y ? -1 : x > y ? 1 : 0; });
+    el.innerHTML = `<div class="item all ${S.tu === -1 ? 'sel' : ''}" data-i="-1"><span class="name">All translation units</span><span class="num">${D.units.length}</span></div>` +
+      rows.map(u => `<div class="item ${u.n === S.tu ? 'sel' : ''}" data-i="${u.n}"><span class="dot k-tu"></span><span class="name" title="${esc(N[u.n].id)}">${esc(base(N[u.n].id))} <small>${esc(dir(N[u.n].id))}</small></span><span class="num" title="transitive headers (incl. external and system) · transitive lines">${u.c} h · ${fmt(u.l)} L</span></div>`).join('');
+  } else {
+    rows = N.map((n, i) => i).filter(i => !N[i].tu && visible(i) && N[i].id.toLowerCase().includes(q));
+    const key = { name: i => N[i].id, tus: i => -N[i].r.length, in: i => -IN[i].length, lines: i => -N[i].l }[S.sort];
+    rows.sort((a, b) => { const x = key(a), y = key(b); return x < y ? -1 : x > y ? 1 : 0; });
+    el.innerHTML = rows.map(i => `<div class="item ${i === S.sel ? 'sel' : ''}" data-i="${i}"><span class="dot k-${kindOf(i)}"></span><span class="name" title="${esc(N[i].id)}">${esc(base(N[i].id))} <small>${esc(dir(N[i].id))}</small></span><span class="num">${N[i].r.length} TU</span></div>`).join('');
+  }
+}
+
+function buildTree(root) {
+  const seen = new Set([root]);
+  const build = (i, depth) => {
+    const kids = [];
+    let size = 0;
+    for (const [c, line] of (E[i] || [])) {
+      if (!visible(c)) continue;
+      if (seen.has(c)) { kids.push({ i: c, line, dup: true, kids: [], size: 0 }); continue; }
+      seen.add(c);
+      const t = build(c, depth + 1);
+      t.line = line;
+      kids.push(t);
+      size += 1 + t.size;
+    }
+    return { i, kids, size, dup: false };
+  };
+  return build(root, 0);
+}
+
+function treeRow(t, depth) {
+  const row = document.createElement('div');
+  const id = N[t.i].id;
+  row.className = 'tn' + (t.dup ? ' dup' : '') + (t.i === S.sel ? ' focus' : '');
+  row.style.setProperty('--d', depth);
+  const hasKids = t.kids.length > 0;
+  row.innerHTML = `<span class="caret">${hasKids ? '▸' : ''}</span><span class="dot k-${kindOf(t.i)}"></span>` +
+    `<span class="fn" data-sel="${t.i}" title="${esc(id)}"><span class="dir">${esc(dir(id))}</span><b>${esc(base(id))}</b></span>` +
+    (t.line ? `<span class="ln">:${t.line}</span>` : '') +
+    (t.dup ? `<span class="ln">(already included)</span>` : '') +
+    (t.size ? `<span class="cnt">+${t.size}</span>` : '');
+  const wrap = document.createElement('div');
+  wrap.appendChild(row);
+  if (hasKids) {
+    const box = document.createElement('div');
+    box.hidden = true;
+    let built = false;
+    const caret = row.querySelector('.caret');
+    wrap._open = (v) => {
+      if (v && !built) { for (const k of t.kids) box.appendChild(treeRow(k, depth + 1)); built = true; }
+      box.hidden = !v;
+      caret.textContent = v ? '▾' : '▸';
+    };
+    caret.onclick = () => wrap._open(box.hidden);
+    wrap.appendChild(box);
+    wrap._box = box;
+  }
+  return wrap;
+}
+
+function openAll(wrap, v) {
+  if (wrap._open) {
+    wrap._open(v);
+    if (v) for (const c of wrap._box.children) openAll(c, v);
+  }
+}
+
+function renderTree() {
+  const el = document.getElementById('v-tree');
+  el.innerHTML = '';
+  const bar = document.createElement('div');
+  bar.className = 'tree-bar';
+  bar.innerHTML = `<button data-a="expand">Expand all</button><button data-a="collapse">Collapse all</button><span>+N = headers first pulled in by that include</span>`;
+  el.appendChild(bar);
+  const tree = document.createElement('div');
+  tree.className = 'tree';
+  el.appendChild(tree);
+  const roots = S.tu === -1 ? D.units.map(u => u.n).sort((a, b) => N[a].id < N[b].id ? -1 : 1) : [S.tu];
+  const wraps = roots.map(r => { const w = treeRow(buildTree(r), 0); tree.appendChild(w); return w; });
+  if (S.tu !== -1 && wraps[0]._open) wraps[0]._open(true);
+  bar.querySelector('[data-a=expand]').onclick = () => wraps.forEach(w => openAll(w, true));
+  bar.querySelector('[data-a=collapse]').onclick = () => wraps.forEach(w => openAll(w, false));
+}
+
+function reach(root) {
+  const seen = new Set([root]);
+  const work = [root];
+  while (work.length) {
+    const i = work.pop();
+    for (const [c] of (E[i] || [])) if (visible(c) && !seen.has(c)) { seen.add(c); work.push(c); }
+  }
+  return seen;
+}
+
+function pathTo(from, to) {
+  const prev = new Map([[from, -1]]);
+  const q = [from];
+  while (q.length) {
+    const i = q.shift();
+    if (i === to) break;
+    for (const [c] of (E[i] || [])) if (!prev.has(c)) { prev.set(c, i); q.push(c); }
+  }
+  if (!prev.has(to)) return null;
+  const p = [];
+  for (let i = to; i !== -1; i = prev.get(i)) p.push(i);
+  return p.reverse();
+}
+
+let cy = null;
+let cyKey = null;
+function renderGraph(force) {
+  const info = document.getElementById('graph-info');
+  if (typeof cytoscape === 'undefined') {
+    document.getElementById('cy').innerHTML = '<div class="empty" style="padding:20px">Cytoscape.js could not be loaded (no internet access?). The Tree, Details and Stats tabs still work.</div>';
+    return;
+  }
+  const focus = S.sel !== -1 ? S.sel : S.tu;
+  const showTus = document.getElementById('g-tus').checked;
+  const key = [focus, S.ext, S.unres, S.pch, showTus].join('|');
+  if (!force && cy && key === cyKey) return;
+  cyKey = key;
+  let set;
+  if (focus === -1) {
+    set = new Set();
+    N.forEach((n, i) => { if (n.k === 'project' && visible(i) && (showTus || !n.tu)) set.add(i); });
+  } else set = reach(focus);
+  const els = [];
+  for (const i of set) {
+    els.push({ data: { id: 'n' + i, label: base(N[i].id), kind: kindOf(i), focus: i === focus ? 1 : 0 } });
+  }
+  let ec = 0;
+  for (const i of set) for (const [c] of (E[i] || [])) if (set.has(c)) { els.push({ data: { id: 'e' + (ec++), source: 'n' + i, target: 'n' + c } }); }
+  info.textContent = `${set.size} nodes · ${ec} edges` + (focus === -1 ? ' · all project headers' : ` · reachable from ${base(N[focus].id)}`);
+  if (set.size > 1500) { info.textContent += ' — too many nodes to lay out; narrow the selection'; if (cy) cy.destroy(); cy = null; return; }
+  const css = getComputedStyle(document.documentElement);
+  const col = k => css.getPropertyValue('--k-' + k).trim();
+  if (cy) cy.destroy();
+  cy = cytoscape({
+    container: document.getElementById('cy'),
+    elements: els,
+    wheelSensitivity: 0.25,
+    style: [
+      { selector: 'node', style: { 'label': 'data(label)', 'font-size': 10, 'color': css.getPropertyValue('--fg').trim(), 'text-valign': 'bottom', 'text-margin-y': 3, 'width': 10, 'height': 10, 'background-color': ele => col(ele.data('kind')) } },
+      { selector: 'node[focus = 1]', style: { 'width': 18, 'height': 18, 'font-weight': 'bold', 'font-size': 12 } },
+      { selector: 'edge', style: { 'width': 1, 'opacity': 0.55, 'line-color': css.getPropertyValue('--dim').trim(), 'target-arrow-shape': 'triangle', 'target-arrow-color': css.getPropertyValue('--dim').trim(), 'arrow-scale': 0.6, 'curve-style': 'bezier' } },
+      { selector: '.faded', style: { 'opacity': 0.12 } },
+      { selector: 'edge.hl', style: { 'line-color': css.getPropertyValue('--accent').trim(), 'target-arrow-color': css.getPropertyValue('--accent').trim(), 'width': 2 } },
+    ],
+    layout: { name: 'dagre', rankDir: 'LR', nodeSep: 6, rankSep: 80, animate: false },
+  });
+  cy.on('tap', 'node', ev => {
+    const n = ev.target;
+    cy.elements().addClass('faded');
+    n.closedNeighborhood().removeClass('faded');
+    n.connectedEdges().addClass('hl');
+  });
+  cy.on('tap', ev => { if (ev.target === cy) cy.elements().removeClass('faded hl'); });
+  cy.on('dbltap', 'node', ev => select(+ev.target.id().slice(1)));
+}
+
+function table(rows, head) {
+  if (!rows.length) return '<div class="empty">None</div>';
+  return `<table><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr>${rows.join('')}</table>`;
+}
+
+function renderDetails() {
+  const el = document.getElementById('v-details');
+  const i = S.sel !== -1 ? S.sel : S.tu;
+  if (i === -1) { el.innerHTML = '<div class="empty">Select a translation unit or header (click any file name).</div>'; return; }
+  const n = N[i];
+  const u = UNIT.get(i);
+  let html = `<h2>File</h2><div class="chain">${nodeLabel(i)} <span class="dir">${esc(n.id)}</span></div>`;
+  html += `<div class="cards" style="margin-top:10px">` +
+    `<div class="card"><div class="v">${fmt(n.l)}</div><div class="l">lines</div></div>` +
+    (u ? `<div class="card"><div class="v">${u.c}</div><div class="l">transitive headers</div></div><div class="card"><div class="v">${fmt(u.l)}</div><div class="l">transitive lines</div></div><div class="card"><div class="v">${n.pch ? 'yes' : 'no'}</div><div class="l">uses PCH</div></div>`
+       : `<div class="card"><div class="v">${n.r.length}</div><div class="l">TUs reaching it</div></div><div class="card"><div class="v">${IN[i].length}</div><div class="l">direct includers</div></div><div class="card"><div class="v">${(E[i] || []).length}</div><div class="l">direct includes</div></div>`) +
+    `</div>`;
+  if (S.tu !== -1 && S.tu !== i) {
+    const p = pathTo(S.tu, i);
+    html += `<h2>Why ${esc(base(N[S.tu].id))} includes it</h2>` + (p ? `<div class="chain">${p.map(nodeLabel).join('<span class="arr">→</span>')}</div>` : '<div class="empty">Not reachable from the selected TU.</div>');
+  }
+  const inc = (E[i] || []).map(([c, line, sp]) => `<tr><td class="n">${line}</td><td>${nodeLabel(c)}</td><td class="dir">${esc(sp)}</td></tr>`);
+  const by = IN[i].map(([p, line]) => `<tr><td>${nodeLabel(p)}</td><td class="n">:${line}</td><td class="dir">${esc(dir(N[p].id))}</td></tr>`);
+  html += `<div class="two"><div><h2>Includes (${inc.length})</h2>${n.x || n.tu ? table(inc, ['Line', 'File', 'Spelling']) : '<div class="empty">Not expanded (external or system header).</div>'}</div>` +
+    `<div><h2>Included by (${by.length})</h2>${table(by, ['File', 'Line', 'Dir'])}</div></div>`;
+  if (!n.tu) {
+    const tus = n.r.slice().sort((a, b) => N[a].id < N[b].id ? -1 : 1).map(t => `<tr><td>${nodeLabel(t)}</td><td class="dir">${esc(dir(N[t].id))}</td></tr>`);
+    html += `<h2>Translation units that reach it (${tus.length})</h2>${table(tus, ['TU', 'Dir'])}`;
+  }
+  el.innerHTML = html;
+}
+
+function renderStats() {
+  const el = document.getElementById('v-stats');
+  const heavy = D.units.slice().sort((a, b) => b.l - a.l).slice(0, 25)
+    .map(u => `<tr><td>${nodeLabel(u.n)}</td><td class="n">${u.c}</td><td class="n">${fmt(u.l)}</td></tr>`);
+  const hdrs = N.map((n, i) => i).filter(i => !N[i].tu && N[i].k === 'project');
+  const popular = hdrs.slice().sort((a, b) => N[b].r.length - N[a].r.length).slice(0, 25)
+    .map(i => `<tr><td>${nodeLabel(i)}</td><td class="n">${N[i].r.length}</td><td class="n">${IN[i].length}</td><td class="n">${fmt(N[i].l)}</td></tr>`);
+  const costly = hdrs.slice().sort((a, b) => N[b].r.length * N[b].l - N[a].r.length * N[a].l).slice(0, 25)
+    .map(i => `<tr><td>${nodeLabel(i)}</td><td class="n">${fmt(N[i].r.length * N[i].l)}</td><td class="n">${N[i].r.length}</td><td class="n">${fmt(N[i].l)}</td></tr>`);
+  const unres = N.map((n, i) => i).filter(i => N[i].k === 'unresolved').sort((a, b) => IN[b].length - IN[a].length)
+    .map(i => `<tr><td>${esc(N[i].id)}</td><td class="n">${IN[i].length}</td><td>${IN[i].slice(0, 4).map(([p]) => nodeLabel(p)).join(' ')}${IN[i].length > 4 ? ' …' : ''}</td></tr>`);
+  const ext = N.map((n, i) => i).filter(i => N[i].k === 'external');
+  const cycles = D.cycles.map(c => `<div class="chain" style="margin-bottom:6px">${c.map(nodeLabel).join('<span class="arr">↔</span>')}</div>`).join('');
+  const total = D.units.reduce((s, u) => s + u.l, 0);
+  el.innerHTML =
+    `<div class="cards">` +
+    `<div class="card"><div class="v">${D.units.length}</div><div class="l">translation units</div></div>` +
+    `<div class="card"><div class="v">${hdrs.length}</div><div class="l">project headers</div></div>` +
+    `<div class="card"><div class="v">${ext.length}</div><div class="l">external headers</div></div>` +
+    `<div class="card"><div class="v">${unres.length}</div><div class="l">unresolved / system</div></div>` +
+    `<div class="card"><div class="v">${fmt(total)}</div><div class="l">lines parsed in total (excl. system)</div></div>` +
+    `<div class="card"><div class="v">${D.cycles.length}</div><div class="l">include cycles</div></div>` +
+    `</div>` +
+    `<div class="two"><div><h2>Heaviest translation units</h2>${table(heavy, ['TU', 'Headers', 'Lines'])}</div>` +
+    `<div><h2>Most included project headers</h2>${table(popular, ['Header', 'TUs', 'Direct', 'Lines'])}</div></div>` +
+    `<div class="two"><div><h2>Costliest headers (TUs × lines)</h2>${table(costly, ['Header', 'Cost', 'TUs', 'Lines'])}</div>` +
+    `<div><h2>Include cycles</h2>${cycles || '<div class="empty">None found</div>'}</div></div>` +
+    `<h2>Unresolved / system includes</h2>${table(unres, ['Spelling', 'Includers', 'Examples'])}`;
+}
+
+function renderTitle() {
+  const parts = [];
+  parts.push(S.tu === -1 ? 'All translation units' : N[S.tu].id);
+  if (S.sel !== -1 && S.sel !== S.tu) parts.push(N[S.sel].id);
+  document.getElementById('title').textContent = parts.join('  ›  ');
+}
+
+function render(force) {
+  renderTitle();
+  if (S.tab === 'tree') renderTree();
+  if (S.tab === 'graph') renderGraph(force);
+  if (S.tab === 'details') renderDetails();
+  if (S.tab === 'stats') renderStats();
+}
+
+function select(i) {
+  if (i === -1) { S.tu = -1; S.sel = -1; }
+  else if (N[i].tu) { S.tu = i; S.sel = -1; }
+  else { S.sel = i; if (S.tab === 'tree' || S.tab === 'stats') setTab('details', true); }
+  renderList();
+  render();
+}
+
+function setTab(t, quiet) {
+  S.tab = t;
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + t));
+  if (!quiet) render();
+  if (t === 'graph' && cy) cy.resize();
+}
+
+document.getElementById('meta').textContent = `${D.project} · ${D.config} · ${D.units.length} TUs · ${N.length} files`;
+document.getElementById('list').onclick = e => { const it = e.target.closest('.item'); if (it) select(+it.dataset.i); };
+document.querySelector('main').addEventListener('click', e => { const s = e.target.closest('[data-sel]'); if (s) select(+s.dataset.sel); });
+document.getElementById('tabs').onclick = e => { const b = e.target.closest('button'); if (b) setTab(b.dataset.t); };
+document.getElementById('listmode').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  S.list = b.dataset.m;
+  document.querySelectorAll('#listmode button').forEach(x => x.classList.toggle('on', x === b));
+  renderSort(); renderList();
+};
+document.getElementById('search').oninput = e => { S.q = e.target.value; renderList(); };
+document.getElementById('sort').onchange = e => { S.sort = e.target.value; renderList(); };
+for (const [id, k] of [['f-ext', 'ext'], ['f-unres', 'unres'], ['f-pch', 'pch']]) {
+  document.getElementById(id).onchange = e => { S[k] = e.target.checked; renderList(); render(); };
+}
+document.getElementById('g-tus').onchange = () => renderGraph();
+document.getElementById('g-fit').onclick = () => cy && cy.fit();
+document.getElementById('g-layout').onclick = () => renderGraph(true);
+renderSort();
+renderList();
+render();
+</script>
+</body>
+</html>
