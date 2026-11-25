@@ -185,7 +185,7 @@ $(function(){initNavTree('physx_2CharacterBody_8cpp_source.html','',''); });
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="keywordtype">void</span> CharacterBody::Move(Vector3 displacement, <span class="keywordtype">double</span> delta)</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>{</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordtype">double</span> timeSinceLastMove = <a class="code hl_function" href="Application_8h.html#a2e3492e29447c56ec3ea3d00173cde1d">GetTicksMilli</a>() - timeWhenLastMoved;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordtype">double</span> timeSinceLastMove = GetTicksMilli() - timeWhenLastMoved;</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    timeSinceLastMove = delta;</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    Vector3 oldPos = Vector3(pxController-&gt;getPosition());</div>
@@ -199,7 +199,7 @@ $(function(){initNavTree('physx_2CharacterBody_8cpp_source.html','',''); });
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    OnFloorShapeCast(timeSinceLastMove);</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    timeWhenLastMoved = <a class="code hl_function" href="Application_8h.html#a2e3492e29447c56ec3ea3d00173cde1d">GetTicksMilli</a>();</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    timeWhenLastMoved = GetTicksMilli();</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>}</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="keywordtype">void</span> CharacterBody::OnShapeHit()</div>
@@ -288,7 +288,6 @@ $(function(){initNavTree('physx_2CharacterBody_8cpp_source.html','',''); });
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>}</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>} <span class="comment">// namespace duin</span></div>
 <div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
-<div class="ttc" id="aApplication_8h_html_a2e3492e29447c56ec3ea3d00173cde1d"><div class="ttname"><a href="Application_8h.html#a2e3492e29447c56ec3ea3d00173cde1d">duin::GetTicksMilli</a></div><div class="ttdeci">double GetTicksMilli()</div><div class="ttdoc">Returns elapsed time in milliseconds since SDL init.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00259">Application.cpp:259</a></div></div>
 <div class="ttc" id="aphysx_2PhysicsServer_8h_html"><div class="ttname"><a href="physx_2PhysicsServer_8h.html">PhysicsServer.h</a></div><div class="ttdoc">Central physics world manager.</div></div>
 <div class="ttc" id="astructduin_1_1CharacterBodyDesc_html"><div class="ttname"><a href="structduin_1_1CharacterBodyDesc.html">duin::CharacterBodyDesc</a></div><div class="ttdef"><b>Definition</b> <a href="jolt_2CharacterBody_8h_source.html#l00014">jolt/CharacterBody.h:15</a></div></div>
 <div class="ttc" id="astructduin_1_1Vector3_html"><div class="ttname"><a href="structduin_1_1Vector3.html">duin::Vector3</a></div><div class="ttdef"><b>Definition</b> <a href="DuinMaths_8h_source.html#l00164">DuinMaths.h:165</a></div></div>

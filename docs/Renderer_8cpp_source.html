@@ -293,7 +293,7 @@ $(function(){initNavTree('Renderer_8cpp_source.html','',''); });
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="keywordtype">void</span> BeginDraw3D(<a class="code hl_struct" href="classduin_1_1Camera.html">Camera</a> &amp;camera)</div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>{</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    BeginDraw3D(camera, RHI_VIEW_3D, (uint16_t)<a class="code hl_function" href="Application_8h.html#a62446673e5e806e310ac470542c2ace9">GetWindowWidth</a>(), (uint16_t)<a class="code hl_function" href="Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4">GetWindowHeight</a>());</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    BeginDraw3D(camera, RHI_VIEW_3D, (uint16_t)GetWindowWidth(), (uint16_t)GetWindowHeight());</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    RHISetViewClear(RHI_VIEW_3D, 0x303030ff, 1.0f, 0);</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>}</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
@@ -809,8 +809,6 @@ $(function(){initNavTree('Renderer_8cpp_source.html','',''); });
 <div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>}</div>
 <div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span> </div>
 <div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>} <span class="comment">// namespace duin</span></div>
-<div class="ttc" id="aApplication_8h_html_a62446673e5e806e310ac470542c2ace9"><div class="ttname"><a href="Application_8h.html#a62446673e5e806e310ac470542c2ace9">duin::GetWindowWidth</a></div><div class="ttdeci">int GetWindowWidth()</div><div class="ttdoc">Returns window width in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00281">Application.cpp:281</a></div></div>
-<div class="ttc" id="aApplication_8h_html_a794171dbf4077b756a1aa1a0de3948f4"><div class="ttname"><a href="Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4">duin::GetWindowHeight</a></div><div class="ttdeci">int GetWindowHeight()</div><div class="ttdoc">Returns window height in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00286">Application.cpp:286</a></div></div>
 <div class="ttc" id="aCamera_8h_html"><div class="ttname"><a href="Camera_8h.html">Camera.h</a></div><div class="ttdoc">3D camera for rendering.</div></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aRenderer_8h_html"><div class="ttname"><a href="Renderer_8h.html">Renderer.h</a></div><div class="ttdoc">Core rendering system and utilities.</div></div>

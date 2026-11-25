@@ -107,7 +107,7 @@ $(function(){initNavTree('Camera_8cpp_source.html','',''); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;dnpch.h&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="Camera_8h.html">Camera.h</a>&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="Application_8h.html">Duin/Core/Application.h</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Duin/Core/Globals.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="DNLog_8h.html">Duin/Core/Debug/DNLog.h</a>&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;RHI.h&quot;</span></div>
@@ -318,7 +318,7 @@ $(function(){initNavTree('Camera_8cpp_source.html','',''); });
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><a class="code hl_struct" href="structduin_1_1Matrix.html">Matrix</a> GetCameraProjectionMatrix(<span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1CameraImpl.html">CameraImpl</a> &amp;cameraImpl)</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>{</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keywordflow">return</span> GetCameraProjectionMatrix(cameraImpl, (<span class="keywordtype">float</span>)<a class="code hl_function" href="Application_8h.html#a62446673e5e806e310ac470542c2ace9">GetWindowWidth</a>() / (<span class="keywordtype">float</span>)<a class="code hl_function" href="Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4">GetWindowHeight</a>());</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keywordflow">return</span> GetCameraProjectionMatrix(cameraImpl, (<span class="keywordtype">float</span>)GetWindowWidth() / (<span class="keywordtype">float</span>)GetWindowHeight());</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>}</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><a class="code hl_struct" href="structduin_1_1Matrix.html">Matrix</a> GetCameraProjectionMatrix(<span class="keyword">const</span> <a class="code hl_struct" href="structduin_1_1CameraImpl.html">CameraImpl</a> &amp;cameraImpl, <span class="keywordtype">float</span> aspect)</div>
@@ -332,9 +332,6 @@ $(function(){initNavTree('Camera_8cpp_source.html','',''); });
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>}</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>} <span class="comment">// namespace duin</span></div>
-<div class="ttc" id="aApplication_8h_html"><div class="ttname"><a href="Application_8h.html">Application.h</a></div><div class="ttdoc">Main application class and engine utility functions.</div></div>
-<div class="ttc" id="aApplication_8h_html_a62446673e5e806e310ac470542c2ace9"><div class="ttname"><a href="Application_8h.html#a62446673e5e806e310ac470542c2ace9">duin::GetWindowWidth</a></div><div class="ttdeci">int GetWindowWidth()</div><div class="ttdoc">Returns window width in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00281">Application.cpp:281</a></div></div>
-<div class="ttc" id="aApplication_8h_html_a794171dbf4077b756a1aa1a0de3948f4"><div class="ttname"><a href="Application_8h.html#a794171dbf4077b756a1aa1a0de3948f4">duin::GetWindowHeight</a></div><div class="ttdeci">int GetWindowHeight()</div><div class="ttdoc">Returns window height in pixels.</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00286">Application.cpp:286</a></div></div>
 <div class="ttc" id="aCamera_8h_html"><div class="ttname"><a href="Camera_8h.html">Camera.h</a></div><div class="ttdoc">3D camera for rendering.</div></div>
 <div class="ttc" id="aDNLog_8h_html"><div class="ttname"><a href="DNLog_8h.html">DNLog.h</a></div><div class="ttdoc">Logging system and macros.</div></div>
 <div class="ttc" id="aclassduin_1_1Camera_html"><div class="ttname"><a href="classduin_1_1Camera.html">duin::Camera</a></div><div class="ttdoc">3D camera with position, target, and orientation.</div><div class="ttdef"><b>Definition</b> <a href="Camera_8h_source.html#l00042">Camera.h:43</a></div></div>

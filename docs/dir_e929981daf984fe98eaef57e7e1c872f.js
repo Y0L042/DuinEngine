@@ -11,5 +11,6 @@ var dir_e929981daf984fe98eaef57e7e1c872f =
     [ "Application.h", "Application_8h.html", "Application_8h" ],
     [ "Application_HeadlessImpl.hpp", "Application__HeadlessImpl_8hpp_source.html", null ],
     [ "Application_Impl.hpp", "Application__Impl_8hpp_source.html", null ],
-    [ "Core.h", "Core_8h_source.html", null ]
+    [ "Core.h", "Core_8h_source.html", null ],
+    [ "Globals.h", "Globals_8h_source.html", null ]
 ];
