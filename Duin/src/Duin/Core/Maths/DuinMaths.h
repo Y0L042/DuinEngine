@@ -54,7 +54,6 @@
 #ifndef DUIN_MATHS_H
 #define DUIN_MATHS_H
 
-#include <rfl.hpp>
 // Fast square root dependencies
 #include <xmmintrin.h>
 
