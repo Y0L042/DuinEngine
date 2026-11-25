@@ -6,7 +6,7 @@
 #include <external/imgui.h>
 
 #include "Duin/Core/Debug/DNLog.h"
-#include "Duin/Core/Application.h"
+#include "Duin/Core/Globals.h"
 #include "Duin/Core/Maths/MathsModule.h"
 #include "Duin/IO/Filesystem.h"
 
