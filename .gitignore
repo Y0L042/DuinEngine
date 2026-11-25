@@ -131,3 +131,7 @@ ExampleProjects/Sandbox/Sandbox.vcxproj
 /.nvim.lua
 /generateprojects.sh
 /DuinEditor/data/editor_cfg.toml
+
+# Tools output
+tools/DependencyMapper/out/
+**/__pycache__/
