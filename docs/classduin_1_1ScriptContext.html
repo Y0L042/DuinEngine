@@ -121,11 +121,13 @@ Collaboration diagram for duin::ScriptContext:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acd104173bbf037963250de6f28f9347d" id="r_acd104173bbf037963250de6f28f9347d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd104173bbf037963250de6f28f9347d">TransferMemoryTo</a> (<a class="el" href="classduin_1_1ScriptContext.html">ScriptContext</a> &amp;other)</td></tr>
 <tr class="memitem:aba8d707f5e22613f229de466f0b09678" id="r_aba8d707f5e22613f229de466f0b09678"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba8d707f5e22613f229de466f0b09678">Clear</a> ()</td></tr>
+<tr class="memitem:a596cab586e9e01d8b4ca5705623b2240" id="r_a596cab586e9e01d8b4ca5705623b2240"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a596cab586e9e01d8b4ca5705623b2240">CollectHeap</a> ()</td></tr>
+<tr class="memitem:a05020c79f519c5d480a47149e98736e9" id="r_a05020c79f519c5d480a47149e98736e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05020c79f519c5d480a47149e98736e9">Restart</a> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7e7952398c1d67cf993bb428d0a80e2d" id="r_a7e7952398c1d67cf993bb428d0a80e2d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classduin_1_1ScriptMemory.html">ScriptMemory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e7952398c1d67cf993bb428d0a80e2d">scriptMemory</a></td></tr>
-<tr class="memitem:ab9964fee1116e9b8ef0d889570dd1ad5" id="r_ab9964fee1116e9b8ef0d889570dd1ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1GameObject.html">GameObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9964fee1116e9b8ef0d889570dd1ad5">rootGameObject</a></td></tr>
+<tr class="memitem:ab9964fee1116e9b8ef0d889570dd1ad5" id="r_ab9964fee1116e9b8ef0d889570dd1ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classduin_1_1GameObject.html">GameObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9964fee1116e9b8ef0d889570dd1ad5">rootGameObject</a> = nullptr</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -136,9 +138,6 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">duin::ScriptContext::~ScriptContext </td>
@@ -147,14 +146,9 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ScriptContext_8h_source.html#l00019">19</a> of file <a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ScriptContext_8cpp_source.html#l00004">4</a> of file <a class="el" href="ScriptContext_8cpp_source.html">ScriptContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -164,9 +158,6 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void duin::ScriptContext::Clear </td>
@@ -175,14 +166,47 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ScriptContext_8h_source.html#l00030">30</a> of file <a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ScriptContext_8cpp_source.html#l00015">15</a> of file <a class="el" href="ScriptContext_8cpp_source.html">ScriptContext.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a596cab586e9e01d8b4ca5705623b2240" name="a596cab586e9e01d8b4ca5705623b2240"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a596cab586e9e01d8b4ca5705623b2240">&#9670;&#160;</a></span>CollectHeap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::ScriptContext::CollectHeap </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ScriptContext_8cpp_source.html#l00022">22</a> of file <a class="el" href="ScriptContext_8cpp_source.html">ScriptContext.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a05020c79f519c5d480a47149e98736e9" name="a05020c79f519c5d480a47149e98736e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05020c79f519c5d480a47149e98736e9">&#9670;&#160;</a></span>Restart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void duin::ScriptContext::Restart </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ScriptContext_8cpp_source.html#l00027">27</a> of file <a class="el" href="ScriptContext_8cpp_source.html">ScriptContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -191,9 +215,6 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void duin::ScriptContext::TransferMemoryTo </td>
@@ -202,14 +223,9 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ScriptContext_8h_source.html#l00024">24</a> of file <a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ScriptContext_8cpp_source.html#l00009">9</a> of file <a class="el" href="ScriptContext_8cpp_source.html">ScriptContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,12 +237,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classduin_1_1GameObject.html">GameObject</a>* duin::ScriptContext::rootGameObject</td>
+          <td class="memname"><a class="el" href="classduin_1_1GameObject.html">GameObject</a>* duin::ScriptContext::rootGameObject = nullptr</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ScriptContext_8h_source.html#l00038">38</a> of file <a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ScriptContext_8h_source.html#l00032">32</a> of file <a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a>.</p>
 
 </div>
 </div>
@@ -242,12 +258,13 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ScriptContext_8h_source.html#l00037">37</a> of file <a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ScriptContext_8h_source.html#l00031">31</a> of file <a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="ScriptContext_8h_source.html">ScriptContext.h</a></li>
+<li><a class="el" href="ScriptContext_8cpp_source.html">ScriptContext.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
