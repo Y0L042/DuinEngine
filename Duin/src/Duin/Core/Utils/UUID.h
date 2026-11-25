@@ -35,10 +35,8 @@
 
 #pragma once
 
-#include <functional>
 #include <cstdint>
 #include <string>
-#include <rfl.hpp>
 
 namespace duin
 {
