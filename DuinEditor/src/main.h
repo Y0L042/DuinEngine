@@ -26,6 +26,7 @@ class Editor : public duin::Application
     void Draw() override;
     void DrawUI() override;
     void Debug() override;
+    void Exit() override;
 
   private:
     static Editor *instance;

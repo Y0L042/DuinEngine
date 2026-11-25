@@ -103,3 +103,8 @@ void Editor::DrawUI()
 void Editor::Debug()
 {
 }
+
+void Editor::Exit()
+{
+    script.reset(); // TODO need safer way to reset script when program ends
+}
