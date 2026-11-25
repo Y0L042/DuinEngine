@@ -336,9 +336,9 @@ function renderGraph(force) {
     style: [
       { selector: 'node', style: { 'label': 'data(label)', 'font-size': 10, 'color': css.getPropertyValue('--fg').trim(), 'text-valign': 'bottom', 'text-margin-y': 3, 'width': 10, 'height': 10, 'background-color': ele => col(ele.data('kind')) } },
       { selector: 'node[focus = 1]', style: { 'width': 18, 'height': 18, 'font-weight': 'bold', 'font-size': 12 } },
-      { selector: 'edge', style: { 'width': 1, 'opacity': 0.55, 'line-color': css.getPropertyValue('--dim').trim(), 'target-arrow-shape': 'triangle', 'target-arrow-color': css.getPropertyValue('--dim').trim(), 'arrow-scale': 0.6, 'curve-style': 'bezier' } },
+      { selector: 'edge', style: { 'width': 1, 'opacity': 0.6, 'line-fill': 'linear-gradient', 'line-gradient-stop-colors': [col('tu'), col('tu'), col('external')], 'line-gradient-stop-positions': [0, 50, 100], 'target-arrow-shape': 'triangle', 'target-arrow-color': col('external'), 'arrow-scale': 0.6, 'curve-style': 'bezier' } },
       { selector: '.faded', style: { 'opacity': 0.12 } },
-      { selector: 'edge.hl', style: { 'line-color': css.getPropertyValue('--accent').trim(), 'target-arrow-color': css.getPropertyValue('--accent').trim(), 'width': 2 } },
+      { selector: 'edge.hl', style: { 'width': 2.5, 'opacity': 1 } },
     ],
     layout: { name: 'dagre', rankDir: 'LR', nodeSep: 6, rankSep: 80, animate: false },
   });
