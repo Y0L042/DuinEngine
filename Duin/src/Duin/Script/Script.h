@@ -129,10 +129,7 @@ class Script
     std::expected<void, std::string> InvokeVoid(das::Func fn);
     std::expected<void, std::string> InvokeWithDelta(das::Func fn, double delta);
 
-    // Runs all exported functions whose names begin with "test_".
-    // Returns {passed, failed} counts. Each test is called via evalWithCatch;
-    // a non-null exception or a panic counts as a failure.
-    std::pair<int, int> RunTests();
+    
 
     // --- Recompile / teardown ---
     // Prepares the same Script instance to compile a different file. Call before Compile().
